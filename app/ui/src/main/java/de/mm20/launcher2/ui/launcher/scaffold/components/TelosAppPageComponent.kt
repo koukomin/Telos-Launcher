@@ -239,6 +239,9 @@ internal class TelosAppPageComponent private constructor(
         }
 
         CompositionLocalProvider(LocalBackStack provides backStack) {
+            de.mm20.launcher2.ui.component.ProvidePerAppFontScale(
+                de.mm20.launcher2.ui.component.telosFontKeyFromPageKey(key),
+            ) {
             de.mm20.launcher2.ui.component.VirtualAppTheme {
                 Box(
                     modifier = modifier
@@ -249,13 +252,18 @@ internal class TelosAppPageComponent private constructor(
                         .windowInsetsPadding(WindowInsets.safeDrawing.only(WindowInsetsSides.Horizontal))
                 ) {
                     if (!isEmpty) {
+                        val pageEffects = de.mm20.launcher2.ui.component.rememberVirtualAppPageEffects()
                         NavDisplay(
                             backStack = backStack,
                             onBack = { backStack.removeLastOrNull() },
                             entryProvider = TelosPages.entries,
+                            transitionSpec = { de.mm20.launcher2.ui.component.telosPageTransition(pageEffects) },
+                            popTransitionSpec = { de.mm20.launcher2.ui.component.telosPagePopTransition(pageEffects) },
+                            predictivePopTransitionSpec = { de.mm20.launcher2.ui.component.telosPagePopTransition(pageEffects) },
                         )
                     }
                 }
+            }
             }
         }
     }

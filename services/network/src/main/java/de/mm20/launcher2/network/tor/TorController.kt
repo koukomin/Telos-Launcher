@@ -109,7 +109,7 @@ class TorController internal constructor(private val context: Context, private v
                         if (ready) unavailable()
                     }
                 }
-                delay(1000)
+                delay(if (ready) 2_000L else 250L)
             }
         }
     }
@@ -125,9 +125,11 @@ class TorController internal constructor(private val context: Context, private v
             val socks = freePort()
             // TorService supplies its private control socket and cookie authentication separately.
             TorService.getTorrc(context).writeText(
-                "SocksPort 127.0.0.1:$socks\nDNSPort 127.0.0.1:$dnsPort\nHTTPTunnelPort 0\n" +
+                "SocksPort 127.0.0.1:$socks IsolateDestAddr\nDNSPort 127.0.0.1:$dnsPort\nHTTPTunnelPort 0\n" +
                     "AutomapHostsOnResolve 1\nAutomapHostsSuffixes .onion\n" +
-                    "VirtualAddrNetworkIPv4 ${TorPolicy.VIRTUAL_V4}\nVirtualAddrNetworkIPv6 ${TorPolicy.VIRTUAL_V6}\n"
+                    "VirtualAddrNetworkIPv4 ${TorPolicy.VIRTUAL_V4}\nVirtualAddrNetworkIPv6 ${TorPolicy.VIRTUAL_V6}\n" +
+                    "ClientOnly 1\nAvoidDiskWrites 1\nUseEntryGuards 1\nNumEntryGuards 2\n" +
+                    "CircuitBuildTimeout 10\nLearnCircuitBuildTimeout 1\nDormantCanceledByStartup 1\n"
             )
             bound = context.bindService(Intent(context, TorService::class.java), connection, Context.BIND_AUTO_CREATE)
             if (!bound) unavailable()

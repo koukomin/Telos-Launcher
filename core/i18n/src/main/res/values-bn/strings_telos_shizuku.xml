@@ -40,4 +40,13 @@
     <string name="telos_shizuku_pair_start">পেয়ারিং কোডের অপেক্ষা</string>
     <string name="telos_shizuku_pair_stop">অপেক্ষা থামান</string>
     <string name="telos_shizuku_pair_open">ওয়্যারলেস ডিবাগিং খুলুন</string>
+    <string name="telos_shizuku_perm_title">Shizuku অ্যাক্সেস অনুমতি দিন</string>
+    <string name="telos_shizuku_perm_body">%1$s Telos Shizuku সার্ভার ব্যবহার করতে চায়।</string>
+    <string name="telos_shizuku_perm_once">একবার অনুমতি দিন</string>
+    <string name="telos_shizuku_grant_failed">Shizuku অ্যাক্সেস আপডেট করা যায়নি। আগে Telos সার্ভার চালু করুন।</string>
+    <string name="telos_shizuku_diag_builtin">অন্তর্নির্মিত Telos Shizuku সার্ভার</string>
+    <string name="telos_shizuku_diag_ready">অবস্থা: প্রস্তুত (WRITE_SECURE_SETTINGS দেওয়া হয়েছে)</string>
+    <string name="telos_shizuku_diag_grant">অবস্থা: সার্ভার চলছে — WRITE_SECURE_SETTINGS দিন</string>
+    <string name="telos_shizuku_diag_start">অবস্থা: Telos System → Shizuku থেকে সার্ভার চালু করুন</string>
+    <string name="telos_shizuku_autostart_ok">Shizuku স্বয়ংক্রিয় চালু চালু আছে।</string>
 </resources>

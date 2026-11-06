@@ -37,6 +37,10 @@ object TelosAppKeywords {
         "telos_downloads_app" to listOf("download", "downloader", "λήψεις", "κατεβάσματα"),
         "telos_network_app" to listOf("nextdns", "vpn", "dns", "firewall", "wifi", "internet", "δίκτυο", "τείχος προστασίας"),
         "telos_system_app" to listOf("system", "cpu", "ram", "wifi", "ip", "processes", "σύστημα", "επεξεργαστής"),
+        "telos_system_app://shizuku" to listOf(
+            "shizuku", "shizuko", "shizukou", "shizukku", "shizukuu", "sizuku", "sizuuku", "shizuk",
+            "σιζούκου", "σιζουκου", "σιζούκο", "σιζουκο", "σιζούκκου", "σίζουκου",
+        ),
         "telos_trash_app" to listOf("trash", "bin", "recycle", "κάδος", "ανακύκλωση"),
         "telos_voice_recorder_app" to listOf("recorder", "recording", "dictaphone", "audio", "καταγραφή ήχου", "εγγραφή φωνής"),
         "telos_akou_app" to listOf("akou", "shazam", "identify", "song finder", "music recognition", "άκου", "αναγνώριση μουσικής"),

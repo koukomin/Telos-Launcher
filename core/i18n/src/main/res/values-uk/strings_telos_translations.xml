@@ -1091,7 +1091,7 @@
     <string name="preference_app_lock_work_profile_toggle_summary">Вимагати автентифікацію для призупинення або відновлення робочого профілю зі списку застосунків</string>
     <string name="app_lock_work_profile_prompt_title">Пройдіть автентифікацію, щоб змінити стан робочого профілю</string>
     <string name="preference_screen_work_profile">Робочий профіль</string>
-    <string name="preference_screen_work_profile_summary">Налаштування, призупинення, відновлення та блокування робочого профілю</string>
+    <string name="preference_screen_work_profile_summary">Налаштування, пауза, відновлення й блокування робочого профілю</string>
     <string name="work_profile_status_title">Стан</string>
     <string name="work_profile_status_not_set_up">Не налаштовано</string>
     <string name="work_profile_status_active">Активний</string>
@@ -1922,4 +1922,7 @@
     <string name="telos_system_wifi_security_open">Відкрита</string>
     <string name="telos_system_wifi_empty">Немає збережених мереж</string>
     <string name="telos_system_wifi_persisted">Збережено тимчасових мереж: %1$d</string>
+    <string name="desktop_mode_kde_connect">Інтеграція KDE Connect</string>
+    <string name="desktop_mode_kde_connect_open">Відкрийте KDE Connect, щоб з’єднати ПК або планшет</string>
+    <string name="desktop_mode_kde_connect_install">Натисніть, щоб установити KDE Connect із Telos Store</string>
 </resources>

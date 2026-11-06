@@ -377,6 +377,15 @@ fun SystemWidget(widget: SystemWidget) {
             }
             Text(stringResource(transport), style = MaterialTheme.typography.labelMedium)
             Text("↓ ${formatRate(rx)}    ↑ ${formatRate(tx)}", style = MaterialTheme.typography.titleMedium)
+            var waveHistory by remember { mutableStateOf(List(24) { 0L to 0L }) }
+            androidx.compose.runtime.LaunchedEffect(rx, tx) {
+                waveHistory = (waveHistory.drop(1) + ((rx ?: 0L) / 1024 to (tx ?: 0L) / 1024))
+            }
+            de.mm20.launcher2.ui.component.CyberWaveformChart(
+                downloadKb = (rx ?: 0L) / 1024,
+                uploadKb = (tx ?: 0L) / 1024,
+                history = waveHistory,
+            )
             stats.lanIp?.let {
                 Text(stringResource(I18nR.string.system_widget_lan_ip, it), style = MaterialTheme.typography.labelMedium)
             }

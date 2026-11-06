@@ -557,7 +557,7 @@
     <string name="preference_smartspacer_integration_description">Smartspacer es un widget de código abierto inspirado en De un vistazo. Si se instala, se puede integrar en la zona dinámica del widget del reloj</string>
     <string name="preference_smartspacer_enable">Habilitar integración con Smartspacer</string>
     <string name="preference_launch_smartspacer_app">Abrir Smartspacer</string>
-    <string name="preference_feed_integration">Feed</string>
+    <string name="preference_feed_integration">Canal</string>
     <string name="preference_category_feed_provider">Proveedor de feeds</string>
     <string name="preference_feed_enable_summary">Desliza hacia la derecha en la pantalla de inicio para abrir el feed</string>
     <string name="no_feed_providers">No hay ningún provedor de feed instalado</string>

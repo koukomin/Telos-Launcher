@@ -31,7 +31,7 @@ fun Preference(
     onClick: () -> Unit = {},
     controls: @Composable (() -> Unit)? = null,
     enabled: Boolean = true,
-    containerColor: Color = MaterialTheme.colorScheme.surfaceBright,
+    containerColor: Color = MaterialTheme.colorScheme.surfaceContainerLow.copy(alpha = 1f),
     toggleValue: Boolean? = null,
     toggleRole: Role = Role.Switch,
 ) {
@@ -88,7 +88,7 @@ fun Preference(
     onClick: () -> Unit = {},
     controls: @Composable (() -> Unit)? = null,
     enabled: Boolean = true,
-    containerColor: Color = MaterialTheme.colorScheme.surfaceBright,
+    containerColor: Color = MaterialTheme.colorScheme.surfaceContainerLow.copy(alpha = 1f),
     toggleValue: Boolean? = null,
     toggleRole: Role = Role.Switch,
 ) {
@@ -121,7 +121,7 @@ fun Preference(
     onClick: () -> Unit = {},
     controls: @Composable (() -> Unit)? = null,
     enabled: Boolean = true,
-    containerColor: Color = MaterialTheme.colorScheme.surfaceBright,
+    containerColor: Color = MaterialTheme.colorScheme.surfaceContainerLow.copy(alpha = 1f),
     toggleValue: Boolean? = null,
     toggleRole: Role = Role.Switch,
 ) {

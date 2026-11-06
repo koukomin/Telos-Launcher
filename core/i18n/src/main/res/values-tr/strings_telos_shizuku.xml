@@ -40,4 +40,13 @@ Bilgisayar: USB hata ayıklama ve aşağıdaki adb komutu.</string>
     <string name="telos_shizuku_pair_start">Eşleme kodunu bekle</string>
     <string name="telos_shizuku_pair_stop">Beklemeyi durdur</string>
     <string name="telos_shizuku_pair_open">Kablosuz hata ayıklamayı aç</string>
+    <string name="telos_shizuku_perm_title">Shizuku erişimine izin ver</string>
+    <string name="telos_shizuku_perm_body">%1$s Telos Shizuku sunucusunu kullanmak istiyor.</string>
+    <string name="telos_shizuku_perm_once">Bir kez izin ver</string>
+    <string name="telos_shizuku_grant_failed">Shizuku erişimi güncellenemedi. Önce Telos sunucusunu başlatın.</string>
+    <string name="telos_shizuku_diag_builtin">Yerleşik Telos Shizuku sunucusu</string>
+    <string name="telos_shizuku_diag_ready">Durum: hazır (WRITE_SECURE_SETTINGS verildi)</string>
+    <string name="telos_shizuku_diag_grant">Durum: sunucu çalışıyor — WRITE_SECURE_SETTINGS verin</string>
+    <string name="telos_shizuku_diag_start">Durum: sunucuyu Telos System → Shizuku’dan başlatın</string>
+    <string name="telos_shizuku_autostart_ok">Shizuku otomatik başlatma açık.</string>
 </resources>

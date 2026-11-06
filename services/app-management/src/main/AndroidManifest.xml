@@ -29,6 +29,17 @@
                 android:name="android.accessibilityservice"
                 android:resource="@xml/telos_adb_pairing_accessibility" />
         </service>
+        <activity
+            android:name=".shizuku.TelosShizukuRequestPermissionActivity"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:theme="@android:style/Theme.DeviceDefault.Dialog.Alert"
+            android:taskAffinity="">
+            <intent-filter>
+                <action android:name="${applicationId}.intent.action.REQUEST_PERMISSION" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <service
             android:name=".shizuku.TelosAdbPairingService"
             android:exported="false"

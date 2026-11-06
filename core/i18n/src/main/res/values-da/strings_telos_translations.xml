@@ -513,7 +513,7 @@
     <string name="preference_app_lock_work_profile_toggle_summary">Kræv godkendelse for at sætte arbejdsprofilen på pause eller genoptage den fra appskuffen</string>
     <string name="app_lock_work_profile_prompt_title">Godkend for at ændre arbejdsprofilens tilstand</string>
     <string name="preference_screen_work_profile">Arbejdsprofil</string>
-    <string name="preference_screen_work_profile_summary">Opsæt, sæt på pause, genoptag og lås arbejdsprofilen</string>
+    <string name="preference_screen_work_profile_summary">Konfigurer, pause, genoptag og lås arbejdsprofilen</string>
     <string name="work_profile_status_title">Status</string>
     <string name="work_profile_status_not_set_up">Ikke opsat</string>
     <string name="work_profile_status_active">Aktiv</string>
@@ -1377,4 +1377,7 @@
     <string name="telos_system_wifi_security_open">Åbent</string>
     <string name="telos_system_wifi_empty">Ingen gemte netværk</string>
     <string name="telos_system_wifi_persisted">%1$d midlertidige netværk gemt</string>
+    <string name="desktop_mode_kde_connect">KDE Connect-integration</string>
+    <string name="desktop_mode_kde_connect_open">Åbn KDE Connect for at parre med en pc eller tablet</string>
+    <string name="desktop_mode_kde_connect_install">Tryk for at installere KDE Connect fra Telos Store</string>
 </resources>

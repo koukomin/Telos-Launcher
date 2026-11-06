@@ -8,6 +8,8 @@ Open **Telos System → Shizuku**. Copy the live `adb` line from that screen; th
 
 The standalone Shizuku app is a separate manager. Telos already needs a privileged shell for freeze, installs and network. Telos manages the embedded server. A wireless/ADB start runs it as Android shell (UID 2000); a root start uses UID 0. External-client authorization has remaining gaps documented in the [feature audit](/docs/developer-guide/shizuku-pairing).
 
+Authorize those apps on **Telos System → Shizuku → Shizuku apps** (the switch writes Shizuku’s binder flags). When an app calls `Shizuku.requestPermission()`, Telos shows the grant dialog. Settings → Advanced autostart uses the same built-in server; it does not require `moe.shizuku.privileged.api`.
+
 ## Start methods
 
 | Method | What you do |

@@ -750,7 +750,7 @@
     <string name="preference_app_lock_work_profile_toggle_summary">Nõua autentimist tööprofiili peatamiseks või jätkamiseks rakenduste sahtlist</string>
     <string name="app_lock_work_profile_prompt_title">Tööprofiili oleku muutmiseks autendi ennast</string>
     <string name="preference_screen_work_profile">Tööprofiil</string>
-    <string name="preference_screen_work_profile_summary">Seadista, peata, jätka ja lukusta tööprofiil</string>
+    <string name="preference_screen_work_profile_summary">Tööprofiili seadistamine, peatamine, jätkamine ja lukustamine</string>
     <string name="work_profile_status_title">Olek</string>
     <string name="work_profile_status_not_set_up">Pole seadistatud</string>
     <string name="work_profile_status_active">Aktiivne</string>
@@ -1858,4 +1858,7 @@
     <string name="telos_system_wifi_security_open">Avatud</string>
     <string name="telos_system_wifi_empty">Salvestatud võrke pole</string>
     <string name="telos_system_wifi_persisted">Salvestati %1$d ajutist võrku</string>
+    <string name="desktop_mode_kde_connect">KDE Connecti lõiming</string>
+    <string name="desktop_mode_kde_connect_open">Ava KDE Connect arvuti või tahvliga sidumiseks</string>
+    <string name="desktop_mode_kde_connect_install">Puuduta, et installida KDE Connect Telos Store’ist</string>
 </resources>

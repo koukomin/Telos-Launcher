@@ -742,6 +742,15 @@ class UiSettings internal constructor(
         }
     }
 
+    val virtualAppPageEffects
+        get() = launcherDataStore.data.map { it.misc.virtualAppPageEffects }.distinctUntilChanged()
+
+    fun setVirtualAppPageEffects(enabled: Boolean) {
+        launcherDataStore.update {
+            it.copy(misc = it.misc.copy(virtualAppPageEffects = enabled))
+        }
+    }
+
     val artOptimizerMasterEnabled
         get() = launcherDataStore.data.map { it.misc.artOptimizerMasterEnabled }
 

@@ -310,6 +310,7 @@ fun DockSettingsScreen() {
 
     if (showChoiceDialog) {
         AlertDialog(
+            containerColor = de.mm20.launcher2.ui.component.virtualAppPopup(),
             onDismissRequest = { showChoiceDialog = false },
             // === TELOS_PENDING_REVIEW_START: ui_i18n_and_features_batch ===
             title = { Text(stringResource(I18nR.string.dock_pick_item_type)) },

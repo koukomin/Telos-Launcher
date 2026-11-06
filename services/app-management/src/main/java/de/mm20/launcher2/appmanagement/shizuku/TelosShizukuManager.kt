@@ -52,6 +52,9 @@ object TelosShizukuManager {
     )
 
     private val SAFE_PKG = Regex("^[a-zA-Z0-9._]+$")
+    // Same bits as rikka.shizuku.server.ConfigManager (manager API).
+    private const val FLAG_ALLOWED = 1 shl 1
+    private const val FLAG_DENIED = 1 shl 2
 
     private val _status = MutableStateFlow(ShizukuEngineStatus())
     val status: StateFlow<ShizukuEngineStatus> = _status.asStateFlow()
@@ -114,7 +117,8 @@ object TelosShizukuManager {
             val label = runCatching {
                 info.applicationInfo?.loadLabel(pm)?.toString()
             }.getOrDefault(pkg)
-            val granted = permissionGranted(pm, pkg)
+            val uid = info.applicationInfo?.uid ?: -1
+            val granted = binderAllowed(uid) || permissionGranted(pm, pkg)
             val enabled = info.applicationInfo?.enabled != false
             rows.add(
                 ShizukuClientApp(
@@ -134,16 +138,27 @@ object TelosShizukuManager {
 
     suspend fun setClientAccess(context: Context, packageName: String, allow: Boolean): Boolean {
         if (!SAFE_PKG.matches(packageName)) return false
+        val uid = runCatching {
+            if (Build.VERSION.SDK_INT >= 33) {
+                context.packageManager.getPackageUid(packageName, PackageManager.PackageInfoFlags.of(0))
+            } else {
+                @Suppress("DEPRECATION")
+                context.packageManager.getPackageUid(packageName, 0)
+            }
+        }.getOrDefault(-1)
+        if (uid < 0) return false
+        val binderOk = updateBinderFlags(uid, allow)
         val perms = listOf(PERM_MANAGER_V23, PERM_RIKKA_V23)
         val verb = if (allow) "grant" else "revoke"
-        var ok = true
+        var ok = binderOk
         for (perm in perms) {
             val r = TelosPrivilegedDaemon.exec(
                 "pm $verb $packageName $perm",
             )
             if (!r.isSuccess) {
                 Log.w(TAG, "pm $verb $packageName $perm: ${r.stderr}")
-                ok = false
+            } else {
+                ok = true
             }
             val mode = if (allow) "allow" else "ignore"
             TelosPrivilegedDaemon.exec("cmd appops set $packageName $perm $mode")
@@ -201,6 +216,30 @@ object TelosShizukuManager {
     private fun hasV3Metadata(ai: ApplicationInfo?): Boolean {
         val bundle = ai?.metaData ?: return false
         return bundle.getBoolean(META_V3, false) || bundle.containsKey(META_V3)
+    }
+
+    @Suppress("RestrictedApi")
+    private fun binderAllowed(uid: Int): Boolean {
+        if (uid < 0) return false
+        if (!runCatching { Shizuku.pingBinder() }.getOrDefault(false)) return false
+        return runCatching {
+            val flags = Shizuku.getFlagsForUid(uid, FLAG_ALLOWED or FLAG_DENIED)
+            flags and FLAG_ALLOWED != 0
+        }.getOrDefault(false)
+    }
+
+    @Suppress("RestrictedApi")
+    private fun updateBinderFlags(uid: Int, allow: Boolean): Boolean {
+        if (!runCatching { Shizuku.pingBinder() }.getOrDefault(false)) return false
+        return runCatching {
+            Shizuku.updateFlagsForUid(
+                uid,
+                FLAG_ALLOWED or FLAG_DENIED,
+                if (allow) FLAG_ALLOWED else FLAG_DENIED,
+            )
+            true
+        }.onFailure { Log.w(TAG, "updateFlagsForUid uid=$uid allow=$allow", it) }
+            .getOrDefault(false)
     }
 
     private fun permissionGranted(pm: PackageManager, packageName: String): Boolean {

@@ -40,4 +40,13 @@ Računalnik: odpravljanje napak USB in ukaz adb spodaj.</string>
     <string name="telos_shizuku_pair_start">Čakaj kodo za seznanitev</string>
     <string name="telos_shizuku_pair_stop">Nehaj čakati</string>
     <string name="telos_shizuku_pair_open">Odpri brezžično odpravljanje napak</string>
+    <string name="telos_shizuku_perm_title">Dovoli dostop Shizuku</string>
+    <string name="telos_shizuku_perm_body">%1$s želi uporabiti strežnik Shizuku Telos.</string>
+    <string name="telos_shizuku_perm_once">Dovoli enkrat</string>
+    <string name="telos_shizuku_grant_failed">Dostopa Shizuku ni bilo mogoče posodobiti. Najprej zaženite strežnik Telos.</string>
+    <string name="telos_shizuku_diag_builtin">Vgrajeni strežnik Shizuku Telos</string>
+    <string name="telos_shizuku_diag_ready">Stanje: pripravljeno (WRITE_SECURE_SETTINGS podeljeno)</string>
+    <string name="telos_shizuku_diag_grant">Stanje: strežnik teče — podelite WRITE_SECURE_SETTINGS</string>
+    <string name="telos_shizuku_diag_start">Stanje: zaženite strežnik v Telos System → Shizuku</string>
+    <string name="telos_shizuku_autostart_ok">Samodejni zagon Shizuku je vklopljen.</string>
 </resources>

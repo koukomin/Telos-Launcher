@@ -258,7 +258,11 @@ fun StoreDashboardScreen(initialLink: String = "", initialQuery: String = "") {
                 val showStoreTab = preferredStorePkg != null
                 val playTabIndex = if (showStoreTab) 3 else -1
 
-                PrimaryScrollableTabRow(selectedTabIndex = tab, edgePadding = 16.dp) {
+                PrimaryScrollableTabRow(
+                    selectedTabIndex = tab,
+                    edgePadding = 16.dp,
+                    modifier = Modifier.fillMaxWidth(),
+                ) {
                     Tab(selected = tab == 0, onClick = { tab = 0 }, text = { Text(stringResource(I18nR.string.hc_apps), maxLines = 1) })
                     Tab(selected = tab == 1, onClick = { tab = 1 }, text = { Text(stringResource(I18nR.string.hc_telos_apps), maxLines = 1) })
                     Tab(selected = tab == 2, onClick = { tab = 2 }, text = { Text(stringResource(I18nR.string.recommendation_tab_label), maxLines = 1) })

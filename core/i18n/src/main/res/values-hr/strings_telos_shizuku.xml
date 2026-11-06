@@ -40,4 +40,13 @@ Računalo: USB otklanjanje pogrešaka i naredba adb ispod.</string>
     <string name="telos_shizuku_pair_start">Čekaj kod uparivanja</string>
     <string name="telos_shizuku_pair_stop">Prestani čekati</string>
     <string name="telos_shizuku_pair_open">Otvori bežično uklanjanje pogrešaka</string>
+    <string name="telos_shizuku_perm_title">Dopusti pristup Shizuku</string>
+    <string name="telos_shizuku_perm_body">%1$s želi koristiti Telos Shizuku poslužitelj.</string>
+    <string name="telos_shizuku_perm_once">Dopusti jednom</string>
+    <string name="telos_shizuku_grant_failed">Pristup Shizuku nije ažuriran. Prvo pokrenite Telos poslužitelj.</string>
+    <string name="telos_shizuku_diag_builtin">Ugrađeni Telos Shizuku poslužitelj</string>
+    <string name="telos_shizuku_diag_ready">Status: spremno (WRITE_SECURE_SETTINGS dodijeljeno)</string>
+    <string name="telos_shizuku_diag_grant">Status: poslužitelj radi — dodijelite WRITE_SECURE_SETTINGS</string>
+    <string name="telos_shizuku_diag_start">Status: pokrenite poslužitelj u Telos System → Shizuku</string>
+    <string name="telos_shizuku_autostart_ok">Automatsko pokretanje Shizuku je uključeno.</string>
 </resources>

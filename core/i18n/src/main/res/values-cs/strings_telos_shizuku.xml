@@ -40,4 +40,13 @@ Počítač: ladění USB a příkaz adb níže.</string>
     <string name="telos_shizuku_pair_start">Čekat na párovací kód</string>
     <string name="telos_shizuku_pair_stop">Přestat čekat</string>
     <string name="telos_shizuku_pair_open">Otevřít bezdrátové ladění</string>
+    <string name="telos_shizuku_perm_title">Povolit přístup Shizuku</string>
+    <string name="telos_shizuku_perm_body">%1$s chce použít server Shizuku Telos.</string>
+    <string name="telos_shizuku_perm_once">Povolit jednou</string>
+    <string name="telos_shizuku_grant_failed">Přístup Shizuku se nepodařilo změnit. Nejprve spusťte server Telos.</string>
+    <string name="telos_shizuku_diag_builtin">Vestavěný server Shizuku Telos</string>
+    <string name="telos_shizuku_diag_ready">Stav: připraveno (WRITE_SECURE_SETTINGS uděleno)</string>
+    <string name="telos_shizuku_diag_grant">Stav: server běží — udělte WRITE_SECURE_SETTINGS</string>
+    <string name="telos_shizuku_diag_start">Stav: spusťte server v Telos System → Shizuku</string>
+    <string name="telos_shizuku_autostart_ok">Automatický start Shizuku je zapnutý.</string>
 </resources>

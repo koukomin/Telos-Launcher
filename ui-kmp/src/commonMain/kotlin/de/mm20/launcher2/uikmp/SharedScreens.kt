@@ -85,13 +85,15 @@ fun SharedCalendarScreen(
     modifier: Modifier = Modifier.fillMaxSize(),
 ) {
     Column(modifier.background(MaterialTheme.colorScheme.surface).padding(12.dp)) {
-        Text(title, color = MaterialTheme.colorScheme.secondary, fontSize = 20.sp)
+        Text(title, color = MaterialTheme.colorScheme.secondary, fontSize = 20.sp, maxLines = 1)
         LazyVerticalGrid(columns = GridCells.Fixed(7), modifier = Modifier.padding(top = 8.dp)) {
             items((1..daysInMonth).toList()) { d ->
                 Text(
                     "$d",
                     color = if (d == today) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface,
                     modifier = Modifier.padding(8.dp),
+                    maxLines = 1,
+                    softWrap = false,
                 )
             }
         }

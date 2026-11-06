@@ -144,7 +144,11 @@ fun TelosSecurityHubBody() {
             }
         }
 
-        PrimaryScrollableTabRow(selectedTabIndex = tab, edgePadding = 8.dp) {
+        PrimaryScrollableTabRow(
+            selectedTabIndex = tab,
+            edgePadding = 8.dp,
+            modifier = Modifier.fillMaxWidth(),
+        ) {
             Tab(selected = tab == 0, onClick = { tab = 0 }, text = { Text(stringResource(I18nR.string.security_hub_tab_shizuku)) })
             Tab(selected = tab == 1, onClick = { tab = 1 }, text = { Text(stringResource(I18nR.string.security_hub_tab_cloak)) })
             Tab(selected = tab == 2, onClick = { tab = 2 }, text = { Text(stringResource(I18nR.string.security_hub_tab_clipboard)) })
@@ -152,7 +156,7 @@ fun TelosSecurityHubBody() {
         }
 
         when (tab) {
-            0 -> ShizukuAppsTab()
+            0 -> TelosShizukuAppsPanel()
             1 -> BankingCloakTab()
             2 -> ClipboardShieldTab()
             else -> HardwareTriggersTab()
@@ -161,7 +165,7 @@ fun TelosSecurityHubBody() {
 }
 
 @Composable
-private fun ShizukuAppsTab() {
+fun TelosShizukuAppsPanel() {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     val clients by TelosShizukuManager.clients.collectAsStateWithLifecycle()
@@ -170,6 +174,9 @@ private fun ShizukuAppsTab() {
         val t = query.trim()
         if (t.isEmpty()) clients
         else clients.filter { it.label.contains(t, true) || it.packageName.contains(t, true) }
+    }
+    LaunchedEffect(Unit) {
+        TelosShizukuManager.scanClientApps(context)
     }
     Column(Modifier.fillMaxWidth().padding(bottom = 16.dp)) {
         OutlinedTextField(
@@ -208,7 +215,16 @@ private fun ShizukuAppsTab() {
                 Switch(
                     checked = row.granted,
                     onCheckedChange = { on ->
-                        scope.launch { TelosShizukuManager.setClientAccess(context, row.packageName, on) }
+                        scope.launch {
+                            val ok = TelosShizukuManager.setClientAccess(context, row.packageName, on)
+                            if (!ok) {
+                                android.widget.Toast.makeText(
+                                    context,
+                                    context.getString(I18nR.string.telos_shizuku_grant_failed),
+                                    android.widget.Toast.LENGTH_LONG,
+                                ).show()
+                            }
+                        }
                     },
                 )
             }

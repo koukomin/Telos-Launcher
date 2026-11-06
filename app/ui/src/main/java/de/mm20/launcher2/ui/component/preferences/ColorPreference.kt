@@ -48,6 +48,7 @@ fun ColorPreference(
         var changed by remember(value) { mutableStateOf(false) }
         AlertDialog(
             onDismissRequest = { showDialog = false },
+            containerColor = de.mm20.launcher2.ui.component.virtualAppPopup(),
             title = {
                 Text(
                     text = title,

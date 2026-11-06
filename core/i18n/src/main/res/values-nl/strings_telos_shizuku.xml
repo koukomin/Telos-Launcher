@@ -40,4 +40,13 @@ Computer: USB-foutopsporing en het adb-commando hieronder.</string>
     <string name="telos_shizuku_pair_start">Wachten op koppelcode</string>
     <string name="telos_shizuku_pair_stop">Stoppen met wachten</string>
     <string name="telos_shizuku_pair_open">Draadloos debuggen openen</string>
+    <string name="telos_shizuku_perm_title">Shizuku-toegang toestaan</string>
+    <string name="telos_shizuku_perm_body">%1$s wil de Telos-Shizuku-server gebruiken.</string>
+    <string name="telos_shizuku_perm_once">Eenmalig toestaan</string>
+    <string name="telos_shizuku_grant_failed">Shizuku-toegang kon niet worden bijgewerkt. Start eerst de Telos-server.</string>
+    <string name="telos_shizuku_diag_builtin">Ingebouwde Telos-Shizuku-server</string>
+    <string name="telos_shizuku_diag_ready">Status: gereed (WRITE_SECURE_SETTINGS verleend)</string>
+    <string name="telos_shizuku_diag_grant">Status: server actief — verleen WRITE_SECURE_SETTINGS</string>
+    <string name="telos_shizuku_diag_start">Status: start de server via Telos System → Shizuku</string>
+    <string name="telos_shizuku_autostart_ok">Shizuku-autostart staat aan.</string>
 </resources>

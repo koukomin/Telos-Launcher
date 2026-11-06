@@ -1767,7 +1767,7 @@
     <string name="preference_app_lock_work_profile_toggle_summary">Pieprasīt autentifikāciju, lai apturētu vai atsāktu darba profilu no lietotņu atvilktnes</string>
     <string name="app_lock_work_profile_prompt_title">Autentificējies, lai mainītu darba profila stāvokli</string>
     <string name="preference_screen_work_profile">Darba profils</string>
-    <string name="preference_screen_work_profile_summary">Iestatīt, apturēt, atsākt un bloķēt darba profilu</string>
+    <string name="preference_screen_work_profile_summary">Darba profila iestatīšana, pauzēšana, atsākšana un bloķēšana</string>
     <string name="work_profile_status_title">Statuss</string>
     <string name="work_profile_status_not_set_up">Nav iestatīts</string>
     <string name="work_profile_status_active">Aktīvs</string>
@@ -2548,4 +2548,7 @@
     <string name="telos_system_wifi_security_open">Atvērts</string>
     <string name="telos_system_wifi_empty">Nav saglabātu tīklu</string>
     <string name="telos_system_wifi_persisted">Saglabāti %1$d pagaidu tīkli</string>
+    <string name="desktop_mode_kde_connect">KDE Connect integrācija</string>
+    <string name="desktop_mode_kde_connect_open">Atveriet KDE Connect, lai savienotu datoru vai planšetdatoru</string>
+    <string name="desktop_mode_kde_connect_install">Pieskarieties, lai instalētu KDE Connect no Telos Store</string>
 </resources>

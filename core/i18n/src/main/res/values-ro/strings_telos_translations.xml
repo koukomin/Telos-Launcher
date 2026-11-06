@@ -628,8 +628,8 @@
     <string name="preference_app_lock_work_profile_toggle">Blochează comutatorul profilului de serviciu</string>
     <string name="preference_app_lock_work_profile_toggle_summary">Necesită autentificare pentru a pune în pauză sau a relua profilul de serviciu din lista de aplicații</string>
     <string name="app_lock_work_profile_prompt_title">Autentifică-te pentru a schimba starea profilului de serviciu</string>
-    <string name="preference_screen_work_profile">Profil de serviciu</string>
-    <string name="preference_screen_work_profile_summary">Configurează, pune în pauză, reia și blochează profilul de serviciu</string>
+    <string name="preference_screen_work_profile">Profil de lucru</string>
+    <string name="preference_screen_work_profile_summary">Configurare, pauză, reluare și blocare a profilului de lucru</string>
     <string name="work_profile_status_title">Stare</string>
     <string name="work_profile_status_not_set_up">Neconfigurat</string>
     <string name="work_profile_status_active">Activ</string>
@@ -1642,4 +1642,7 @@
     <string name="telos_system_wifi_security_open">Deschisă</string>
     <string name="telos_system_wifi_empty">Nu există rețele salvate</string>
     <string name="telos_system_wifi_persisted">S-au salvat %1$d rețele temporare</string>
+    <string name="desktop_mode_kde_connect">Integrare KDE Connect</string>
+    <string name="desktop_mode_kde_connect_open">Deschide KDE Connect pentru a asocia un PC sau o tabletă</string>
+    <string name="desktop_mode_kde_connect_install">Atinge pentru a instala KDE Connect din Telos Store</string>
 </resources>

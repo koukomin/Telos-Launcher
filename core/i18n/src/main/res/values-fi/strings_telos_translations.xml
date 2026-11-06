@@ -546,7 +546,7 @@
     <string name="preference_app_lock_work_profile_toggle_summary">Vaadi todennus työprofiilin keskeyttämiseen tai jatkamiseen sovelluslaatikosta</string>
     <string name="app_lock_work_profile_prompt_title">Todenna muuttaaksesi työprofiilin tilaa</string>
     <string name="preference_screen_work_profile">Työprofiili</string>
-    <string name="preference_screen_work_profile_summary">Ota käyttöön, keskeytä, jatka ja lukitse työprofiili</string>
+    <string name="preference_screen_work_profile_summary">Työprofiilin määritys, tauko, jatkaminen ja lukitus</string>
     <string name="work_profile_status_title">Tila</string>
     <string name="work_profile_status_not_set_up">Ei otettu käyttöön</string>
     <string name="work_profile_status_active">Aktiivinen</string>
@@ -1593,4 +1593,7 @@
     <string name="telos_system_wifi_security_open">Avoin</string>
     <string name="telos_system_wifi_empty">Ei tallennettuja verkkoja</string>
     <string name="telos_system_wifi_persisted">%1$d tilapäistä verkkoa tallennettu</string>
+    <string name="desktop_mode_kde_connect">KDE Connect -integraatio</string>
+    <string name="desktop_mode_kde_connect_open">Avaa KDE Connect pariliittääksesi tietokoneen tai tabletin</string>
+    <string name="desktop_mode_kde_connect_install">Napauta asentaaksesi KDE Connectin Telos Storesta</string>
 </resources>

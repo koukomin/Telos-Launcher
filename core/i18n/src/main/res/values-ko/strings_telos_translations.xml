@@ -741,7 +741,7 @@
     <string name="preference_app_lock_work_profile_toggle_summary">앱 서랍에서 업무 프로필을 일시 중지하거나 다시 시작할 때 인증을 요구해요</string>
     <string name="app_lock_work_profile_prompt_title">업무 프로필 상태를 변경하려면 인증하세요</string>
     <string name="preference_screen_work_profile">업무 프로필</string>
-    <string name="preference_screen_work_profile_summary">업무 프로필 설정, 일시 중지, 다시 시작, 잠금</string>
+    <string name="preference_screen_work_profile_summary">업무 프로필 설정, 일시중지, 재개 및 잠금</string>
     <string name="work_profile_status_title">상태</string>
     <string name="work_profile_status_not_set_up">설정 안 됨</string>
     <string name="work_profile_status_active">활성</string>
@@ -1636,4 +1636,11 @@
     <string name="telos_system_wifi_security_open">개방</string>
     <string name="telos_system_wifi_empty">저장된 네트워크가 없습니다</string>
     <string name="telos_system_wifi_persisted">임시 네트워크 %1$d개를 저장했습니다</string>
+    <string name="desktop_mode_kde_connect">KDE Connect 연동</string>
+    <string name="desktop_mode_kde_connect_open">KDE Connect를 열어 PC나 태블릿과 페어링</string>
+    <string name="desktop_mode_kde_connect_install">탭하여 Telos Store에서 KDE Connect 설치</string>
+    <string name="preference_virtual_app_page_effects">Telos 앱 페이지 애니메이션</string>
+    <string name="preference_virtual_app_page_effects_summary">화면 전환 시 슬라이드와 확대/축소. 기본값은 끔.</string>
+    <string name="net_waveform_title">네트워크 트래픽 파형</string>
+    <string name="net_waveform_rates">↓ %1$s  ·  ↑ %2$s</string>
 </resources>

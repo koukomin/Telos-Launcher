@@ -168,7 +168,7 @@ class TelosPackageInstaller(
                 pending = true
                 return InstallResult.Pending
             }
-            if (selected != "session") return failed(IllegalStateException("Unknown installer: $selected"))
+            if (selected != "session" && selected != "shizuku" && selected != "root") return failed(IllegalStateException("Unknown installer: $selected"))
             return when (val result = sessionApi.install(apk, packageName, lease)) {
                 is BackendInstallResult.Success -> { pending = true; InstallResult.Pending }
                 is BackendInstallResult.Failed -> failed(result.cause, result.reason)

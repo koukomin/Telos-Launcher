@@ -60,6 +60,7 @@ fun AppearanceSettingsScreen() {
     val drawerBackground by uiSettings.drawerBackgroundEnabled.collectAsStateWithLifecycle(true)
     val drawerBlur by uiSettings.drawerBackgroundBlur.collectAsStateWithLifecycle(32)
     val drawerOpacity by uiSettings.drawerBackgroundOpacity.collectAsStateWithLifecycle(0.35f)
+    val pageEffects by uiSettings.virtualAppPageEffects.collectAsStateWithLifecycle(false)
     val viewModel: AppearanceSettingsScreenVM = viewModel()
     val backStack = LocalBackStack.current
     val colorThemeName by viewModel.colorThemeName.collectAsStateWithLifecycle(null)
@@ -98,6 +99,14 @@ fun AppearanceSettingsScreen() {
                         )
                     }
                 }
+            }
+            PreferenceCategory(title = stringResource(I18nR.string.preference_virtual_app_page_effects)) {
+                de.mm20.launcher2.ui.component.preferences.SwitchPreference(
+                    title = stringResource(I18nR.string.preference_virtual_app_page_effects),
+                    summary = stringResource(I18nR.string.preference_virtual_app_page_effects_summary),
+                    value = pageEffects,
+                    onValueChanged = uiSettings::setVirtualAppPageEffects,
+                )
             }
             PreferenceCategory(title = stringResource(I18nR.string.preference_category_widgets)) {
                 de.mm20.launcher2.ui.component.preferences.SwitchPreference(

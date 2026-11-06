@@ -18,12 +18,10 @@ import de.mm20.launcher2.ui.settings.icons.IconsSettingsRoute
 import de.mm20.launcher2.ui.settings.integrations.IntegrationsSettingsRoute
 import de.mm20.launcher2.ui.settings.locale.LocaleSettingsRoute
 import de.mm20.launcher2.ui.settings.search.SearchSettingsRoute
-import de.mm20.launcher2.ui.settings.advanced.AdvancedSettingsRoute
+import de.mm20.launcher2.ui.system.SystemDashboardRoute
 import de.mm20.launcher2.ui.settings.webapps.WebAppsSettingsRoute
 import de.mm20.launcher2.ui.settings.dynamicisland.DynamicIslandSettingsRoute
-import de.mm20.launcher2.ui.settings.freeze.SmartFreezeDashboardRoute
 import de.mm20.launcher2.ui.settings.floating.FloatingLauncherSettingsRoute
-import de.mm20.launcher2.ui.settings.platform.PlatformEnvironment
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -32,7 +30,6 @@ data object MainRoute: NavKey
 @Composable
 fun MainSettingsScreen() {
     val backStack = LocalBackStack.current
-    val visibility = PlatformEnvironment.settings(desktopModeOnAndroid = false)
     PreferenceScreen(
         title = stringResource(I18nR.string.settings),
     ) {
@@ -112,10 +109,10 @@ fun MainSettingsScreen() {
                 )
                 Preference(
                     icon = BaseR.drawable.settings_24px,
-                    title = stringResource(id = I18nR.string.preference_screen_advanced),
+                    title = stringResource(id = I18nR.string.telos_system_label),
                     summary = stringResource(id = I18nR.string.preference_screen_advanced_summary),
                     onClick = {
-                        backStack.add(AdvancedSettingsRoute)
+                        backStack.add(SystemDashboardRoute())
                     }
                 )
                 Preference(
@@ -126,18 +123,6 @@ fun MainSettingsScreen() {
                         backStack.add(FloatingLauncherSettingsRoute)
                     }
                 )
-                // === TELOS_PENDING_REVIEW_START: smart_freeze_ui_and_actions ===
-                if (visibility.showShizukuDhizukuFreeze) {
-                    Preference(
-                        icon = BaseR.drawable.ac_unit_24px,
-                        title = stringResource(I18nR.string.preference_screen_freeze),
-                        summary = stringResource(I18nR.string.preference_screen_freeze_summary),
-                        onClick = {
-                            backStack.add(SmartFreezeDashboardRoute)
-                        }
-                    )
-                }
-                // === TELOS_PENDING_REVIEW_END: smart_freeze_ui_and_actions ===
                 Preference(
                     icon = BaseR.drawable.info_24px,
                     title = stringResource(id = I18nR.string.preference_screen_about),

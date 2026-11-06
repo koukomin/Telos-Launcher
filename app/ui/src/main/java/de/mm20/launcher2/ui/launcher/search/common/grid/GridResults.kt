@@ -36,6 +36,7 @@ fun <T : SavableSearchable> LazyListScope.GridResults(
             val isBottom = reverse || items.isEmpty() && after == null
             Box(
                 modifier = Modifier
+                    .fillMaxWidth()
                     .padding(
                         top = if (reverse && isTop) 8.dp else 0.dp,
                         bottom = if (!reverse && isBottom) 8.dp else 0.dp,
@@ -119,6 +120,7 @@ fun <T : SavableSearchable> LazyListScope.GridResults(
             val isBottom = !reverse || items.isEmpty() && before == null
             Box(
                 modifier = Modifier
+                    .fillMaxWidth()
                     .padding(
                         top = if (reverse) 8.dp else 0.dp,
                         bottom = if (!reverse) 8.dp else 0.dp,

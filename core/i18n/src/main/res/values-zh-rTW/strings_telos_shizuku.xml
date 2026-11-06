@@ -40,4 +40,13 @@
     <string name="telos_shizuku_pair_start">等待配對碼</string>
     <string name="telos_shizuku_pair_stop">停止等待</string>
     <string name="telos_shizuku_pair_open">開啟無線偵錯</string>
+    <string name="telos_shizuku_perm_title">允許 Shizuku 存取</string>
+    <string name="telos_shizuku_perm_body">%1$s 想使用 Telos Shizuku 伺服器。</string>
+    <string name="telos_shizuku_perm_once">允許一次</string>
+    <string name="telos_shizuku_grant_failed">無法更新 Shizuku 存取。請先啟動 Telos Shizuku 伺服器。</string>
+    <string name="telos_shizuku_diag_builtin">Telos 內建 Shizuku 伺服器</string>
+    <string name="telos_shizuku_diag_ready">狀態：就緒（已授予 WRITE_SECURE_SETTINGS）</string>
+    <string name="telos_shizuku_diag_grant">狀態：伺服器執行中 — 請授予 WRITE_SECURE_SETTINGS</string>
+    <string name="telos_shizuku_diag_start">狀態：請從 Telos System → Shizuku 啟動伺服器</string>
+    <string name="telos_shizuku_autostart_ok">Shizuku 自動啟動已開啟。</string>
 </resources>

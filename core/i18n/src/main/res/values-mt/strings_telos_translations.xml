@@ -1767,7 +1767,7 @@
     <string name="preference_app_lock_work_profile_toggle_summary">Jeħtieġ awtentikazzjoni biex il-profil tax-xogħol jiġi sospiż jew jitkompla mid-drawer tal-apps</string>
     <string name="app_lock_work_profile_prompt_title">Awtentika biex tibdel l-istat tal-profil tax-xogħol</string>
     <string name="preference_screen_work_profile">Profil tax-xogħol</string>
-    <string name="preference_screen_work_profile_summary">Issettja, waqqaf, kompli u aqfel il-profil tax-xogħol</string>
+    <string name="preference_screen_work_profile_summary">Issettja, waqqaf, kompli u agħlaq il-profil tax-xogħol</string>
     <string name="work_profile_status_title">Stat</string>
     <string name="work_profile_status_not_set_up">Mhux issettjat</string>
     <string name="work_profile_status_active">Attiv</string>
@@ -2864,4 +2864,7 @@
     <string name="telos_system_wifi_security_open">Miftuħ</string>
     <string name="telos_system_wifi_empty">L-ebda network salvat</string>
     <string name="telos_system_wifi_persisted">issejvjati %1$d networks temporanji</string>
+    <string name="desktop_mode_kde_connect">Integrazzjoni KDE Connect</string>
+    <string name="desktop_mode_kde_connect_open">Iftaħ KDE Connect biex tqabbel ma’ PC jew tablet</string>
+    <string name="desktop_mode_kde_connect_install">Agħfas biex tinstalla KDE Connect mit-Telos Store</string>
 </resources>

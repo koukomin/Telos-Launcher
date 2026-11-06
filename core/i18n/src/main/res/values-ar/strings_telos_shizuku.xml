@@ -40,4 +40,13 @@
     <string name="telos_shizuku_pair_start">انتظار رمز الاقتران</string>
     <string name="telos_shizuku_pair_stop">إيقاف الانتظار</string>
     <string name="telos_shizuku_pair_open">فتح التصحيح اللاسلكي</string>
+    <string name="telos_shizuku_perm_title">السماح بالوصول إلى Shizuku</string>
+    <string name="telos_shizuku_perm_body">يريد %1$s استخدام خادم Shizuku في Telos.</string>
+    <string name="telos_shizuku_perm_once">السماح مرة واحدة</string>
+    <string name="telos_shizuku_grant_failed">تعذر تحديث وصول Shizuku. ابدأ خادم Telos أولاً.</string>
+    <string name="telos_shizuku_diag_builtin">خادم Shizuku المدمج في Telos</string>
+    <string name="telos_shizuku_diag_ready">الحالة: جاهز (مُنح WRITE_SECURE_SETTINGS)</string>
+    <string name="telos_shizuku_diag_grant">الحالة: الخادم يعمل — امنح WRITE_SECURE_SETTINGS</string>
+    <string name="telos_shizuku_diag_start">الحالة: ابدأ الخادم من Telos System → Shizuku</string>
+    <string name="telos_shizuku_autostart_ok">التشغيل التلقائي لـ Shizuku مفعّل.</string>
 </resources>

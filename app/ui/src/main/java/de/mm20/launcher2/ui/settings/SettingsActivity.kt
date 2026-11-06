@@ -267,7 +267,7 @@ open class SettingsActivity : BaseActivity() {
                 FreezeSettingsScreen()
             }
             entry<AdvancedSettingsRoute> {
-                AdvancedSettingsScreen()
+                de.mm20.launcher2.ui.system.SystemDashboardScreen()
             }
             entry<AppearanceSettingsRoute> {
                 AppearanceSettingsScreen()
@@ -737,6 +737,11 @@ open class SettingsActivity : BaseActivity() {
                             }
                         }
 
+                        val fontKey = de.mm20.launcher2.applock.SettingsDeepLinkContract.virtualAppTaskId(
+                            intent.getStringExtra(EXTRA_ROUTE),
+                            intent.getStringExtra(de.mm20.launcher2.applock.SettingsDeepLinkContract.EXTRA_COMMS_TAB),
+                        )
+                        de.mm20.launcher2.ui.component.ProvidePerAppFontScale(fontKey) {
                         OverlayHost(
                             modifier = Modifier
                                 .fillMaxSize()
@@ -747,29 +752,22 @@ open class SettingsActivity : BaseActivity() {
                             // a Telos app opened directly is the only entry: going back from it closes the activity
                             // (an empty back stack must never reach NavDisplay)
                             LaunchedEffect(backStack.size) { if (backStack.isEmpty()) activity?.finish() }
+                            val pageEffects = de.mm20.launcher2.ui.component.rememberVirtualAppPageEffects()
                             if (backStack.isNotEmpty()) NavDisplay(
                                 backStack = backStack,
                                 onBack = { backStack.removeLastOrNull() },
                                 entryProvider = entryProvider,
                                 transitionSpec = {
-                                    (slideInHorizontally { it / 2 } + scaleIn(initialScale = 0.9f) + fadeIn())
-                                        .togetherWith(
-                                            slideOutHorizontally { -it / 4 }
-                                        )
+                                    de.mm20.launcher2.ui.component.telosPageTransition(pageEffects)
                                 },
                                 popTransitionSpec = {
-                                    (slideInHorizontally { -it / 4 })
-                                        .togetherWith(
-                                            slideOutHorizontally { it / 2 } + scaleOut(targetScale = 0.9f) + fadeOut()
-                                        )
+                                    de.mm20.launcher2.ui.component.telosPagePopTransition(pageEffects)
                                 },
                                 predictivePopTransitionSpec = {
-                                    (slideInHorizontally { -it / 4 })
-                                        .togetherWith(
-                                            slideOutHorizontally { it / 2 } + scaleOut(targetScale = 0.9f) + fadeOut()
-                                        )
+                                    de.mm20.launcher2.ui.component.telosPagePopTransition(pageEffects)
                                 },
                             )
+                        }
                         }
                     }
                 }

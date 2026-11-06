@@ -17,16 +17,29 @@ val LocalVirtualAppBlur = staticCompositionLocalOf<VirtualAppBlur?> { null }
     else MaterialTheme.colorScheme.surface.copy(alpha = MaterialTheme.transparency.background)
 @Composable fun virtualAppElevated(): Color = MaterialTheme.colorScheme.surfaceContainerHigh
     .copy(alpha = 1f)
+/** Dialogs, menus and list pickers over wallpaper glass. */
+@Composable fun virtualAppPopup(): Color = MaterialTheme.colorScheme.surfaceContainer
+    .copy(alpha = 1f)
+/** Settings lists (PreferenceScreen): frosted plate, not a clear hole over wallpaper. */
+@Composable fun virtualAppSettingsPane(): Color =
+    MaterialTheme.colorScheme.surface.copy(
+        alpha = MaterialTheme.transparency.background.coerceIn(0.92f, 1f),
+    )
 
 @Composable fun VirtualAppWindow(content: @Composable () -> Unit) {
     if (LocalGlassSurface.current) content() else {
-        androidx.compose.animation.AnimatedVisibility(
-            visible = true,
-            enter = androidx.compose.animation.fadeIn(androidx.compose.animation.core.tween(300)) + 
+        val pageEffects = rememberVirtualAppPageEffects()
+        if (pageEffects) {
+            androidx.compose.animation.AnimatedVisibility(
+                visible = true,
+                enter = androidx.compose.animation.fadeIn(androidx.compose.animation.core.tween(300)) +
                     androidx.compose.animation.scaleIn(androidx.compose.animation.core.tween(300), initialScale = 0.92f),
-            exit = androidx.compose.animation.fadeOut(androidx.compose.animation.core.tween(200)) + 
-                   androidx.compose.animation.scaleOut(androidx.compose.animation.core.tween(200), targetScale = 0.92f)
-        ) {
+                exit = androidx.compose.animation.fadeOut(androidx.compose.animation.core.tween(200)) +
+                    androidx.compose.animation.scaleOut(androidx.compose.animation.core.tween(200), targetScale = 0.92f)
+            ) {
+                VirtualAppTheme(content)
+            }
+        } else {
             VirtualAppTheme(content)
         }
     }
@@ -39,7 +52,7 @@ fun Modifier.virtualAppGlass(blur: VirtualAppBlur, color: Color): Modifier = fro
     if (LocalGlassSurface.current) { content(); return }
     val token = rememberVirtualAppBlur()
     val base = MaterialTheme.colorScheme
-    val alpha = MaterialTheme.transparency.background.coerceIn(0f, 1f)
+    val alpha = MaterialTheme.transparency.background.coerceIn(0.88f, 1f)
     val backing = base.surface.copy(alpha = alpha)
     val colors = remember(base) { base.copy(
         background = base.background.copy(alpha = 0f),

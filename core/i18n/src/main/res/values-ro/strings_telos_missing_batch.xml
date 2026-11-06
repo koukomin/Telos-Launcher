@@ -401,7 +401,7 @@
     <string name="preference_search_websites_summary">Afișează previzualizarea unui site web dacă interogarea de căutare este o adresă URL</string>
     <string name="preference_search_wikipedia">Wikipedia</string>
     <string name="preference_search_wikipedia_summary">Caută în enciclopedia liberă</string>
-    <string name="preference_shapes_default">Default</string>
+    <string name="preference_shapes_default">Implicit</string>
     <string name="preference_shapes_extra_round">Mai rotund</string>
     <string name="preference_shapes_rect">Dreptunghiular</string>
     <string name="preference_shortcut_badges">Insigne de scurtătură</string>
@@ -421,7 +421,7 @@
     <string name="preference_theme_system">Urmează sistemul</string>
     <string name="preference_themed_icons">Pictograme tematice</string>
     <string name="preference_themed_icons_summary">Colorați pictogramele cu schema de culori a aplicației</string>
-    <string name="preference_transparencies_default">Default</string>
+    <string name="preference_transparencies_default">Implicit</string>
     <string name="preference_transparencies_semi_transparent">Semitransparent</string>
     <string name="preference_version">Versiune</string>
     <string name="preference_wallpaper_select_file">Răsfoiește sistemul de fișiere</string>

@@ -40,4 +40,13 @@ Computer: USB-fejlfinding og adb-kommandoen nedenfor.</string>
     <string name="telos_shizuku_pair_start">Vent på parringskode</string>
     <string name="telos_shizuku_pair_stop">Stop venten</string>
     <string name="telos_shizuku_pair_open">Åbn trådløs fejlfinding</string>
+    <string name="telos_shizuku_perm_title">Tillad Shizuku-adgang</string>
+    <string name="telos_shizuku_perm_body">%1$s vil bruge Telos’ Shizuku-server.</string>
+    <string name="telos_shizuku_perm_once">Tillad én gang</string>
+    <string name="telos_shizuku_grant_failed">Shizuku-adgang kunne ikke opdateres. Start Telos-serveren først.</string>
+    <string name="telos_shizuku_diag_builtin">Indbygget Telos Shizuku-server</string>
+    <string name="telos_shizuku_diag_ready">Status: klar (WRITE_SECURE_SETTINGS givet)</string>
+    <string name="telos_shizuku_diag_grant">Status: server kører — giv WRITE_SECURE_SETTINGS</string>
+    <string name="telos_shizuku_diag_start">Status: start serveren fra Telos System → Shizuku</string>
+    <string name="telos_shizuku_autostart_ok">Shizuku-autostart er slået til.</string>
 </resources>

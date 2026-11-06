@@ -438,7 +438,7 @@
     <string name="preference_app_lock_work_profile_toggle_summary">从应用抽屉暂停或恢复工作资料时需要验证身份</string>
     <string name="app_lock_work_profile_prompt_title">验证身份以更改工作资料状态</string>
     <string name="preference_screen_work_profile">工作资料</string>
-    <string name="preference_screen_work_profile_summary">设置、暂停、恢复和锁定工作资料</string>
+    <string name="preference_screen_work_profile_summary">设置、暂停、恢复并锁定工作资料</string>
     <string name="work_profile_status_title">状态</string>
     <string name="work_profile_status_not_set_up">未设置</string>
     <string name="work_profile_status_active">已启用</string>
@@ -1116,4 +1116,11 @@
     <string name="telos_system_wifi_security_open">开放</string>
     <string name="telos_system_wifi_empty">没有已保存的网络</string>
     <string name="telos_system_wifi_persisted">已保存 %1$d 个临时网络</string>
+    <string name="desktop_mode_kde_connect">KDE Connect 集成</string>
+    <string name="desktop_mode_kde_connect_open">打开 KDE Connect 以与电脑或平板配对</string>
+    <string name="desktop_mode_kde_connect_install">点按以从 Telos Store 安装 KDE Connect</string>
+    <string name="preference_virtual_app_page_effects">Telos 应用内页面动画</string>
+    <string name="preference_virtual_app_page_effects_summary">切换屏幕时的滑动和缩放。默认关闭。</string>
+    <string name="net_waveform_title">网络流量波形</string>
+    <string name="net_waveform_rates">↓ %1$s  ·  ↑ %2$s</string>
 </resources>

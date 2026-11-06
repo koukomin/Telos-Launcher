@@ -1077,7 +1077,7 @@
     <string name="preference_app_lock_work_profile_toggle_summary">アプリドロワーから仕事用プロファイルを一時停止または再開するには、認証を必須にします</string>
     <string name="app_lock_work_profile_prompt_title">認証して仕事用プロファイルの状態を変更</string>
     <string name="preference_screen_work_profile">仕事用プロファイル</string>
-    <string name="preference_screen_work_profile_summary">仕事用プロファイルのセットアップ、一時停止、再開、ロックを行います</string>
+    <string name="preference_screen_work_profile_summary">仕事用プロファイルの設定、一時停止、再開、ロック</string>
     <string name="work_profile_status_title">ステータス</string>
     <string name="work_profile_status_not_set_up">未設定</string>
     <string name="work_profile_status_active">有効</string>
@@ -1814,4 +1814,11 @@
     <string name="telos_system_wifi_security_open">開放</string>
     <string name="telos_system_wifi_empty">保存済みネットワークはありません</string>
     <string name="telos_system_wifi_persisted">一時ネットワークを %1$d 件保存しました</string>
+    <string name="desktop_mode_kde_connect">KDE Connect 連携</string>
+    <string name="desktop_mode_kde_connect_open">KDE Connect を開いて PC やタブレットとペアリング</string>
+    <string name="desktop_mode_kde_connect_install">タップして Telos Store から KDE Connect をインストール</string>
+    <string name="preference_virtual_app_page_effects">Telos アプリのページアニメーション</string>
+    <string name="preference_virtual_app_page_effects_summary">画面切替時のスライドと拡大縮小。初期値はオフ。</string>
+    <string name="net_waveform_title">ネットワークトラフィック波形</string>
+    <string name="net_waveform_rates">↓ %1$s  ·  ↑ %2$s</string>
 </resources>

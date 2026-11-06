@@ -366,7 +366,7 @@ private fun CalendarContent(vm: CalendarViewModel) {
             Row(Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 4.dp), verticalAlignment = Alignment.CenterVertically) {
                 IconButton(onClick = { vm.go(month.minusMonths(1)) }) { Icon(painterResource(BaseR.drawable.chevron_backward_24px), stringResource(I18nR.string.cal_previous)) }
                 Text(month.atDay(1).format(DateTimeFormatter.ofPattern("LLLL yyyy")).replaceFirstChar { it.uppercase() }, style = MaterialTheme.typography.titleLarge,
-                    modifier = Modifier.weight(1f).clickable { pickMonth = true }, textAlign = TextAlign.Center)
+                    modifier = Modifier.weight(1f).clickable { pickMonth = true }, textAlign = TextAlign.Center, maxLines = 1, overflow = TextOverflow.Ellipsis)
                 IconButton(onClick = { vm.go(month.plusMonths(1)) }) { Icon(painterResource(BaseR.drawable.chevron_forward_24px), stringResource(I18nR.string.cal_next)) }
                 IconButton(onClick = { vm.selected.value = LocalDate.now(); vm.go(YearMonth.now()) }) { Icon(painterResource(BaseR.drawable.today_24px), stringResource(I18nR.string.cal_today)) }
                 var showFontDialog by remember { mutableStateOf(false) }
@@ -475,13 +475,26 @@ private fun MonthGrid(month: YearMonth, selected: LocalDate, events: List<CalEve
     val offset = (first.dayOfWeek.value - week.firstDayOfWeek.value + 7) % 7
     val start = first.minusDays(offset.toLong())
     val today = LocalDate.now()
+    val density = androidx.compose.ui.platform.LocalDensity.current
+    val minCellWidth = maxOf(48.dp, 48.dp * density.fontScale)
     androidx.compose.foundation.layout.BoxWithConstraints(Modifier.fillMaxWidth()) {
-        val calendarWidth = maxOf(maxWidth, maxOf(48.dp, 48.dp * androidx.compose.ui.platform.LocalDensity.current.fontScale) * 7 + 16.dp)
+        val calendarWidth = maxOf(maxWidth, minCellWidth * 7 + 16.dp)
         Box(Modifier.horizontalScroll(rememberScrollState())) {
         Column(Modifier.width(calendarWidth).padding(horizontal = 8.dp)) {
             Row {
-                for (i in 0 until 7) Text(week.firstDayOfWeek.plus(i.toLong()).getDisplayName(TextStyle.SHORT, Locale.getDefault()), Modifier.weight(1f),
-                    textAlign = TextAlign.Center, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                for (i in 0 until 7) {
+                    val dayName = week.firstDayOfWeek.plus(i.toLong()).getDisplayName(TextStyle.SHORT, Locale.getDefault())
+                    Text(
+                        text = dayName,
+                        modifier = Modifier.weight(1f),
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        maxLines = 1,
+                        softWrap = false,
+                        overflow = TextOverflow.Clip,
+                    )
+                }
             }
             for (w in 0 until 6) {
                 Row {
@@ -495,9 +508,15 @@ private fun MonthGrid(month: YearMonth, selected: LocalDate, events: List<CalEve
                                 .clickable { onSelect(day) },
                             horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center,
                         ) {
-                            Text(day.dayOfMonth.toString(), style = MaterialTheme.typography.bodyMedium,
+                            Text(
+                                text = day.dayOfMonth.toString(),
+                                style = MaterialTheme.typography.bodyMedium,
                                 color = when { day == today -> MaterialTheme.colorScheme.primary; inMonth -> MaterialTheme.colorScheme.onSurface; else -> MaterialTheme.colorScheme.onSurface.copy(alpha = 0.35f) },
-                                fontWeight = if (day == today) androidx.compose.ui.text.font.FontWeight.Bold else null)
+                                fontWeight = if (day == today) androidx.compose.ui.text.font.FontWeight.Bold else null,
+                                maxLines = 1,
+                                softWrap = false,
+                                overflow = TextOverflow.Clip,
+                            )
                             Row(Modifier.height(8.dp).padding(top = 2.dp), horizontalArrangement = Arrangement.spacedBy(2.dp)) {
                                 colors.forEach { Box(Modifier.size(5.dp).clip(CircleShape).background(Color(it))) }
                             }

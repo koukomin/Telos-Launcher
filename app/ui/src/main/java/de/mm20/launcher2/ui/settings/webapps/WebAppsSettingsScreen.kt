@@ -388,6 +388,7 @@ fun WebAppsSettingsScreen() {
     if (showCustomUserAgentDialog) {
         var userAgentText by androidx.compose.runtime.saveable.rememberSaveable { mutableStateOf(customUserAgent) }
         AlertDialog(
+            containerColor = de.mm20.launcher2.ui.component.virtualAppPopup(),
             onDismissRequest = { showCustomUserAgentDialog = false },
             title = { Text(stringResource(I18nR.string.au4_webapps2_user_agent_custom_title)) },
             text = {
@@ -415,6 +416,7 @@ fun WebAppsSettingsScreen() {
 
     if (showClearCookiesDialog) {
         AlertDialog(
+            containerColor = de.mm20.launcher2.ui.component.virtualAppPopup(),
             onDismissRequest = { showClearCookiesDialog = false },
             title = { Text(stringResource(I18nR.string.au4_webapps2_clear_cookies)) },
             text = { Text(stringResource(I18nR.string.au4_webapps2_clear_cookies_confirm)) },
@@ -441,6 +443,7 @@ fun WebAppsSettingsScreen() {
     if (showCreateGroupDialog) {
         var groupName by androidx.compose.runtime.saveable.rememberSaveable { mutableStateOf("") }
         AlertDialog(
+            containerColor = de.mm20.launcher2.ui.component.virtualAppPopup(),
             onDismissRequest = { showCreateGroupDialog = false },
             title = { Text(stringResource(I18nR.string.web_app_group_create_title)) },
             text = {
@@ -474,6 +477,7 @@ fun WebAppsSettingsScreen() {
     if (groupToRename != null) {
         var groupName by androidx.compose.runtime.saveable.rememberSaveable { mutableStateOf(groupToRename!!.name) }
         AlertDialog(
+            containerColor = de.mm20.launcher2.ui.component.virtualAppPopup(),
             onDismissRequest = { groupToRename = null },
             title = { Text(stringResource(I18nR.string.web_app_group_rename_title)) },
             text = {
@@ -506,6 +510,7 @@ fun WebAppsSettingsScreen() {
 
     groupToDelete?.let { group ->
         AlertDialog(
+            containerColor = de.mm20.launcher2.ui.component.virtualAppPopup(),
             onDismissRequest = { groupToDelete = null },
             title = { Text(stringResource(I18nR.string.web_app_group_delete_title)) },
             text = { Text(stringResource(I18nR.string.web_app_group_delete_message, group.name)) },
@@ -525,6 +530,7 @@ fun WebAppsSettingsScreen() {
 
     shortcutToDelete?.let { shortcut ->
         AlertDialog(
+            containerColor = de.mm20.launcher2.ui.component.virtualAppPopup(),
             onDismissRequest = { shortcutToDelete = null },
             title = { Text(stringResource(I18nR.string.web_app_delete_title)) },
             text = { Text(stringResource(I18nR.string.web_app_delete_message, shortcut.labelOverride ?: shortcut.label)) },
@@ -547,6 +553,7 @@ fun WebAppsSettingsScreen() {
         val existingUrls = remember(shortcuts) { shortcuts.map { WebAppPresets.comparableUrl(it.url) }.toSet() }
         val categoryName = stringResource(category.nameRes)
         AlertDialog(
+            containerColor = de.mm20.launcher2.ui.component.virtualAppPopup(),
             onDismissRequest = { presetToAdd = null },
             icon = { Icon(painterResource(category.iconRes), null) },
             title = { Text(stringResource(I18nR.string.web_app_preset_dialog_title, categoryName)) },

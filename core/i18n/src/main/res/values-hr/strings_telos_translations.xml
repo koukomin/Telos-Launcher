@@ -1616,7 +1616,7 @@
     <string name="preference_smartspacer_integration_description">Smartspacer je slobodan widget At a Glance otvorenog koda. Ako je instaliran, može se integrirati u dinamičnu zonu widgeta sata</string>
     <string name="preference_smartspacer_enable">Omogući integraciju sa Smartspacerom</string>
     <string name="preference_launch_smartspacer_app">Otvori Smartspacer</string>
-    <string name="preference_feed_integration">Feed</string>
+    <string name="preference_feed_integration">Sažetak</string>
     <string name="preference_category_feed_provider">Pružatelj feeda</string>
     <string name="preference_feed_enable_summary">Povucite udesno na početnom zaslonu za otvaranje feeda</string>
     <string name="no_feed_providers">Nema instaliranih pružatelja feeda</string>
@@ -1766,8 +1766,8 @@
     <string name="preference_app_lock_work_profile_toggle">Zaključaj prekidač poslovnog profila</string>
     <string name="preference_app_lock_work_profile_toggle_summary">Zahtijevaj autentifikaciju za pauziranje ili nastavak poslovnog profila iz ladice aplikacija</string>
     <string name="app_lock_work_profile_prompt_title">Autentificirajte se za promjenu stanja poslovnog profila</string>
-    <string name="preference_screen_work_profile">Poslovni profil</string>
-    <string name="preference_screen_work_profile_summary">Postavljanje, pauziranje, nastavak i zaključavanje poslovnog profila</string>
+    <string name="preference_screen_work_profile">Radni profil</string>
+    <string name="preference_screen_work_profile_summary">Postavljanje, pauza, nastavak i zaključavanje radnog profila</string>
     <string name="work_profile_status_title">Status</string>
     <string name="work_profile_status_not_set_up">Nije postavljeno</string>
     <string name="work_profile_status_active">Aktivno</string>
@@ -2548,4 +2548,7 @@
     <string name="telos_system_wifi_security_open">Otvorena</string>
     <string name="telos_system_wifi_empty">Nema spremljenih mreža</string>
     <string name="telos_system_wifi_persisted">Spremljeno %1$d privremenih mreža</string>
+    <string name="desktop_mode_kde_connect">Integracija KDE Connect</string>
+    <string name="desktop_mode_kde_connect_open">Otvorite KDE Connect za uparivanje s računalom ili tabletom</string>
+    <string name="desktop_mode_kde_connect_install">Dodirnite za instalaciju KDE Connect iz Telos Store</string>
 </resources>

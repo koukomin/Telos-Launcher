@@ -37,4 +37,13 @@
     <string name="telos_shizuku_pair_start">Cütləşmə kodunu gözlə</string>
     <string name="telos_shizuku_pair_stop">Gözləməni dayandır</string>
     <string name="telos_shizuku_pair_open">Simsiz sazlamanı aç</string>
+    <string name="telos_shizuku_perm_title">Allow Shizuku access</string>
+    <string name="telos_shizuku_perm_body">%1$s wants to use the Telos Shizuku server.</string>
+    <string name="telos_shizuku_perm_once">Allow once</string>
+    <string name="telos_shizuku_grant_failed">Could not update Shizuku access. Start the Telos Shizuku server first.</string>
+    <string name="telos_shizuku_diag_builtin">Built-in Telos Shizuku server</string>
+    <string name="telos_shizuku_diag_ready">Status: ready (WRITE_SECURE_SETTINGS granted)</string>
+    <string name="telos_shizuku_diag_grant">Status: server running — grant WRITE_SECURE_SETTINGS</string>
+    <string name="telos_shizuku_diag_start">Status: start the server from Telos System → Shizuku</string>
+    <string name="telos_shizuku_autostart_ok">Shizuku auto-start is on.</string>
 </resources>

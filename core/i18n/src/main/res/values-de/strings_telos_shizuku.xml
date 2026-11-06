@@ -40,4 +40,13 @@ PC: USB-Debugging an, dann den adb-Befehl unten.</string>
     <string name="telos_shizuku_pair_start">Auf Pairing-Code warten</string>
     <string name="telos_shizuku_pair_stop">Warten beenden</string>
     <string name="telos_shizuku_pair_open">Wireless debugging öffnen</string>
+    <string name="telos_shizuku_perm_title">Shizuku-Zugriff erlauben</string>
+    <string name="telos_shizuku_perm_body">%1$s möchte den Telos-Shizuku-Server nutzen.</string>
+    <string name="telos_shizuku_perm_once">Einmal erlauben</string>
+    <string name="telos_shizuku_grant_failed">Shizuku-Zugriff konnte nicht geändert werden. Starte zuerst den Telos-Shizuku-Server.</string>
+    <string name="telos_shizuku_diag_builtin">Eingebauter Telos-Shizuku-Server</string>
+    <string name="telos_shizuku_diag_ready">Status: bereit (WRITE_SECURE_SETTINGS erteilt)</string>
+    <string name="telos_shizuku_diag_grant">Status: Server läuft — WRITE_SECURE_SETTINGS erteilen</string>
+    <string name="telos_shizuku_diag_start">Status: Server unter Telos System → Shizuku starten</string>
+    <string name="telos_shizuku_autostart_ok">Shizuku-Autostart ist eingeschaltet.</string>
 </resources>

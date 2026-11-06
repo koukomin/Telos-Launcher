@@ -1843,4 +1843,7 @@
     <string name="telos_system_wifi_security_open">Öppet</string>
     <string name="telos_system_wifi_empty">Inga sparade nätverk</string>
     <string name="telos_system_wifi_persisted">%1$d tillfälliga nätverk sparade</string>
+    <string name="desktop_mode_kde_connect">KDE Connect-integration</string>
+    <string name="desktop_mode_kde_connect_open">Öppna KDE Connect för att parkoppla med en PC eller surfplatta</string>
+    <string name="desktop_mode_kde_connect_install">Tryck för att installera KDE Connect från Telos Store</string>
 </resources>

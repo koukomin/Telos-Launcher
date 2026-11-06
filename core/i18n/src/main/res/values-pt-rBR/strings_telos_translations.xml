@@ -440,7 +440,7 @@
     <string name="preference_app_lock_work_profile_toggle_summary">Exige autenticação para pausar ou retomar o perfil de trabalho na gaveta de apps</string>
     <string name="app_lock_work_profile_prompt_title">Autentique-se para alterar o estado do perfil de trabalho</string>
     <string name="preference_screen_work_profile">Perfil de trabalho</string>
-    <string name="preference_screen_work_profile_summary">Configure, pause, retome e bloqueie o perfil de trabalho</string>
+    <string name="preference_screen_work_profile_summary">Configurar, pausar, retomar e bloquear o perfil de trabalho</string>
     <string name="work_profile_status_title">Status</string>
     <string name="work_profile_status_not_set_up">Não configurado</string>
     <string name="work_profile_status_active">Ativo</string>
@@ -1134,4 +1134,7 @@
     <string name="telos_system_wifi_security_open">Aberta</string>
     <string name="telos_system_wifi_empty">Nenhuma rede salva</string>
     <string name="telos_system_wifi_persisted">%1$d redes temporárias salvas</string>
+    <string name="desktop_mode_kde_connect">Integração KDE Connect</string>
+    <string name="desktop_mode_kde_connect_open">Abrir o KDE Connect para emparelhar com um PC ou tablet</string>
+    <string name="desktop_mode_kde_connect_install">Toque para instalar o KDE Connect na Telos Store</string>
 </resources>

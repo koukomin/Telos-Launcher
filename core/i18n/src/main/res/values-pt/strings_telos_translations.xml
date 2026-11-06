@@ -1187,4 +1187,11 @@
     <string name="telos_system_wifi_security_open">Aberta</string>
     <string name="telos_system_wifi_empty">Sem redes guardadas</string>
     <string name="telos_system_wifi_persisted">%1$d redes temporárias guardadas</string>
+    <string name="desktop_mode_kde_connect">Integração KDE Connect</string>
+    <string name="desktop_mode_kde_connect_open">Abrir o KDE Connect para emparelhar com um PC ou tablet</string>
+    <string name="desktop_mode_kde_connect_install">Toque para instalar o KDE Connect na Telos Store</string>
+    <string name="preference_virtual_app_page_effects">Animações de página nas apps Telos</string>
+    <string name="preference_virtual_app_page_effects_summary">Deslize e escala ao mudar de ecrã. Desligado por predefinição.</string>
+    <string name="net_waveform_title">Forma de onda do tráfego de rede</string>
+    <string name="net_waveform_rates">↓ %1$s  ·  ↑ %2$s</string>
 </resources>

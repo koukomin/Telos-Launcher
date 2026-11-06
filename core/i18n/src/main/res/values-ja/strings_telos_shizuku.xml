@@ -40,4 +40,13 @@
     <string name="telos_shizuku_pair_start">ペアリングコードを待つ</string>
     <string name="telos_shizuku_pair_stop">待機を停止</string>
     <string name="telos_shizuku_pair_open">ワイヤレスデバッグを開く</string>
+    <string name="telos_shizuku_perm_title">Shizuku へのアクセスを許可</string>
+    <string name="telos_shizuku_perm_body">%1$s が Telos の Shizuku サーバーを使おうとしています。</string>
+    <string name="telos_shizuku_perm_once">一度だけ許可</string>
+    <string name="telos_shizuku_grant_failed">Shizuku のアクセスを更新できません。先に Telos サーバーを起動してください。</string>
+    <string name="telos_shizuku_diag_builtin">Telos 内蔵 Shizuku サーバー</string>
+    <string name="telos_shizuku_diag_ready">状態: 準備完了（WRITE_SECURE_SETTINGS 付与済み）</string>
+    <string name="telos_shizuku_diag_grant">状態: サーバー稼働中 — WRITE_SECURE_SETTINGS を付与</string>
+    <string name="telos_shizuku_diag_start">状態: Telos System → Shizuku からサーバーを起動</string>
+    <string name="telos_shizuku_autostart_ok">Shizuku の自動起動がオンです。</string>
 </resources>

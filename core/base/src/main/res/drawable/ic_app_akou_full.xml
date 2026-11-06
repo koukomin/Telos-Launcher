@@ -7,15 +7,15 @@
         android:fillColor="#8E24AA"
         android:pathData="M24,2A22,22 0 1,0 24,46A22,22 0 1,0 24,2Z" />
     <path
-        android:fillColor="#AB47BC"
-        android:pathData="M24,6A18,18 0 1,1 24,42A18,18 0 1,1 24,6Z" />
+        android:fillColor="#20000000"
+        android:pathData="M14,14 L32,32 L26,44 L10,28 Z" />
     <group
         android:translateX="9"
         android:translateY="9"
         android:scaleX="1.25"
         android:scaleY="1.25">
         <path
-            android:fillColor="#FFFFFFFF"
-            android:pathData="M12,3v10.55c-0.59,-0.34 -1.27,-0.55 -2,-0.55 -2.21,0 -4,1.79 -4,4s1.79,4 4,4 4,-1.79 4,-4V7h4V3h-6z" />
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M12,3v10.55c-0.59,-0.34 -1.27,-0.55 -2,-0.55 -2.21,0 -4,1.79 -4,4s1.79,4 4,4 4,-1.79 4,-4V7h4V3h-6z" />
     </group>
 </vector>

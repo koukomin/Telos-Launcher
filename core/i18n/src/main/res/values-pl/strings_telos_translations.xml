@@ -530,7 +530,7 @@
     <string name="preference_app_lock_work_profile_toggle_summary">Wymagaj uwierzytelnienia, aby wstrzymać lub wznowić profil służbowy z szuflady aplikacji</string>
     <string name="app_lock_work_profile_prompt_title">Uwierzytelnij się, aby zmienić stan profilu służbowego</string>
     <string name="preference_screen_work_profile">Profil służbowy</string>
-    <string name="preference_screen_work_profile_summary">Konfiguruj, wstrzymuj, wznawiaj i blokuj profil służbowy</string>
+    <string name="preference_screen_work_profile_summary">Konfiguracja, wstrzymanie, wznowienie i blokada profilu służbowego</string>
     <string name="work_profile_status_title">Stan</string>
     <string name="work_profile_status_not_set_up">Nie skonfigurowano</string>
     <string name="work_profile_status_active">Aktywny</string>
@@ -1525,4 +1525,11 @@
     <string name="telos_system_wifi_security_open">Otwarta</string>
     <string name="telos_system_wifi_empty">Brak zapisanych sieci</string>
     <string name="telos_system_wifi_persisted">Zapisano %1$d sieci tymczasowych</string>
+    <string name="desktop_mode_kde_connect">Integracja KDE Connect</string>
+    <string name="desktop_mode_kde_connect_open">Otwórz KDE Connect, aby sparować komputer lub tablet</string>
+    <string name="desktop_mode_kde_connect_install">Dotknij, aby zainstalować KDE Connect ze sklepu Telos</string>
+    <string name="preference_virtual_app_page_effects">Animacje stron w aplikacjach Telos</string>
+    <string name="preference_virtual_app_page_effects_summary">Przesuwanie i skala przy zmianie ekranu. Domyślnie wyłączone.</string>
+    <string name="net_waveform_title">Przebieg ruchu sieciowego</string>
+    <string name="net_waveform_rates">↓ %1$s  ·  ↑ %2$s</string>
 </resources>

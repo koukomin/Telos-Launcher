@@ -372,6 +372,8 @@ data class MiscGroup(
     /** Retry root/previously paired wireless startup after unlock or launcher foreground. */
     val shizukuAutoStart: Boolean = false,
     val shizukuDisableWirelessAfterStart: Boolean = false,
+    /** Slide/scale when changing screens inside Telos apps. Off by default. */
+    val virtualAppPageEffects: Boolean = false,
     val artOptimizerMasterEnabled: Boolean = false,
     val artOptimizationProfile: String = "speed-profile",
     val artOptimizationScheduled: Boolean = false,

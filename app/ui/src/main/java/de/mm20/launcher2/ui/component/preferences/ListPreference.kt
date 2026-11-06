@@ -26,7 +26,7 @@ fun <T> ListPreference(
     items: List<ListPreferenceItem<T>>,
     value: T,
     summary: String? = items.firstOrNull { value == it.value }?.label,
-    containerColor: Color = MaterialTheme.colorScheme.surfaceBright,
+    containerColor: Color = MaterialTheme.colorScheme.surfaceContainerLow.copy(alpha = 1f),
     onValueChanged: (T) -> Unit,
     enabled: Boolean = true,
     itemLabel: @Composable RowScope.(item: ListPreferenceItem<T>) -> Unit = {
@@ -50,7 +50,9 @@ fun <T> ListPreference(
     if (showDialog) {
         Dialog(onDismissRequest = { showDialog = false }) {
             Surface(
-                tonalElevation = 16.dp,
+                color = de.mm20.launcher2.ui.component.virtualAppPopup(),
+                contentColor = MaterialTheme.colorScheme.onSurface,
+                tonalElevation = 0.dp,
                 shadowElevation = 16.dp,
                 shape = MaterialTheme.shapes.extraLarge,
                 modifier = Modifier

@@ -40,4 +40,13 @@ Kompiuteris: USB derinimas ir adb komanda žemiau.</string>
     <string name="telos_shizuku_pair_start">Laukti susiejimo kodo</string>
     <string name="telos_shizuku_pair_stop">Stabdyti laukimą</string>
     <string name="telos_shizuku_pair_open">Atidaryti belaidį derinimą</string>
+    <string name="telos_shizuku_perm_title">Leisti Shizuku prieigą</string>
+    <string name="telos_shizuku_perm_body">%1$s nori naudoti „Telos“ Shizuku serverį.</string>
+    <string name="telos_shizuku_perm_once">Leisti vieną kartą</string>
+    <string name="telos_shizuku_grant_failed">Nepavyko atnaujinti Shizuku prieigos. Pirmiausia paleiskite „Telos“ serverį.</string>
+    <string name="telos_shizuku_diag_builtin">Įtaisytasis „Telos“ Shizuku serveris</string>
+    <string name="telos_shizuku_diag_ready">Būsena: paruošta (WRITE_SECURE_SETTINGS suteikta)</string>
+    <string name="telos_shizuku_diag_grant">Būsena: serveris veikia — suteikite WRITE_SECURE_SETTINGS</string>
+    <string name="telos_shizuku_diag_start">Būsena: paleiskite serverį skiltyje Telos System → Shizuku</string>
+    <string name="telos_shizuku_autostart_ok">Shizuku automatinis paleidimas įjungtas.</string>
 </resources>

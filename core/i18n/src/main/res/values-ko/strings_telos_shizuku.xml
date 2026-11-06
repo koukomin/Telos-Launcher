@@ -40,4 +40,13 @@
     <string name="telos_shizuku_pair_start">페어링 코드 기다리기</string>
     <string name="telos_shizuku_pair_stop">대기 중지</string>
     <string name="telos_shizuku_pair_open">무선 디버깅 열기</string>
+    <string name="telos_shizuku_perm_title">Shizuku 접근 허용</string>
+    <string name="telos_shizuku_perm_body">%1$s이(가) Telos Shizuku 서버를 사용하려고 합니다.</string>
+    <string name="telos_shizuku_perm_once">한 번만 허용</string>
+    <string name="telos_shizuku_grant_failed">Shizuku 접근을 업데이트할 수 없습니다. 먼저 Telos 서버를 시작하세요.</string>
+    <string name="telos_shizuku_diag_builtin">내장 Telos Shizuku 서버</string>
+    <string name="telos_shizuku_diag_ready">상태: 준비됨(WRITE_SECURE_SETTINGS 부여됨)</string>
+    <string name="telos_shizuku_diag_grant">상태: 서버 실행 중 — WRITE_SECURE_SETTINGS 부여</string>
+    <string name="telos_shizuku_diag_start">상태: Telos System → Shizuku에서 서버 시작</string>
+    <string name="telos_shizuku_autostart_ok">Shizuku 자동 시작이 켜져 있습니다.</string>
 </resources>

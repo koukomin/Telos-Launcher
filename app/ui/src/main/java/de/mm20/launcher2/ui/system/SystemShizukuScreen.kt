@@ -50,7 +50,7 @@ import de.mm20.launcher2.ktx.TelosShellEngine
 import de.mm20.launcher2.preferences.ui.UiSettings
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
-import de.mm20.launcher2.ui.settings.security.TelosSecurityHubBody
+import de.mm20.launcher2.ui.settings.security.TelosShizukuAppsPanel
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 
@@ -261,7 +261,11 @@ fun SystemShizukuTab() {
                 }
             }
         }
-        item { TelosSecurityHubBody() }
+        item {
+            PreferenceCategory(title = stringResource(I18nR.string.security_hub_tab_shizuku)) {
+                TelosShizukuAppsPanel()
+            }
+        }
         item { Spacer(Modifier.height(24.dp)) }
     }
 }

@@ -44,10 +44,11 @@ import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.component.frostedGlass
 import de.mm20.launcher2.ui.component.rememberVirtualAppBlur
 import de.mm20.launcher2.ui.component.virtualAppElevated
 import de.mm20.launcher2.ui.component.virtualAppGlass
-import de.mm20.launcher2.ui.component.virtualAppSurface
+import de.mm20.launcher2.ui.component.virtualAppSettingsPane
 import de.mm20.launcher2.ui.theme.transparency.transparency
 import de.mm20.launcher2.ui.component.dragndrop.LazyDragAndDropColumn
 import de.mm20.launcher2.ui.component.dragndrop.LazyDragAndDropListState
@@ -120,7 +121,10 @@ fun PreferenceScreen(
                     .fillMaxSize()
                     .consumeWindowInsets(insets)
                     .imePadding()
-                    .background(virtualAppSurface())
+                    .frostedGlass(
+                        virtualAppSettingsPane(),
+                        fallbackColor = MaterialTheme.colorScheme.surface,
+                    )
                     .nestedScroll(scrollBehavior.nestedScrollConnection),
                 state = lazyColumnState,
                 content = content,
@@ -170,7 +174,10 @@ fun DragAndDropPreferenceScreen(
                     .fillMaxSize()
                     .consumeWindowInsets(insets)
                     .imePadding()
-                    .background(virtualAppSurface())
+                    .frostedGlass(
+                        virtualAppSettingsPane(),
+                        fallbackColor = MaterialTheme.colorScheme.surface,
+                    )
                     .nestedScroll(scrollBehavior.nestedScrollConnection),
                 state = lazyColumnState,
                 content = content,

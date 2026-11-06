@@ -1,7 +1,14 @@
 package de.mm20.launcher2.ui.component
 
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
+import androidx.compose.ui.res.stringResource
+import de.mm20.launcher2.i18n.R as I18nR
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -137,6 +144,17 @@ fun CyberWaveformChart(
     history: List<Pair<Long, Long>>, // (dl, ul) history
     modifier: Modifier = Modifier,
 ) {
+    val pulse = rememberInfiniteTransition(label = "wave")
+    val scan by pulse.animateFloat(
+        0f, 1f,
+        infiniteRepeatable(tween(2200, easing = LinearEasing), RepeatMode.Restart),
+        label = "scan",
+    )
+    val glow by pulse.animateFloat(
+        0.25f, 0.7f,
+        infiniteRepeatable(tween(900, easing = LinearEasing), RepeatMode.Reverse),
+        label = "glow",
+    )
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -151,7 +169,7 @@ fun CyberWaveformChart(
         ) {
             Column {
                 Text(
-                    text = "NETWORK TRAFFIC WAVEFORM",
+                    text = stringResource(I18nR.string.net_waveform_title),
                     style = MaterialTheme.typography.labelMedium,
                     fontWeight = FontWeight.Bold,
                     color = CyanNeon,
@@ -159,7 +177,11 @@ fun CyberWaveformChart(
                     fontFamily = FontFamily.Monospace,
                 )
                 Text(
-                    text = "DL: ${downloadKb} KB/s  ·  UL: ${uploadKb} KB/s",
+                    text = stringResource(
+                        I18nR.string.net_waveform_rates,
+                        "$downloadKb KB/s",
+                        "$uploadKb KB/s",
+                    ),
                     style = MaterialTheme.typography.bodyMedium,
                     fontWeight = FontWeight.Bold,
                     color = Color.White,
@@ -178,7 +200,6 @@ fun CyberWaveformChart(
             val width = size.width
             val height = size.height
 
-            // Grid lines
             for (i in 1..3) {
                 val y = height * (i / 4f)
                 drawLine(
@@ -195,6 +216,10 @@ fun CyberWaveformChart(
 
                 val dlPath = androidx.compose.ui.graphics.Path()
                 val ulPath = androidx.compose.ui.graphics.Path()
+                val dlFill = androidx.compose.ui.graphics.Path()
+                val ulFill = androidx.compose.ui.graphics.Path()
+                dlFill.moveTo(0f, height)
+                ulFill.moveTo(0f, height)
 
                 history.forEachIndexed { index, (dl, ul) ->
                     val x = index * stepX
@@ -208,8 +233,16 @@ fun CyberWaveformChart(
                         dlPath.lineTo(x, yDl)
                         ulPath.lineTo(x, yUl)
                     }
+                    dlFill.lineTo(x, yDl)
+                    ulFill.lineTo(x, yUl)
                 }
+                dlFill.lineTo(width, height)
+                dlFill.close()
+                ulFill.lineTo(width, height)
+                ulFill.close()
 
+                drawPath(dlFill, CyanNeon.copy(alpha = glow * 0.22f))
+                drawPath(ulFill, PinkNeon.copy(alpha = glow * 0.18f))
                 drawPath(
                     path = dlPath,
                     color = CyanNeon,
@@ -221,6 +254,17 @@ fun CyberWaveformChart(
                     style = Stroke(width = 2.5.dp.toPx(), cap = StrokeCap.Round),
                 )
             }
+            val sx = width * scan
+            drawLine(
+                brush = Brush.horizontalGradient(
+                    listOf(Color.Transparent, CyanNeon.copy(alpha = 0.85f), Color.Transparent),
+                    startX = sx - 28f,
+                    endX = sx + 28f,
+                ),
+                start = Offset(sx, 0f),
+                end = Offset(sx, height),
+                strokeWidth = 3.dp.toPx(),
+            )
         }
     }
 }

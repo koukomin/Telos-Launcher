@@ -434,7 +434,7 @@
     <string name="preference_app_lock_work_profile_toggle_summary">Richiedi l\'autenticazione per sospendere o riprendere il profilo di lavoro dal cassetto delle app</string>
     <string name="app_lock_work_profile_prompt_title">Autenticati per cambiare lo stato del profilo di lavoro</string>
     <string name="preference_screen_work_profile">Profilo di lavoro</string>
-    <string name="preference_screen_work_profile_summary">Configura, sospendi, riprendi e blocca il profilo di lavoro</string>
+    <string name="preference_screen_work_profile_summary">Configura, metti in pausa, riprendi e blocca il profilo di lavoro</string>
     <string name="work_profile_status_title">Stato</string>
     <string name="work_profile_status_not_set_up">Non configurato</string>
     <string name="work_profile_status_active">Attivo</string>
@@ -1120,4 +1120,11 @@
     <string name="telos_system_wifi_security_open">Aperta</string>
     <string name="telos_system_wifi_empty">Nessuna rete salvata</string>
     <string name="telos_system_wifi_persisted">Salvate %1$d reti temporanee</string>
+    <string name="desktop_mode_kde_connect">Integrazione KDE Connect</string>
+    <string name="desktop_mode_kde_connect_open">Apri KDE Connect per associare un PC o un tablet</string>
+    <string name="desktop_mode_kde_connect_install">Tocca per installare KDE Connect da Telos Store</string>
+    <string name="preference_virtual_app_page_effects">Animazioni di pagina nelle app Telos</string>
+    <string name="preference_virtual_app_page_effects_summary">Scorrimento e scala al cambio schermata. Disattivato di default.</string>
+    <string name="net_waveform_title">Forma d’onda del traffico di rete</string>
+    <string name="net_waveform_rates">↓ %1$s  ·  ↑ %2$s</string>
 </resources>

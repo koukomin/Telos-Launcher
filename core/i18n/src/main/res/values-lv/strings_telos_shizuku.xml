@@ -40,4 +40,13 @@ Dators: USB atkļūdošana un adb komanda zemāk.</string>
     <string name="telos_shizuku_pair_start">Gaidīt savienošanas kodu</string>
     <string name="telos_shizuku_pair_stop">Pārtraukt gaidīšanu</string>
     <string name="telos_shizuku_pair_open">Atvērt bezvadu atkļūdošanu</string>
+    <string name="telos_shizuku_perm_title">Atļaut Shizuku piekļuvi</string>
+    <string name="telos_shizuku_perm_body">%1$s vēlas izmantot Telos Shizuku serveri.</string>
+    <string name="telos_shizuku_perm_once">Atļaut vienreiz</string>
+    <string name="telos_shizuku_grant_failed">Neizdevās atjaunināt Shizuku piekļuvi. Vispirms palaidiet Telos serveri.</string>
+    <string name="telos_shizuku_diag_builtin">Iebūvētais Telos Shizuku serveris</string>
+    <string name="telos_shizuku_diag_ready">Statuss: gatavs (WRITE_SECURE_SETTINGS piešķirts)</string>
+    <string name="telos_shizuku_diag_grant">Statuss: serveris darbojas — piešķiriet WRITE_SECURE_SETTINGS</string>
+    <string name="telos_shizuku_diag_start">Statuss: palaidiet serveri sadaļā Telos System → Shizuku</string>
+    <string name="telos_shizuku_autostart_ok">Shizuku automātiskā palaišana ir ieslēgta.</string>
 </resources>

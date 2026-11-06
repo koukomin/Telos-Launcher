@@ -40,4 +40,13 @@ Arvuti: USB-silumine ja allpool olev adb-käsk.</string>
     <string name="telos_shizuku_pair_start">Oota sidumiskoodi</string>
     <string name="telos_shizuku_pair_stop">Lõpeta ootamine</string>
     <string name="telos_shizuku_pair_open">Ava juhtmeta silumine</string>
+    <string name="telos_shizuku_perm_title">Luba Shizuku juurdepääs</string>
+    <string name="telos_shizuku_perm_body">%1$s soovib kasutada Telose Shizuku serverit.</string>
+    <string name="telos_shizuku_perm_once">Luba üks kord</string>
+    <string name="telos_shizuku_grant_failed">Shizuku juurdepääsu ei saanud värskendada. Käivita esmalt Telose server.</string>
+    <string name="telos_shizuku_diag_builtin">Telose sisseehitatud Shizuku server</string>
+    <string name="telos_shizuku_diag_ready">Olek: valmis (WRITE_SECURE_SETTINGS antud)</string>
+    <string name="telos_shizuku_diag_grant">Olek: server töötab — anna WRITE_SECURE_SETTINGS</string>
+    <string name="telos_shizuku_diag_start">Olek: käivita server menüüst Telos System → Shizuku</string>
+    <string name="telos_shizuku_autostart_ok">Shizuku automaatkäivitus on sees.</string>
 </resources>

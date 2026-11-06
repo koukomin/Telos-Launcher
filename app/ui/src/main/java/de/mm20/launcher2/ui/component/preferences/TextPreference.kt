@@ -26,6 +26,7 @@ fun TextPreference(
         var textFieldValue by rememberSaveable { mutableStateOf(value) }
         AlertDialog(
             onDismissRequest = { showDialog = false },
+            containerColor = de.mm20.launcher2.ui.component.virtualAppPopup(),
             title = {
                 Text(text = title, style = MaterialTheme.typography.titleLarge)
             },
