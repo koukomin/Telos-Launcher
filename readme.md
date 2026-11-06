@@ -1230,6 +1230,8 @@ toolchain and Gradle 9.8.2 via the wrapper. Build variants combine a build type 
 
 Dependency resolution keeps Guava 33.8.0 (`-android` in the app, `-jre` in build
 tools) and jsoup 1.24.1 aligned across the version catalog and transitive pins.
+The same rules cover root Dokka dependencies, including FreeMarker 2.3.35 for
+the critical path-traversal advisory; dependency submission verifies this graph.
 See [dependency security checks](docs/docs/developer-guide/dependabot.md) and
 [the security reporting policy](SECURITY.md).
 

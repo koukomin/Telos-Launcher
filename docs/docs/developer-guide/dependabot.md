@@ -27,7 +27,7 @@ Pin those on `gradle.beforeProject { buildscript.configurations }` in
 `settings.gradle.kts` (Guava `-jre` on the plugin classpath). Jackson core/databind may be 2.22.4; pin `jackson-annotations` to `2.22`
 (there is no 2.22.4 annotations artifact). Do not `useVersion` the core patch
 onto annotations. Pin app graphs in
-the root `subprojects { configurations.configureEach { resolutionStrategy.eachDependency } }`
+the root `allprojects { configurations.configureEach { resolutionStrategy.eachDependency } }`
 block (Guava `-android` there). Keep one Bouncy Castle version
 (`libs.versions.bouncycastle`, currently 1.86). App `useVersion` calls must use
 that catalog entry. `.github/workflows/dependency-graph.yml` submits the
@@ -58,12 +58,22 @@ classpaths even when a transitive dependency requests `-jre`. JVM modules and
 compiler/tool classpaths retain `-jre`. Verify the selected artifact in
 `dependencyInsight`; the declaration alone does not establish which artifact won.
 
+The root project must be included: Dokka's generator and publication resolvers
+are separate from both app dependencies and the Gradle plugin classpath. Alert
+**#57 / CVE-2026-84939 / GHSA-27j2-h3m2-8237** was reproduced with FreeMarker
+2.3.32 in those resolvers despite a 2.3.35 catalog pin. Applying the rules to
+`allprojects` also patches the root Jackson and jsoup dependencies. The
+dependency-submission workflow now runs a regression check against the actual
+Dokka graph before submitting the resolved graph. It fails if vulnerable
+versions remain, resolution fails, or the expected packages are not checked.
+
 Inspect the resolved versions, not just Dependabot's manifest diff:
 
 ```sh
 ./gradlew :app:app:dependencyInsight --dependency com.google.guava:guava --configuration defaultDebugRuntimeClasspath
 ./gradlew :app:app:dependencyInsight --dependency org.jsoup:jsoup --configuration defaultDebugRuntimeClasspath
 ./gradlew buildEnvironment
+./gradlew -I tools/validation/security-dependencies.init.gradle verifyDokkaSecurityDependencies --no-configuration-cache
 ./gradlew :core:base:testDebugUnitTest :services:app-management:testDebugUnitTest
 npm ci --prefix docs
 npm audit --prefix docs
@@ -75,6 +85,14 @@ scanning, or code quality alerts are closed. Read those reports separately with
 authorized GitHub access and recheck their status after the PR's checks finish.
 The daily dependency stamp and a successful CodeQL workflow are not substitutes
 for reading the alert list.
+
+The [PR #80 audit record](https://github.com/koukomin/Telos-Launcher/blob/main/.github/dependencies/security-audit-pr80.json)
+records the GitHub Advisory Database revision, the 18 reproduced advisory
+matches (1 critical, 8 high, 9 moderate), and the corrected graph's zero matches
+across 649 resolved module versions. This comparison excludes two JitPack
+modules whose downloads were blocked in the cloud environment; it does not
+claim a complete APK build or a completed CodeQL/Code Quality scan. The audit
+does not dismiss GitHub alerts.
 
 ## Built-in Shizuku pairing crypto
 

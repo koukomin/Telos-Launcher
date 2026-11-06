@@ -23,3 +23,5 @@ jobs:
       - uses: gradle/actions/dependency-submission@v6
         with:
           cache-provider: basic
+          dependency-resolution-task: ':verifyDokkaSecurityDependencies :ForceDependencyResolutionPlugin_resolveAllDependencies'
+          additional-arguments: '-I tools/validation/security-dependencies.init.gradle --no-configuration-cache'

@@ -13,7 +13,8 @@ plugins {
     alias(libs.plugins.dokka) apply true
 }
 
-subprojects {
+// Dokka's generator/publication resolvers live on the root project too.
+allprojects {
     val targetProject = this
     configurations.configureEach {
         val isApplicationClasspath = name.endsWith("RuntimeClasspath") || name.endsWith("CompileClasspath")
@@ -57,6 +58,9 @@ subprojects {
         }
     }
 
+}
+
+subprojects {
     pluginManager.withPlugin("org.jetbrains.kotlin.plugin.compose") {
         tasks.withType<KotlinCompile>().configureEach {
             compilerOptions.freeCompilerArgs.addAll(
