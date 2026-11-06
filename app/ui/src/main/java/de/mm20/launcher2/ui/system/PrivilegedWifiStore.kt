@@ -379,7 +379,7 @@ internal object PrivilegedWifiStore {
             networkId = networkId,
             security = securityLabel(this),
             hidden = hiddenSSID,
-            autoJoin = runCatching { allowAutojoin }.getOrDefault(true),
+            autoJoin = if (Build.VERSION.SDK_INT >= 37) runCatching { allowAutojoin }.getOrDefault(true) else true,
             existInSystem = true,
             ephemeral = isEphemeral(this),
         )

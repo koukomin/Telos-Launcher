@@ -97,6 +97,9 @@ jobs:
           EXPECTED_ABI: ${{ matrix.abi }}
         run: python3 tools/release-apk-check.py
 
+      - name: Verify Shizuku payloads and 16 KB ELF alignment
+        run: python3 tools/release-shizuku-native-check.py
+
       - name: Align and Sign APK with v1/v2/v3/v4 & 16KB Page Alignment
         if: github.event_name != 'pull_request'
         run: |

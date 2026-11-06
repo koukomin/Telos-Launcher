@@ -1,5 +1,37 @@
 # Built-in Shizuku pairing audit
 
+## Current notification-based flow (1.44.15)
+
+The floating overlay and prompt Activity have been removed. Both manual entry points use Android
+notification `RemoteInput`; only SystemUI owns the reply field and IME. Notification permission
+is requested before starting, and repeated mDNS results are deduplicated. Automatic pairing is
+optional and reads only Settings during an explicit session. Reads are coalesced instead of
+walking the window tree on every accessibility event; navigation attempts are throttled.
+
+On the installed 1.44.14 OnePlus build, ADB confirmed a `telos-adb-pairing` window holding focus
+above the browser and covering the system navigation bar. Disabling only pairing accessibility
+removed that window. CPU was not saturated at the time; GPU/input timing from mixed app windows
+is not a controlled performance comparison. The previous isolated overlay tests below did not
+certify the installed production version or every IME/navigation interaction. The notification
+implementation supersedes that approach.
+
+The native targets also use explicit 16 KB LOAD/RELRO linker alignment with the pinned NDK 27.
+`tools/release-shizuku-native-check.py` validates the actual packaged ARM binaries, and the release
+publisher runs that check before signing. The same check verifies both ARM payloads in the
+pairing workflow. The reported phone currently has 4 KB kernel pages; ELF alignment validation
+must not be described as physical testing on a 16 KB kernel.
+
+## Notification device validation (2026-11-06)
+
+The isolated production-service harness on the reported OnePlus completed manual notification
+reply pairing and a fresh server bootstrap (`Done`, `running=true`, UID 2000). Before typing,
+SystemUI owned focus and the IME was visible. After Send, the IME was hidden; Back returned focus
+to Settings and navigation responded. No Telos pairing window existed. JNI/identity instrumentation
+passed both tests. The test server and APK were removed afterward. This certifies the harness
+flow, not installation of the signed production APK: the user disconnected USB before release.
+
+The following sections retain the original transport audit and historical validation record.
+
 This audit compares the actual Telos manager and server, not just the vendored source tree,
 with Shizuku-Next `8508e1d50a293cec82eb60465bcc17022d7a5926` and Shizuku+
 `80330704be4ebc46e282334b9c542d4a7d071b1b`. Both references were cloned with their API
@@ -36,9 +68,8 @@ submodules. The managers are Apache-2.0; API/Rish is MIT; Telos changes remain G
    accessibility uses Settings' own localized `enable_adb_wireless` label to open the row.
 3. **Wait for pairing code** selects automatic reading when accessibility is enabled;
    **Enter code** starts a manual session even if accessibility is enabled.
-   A single collapsed, non-focusable pill waits. With accessibility enabled it is an accessibility
-   overlay; otherwise the application overlay requires the user's draw-over-other-apps grant.
-   The notification reply is the fallback when overlays are unavailable.
+   A persistent notification waits for the code. Manual entry uses its reply action; no overlay
+   or draw-over-other-apps permission is used.
 4. The optional reader examines only Settings windows during the session. It accepts a standalone
    six-digit code (including a space between two groups of three), never digits combined from
    unrelated labels. Android 17 dialogs without a printed IP use mDNS to find the pairing service.
@@ -72,6 +103,16 @@ not provided by copying server sources. Telos's `Usb`/`Tcp` enum entries were no
 as distinct transports. Do not advertise full Next/Plus parity or add switches that call the
 same wireless implementation. These need separate implementation and acceptance tests if adopted.
 The legacy external `starter.sh` helper is unused by the built-in UI.
+
+A further **client-authorisation gap** is visible in the current manager code: the server launches
+`<manager package>.intent.action.REQUEST_PERMISSION`, but Telos does not declare a matching
+permission-confirmation Activity. Security Hub's existing `setClientAccess` implementation uses
+`pm grant`/permission-name app-ops commands rather than Next's manager-side
+`Shizuku.getFlagsForUid`/`updateFlagsForUid` flow. On this ColorOS build, shell runtime-permission
+grants are also restricted. These are functional manager gaps, not settings hidden elsewhere.
+The pairing fix does not certify external-client authorisation; a separate implementation needs
+a validated allow/deny prompt and server-flag controls before full manager parity can be claimed.
+
 
 ## Validation
 

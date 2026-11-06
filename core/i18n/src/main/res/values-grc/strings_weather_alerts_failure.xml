@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preference_weather_alerts_test_failed">Ἡ ἀγγελία οὐκ ἐδυνήθη φανῆναι. Σκόπει εἰ ἐπιτρέπονται αἱ τοῦ Telos ἀγγελίαι</string>
+</resources>

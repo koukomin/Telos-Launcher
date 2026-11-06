@@ -24,7 +24,7 @@ android {
                 targets("libshizuku.so", "adb", "rish")
                 // app_process must not resolve a different system C++ runtime.
                 // JNI libraries exchange only Java values, never C++ objects.
-                arguments("-DANDROID_STL=c++_static")
+                arguments("-DANDROID_STL=c++_static", "-DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON")
             }
         }
     }

@@ -20,11 +20,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -34,7 +29,6 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -45,7 +39,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -64,8 +57,6 @@ import org.koin.compose.koinInject
 @Composable
 fun SystemShizukuTab() {
     val context = LocalContext.current
-    val keyboard = LocalSoftwareKeyboardController.current
-    val focus = LocalFocusManager.current
     val scope = rememberCoroutineScope()
     val ui: UiSettings = koinInject()
     val host by TelosShizukuHost.status.collectAsStateWithLifecycle()
@@ -74,24 +65,24 @@ fun SystemShizukuTab() {
     var shellCmd by remember { mutableStateOf("id") }
     var shellOut by remember { mutableStateOf("") }
     var automaticPairing by rememberSaveable { mutableStateOf(true) }
-    val pairingPermission = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
-        if (granted) TelosAdbPairingService.start(context, automaticPairing)
+    val pairingPermissions = rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { results ->
+        if (results.isNotEmpty() && results.values.all { it }) TelosAdbPairingService.start(context, automaticPairing)
+        else Toast.makeText(context, context.getString(I18nR.string.preference_weather_alerts_test_failed), Toast.LENGTH_LONG).show()
     }
     fun beginPairing(automatic: Boolean) {
         automaticPairing = automatic
-        if (Build.VERSION.SDK_INT >= 37 && ContextCompat.checkSelfPermission(context, "android.permission.ACCESS_LOCAL_NETWORK") != PackageManager.PERMISSION_GRANTED) {
-            pairingPermission.launch("android.permission.ACCESS_LOCAL_NETWORK")
+        val missing = buildList {
+            if (Build.VERSION.SDK_INT >= 33 && ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) add(Manifest.permission.POST_NOTIFICATIONS)
+            if (Build.VERSION.SDK_INT >= 37 && ContextCompat.checkSelfPermission(context, "android.permission.ACCESS_LOCAL_NETWORK") != PackageManager.PERMISSION_GRANTED) add("android.permission.ACCESS_LOCAL_NETWORK")
+        }
+        if (missing.isNotEmpty()) pairingPermissions.launch(missing.toTypedArray())
+        else if (!androidx.core.app.NotificationManagerCompat.from(context).areNotificationsEnabled()) {
+            context.startActivity(Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName))
         } else TelosAdbPairingService.start(context, automatic)
     }
-    val notifPerm = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { }
     LaunchedEffect(Unit) {
         TelosShizukuHost.refresh(context)
-        if (Build.VERSION.SDK_INT >= 33 &&
-            ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) !=
-            PackageManager.PERMISSION_GRANTED
-        ) {
-            notifPerm.launch(Manifest.permission.POST_NOTIFICATIONS)
-        }
+
     }
 
 
@@ -208,32 +199,11 @@ fun SystemShizukuTab() {
                         },
                         style = MaterialTheme.typography.bodySmall,
                     )
-                    OutlinedTextField(
-                        value = host.pairing.code,
-                        onValueChange = { TelosShizukuHost.setPairingCode(it) },
-                        label = { Text(stringResource(I18nR.string.telos_shizuku_pair_code)) },
-                        modifier = Modifier.fillMaxWidth(),
-                        singleLine = true,
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword, imeAction = ImeAction.Done),
-                        keyboardActions = KeyboardActions(onDone = {
-                            keyboard?.hide()
-                            focus.clearFocus()
-                            scope.launch {
-                                val r = TelosShizukuHost.submitPairingCode(context, host.pairing.code)
-                                log = r.getOrElse { it.message.orEmpty() }
-                            }
-                        }),
-                    )
-                    FilledTonalButton(
-                        onClick = {
-                            scope.launch {
-                                val r = TelosShizukuHost.submitPairingCode(context, host.pairing.code)
-                                log = r.getOrElse { it.message.orEmpty() }
-                            }
-                        },
-                        enabled = host.pairing.code.length == 6,
-                        modifier = Modifier.fillMaxWidth(),
-                    ) { Text(stringResource(I18nR.string.telos_shizuku_pair_submit)) }
+                    OutlinedButton(onClick = {
+                        context.startService(TelosAdbPairingService.stopIntent(context))
+                    }, modifier = Modifier.fillMaxWidth()) {
+                        Text(stringResource(I18nR.string.telos_shizuku_pair_stop))
+                    }
                 }
                 if (host.pairing.phase == TelosShizukuHost.PairingPhase.Done) {
                     Text(stringResource(I18nR.string.telos_shizuku_pair_ok), color = MaterialTheme.colorScheme.primary)

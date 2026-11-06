@@ -6,6 +6,7 @@ on:
       - 'libs/shizuku-next/**'
       - 'app/ui/src/main/java/de/mm20/launcher2/ui/system/SystemShizukuScreen.kt'
       - '.github/workflows/shizuku-pairing-check.yml'
+      - 'tools/release-shizuku-native-check.py'
   workflow_dispatch:
 permissions:
   contents: read
@@ -24,17 +25,8 @@ jobs:
           cache-provider: basic
       - name: Compile UI, run unit regressions, build physical-device harness
         run: ./gradlew :services:app-management:testDebugUnitTest :services:app-management:assembleDebugAndroidTest :app:ui:compileDefaultDebugKotlin --console=plain --max-workers=4
-      - name: Verify both ARM pairing libraries are packaged
-        shell: python
-        run: |
-          from pathlib import Path
-          import zipfile
-          apk = next(Path('services/app-management/build/outputs/apk/androidTest/debug').glob('*.apk'))
-          with zipfile.ZipFile(apk) as archive:
-              names = set(archive.namelist())
-              for abi in ('arm64-v8a', 'armeabi-v7a'):
-                  for library in ('libadb.so', 'libshizuku.so', 'librish.so'):
-                      assert f'lib/{abi}/{library}' in names, (abi, library)
+      - name: Verify ARM payloads and ARM64 16 KB ELF alignment
+        run: python3 tools/release-shizuku-native-check.py --require-both services/app-management/build/outputs/apk/androidTest/debug/*.apk
       - uses: actions/upload-artifact@v7
         if: always()
         with:

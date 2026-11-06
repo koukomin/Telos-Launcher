@@ -19,11 +19,11 @@ Settings live on **Telos System → Shizuku**.
 
 ### Pairing (wireless, first time)
 
-There is no AI. Telos copies Shizuku-Next: stay on the system pairing dialog (leaving it cancels the code). Accessibility reads the 6 digits and pairs. A floating field and the notification RemoteInput let you type the code without leaving Settings.
+There is no AI. Telos copies Shizuku-Next: stay on the system pairing dialog (leaving it cancels the code). Accessibility reads the 6 digits and pairs. The system notification reply lets you type the code without leaving Settings; Telos creates no floating input window.
 
 1. Telos System → Shizuku → enable pairing accessibility, then **Wait for pairing code** (or **Open wireless debugging**).
 2. In system Settings, **Pair device with pairing code**. Keep that dialog on screen.
-3. Telos reads the 6-digit code automatically. If it does not, type it in the floating field or in the Telos notification.
+3. Telos reads the 6-digit code automatically. If it does not, use the reply action in the Telos notification.
 4. Grant the Shizuku permission when asked, then **Start server**.
 5. Turn on **Autostart** so the watchdog starts the server after reboot. Pairing is not needed again until you reset ADB keys.
 
@@ -71,12 +71,11 @@ Privacy Shield (clients, freeze external Shizuku, banking cloak, clipboard) stay
 
 ## Wireless Shizuku setup
 
-Open the Shizuku tab and start waiting for a pairing code. On Android 17, grant local-network
-access first. The floating pill waits without opening the keyboard. With the optional Telos
-pairing accessibility service enabled, the code is read only from the Settings pairing dialog
-during that session. Otherwise use the pill (requires overlay permission) or the notification
-reply. Done/Enter and Pair submit the same code and dismiss the keyboard before connecting.
-Use Stop waiting to cancel. See [Shizuku](/docs/wiki/shizuku) and the
-[implementation/feature audit](/docs/developer-guide/shizuku-pairing).
+Open the Shizuku tab and start waiting for a pairing code. Grant notifications and, on Android 17,
+local-network access if requested. Leave the Settings pairing dialog open. With the optional
+Settings-only pairing accessibility service enabled, Telos can read the code automatically.
+Choose **Enter code** for a manual session: expand the system notification, tap its reply action,
+type the code and send it. The system owns the keyboard; there is no Telos overlay over Settings
+or the navigation bar. Use Stop waiting in the notification or Telos System to cancel.
 
-Choose **Enter code** for a manual session even with accessibility enabled; **Wait for pairing code** enables optional automatic reading.
+See [Shizuku](/docs/wiki/shizuku) and the [implementation audit](/docs/developer-guide/shizuku-pairing).
