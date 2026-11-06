@@ -28,10 +28,15 @@ def check_apk(apk, require_both=False):
     with zipfile.ZipFile(apk) as archive:
         names = set(archive.namelist())
         abis = {name.split('/')[1] for name in names if name.startswith('lib/') and name.endswith('.so')}
-        assert abis and abis <= {'arm64-v8a', 'armeabi-v7a'}, f'unexpected packaged ABIs: {abis}'
+        arm_abis = {'arm64-v8a', 'armeabi-v7a'}
         if require_both:
-            assert abis == {'arm64-v8a', 'armeabi-v7a'}, f'harness is missing an ARM ABI: {abis}'
-        for abi in sorted(abis):
+            # AndroidX test dependencies include emulator binaries. They are not release payloads.
+            assert arm_abis <= abis, f'harness is missing an ARM ABI: {abis}'
+            for abi in abis - arm_abis:
+                assert not any(f'lib/{abi}/{lib}' in names for lib in ('libadb.so', 'librish.so', 'libshizuku.so')), f'unsupported Shizuku ABI: {abi}'
+        else:
+            assert abis and abis <= arm_abis, f'unexpected packaged ABIs: {abis}'
+        for abi in sorted(abis & arm_abis):
             for library in ('libadb.so', 'librish.so', 'libshizuku.so'):
                 name = f'lib/{abi}/{library}'
                 assert name in names, f'missing {name}'
