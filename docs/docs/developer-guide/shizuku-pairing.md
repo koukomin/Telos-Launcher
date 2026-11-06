@@ -15,6 +15,12 @@ is not a controlled performance comparison. The previous isolated overlay tests 
 certify the installed production version or every IME/navigation interaction. The notification
 implementation supersedes that approach.
 
+The native targets also use explicit 16 KB LOAD/RELRO linker alignment with the pinned NDK 27.
+`tools/release-shizuku-native-check.py` validates the actual packaged ARM binaries, and the release
+publisher runs that check before signing. The same check verifies both ARM payloads in the
+pairing workflow. The reported phone currently has 4 KB kernel pages; ELF alignment validation
+must not be described as physical testing on a 16 KB kernel.
+
 The following sections retain the original transport audit and historical validation record.
 
 This audit compares the actual Telos manager and server, not just the vendored source tree,

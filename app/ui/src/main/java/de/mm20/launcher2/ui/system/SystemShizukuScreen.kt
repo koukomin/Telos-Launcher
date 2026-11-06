@@ -66,7 +66,7 @@ fun SystemShizukuTab() {
     var shellOut by remember { mutableStateOf("") }
     var automaticPairing by rememberSaveable { mutableStateOf(true) }
     val pairingPermissions = rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { results ->
-        if (results.values.all { it }) TelosAdbPairingService.start(context, automaticPairing)
+        if (results.isNotEmpty() && results.values.all { it }) TelosAdbPairingService.start(context, automaticPairing)
         else Toast.makeText(context, context.getString(I18nR.string.preference_weather_alerts_test_failed), Toast.LENGTH_LONG).show()
     }
     fun beginPairing(automatic: Boolean) {

@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.22)
 project("telos_shizuku")
 set(CMAKE_CXX_STANDARD 17)
-add_link_options(-Wl,--exclude-libs,ALL)
+add_link_options(-Wl,--exclude-libs,ALL -Wl,-z,max-page-size=16384 -Wl,-z,common-page-size=16384)
 add_compile_options(-fdata-sections -ffunction-sections -fno-exceptions -fno-rtti)
 add_executable(libshizuku.so
         starter.cpp misc.cpp selinux.cpp cgroup.cpp android.cpp)

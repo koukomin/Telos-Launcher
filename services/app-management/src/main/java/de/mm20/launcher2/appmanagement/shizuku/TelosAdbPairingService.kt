@@ -100,6 +100,10 @@ class TelosAdbPairingService : Service() {
                 return START_NOT_STICKY
             }
             ACTION_START -> {
+                discovery?.stop()
+                discovery = null
+                foundHost = null
+                foundPort = null
                 TelosShizukuHost.notifyPairingSearch(intent?.getBooleanExtra(EXTRA_AUTOMATIC, true) ?: true)
                 startSearch()
                 show(searchingNotification())
