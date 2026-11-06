@@ -185,3 +185,8 @@ manual Run and automatic execution share a serial worker. Local tests/build resu
 in the PR. No physical device is connected for this feature: boot, root prompts, notification
 permissions, light/dark, compact/expanded, short landscape, font/display sizes and IME interaction
 have not been visually certified. This does not replace the notification pairing evidence above.
+The UI instrumentation failure was traced using the crash buffer to an unconditional Shizuku
+watchdog boot/install entry point accessing Koin in the standalone library test Application.
+The watchdog now stops when launcher DI is unavailable; boot preference failures are contained.
+The device-test helper preserves crash-buffer evidence and rejects failed JUnit reports even
+when AGP returns exit code zero. Final rerun results are recorded on PR #81.
