@@ -5,9 +5,7 @@ import de.mm20.launcher2.base.R as BaseR
 import android.content.ClipboardManager
 import android.content.Context
 import android.widget.Toast
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -83,49 +81,42 @@ fun AdvancedSettingsScreen() {
         item {
             PreferenceCategory(title = stringResource(I18nR.string.settings_system_automation)) {
                 val currentStatus = status
-                val isInstalled = currentStatus?.isShizukuInstalled == true
-                val summaryText = if (isInstalled) {
-                    val statusText = when {
-                        currentStatus.hasWriteSecureSettings -> "Status: Ready (Permission Granted)"
-                        currentStatus.isShizukuRunning -> "Status: Shizuku Active (Action Required: Grant Permission)"
-                        else -> "Status: Action Required (Missing WRITE_SECURE_SETTINGS)"
-                    }
-                    "Automatically enables Android Wireless Debugging once Wi-Fi connects on boot and wakes the Shizuku daemon in the background without needing a PC.\n$statusText"
-                } else {
-                    "Requires Shizuku app to be installed. Tap here to find it in Telos Store."
+                val statusText = when {
+                    currentStatus?.hasWriteSecureSettings == true ->
+                        stringResource(I18nR.string.telos_shizuku_diag_ready)
+                    currentStatus?.isShizukuRunning == true ->
+                        stringResource(I18nR.string.telos_shizuku_diag_grant)
+                    else ->
+                        stringResource(I18nR.string.telos_shizuku_diag_start)
                 }
-
-                if (isInstalled) {
-                    SwitchPreference(
-                        title = stringResource(I18nR.string.settings_shizuku_autostart),
-                        summary = summaryText,
-                        value = shizukuAutoStart,
-                        onValueChanged = { enabled ->
-                            vm.setShizukuAutoStart(
-                                context = context,
-                                enabled = enabled,
-                                onVerified = {
-                                    Toast.makeText(context, "Επιβεβαιώθηκε! Το Shizuku Auto-Start λειτουργεί κανονικά και ενεργοποιήθηκε.", Toast.LENGTH_LONG).show()
-                                },
-                                onFailed = {
-                                    showDiagnosticDialog = true
-                                }
-                            )
-                        }
-                    )
-                } else {
-                    Box(
-                        modifier = Modifier.fillMaxWidth().clickable {
-                            backStack.add(de.mm20.launcher2.ui.store.StoreDashboardRoute(initialQuery = "Shizuku"))
-                        }
-                    ) {
-                        Preference(
-                            title = stringResource(I18nR.string.settings_shizuku_autostart),
-                            summary = summaryText,
-                            enabled = false,
+                SwitchPreference(
+                    title = stringResource(I18nR.string.settings_shizuku_autostart),
+                    summary = stringResource(I18nR.string.telos_shizuku_autostart_summary) + "\n" + statusText,
+                    value = shizukuAutoStart,
+                    onValueChanged = { enabled ->
+                        vm.setShizukuAutoStart(
+                            context = context,
+                            enabled = enabled,
+                            onVerified = {
+                                Toast.makeText(
+                                    context,
+                                    context.getString(I18nR.string.telos_shizuku_autostart_ok),
+                                    Toast.LENGTH_LONG,
+                                ).show()
+                            },
+                            onFailed = {
+                                showDiagnosticDialog = true
+                            }
                         )
                     }
-                }
+                )
+                Preference(
+                    title = stringResource(I18nR.string.telos_shizuku_title),
+                    summary = stringResource(I18nR.string.security_hub_summary),
+                    onClick = {
+                        backStack.add(de.mm20.launcher2.ui.system.SystemDashboardRoute("shizuku"))
+                    },
+                )
 
                 Preference(
                     icon = BaseR.drawable.settings_24px,
@@ -262,7 +253,7 @@ private fun ShizukuDiagnosticDialog(
                 Text("Live OS Compatibility Checklist:", fontWeight = FontWeight.Bold)
 
                 ChecklistItem("Android 11+ (Wireless Debugging Support)", status?.isAndroid11OrHigher == true)
-                ChecklistItem("Shizuku Installed (moe.shizuku.privileged.api)", status?.isShizukuInstalled == true)
+                ChecklistItem(stringResource(I18nR.string.telos_shizuku_diag_builtin), status?.isShizukuInstalled == true || status?.isShizukuRunning == true)
                 ChecklistItem("Developer Options Enabled", status?.isDeveloperOptionsEnabled == true)
                 ChecklistItem("Wi-Fi Connected (Active Network)", status?.isWifiConnected == true)
                 ChecklistItem("WRITE_SECURE_SETTINGS Granted", status?.hasWriteSecureSettings == true)

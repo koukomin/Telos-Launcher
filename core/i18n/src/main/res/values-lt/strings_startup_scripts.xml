@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="startup_scripts_title">Paleidimo scenarijai</string>
+    <string name="startup_scripts_summary">Įjungti scenarijai vykdomi vieną kartą atidarant Telos su pasirinkta tapatybe. Įjunkite tik patikimas komandas. Redagavimas išjungia automatinį vykdymą.</string>
+    <string name="startup_script_enable">Vykdyti paleidžiant Telos</string>
+    <string name="startup_script_code">Apvalkalo scenarijus (iki 16 384 ženklų)</string>
+    <string name="startup_script_exit">Išėjimo kodas: %1$d</string>
+    <string name="startup_wireless_off">Išjungti belaidį derinimą paleidus Shizuku</string>
+    <string name="startup_shizuku_help">Vieną kartą susiekite belaidžio derinimo nustatymuose. Po kiekvieno paleidimo iš naujo įjunkite belaidį derinimą ir patvirtinkite Wi-Fi tinklą, jei Android to prašo. Automatinis paleidimas prisijungia iš naujo su išsaugotu raktu; jis negali apeiti Android leidimų. Root nereikia belaidžio derinimo.</string>
+</resources>

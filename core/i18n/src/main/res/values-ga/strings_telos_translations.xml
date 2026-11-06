@@ -2864,4 +2864,7 @@
     <string name="telos_system_wifi_security_open">Oscailte</string>
     <string name="telos_system_wifi_empty">Níl aon líonra sábháilte</string>
     <string name="telos_system_wifi_persisted">Sábháladh %1$d líonra sealadach</string>
+    <string name="desktop_mode_kde_connect">Comhtháthú KDE Connect</string>
+    <string name="desktop_mode_kde_connect_open">Oscail KDE Connect chun ríomhaire nó táibléad a phéireáil</string>
+    <string name="desktop_mode_kde_connect_install">Tapáil chun KDE Connect a shuiteáil ó Telos Store</string>
 </resources>

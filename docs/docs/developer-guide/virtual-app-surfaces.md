@@ -45,7 +45,12 @@ The home clock, transparent resting search bar and dock page dots have no automa
 ## Readable overlays, controls and search
 
 Keep `surface`/`background` clear for root scaffolds, but preserve opaque
-`surfaceContainer` for Material popup menus. Files and Phone drawers explicitly
+`surfaceContainer` for Material popup menus, list pickers and preference
+dialogs (`virtualAppPopup()`). Settings → Appearance (theme, shapes,
+transparency, dynamic-color source) and Web apps (swipe/scroll direction
+`ListPreference`) use the same frosted root as Telos apps;
+dialog `Surface`/`AlertDialog` must set an opaque container via
+`virtualAppPopup()`, never the cleared root `surface`. Preference rows use opaque `surfaceContainerLow`. Files and Phone drawers explicitly
 use that role: wallpaper blur remains behind the app, while overlay labels do
 not mix with underlying content. Playback buttons use paired
 primaryContainer/onPrimaryContainer roles, never the transparent root surface as

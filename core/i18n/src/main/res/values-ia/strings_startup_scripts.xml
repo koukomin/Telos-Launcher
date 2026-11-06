@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="startup_scripts_title">Scriptos de initio</string>
+    <string name="startup_scripts_summary">Le scriptos activate es executate un vice quando Telos se aperi, con le identitate seligite. Activa solmente commandos fidabile. Le edition disactiva le execution automatic.</string>
+    <string name="startup_script_enable">Executar al initio de Telos</string>
+    <string name="startup_script_code">Scripto de shell (maximo 16.384 characteres)</string>
+    <string name="startup_script_exit">Codice de exito: %1$d</string>
+    <string name="startup_wireless_off">Disactivar le depuration sin filo post le initio de Shizuku</string>
+    <string name="startup_shizuku_help">Associa un vice in Depuration sin filo. Post cata reinitio, activa le depuration sin filo e approba le rete Wi-Fi si Android lo demanda. Le initio automatic reconnecte con le clave salvate; illo non pote eluder le permissiones de Android. Root non require depuration sin filo.</string>
+</resources>

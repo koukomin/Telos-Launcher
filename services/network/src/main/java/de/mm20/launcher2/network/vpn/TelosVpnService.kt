@@ -39,6 +39,8 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
@@ -240,7 +242,10 @@ class TelosVpnService : VpnService(), KoinComponent {
             // tunnel was built with, so changes during startup are not lost.
             scope.launch(ops) {
                 var last = snapshot
-                mon.snapshot.collect { s ->
+                mon.snapshot
+                    .debounce(400)
+                    .distinctUntilChanged()
+                    .collect { s ->
                     if (s != last) {
                         last = s
                         onNetworksChanged(s)
@@ -350,8 +355,10 @@ class TelosVpnService : VpnService(), KoinComponent {
         }
     }
 
-    private fun underlyingNetworks(snapshot: NetSnapshot): Array<Network>? =
-        snapshot.networks.map { it.network }.takeIf { it.isNotEmpty() }?.toTypedArray()
+    private fun underlyingNetworks(snapshot: NetSnapshot): Array<Network>? {
+        val primary = snapshot.active?.network ?: return null
+        return arrayOf(primary)
+    }
 
     private fun networkFor(ipv6: Boolean): Network? {
         val s = monitor?.snapshot?.value ?: return null
@@ -391,7 +398,10 @@ class TelosVpnService : VpnService(), KoinComponent {
         try {
             applyNetworks(t, snapshot)
             val next = computeRoutes(snapshot)
-            if (next != routes) {
+            val prev = routes
+            val routesChanged = prev == null || next.has4 != prev.has4 || next.has6 != prev.has6 ||
+                kotlin.math.abs(next.mtu - prev.mtu) >= 64
+            if (routesChanged) {
                 // seamless hand-over: the new interface replaces the old one without a gap
                 val fd = establish(next, snapshot) ?: throw IllegalStateException("VPN permission was revoked")
                 val proto = when {

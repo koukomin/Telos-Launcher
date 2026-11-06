@@ -209,7 +209,12 @@ fun SystemDashboardScreen(initialTab: String = "") {
                     Icon(painterResource(BaseR.drawable.settings_24px), contentDescription = "Font Settings")
                 }
             }
-            androidx.compose.material3.ScrollableTabRow(selectedTabIndex = currentTab, containerColor = Color.Transparent, edgePadding = 8.dp) {
+            androidx.compose.material3.ScrollableTabRow(
+                selectedTabIndex = currentTab,
+                containerColor = Color.Transparent,
+                edgePadding = 8.dp,
+                modifier = Modifier.fillMaxWidth(),
+            ) {
                 androidx.compose.material3.Tab(
                     selected = currentTab == 0,
                     onClick = { currentTab = 0 },
@@ -375,6 +380,7 @@ fun SystemDashboardScreen(initialTab: String = "") {
                     }
                 }
                 item { SavedWifiPasswordsPreference() }
+                item { SystemToolsSection() }
                 if (networks.isNotEmpty()) {
                     item { Text(stringResource(I18nR.string.telos_system_saved_wifi), style = MaterialTheme.typography.titleMedium) }
                     items(networks, key = { it.ssid }) { n ->

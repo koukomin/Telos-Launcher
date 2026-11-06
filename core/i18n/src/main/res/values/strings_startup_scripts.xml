@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="startup_scripts_title">Startup scripts</string>
+    <string name="startup_scripts_summary">Enabled scripts run once when Telos opens, with the selected identity. Only enable commands you trust. Editing disables automatic execution.</string>
+    <string name="startup_script_enable">Run when Telos starts</string>
+    <string name="startup_script_code">Shell script (maximum 16,384 characters)</string>
+    <string name="startup_script_exit">Exit code: %1$d</string>
+    <string name="startup_wireless_off">Turn off wireless debugging after Shizuku starts</string>
+    <string name="startup_shizuku_help">Pair once in Wireless debugging. After each reboot, enable wireless debugging and approve the Wi-Fi network if Android asks. Autostart reconnects using the saved key; it cannot bypass Android permissions. Root does not require wireless debugging.</string>
+</resources>

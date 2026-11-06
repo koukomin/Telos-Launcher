@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="startup_scripts_title">启动脚本</string>
+    <string name="startup_scripts_summary">已启用的脚本会在打开 Telos 时以所选身份运行一次。请仅启用可信的命令。编辑脚本会停用自动执行。</string>
+    <string name="startup_script_enable">Telos 启动时运行</string>
+    <string name="startup_script_code">Shell 脚本（最多 16,384 个字符）</string>
+    <string name="startup_script_exit">退出代码：%1$d</string>
+    <string name="startup_wireless_off">Shizuku 启动后关闭无线调试</string>
+    <string name="startup_shizuku_help">在“无线调试”中配对一次。每次重启后，请开启无线调试，并在 Android 提示时授权 Wi-Fi 网络。自动启动会使用保存的密钥重新连接，但无法绕过 Android 权限。Root 不需要无线调试。</string>
+</resources>

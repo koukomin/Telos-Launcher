@@ -102,8 +102,11 @@ fun DesktopModeSettingsScreen() {
                         runCatching { context.packageManager.getApplicationInfo(kdePkg, 0) }.isSuccess
                     }
                     Preference(
-                        title = "KDE Connect Integration",
-                        summary = if (isKdeInstalled) "Open KDE Connect to pair with PC or Tablet" else "Tap to install KDE Connect from Telos Store",
+                        title = stringResource(I18nR.string.desktop_mode_kde_connect),
+                        summary = stringResource(
+                            if (isKdeInstalled) I18nR.string.desktop_mode_kde_connect_open
+                            else I18nR.string.desktop_mode_kde_connect_install
+                        ),
                         onClick = {
                             val intent = context.packageManager.getLaunchIntentForPackage(kdePkg)
                                 ?: android.content.Intent(android.content.Intent.ACTION_VIEW, android.net.Uri.parse("market://details?id=$kdePkg")).addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK)

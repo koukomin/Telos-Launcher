@@ -727,6 +727,30 @@ class UiSettings internal constructor(
         }
     }
 
+    suspend fun setShizukuAutoStartAndWait(enabled: Boolean) {
+        launcherDataStore.updateAndWait {
+            it.copy(misc = it.misc.copy(shizukuAutoStart = enabled))
+        }
+    }
+
+    val shizukuDisableWirelessAfterStart
+        get() = launcherDataStore.data.map { it.misc.shizukuDisableWirelessAfterStart }
+
+    fun setShizukuDisableWirelessAfterStart(enabled: Boolean) {
+        launcherDataStore.update {
+            it.copy(misc = it.misc.copy(shizukuDisableWirelessAfterStart = enabled))
+        }
+    }
+
+    val virtualAppPageEffects
+        get() = launcherDataStore.data.map { it.misc.virtualAppPageEffects }.distinctUntilChanged()
+
+    fun setVirtualAppPageEffects(enabled: Boolean) {
+        launcherDataStore.update {
+            it.copy(misc = it.misc.copy(virtualAppPageEffects = enabled))
+        }
+    }
+
     val artOptimizerMasterEnabled
         get() = launcherDataStore.data.map { it.misc.artOptimizerMasterEnabled }
 

@@ -506,7 +506,7 @@
     <string name="preference_favorites_edit_button_summary">顯示一個按鈕以重新排列我的最愛</string>
     <string name="preference_favorites_frequently_used_summary">在我的最愛顯示常用的項目</string>
     <string name="preference_feed_enable_summary">在主畫面向右滑動開啟 Feed</string>
-    <string name="preference_feed_integration">Feed</string>
+    <string name="preference_feed_integration">動態</string>
     <string name="preference_filter_bar">顯示篩選器列</string>
     <string name="preference_filter_bar_summary">在鍵盤上方顯示快速篩選器</string>
     <string name="preference_font">字型</string>

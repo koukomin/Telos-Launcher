@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="startup_scripts_title">Scripts εκκίνησης</string>
+    <string name="startup_scripts_summary">Τα ενεργοποιημένα scripts εκτελούνται μία φορά όταν ανοίγει το Telos, με την επιλεγμένη ταυτότητα. Ενεργοποιείτε μόνο εντολές που εμπιστεύεστε. Η επεξεργασία απενεργοποιεί την αυτόματη εκτέλεση.</string>
+    <string name="startup_script_enable">Εκτέλεση κατά την εκκίνηση του Telos</string>
+    <string name="startup_script_code">Script κελύφους (έως 16.384 χαρακτήρες)</string>
+    <string name="startup_script_exit">Κωδικός εξόδου: %1$d</string>
+    <string name="startup_wireless_off">Απενεργοποίηση ασύρματης αποσφαλμάτωσης μετά την εκκίνηση του Shizuku</string>
+    <string name="startup_shizuku_help">Κάντε σύζευξη μία φορά στην Ασύρματη αποσφαλμάτωση. Μετά από κάθε επανεκκίνηση, ενεργοποιήστε την ασύρματη αποσφαλμάτωση και εγκρίνετε το δίκτυο Wi-Fi αν το ζητήσει το Android. Η αυτόματη εκκίνηση συνδέεται ξανά με το αποθηκευμένο κλειδί· δεν παρακάμπτει τις άδειες του Android. Το root δεν απαιτεί ασύρματη αποσφαλμάτωση.</string>
+</resources>

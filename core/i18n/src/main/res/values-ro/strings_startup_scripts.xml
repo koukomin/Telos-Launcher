@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="startup_scripts_title">Scripturi de pornire</string>
+    <string name="startup_scripts_summary">Scripturile activate rulează o singură dată la deschiderea Telos, cu identitatea selectată. Activați doar comenzi de încredere. Editarea dezactivează execuția automată.</string>
+    <string name="startup_script_enable">Rulează la pornirea Telos</string>
+    <string name="startup_script_code">Script shell (maximum 16.384 de caractere)</string>
+    <string name="startup_script_exit">Cod de ieșire: %1$d</string>
+    <string name="startup_wireless_off">Dezactivează depanarea wireless după pornirea Shizuku</string>
+    <string name="startup_shizuku_help">Asociați o singură dată în Depanare wireless. După fiecare repornire, activați depanarea wireless și aprobați rețeaua Wi-Fi dacă Android solicită acest lucru. Pornirea automată se reconectează cu cheia salvată; nu poate ocoli permisiunile Android. Root nu necesită depanare wireless.</string>
+</resources>

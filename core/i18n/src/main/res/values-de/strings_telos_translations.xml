@@ -372,7 +372,7 @@
     <string name="preference_app_lock_work_profile_toggle_summary">Authentifizierung verlangen, um das Arbeitsprofil in der App-Übersicht zu pausieren oder fortzusetzen</string>
     <string name="app_lock_work_profile_prompt_title">Authentifiziere dich, um den Status des Arbeitsprofils zu ändern</string>
     <string name="preference_screen_work_profile">Arbeitsprofil</string>
-    <string name="preference_screen_work_profile_summary">Das Arbeitsprofil einrichten, pausieren, fortsetzen und sperren</string>
+    <string name="preference_screen_work_profile_summary">Arbeitsprofil einrichten, pausieren, fortsetzen und sperren</string>
     <string name="work_profile_status_title">Status</string>
     <string name="work_profile_status_not_set_up">Nicht eingerichtet</string>
     <string name="work_profile_status_active">Aktiv</string>
@@ -1225,4 +1225,11 @@
     <string name="telos_system_wifi_security_open">Offen</string>
     <string name="telos_system_wifi_empty">Keine gespeicherten Netzwerke</string>
     <string name="telos_system_wifi_persisted">%1$d temporäre Netzwerke gespeichert</string>
+    <string name="desktop_mode_kde_connect">KDE-Connect-Integration</string>
+    <string name="desktop_mode_kde_connect_open">KDE Connect öffnen, um mit PC oder Tablet zu koppeln</string>
+    <string name="desktop_mode_kde_connect_install">Tippen, um KDE Connect aus dem Telos Store zu installieren</string>
+    <string name="preference_virtual_app_page_effects">Seitenanimationen in Telos-Apps</string>
+    <string name="preference_virtual_app_page_effects_summary">Schieben und Skalieren beim Wechseln der Bildschirme. Standardmäßig aus.</string>
+    <string name="net_waveform_title">Netzwerkverkehr-Wellenform</string>
+    <string name="net_waveform_rates">↓ %1$s  ·  ↑ %2$s</string>
 </resources>

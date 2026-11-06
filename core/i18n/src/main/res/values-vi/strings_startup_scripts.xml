@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="startup_scripts_title">Tập lệnh khởi động</string>
+    <string name="startup_scripts_summary">Các tập lệnh đã bật chạy một lần khi mở Telos, bằng danh tính đã chọn. Chỉ bật những lệnh bạn tin cậy. Chỉnh sửa sẽ tắt thực thi tự động.</string>
+    <string name="startup_script_enable">Chạy khi Telos khởi động</string>
+    <string name="startup_script_code">Tập lệnh shell (tối đa 16.384 ký tự)</string>
+    <string name="startup_script_exit">Mã thoát: %1$d</string>
+    <string name="startup_wireless_off">Tắt gỡ lỗi không dây sau khi Shizuku khởi động</string>
+    <string name="startup_shizuku_help">Ghép nối một lần trong Gỡ lỗi không dây. Sau mỗi lần khởi động lại, bật gỡ lỗi không dây và cho phép mạng Wi-Fi nếu Android yêu cầu. Tự khởi động kết nối lại bằng khóa đã lưu; không thể bỏ qua quyền của Android. Root không yêu cầu gỡ lỗi không dây.</string>
+</resources>

@@ -40,4 +40,13 @@ Computer: depanare USB și comanda adb de mai jos.</string>
     <string name="telos_shizuku_pair_start">Așteaptă codul de asociere</string>
     <string name="telos_shizuku_pair_stop">Oprește așteptarea</string>
     <string name="telos_shizuku_pair_open">Deschide depanarea wireless</string>
+    <string name="telos_shizuku_perm_title">Permite accesul Shizuku</string>
+    <string name="telos_shizuku_perm_body">%1$s vrea să folosească serverul Shizuku Telos.</string>
+    <string name="telos_shizuku_perm_once">Permite o dată</string>
+    <string name="telos_shizuku_grant_failed">Accesul Shizuku nu a putut fi actualizat. Pornește mai întâi serverul Telos.</string>
+    <string name="telos_shizuku_diag_builtin">Server Shizuku Telos integrat</string>
+    <string name="telos_shizuku_diag_ready">Stare: gata (WRITE_SECURE_SETTINGS acordat)</string>
+    <string name="telos_shizuku_diag_grant">Stare: serverul rulează — acordă WRITE_SECURE_SETTINGS</string>
+    <string name="telos_shizuku_diag_start">Stare: pornește serverul din Telos System → Shizuku</string>
+    <string name="telos_shizuku_autostart_ok">Pornirea automată Shizuku este activă.</string>
 </resources>

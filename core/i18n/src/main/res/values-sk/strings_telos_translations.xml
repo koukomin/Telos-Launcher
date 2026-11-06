@@ -1767,7 +1767,7 @@
     <string name="preference_app_lock_work_profile_toggle_summary">Vyžadovať overenie na pozastavenie alebo obnovenie pracovného profilu zo zásuvky aplikácií</string>
     <string name="app_lock_work_profile_prompt_title">Overením zmeníte stav pracovného profilu</string>
     <string name="preference_screen_work_profile">Pracovný profil</string>
-    <string name="preference_screen_work_profile_summary">Nastavenie, pozastavenie, obnovenie a zamknutie pracovného profilu</string>
+    <string name="preference_screen_work_profile_summary">Nastavenie, pozastavenie, obnovenie a uzamknutie pracovného profilu</string>
     <string name="work_profile_status_title">Stav</string>
     <string name="work_profile_status_not_set_up">Nenastavený</string>
     <string name="work_profile_status_active">Aktívny</string>
@@ -2635,4 +2635,7 @@
     <string name="telos_system_wifi_security_open">Otvorená</string>
     <string name="telos_system_wifi_empty">Žiadne uložené siete</string>
     <string name="telos_system_wifi_persisted">Uložených %1$d dočasných sietí</string>
+    <string name="desktop_mode_kde_connect">Integrácia KDE Connect</string>
+    <string name="desktop_mode_kde_connect_open">Otvorte KDE Connect a spárujte PC alebo tablet</string>
+    <string name="desktop_mode_kde_connect_install">Ťuknutím nainštalujte KDE Connect z Telos Store</string>
 </resources>

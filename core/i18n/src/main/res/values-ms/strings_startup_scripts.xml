@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="startup_scripts_title">Skrip permulaan</string>
+    <string name="startup_scripts_summary">Skrip yang didayakan dijalankan sekali apabila Telos dibuka, dengan identiti yang dipilih. Dayakan hanya arahan yang dipercayai. Penyuntingan mematikan pelaksanaan automatik.</string>
+    <string name="startup_script_enable">Jalankan apabila Telos bermula</string>
+    <string name="startup_script_code">Skrip shell (maksimum 16,384 aksara)</string>
+    <string name="startup_script_exit">Kod keluar: %1$d</string>
+    <string name="startup_wireless_off">Matikan penyahpepijatan wayarles selepas Shizuku bermula</string>
+    <string name="startup_shizuku_help">Gandingkan sekali dalam Penyahpepijatan wayarles. Selepas setiap but semula, dayakan penyahpepijatan wayarles dan benarkan rangkaian Wi-Fi jika Android meminta. Permulaan automatik menyambung semula dengan kunci yang disimpan; ia tidak boleh memintas kebenaran Android. Root tidak memerlukan penyahpepijatan wayarles.</string>
+</resources>

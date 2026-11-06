@@ -440,7 +440,9 @@ internal class AppRepositoryImpl(
                             appResults.add(vApp)
                         } else if (foldedQuery.length >= 2 && (
                                 de.mm20.launcher2.search.GreekFold.matches(vApp.label, foldedQuery) ||
-                                    aliases.any { de.mm20.launcher2.search.GreekFold.matches(it, foldedQuery) })
+                                    aliases.any { de.mm20.launcher2.search.GreekFold.matches(it, foldedQuery) } ||
+                                    (vApp.key == "telos_system_app://shizuku" && de.mm20.launcher2.search.GreekFold.matches("shizuku", foldedQuery))
+                                )
                         ) {
                             // Greek / accent-less / Greeklish spelling ("Τηλέφωνο", "tilefono", "klhseis")
                             appResults.add(vApp)

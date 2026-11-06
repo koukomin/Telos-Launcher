@@ -277,6 +277,9 @@
     <string name="desktop_mode_display_status">External display</string>
     <string name="desktop_mode_display_connected">Connected</string>
     <string name="desktop_mode_display_not_connected">Not connected</string>
+    <string name="desktop_mode_kde_connect">KDE Connect integration</string>
+    <string name="desktop_mode_kde_connect_open">Open KDE Connect to pair with a PC or tablet</string>
+    <string name="desktop_mode_kde_connect_install">Tap to install KDE Connect from Telos Store</string>
     <string name="desktop_mode_orientation">Orientation</string>
     <string name="desktop_mode_orientation_auto">Automatic</string>
     <string name="desktop_mode_orientation_portrait">Portrait</string>
@@ -557,8 +560,8 @@
     <string name="preference_font_scale">Text size</string>
     <string name="preference_font_scale_summary">Scale text across the home screen, search and settings, independently of the system font size</string>
     <string name="preference_font_scale_preview_label">Camera</string>
-    <string name="preference_screen_advanced">Advanced settings</string>
-    <string name="preference_screen_advanced_summary">Performance, profiles, plugins, and tools</string>
+    <string name="preference_screen_advanced">System</string>
+    <string name="preference_screen_advanced_summary">Graphics, Shizuku, privacy, backup and system tools</string>
     <string name="preference_screen_about">About</string>
     <string name="preference_version">Version</string>
     <string name="preference_category_links">Links</string>
@@ -692,7 +695,10 @@
     <string name="store_terminal_ready" translatable="false">&gt; System ready. Awaiting Store events...</string>
     <string name="store_security_audit_title" translatable="false">Security &amp; Architecture Audit</string>
     <string name="store_similar_apps_title" translatable="false">Recommended Similar Apps</string>
-    <string name="net_waveform_title" translatable="false">NETWORK TRAFFIC WAVEFORM</string>
+    <string name="net_waveform_title">Network traffic waveform</string>
+    <string name="net_waveform_rates">↓ %1$s  ·  ↑ %2$s</string>
+    <string name="preference_virtual_app_page_effects">Page animations in Telos apps</string>
+    <string name="preference_virtual_app_page_effects_summary">Slide and scale when changing screens. Off by default.</string>
     <string name="weather_radar_title" translatable="false">[ATMOSPHERIC_RADAR]</string>
     <string name="weather_radar_sweep" translatable="false">[SWEEP: LIVE]</string>
     <string name="freeze_backend_icebox">Ice Box</string>

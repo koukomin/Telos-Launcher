@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="startup_scripts_title">Lanĉaj skriptoj</string>
+    <string name="startup_scripts_summary">Ŝaltitaj skriptoj ruliĝas unufoje kiam Telos malfermiĝas, kun la elektita identeco. Ŝaltu nur komandojn, kiujn vi fidas. Redaktado malŝaltas aŭtomatan ruladon.</string>
+    <string name="startup_script_enable">Ruli kiam Telos lanĉiĝas</string>
+    <string name="startup_script_code">Ŝela skripto (maksimume 16 384 signoj)</string>
+    <string name="startup_script_exit">Elirkodo: %1$d</string>
+    <string name="startup_wireless_off">Malŝalti sendratan sencimigon post la lanĉo de Shizuku</string>
+    <string name="startup_shizuku_help">Parigu unufoje en Sendrata sencimigo. Post ĉiu restartigo, ŝaltu sendratan sencimigon kaj aprobu la reton Wi-Fi se Android petas. Aŭtomata lanĉo rekonektiĝas per la konservita ŝlosilo; ĝi ne povas preteriri la permesojn de Android. Root ne bezonas sendratan sencimigon.</string>
+</resources>

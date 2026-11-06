@@ -1766,8 +1766,8 @@
     <string name="preference_app_lock_work_profile_toggle">Заключване на превключвателя на работния профил</string>
     <string name="preference_app_lock_work_profile_toggle_summary">Изисква удостоверяване за пауза или възобновяване на работния профил от списъка с приложения</string>
     <string name="app_lock_work_profile_prompt_title">Удостоверете се, за да промените състоянието на работния профил</string>
-    <string name="preference_screen_work_profile">Работен профил</string>
-    <string name="preference_screen_work_profile_summary">Настройване, пауза, възобновяване и заключване на работния профил</string>
+    <string name="preference_screen_work_profile">Служебен профил</string>
+    <string name="preference_screen_work_profile_summary">Настройка, пауза, подновяване и заключване на служебния профил</string>
     <string name="work_profile_status_title">Състояние</string>
     <string name="work_profile_status_not_set_up">Не е настроен</string>
     <string name="work_profile_status_active">Активен</string>
@@ -2461,4 +2461,7 @@
     <string name="telos_system_wifi_security_open">Отворена</string>
     <string name="telos_system_wifi_empty">Няма запазени мрежи</string>
     <string name="telos_system_wifi_persisted">Запазени са %1$d временни мрежи</string>
+    <string name="desktop_mode_kde_connect">Интеграция на KDE Connect</string>
+    <string name="desktop_mode_kde_connect_open">Отворете KDE Connect за сдвояване с компютър или таблет</string>
+    <string name="desktop_mode_kde_connect_install">Докоснете, за да инсталирате KDE Connect от Telos Store</string>
 </resources>

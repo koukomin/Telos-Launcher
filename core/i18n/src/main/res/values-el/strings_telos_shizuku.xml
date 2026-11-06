@@ -40,4 +40,13 @@
     <string name="telos_shizuku_pair_start">Αναμονή κωδικού ζεύξης</string>
     <string name="telos_shizuku_pair_stop">Διακοπή αναμονής</string>
     <string name="telos_shizuku_pair_open">Άνοιγμα ασύρματου debugging</string>
+    <string name="telos_shizuku_perm_title">Επιτρέπεται πρόσβαση Shizuku</string>
+    <string name="telos_shizuku_perm_body">Η εφαρμογή %1$s θέλει να χρησιμοποιήσει τον διακομιστή Shizuku του Telos.</string>
+    <string name="telos_shizuku_perm_once">Μία φορά</string>
+    <string name="telos_shizuku_grant_failed">Δεν ενημερώθηκε η πρόσβαση Shizuku. Ξεκίνα πρώτα τον διακομιστή από το Telos System.</string>
+    <string name="telos_shizuku_diag_builtin">Ενσωματωμένος διακομιστής Shizuku του Telos</string>
+    <string name="telos_shizuku_diag_ready">Κατάσταση: έτοιμο (WRITE_SECURE_SETTINGS)</string>
+    <string name="telos_shizuku_diag_grant">Κατάσταση: ο διακομιστής τρέχει — χορήγησε WRITE_SECURE_SETTINGS</string>
+    <string name="telos_shizuku_diag_start">Κατάσταση: ξεκίνα τον διακομιστή από Telos System → Shizuku</string>
+    <string name="telos_shizuku_autostart_ok">Η αυτόματη εκκίνηση Shizuku είναι ενεργή.</string>
 </resources>

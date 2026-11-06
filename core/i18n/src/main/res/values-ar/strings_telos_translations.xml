@@ -1187,4 +1187,11 @@
     <string name="telos_system_wifi_security_open">مفتوحة</string>
     <string name="telos_system_wifi_empty">لا توجد شبكات محفوظة</string>
     <string name="telos_system_wifi_persisted">تم حفظ %1$d شبكة مؤقتة</string>
+    <string name="desktop_mode_kde_connect">تكامل KDE Connect</string>
+    <string name="desktop_mode_kde_connect_open">افتح KDE Connect للاقتران مع حاسوب أو جهاز لوحي</string>
+    <string name="desktop_mode_kde_connect_install">اضغط لتثبيت KDE Connect من متجر Telos</string>
+    <string name="preference_virtual_app_page_effects">حركات الصفحات في تطبيقات Telos</string>
+    <string name="preference_virtual_app_page_effects_summary">انزلاق وتكبير عند تغيير الشاشات. معطّل افتراضيًا.</string>
+    <string name="net_waveform_title">شكل موجة حركة الشبكة</string>
+    <string name="net_waveform_rates">↓ %1$s  ·  ↑ %2$s</string>
 </resources>

@@ -40,4 +40,13 @@ Tietokone: USB-virheenkorjaus ja alla oleva adb-komento.</string>
     <string name="telos_shizuku_pair_start">Odota pariliitoskoodia</string>
     <string name="telos_shizuku_pair_stop">Lopeta odotus</string>
     <string name="telos_shizuku_pair_open">Avaa langaton virheenkorjaus</string>
+    <string name="telos_shizuku_perm_title">Salli Shizuku-käyttö</string>
+    <string name="telos_shizuku_perm_body">%1$s haluaa käyttää Teloksen Shizuku-palvelinta.</string>
+    <string name="telos_shizuku_perm_once">Salli kerran</string>
+    <string name="telos_shizuku_grant_failed">Shizuku-käyttöoikeutta ei voitu päivittää. Käynnistä Telos-palvelin ensin.</string>
+    <string name="telos_shizuku_diag_builtin">Teloksen sisäänrakennettu Shizuku-palvelin</string>
+    <string name="telos_shizuku_diag_ready">Tila: valmis (WRITE_SECURE_SETTINGS myönnetty)</string>
+    <string name="telos_shizuku_diag_grant">Tila: palvelin käynnissä — myönnä WRITE_SECURE_SETTINGS</string>
+    <string name="telos_shizuku_diag_start">Tila: käynnistä palvelin kohdasta Telos System → Shizuku</string>
+    <string name="telos_shizuku_autostart_ok">Shizukun automaattinen käynnistys on päällä.</string>
 </resources>

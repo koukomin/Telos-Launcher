@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="startup_scripts_title">Abiarazteko scriptak</string>
+    <string name="startup_scripts_summary">Gaitutako scriptak behin exekutatzen dira Telos irekitzean, hautatutako identitatearekin. Gaitu soilik fidagarriak diren komandoak. Editatzeak exekuzio automatikoa desgaitzen du.</string>
+    <string name="startup_script_enable">Exekutatu Telos abiaraztean</string>
+    <string name="startup_script_code">Shell scripta (gehienez 16.384 karaktere)</string>
+    <string name="startup_script_exit">Irteera-kodea: %1$d</string>
+    <string name="startup_wireless_off">Desaktibatu hari gabeko arazketa Shizuku abiarazi ondoren</string>
+    <string name="startup_shizuku_help">Parekatu behin hari gabeko arazketan. Berrabiarazi ondoren, gaitu hari gabeko arazketa eta onartu Wi-Fi sarea Android-ek eskatzen badu. Abiarazte automatikoa gordetako gakoarekin berriro konektatzen da; ezin ditu Android-en baimenak saihestu. Root-ek ez du hari gabeko arazketarik behar.</string>
+</resources>

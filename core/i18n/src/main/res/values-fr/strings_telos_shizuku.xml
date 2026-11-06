@@ -40,4 +40,13 @@ Ordinateur : débogage USB, puis la commande adb ci-dessous.</string>
     <string name="telos_shizuku_pair_start">Attendre le code d’appairage</string>
     <string name="telos_shizuku_pair_stop">Arrêter d’attendre</string>
     <string name="telos_shizuku_pair_open">Ouvrir le débogage sans fil</string>
+    <string name="telos_shizuku_perm_title">Autoriser l’accès Shizuku</string>
+    <string name="telos_shizuku_perm_body">%1$s souhaite utiliser le serveur Shizuku de Telos.</string>
+    <string name="telos_shizuku_perm_once">Autoriser une fois</string>
+    <string name="telos_shizuku_grant_failed">Impossible de mettre à jour l’accès Shizuku. Démarrez d’abord le serveur Telos.</string>
+    <string name="telos_shizuku_diag_builtin">Serveur Shizuku intégré de Telos</string>
+    <string name="telos_shizuku_diag_ready">État : prêt (WRITE_SECURE_SETTINGS accordé)</string>
+    <string name="telos_shizuku_diag_grant">État : serveur actif — accorder WRITE_SECURE_SETTINGS</string>
+    <string name="telos_shizuku_diag_start">État : démarrez le serveur dans Telos System → Shizuku</string>
+    <string name="telos_shizuku_autostart_ok">Le démarrage automatique de Shizuku est activé.</string>
 </resources>

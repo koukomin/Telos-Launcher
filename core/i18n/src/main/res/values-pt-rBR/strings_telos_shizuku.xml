@@ -40,4 +40,13 @@ Computador: depuração USB e o comando adb abaixo.</string>
     <string name="telos_shizuku_pair_start">Aguardar código de emparelhamento</string>
     <string name="telos_shizuku_pair_stop">Parar espera</string>
     <string name="telos_shizuku_pair_open">Abrir depuração sem fio</string>
+    <string name="telos_shizuku_perm_title">Permitir acesso ao Shizuku</string>
+    <string name="telos_shizuku_perm_body">%1$s quer usar o servidor Shizuku do Telos.</string>
+    <string name="telos_shizuku_perm_once">Permitir uma vez</string>
+    <string name="telos_shizuku_grant_failed">Não foi possível atualizar o acesso ao Shizuku. Inicie primeiro o servidor Telos.</string>
+    <string name="telos_shizuku_diag_builtin">Servidor Shizuku integrado do Telos</string>
+    <string name="telos_shizuku_diag_ready">Estado: pronto (WRITE_SECURE_SETTINGS concedido)</string>
+    <string name="telos_shizuku_diag_grant">Estado: servidor em execução — conceda WRITE_SECURE_SETTINGS</string>
+    <string name="telos_shizuku_diag_start">Estado: inicie o servidor em Telos System → Shizuku</string>
+    <string name="telos_shizuku_autostart_ok">O arranque automático do Shizuku está ligado.</string>
 </resources>

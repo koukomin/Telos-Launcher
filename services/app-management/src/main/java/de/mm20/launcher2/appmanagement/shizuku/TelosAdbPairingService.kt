@@ -33,7 +33,6 @@ class TelosAdbPairingService : Service() {
     private var discovery: TelosAdbPairingDiscovery? = null
     private var foundHost: String? = null
     private var foundPort: Int? = null
-    private var overlay: TelosAdbPairingOverlay? = null
 
     override fun onBind(intent: Intent?): IBinder? = null
 
@@ -49,8 +48,6 @@ class TelosAdbPairingService : Service() {
                     }
                     TelosShizukuHost.PairingPhase.Working -> show(workingNotification())
                     TelosShizukuHost.PairingPhase.Failed -> {
-                        overlay?.dismiss()
-                        overlay = null
                         show(failNotification(state.lastLog))
                     }
                     else -> Unit
@@ -102,12 +99,16 @@ class TelosAdbPairingService : Service() {
                 }
                 return START_NOT_STICKY
             }
-            else -> {
+            ACTION_START -> {
+                discovery?.stop()
+                discovery = null
+                foundHost = null
+                foundPort = null
                 TelosShizukuHost.notifyPairingSearch(intent?.getBooleanExtra(EXTRA_AUTOMATIC, true) ?: true)
                 startSearch()
                 show(searchingNotification())
-                showOverlay("", "", -1)
             }
+            else -> return START_NOT_STICKY
         }
         return START_NOT_STICKY
     }
@@ -123,11 +124,11 @@ class TelosAdbPairingService : Service() {
         if (discovery != null) return
         val d = TelosAdbPairingDiscovery(this) { host, port ->
             if (TelosShizukuHost.status.value.pairing.phase !in setOf(TelosShizukuHost.PairingPhase.Searching, TelosShizukuHost.PairingPhase.WaitingForCode)) return@TelosAdbPairingDiscovery
+            if (foundHost == host && foundPort == port) return@TelosAdbPairingDiscovery
             foundHost = host
             foundPort = port
             TelosShizukuHost.onPairingCodeRead(this, TelosShizukuHost.status.value.pairing.code, host, port)
             show(inputNotification(host, port))
-            showOverlay(TelosShizukuHost.status.value.pairing.code, host, port)
         }
         discovery = d
         d.start()
@@ -136,16 +137,7 @@ class TelosAdbPairingService : Service() {
     private fun stopSearch() {
         discovery?.stop()
         discovery = null
-        overlay?.dismiss()
-        overlay = null
         TelosShizukuHost.stopPairingWait()
-    }
-
-    private fun showOverlay(code: String, host: String, port: Int) {
-        if (TelosAdbPairingAccessibilityService.connected) return
-        val type = TelosAdbPairingOverlay.overlayTypeFor(this, accessibility = false) ?: return
-        val sheet = overlay ?: TelosAdbPairingOverlay(this, type).also { overlay = it }
-        sheet.show(code, host, port)
     }
 
     private fun show(n: Notification) {
@@ -200,7 +192,11 @@ class TelosAdbPairingService : Service() {
             0,
             getString(I18nR.string.telos_shizuku_pair_notif_enter),
             reply,
-        ).addRemoteInput(remote).build()
+        ).addRemoteInput(remote)
+            .setSemanticAction(NotificationCompat.Action.SEMANTIC_ACTION_REPLY)
+            .setShowsUserInterface(false)
+            .setAllowGeneratedReplies(false)
+            .build()
         return base()
             .setContentTitle(getString(I18nR.string.telos_shizuku_pair_notif_found))
             .setContentText(getString(I18nR.string.telos_shizuku_pair_found, host, port))

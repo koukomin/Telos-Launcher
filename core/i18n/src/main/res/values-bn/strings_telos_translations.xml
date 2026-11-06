@@ -896,8 +896,8 @@
     <string name="preference_app_lock_work_profile_toggle">ওয়ার্ক প্রোফাইল টগল লক করুন</string>
     <string name="preference_app_lock_work_profile_toggle_summary">অ্যাপ ড্রয়ার থেকে ওয়ার্ক প্রোফাইল বিরতি বা পুনরায় চালু করতে প্রমাণীকরণ প্রয়োজন</string>
     <string name="app_lock_work_profile_prompt_title">ওয়ার্ক প্রোফাইলের অবস্থা পরিবর্তন করতে প্রমাণীকরণ করুন</string>
-    <string name="preference_screen_work_profile">ওয়ার্ক প্রোফাইল</string>
-    <string name="preference_screen_work_profile_summary">ওয়ার্ক প্রোফাইল সেট আপ, বিরতি, পুনরায় চালু ও লক করুন</string>
+    <string name="preference_screen_work_profile">কাজের প্রোফাইল</string>
+    <string name="preference_screen_work_profile_summary">কাজের প্রোফাইল সেট, বিরতি, আবার চালু ও লক করুন</string>
     <string name="work_profile_status_title">অবস্থা</string>
     <string name="work_profile_status_not_set_up">সেট আপ করা নেই</string>
     <string name="work_profile_status_active">সক্রিয়</string>
@@ -2094,4 +2094,7 @@
     <string name="telos_system_wifi_security_open">খোলা</string>
     <string name="telos_system_wifi_empty">কোনো সংরক্ষিত নেটওয়ার্ক নেই</string>
     <string name="telos_system_wifi_persisted">%1$dটি অস্থায়ী নেটওয়ার্ক সংরক্ষিত</string>
+    <string name="desktop_mode_kde_connect">KDE Connect ইন্টিগ্রেশন</string>
+    <string name="desktop_mode_kde_connect_open">পিসি বা ট্যাবলেট জোড়া লাগাতে KDE Connect খুলুন</string>
+    <string name="desktop_mode_kde_connect_install">Telos Store থেকে KDE Connect ইনস্টল করতে ট্যাপ করুন</string>
 </resources>

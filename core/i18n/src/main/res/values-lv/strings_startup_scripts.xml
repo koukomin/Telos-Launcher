@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="startup_scripts_title">Palaišanas skripti</string>
+    <string name="startup_scripts_summary">Iespējotie skripti tiek izpildīti vienu reizi, atverot Telos, ar izvēlēto identitāti. Iespējojiet tikai uzticamas komandas. Rediģēšana atspējo automātisko izpildi.</string>
+    <string name="startup_script_enable">Izpildīt, palaižot Telos</string>
+    <string name="startup_script_code">Čaulas skripts (līdz 16 384 rakstzīmēm)</string>
+    <string name="startup_script_exit">Izejas kods: %1$d</string>
+    <string name="startup_wireless_off">Izslēgt bezvadu atkļūdošanu pēc Shizuku palaišanas</string>
+    <string name="startup_shizuku_help">Vienreiz savienojiet pārī bezvadu atkļūdošanas iestatījumos. Pēc katras pārstartēšanas iespējojiet bezvadu atkļūdošanu un apstipriniet Wi-Fi tīklu, ja Android to pieprasa. Automātiskā palaišana atkārtoti savienojas ar saglabāto atslēgu; tā nevar apiet Android atļaujas. Root nav nepieciešama bezvadu atkļūdošana.</string>
+</resources>

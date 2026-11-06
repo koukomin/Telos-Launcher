@@ -22,7 +22,7 @@ fun SwitchPreference(
     value: Boolean,
     onValueChanged: (Boolean) -> Unit,
     enabled: Boolean = true,
-    containerColor: Color = MaterialTheme.colorScheme.surfaceBright,
+    containerColor: Color = MaterialTheme.colorScheme.surfaceContainerLow.copy(alpha = 1f),
 ) {
     Preference(
         title = title,

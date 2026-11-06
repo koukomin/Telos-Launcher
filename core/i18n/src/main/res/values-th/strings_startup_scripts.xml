@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="startup_scripts_title">สคริปต์เริ่มต้น</string>
+    <string name="startup_scripts_summary">สคริปต์ที่เปิดใช้งานจะทำงานหนึ่งครั้งเมื่อเปิด Telos โดยใช้สิทธิ์ที่เลือก เปิดใช้งานเฉพาะคำสั่งที่เชื่อถือได้ การแก้ไขจะปิดการทำงานอัตโนมัติ</string>
+    <string name="startup_script_enable">เรียกใช้เมื่อ Telos เริ่มต้น</string>
+    <string name="startup_script_code">เชลล์สคริปต์ (สูงสุด 16,384 อักขระ)</string>
+    <string name="startup_script_exit">รหัสออก: %1$d</string>
+    <string name="startup_wireless_off">ปิดการแก้ไขข้อบกพร่องแบบไร้สายหลังจาก Shizuku เริ่มต้น</string>
+    <string name="startup_shizuku_help">จับคู่หนึ่งครั้งในเมนูการแก้ไขข้อบกพร่องแบบไร้สาย หลังจากรีบูตแต่ละครั้ง ให้เปิดการแก้ไขข้อบกพร่องแบบไร้สายและอนุญาตเครือข่าย Wi-Fi หาก Android ร้องขอ การเริ่มอัตโนมัติจะเชื่อมต่ออีกครั้งด้วยคีย์ที่บันทึกไว้ แต่ไม่สามารถข้ามสิทธิ์ของ Android ได้ Root ไม่ต้องใช้การแก้ไขข้อบกพร่องแบบไร้สาย</string>
+</resources>

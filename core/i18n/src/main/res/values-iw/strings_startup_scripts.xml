@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="startup_scripts_title">סקריפטים להפעלה</string>
+    <string name="startup_scripts_summary">סקריפטים פעילים מופעלים פעם אחת בפתיחת Telos, עם הזהות שנבחרה. יש להפעיל רק פקודות מהימנות. עריכה מבטלת את ההפעלה האוטומטית.</string>
+    <string name="startup_script_enable">הפעלה עם תחילת Telos</string>
+    <string name="startup_script_code">סקריפט מעטפת (עד 16,384 תווים)</string>
+    <string name="startup_script_exit">קוד יציאה: %1$d</string>
+    <string name="startup_wireless_off">כיבוי ניפוי באגים אלחוטי לאחר הפעלת Shizuku</string>
+    <string name="startup_shizuku_help">יש לבצע התאמה פעם אחת בניפוי באגים אלחוטי. אחרי כל הפעלה מחדש, יש להפעיל ניפוי באגים אלחוטי ולאשר את רשת ה-Wi-Fi אם Android מבקש. ההפעלה האוטומטית מתחברת מחדש באמצעות המפתח השמור; היא אינה יכולה לעקוף את הרשאות Android. Root אינו דורש ניפוי באגים אלחוטי.</string>
+</resources>

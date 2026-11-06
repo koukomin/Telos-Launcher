@@ -40,4 +40,13 @@ Számítógép: USB hibakeresés és az alábbi adb parancs.</string>
     <string name="telos_shizuku_pair_start">Várakozás a párosítási kódra</string>
     <string name="telos_shizuku_pair_stop">Várakozás leállítása</string>
     <string name="telos_shizuku_pair_open">Vezeték nélküli hibakeresés megnyitása</string>
+    <string name="telos_shizuku_perm_title">Shizuku-hozzáférés engedélyezése</string>
+    <string name="telos_shizuku_perm_body">A(z) %1$s a Telos Shizuku-kiszolgálót szeretné használni.</string>
+    <string name="telos_shizuku_perm_once">Engedélyezés egyszer</string>
+    <string name="telos_shizuku_grant_failed">A Shizuku-hozzáférést nem sikerült frissíteni. Előbb indítsd el a Telos-kiszolgálót.</string>
+    <string name="telos_shizuku_diag_builtin">Beépített Telos Shizuku-kiszolgáló</string>
+    <string name="telos_shizuku_diag_ready">Állapot: kész (WRITE_SECURE_SETTINGS megadva)</string>
+    <string name="telos_shizuku_diag_grant">Állapot: a kiszolgáló fut — add meg a WRITE_SECURE_SETTINGS-t</string>
+    <string name="telos_shizuku_diag_start">Állapot: indítsd a kiszolgálót a Telos System → Shizuku menüben</string>
+    <string name="telos_shizuku_autostart_ok">A Shizuku automatikus indítása be van kapcsolva.</string>
 </resources>

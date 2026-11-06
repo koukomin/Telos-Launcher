@@ -199,7 +199,7 @@ fun NetworkHomeScreen() {
                                 .padding(vertical = 4.dp),
                         ) {
                             Text(
-                                text = if (on) "STOP" else "START",
+                                text = stringResource(if (on) I18nR.string.net_hub_stop else I18nR.string.net_hub_start),
                                 style = MaterialTheme.typography.titleLarge,
                                 fontWeight = FontWeight.Bold,
                                 letterSpacing = 2.sp
@@ -211,17 +211,16 @@ fun NetworkHomeScreen() {
                             TextButton(onClick = { engine.acknowledgeError() }) { Text(stringResource(I18nR.string.net_hub_dismiss)) }
                         }
 
-                        val sampleHistory = remember {
-                            listOf(
-                                10L to 5L, 45L to 18L, 120L to 35L, 85L to 40L,
-                                210L to 90L, 160L to 75L, 340L to 110L, 290L to 95L,
-                                420L to 180L, 380L to 150L, 510L to 210L, 460L to 190L
-                            )
+                        var waveHistory by remember { mutableStateOf(List(24) { 0L to 0L }) }
+                        androidx.compose.runtime.LaunchedEffect(stats.dnsAllowed, stats.connectionsAllowed, stats.dnsBlocked, stats.connectionsBlocked) {
+                            val dl = (stats.dnsAllowed + stats.connectionsAllowed).coerceAtLeast(0L)
+                            val ul = (stats.dnsBlocked + stats.connectionsBlocked).coerceAtLeast(0L)
+                            waveHistory = (waveHistory.drop(1) + (dl to ul))
                         }
                         de.mm20.launcher2.ui.component.CyberWaveformChart(
                             downloadKb = stats.dnsAllowed + stats.connectionsAllowed,
                             uploadKb = stats.dnsBlocked + stats.connectionsBlocked,
-                            history = sampleHistory,
+                            history = waveHistory,
                             modifier = Modifier.padding(top = 12.dp)
                         )
 

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="startup_scripts_title">Spouštěcí skripty</string>
+    <string name="startup_scripts_summary">Povolené skripty se spustí jednou při otevření Telos pod vybranou identitou. Povolujte jen důvěryhodné příkazy. Úprava vypne automatické spouštění.</string>
+    <string name="startup_script_enable">Spustit při spuštění Telos</string>
+    <string name="startup_script_code">Skript shellu (nejvýše 16 384 znaků)</string>
+    <string name="startup_script_exit">Návratový kód: %1$d</string>
+    <string name="startup_wireless_off">Vypnout bezdrátové ladění po spuštění Shizuku</string>
+    <string name="startup_shizuku_help">Jednou spárujte v nastavení Bezdrátové ladění. Po každém restartu zapněte bezdrátové ladění a schvalte síť Wi-Fi, pokud o to Android požádá. Automatické spuštění se znovu připojí pomocí uloženého klíče; nemůže obejít oprávnění Androidu. Root nevyžaduje bezdrátové ladění.</string>
+</resources>

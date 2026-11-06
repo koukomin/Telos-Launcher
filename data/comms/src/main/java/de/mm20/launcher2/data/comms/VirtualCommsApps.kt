@@ -1208,6 +1208,52 @@ internal class VirtualSystemApp(private val context: Context) : Application {
     }
 }
 
+/** Search “Shizuku” (and near-miss spellings) opens Telos System on the Shizuku tab. */
+internal class VirtualShizukuSettingsApp(private val context: Context) : Application {
+    override val key: String = "telos_system_app://shizuku"
+    override val label: String get() = de.mm20.launcher2.search.TelosAppLabels.forDomain(context, VirtualSystemApp.Domain)
+    override val labelOverride: String? = null
+    override val keywords: List<String> = TelosAppKeywords.forKey(key)
+    override val domain: String = VirtualSystemApp.Domain
+    override val score: ResultScore = ResultScore.Unspecified
+    override val componentName: ComponentName = ComponentName(
+        context.packageName,
+        "de.mm20.launcher2.comms.VirtualShizukuSettingsApp",
+    )
+    override val isSuspended: Boolean = false
+    override val user: UserHandle = Process.myUserHandle()
+    override val versionName: String? = null
+    override val canUninstall: Boolean = false
+    override fun uninstall(context: Context) {}
+    override fun openAppDetails(context: Context) {}
+    override val canShareApk: Boolean = false
+    override fun overrideLabel(label: String): SavableSearchable = this
+    override fun launch(context: Context, options: Bundle?): Boolean {
+        return try {
+            val intent = Intent().apply {
+                setClassName(context.packageName, SettingsDeepLinkContract.ACTIVITY_CLASS_NAME)
+                putExtra(SettingsDeepLinkContract.EXTRA_ROUTE, SettingsDeepLinkContract.ROUTE_SYSTEM)
+                putExtra(SettingsDeepLinkContract.EXTRA_SYSTEM_TAB, "shizuku")
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            context.startActivity(intent, options)
+            true
+        } catch (_: Exception) {
+            false
+        }
+    }
+    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? {
+        val res = de.mm20.launcher2.search.TelosAppIcons.forDomain(VirtualSystemApp.Domain)
+            ?: de.mm20.launcher2.base.R.drawable.ic_app_system_full
+        val drawable = androidx.core.content.ContextCompat.getDrawable(context, res) ?: return null
+        return StaticLauncherIcon(
+            foregroundLayer = StaticIconLayer(drawable, 1f),
+            backgroundLayer = TransparentLayer,
+        )
+    }
+    override fun getSerializer(): SearchableSerializer = VirtualAppSerializer()
+}
+
 internal class CommsVirtualAppProvider(private val context: Context) : VirtualAppProvider {
     override fun getVirtualApps(): List<Application> = listOf(
         VirtualPhoneApp(context),
@@ -1231,6 +1277,7 @@ internal class CommsVirtualAppProvider(private val context: Context) : VirtualAp
         VirtualDownloadsApp(context),
         VirtualNetworkApp(context),
         VirtualSystemApp(context),
+        VirtualShizukuSettingsApp(context),
     )
 }
 // === TELOS_PENDING_REVIEW_END: comms_virtual_apps ===

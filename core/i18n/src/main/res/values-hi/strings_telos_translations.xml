@@ -1648,7 +1648,7 @@
     <string name="preference_app_lock_work_profile_toggle_summary">ऐप ड्रॉअर से वर्क प्रोफ़ाइल रोकने या फिर शुरू करने के लिए प्रमाणीकरण आवश्यक करें</string>
     <string name="app_lock_work_profile_prompt_title">वर्क प्रोफ़ाइल की स्थिति बदलने के लिए प्रमाणित करें</string>
     <string name="preference_screen_work_profile">वर्क प्रोफ़ाइल</string>
-    <string name="preference_screen_work_profile_summary">वर्क प्रोफ़ाइल सेट अप करें, रोकें, फिर शुरू करें और लॉक करें</string>
+    <string name="preference_screen_work_profile_summary">वर्क प्रोफ़ाइल सेट करें, रोकें, फिर चलाएँ और लॉक करें</string>
     <string name="work_profile_status_title">स्थिति</string>
     <string name="work_profile_status_not_set_up">सेट अप नहीं है</string>
     <string name="work_profile_status_active">सक्रिय</string>
@@ -2396,4 +2396,7 @@
     <string name="telos_system_wifi_security_open">खुला</string>
     <string name="telos_system_wifi_empty">कोई सहेजा नेटवर्क नहीं</string>
     <string name="telos_system_wifi_persisted">%1$d अस्थायी नेटवर्क सहेजे गए</string>
+    <string name="desktop_mode_kde_connect">KDE Connect एकीकरण</string>
+    <string name="desktop_mode_kde_connect_open">PC या टैबलेट से जोड़ने के लिए KDE Connect खोलें</string>
+    <string name="desktop_mode_kde_connect_install">Telos Store से KDE Connect इंस्टॉल करने के लिए टैप करें</string>
 </resources>

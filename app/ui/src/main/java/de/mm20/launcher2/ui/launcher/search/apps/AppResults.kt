@@ -58,6 +58,7 @@ fun LazyListScope.AppResults(
                 verticalArrangement = if (reverse) Arrangement.BottomReversed else Arrangement.Top,
             ) {
                 PrimaryScrollableTabRow(
+                    modifier = Modifier.fillMaxWidth(),
                     selectedTabIndex = selectedProfileIndex.coerceIn(0, profiles.lastIndex),
                     containerColor = Color.Transparent,
                     edgePadding = 16.dp,

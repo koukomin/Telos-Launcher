@@ -607,7 +607,7 @@
     <string name="preference_app_lock_work_profile_toggle_summary">Reikalauti autentifikavimo norint pristabdyti ar tęsti darbo profilį iš programų stalčiaus</string>
     <string name="app_lock_work_profile_prompt_title">Autentifikuokitės, kad pakeistumėte darbo profilio būseną</string>
     <string name="preference_screen_work_profile">Darbo profilis</string>
-    <string name="preference_screen_work_profile_summary">Nustatykite, pristabdykite, tęskite ir užrakinkite darbo profilį</string>
+    <string name="preference_screen_work_profile_summary">Darbo profilio nustatymas, pristabdymas, tęsimas ir užrakinimas</string>
     <string name="work_profile_status_title">Būsena</string>
     <string name="work_profile_status_not_set_up">Nenustatytas</string>
     <string name="work_profile_status_active">Aktyvus</string>
@@ -1656,4 +1656,7 @@
     <string name="telos_system_wifi_security_open">Atvira</string>
     <string name="telos_system_wifi_empty">Nėra įrašytų tinklų</string>
     <string name="telos_system_wifi_persisted">Išsaugota %1$d laikinų tinklų</string>
+    <string name="desktop_mode_kde_connect">KDE Connect integracija</string>
+    <string name="desktop_mode_kde_connect_open">Atidarykite KDE Connect, kad susietumėte kompiuterį ar planšetę</string>
+    <string name="desktop_mode_kde_connect_install">Palieskite, kad įdiegtumėte KDE Connect iš Telos Store</string>
 </resources>

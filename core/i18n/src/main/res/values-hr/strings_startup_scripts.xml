@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="startup_scripts_title">Skripte za pokretanje</string>
+    <string name="startup_scripts_summary">Omogućene skripte izvršavaju se jednom pri otvaranju Telosa, s odabranim identitetom. Omogućite samo naredbe kojima vjerujete. Uređivanje isključuje automatsko izvršavanje.</string>
+    <string name="startup_script_enable">Izvrši pri pokretanju Telosa</string>
+    <string name="startup_script_code">Skripta ljuske (najviše 16.384 znaka)</string>
+    <string name="startup_script_exit">Izlazni kôd: %1$d</string>
+    <string name="startup_wireless_off">Isključi bežično otklanjanje pogrešaka nakon pokretanja Shizukua</string>
+    <string name="startup_shizuku_help">Jednom uparite u postavkama bežičnog otklanjanja pogrešaka. Nakon svakog ponovnog pokretanja omogućite bežično otklanjanje pogrešaka i odobrite Wi-Fi mrežu ako Android to zatraži. Automatsko pokretanje ponovno se povezuje spremljenim ključem; ne može zaobići dopuštenja Androida. Root ne zahtijeva bežično otklanjanje pogrešaka.</string>
+</resources>

@@ -434,7 +434,7 @@
     <string name="preference_app_lock_work_profile_toggle_summary">Vereis authenticatie om het werkprofiel te pauzeren of te hervatten vanuit het app-overzicht</string>
     <string name="app_lock_work_profile_prompt_title">Authenticeer om de status van het werkprofiel te wijzigen</string>
     <string name="preference_screen_work_profile">Werkprofiel</string>
-    <string name="preference_screen_work_profile_summary">Het werkprofiel instellen, pauzeren, hervatten en vergrendelen</string>
+    <string name="preference_screen_work_profile_summary">Werkprofiel instellen, pauzeren, hervatten en vergrendelen</string>
     <string name="work_profile_status_title">Status</string>
     <string name="work_profile_status_not_set_up">Niet ingesteld</string>
     <string name="work_profile_status_active">Actief</string>
@@ -1115,4 +1115,11 @@
     <string name="telos_system_wifi_security_open">Open</string>
     <string name="telos_system_wifi_empty">Geen opgeslagen netwerken</string>
     <string name="telos_system_wifi_persisted">%1$d tijdelijke netwerken opgeslagen</string>
+    <string name="desktop_mode_kde_connect">KDE Connect-integratie</string>
+    <string name="desktop_mode_kde_connect_open">Open KDE Connect om te koppelen met een pc of tablet</string>
+    <string name="desktop_mode_kde_connect_install">Tik om KDE Connect te installeren vanuit Telos Store</string>
+    <string name="preference_virtual_app_page_effects">Pagina-animaties in Telos-apps</string>
+    <string name="preference_virtual_app_page_effects_summary">Schuiven en schalen bij wisselen van scherm. Standaard uit.</string>
+    <string name="net_waveform_title">Golfvorm netwerkverkeer</string>
+    <string name="net_waveform_rates">↓ %1$s  ·  ↑ %2$s</string>
 </resources>

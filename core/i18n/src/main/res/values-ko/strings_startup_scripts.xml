@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="startup_scripts_title">시작 스크립트</string>
+    <string name="startup_scripts_summary">활성화된 스크립트는 Telos를 열 때 선택한 사용자 권한으로 한 번 실행됩니다. 신뢰하는 명령만 활성화하세요. 편집하면 자동 실행이 비활성화됩니다.</string>
+    <string name="startup_script_enable">Telos 시작 시 실행</string>
+    <string name="startup_script_code">셸 스크립트(최대 16,384자)</string>
+    <string name="startup_script_exit">종료 코드: %1$d</string>
+    <string name="startup_wireless_off">Shizuku 시작 후 무선 디버깅 끄기</string>
+    <string name="startup_shizuku_help">무선 디버깅에서 한 번 페어링하세요. 재부팅할 때마다 무선 디버깅을 켜고 Android에서 요청하면 Wi-Fi 네트워크를 승인하세요. 자동 시작은 저장된 키로 다시 연결하지만 Android 권한을 우회할 수 없습니다. Root는 무선 디버깅이 필요하지 않습니다.</string>
+</resources>

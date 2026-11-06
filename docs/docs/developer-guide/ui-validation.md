@@ -163,3 +163,30 @@ IME was hidden after submission. The production launcher was retained. See
 [transport audit and evidence](./shizuku-pairing.md). This does not certify landscape, light mode
 or the full font/display-size matrix. Device screenshots are not published because they contain
 private Settings/device data.
+
+### Shizuku notification reply — 1.44.15
+
+Supersedes the experimental floating pairing pill. The 1.44.14 production overlay was confirmed
+via ADB to hold focus over another app and overlap navigation. It was disabled on the reported
+OnePlus while preparing this fix. Telos pairing now creates no WindowManager views; manual input
+is Android SystemUI notification RemoteInput. Validation for the notification flow is recorded
+in the pairing audit; earlier overlay test results must not be read as certification of this flow.
+
+On 2026-11-06 the notification-only harness completed pairing and a fresh UID 2000 server
+bootstrap on the OnePlus Android 17 device. SystemUI owned the reply keyboard; Send hid it,
+Back returned to Settings and no pairing overlay existed. The test APK/server were removed.
+The signed production APK has not been installed because the user disconnected USB before release.
+
+### Startup scripts and paired-key reconnection
+
+New System → Shizuku controls use shared preference rows, FlowRow actions, and a scrollable
+script editor with saveable drafts. New/edited scripts are disabled until explicitly enabled;
+manual Run and automatic execution share a serial worker. Local tests/build results are recorded
+in the PR. No physical device is connected for this feature: boot, root prompts, notification
+permissions, light/dark, compact/expanded, short landscape, font/display sizes and IME interaction
+have not been visually certified. This does not replace the notification pairing evidence above.
+The UI instrumentation failure was traced using the crash buffer to an unconditional Shizuku
+watchdog boot/install entry point accessing Koin in the standalone library test Application.
+The watchdog now stops when launcher DI is unavailable; boot preference failures are contained.
+The device-test helper preserves crash-buffer evidence and rejects failed JUnit reports even
+when AGP returns exit code zero. Final rerun results are recorded on PR #81.

@@ -30,12 +30,16 @@
                 android:resource="@xml/telos_adb_pairing_accessibility" />
         </service>
         <activity
-            android:name=".shizuku.TelosAdbPairingPromptActivity"
+            android:name=".shizuku.TelosShizukuRequestPermissionActivity"
             android:excludeFromRecents="true"
-            android:exported="false"
-            android:showOnLockScreen="true"
-            android:theme="@android:style/Theme.DeviceDefault.Light.Dialog.Alert"
-            android:taskAffinity="" />
+            android:exported="true"
+            android:theme="@android:style/Theme.DeviceDefault.Dialog.Alert"
+            android:taskAffinity="">
+            <intent-filter>
+                <action android:name="${applicationId}.intent.action.REQUEST_PERMISSION" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <service
             android:name=".shizuku.TelosAdbPairingService"
             android:exported="false"
@@ -54,11 +58,9 @@
         </service>
         <receiver
             android:name=".shizuku.TelosShizukuBootReceiver"
-            android:exported="true"
-            android:directBootAware="true">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
                 <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
             </intent-filter>
         </receiver>

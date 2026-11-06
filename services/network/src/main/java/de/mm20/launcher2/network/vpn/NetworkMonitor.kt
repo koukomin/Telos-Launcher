@@ -7,6 +7,7 @@ import android.net.Network
 import android.net.NetworkCapabilities
 import android.net.NetworkRequest
 import android.os.Build
+import android.os.SystemClock
 import de.mm20.launcher2.network.api.ConnectionType
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -51,6 +52,8 @@ internal class NetworkMonitor(context: Context) {
     val snapshot: StateFlow<NetSnapshot> = _snapshot
 
     private var registered = false
+    private var lastGoodWifi: NetInfo? = null
+    private var lastGoodWifiAt = 0L
 
     private val callback = object : ConnectivityManager.NetworkCallback() {
         override fun onAvailable(network: Network) {
@@ -104,7 +107,32 @@ internal class NetworkMonitor(context: Context) {
         val infos = synchronized(this) {
             capabilities.mapNotNull { (network, caps) -> toInfo(network, caps, links[network]) }
         }
-        _snapshot.value = NetSnapshot(infos.sortedWith(compareByDescending<NetInfo> { it.validated }.thenBy { priority(it.type) }))
+        val now = SystemClock.elapsedRealtime()
+        val wifi = infos.firstOrNull { it.type == ConnectionType.Wifi }
+        if (wifi != null && wifi.validated) {
+            lastGoodWifi = wifi
+            lastGoodWifiAt = now
+        }
+        val sticky = lastGoodWifi
+        val keepWifi = sticky != null && now - lastGoodWifiAt < WIFI_STICKY_MS
+        val merged = if (keepWifi && sticky != null) {
+            val withoutUnvalidatedMobile = infos.filterNot {
+                it.type == ConnectionType.Mobile && !it.validated
+            }
+            val hasWifi = withoutUnvalidatedMobile.any { it.type == ConnectionType.Wifi }
+            val withWifi = if (!hasWifi || wifi?.validated == false) {
+                listOf(sticky) + withoutUnvalidatedMobile.filter { it.network != sticky.network }
+            } else withoutUnvalidatedMobile
+            withWifi
+        } else infos
+        _snapshot.value = NetSnapshot(
+            merged.sortedWith(compareByDescending<NetInfo> { it.validated }.thenBy { priority(it.type) }),
+        )
+    }
+
+    companion object {
+        /** Keep the last validated Wi-Fi during WPA3 rekey / brief roam so the VPN does not jump to LTE. */
+        private const val WIFI_STICKY_MS = 8_000L
     }
 
     private fun priority(type: ConnectionType) = when (type) {

@@ -431,7 +431,7 @@
     <string name="preference_app_lock_work_profile_toggle_summary">Exiger une authentification pour suspendre ou réactiver le profil professionnel depuis le tiroir d\'apps</string>
     <string name="app_lock_work_profile_prompt_title">Authentifiez-vous pour modifier l\'état du profil professionnel</string>
     <string name="preference_screen_work_profile">Profil professionnel</string>
-    <string name="preference_screen_work_profile_summary">Configurer, suspendre, réactiver et verrouiller le profil professionnel</string>
+    <string name="preference_screen_work_profile_summary">Configurer, mettre en pause, reprendre et verrouiller le profil professionnel</string>
     <string name="work_profile_status_title">État</string>
     <string name="work_profile_status_not_set_up">Non configuré</string>
     <string name="work_profile_status_active">Actif</string>
@@ -1144,4 +1144,11 @@
     <string name="telos_system_wifi_security_open">Ouvert</string>
     <string name="telos_system_wifi_empty">Aucun réseau enregistré</string>
     <string name="telos_system_wifi_persisted">%1$d réseaux temporaires enregistrés</string>
+    <string name="desktop_mode_kde_connect">Intégration KDE Connect</string>
+    <string name="desktop_mode_kde_connect_open">Ouvrir KDE Connect pour l’associer à un PC ou une tablette</string>
+    <string name="desktop_mode_kde_connect_install">Appuyez pour installer KDE Connect depuis Telos Store</string>
+    <string name="preference_virtual_app_page_effects">Animations de page dans les apps Telos</string>
+    <string name="preference_virtual_app_page_effects_summary">Glissement et échelle au changement d’écran. Désactivé par défaut.</string>
+    <string name="net_waveform_title">Forme d’onde du trafic réseau</string>
+    <string name="net_waveform_rates">↓ %1$s  ·  ↑ %2$s</string>
 </resources>

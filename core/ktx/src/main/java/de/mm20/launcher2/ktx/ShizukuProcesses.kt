@@ -38,7 +38,7 @@ object ShizukuProcesses {
         Shizuku.pingBinder() && Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED
     }.getOrDefault(false)
 
-    fun start(args: Array<String>, environment: Array<String>? = null, directory: String? = null): Process {
+    fun start(args: Array<String>, environment: Array<String>? = null, directory: String? = null, retryOnSpawnFailure: Boolean = true): Process {
         check(Looper.myLooper() != Looper.getMainLooper()) { "Privileged processes must start off Main" }
         check(args.isNotEmpty() && available())
         val context = requireNotNull(appContext) { "ShizukuProcesses is not initialized" }
@@ -66,6 +66,8 @@ object ShizukuProcesses {
             IRemoteProcess.Stub.asInterface(service.start(args, environment, directory))
         }.getOrElse {
             synchronized(monitor) { binding = null }
+            // A failed Binder reply can mean the child already started. Scripts must not replay it.
+            if (!retryOnSpawnFailure) throw it
             val retriedState = synchronized(monitor) {
                 Binding().also { state ->
                     binding = state

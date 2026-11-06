@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="startup_scripts_title">Scripts de démarrage</string>
+    <string name="startup_scripts_summary">Les scripts activés sont exécutés une fois à l’ouverture de Telos, avec l’identité choisie. Activez uniquement des commandes fiables. Toute modification désactive l’exécution automatique.</string>
+    <string name="startup_script_enable">Exécuter au démarrage de Telos</string>
+    <string name="startup_script_code">Script shell (16 384 caractères maximum)</string>
+    <string name="startup_script_exit">Code de sortie : %1$d</string>
+    <string name="startup_wireless_off">Désactiver le débogage sans fil après le démarrage de Shizuku</string>
+    <string name="startup_shizuku_help">Effectuez une association dans Débogage sans fil. Après chaque redémarrage, activez le débogage sans fil et autorisez le réseau Wi-Fi si Android le demande. Le démarrage automatique se reconnecte avec la clé enregistrée ; il ne peut pas contourner les autorisations Android. Root ne nécessite pas de débogage sans fil.</string>
+</resources>

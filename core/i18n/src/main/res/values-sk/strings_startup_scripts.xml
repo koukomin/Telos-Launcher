@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="startup_scripts_title">Spúšťacie skripty</string>
+    <string name="startup_scripts_summary">Povolené skripty sa spustia raz pri otvorení Telos pod vybranou identitou. Povoľujte len dôveryhodné príkazy. Úprava vypne automatické spúšťanie.</string>
+    <string name="startup_script_enable">Spustiť pri spustení Telos</string>
+    <string name="startup_script_code">Skript shellu (najviac 16 384 znakov)</string>
+    <string name="startup_script_exit">Návratový kód: %1$d</string>
+    <string name="startup_wireless_off">Vypnúť bezdrôtové ladenie po spustení Shizuku</string>
+    <string name="startup_shizuku_help">Raz spárujte v nastavení Bezdrôtové ladenie. Po každom reštarte zapnite bezdrôtové ladenie a schváľte sieť Wi-Fi, ak o to Android požiada. Automatické spustenie sa znova pripojí pomocou uloženého kľúča; nemôže obísť povolenia Androidu. Root nevyžaduje bezdrôtové ladenie.</string>
+</resources>

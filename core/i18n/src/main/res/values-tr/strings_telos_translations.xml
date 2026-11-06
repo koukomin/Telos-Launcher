@@ -444,7 +444,7 @@
     <string name="preference_app_lock_work_profile_toggle_summary">Uygulama çekmecesinden iş profilini duraklatmak veya sürdürmek için kimlik doğrulaması iste</string>
     <string name="app_lock_work_profile_prompt_title">İş profili durumunu değiştirmek için kimliğinizi doğrulayın</string>
     <string name="preference_screen_work_profile">İş profili</string>
-    <string name="preference_screen_work_profile_summary">İş profilini kur, duraklat, sürdür ve kilitle</string>
+    <string name="preference_screen_work_profile_summary">İş profilini kurun, duraklatın, sürdürün ve kilitleyin</string>
     <string name="work_profile_status_title">Durum</string>
     <string name="work_profile_status_not_set_up">Kurulmadı</string>
     <string name="work_profile_status_active">Etkin</string>
@@ -1136,4 +1136,11 @@
     <string name="telos_system_wifi_security_open">Açık</string>
     <string name="telos_system_wifi_empty">Kayıtlı ağ yok</string>
     <string name="telos_system_wifi_persisted">%1$d geçici ağ kaydedildi</string>
+    <string name="desktop_mode_kde_connect">KDE Connect entegrasyonu</string>
+    <string name="desktop_mode_kde_connect_open">PC veya tablet ile eşlemek için KDE Connect’i açın</string>
+    <string name="desktop_mode_kde_connect_install">KDE Connect’i Telos Store’dan yüklemek için dokunun</string>
+    <string name="preference_virtual_app_page_effects">Telos uygulamalarında sayfa animasyonları</string>
+    <string name="preference_virtual_app_page_effects_summary">Ekran değişiminde kaydırma ve ölçek. Varsayılan kapalı.</string>
+    <string name="net_waveform_title">Ağ trafiği dalga formu</string>
+    <string name="net_waveform_rates">↓ %1$s  ·  ↑ %2$s</string>
 </resources>

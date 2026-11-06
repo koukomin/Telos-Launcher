@@ -437,8 +437,8 @@
     <string name="preference_app_lock_work_profile_toggle">鎖定工作設定檔開關</string>
     <string name="preference_app_lock_work_profile_toggle_summary">從應用程式抽屜暫停或恢復工作設定檔時需要驗證</string>
     <string name="app_lock_work_profile_prompt_title">驗證身分以變更工作設定檔狀態</string>
-    <string name="preference_screen_work_profile">工作設定檔</string>
-    <string name="preference_screen_work_profile_summary">設定、暫停、恢復與鎖定工作設定檔</string>
+    <string name="preference_screen_work_profile">工作資料</string>
+    <string name="preference_screen_work_profile_summary">設定、暫停、繼續並鎖定工作資料</string>
     <string name="work_profile_status_title">狀態</string>
     <string name="work_profile_status_not_set_up">未設定</string>
     <string name="work_profile_status_active">使用中</string>
@@ -1120,4 +1120,11 @@
     <string name="telos_system_wifi_security_open">開放</string>
     <string name="telos_system_wifi_empty">沒有已儲存的網路</string>
     <string name="telos_system_wifi_persisted">已儲存 %1$d 個臨時網路</string>
+    <string name="desktop_mode_kde_connect">KDE Connect 整合</string>
+    <string name="desktop_mode_kde_connect_open">開啟 KDE Connect 以與電腦或平板配對</string>
+    <string name="desktop_mode_kde_connect_install">點一下以從 Telos Store 安裝 KDE Connect</string>
+    <string name="preference_virtual_app_page_effects">Telos 應用程式頁面動畫</string>
+    <string name="preference_virtual_app_page_effects_summary">切換畫面時的滑動與縮放。預設關閉。</string>
+    <string name="net_waveform_title">網路流量波形</string>
+    <string name="net_waveform_rates">↓ %1$s  ·  ↑ %2$s</string>
 </resources>

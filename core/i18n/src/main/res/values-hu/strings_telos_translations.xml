@@ -1115,4 +1115,7 @@
     <string name="telos_system_wifi_security_open">Nyílt</string>
     <string name="telos_system_wifi_empty">Nincsenek mentett hálózatok</string>
     <string name="telos_system_wifi_persisted">%1$d ideiglenes hálózat mentve</string>
+    <string name="desktop_mode_kde_connect">KDE Connect integráció</string>
+    <string name="desktop_mode_kde_connect_open">Nyisd meg a KDE Connectet PC vagy tablet párosításához</string>
+    <string name="desktop_mode_kde_connect_install">Érintsd meg a KDE Connect telepítéséhez a Telos Store-ból</string>
 </resources>

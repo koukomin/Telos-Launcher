@@ -6,14 +6,16 @@ Open **Telos System → Shizuku**. Copy the live `adb` line from that screen; th
 
 ## Why builtin
 
-The standalone Shizuku app is a separate manager. Telos already needs a privileged shell for freeze, installs and network. The server runs as Telos (`com.dimitris.telos`), so other Shizuku-API apps still get the binder.
+The standalone Shizuku app is a separate manager. Telos already needs a privileged shell for freeze, installs and network. Telos manages the embedded server. A wireless/ADB start runs it as Android shell (UID 2000); a root start uses UID 0. External-client authorization has remaining gaps documented in the [feature audit](/docs/developer-guide/shizuku-pairing).
+
+Authorize those apps on **Telos System → Shizuku → Shizuku apps** (the switch writes Shizuku’s binder flags). When an app calls `Shizuku.requestPermission()`, Telos shows the grant dialog. Settings → Advanced autostart uses the same built-in server; it does not require `moe.shizuku.privileged.api`.
 
 ## Start methods
 
 | Method | What you do |
 | --- | --- |
 | **Root** | **Start with root**. Turn on Autostart. |
-| **Wireless (phone)** | Enable pairing accessibility, tap **Wait for pairing code**, then Pair device with pairing code. Stay on that Settings dialog. Telos reads the 6 digits automatically; otherwise type them in the floating field or notification. Then Start server and Autostart. Pairing is once per ADB key. |
+| **Wireless (phone)** | Enable pairing accessibility, tap **Wait for pairing code**, then Pair device with pairing code. Stay on that Settings dialog. Telos reads the 6 digits automatically; otherwise use the notification reply. Then Start server and Autostart. Pairing is once per ADB key. |
 | **Computer ADB** | USB debugging on, then the command on the Shizuku tab. |
 
 ## Computer ADB
@@ -22,7 +24,7 @@ The standalone Shizuku app is a separate manager. Telos already needs a privileg
 adb shell /data/app/~~HASH~~/com.dimitris.telos-XXXX/lib/arm64/libshizuku.so --apk=/data/app/~~HASH~~/com.dimitris.telos-XXXX/base.apk
 ```
 
-On 32-bit devices use `lib/armeabi-v7a`. Copy the command from the app.
+On 32-bit devices the extracted native-library directory differs. Copy the exact command from the app; do not guess the ABI directory.
 
 Pairing from a computer (once):
 
@@ -38,14 +40,30 @@ Full page: [Telos System](/docs/user-guide/telos/system/).
 
 ## Pairing input
 
-On Android 17, allow the local-network permission when starting pairing. With Telos pairing
-accessibility enabled, leave the Settings pairing dialog visible for automatic code reading.
-The floating pill stays collapsed until you tap it. Manual input also works from the notification;
-it does not require accessibility. Tap Pair or the keyboard Done/Enter key; the keyboard closes
-before connecting. Stop waiting cancels the session. Without accessibility, a floating pill
-requires the system draw-over-other-apps grant; notification input remains available.
+On Android 17, allow local-network access if requested. Pairing also needs notification permission:
+Telos posts a high-priority system notification while it searches for the pairing service.
+Open **Pair device with pairing code** in Wireless debugging, expand the notification and tap
+**Enter code**. Type the six digits in Android's notification reply and send. SystemUI owns the
+keyboard; Telos creates no floating input window and cannot cover the navigation bar.
 
-The [implementation audit](/docs/developer-guide/shizuku-pairing) explains the transport, Android 17
-permission, ColorOS navigation fallback, and which Next/Plus manager features are separate.
+**Wait for pairing code** enables optional automatic code reading when the Settings-only Telos
+pairing accessibility service is enabled. **Enter code** starts a manual notification session
+even with accessibility enabled. Stop waiting cancels the session. No overlay permission is
+required. Notification appearance follows Android/ColorOS settings and Do Not Disturb.
 
-Choose **Enter code** for a manual session even with accessibility enabled; **Wait for pairing code** enables optional automatic reading.
+The [implementation audit](/docs/developer-guide/shizuku-pairing) records the transport and
+feature scope. Version 1.44.15 replaces the old focus-stealing overlay entirely.
+
+
+## Startup scripts and automatic reconnection
+
+From version 1.44.16, **Telos System → Shizuku → Startup scripts** lets you create, test and
+explicitly enable shell scripts for the next launcher process start. Choose Telos, Shizuku or root
+for each script. Editing disarms automatic execution. Returning Home does not repeat the list.
+
+Enable **Autostart** for paired-key reconnection and optional watchdog retries. Without root,
+Wireless debugging and Wi-Fi authorization must be available after reboot; initial pairing is
+required. The optional wireless-off switch acts only after a verified server start. Telos does
+not need Termux or a port scan. See the [System guide](/docs/user-guide/telos/system/#startup-scripts)
+and [startup design and limitations](/docs/developer-guide/startup-scripts), informed by
+[Shizuku discussion #462](https://github.com/RikkaApps/Shizuku/discussions/462).

@@ -6,6 +6,11 @@ import de.mm20.launcher2.ui.launcher.scaffold.ScaffoldPage
 
 
 class LauncherActivity: SharedLauncherActivity(LauncherActivityMode.Launcher) {
+    override fun onStart() {
+        super.onStart()
+        de.mm20.launcher2.appmanagement.startup.LauncherStartup.onForeground(this)
+    }
+
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         val navContract = intent.let { GestureNavContract.fromIntent(it) }

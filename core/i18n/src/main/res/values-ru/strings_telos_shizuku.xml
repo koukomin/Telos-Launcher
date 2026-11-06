@@ -40,4 +40,13 @@
     <string name="telos_shizuku_pair_start">Ждать код сопряжения</string>
     <string name="telos_shizuku_pair_stop">Остановить ожидание</string>
     <string name="telos_shizuku_pair_open">Открыть беспроводную отладку</string>
+    <string name="telos_shizuku_perm_title">Разрешить доступ Shizuku</string>
+    <string name="telos_shizuku_perm_body">%1$s хочет использовать сервер Shizuku Telos.</string>
+    <string name="telos_shizuku_perm_once">Разрешить один раз</string>
+    <string name="telos_shizuku_grant_failed">Не удалось изменить доступ Shizuku. Сначала запустите сервер Telos.</string>
+    <string name="telos_shizuku_diag_builtin">Встроенный сервер Shizuku Telos</string>
+    <string name="telos_shizuku_diag_ready">Статус: готово (WRITE_SECURE_SETTINGS выдано)</string>
+    <string name="telos_shizuku_diag_grant">Статус: сервер работает — выдайте WRITE_SECURE_SETTINGS</string>
+    <string name="telos_shizuku_diag_start">Статус: запустите сервер в Telos System → Shizuku</string>
+    <string name="telos_shizuku_autostart_ok">Автозапуск Shizuku включён.</string>
 </resources>

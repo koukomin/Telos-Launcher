@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="startup_scripts_title">स्टार्टअप स्क्रिप्ट</string>
+    <string name="startup_scripts_summary">सक्षम स्क्रिप्ट Telos खुलने पर चुनी गई पहचान के साथ एक बार चलती हैं। केवल विश्वसनीय कमांड सक्षम करें। संपादन करने से अपने-आप चलना बंद हो जाता है।</string>
+    <string name="startup_script_enable">Telos शुरू होने पर चलाएँ</string>
+    <string name="startup_script_code">शेल स्क्रिप्ट (अधिकतम 16,384 अक्षर)</string>
+    <string name="startup_script_exit">निकास कोड: %1$d</string>
+    <string name="startup_wireless_off">Shizuku शुरू होने के बाद वायरलेस डीबगिंग बंद करें</string>
+    <string name="startup_shizuku_help">वायरलेस डीबगिंग में एक बार पेयर करें। हर रीबूट के बाद वायरलेस डीबगिंग सक्षम करें और Android के पूछने पर Wi-Fi नेटवर्क की अनुमति दें। अपने-आप शुरू करने की सुविधा सहेजी गई कुंजी से फिर जुड़ती है; यह Android की अनुमतियों को दरकिनार नहीं कर सकती। Root को वायरलेस डीबगिंग की ज़रूरत नहीं है।</string>
+</resources>

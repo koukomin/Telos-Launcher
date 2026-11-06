@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preference_weather_alerts_test_failed">Notificatio ostendi non potuit. Fac ut notificationes Telos permittantur</string>
+</resources>

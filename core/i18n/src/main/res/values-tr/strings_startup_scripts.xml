@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="startup_scripts_title">Başlangıç betikleri</string>
+    <string name="startup_scripts_summary">Etkin betikler Telos açıldığında seçilen kimlikle bir kez çalıştırılır. Yalnızca güvendiğiniz komutları etkinleştirin. Düzenleme otomatik çalıştırmayı kapatır.</string>
+    <string name="startup_script_enable">Telos başladığında çalıştır</string>
+    <string name="startup_script_code">Kabuk betiği (en fazla 16.384 karakter)</string>
+    <string name="startup_script_exit">Çıkış kodu: %1$d</string>
+    <string name="startup_wireless_off">Shizuku başladıktan sonra kablosuz hata ayıklamayı kapat</string>
+    <string name="startup_shizuku_help">Kablosuz hata ayıklamada bir kez eşleştirin. Her yeniden başlatmadan sonra kablosuz hata ayıklamayı açın ve Android isterse Wi-Fi ağına izin verin. Otomatik başlatma kayıtlı anahtarla yeniden bağlanır; Android izinlerini atlayamaz. Root için kablosuz hata ayıklama gerekmez.</string>
+</resources>

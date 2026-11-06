@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="startup_scripts_title">Scripteanna tosaithe</string>
+    <string name="startup_scripts_summary">Ritear scripteanna cumasaithe uair amháin nuair a osclaítear Telos, leis an aitheantas roghnaithe. Ná cumasaigh ach orduithe a bhfuil muinín agat astu. Díchumasaíonn eagarthóireacht an rith uathoibríoch.</string>
+    <string name="startup_script_enable">Rith nuair a thosaíonn Telos</string>
+    <string name="startup_script_code">Script bhlaoisce (16,384 carachtar ar a mhéad)</string>
+    <string name="startup_script_exit">Cód scoir: %1$d</string>
+    <string name="startup_wireless_off">Múch dífhabhtú gan sreang tar éis do Shizuku tosú</string>
+    <string name="startup_shizuku_help">Péireáil uair amháin i nDífhabhtú gan sreang. Tar éis gach atosaithe, cumasaigh dífhabhtú gan sreang agus ceadaigh an líonra Wi-Fi má iarrann Android ort é. Athcheanglaíonn an tús uathoibríoch leis an eochair shábháilte; ní féidir leis ceadanna Android a sheachaint. Ní theastaíonn dífhabhtú gan sreang ó root.</string>
+</resources>

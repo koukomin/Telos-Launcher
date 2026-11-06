@@ -40,4 +40,13 @@
     <string name="telos_shizuku_pair_start">पेयरिंग कोड की प्रतीक्षा करें</string>
     <string name="telos_shizuku_pair_stop">प्रतीक्षा रोकें</string>
     <string name="telos_shizuku_pair_open">वायरलेस डीबगिंग खोलें</string>
+    <string name="telos_shizuku_perm_title">Shizuku पहुँच की अनुमति दें</string>
+    <string name="telos_shizuku_perm_body">%1$s Telos Shizuku सर्वर का उपयोग करना चाहता है।</string>
+    <string name="telos_shizuku_perm_once">एक बार अनुमति दें</string>
+    <string name="telos_shizuku_grant_failed">Shizuku पहुँच अपडेट नहीं हो सकी। पहले Telos सर्वर शुरू करें।</string>
+    <string name="telos_shizuku_diag_builtin">अंतर्निहित Telos Shizuku सर्वर</string>
+    <string name="telos_shizuku_diag_ready">स्थिति: तैयार (WRITE_SECURE_SETTINGS दिया गया)</string>
+    <string name="telos_shizuku_diag_grant">स्थिति: सर्वर चल रहा है — WRITE_SECURE_SETTINGS दें</string>
+    <string name="telos_shizuku_diag_start">स्थिति: Telos System → Shizuku से सर्वर शुरू करें</string>
+    <string name="telos_shizuku_autostart_ok">Shizuku ऑटो-स्टार्ट चालू है।</string>
 </resources>

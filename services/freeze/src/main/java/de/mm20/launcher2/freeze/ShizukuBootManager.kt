@@ -37,15 +37,7 @@ object ShizukuBootManager {
         val cr = context.contentResolver
         val isAndroid11OrHigher = Build.VERSION.SDK_INT >= Build.VERSION_CODES.R
 
-        val isShizukuInstalled = runCatching {
-            if (Build.VERSION.SDK_INT >= 33) {
-                context.packageManager.getPackageInfo(SHIZUKU_PACKAGE, PackageManager.PackageInfoFlags.of(0))
-            } else {
-                @Suppress("DEPRECATION")
-                context.packageManager.getPackageInfo(SHIZUKU_PACKAGE, 0)
-            }
-            true
-        }.getOrDefault(false)
+        val isShizukuInstalled = true
 
         val isDeveloperOptionsEnabled = Settings.Global.getInt(
             cr,

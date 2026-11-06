@@ -40,4 +40,13 @@ Kompjuter: debugging USB u l-kmand adb hawn taħt.</string>
     <string name="telos_shizuku_pair_start">Stenna l-kodiċi ta’ tqabbil</string>
     <string name="telos_shizuku_pair_stop">Waqqaf l-istennija</string>
     <string name="telos_shizuku_pair_open">Iftaħ debugging wireless</string>
+    <string name="telos_shizuku_perm_title">Ħalli aċċess għal Shizuku</string>
+    <string name="telos_shizuku_perm_body">%1$s irid juża s-server Shizuku ta’ Telos.</string>
+    <string name="telos_shizuku_perm_once">Ħalli darba</string>
+    <string name="telos_shizuku_grant_failed">Ma setax jiġi aġġornat l-aċċess Shizuku. Ibda s-server Telos l-ewwel.</string>
+    <string name="telos_shizuku_diag_builtin">Server Shizuku mibni f’Telos</string>
+    <string name="telos_shizuku_diag_ready">Status: lest (WRITE_SECURE_SETTINGS mogħti)</string>
+    <string name="telos_shizuku_diag_grant">Status: is-server qed jaħdem — agħti WRITE_SECURE_SETTINGS</string>
+    <string name="telos_shizuku_diag_start">Status: ibda s-server minn Telos System → Shizuku</string>
+    <string name="telos_shizuku_autostart_ok">L-awto-start ta’ Shizuku huwa mixgħul.</string>
 </resources>

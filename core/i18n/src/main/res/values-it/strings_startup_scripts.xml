@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="startup_scripts_title">Script di avvio</string>
+    <string name="startup_scripts_summary">Gli script abilitati vengono eseguiti una volta all’apertura di Telos, con l’identità selezionata. Abilita solo comandi attendibili. La modifica disabilita l’esecuzione automatica.</string>
+    <string name="startup_script_enable">Esegui all’avvio di Telos</string>
+    <string name="startup_script_code">Script shell (massimo 16.384 caratteri)</string>
+    <string name="startup_script_exit">Codice di uscita: %1$d</string>
+    <string name="startup_wireless_off">Disattiva il debug wireless dopo l’avvio di Shizuku</string>
+    <string name="startup_shizuku_help">Esegui un abbinamento in Debug wireless. Dopo ogni riavvio, abilita il debug wireless e autorizza la rete Wi-Fi se Android lo richiede. L’avvio automatico si riconnette con la chiave salvata; non può aggirare le autorizzazioni di Android. Root non richiede il debug wireless.</string>
+</resources>

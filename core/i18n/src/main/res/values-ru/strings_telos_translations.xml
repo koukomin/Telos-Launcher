@@ -461,7 +461,7 @@
     <string name="preference_app_lock_work_profile_toggle_summary">Требовать аутентификацию для приостановки или возобновления рабочего профиля из списка приложений</string>
     <string name="app_lock_work_profile_prompt_title">Пройдите аутентификацию, чтобы изменить состояние рабочего профиля</string>
     <string name="preference_screen_work_profile">Рабочий профиль</string>
-    <string name="preference_screen_work_profile_summary">Настройка, приостановка, возобновление и блокировка рабочего профиля</string>
+    <string name="preference_screen_work_profile_summary">Настройка, пауза, возобновление и блокировка рабочего профиля</string>
     <string name="work_profile_status_title">Состояние</string>
     <string name="work_profile_status_not_set_up">Не настроен</string>
     <string name="work_profile_status_active">Активен</string>
@@ -1209,4 +1209,11 @@
     <string name="telos_system_wifi_security_open">Открытая</string>
     <string name="telos_system_wifi_empty">Нет сохранённых сетей</string>
     <string name="telos_system_wifi_persisted">Сохранено временных сетей: %1$d</string>
+    <string name="desktop_mode_kde_connect">Интеграция KDE Connect</string>
+    <string name="desktop_mode_kde_connect_open">Откройте KDE Connect, чтобы связать ПК или планшет</string>
+    <string name="desktop_mode_kde_connect_install">Нажмите, чтобы установить KDE Connect из Telos Store</string>
+    <string name="preference_virtual_app_page_effects">Анимация страниц в приложениях Telos</string>
+    <string name="preference_virtual_app_page_effects_summary">Сдвиг и масштаб при смене экранов. По умолчанию выключено.</string>
+    <string name="net_waveform_title">Осциллограмма сетевого трафика</string>
+    <string name="net_waveform_rates">↓ %1$s  ·  ↑ %2$s</string>
 </resources>

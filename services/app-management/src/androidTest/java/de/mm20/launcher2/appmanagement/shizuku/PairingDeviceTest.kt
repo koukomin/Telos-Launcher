@@ -32,15 +32,18 @@ class PairingTestActivity : Activity() {
         setContentView(Button(this).apply {
             text = "Start wireless pairing test"
             setOnClickListener {
-                if (android.os.Build.VERSION.SDK_INT >= 37 && checkSelfPermission("android.permission.ACCESS_LOCAL_NETWORK") != android.content.pm.PackageManager.PERMISSION_GRANTED) {
-                    requestPermissions(arrayOf("android.permission.ACCESS_LOCAL_NETWORK", "android.permission.POST_NOTIFICATIONS"), 42)
-                } else TelosAdbPairingService.start(this@PairingTestActivity, intent.getBooleanExtra("automatic", true))
+                val missing = buildList {
+                    if (android.os.Build.VERSION.SDK_INT >= 33 && checkSelfPermission("android.permission.POST_NOTIFICATIONS") != android.content.pm.PackageManager.PERMISSION_GRANTED) add("android.permission.POST_NOTIFICATIONS")
+                    if (android.os.Build.VERSION.SDK_INT >= 37 && checkSelfPermission("android.permission.ACCESS_LOCAL_NETWORK") != android.content.pm.PackageManager.PERMISSION_GRANTED) add("android.permission.ACCESS_LOCAL_NETWORK")
+                }
+                if (missing.isNotEmpty()) requestPermissions(missing.toTypedArray(), 42)
+                else TelosAdbPairingService.start(this@PairingTestActivity, intent.getBooleanExtra("automatic", true))
             }
         })
     }
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, results: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, results)
-        if (requestCode == 42 && results.firstOrNull() == android.content.pm.PackageManager.PERMISSION_GRANTED) {
+        if (requestCode == 42 && results.isNotEmpty() && results.all { it == android.content.pm.PackageManager.PERMISSION_GRANTED }) {
             TelosAdbPairingService.start(this, intent.getBooleanExtra("automatic", true))
         }
     }

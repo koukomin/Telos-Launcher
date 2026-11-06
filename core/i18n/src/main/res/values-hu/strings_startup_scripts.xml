@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="startup_scripts_title">Indítási parancsfájlok</string>
+    <string name="startup_scripts_summary">Az engedélyezett parancsfájlok egyszer futnak le a Telos megnyitásakor, a kiválasztott felhasználóként. Csak megbízható parancsokat engedélyezzen. A szerkesztés kikapcsolja az automatikus futtatást.</string>
+    <string name="startup_script_enable">Futtatás a Telos indításakor</string>
+    <string name="startup_script_code">Rendszerhéj-parancsfájl (legfeljebb 16 384 karakter)</string>
+    <string name="startup_script_exit">Kilépési kód: %1$d</string>
+    <string name="startup_wireless_off">Vezeték nélküli hibakeresés kikapcsolása a Shizuku indítása után</string>
+    <string name="startup_shizuku_help">Párosítson egyszer a Vezeték nélküli hibakeresés beállításaiban. Minden újraindítás után kapcsolja be a vezeték nélküli hibakeresést, és hagyja jóvá a Wi-Fi-hálózatot, ha az Android kéri. Az automatikus indítás a mentett kulccsal kapcsolódik újra; nem kerülheti meg az Android engedélyeit. A root nem igényel vezeték nélküli hibakeresést.</string>
+</resources>

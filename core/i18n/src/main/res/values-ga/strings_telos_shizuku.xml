@@ -40,4 +40,13 @@ Ríomhaire: dífhabhtú USB agus an t-ordú adb thíos.</string>
     <string name="telos_shizuku_pair_start">Fan le cód péireála</string>
     <string name="telos_shizuku_pair_stop">Stop ag fanacht</string>
     <string name="telos_shizuku_pair_open">Oscail dífhabhtú gan sreang</string>
+    <string name="telos_shizuku_perm_title">Ceadaigh rochtain Shizuku</string>
+    <string name="telos_shizuku_perm_body">Ba mhaith le %1$s freastalaí Shizuku Telos a úsáid.</string>
+    <string name="telos_shizuku_perm_once">Ceadaigh uair amháin</string>
+    <string name="telos_shizuku_grant_failed">Níorbh fhéidir rochtain Shizuku a nuashonrú. Tosaigh an freastalaí Telos ar dtús.</string>
+    <string name="telos_shizuku_diag_builtin">Freastalaí Shizuku Telos ionsuite</string>
+    <string name="telos_shizuku_diag_ready">Stádas: réidh (WRITE_SECURE_SETTINGS deonaithe)</string>
+    <string name="telos_shizuku_diag_grant">Stádas: tá an freastalaí ag rith — deonaigh WRITE_SECURE_SETTINGS</string>
+    <string name="telos_shizuku_diag_start">Stádas: tosaigh an freastalaí ó Telos System → Shizuku</string>
+    <string name="telos_shizuku_autostart_ok">Tá uaththosú Shizuku ar siúl.</string>
 </resources>

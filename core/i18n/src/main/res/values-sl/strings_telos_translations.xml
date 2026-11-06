@@ -1766,8 +1766,8 @@
     <string name="preference_app_lock_work_profile_toggle">Zakleni stikalo delovnega profila</string>
     <string name="preference_app_lock_work_profile_toggle_summary">Zahtevaj overitev za začasno ustavitev ali nadaljevanje delovnega profila iz predala z aplikacijami</string>
     <string name="app_lock_work_profile_prompt_title">Overite se za spremembo stanja delovnega profila</string>
-    <string name="preference_screen_work_profile">Delovni profil</string>
-    <string name="preference_screen_work_profile_summary">Nastavite, začasno ustavite, nadaljujte in zaklenite delovni profil</string>
+    <string name="preference_screen_work_profile">Službeni profil</string>
+    <string name="preference_screen_work_profile_summary">Nastavitev, premor, nadaljevanje in zaklep službenega profila</string>
     <string name="work_profile_status_title">Stanje</string>
     <string name="work_profile_status_not_set_up">Ni nastavljeno</string>
     <string name="work_profile_status_active">Aktivno</string>
@@ -2635,4 +2635,7 @@
     <string name="telos_system_wifi_security_open">Odprto</string>
     <string name="telos_system_wifi_empty">Ni shranjenih omrežij</string>
     <string name="telos_system_wifi_persisted">Shranjenih %1$d začasnih omrežij</string>
+    <string name="desktop_mode_kde_connect">Integracija KDE Connect</string>
+    <string name="desktop_mode_kde_connect_open">Odprite KDE Connect za seznanitev z računalnikom ali tablico</string>
+    <string name="desktop_mode_kde_connect_install">Tapnite za namestitev KDE Connect iz Telos Store</string>
 </resources>
