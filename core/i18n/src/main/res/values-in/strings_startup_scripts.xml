@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="startup_scripts_title">Skrip mulai</string>
+    <string name="startup_scripts_summary">Skrip yang diaktifkan dijalankan sekali saat Telos dibuka, dengan identitas yang dipilih. Aktifkan hanya perintah yang Anda percayai. Pengeditan menonaktifkan eksekusi otomatis.</string>
+    <string name="startup_script_enable">Jalankan saat Telos dimulai</string>
+    <string name="startup_script_code">Skrip shell (maksimal 16.384 karakter)</string>
+    <string name="startup_script_exit">Kode keluar: %1$d</string>
+    <string name="startup_wireless_off">Matikan proses debug nirkabel setelah Shizuku dimulai</string>
+    <string name="startup_shizuku_help">Sandingkan sekali di Proses debug nirkabel. Setelah setiap mulai ulang, aktifkan proses debug nirkabel dan izinkan jaringan Wi-Fi jika Android memintanya. Mulai otomatis menyambungkan kembali dengan kunci tersimpan; ini tidak dapat melewati izin Android. Root tidak memerlukan proses debug nirkabel.</string>
+</resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="startup_scripts_title">Скриптове при стартиране</string>
+    <string name="startup_scripts_summary">Включените скриптове се изпълняват веднъж при отваряне на Telos с избраната самоличност. Включвайте само доверени команди. Редактирането изключва автоматичното изпълнение.</string>
+    <string name="startup_script_enable">Изпълнение при стартиране на Telos</string>
+    <string name="startup_script_code">Скрипт за обвивката (до 16 384 знака)</string>
+    <string name="startup_script_exit">Код за изход: %1$d</string>
+    <string name="startup_wireless_off">Изключване на безжичното отстраняване на грешки след стартиране на Shizuku</string>
+    <string name="startup_shizuku_help">Сдвоете веднъж в настройките за безжично отстраняване на грешки. След всяко рестартиране го включвайте и одобрявайте Wi-Fi мрежата, ако Android поиска това. Автоматичното стартиране се свързва със запазения ключ; не може да заобикаля разрешенията на Android. Root не изисква безжично отстраняване на грешки.</string>
+</resources>

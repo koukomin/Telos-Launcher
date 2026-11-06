@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="startup_scripts_title">Scripta initialia</string>
+    <string name="startup_scripts_summary">Scripta activa semel exsequuntur cum Telos aperitur, sub identitate electa. Sola mandata fida activa. Recensio exsecutionem automaticam impedit.</string>
+    <string name="startup_script_enable">Exsequi cum Telos incipit</string>
+    <string name="startup_script_code">Scriptum interpretis mandatorum (ad 16.384 characteres)</string>
+    <string name="startup_script_exit">Codex exitus: %1$d</string>
+    <string name="startup_wireless_off">Depurationem sine filis post initium Shizuku exstinguere</string>
+    <string name="startup_shizuku_help">Semel in Depuratione sine filis coniunge. Post quamque reinitializationem depurationem sine filis activa et rete Wi-Fi approba si Android rogat. Initium automaticum clave servata iterum conectit; permissiones Android praeterire non potest. Root depuratione sine filis non eget.</string>
+</resources>

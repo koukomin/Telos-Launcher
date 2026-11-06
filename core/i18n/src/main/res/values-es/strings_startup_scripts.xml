@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="startup_scripts_title">Scripts de inicio</string>
+    <string name="startup_scripts_summary">Los scripts activados se ejecutan una vez al abrir Telos, con la identidad seleccionada. Activa solo comandos de confianza. Editarlos desactiva la ejecución automática.</string>
+    <string name="startup_script_enable">Ejecutar al iniciar Telos</string>
+    <string name="startup_script_code">Script de shell (máximo 16.384 caracteres)</string>
+    <string name="startup_script_exit">Código de salida: %1$d</string>
+    <string name="startup_wireless_off">Desactivar la depuración inalámbrica después de iniciar Shizuku</string>
+    <string name="startup_shizuku_help">Vincula una vez en Depuración inalámbrica. Después de cada reinicio, activa la depuración inalámbrica y autoriza la red Wi-Fi si Android lo solicita. El inicio automático vuelve a conectar con la clave guardada; no puede eludir los permisos de Android. Root no requiere depuración inalámbrica.</string>
+</resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="startup_scripts_title">Скрипты запуска</string>
+    <string name="startup_scripts_summary">Включённые скрипты выполняются один раз при открытии Telos от выбранного пользователя. Включайте только команды, которым доверяете. Изменение отключает автоматическое выполнение.</string>
+    <string name="startup_script_enable">Выполнять при запуске Telos</string>
+    <string name="startup_script_code">Скрипт оболочки (не более 16 384 символов)</string>
+    <string name="startup_script_exit">Код завершения: %1$d</string>
+    <string name="startup_wireless_off">Отключать беспроводную отладку после запуска Shizuku</string>
+    <string name="startup_shizuku_help">Один раз выполните сопряжение в разделе «Беспроводная отладка». После каждой перезагрузки включайте беспроводную отладку и разрешайте сеть Wi-Fi, если Android запрашивает это. Автозапуск подключается с сохранённым ключом и не может обойти разрешения Android. Root не требует беспроводной отладки.</string>
+</resources>

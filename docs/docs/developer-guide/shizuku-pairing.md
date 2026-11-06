@@ -157,3 +157,7 @@ committed.
 Pairing transactions have their own bounded coroutine lifetime. Rebinding/closing an overlay
 does not cancel the network transaction or strand the UI in Working; explicit Stop cancels it.
 The pairing operation has a one-minute deadline, and idle discovery expires after three minutes.
+
+## Startup and scripting
+
+See [Launcher startup scripts and Shizuku reconnection](./startup-scripts) for the opt-in foreground launcher runner, paired-key autostart, optional wireless shutdown and discussion #462 comparison.

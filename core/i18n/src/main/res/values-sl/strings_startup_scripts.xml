@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="startup_scripts_title">Zagonski skripti</string>
+    <string name="startup_scripts_summary">Omogočeni skripti se izvedejo enkrat ob odprtju Telos z izbrano identiteto. Omogočite le ukaze, ki jim zaupate. Urejanje onemogoči samodejno izvajanje.</string>
+    <string name="startup_script_enable">Zaženi ob zagonu Telos</string>
+    <string name="startup_script_code">Lupinski skript (največ 16.384 znakov)</string>
+    <string name="startup_script_exit">Izhodna koda: %1$d</string>
+    <string name="startup_wireless_off">Izklopi brezžično razhroščevanje po zagonu Shizuku</string>
+    <string name="startup_shizuku_help">Enkrat seznanite v nastavitvah brezžičnega razhroščevanja. Po vsakem ponovnem zagonu omogočite brezžično razhroščevanje in odobrite omrežje Wi-Fi, če Android to zahteva. Samodejni zagon se znova poveže s shranjenim ključem; ne more obiti dovoljenj Androida. Root ne zahteva brezžičnega razhroščevanja.</string>
+</resources>

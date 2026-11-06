@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="startup_scripts_title">Γραφαὶ ἐκκινήσεως</string>
+    <string name="startup_scripts_summary">Αἱ ἐνεργαὶ γραφαὶ ἅπαξ ἐκτελοῦνται ὅταν τὸ Telos ἀνοίγηται, κατὰ τὴν ἐκλελεγμένην ταυτότητα. Μόνας τὰς πιστὰς ἐντολὰς ἐνεργὰς ποιεῖτε. Ἡ διόρθωσις παύει τὴν αὐτόματον ἐκτέλεσιν.</string>
+    <string name="startup_script_enable">Ἐκτελεῖν ὅταν τὸ Telos ἐκκινῇ</string>
+    <string name="startup_script_code">Γραφὴ κελύφους (μέχρι 16.384 χαρακτήρων)</string>
+    <string name="startup_script_exit">Κώδιξ ἐξόδου: %1$d</string>
+    <string name="startup_wireless_off">Παύειν τὴν ἀσύρματον ἀποσφαλμάτωσιν μετὰ τὴν ἐκκίνησιν τοῦ Shizuku</string>
+    <string name="startup_shizuku_help">Ἅπαξ ζεύξατε ἐν τῇ Ἀσυρμάτῳ ἀποσφαλματώσει. Μετὰ πᾶσαν ἐπανεκκίνησιν ἐνεργὸν ποιεῖτε τὴν ἀσύρματον ἀποσφαλμάτωσιν καὶ ἐγκρίνετε τὸ δίκτυον Wi-Fi ἐὰν τὸ Android αἰτῇ. Ἡ αὐτόματος ἐκκίνησις πάλιν συνδέει διὰ τῆς ἀποκειμένης κλειδός· οὐ δύναται παρακάμπτειν τὰς ἀδείας τοῦ Android. Τὸ root οὐ δεῖται ἀσυρμάτου ἀποσφαλματώσεως.</string>
+</resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="startup_scripts_title">শুরুর স্ক্রিপ্ট</string>
+    <string name="startup_scripts_summary">সক্রিয় স্ক্রিপ্টগুলো Telos খোলার সময় নির্বাচিত পরিচয়ে একবার চলে। শুধু বিশ্বস্ত কমান্ড সক্রিয় করুন। সম্পাদনা করলে স্বয়ংক্রিয়ভাবে চালানো বন্ধ হয়।</string>
+    <string name="startup_script_enable">Telos চালু হলে চালান</string>
+    <string name="startup_script_code">শেল স্ক্রিপ্ট (সর্বোচ্চ ১৬,৩৮৪ অক্ষর)</string>
+    <string name="startup_script_exit">প্রস্থান কোড: %1$d</string>
+    <string name="startup_wireless_off">Shizuku চালু হওয়ার পর ওয়্যারলেস ডিবাগিং বন্ধ করুন</string>
+    <string name="startup_shizuku_help">ওয়্যারলেস ডিবাগিংয়ে একবার পেয়ার করুন। প্রতিবার রিবুটের পর ওয়্যারলেস ডিবাগিং চালু করুন এবং Android চাইলে Wi-Fi নেটওয়ার্ক অনুমোদন করুন। স্বয়ংক্রিয় সূচনা সংরক্ষিত কী দিয়ে আবার সংযোগ করে; এটি Android-এর অনুমতি এড়াতে পারে না। Root-এর জন্য ওয়্যারলেস ডিবাগিং লাগে না।</string>
+</resources>

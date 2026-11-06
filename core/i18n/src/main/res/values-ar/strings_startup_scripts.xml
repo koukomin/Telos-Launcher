@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="startup_scripts_title">برامج نصية لبدء التشغيل</string>
+    <string name="startup_scripts_summary">تُشغَّل البرامج النصية المفعّلة مرة واحدة عند فتح Telos بالهوية المحددة. فعّل الأوامر التي تثق بها فقط. يؤدي التعديل إلى تعطيل التشغيل التلقائي.</string>
+    <string name="startup_script_enable">تشغيل عند بدء Telos</string>
+    <string name="startup_script_code">برنامج نصي للصدفة (بحد أقصى 16,384 محرفًا)</string>
+    <string name="startup_script_exit">رمز الخروج: %1$d</string>
+    <string name="startup_wireless_off">إيقاف تصحيح الأخطاء اللاسلكي بعد بدء Shizuku</string>
+    <string name="startup_shizuku_help">أجرِ الاقتران مرة واحدة في تصحيح الأخطاء اللاسلكي. بعد كل إعادة تشغيل، فعّل تصحيح الأخطاء اللاسلكي واسمح بشبكة Wi-Fi إذا طلب Android ذلك. يعيد التشغيل التلقائي الاتصال بالمفتاح المحفوظ؛ ولا يمكنه تجاوز أذونات Android. لا يتطلب root تصحيح الأخطاء اللاسلكي.</string>
+</resources>

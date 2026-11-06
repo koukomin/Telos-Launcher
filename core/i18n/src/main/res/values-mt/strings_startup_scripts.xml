@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="startup_scripts_title">Skripts tal-bidu</string>
+    <string name="startup_scripts_summary">L-iskripts attivati jitħaddmu darba meta jinfetaħ Telos, bl-identità magħżula. Attiva biss kmandi li tafda. L-editjar jitfi t-tħaddim awtomatiku.</string>
+    <string name="startup_script_enable">Ħaddem meta jibda Telos</string>
+    <string name="startup_script_code">Skript tal-qoxra (massimu ta’ 16,384 karattru)</string>
+    <string name="startup_script_exit">Kodiċi tal-ħruġ: %1$d</string>
+    <string name="startup_wireless_off">Itfi d-debugging bla fili wara li jibda Shizuku</string>
+    <string name="startup_shizuku_help">Agħmel tqabbil darba fid-debugging bla fili. Wara kull startjar mill-ġdid, attiva d-debugging bla fili u approva n-netwerk Wi-Fi jekk Android jitlob hekk. Il-bidu awtomatiku jerġa’ jikkonnettja biċ-ċavetta ssejvjata; ma jistax jevita l-permessi ta’ Android. Root ma jeħtieġx debugging bla fili.</string>
+</resources>

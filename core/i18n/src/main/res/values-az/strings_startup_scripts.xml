@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="startup_scripts_title">Başlanğıc skriptləri</string>
+    <string name="startup_scripts_summary">Aktiv skriptlər Telos açıldıqda seçilmiş kimliklə bir dəfə icra olunur. Yalnız etibar etdiyiniz əmrləri aktivləşdirin. Redaktə avtomatik icranı söndürür.</string>
+    <string name="startup_script_enable">Telos başlayanda icra et</string>
+    <string name="startup_script_code">Qabıq skripti (ən çox 16.384 simvol)</string>
+    <string name="startup_script_exit">Çıxış kodu: %1$d</string>
+    <string name="startup_wireless_off">Shizuku başladıqdan sonra simsiz sazlamanı söndür</string>
+    <string name="startup_shizuku_help">Simsiz sazlamada bir dəfə qoşalaşdırın. Hər yenidən başlatmadan sonra simsiz sazlamanı aktivləşdirin və Android soruşarsa Wi-Fi şəbəkəsinə icazə verin. Avtomatik başlatma saxlanmış açarla yenidən qoşulur; Android icazələrini keçə bilməz. Root üçün simsiz sazlama tələb olunmur.</string>
+</resources>

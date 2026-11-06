@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="startup_scripts_title">اسکریپت‌های راه‌اندازی</string>
+    <string name="startup_scripts_summary">اسکریپت‌های فعال هنگام باز شدن Telos با هویت انتخاب‌شده یک بار اجرا می‌شوند. فقط فرمان‌های مورد اعتماد را فعال کنید. ویرایش، اجرای خودکار را غیرفعال می‌کند.</string>
+    <string name="startup_script_enable">اجرا هنگام شروع Telos</string>
+    <string name="startup_script_code">اسکریپت پوسته (حداکثر ۱۶٬۳۸۴ نویسه)</string>
+    <string name="startup_script_exit">کد خروج: %1$d</string>
+    <string name="startup_wireless_off">خاموش کردن اشکال‌زدایی بی‌سیم پس از شروع Shizuku</string>
+    <string name="startup_shizuku_help">یک بار در اشکال‌زدایی بی‌سیم جفت‌سازی کنید. پس از هر راه‌اندازی مجدد، اشکال‌زدایی بی‌سیم را فعال کنید و اگر Android درخواست کرد، شبکهٔ Wi-Fi را تأیید کنید. راه‌اندازی خودکار با کلید ذخیره‌شده دوباره وصل می‌شود؛ نمی‌تواند مجوزهای Android را دور بزند. Root به اشکال‌زدایی بی‌سیم نیاز ندارد.</string>
+</resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="startup_scripts_title">啟動指令碼</string>
+    <string name="startup_scripts_summary">已啟用的指令碼會在開啟 Telos 時以所選身分執行一次。請只啟用可信任的指令。編輯指令碼會停用自動執行。</string>
+    <string name="startup_script_enable">Telos 啟動時執行</string>
+    <string name="startup_script_code">Shell 指令碼（最多 16,384 個字元）</string>
+    <string name="startup_script_exit">結束代碼：%1$d</string>
+    <string name="startup_wireless_off">Shizuku 啟動後關閉無線偵錯</string>
+    <string name="startup_shizuku_help">在「無線偵錯」中配對一次。每次重新啟動後，請開啟無線偵錯，並在 Android 詢問時授權 Wi-Fi 網路。自動啟動會使用儲存的金鑰重新連線，但無法略過 Android 權限。Root 不需要無線偵錯。</string>
+</resources>

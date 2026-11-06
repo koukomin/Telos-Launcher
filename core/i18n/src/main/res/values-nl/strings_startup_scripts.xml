@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="startup_scripts_title">Opstartscripts</string>
+    <string name="startup_scripts_summary">Ingeschakelde scripts worden eenmaal uitgevoerd wanneer Telos opent, met de gekozen identiteit. Schakel alleen vertrouwde opdrachten in. Bewerken schakelt automatisch uitvoeren uit.</string>
+    <string name="startup_script_enable">Uitvoeren wanneer Telos start</string>
+    <string name="startup_script_code">Shellscript (maximaal 16.384 tekens)</string>
+    <string name="startup_script_exit">Afsluitcode: %1$d</string>
+    <string name="startup_wireless_off">Draadloze foutopsporing uitschakelen nadat Shizuku start</string>
+    <string name="startup_shizuku_help">Koppel eenmaal via Draadloze foutopsporing. Schakel na elke herstart draadloze foutopsporing in en sta het wifi-netwerk toe als Android daarom vraagt. Automatisch starten maakt opnieuw verbinding met de opgeslagen sleutel; Android-machtigingen kunnen niet worden omzeild. Root vereist geen draadloze foutopsporing.</string>
+</resources>

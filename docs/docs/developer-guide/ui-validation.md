@@ -176,3 +176,12 @@ On 2026-11-06 the notification-only harness completed pairing and a fresh UID 20
 bootstrap on the OnePlus Android 17 device. SystemUI owned the reply keyboard; Send hid it,
 Back returned to Settings and no pairing overlay existed. The test APK/server were removed.
 The signed production APK has not been installed because the user disconnected USB before release.
+
+### Startup scripts and paired-key reconnection
+
+New System → Shizuku controls use shared preference rows, FlowRow actions, and a scrollable
+script editor with saveable drafts. New/edited scripts are disabled until explicitly enabled;
+manual Run and automatic execution share a serial worker. Local tests/build results are recorded
+in the PR. No physical device is connected for this feature: boot, root prompts, notification
+permissions, light/dark, compact/expanded, short landscape, font/display sizes and IME interaction
+have not been visually certified. This does not replace the notification pairing evidence above.

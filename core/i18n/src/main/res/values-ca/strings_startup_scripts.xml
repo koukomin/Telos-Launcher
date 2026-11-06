@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="startup_scripts_title">Scripts d’inici</string>
+    <string name="startup_scripts_summary">Els scripts activats s’executen un cop en obrir Telos, amb la identitat seleccionada. Activeu només ordres de confiança. L’edició desactiva l’execució automàtica.</string>
+    <string name="startup_script_enable">Executa en iniciar Telos</string>
+    <string name="startup_script_code">Script d’intèrpret d’ordres (màxim 16.384 caràcters)</string>
+    <string name="startup_script_exit">Codi de sortida: %1$d</string>
+    <string name="startup_wireless_off">Desactiva la depuració sense fil després d’iniciar Shizuku</string>
+    <string name="startup_shizuku_help">Vinculeu un cop a Depuració sense fil. Després de cada reinici, activeu la depuració sense fil i autoritzeu la xarxa Wi-Fi si Android ho demana. L’inici automàtic torna a connectar amb la clau desada; no pot eludir els permisos d’Android. Root no requereix depuració sense fil.</string>
+</resources>

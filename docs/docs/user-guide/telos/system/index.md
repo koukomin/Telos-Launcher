@@ -13,8 +13,8 @@ Settings live on **Telos System → Shizuku**.
 | Method | When to use |
 | --- | --- |
 | **Start server** | Auto: root if available, otherwise wireless debugging |
-| **Start with root** | Magisk / KernelSU. Survives reboot with Autostart |
-| **Start with wireless debugging** | Android 11+, no root. Pair once, then Autostart |
+| **Start with root** | Magisk / KernelSU. Autostart retries after unlock when Android permits |
+| **Start with wireless debugging** | Android 11+, no root. Pair once; enable wireless debugging after reboot |
 | **Computer ADB** | USB debugging. Exact command is shown on the Shizuku tab (paths change per install) |
 
 ### Pairing (wireless, first time)
@@ -25,7 +25,7 @@ There is no AI. Telos copies Shizuku-Next: stay on the system pairing dialog (le
 2. In system Settings, **Pair device with pairing code**. Keep that dialog on screen.
 3. Telos reads the 6-digit code automatically. If it does not, use the reply action in the Telos notification.
 4. Grant the Shizuku permission when asked, then **Start server**.
-5. Turn on **Autostart** so the watchdog starts the server after reboot. Pairing is not needed again until you reset ADB keys.
+5. Turn on **Autostart** to retry startup after unlock/opening Telos. After reboot, enable Wireless debugging and approve the Wi-Fi network if Android asks. Pairing is not needed again unless its saved key is revoked.
 
 Manual fallback: type the 6-digit code on a computer with `adb pair IP:PORT`.
 
@@ -79,3 +79,25 @@ type the code and send it. The system owns the keyboard; there is no Telos overl
 or the navigation bar. Use Stop waiting in the notification or Telos System to cancel.
 
 See [Shizuku](/docs/wiki/shizuku) and the [implementation audit](/docs/developer-guide/shizuku-pairing).
+
+## Startup scripts
+
+Open **Telos System → Shizuku → Startup scripts**, tap **Add**, enter shell text and choose
+**Telos**, **Shizuku** or **Root**. Save, inspect your entry and use **Run** to test it. Enable
+**Run when Telos starts** separately if you want it at the next launcher process start. Every
+edit turns that switch off again. Do not enable scripts you do not trust.
+
+Telos runs enabled scripts sequentially in the background once per process when the launcher
+opens. Returning Home or rotating does not repeat them; restarting the launcher process does.
+Shizuku scripts require the running authorized service; root scripts require root-manager approval.
+There is no automatic change of identity or retry of a failed script. Inspect the latest exit code
+and output under its entry. Scripts stay in private storage and are excluded from Android backup.
+
+Each command has a 30-second shell timeout (35-second independent collection limit), bounded output,
+and a maximum of 16,384 characters; ten entries are supported. Use finite foreground commands.
+Older Android versions may not terminate every background descendant, so this is not a daemon manager.
+
+**Turn off wireless debugging after Shizuku starts** is optional and disabled by default. It acts
+only after a verified successful start. You may need to enable wireless debugging again if Shizuku
+later stops. Android permissions, Wi-Fi trust and OEM boot restrictions cannot be bypassed.
+See the [startup implementation and prerequisites](../../../developer-guide/startup-scripts).

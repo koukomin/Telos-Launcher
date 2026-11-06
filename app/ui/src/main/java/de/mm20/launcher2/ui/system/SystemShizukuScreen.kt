@@ -61,6 +61,7 @@ fun SystemShizukuTab() {
     val ui: UiSettings = koinInject()
     val host by TelosShizukuHost.status.collectAsStateWithLifecycle()
     val auto by ui.shizukuAutoStart.collectAsStateWithLifecycle(false)
+    val disableWireless by ui.shizukuDisableWirelessAfterStart.collectAsStateWithLifecycle(false)
     var log by remember { mutableStateOf("") }
     var shellCmd by remember { mutableStateOf("id") }
     var shellOut by remember { mutableStateOf("") }
@@ -138,7 +139,7 @@ fun SystemShizukuTab() {
         item {
             Column(Modifier.padding(horizontal = 16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text(stringResource(I18nR.string.telos_shizuku_howto_title), style = MaterialTheme.typography.titleMedium)
-                Text(stringResource(I18nR.string.telos_shizuku_howto_body), style = MaterialTheme.typography.bodySmall)
+                Text(stringResource(I18nR.string.startup_shizuku_help), style = MaterialTheme.typography.bodySmall)
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.fillMaxWidth()) {
                     OutlinedButton(
                         onClick = {
@@ -224,15 +225,22 @@ fun SystemShizukuTab() {
             PreferenceCategory(title = stringResource(I18nR.string.telos_shizuku_settings)) {
                 SwitchPreference(
                     title = stringResource(I18nR.string.settings_shizuku_autostart),
-                    summary = stringResource(I18nR.string.telos_shizuku_autostart_summary),
+                    summary = stringResource(I18nR.string.startup_shizuku_help),
                     value = auto,
-                    onValueChanged = {
-                        ui.setShizukuAutoStart(it)
-                        if (it) TelosShizukuWatchdog.start(context) else TelosShizukuWatchdog.stop(context)
-                    },
+                    onValueChanged = { enabled -> scope.launch {
+                        // The service reads this preference immediately; persist before starting it.
+                        ui.setShizukuAutoStartAndWait(enabled)
+                        if (enabled) TelosShizukuWatchdog.start(context) else TelosShizukuWatchdog.stop(context)
+                    } },
+                )
+                SwitchPreference(
+                    title = stringResource(I18nR.string.startup_wireless_off),
+                    value = disableWireless,
+                    onValueChanged = ui::setShizukuDisableWirelessAfterStart,
                 )
             }
         }
+        item { StartupScriptsPreference() }
         item {
             PreferenceCategory(title = stringResource(I18nR.string.telos_shizuku_labs)) {
                 Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
