@@ -73,6 +73,16 @@ as distinct transports. Do not advertise full Next/Plus parity or add switches t
 same wireless implementation. These need separate implementation and acceptance tests if adopted.
 The legacy external `starter.sh` helper is unused by the built-in UI.
 
+A further **client-authorisation gap** is visible in the current manager code: the server launches
+`<manager package>.intent.action.REQUEST_PERMISSION`, but Telos does not declare a matching
+permission-confirmation Activity. Security Hub's existing `setClientAccess` implementation uses
+`pm grant`/permission-name app-ops commands rather than Next's manager-side
+`Shizuku.getFlagsForUid`/`updateFlagsForUid` flow. On this ColorOS build, shell runtime-permission
+grants are also restricted. These are functional manager gaps, not settings hidden elsewhere.
+The pairing fix does not certify external-client authorisation; a separate implementation needs
+a validated allow/deny prompt and server-flag controls before full manager parity can be claimed.
+
+
 ## Validation
 
 Automated regression: `:services:app-management:testDebugUnitTest` includes rejection of IP/port
