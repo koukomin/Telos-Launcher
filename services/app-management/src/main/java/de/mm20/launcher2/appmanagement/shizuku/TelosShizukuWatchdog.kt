@@ -16,11 +16,11 @@ import de.mm20.launcher2.preferences.ui.UiSettings
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.withTimeoutOrNull
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.isActive
-import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.koin.core.context.GlobalContext
@@ -34,7 +34,6 @@ class TelosShizukuWatchdog : Service(), KoinComponent {
     override fun onCreate() {
         super.onCreate()
         // Library instrumentation and secondary entry points may have no launcher DI container.
-        // Never launch an uncaught coroutine against an uninitialised application.
         if (GlobalContext.getOrNull() == null) {
             stopSelf()
             return
@@ -53,11 +52,17 @@ class TelosShizukuWatchdog : Service(), KoinComponent {
                 .build(),
         )
         scope.launch {
+            var failures = 0
             while (isActive) {
-                val auto = ui.shizukuAutoStart.first()
-                val method = TelosShizukuHost.StartMethod.Auto
-                TelosShizukuHost.watchdogTick(this@TelosShizukuWatchdog, auto, method)
-                delay(30_000)
+                if (!runCatching { ui.shizukuAutoStart.first() }.getOrDefault(false)) {
+                    stopSelf()
+                    break
+                }
+                runCatching {
+                    TelosShizukuHost.watchdogTick(this@TelosShizukuWatchdog, true, TelosShizukuHost.StartMethod.Auto)
+                }
+                failures = if (TelosShizukuHost.status.value.running) 0 else (failures + 1).coerceAtMost(4)
+                delay(if (failures == 0) 30_000L else (30_000L shl failures).coerceAtMost(300_000L))
             }
         }
     }
@@ -72,7 +77,10 @@ class TelosShizukuWatchdog : Service(), KoinComponent {
         fun start(context: Context) {
             if (GlobalContext.getOrNull() == null) return
             val i = Intent(context, TelosShizukuWatchdog::class.java)
-            if (Build.VERSION.SDK_INT >= 26) context.startForegroundService(i) else context.startService(i)
+            // Boot/background FGS restrictions differ by Android/OEM. Opening the launcher retries.
+            runCatching {
+                if (Build.VERSION.SDK_INT >= 26) context.startForegroundService(i) else context.startService(i)
+            }
         }
         fun stop(context: Context) {
             context.stopService(Intent(context, TelosShizukuWatchdog::class.java))
@@ -84,16 +92,19 @@ class TelosShizukuBootReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent?) {
         val action = intent?.action ?: return
         if (action != Intent.ACTION_BOOT_COMPLETED &&
-            action != Intent.ACTION_LOCKED_BOOT_COMPLETED &&
             action != Intent.ACTION_MY_PACKAGE_REPLACED
         ) return
-        TelosShizukuWatchdog.start(context.applicationContext)
         val pending = goAsync()
         kotlinx.coroutines.CoroutineScope(kotlinx.coroutines.Dispatchers.IO).launch {
             try {
-                de.mm20.launcher2.appmanagement.tweaks.TweaksApplier.applySavedOnBoot(context.applicationContext)
-            } catch (_: Exception) {
-                // A boot hook must not crash the host process when preferences are unavailable.
+                withTimeoutOrNull(8_000L) {
+                    runCatching {
+                        val app = context.applicationContext
+                        val ui = org.koin.core.context.GlobalContext.get().get<UiSettings>()
+                        if (ui.shizukuAutoStart.first()) TelosShizukuWatchdog.start(app)
+                        de.mm20.launcher2.appmanagement.tweaks.TweaksApplier.applySavedOnBoot(app)
+                    }
+                }
             } finally {
                 pending.finish()
             }
@@ -103,6 +114,17 @@ class TelosShizukuBootReceiver : BroadcastReceiver() {
 
 class TelosShizukuStartReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent?) {
-        TelosShizukuWatchdog.start(context.applicationContext)
+        val pending = goAsync()
+        kotlinx.coroutines.CoroutineScope(kotlinx.coroutines.Dispatchers.IO).launch {
+            try {
+                withTimeoutOrNull(8_000L) {
+                    runCatching {
+                        if (org.koin.core.context.GlobalContext.get().get<UiSettings>().shizukuAutoStart.first()) {
+                            TelosShizukuWatchdog.start(context.applicationContext)
+                        }
+                    }
+                }
+            } finally { pending.finish() }
+        }
     }
 }

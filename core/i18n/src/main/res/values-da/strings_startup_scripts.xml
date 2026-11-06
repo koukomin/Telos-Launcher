@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="startup_scripts_title">Opstartsscripts</string>
+    <string name="startup_scripts_summary">Aktiverede scripts køres én gang, når Telos åbnes, med den valgte identitet. Aktivér kun kommandoer, du har tillid til. Redigering slår automatisk kørsel fra.</string>
+    <string name="startup_script_enable">Kør, når Telos starter</string>
+    <string name="startup_script_code">Shellscript (højst 16.384 tegn)</string>
+    <string name="startup_script_exit">Afslutningskode: %1$d</string>
+    <string name="startup_wireless_off">Slå trådløs fejlfinding fra, når Shizuku er startet</string>
+    <string name="startup_shizuku_help">Par én gang under Trådløs fejlfinding. Slå trådløs fejlfinding til efter hver genstart, og godkend Wi-Fi-netværket, hvis Android beder om det. Automatisk start forbinder igen med den gemte nøgle; den kan ikke omgå Android-tilladelser. Root kræver ikke trådløs fejlfinding.</string>
+</resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="startup_scripts_title">Käivitusskriptid</string>
+    <string name="startup_scripts_summary">Lubatud skriptid käivitatakse Telose avamisel üks kord valitud identiteediga. Luba ainult usaldusväärsed käsud. Muutmine keelab automaatse käivitamise.</string>
+    <string name="startup_script_enable">Käivita Telose käivitamisel</string>
+    <string name="startup_script_code">Kestaskript (kuni 16 384 märki)</string>
+    <string name="startup_script_exit">Väljumiskood: %1$d</string>
+    <string name="startup_wireless_off">Lülita juhtmeta silumine pärast Shizuku käivitumist välja</string>
+    <string name="startup_shizuku_help">Seo üks kord juhtmeta silumise seadetes. Pärast iga taaskäivitust luba juhtmeta silumine ja kinnita Wi-Fi-võrk, kui Android seda küsib. Automaatne käivitus ühendub salvestatud võtmega; see ei saa Androidi õigustest mööda minna. Root ei vaja juhtmeta silumist.</string>
+</resources>

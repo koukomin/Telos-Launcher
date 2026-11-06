@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="startup_scripts_title">Skrypty startowe</string>
+    <string name="startup_scripts_summary">Włączone skrypty są wykonywane raz przy otwarciu Telos z wybraną tożsamością. Włączaj tylko zaufane polecenia. Edycja wyłącza automatyczne wykonywanie.</string>
+    <string name="startup_script_enable">Uruchamiaj przy starcie Telos</string>
+    <string name="startup_script_code">Skrypt powłoki (maksymalnie 16 384 znaki)</string>
+    <string name="startup_script_exit">Kod zakończenia: %1$d</string>
+    <string name="startup_wireless_off">Wyłącz debugowanie bezprzewodowe po uruchomieniu Shizuku</string>
+    <string name="startup_shizuku_help">Sparuj raz w ustawieniach debugowania bezprzewodowego. Po każdym ponownym uruchomieniu włącz debugowanie bezprzewodowe i zatwierdź sieć Wi-Fi, jeśli Android o to poprosi. Autostart łączy się ponownie za pomocą zapisanego klucza; nie może omijać uprawnień Androida. Root nie wymaga debugowania bezprzewodowego.</string>
+</resources>

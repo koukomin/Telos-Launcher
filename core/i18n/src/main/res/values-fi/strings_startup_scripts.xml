@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="startup_scripts_title">Käynnistysskriptit</string>
+    <string name="startup_scripts_summary">Käytössä olevat skriptit suoritetaan kerran Telosin avautuessa valitulla käyttäjätunnuksella. Ota käyttöön vain luotettuja komentoja. Muokkaus poistaa automaattisen suorituksen käytöstä.</string>
+    <string name="startup_script_enable">Suorita Telosin käynnistyessä</string>
+    <string name="startup_script_code">Komentotulkkiskripti (enintään 16 384 merkkiä)</string>
+    <string name="startup_script_exit">Paluukoodi: %1$d</string>
+    <string name="startup_wireless_off">Poista langaton virheenkorjaus käytöstä Shizukun käynnistyttyä</string>
+    <string name="startup_shizuku_help">Tee pariliitos kerran Langaton virheenkorjaus -asetuksissa. Ota langaton virheenkorjaus käyttöön jokaisen uudelleenkäynnistyksen jälkeen ja hyväksy Wi-Fi-verkko, jos Android pyytää. Automaattinen käynnistys yhdistää tallennetulla avaimella; se ei voi ohittaa Androidin käyttöoikeuksia. Root ei edellytä langatonta virheenkorjausta.</string>
+</resources>

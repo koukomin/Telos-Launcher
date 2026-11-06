@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="startup_scripts_title">起動スクリプト</string>
+    <string name="startup_scripts_summary">有効なスクリプトは、Telos を開いたときに選択した権限で一度実行されます。信頼できるコマンドのみ有効にしてください。編集すると自動実行は無効になります。</string>
+    <string name="startup_script_enable">Telos の起動時に実行</string>
+    <string name="startup_script_code">シェルスクリプト（最大 16,384 文字）</string>
+    <string name="startup_script_exit">終了コード: %1$d</string>
+    <string name="startup_wireless_off">Shizuku の起動後にワイヤレスデバッグをオフにする</string>
+    <string name="startup_shizuku_help">「ワイヤレスデバッグ」で一度ペア設定してください。再起動のたびにワイヤレスデバッグを有効にし、Android に求められた場合は Wi-Fi ネットワークを許可してください。自動起動は保存された鍵で再接続しますが、Android の権限を回避できません。Root ではワイヤレスデバッグは不要です。</string>
+</resources>

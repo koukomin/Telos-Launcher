@@ -369,8 +369,9 @@ data class MiscGroup(
     val easterEgg: Boolean = false,
     /** Local crash reporter switch. Mirrored into SharedPreferences for the crash handler. */
     val crashReporterEnabled: Boolean = true,
-    /** Automatically configure Wireless Debugging and wake Shizuku on boot. */
+    /** Retry root/previously paired wireless startup after unlock or launcher foreground. */
     val shizukuAutoStart: Boolean = false,
+    val shizukuDisableWirelessAfterStart: Boolean = false,
     val artOptimizerMasterEnabled: Boolean = false,
     val artOptimizationProfile: String = "speed-profile",
     val artOptimizationScheduled: Boolean = false,

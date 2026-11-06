@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="startup_scripts_title">Startskripte</string>
+    <string name="startup_scripts_summary">Aktivierte Skripte werden beim Öffnen von Telos einmal mit der gewählten Identität ausgeführt. Aktiviere nur vertrauenswürdige Befehle. Bearbeiten deaktiviert die automatische Ausführung.</string>
+    <string name="startup_script_enable">Beim Start von Telos ausführen</string>
+    <string name="startup_script_code">Shellskript (höchstens 16.384 Zeichen)</string>
+    <string name="startup_script_exit">Exit-Code: %1$d</string>
+    <string name="startup_wireless_off">Drahtloses Debugging nach dem Start von Shizuku ausschalten</string>
+    <string name="startup_shizuku_help">Kopple einmal unter Drahtloses Debugging. Aktiviere nach jedem Neustart drahtloses Debugging und bestätige das WLAN, falls Android danach fragt. Autostart verbindet erneut mit dem gespeicherten Schlüssel; Android-Berechtigungen können nicht umgangen werden. Root benötigt kein drahtloses Debugging.</string>
+</resources>

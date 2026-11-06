@@ -23,6 +23,7 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.withTimeout
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.withContext
@@ -67,6 +68,7 @@ object TelosShizukuHost {
     val status: StateFlow<HostStatus> = _status.asStateFlow()
     private val pairingScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
     private var pairingTask: Deferred<Result<String>>? = null
+    private val startMutex = kotlinx.coroutines.sync.Mutex()
     private val pairingMutex = kotlinx.coroutines.sync.Mutex()
     private var pairingDiscovery: TelosAdbPairingDiscovery? = null
 
@@ -280,6 +282,11 @@ object TelosShizukuHost {
 
     suspend fun start(context: Context, method: StartMethod = StartMethod.Auto): Result<String> =
         withContext(TelosDispatchers.Disk) {
+            startMutex.withLock { startLocked(context, method) }
+        }
+
+    private suspend fun startLocked(context: Context, method: StartMethod): Result<String> =
+        withContext(TelosDispatchers.Disk) {
             val app = context.applicationContext
             ShizukuProcesses.init(app)
             if (runCatching { Shizuku.pingBinder() }.getOrDefault(false)) {
@@ -307,7 +314,6 @@ object TelosShizukuHost {
                     waitBinder()
                 }
                 StartMethod.Wireless, StartMethod.Usb, StartMethod.Tcp -> {
-                    enableWirelessDebugging(app)
                     log.appendLine("wireless $cmd")
                     val r = TelosWirelessAdb.start(app, cmd)
                     log.append(r.getOrElse { it.message.orEmpty() })
@@ -318,6 +324,17 @@ object TelosShizukuHost {
             refresh(app)
             if (ok || _status.value.running) {
                 runCatching { Shizuku.requestPermission(0x51) }
+                val disableWireless = runCatching {
+                    org.koin.core.context.GlobalContext.get()
+                        .get<de.mm20.launcher2.preferences.ui.UiSettings>().shizukuDisableWirelessAfterStart.first()
+                }.getOrDefault(false)
+                if (chosen == StartMethod.Wireless && disableWireless && ShizukuProcesses.available()) {
+                    // Only after a verified live binder; never disable the user's ADB on failure.
+                    val disabled = runCatching {
+                        TelosShellEngine.execResult("settings put global adb_wifi_enabled 0", timeoutMs = 5_000L)
+                    }.getOrNull()
+                    if (disabled?.isSuccess != true) log.appendLine("Wireless debugging unchanged")
+                }
                 Result.success(log.toString())
             } else {
                 Result.failure(IllegalStateException(log.toString().ifBlank { "start failed" }))
@@ -347,15 +364,6 @@ object TelosShizukuHost {
             delay(500)
         }
         return false
-    }
-
-    private fun enableWirelessDebugging(context: Context) {
-        if (Build.VERSION.SDK_INT < 30) return
-        val cr = context.contentResolver
-        runCatching {
-            Settings.Global.putInt(cr, Settings.Global.ADB_ENABLED, 1)
-            Settings.Global.putInt(cr, "adb_wifi_enabled", 1)
-        }.onFailure { Log.w(TAG, "wireless debug", it) }
     }
 
     fun startIntent(context: Context, action: String) {

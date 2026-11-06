@@ -18,6 +18,10 @@ export const DeveloperGuideSidebar: DefaultTheme.SidebarItem[] = [
     link: '/docs/developer-guide/adaptive-ui',
   },
   {
+    text: 'Startup scripts and Shizuku',
+    link: '/docs/developer-guide/startup-scripts',
+  },
+  {
     text: 'UI validation',
     link: '/docs/developer-guide/ui-validation',
   },
