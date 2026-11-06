@@ -21,8 +21,8 @@ dependencyResolutionManagement {
 // Dependabot maps plugin-classpath transitives to this file. Pin CVE-patched
 // versions here. jackson-annotations has no 2.22.4 artifact — use 2.22.
 val telosPluginCvePins = listOf(
-    "com.google.guava:guava:33.7.2-jre",
-    "org.jsoup:jsoup:1.23.2",
+    "com.google.guava:guava:33.8.0-jre",
+    "org.jsoup:jsoup:1.24.1",
     "org.freemarker:freemarker:2.3.35",
     "org.bouncycastle:bcprov-jdk18on:1.86",
     "org.bouncycastle:bcpkix-jdk18on:1.86",
@@ -44,9 +44,9 @@ gradle.beforeProject {
             eachDependency {
                 when {
                     requested.group == "com.google.guava" && requested.name == "guava" ->
-                        useVersion("33.7.2-jre")
+                        useVersion("33.8.0-jre")
                     requested.group == "org.jsoup" && requested.name == "jsoup" ->
-                        useVersion("1.23.2")
+                        useVersion("1.24.1")
                     requested.group == "org.freemarker" && requested.name == "freemarker" ->
                         useVersion("2.3.35")
                     requested.group == "org.bouncycastle" ->

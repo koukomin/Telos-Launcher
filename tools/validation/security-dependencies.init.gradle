@@ -1,0 +1,69 @@
+import org.gradle.api.artifacts.component.ModuleComponentIdentifier
+import org.gradle.api.artifacts.result.UnresolvedDependencyResult
+
+// Run with --no-configuration-cache: this verification resolves the root's
+// actual Dokka graphs at execution time, under the root project's lock.
+gradle.rootProject { target ->
+    target.tasks.register('verifyDokkaSecurityDependencies') {
+        group = 'verification'
+        description = 'Reject vulnerable transitive dependencies in root Dokka resolvers.'
+        doLast {
+            // Advisory minima, independent of the version catalog. Raising only
+            // catalog entries must not hide a vulnerable resolved tool graph.
+            def minima = [
+                'org.freemarker:freemarker': '2.3.35', // GHSA-27j2-h3m2-8237
+                'com.fasterxml.jackson.core:jackson-core': '2.18.11',
+                'com.fasterxml.jackson.core:jackson-databind': '2.18.11',
+                'org.jsoup:jsoup': '1.23.2',
+            ]
+            def belowMinimum = { String actual, String minimum ->
+                if (!(actual ==~ /[0-9]+(\.[0-9]+)+/)) {
+                    throw new GradleException("Review non-release security dependency version: ${actual}")
+                }
+                def left = actual.tokenize('.').collect { it as int }
+                def right = minimum.tokenize('.').collect { it as int }
+                for (int i = 0; i < Math.max(left.size(), right.size()); i++) {
+                    int a = i < left.size() ? left[i] : 0
+                    int b = i < right.size() ? right[i] : 0
+                    if (a != b) return a < b
+                }
+                return false
+            }
+            def resolvers = target.configurations.findAll {
+                it.canBeResolved && it.name.toLowerCase(Locale.ROOT).contains('dokka')
+            }
+            if (resolvers.empty) {
+                throw new GradleException('No root Dokka resolvers found; security verification did not run.')
+            }
+            def seen = [] as Set
+            def failures = [] as Set
+            resolvers.each { config ->
+                def result = config.incoming.resolutionResult
+                result.allDependencies.each { dependency ->
+                    if (dependency instanceof UnresolvedDependencyResult) {
+                        failures.add("${config.name}: unresolved ${dependency.attempted.displayName}")
+                    }
+                }
+                result.allComponents.each { component ->
+                    if (component.id instanceof ModuleComponentIdentifier) {
+                        def name = "${component.id.group}:${component.id.module}".toString()
+                        if (minima.containsKey(name)) {
+                            seen.add(name)
+                            if (belowMinimum(component.id.version, minima[name])) {
+                                failures.add("${config.name}: ${name}:${component.id.version} must be >= ${minima[name]}")
+                            }
+                        }
+                    }
+                }
+            }
+            def missing = minima.keySet() - seen
+            if (!missing.empty) {
+                failures.add("Expected Dokka dependencies were not checked: ${missing}; review resolver coverage.")
+            }
+            if (!failures.empty) {
+                throw new GradleException('Dokka dependency security verification failed:\n' + failures.sort().join('\n'))
+            }
+            println "Verified ${seen.size()} security-sensitive packages in ${resolvers.size()} root Dokka resolvers."
+        }
+    }
+}

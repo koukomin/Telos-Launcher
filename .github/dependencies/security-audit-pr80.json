@@ -1,0 +1,297 @@
+{
+  "pr": 80,
+  "advisory_database": {
+    "repository": "https://github.com/github/advisory-database",
+    "commit": "5ca63d9b5b4796275f29e5da5e72c5959f919858",
+    "scope": "GitHub-reviewed Maven advisories; withdrawn advisories excluded"
+  },
+  "comparison": "Maven 3.9.9 ComparableVersion against ECOSYSTEM introduced/fixed/last_affected/limit ranges and explicitly affected versions",
+  "graphs": [
+    "root plugin classpath",
+    "root Dokka resolvers",
+    "Android defaultDebug runtime",
+    "app-management debug unit-test runtime",
+    "Linux desktop runtime"
+  ],
+  "before": {
+    "base_commit": "6482bf50b7ff7370fe877c5b676c9c8b9a72b1d2",
+    "counts": {
+      "CRITICAL": 1,
+      "HIGH": 8,
+      "MODERATE": 9
+    },
+    "findings": [
+      {
+        "id": "GHSA-27j2-h3m2-8237",
+        "severity": "CRITICAL",
+        "summary": "Apache FreeMarker template loading mechanism vulnerable to path traversal",
+        "package": "org.freemarker:freemarker",
+        "version": "2.3.32",
+        "fixed": [
+          "2.3.35"
+        ],
+        "scopes": [
+          "::dokkaHtmlGeneratorRuntimeResolver~internal",
+          "::dokkaHtmlPublicationPluginResolver~internal"
+        ]
+      },
+      {
+        "id": "GHSA-7hhh-6rmp-j9qf",
+        "severity": "HIGH",
+        "summary": "jackson-core: UTF8DataInputJsonParser._reportInvalidToken() missing maxErrorTokenLength limit -> unbounded StringBuilder growth (DoS)",
+        "package": "com.fasterxml.jackson.core:jackson-core",
+        "version": "2.15.3",
+        "fixed": [
+          "2.18.11"
+        ],
+        "scopes": [
+          "::dokkaHtmlGeneratorRuntimeResolver~internal",
+          "::dokkaHtmlPublicationPluginResolver~internal"
+        ]
+      },
+      {
+        "id": "GHSA-r7wm-3cxj-wff9",
+        "severity": "HIGH",
+        "summary": "jackson-core: Async parser maxNumberLength bypass via chunked digit accumulation (incomplete fix for GHSA-72hv-8253-57qq)",
+        "package": "com.fasterxml.jackson.core:jackson-core",
+        "version": "2.15.3",
+        "fixed": [
+          "2.18.8"
+        ],
+        "scopes": [
+          "::dokkaHtmlGeneratorRuntimeResolver~internal",
+          "::dokkaHtmlPublicationPluginResolver~internal"
+        ]
+      },
+      {
+        "id": "GHSA-cxp5-3px4-pw24",
+        "severity": "HIGH",
+        "summary": "jackson-databind quadratic forward-reference completion ",
+        "package": "com.fasterxml.jackson.core:jackson-databind",
+        "version": "2.15.3",
+        "fixed": [
+          "2.18.11"
+        ],
+        "scopes": [
+          "::dokkaHtmlGeneratorRuntimeResolver~internal",
+          "::dokkaHtmlPublicationPluginResolver~internal"
+        ]
+      },
+      {
+        "id": "GHSA-j3rv-43j4-c7qm",
+        "severity": "HIGH",
+        "summary": "jackson-databind has a PolymorphicTypeValidator bypass via generic type parameters that allows arbitrary class instantiation",
+        "package": "com.fasterxml.jackson.core:jackson-databind",
+        "version": "2.15.3",
+        "fixed": [
+          "2.18.8"
+        ],
+        "scopes": [
+          "::dokkaHtmlGeneratorRuntimeResolver~internal",
+          "::dokkaHtmlPublicationPluginResolver~internal"
+        ]
+      },
+      {
+        "id": "GHSA-q4xh-88c3-wmh7",
+        "severity": "HIGH",
+        "summary": "jackson-databind: Duration XMLGregorianCalendar Unbounded Number Parse DoS",
+        "package": "com.fasterxml.jackson.core:jackson-databind",
+        "version": "2.15.3",
+        "fixed": [
+          "2.18.10"
+        ],
+        "scopes": [
+          "::dokkaHtmlGeneratorRuntimeResolver~internal",
+          "::dokkaHtmlPublicationPluginResolver~internal"
+        ]
+      },
+      {
+        "id": "GHSA-rmj7-2vxq-3g9f",
+        "severity": "HIGH",
+        "summary": "jackson-databind has an array subtype allowlist bypass in BasicPolymorphicTypeValidator (allowIfSubTypeIsArray)",
+        "package": "com.fasterxml.jackson.core:jackson-databind",
+        "version": "2.15.3",
+        "fixed": [
+          "2.18.8"
+        ],
+        "scopes": [
+          "::dokkaHtmlGeneratorRuntimeResolver~internal",
+          "::dokkaHtmlPublicationPluginResolver~internal"
+        ]
+      },
+      {
+        "id": "GHSA-wv8q-qhhj-9h54",
+        "severity": "HIGH",
+        "summary": "jackson-databind retains every unknown raw type ID ",
+        "package": "com.fasterxml.jackson.core:jackson-databind",
+        "version": "2.15.3",
+        "fixed": [
+          "2.18.11"
+        ],
+        "scopes": [
+          "::dokkaHtmlGeneratorRuntimeResolver~internal",
+          "::dokkaHtmlPublicationPluginResolver~internal"
+        ]
+      },
+      {
+        "id": "GHSA-65r4-943x-97jj",
+        "severity": "HIGH",
+        "summary": "jsoup XmlTreeBuilder vulnerable to memory exhaustion through deeply nested namespace declarations",
+        "package": "org.jsoup:jsoup",
+        "version": "1.16.1",
+        "fixed": [
+          "1.23.2"
+        ],
+        "scopes": [
+          "::dokkaHtmlGeneratorRuntimeResolver~internal",
+          "::dokkaHtmlPublicationPluginResolver~internal"
+        ]
+      },
+      {
+        "id": "GHSA-72hv-8253-57qq",
+        "severity": "MODERATE",
+        "summary": "jackson-core: Number Length Constraint Bypass in Async Parser Leads to Potential DoS Condition",
+        "package": "com.fasterxml.jackson.core:jackson-core",
+        "version": "2.15.3",
+        "fixed": [
+          "2.18.6"
+        ],
+        "scopes": [
+          "::dokkaHtmlGeneratorRuntimeResolver~internal",
+          "::dokkaHtmlPublicationPluginResolver~internal"
+        ]
+      },
+      {
+        "id": "GHSA-3pjw-73gf-8qr5",
+        "severity": "MODERATE",
+        "summary": "jackson-databind: @JsonIgnore on a Record property is bypassed with a PropertyNamingStrategy",
+        "package": "com.fasterxml.jackson.core:jackson-databind",
+        "version": "2.15.3",
+        "fixed": [
+          "2.18.8"
+        ],
+        "scopes": [
+          "::dokkaHtmlGeneratorRuntimeResolver~internal",
+          "::dokkaHtmlPublicationPluginResolver~internal"
+        ]
+      },
+      {
+        "id": "GHSA-5gvw-p9qm-jgwh",
+        "severity": "MODERATE",
+        "summary": "jackson-databind: @JsonView bypassed for @JsonUnwrapped container properties on deserialization",
+        "package": "com.fasterxml.jackson.core:jackson-databind",
+        "version": "2.15.3",
+        "fixed": [
+          "2.18.9"
+        ],
+        "scopes": [
+          "::dokkaHtmlGeneratorRuntimeResolver~internal",
+          "::dokkaHtmlPublicationPluginResolver~internal"
+        ]
+      },
+      {
+        "id": "GHSA-5jmj-h7xm-6q6v",
+        "severity": "MODERATE",
+        "summary": "jackson-databind has case-insensitive deserialization bypasses per-property @JsonIgnoreProperties",
+        "package": "com.fasterxml.jackson.core:jackson-databind",
+        "version": "2.15.3",
+        "fixed": [
+          "2.18.9"
+        ],
+        "scopes": [
+          "::dokkaHtmlGeneratorRuntimeResolver~internal",
+          "::dokkaHtmlPublicationPluginResolver~internal"
+        ]
+      },
+      {
+        "id": "GHSA-gx83-3vf8-gh7j",
+        "severity": "MODERATE",
+        "summary": "jackson-databind: Comparable missing from DefaultBaseTypeLimitingValidator's unsafe base types (incomplete PolymorphicTypeValidator denylist)",
+        "package": "com.fasterxml.jackson.core:jackson-databind",
+        "version": "2.15.3",
+        "fixed": [
+          "2.18.10"
+        ],
+        "scopes": [
+          "::dokkaHtmlGeneratorRuntimeResolver~internal",
+          "::dokkaHtmlPublicationPluginResolver~internal"
+        ]
+      },
+      {
+        "id": "GHSA-hgj6-7826-r7m5",
+        "severity": "MODERATE",
+        "summary": "jackson-databind: InetSocketAddress deserialization triggers eager DNS resolution (SSRF)",
+        "package": "com.fasterxml.jackson.core:jackson-databind",
+        "version": "2.15.3",
+        "fixed": [
+          "2.18.8"
+        ],
+        "scopes": [
+          "::dokkaHtmlGeneratorRuntimeResolver~internal",
+          "::dokkaHtmlPublicationPluginResolver~internal"
+        ]
+      },
+      {
+        "id": "GHSA-vvgp-rfg2-7rr6",
+        "severity": "MODERATE",
+        "summary": "jackson-databind: Incomplete fix for CVE-2026-54514: eager DNS resolution (SSRF) still present in InetAddress deserialization",
+        "package": "com.fasterxml.jackson.core:jackson-databind",
+        "version": "2.15.3",
+        "fixed": [
+          "2.18.9"
+        ],
+        "scopes": [
+          "::dokkaHtmlGeneratorRuntimeResolver~internal",
+          "::dokkaHtmlPublicationPluginResolver~internal"
+        ]
+      },
+      {
+        "id": "GHSA-wjgm-6hv5-3cvf",
+        "severity": "MODERATE",
+        "summary": "jackson-databind: Path Deserialization Missing Scheme Allowlist for FileSystemProvider Resolution",
+        "package": "com.fasterxml.jackson.core:jackson-databind",
+        "version": "2.15.3",
+        "fixed": [
+          "2.18.10"
+        ],
+        "scopes": [
+          "::dokkaHtmlGeneratorRuntimeResolver~internal",
+          "::dokkaHtmlPublicationPluginResolver~internal"
+        ]
+      },
+      {
+        "id": "GHSA-pmhh-3w7g-xqp8",
+        "severity": "MODERATE",
+        "summary": "jsoup: Cleaner may expose markup with custom raw-text elements",
+        "package": "org.jsoup:jsoup",
+        "version": "1.16.1",
+        "fixed": [
+          "1.23.1"
+        ],
+        "scopes": [
+          "::dokkaHtmlGeneratorRuntimeResolver~internal",
+          "::dokkaHtmlPublicationPluginResolver~internal"
+        ]
+      }
+    ]
+  },
+  "after": {
+    "unique_resolved_module_versions": 649,
+    "findings": [],
+    "unresolved": [
+      {
+        "scope": ":app:app:defaultDebugRuntimeClasspath",
+        "requested": "cz.adaptech.tesseract4android:tesseract4android:4.9.0"
+      },
+      {
+        "scope": ":app:app:defaultDebugRuntimeClasspath",
+        "requested": "com.github.TeamNewPipe:NewPipeExtractor:v0.26.5"
+      }
+    ]
+  },
+  "limitations": [
+    "Unresolved JitPack modules could not be audited or included in a complete APK build.",
+    "This audit does not replace GitHub CodeQL or Code Quality analysis.",
+    "Dependabot alert closure requires the corrected graph on the default branch; alerts were not dismissed."
+  ]
+}

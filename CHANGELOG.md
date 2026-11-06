@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.44.19
+
+- Fix 18 reproduced dependency advisories in the root Dokka documentation tooling,
+  including critical FreeMarker path traversal (CVE-2026-84939, Dependabot #57).
+- Apply security dependency rules to the root project as well as subprojects;
+  verify resolved Dokka dependencies before submitting the dependency graph.
+- Align Guava 33.8.0 and jsoup 1.24.1 across declarations and transitive pins.
+  Keep Android Guava in Android app classpaths and JRE Guava in build tools.
+- Retain full Guava/jsoup license texts in APK assets and document private
+  vulnerability reporting and the dependency audit evidence.
+
 ## 1.44.13
 
 - System tweaks: save working tweaks and optionally re-apply them on every boot (Root/Shizuku).

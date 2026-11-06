@@ -2,20 +2,22 @@
 
 ## Supported Versions
 
-Use this section to tell people about which versions of your project are
-currently being supported with security updates.
-
-| Version | Supported          |
-| ------- | ------------------ |
-| 5.1.x   | :white_check_mark: |
-| 5.0.x   | :x:                |
-| 4.0.x   | :white_check_mark: |
-| < 4.0   | :x:                |
+Security fixes target the latest Telos release and the `main` branch. Update to
+the latest release before reporting a problem. Older releases do not have a
+separate security maintenance commitment.
 
 ## Reporting a Vulnerability
 
-Use this section to tell people how to report a vulnerability.
+Use GitHub's **Report a vulnerability** option in the repository's
+[Security tab](https://github.com/koukomin/Telos-Launcher/security) to contact
+the maintainers privately. If private reporting is unavailable, ask a maintainer
+for a private reporting channel before sharing sensitive details.
 
-Tell them where to go, how often they can expect to get an update on a
-reported vulnerability, what to expect if the vulnerability is accepted or
-declined, etc.
+Include the affected Telos version, Android version, reproduction steps,
+expected and actual behavior, and the security impact. Remove personal data,
+credentials, pairing codes, and signing keys from logs and attachments.
+
+Do not publish exploit details in a public issue or pull request before the
+maintainers have had an opportunity to investigate and coordinate a fix.
+There is no guaranteed response time; updates are provided through the private
+report when available.
