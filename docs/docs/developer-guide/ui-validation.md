@@ -171,3 +171,8 @@ via ADB to hold focus over another app and overlap navigation. It was disabled o
 OnePlus while preparing this fix. Telos pairing now creates no WindowManager views; manual input
 is Android SystemUI notification RemoteInput. Validation for the notification flow is recorded
 in the pairing audit; earlier overlay test results must not be read as certification of this flow.
+
+On 2026-11-06 the notification-only harness completed pairing and a fresh UID 2000 server
+bootstrap on the OnePlus Android 17 device. SystemUI owned the reply keyboard; Send hid it,
+Back returned to Settings and no pairing overlay existed. The test APK/server were removed.
+The signed production APK has not been installed because the user disconnected USB before release.

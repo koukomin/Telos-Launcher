@@ -21,6 +21,15 @@ publisher runs that check before signing. The same check verifies both ARM paylo
 pairing workflow. The reported phone currently has 4 KB kernel pages; ELF alignment validation
 must not be described as physical testing on a 16 KB kernel.
 
+## Notification device validation (2026-11-06)
+
+The isolated production-service harness on the reported OnePlus completed manual notification
+reply pairing and a fresh server bootstrap (`Done`, `running=true`, UID 2000). Before typing,
+SystemUI owned focus and the IME was visible. After Send, the IME was hidden; Back returned focus
+to Settings and navigation responded. No Telos pairing window existed. JNI/identity instrumentation
+passed both tests. The test server and APK were removed afterward. This certifies the harness
+flow, not installation of the signed production APK: the user disconnected USB before release.
+
 The following sections retain the original transport audit and historical validation record.
 
 This audit compares the actual Telos manager and server, not just the vendored source tree,
@@ -59,9 +68,8 @@ submodules. The managers are Apache-2.0; API/Rish is MIT; Telos changes remain G
    accessibility uses Settings' own localized `enable_adb_wireless` label to open the row.
 3. **Wait for pairing code** selects automatic reading when accessibility is enabled;
    **Enter code** starts a manual session even if accessibility is enabled.
-   A single collapsed, non-focusable pill waits. With accessibility enabled it is an accessibility
-   overlay; otherwise the application overlay requires the user's draw-over-other-apps grant.
-   The notification reply is the fallback when overlays are unavailable.
+   A persistent notification waits for the code. Manual entry uses its reply action; no overlay
+   or draw-over-other-apps permission is used.
 4. The optional reader examines only Settings windows during the session. It accepts a standalone
    six-digit code (including a space between two groups of three), never digits combined from
    unrelated labels. Android 17 dialogs without a printed IP use mDNS to find the pairing service.
