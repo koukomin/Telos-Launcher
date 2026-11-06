@@ -23,6 +23,7 @@ import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import org.koin.core.context.GlobalContext
 
 class TelosShizukuWatchdog : Service(), KoinComponent {
     private val ui: UiSettings by inject()
@@ -32,6 +33,12 @@ class TelosShizukuWatchdog : Service(), KoinComponent {
 
     override fun onCreate() {
         super.onCreate()
+        // Library instrumentation and secondary entry points may have no launcher DI container.
+        // Never launch an uncaught coroutine against an uninitialised application.
+        if (GlobalContext.getOrNull() == null) {
+            stopSelf()
+            return
+        }
         if (Build.VERSION.SDK_INT >= 26) {
             getSystemService(NotificationManager::class.java)?.createNotificationChannel(
                 NotificationChannel(CHANNEL, getString(I18nR.string.telos_shizuku_watchdog_channel), NotificationManager.IMPORTANCE_MIN),
@@ -63,6 +70,7 @@ class TelosShizukuWatchdog : Service(), KoinComponent {
     companion object {
         const val CHANNEL = "telos_shizuku_watchdog"
         fun start(context: Context) {
+            if (GlobalContext.getOrNull() == null) return
             val i = Intent(context, TelosShizukuWatchdog::class.java)
             if (Build.VERSION.SDK_INT >= 26) context.startForegroundService(i) else context.startService(i)
         }
@@ -84,6 +92,8 @@ class TelosShizukuBootReceiver : BroadcastReceiver() {
         kotlinx.coroutines.CoroutineScope(kotlinx.coroutines.Dispatchers.IO).launch {
             try {
                 de.mm20.launcher2.appmanagement.tweaks.TweaksApplier.applySavedOnBoot(context.applicationContext)
+            } catch (_: Exception) {
+                // A boot hook must not crash the host process when preferences are unavailable.
             } finally {
                 pending.finish()
             }

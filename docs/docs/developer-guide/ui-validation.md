@@ -176,3 +176,9 @@ On 2026-11-06 the notification-only harness completed pairing and a fresh UID 20
 bootstrap on the OnePlus Android 17 device. SystemUI owned the reply keyboard; Send hid it,
 Back returned to Settings and no pairing overlay existed. The test APK/server were removed.
 The signed production APK has not been installed because the user disconnected USB before release.
+
+The UI instrumentation failure was traced using the crash buffer to an unconditional Shizuku
+watchdog boot/install entry point accessing Koin in the standalone library test Application.
+The watchdog now stops when launcher DI is unavailable; boot preference failures are contained.
+The device-test helper preserves crash-buffer evidence and rejects failed JUnit reports even
+when AGP returns exit code zero. Final rerun results are recorded on PR #81.
