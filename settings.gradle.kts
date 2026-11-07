@@ -13,6 +13,7 @@ dependencyResolutionManagement {
             content { includeGroup("info.guardianproject") }
         }
         maven("https://jitpack.io") { content { includeGroup("com.github.TeamNewPipe"); includeGroup("cz.adaptech.tesseract4android") } }
+        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
         google()
         mavenCentral()
     }

@@ -58,6 +58,18 @@ object MorseCodec {
         return Encoded(tokens.joinToString(" "), readable.toString(), romanized, unsupported)
     }
 
+    private val reverseLatin = latin.entries.associate { (k, v) -> v to k.toString() }
+    private val reverseGreek = greek.entries.associate { (k, v) -> v to k.toString() }
+
+    fun decode(morseCode: String): String {
+        val words = morseCode.trim().split(Regex("\\s+/\\s+|\\s{3,}"))
+        return words.joinToString(" ") { word ->
+            word.trim().split(Regex("\\s+")).mapNotNull { symbol ->
+                reverseGreek[symbol] ?: reverseLatin[symbol]
+            }.joinToString("")
+        }
+    }
+
     /** ITU 1/3-unit marks, 1/3/7-unit gaps, without accumulating extra gaps. */
     fun pulses(code: String): List<Pulse> = buildList {
         val words = code.split(" / ").filter { it.isNotBlank() }

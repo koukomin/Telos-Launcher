@@ -108,6 +108,7 @@ internal object ComicArchive {
             val entries = z.entries().toList().filter { e -> !e.isDirectory && isImage(e.name) }
             for (e in entries) {
                 val dest = slipSafe(root, e.name) ?: continue
+                Files.createDirectories(dest.parent)
                 z.getInputStream(e).use { input -> Files.newOutputStream(dest).use { input.copyTo(it) } }
                 out += dest.toFile()
             }
@@ -124,6 +125,7 @@ internal object ComicArchive {
                 val e = session.next() ?: break
                 if (e.isDir || e.isLink || e.encrypted || !isImage(e.path)) continue
                 val dest = slipSafe(root, e.path) ?: continue
+                Files.createDirectories(dest.parent)
                 session.copyCurrentTo(dest.toFile())
                 out += dest.toFile()
             }
@@ -139,6 +141,7 @@ internal object ComicArchive {
                 val e = tar.nextEntry ?: break
                 if (e.isDirectory || !isImage(e.name)) continue
                 val dest = slipSafe(root, e.name) ?: continue
+                Files.createDirectories(dest.parent)
                 Files.newOutputStream(dest).use { tar.copyTo(it) }
                 out += dest.toFile()
             }
@@ -154,6 +157,7 @@ internal object ComicArchive {
                 val e = z.nextEntry ?: break
                 if (e.isDirectory || !isImage(e.name)) continue
                 val dest = slipSafe(root, e.name) ?: continue
+                Files.createDirectories(dest.parent)
                 Files.newOutputStream(dest).use { z.getInputStream(e).copyTo(it) }
                 out += dest.toFile()
             }
@@ -166,10 +170,10 @@ internal object ComicArchive {
 
     /** Basename only, then Path.startsWith so Zip Slip (`../`) cannot leave [root]. */
     private fun slipSafe(root: Path, entryName: String): Path? {
-        val base = File(entryName).name
-        if (base.isEmpty() || base == "." || base == "..") return null
-        val dest = root.resolve(base).normalize()
-        if (!dest.startsWith(root)) return null
+        val baseName = File(entryName).name
+        if (baseName.isEmpty() || baseName == "." || baseName == "..") return null
+        val dest = root.resolve(baseName).normalize()
+        if (!dest.startsWith(root) || dest == root) return null
         return dest
     }
 }

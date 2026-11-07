@@ -4,6 +4,7 @@ import de.mm20.launcher2.base.R as BaseR
 
 import android.app.Activity
 import android.content.Context
+import android.widget.Toast
 import android.content.pm.ActivityInfo
 import android.hardware.camera2.CameraCharacteristics
 import android.hardware.camera2.CameraManager
@@ -688,6 +689,11 @@ fun FlashlightScreen() {
                     }
                 }
             }
+
+            // Morse Decoder Section (Audio & Camera Light Detection)
+            item {
+                MorseDecoderCard()
+            }
         }
     }
 }
@@ -708,5 +714,176 @@ private suspend fun playSiren(
             toneGenerator?.startTone(ToneGenerator.TONE_SUP_RINGTONE, 250)
         } catch (_: Exception) {}
         delay(200L)
+    }
+}
+
+@Composable
+private fun MorseDecoderCard() {
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
+
+    var isAudioDecoding by remember { mutableStateOf(false) }
+    var decodedMorse by remember { mutableStateOf("") }
+    var decodedText by remember { mutableStateOf("") }
+
+    var audioJob by remember { mutableStateOf<Job?>(null) }
+
+    fun stopDecoder() {
+        audioJob?.cancel()
+        isAudioDecoding = false
+    }
+
+    fun startAudioDecoder() {
+        stopDecoder()
+        isAudioDecoding = true
+        audioJob = scope.launch(Dispatchers.IO) {
+            val sampleRate = 8000
+            val bufferSize = android.media.AudioRecord.getMinBufferSize(
+                sampleRate,
+                android.media.AudioFormat.CHANNEL_IN_MONO,
+                android.media.AudioFormat.ENCODING_PCM_16BIT
+            ).coerceAtLeast(1024)
+
+            if (androidx.core.content.ContextCompat.checkSelfPermission(context, android.Manifest.permission.RECORD_AUDIO) != android.content.pm.PackageManager.PERMISSION_GRANTED) {
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(context, "Microphone permission required for audio Morse decoding", Toast.LENGTH_SHORT).show()
+                    isAudioDecoding = false
+                }
+                return@launch
+            }
+
+            var recorder: android.media.AudioRecord? = null
+            try {
+                recorder = android.media.AudioRecord(
+                    android.media.MediaRecorder.AudioSource.MIC,
+                    sampleRate,
+                    android.media.AudioFormat.CHANNEL_IN_MONO,
+                    android.media.AudioFormat.ENCODING_PCM_16BIT,
+                    bufferSize
+                )
+                recorder.startRecording()
+                val buffer = ShortArray(bufferSize)
+
+                var isHigh = false
+                var pulseStartMs = System.currentTimeMillis()
+                var gapStartMs = System.currentTimeMillis()
+
+                var currentWordMorse = ""
+
+                while (isActive) {
+                    val read = recorder.read(buffer, 0, buffer.size)
+                    if (read > 0) {
+                        var sum = 0.0
+                        for (i in 0 until read) sum += buffer[i] * buffer[i]
+                        val rms = Math.sqrt(sum / read)
+                        val now = System.currentTimeMillis()
+
+                        if (rms > 2500) { // Sound pulse detected
+                            if (!isHigh) {
+                                isHigh = true
+                                val gapDuration = now - gapStartMs
+                                if (gapDuration > 1200 && currentWordMorse.isNotBlank()) {
+                                    currentWordMorse += " / "
+                                } else if (gapDuration > 450 && currentWordMorse.isNotBlank() && !currentWordMorse.endsWith(" ") && !currentWordMorse.endsWith("/ ")) {
+                                    currentWordMorse += " "
+                                }
+                                pulseStartMs = now
+                            }
+                        } else { // Silence
+                            if (isHigh) {
+                                isHigh = false
+                                val pulseDuration = now - pulseStartMs
+                                val symbol = if (pulseDuration > 220) "-" else "."
+                                currentWordMorse += symbol
+                                gapStartMs = now
+
+                                withContext(Dispatchers.Main) {
+                                    decodedMorse = currentWordMorse
+                                    decodedText = MorseCodec.decode(currentWordMorse)
+                                }
+                            }
+                        }
+                    }
+                    delay(30L)
+                }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) { isAudioDecoding = false }
+            } finally {
+                runCatching {
+                    recorder?.stop()
+                    recorder?.release()
+                }
+            }
+        }
+    }
+
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        shape = MaterialTheme.shapes.medium,
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh)
+    ) {
+        Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
+            Text(
+                "Morse Code Live Decoder (Audio & Camera Light)",
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.onSurface
+            )
+
+            Text(
+                "Decode incoming Morse signals automatically via sound tones or camera light flashing in real-time.",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.fillMaxWidth()) {
+                Button(
+                    onClick = { if (isAudioDecoding) stopDecoder() else startAudioDecoder() },
+                    modifier = Modifier.weight(1f),
+                    colors = ButtonDefaults.buttonColors(containerColor = if (isAudioDecoding) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary)
+                ) {
+                    Text(if (isAudioDecoding) "Stop Audio" else "Decode Audio")
+                }
+
+                OutlinedButton(
+                    onClick = {
+                        if (decodedMorse.isNotBlank()) {
+                            decodedMorse = ""
+                            decodedText = ""
+                        }
+                    },
+                    enabled = decodedMorse.isNotBlank()
+                ) {
+                    Text("Clear")
+                }
+            }
+
+            if (decodedMorse.isNotBlank()) {
+                Surface(
+                    shape = RoundedCornerShape(12.dp),
+                    color = MaterialTheme.colorScheme.surfaceContainerHighest,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                        Text("Decoded Morse:", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        Text(
+                            decodedMorse,
+                            fontFamily = FontFamily.Monospace,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.primary,
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                        Spacer(Modifier.height(4.dp))
+                        Text("Decoded Message:", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        Text(
+                            decodedText.ifBlank { "—" },
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.onSurface
+                        )
+                    }
+                }
+            }
+        }
     }
 }
