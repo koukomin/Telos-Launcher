@@ -2,6 +2,7 @@ package de.mm20.launcher2.ui.media.stremio
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
 
+import android.content.Intent
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
@@ -167,7 +168,7 @@ fun StremioScreen() {
                     Text(stringResource(I18nR.string.au22_stremio_fork_intro), style = MaterialTheme.typography.bodyLarge)
                     AccountSection(vm)
                 }
-                !accepted -> NoticeCard(onAccept = { vm.acceptNotice() })
+                !accepted -> NoticeCard(onAccept = { installDefaults -> vm.acceptNotice(installDefaults) })
                 addons.isEmpty() -> EmptyAddons(vm)
                 else -> StremioHome(vm)
             }
@@ -187,13 +188,83 @@ fun StremioScreen() {
 }
 
 @Composable
-private fun NoticeCard(onAccept: () -> Unit) {
+private fun NoticeCard(onAccept: (Boolean) -> Unit) {
+    val context = LocalContext.current
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(16.dp), verticalArrangement = Arrangement.Center) {
         Card(Modifier.fillMaxWidth()) {
             Column(Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 Text(stringResource(I18nR.string.au22_stremio_notice_title), style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
                 Text(stringResource(I18nR.string.au22_stremio_notice_text), style = MaterialTheme.typography.bodyMedium)
-                Button(onClick = onAccept, modifier = Modifier.align(Alignment.End)) { Text(stringResource(I18nR.string.au22_stremio_notice_accept)) }
+
+                Surface(
+                    shape = RoundedCornerShape(12.dp),
+                    color = MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.5f),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                        Text(
+                            "⚠️ Privacy & P2P Stream Warning",
+                            style = MaterialTheme.typography.titleSmall,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.onErrorContainer
+                        )
+                        Text(
+                            "Community add-ons (OpenSubtitles v3, TorrentsDB, Cinemata, Torrentio, Comet, TMDB) retrieve video streams directly from peer-to-peer (P2P) networks. Streaming P2P torrents exposes your public IP address on the swarm and may stream copyrighted content.",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onErrorContainer
+                        )
+                        Text(
+                            "Recommendation: Protect your network privacy by using Proton VPN (available in Telos Store) or turning on Tor Onion Routing in Telos Network.",
+                            style = MaterialTheme.typography.bodySmall,
+                            fontWeight = FontWeight.SemiBold,
+                            color = MaterialTheme.colorScheme.onErrorContainer
+                        )
+                    }
+                }
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    OutlinedButton(
+                        onClick = {
+                            val intent = Intent(context, de.mm20.launcher2.ui.settings.SettingsActivity::class.java).apply {
+                                putExtra(de.mm20.launcher2.ui.settings.SettingsActivity.EXTRA_ROUTE, de.mm20.launcher2.ui.settings.SettingsActivity.ROUTE_STORE)
+                                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                            }
+                            context.startActivity(intent)
+                        },
+                        modifier = Modifier.weight(1f)
+                    ) {
+                        Text("Proton VPN")
+                    }
+                    OutlinedButton(
+                        onClick = {
+                            val intent = Intent(context, de.mm20.launcher2.ui.settings.SettingsActivity::class.java).apply {
+                                putExtra(de.mm20.launcher2.ui.settings.SettingsActivity.EXTRA_ROUTE, de.mm20.launcher2.ui.settings.SettingsActivity.ROUTE_NETWORK)
+                                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                            }
+                            context.startActivity(intent)
+                        },
+                        modifier = Modifier.weight(1f)
+                    ) {
+                        Text("Network / Tor")
+                    }
+                }
+
+                Button(
+                    onClick = { onAccept(true) },
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text("Enable Recommended Addons & Continue")
+                }
+
+                OutlinedButton(
+                    onClick = { onAccept(false) },
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text("Continue Without Addons")
+                }
             }
         }
     }
@@ -253,77 +324,206 @@ private fun StremioHome(vm: StremioViewModel) {
     val searchRows by vm.searchRows.collectAsStateWithLifecycle()
     val query by vm.query.collectAsStateWithLifecycle()
     val watching by vm.watching.collectAsStateWithLifecycle()
+    val history by vm.progressHistory.collectAsStateWithLifecycle()
     val saved by vm.saved.collectAsStateWithLifecycle()
     var tab by de.mm20.launcher2.ui.component.rememberPersistentUiState("stremio.tab", 0)
     var searchExpanded by rememberSaveable { mutableStateOf(false) }
 
+    var yearFilter by rememberSaveable { mutableStateOf("All") }
+    var typeFilter by rememberSaveable { mutableStateOf("All") }
+
     Column(Modifier.fillMaxSize()) {
-        StremioBrowseControls(tab, { tab = it }, query, vm::setQuery, searchExpanded, { searchExpanded = it })
-        if (tab == 0) {
-            val shown = if (query.isBlank()) rows else searchRows
-            LazyColumn(contentPadding = PaddingValues(bottom = 112.dp), verticalArrangement = Arrangement.spacedBy(16.dp), modifier = Modifier.fillMaxSize()) {
-                if (query.isBlank() && watching.isNotEmpty()) item(key = "continue") {
-                    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                        RowTitle(stringResource(I18nR.string.au22_stremio_continue))
-                        LazyRow(contentPadding = PaddingValues(horizontal = 16.dp), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                            items(watching, key = { it.id }) { p ->
-                                Poster(vm, MetaPreview(p.id, p.type, p.name, p.poster), caption = p.videoTitle, onClick = { vm.openProgress(p) })
+        StremioBrowseControls(
+            tab = tab,
+            onTab = { tab = it },
+            query = query,
+            onQuery = vm::setQuery,
+            searchExpanded = searchExpanded,
+            onSearchExpanded = { searchExpanded = it },
+            yearFilter = yearFilter,
+            onYearFilter = { yearFilter = it },
+            typeFilter = typeFilter,
+            onTypeFilter = { typeFilter = it }
+        )
+        when (tab) {
+            0 -> {
+                val shown = if (query.isBlank()) rows else searchRows
+                val filtered = remember(shown, yearFilter, typeFilter) {
+                    shown.map { row ->
+                        val items = row.items?.filter { m ->
+                            val matchYear = when (yearFilter) {
+                                "All" -> true
+                                "2020s" -> m.releaseInfo?.contains(Regex("202[0-9]")) == true
+                                "2010s" -> m.releaseInfo?.contains(Regex("201[0-9]")) == true
+                                else -> m.releaseInfo?.contains(yearFilter) == true
+                            }
+                            val matchType = when (typeFilter) {
+                                "All" -> true
+                                "Movies" -> m.type == "movie"
+                                "Series" -> m.type == "series"
+                                else -> true
+                            }
+                            matchYear && matchType
+                        }
+                        row.copy(items = items)
+                    }
+                }
+                LazyColumn(contentPadding = PaddingValues(bottom = 112.dp), verticalArrangement = Arrangement.spacedBy(16.dp), modifier = Modifier.fillMaxSize()) {
+                    if (query.isBlank() && watching.isNotEmpty()) item(key = "continue") {
+                        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                            RowTitle(stringResource(I18nR.string.au22_stremio_continue))
+                            LazyRow(contentPadding = PaddingValues(horizontal = 16.dp), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                                items(watching, key = { it.id }) { p ->
+                                    Poster(vm, MetaPreview(p.id, p.type, p.name, p.poster), caption = p.videoTitle, onClick = { vm.openProgress(p) })
+                                }
                             }
                         }
                     }
-                }
-                items(shown, key = { it.key }) { row ->
-                    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                        RowTitle(row.title)
-                        val list = row.items
-                        if (list == null) {
-                            Box(Modifier.fillMaxWidth().height(120.dp), contentAlignment = Alignment.Center) { CircularProgressIndicator(Modifier.size(24.dp), strokeWidth = 2.dp) }
-                        } else if (list.isEmpty()) {
-                            Text(stringResource(I18nR.string.au22_stremio_no_results), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(horizontal = 16.dp))
-                        } else {
-                            LazyRow(contentPadding = PaddingValues(horizontal = 16.dp), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                                items(list, key = { it.id }) { m -> Poster(vm, m, onClick = { vm.open(m) }) }
+                    items(filtered, key = { it.key }) { row ->
+                        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                            RowTitle(row.title)
+                            val list = row.items
+                            if (list == null) {
+                                Box(Modifier.fillMaxWidth().height(120.dp), contentAlignment = Alignment.Center) { CircularProgressIndicator(Modifier.size(24.dp), strokeWidth = 2.dp) }
+                            } else if (list.isEmpty()) {
+                                Text(stringResource(I18nR.string.au22_stremio_no_results), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(horizontal = 16.dp))
+                            } else {
+                                LazyRow(contentPadding = PaddingValues(horizontal = 16.dp), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                                    items(list, key = { it.id }) { m -> Poster(vm, m, onClick = { vm.open(m) }) }
+                                }
                             }
                         }
                     }
                 }
             }
+            1 -> {
+                if (saved.isEmpty()) {
+                    Text(stringResource(I18nR.string.au22_stremio_library_empty), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(16.dp))
+                } else {
+                    LazyVerticalGrid(
+                        columns = GridCells.Adaptive(164.dp),
+                        contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 12.dp, bottom = 112.dp),
+                        horizontalArrangement = Arrangement.spacedBy(10.dp),
+                        verticalArrangement = Arrangement.spacedBy(14.dp),
+                    ) {
+                        gridItems(saved, key = { it.id }) { e -> Poster(vm, MetaPreview(e.id, e.type, e.name, e.poster), onClick = { vm.openSaved(e) }, fillWidth = true) }
+                    }
+                }
+            }
+            else -> {
+                StremioWatchedCalendar(vm = vm, history = history)
+            }
+        }
+    }
+}
+
+@Composable
+private fun StremioWatchedCalendar(vm: StremioViewModel, history: List<de.mm20.launcher2.comms.stremio.WatchProgress>) {
+    val formatter = remember { java.text.SimpleDateFormat("yyyy-MM-dd HH:mm", java.util.Locale.getDefault()) }
+    val sortedHistory = remember(history) { history.sortedByDescending { it.watchedAt } }
+
+    Column(Modifier.fillMaxSize().padding(16.dp)) {
+        Row(Modifier.fillMaxWidth().padding(bottom = 8.dp), verticalAlignment = Alignment.CenterVertically) {
+            Icon(
+                painter = painterResource(BaseR.drawable.schedule_24px),
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.size(24.dp)
+            )
+            Spacer(Modifier.width(8.dp))
+            Text("Watched Calendar & History", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
+        }
+
+        if (sortedHistory.isEmpty()) {
+            Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                Text("No watch history recorded yet.", color = MaterialTheme.colorScheme.onSurfaceVariant)
+            }
         } else {
-            if (saved.isEmpty()) {
-                Text(stringResource(I18nR.string.au22_stremio_library_empty), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(16.dp))
-            } else {
-                LazyVerticalGrid(
-                    columns = GridCells.Adaptive(164.dp),
-                    contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 12.dp, bottom = 112.dp),
-                    horizontalArrangement = Arrangement.spacedBy(10.dp),
-                    verticalArrangement = Arrangement.spacedBy(14.dp),
-                ) {
-                    gridItems(saved, key = { it.id }) { e -> Poster(vm, MetaPreview(e.id, e.type, e.name, e.poster), onClick = { vm.openSaved(e) }, fillWidth = true) }
+            LazyColumn(
+                contentPadding = PaddingValues(bottom = 112.dp),
+                verticalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
+                items(sortedHistory, key = { "${it.id}_${it.watchedAt}" }) { p ->
+                    Card(
+                        modifier = Modifier.fillMaxWidth().clickable { vm.openProgress(p) },
+                        colors = androidx.compose.material3.CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh)
+                    ) {
+                        Row(Modifier.padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
+                            Column(Modifier.weight(1f)) {
+                                Text(p.name, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold)
+                                if (p.videoTitle.isNotBlank()) {
+                                    Text(p.videoTitle, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.primary)
+                                }
+                                Text(
+                                    "Watched on " + formatter.format(java.util.Date(p.watchedAt)),
+                                    style = MaterialTheme.typography.labelSmall,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                            }
+                            if (p.completed) {
+                                Icon(
+                                    painter = painterResource(BaseR.drawable.task_alt_24px),
+                                    contentDescription = null,
+                                    tint = MaterialTheme.colorScheme.primary,
+                                    modifier = Modifier.size(20.dp)
+                                )
+                            }
+                        }
+                    }
                 }
             }
         }
     }
 }
 
-/** Home/Library and search share one row, even with large fonts and narrow windows. */
+/** Home/Library/Calendar and search share one row, even with large fonts and narrow windows. */
 @Composable
 internal fun StremioBrowseControls(
     tab: Int, onTab: (Int) -> Unit, query: String, onQuery: (String) -> Unit,
     searchExpanded: Boolean, onSearchExpanded: (Boolean) -> Unit,
+    yearFilter: String, onYearFilter: (String) -> Unit,
+    typeFilter: String, onTypeFilter: (String) -> Unit,
 ) {
     Column {
         Row(Modifier.fillMaxWidth().padding(horizontal = 8.dp), verticalAlignment = Alignment.CenterVertically) {
             Row(Modifier.weight(1f).horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 FilterChip(selected = tab == 0, onClick = { onTab(0) }, label = { Text(stringResource(I18nR.string.au22_stremio_home)) }, shape = MaterialTheme.shapes.large)
                 FilterChip(selected = tab == 1, onClick = { onTab(1) }, label = { Text(stringResource(I18nR.string.au22_stremio_library)) }, shape = MaterialTheme.shapes.large)
+                FilterChip(selected = tab == 2, onClick = { onTab(2) }, label = { Text("Calendar / History") }, shape = MaterialTheme.shapes.large)
             }
             if (tab == 0) de.mm20.launcher2.ui.media.MediaSearchAction(searchExpanded, query.isNotBlank()) {
                 if (searchExpanded) onQuery("")
                 onSearchExpanded(!searchExpanded)
             }
         }
-        if (tab == 0) de.mm20.launcher2.ui.media.MediaSearchBar(query, onQuery, stringResource(I18nR.string.au22_stremio_search_hint),
-            expanded = searchExpanded, onClose = { onQuery(""); onSearchExpanded(false) })
+
+        if (tab == 0) {
+            Row(
+                Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 2.dp).horizontalScroll(rememberScrollState()),
+                horizontalArrangement = Arrangement.spacedBy(6.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                listOf("All", "Movies", "Series").forEach { t ->
+                    FilterChip(
+                        selected = typeFilter == t,
+                        onClick = { onTypeFilter(t) },
+                        label = { Text(t) },
+                        shape = MaterialTheme.shapes.small
+                    )
+                }
+                Spacer(Modifier.width(8.dp))
+                listOf("All", "2026", "2025", "2024", "2020s", "2010s").forEach { y ->
+                    FilterChip(
+                        selected = yearFilter == y,
+                        onClick = { onYearFilter(y) },
+                        label = { Text(y) },
+                        shape = MaterialTheme.shapes.small
+                    )
+                }
+            }
+            de.mm20.launcher2.ui.media.MediaSearchBar(query, onQuery, stringResource(I18nR.string.au22_stremio_search_hint),
+                expanded = searchExpanded, onClose = { onQuery(""); onSearchExpanded(false) })
+        }
     }
 }
 

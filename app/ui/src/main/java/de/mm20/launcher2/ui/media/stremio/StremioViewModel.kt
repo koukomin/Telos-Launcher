@@ -83,7 +83,17 @@ class StremioViewModel : ViewModel(), KoinComponent {
             .filterNot { it.completed }.sortedByDescending { it.watchedAt }
     }.flowOn(kotlinx.coroutines.Dispatchers.Default).stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
-    fun acceptNotice() = store.acceptNotice()
+    fun acceptNotice(installDefaults: Boolean = false) {
+        if (installDefaults) {
+            viewModelScope.launch {
+                StremioAddons.DEFAULT_ADDONS.forEach { url ->
+                    store.add(url)
+                }
+                account.addonAdded()
+            }
+        }
+        store.acceptNotice()
+    }
 
     // ---- add-ons ----
 

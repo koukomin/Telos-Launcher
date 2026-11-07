@@ -99,6 +99,15 @@ class StremioAddons(context: Context, private val client: StremioClient) {
         /** Stremio's own metadata add-on, offered as a one-tap suggestion (never installed without the user's tap) */
         const val CINEMETA = "https://v3-cinemeta.strem.io"
 
+        /** Popular community add-ons suggested for default opt-in installation */
+        val DEFAULT_ADDONS = listOf(
+            "https://v3-cinemeta.strem.io",
+            "https://opensubtitles-v3.strem.io/manifest.json",
+            "https://torrentio.strem.fun/manifest.json",
+            "https://comet.strem.fun/manifest.json",
+            "https://94c8b57082d0-tmdb-addons.baby-beamup.club/manifest.json",
+        )
+
         /** The public list of community add-ons that Stremio's apps show; may change or be gone, then the directory shows less */
         const val PUBLIC_LIST = "https://api.strem.io/addonscollection.json"
 
