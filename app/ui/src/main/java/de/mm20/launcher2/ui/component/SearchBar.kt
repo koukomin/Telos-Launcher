@@ -162,13 +162,6 @@ fun SearchBar(
                     Box(
                         modifier = Modifier.weight(1f).padding(vertical = 8.dp)
                     ) {
-                        if (value.isEmpty()) {
-                            Text(
-                                text = stringResource(I18nR.string.search_bar_placeholder),
-                                style = MaterialTheme.typography.titleMedium,
-                                color = resolvedContentColor
-                            )
-                        }
                         BasicTextField(
                             modifier = Modifier
                                 .onFocusChanged {

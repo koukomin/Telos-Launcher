@@ -229,7 +229,7 @@ private val staticPhotoWallpaperTargets = listOf(
 private fun PhotoViewer(uris: List<Uri>, start: Int, onClose: () -> Unit) {
     val context = LocalContext.current
     val pager = rememberPagerState(initialPage = start) { uris.size }
-    var chrome by remember { mutableStateOf(true) }
+    var chrome by remember { mutableStateOf(false) }
     var showInfo by remember { mutableStateOf(false) }
     var showOcr by remember { mutableStateOf(false) }
     var confirmDelete by remember { mutableStateOf(false) }

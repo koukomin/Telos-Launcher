@@ -189,7 +189,7 @@ private fun SearchPill(
                 Modifier.weight(1f).defaultMinSize(minHeight = 24.dp),
                 contentAlignment = Alignment.CenterStart,
             ) {
-                if (value.isEmpty()) {
+                if (value.isEmpty() && placeholder.isNotBlank()) {
                     Text(
                         placeholder,
                         style = MaterialTheme.typography.bodyLarge,
