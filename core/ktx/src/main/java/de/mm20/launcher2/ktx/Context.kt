@@ -12,6 +12,7 @@ val Context.dp: Float
 
 
 val Context.sp: Float
+    @Suppress("DEPRECATION")
     get() = resources.displayMetrics.scaledDensity
 
 fun Context.checkPermission(permission: String): Boolean {

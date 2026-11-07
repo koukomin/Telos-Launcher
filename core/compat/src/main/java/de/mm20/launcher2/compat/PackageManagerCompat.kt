@@ -16,6 +16,7 @@ object PackageManagerCompat {
                 installingPackageName = installSourceInfo.installingPackageName,
             )
         } else {
+            @Suppress("DEPRECATION")
             val installerPackageName = packageManager.getInstallerPackageName(packageName)
             return InstallSourceInfoCompat(
                 originatingPackageName = installerPackageName,

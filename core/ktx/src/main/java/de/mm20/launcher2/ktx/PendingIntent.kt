@@ -6,6 +6,7 @@ import android.content.Context
 
 fun PendingIntent.sendWithBackgroundPermission(context: Context) {
     if (isAtLeastApiLevel(34)) {
+        @Suppress("DEPRECATION")
         val options = ActivityOptions.makeBasic()
             .setPendingIntentBackgroundActivityStartMode(
                 ActivityOptions.MODE_BACKGROUND_ACTIVITY_START_ALLOWED
