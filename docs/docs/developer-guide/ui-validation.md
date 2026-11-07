@@ -25,7 +25,14 @@ filter bar below the fold in a lazy list. It scrolls vertically to the header, r
 every filter, changes selection and edits the query with Greek resources at font
 scales 1.0/light and 2.0/dark in a 320 dp viewport. These tests execute no privileged
 ART commands. The dedicated `ART filter scrolling regression` workflow checks that
-both cases actually run and pass; execution is pending for the initial fix commit.
+both cases actually run and pass.
+
+The [Android regression job](https://github.com/koukomin/Telos-Launcher/actions/runs/42356993390/job/128357175784)
+on `afcb1ab0f` compiled the real instrumented UI APK and passed both cases on an
+API 35 emulator, including the Greek/font-scale matrix above. The overall run
+also contains a failed PR-creation metadata job; the Android job and its explicit
+two-case result check succeeded. That metadata job was subsequently removed,
+leaving the regression workflow read-only and dedicated to Android validation.
 Physical OnePlus/Android 17 verification and the complete visual matrix remain unrun.
 
 The recovered cloud checkout contains 17 JUnit result XMLs: **86 tests, zero failures/errors/skips**,

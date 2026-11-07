@@ -2,6 +2,12 @@ name: ART filter scrolling regression
 on:
   push:
     branches: ['codex/fix-art-filter-scroll']
+    paths:
+      - 'app/ui/src/main/java/de/mm20/launcher2/ui/settings/art/**'
+      - 'app/ui/src/main/java/de/mm20/launcher2/ui/component/TelosSearchBar.kt'
+      - 'app/ui/src/main/java/de/mm20/launcher2/ui/component/TelosSharedUi.kt'
+      - 'app/ui/src/androidTest/java/de/mm20/launcher2/ui/settings/art/**'
+      - '.github/workflows/art-scroll-regression.yml'
   pull_request:
     paths:
       - 'app/ui/src/main/java/de/mm20/launcher2/ui/settings/art/**'
@@ -16,26 +22,6 @@ concurrency:
   group: art-scroll-${{ github.ref }}
   cancel-in-progress: true
 jobs:
-  open-pr:
-    if: github.event_name == 'push'
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pull-requests: write
-    steps:
-      - name: Open the crash fix for review
-        env:
-          GH_TOKEN: ${{ github.token }}
-          GH_REPO: ${{ github.repository }}
-        run: |
-          EXISTING=$(gh pr list --head codex/fix-art-filter-scroll --state open --json url --jq '.[0].url')
-          if [ -n "$EXISTING" ]; then echo "$EXISTING"; exit 0; fi
-          cat > "$RUNNER_TEMP/pr.md" <<'BODY'
-          Scrolling down to the per-app filters in ART optimization crashed because both the search bar and its filter content owned horizontal scrolling. Emit chips directly into the shared search bar's bounded row, and apply the same correction to the shared app filter bar.
-
-          Add Android regression tests that scroll down to the real ART search header, reach every filter, change selection and edit search text with Greek labels at font scales 1.0 and 2.0. No ART/root/Shizuku commands run in these tests. Validation results are reported by the ART filter scrolling regression workflow.
-          BODY
-          gh pr create --base main --head codex/fix-art-filter-scroll --title "Fix ART optimizer crash when scrolling to app filters" --body-file "$RUNNER_TEMP/pr.md"
   android-scroll:
     runs-on: ubuntu-latest
     timeout-minutes: 40
