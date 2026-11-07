@@ -76,6 +76,7 @@ internal object TelosPages {
         "telos_screenshot_app://screenshot" -> de.mm20.launcher2.ui.screenshot.ScreenshotRoute
         "telos_sync_app://sync" -> de.mm20.launcher2.ui.sync.SyncRoute
         "telos_backup_app://backup" -> de.mm20.launcher2.ui.backup.BackupRoute
+        "telos_help_app://help" -> de.mm20.launcher2.ui.help.HelpDashboardRoute
         else -> null
     }
 
@@ -83,6 +84,8 @@ internal object TelosPages {
 
     /** Same screens as the entries of the same routes in SettingsActivity */
     val entries = entryProvider {
+        entry<de.mm20.launcher2.ui.help.HelpDashboardRoute> { de.mm20.launcher2.ui.help.HelpDashboardScreen() }
+        entry<de.mm20.launcher2.ui.help.HelpAppDetailRoute> { de.mm20.launcher2.ui.help.HelpAppDetailScreen(it.appKey) }
         entry<CommsDashboardRoute> {
             CommsDashboardScreen(it.initialTab, it.initialNumber, it.initialBody, it.initialAttachments)
         }

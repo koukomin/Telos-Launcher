@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="telos_help_title">Telos Help</string>
+    <string name="telos_help_subtitle">Discover how to use Telos Apps and their unique features.</string>
+    <string name="telos_help_start_tutorial">Start Tutorial</string>
+
+    <string name="telos_calculator_help_desc">Learn how to perform calculations, convert units, and apply VAT.</string>
+    <string name="telos_media_help_desc">Find out how to play music, videos, and manage your media library.</string>
+    <string name="telos_files_help_desc">Manage your files, documents, and external storage easily.</string>
+    <string name="telos_notes_help_desc">Create notes, sync across devices, and organize your thoughts.</string>
+    <string name="telos_system_help_desc">Control advanced system settings like Freeze Manager and AppOps.</string>
+    <string name="telos_network_help_desc">Manage VPN, DNS, Firewall rules, and network privacy.</string>
+    <string name="telos_store_help_desc">Install and update apps seamlessly with background Shizuku installation.</string>
+    <string name="telos_phone_help_desc">Make calls, view call history, and block spam numbers.</string>
+    <string name="telos_messages_help_desc">Send and receive SMS/MMS messages with end-to-end encryption.</string>
+    <string name="telos_ermis_help_desc">Manage your emails across multiple accounts with privacy first.</string>
+    <string name="telos_akou_help_desc">Identify songs playing around you instantly.</string>
+    <string name="telos_sync_help_desc">Synchronize files securely across all your devices using Syncthing.</string>
+</resources>
