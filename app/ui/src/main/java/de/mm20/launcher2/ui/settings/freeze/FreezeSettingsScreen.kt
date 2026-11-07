@@ -7,6 +7,8 @@ import de.mm20.launcher2.ui.settings.SettingsActivity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -123,6 +125,27 @@ private fun FreezeSettingsContent(section: Int, tabs: @Composable () -> Unit) {
         verticalArrangement = Arrangement.spacedBy(2.dp),
     ) {
         item { tabs() }
+        item {
+            androidx.compose.material3.Surface(
+                shape = androidx.compose.foundation.shape.RoundedCornerShape(16.dp),
+                color = MaterialTheme.colorScheme.errorContainer,
+                modifier = androidx.compose.ui.Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 6.dp)
+            ) {
+                Column(modifier = androidx.compose.ui.Modifier.padding(12.dp)) {
+                    Text(
+                        text = "⚠️ Προειδοποίηση / Warning",
+                        style = MaterialTheme.typography.titleSmall,
+                        fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.onErrorContainer
+                    )
+                    Text(
+                        text = "Αυτό το εργαλείο τροποποιεί την κατάσταση εφαρμογών συστήματος (Freeze/Disable). Η εσφαλμένη χρήση μπορεί να προκαλέσει αστάθεια ή bootloops. Απευθύνεται σε προχωρημένους χρήστες.",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onErrorContainer.copy(alpha = 0.9f)
+                    )
+                }
+            }
+        }
         if (section == 2) item {
             val autoUpdate by viewModel.bloatAutoUpdate.collectAsStateWithLifecycle()
             val updateStatus by viewModel.bloatUpdateStatus.collectAsStateWithLifecycle()

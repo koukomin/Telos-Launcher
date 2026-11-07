@@ -100,6 +100,27 @@ fun SettingsScreen(
                 .padding(contentPadding),
         ) {
             item {
+                Surface(
+                    shape = RoundedCornerShape(16.dp),
+                    color = MaterialTheme.colorScheme.errorContainer,
+                    modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 6.dp)
+                ) {
+                    Column(modifier = Modifier.padding(12.dp)) {
+                        Text(
+                            text = "⚠️ Προειδοποίηση / Warning",
+                            style = MaterialTheme.typography.titleSmall,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.onErrorContainer
+                        )
+                        Text(
+                            text = "Οι ρυθμίσεις AppOps ελέγχουν τα βασικά δικαιώματα εφαρμογών σε επίπεδο συστήματος (π.χ. τοποθεσία, κάμερα, κ.λπ.). Απευθύνεται σε προχωρημένους χρήστες.",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onErrorContainer.copy(alpha = 0.9f)
+                        )
+                    }
+                }
+            }
+            item {
                 SettingsSectionTitle(text = stringResource(R.string.appopsnext_settings_preferences))
             }
             item {
