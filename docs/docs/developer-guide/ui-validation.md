@@ -11,6 +11,28 @@ no new production library or replacement design framework is introduced.
 
 ## Execution evidence
 
+### ART filter scrolling regression after v1.44.19
+
+A OnePlus Android 17 report identifies a crash when scrolling down the ART optimizer to
+the per-app search/filter header. That header nested a `horizontalScroll` row inside
+`TelosSearchBar`'s own horizontal scroller, passing infinite width to the inner scroller.
+The ART header and `TelosSearchAndFilterBar` now emit chips directly into the shared
+search bar. The document viewer already uses this contract. Filter/query ownership,
+saved selection, labels, theme surfaces and ART execution controls are unchanged.
+
+`ArtOptimizerScrollTest` renders the actual stateless ART header and the shared app
+filter bar below the fold in a lazy list. It scrolls vertically to the header, reaches
+every filter, changes selection and edits the query with Greek resources at font
+scales 1.0/light and 2.0/dark in a 320 dp viewport. These tests execute no privileged
+ART commands. The dedicated `ART filter scrolling regression` workflow checks that
+both cases actually run and pass.
+
+The [read-only Android regression workflow](https://github.com/koukomin/Telos-Launcher/actions/runs/42357872285)
+on `b481e573e` completed successfully: it compiled the real instrumented UI APK
+and passed both cases on an API 35 emulator, including the Greek/font-scale
+matrix above and the explicit check that both cases executed successfully.
+Physical OnePlus/Android 17 verification and the complete visual matrix remain unrun.
+
 The recovered cloud checkout contains 17 JUnit result XMLs: **86 tests, zero failures/errors/skips**,
 including eight adaptive layout tests and ten contrast tests. Those results predate reconciliation
 with newer main `8e3110c`; they are historical evidence, not validation of the reconciled commit.

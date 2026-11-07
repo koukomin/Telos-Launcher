@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.44.20
+
+- Fix the crash when scrolling down the ART optimizer to the per-app search
+  filters: the search bar now owns the single horizontal scrolling strip.
+- Fix the same nested-scrolling problem in the shared app search/filter bar,
+  preserving filter selection, search text and existing translations.
+- Add Android regression coverage for scrolling to the real ART header and
+  reaching every filter with Greek labels at normal and doubled font scale.
+
 ## 1.44.19
 
 - Fix 18 reproduced dependency advisories in the root Dokka documentation tooling,

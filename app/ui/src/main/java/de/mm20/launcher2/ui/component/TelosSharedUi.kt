@@ -5,7 +5,6 @@ import de.mm20.launcher2.base.R as BaseR
 import android.text.format.Formatter
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,7 +17,6 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -304,22 +302,15 @@ fun TelosSearchAndFilterBar(
             onValueChange = onQueryChange,
             placeholder = placeholder,
             filters = {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .horizontalScroll(rememberScrollState()),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                ) {
-                    for (filter in availableFilters) {
-                        FilterChip(
-                            selected = activeFilter == filter,
-                            onClick = {
-                                haptics.performHapticFeedback(HapticFeedbackType.TextHandleMove)
-                                onFilterChange(filter)
-                            },
-                            label = { Text(stringResource(filter.labelRes)) },
-                        )
-                    }
+                for (filter in availableFilters) {
+                    FilterChip(
+                        selected = activeFilter == filter,
+                        onClick = {
+                            haptics.performHapticFeedback(HapticFeedbackType.TextHandleMove)
+                            onFilterChange(filter)
+                        },
+                        label = { Text(stringResource(filter.labelRes)) },
+                    )
                 }
             }
         )

@@ -61,7 +61,8 @@ import de.mm20.launcher2.ui.R
  *
  * @param leading replaces the search icon
  * @param trailing extra actions (filter, sort, mic ...) shown after the clear button
- * @param filters optional row of filter chips below the pill (scrolls horizontally)
+ * @param filters filter chips below the pill. Emit chips directly: this component
+ * owns the scrolling row; a nested horizontal scroller receives unbounded width.
  */
 @Composable
 fun TelosSearchBar(
