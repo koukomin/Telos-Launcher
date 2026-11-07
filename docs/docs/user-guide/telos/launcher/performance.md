@@ -33,6 +33,11 @@ Applying it needs **Shizuku**, **root**, or the **ADB** command on the screen (c
 
 Reading the table:
 
+- **ART app list.** Scroll down to the per-app section to search by name or package and filter
+  All, Needs optimization, Optimized, Degraded or Frozen apps. The search bar owns the horizontal
+  filter strip, so reaching this section does not nest two horizontal scrolling containers.
+  Selecting a filter only changes the displayed list; optimization still requires its own action.
+
 - **Search delay.** With 0 ms every keystroke starts a search. A value of 100 to 150 ms means that while you
   type fast, only the final text is searched. It saves work on slow devices and feels less instant on fast
   ones.

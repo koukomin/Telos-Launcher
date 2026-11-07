@@ -5,7 +5,6 @@ import de.mm20.launcher2.base.R as BaseR
 import android.text.format.Formatter
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -28,7 +27,6 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FilterChip
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -64,7 +62,6 @@ import de.mm20.launcher2.appmanagement.art.ProfileDiagnosticResult
 import de.mm20.launcher2.appmanagement.art.TelosArtOptimizer
 import de.mm20.launcher2.preferences.ArtBenchmarkRecord
 import de.mm20.launcher2.ui.R
-import de.mm20.launcher2.ui.component.TelosSearchBar
 import de.mm20.launcher2.ui.component.preferences.CheckboxPreference
 import de.mm20.launcher2.ui.component.preferences.ListPreference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
@@ -509,54 +506,12 @@ fun ArtOptimizerScreen() {
             }
 
             item(key = "per_app_header") {
-                Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                    Text(
-                        text = stringResource(I18nR.string.art_optimizer_apps_category),
-                        style = MaterialTheme.typography.titleSmall,
-                        color = MaterialTheme.colorScheme.primary,
-                        fontWeight = FontWeight.SemiBold,
-                        modifier = Modifier.padding(horizontal = 24.dp, vertical = 4.dp),
-                    )
-                    TelosSearchBar(
-                        value = searchQuery,
-                        onValueChange = { searchQuery = it },
-                        placeholder = stringResource(I18nR.string.art_optimizer_search_apps_hint),
-                        filters = {
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .horizontalScroll(rememberScrollState()),
-                                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                            ) {
-                                FilterChip(
-                                    selected = activeFilter == ArtAppFilter.ALL,
-                                    onClick = { activeFilterName = ArtAppFilter.ALL.name },
-                                    label = { Text(stringResource(I18nR.string.art_optimizer_filter_all)) },
-                                )
-                                FilterChip(
-                                    selected = activeFilter == ArtAppFilter.NEEDS_OPTIMIZATION,
-                                    onClick = { activeFilterName = ArtAppFilter.NEEDS_OPTIMIZATION.name },
-                                    label = { Text(stringResource(I18nR.string.art_optimizer_filter_needed)) },
-                                )
-                                FilterChip(
-                                    selected = activeFilter == ArtAppFilter.UP_TO_DATE,
-                                    onClick = { activeFilterName = ArtAppFilter.UP_TO_DATE.name },
-                                    label = { Text(stringResource(I18nR.string.art_optimizer_filter_optimized)) },
-                                )
-                                FilterChip(
-                                    selected = activeFilter == ArtAppFilter.DEGRADED,
-                                    onClick = { activeFilterName = ArtAppFilter.DEGRADED.name },
-                                    label = { Text(stringResource(I18nR.string.art_optimizer_filter_degraded)) },
-                                )
-                                FilterChip(
-                                    selected = activeFilter == ArtAppFilter.FROZEN,
-                                    onClick = { activeFilterName = ArtAppFilter.FROZEN.name },
-                                    label = { Text(stringResource(I18nR.string.art_optimizer_filter_frozen)) },
-                                )
-                            }
-                        }
-                    )
-                }
+                ArtOptimizerAppSearch(
+                    query = searchQuery,
+                    onQueryChange = { searchQuery = it },
+                    activeFilter = activeFilter,
+                    onFilterChange = { activeFilterName = it.name },
+                )
             }
 
             items(

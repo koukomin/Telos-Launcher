@@ -1,0 +1,90 @@
+name: ART filter scrolling regression
+on:
+  push:
+    branches: ['codex/fix-art-filter-scroll']
+  pull_request:
+    paths:
+      - 'app/ui/src/main/java/de/mm20/launcher2/ui/settings/art/**'
+      - 'app/ui/src/main/java/de/mm20/launcher2/ui/component/TelosSearchBar.kt'
+      - 'app/ui/src/main/java/de/mm20/launcher2/ui/component/TelosSharedUi.kt'
+      - 'app/ui/src/androidTest/java/de/mm20/launcher2/ui/settings/art/**'
+      - '.github/workflows/art-scroll-regression.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: art-scroll-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  open-pr:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Open the crash fix for review
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          EXISTING=$(gh pr list --head codex/fix-art-filter-scroll --state open --json url --jq '.[0].url')
+          if [ -n "$EXISTING" ]; then echo "$EXISTING"; exit 0; fi
+          cat > "$RUNNER_TEMP/pr.md" <<'BODY'
+          Scrolling down to the per-app filters in ART optimization crashed because both the search bar and its filter content owned horizontal scrolling. Emit chips directly into the shared search bar's bounded row, and apply the same correction to the shared app filter bar.
+
+          Add Android regression tests that scroll down to the real ART search header, reach every filter, change selection and edit search text with Greek labels at font scales 1.0 and 2.0. No ART/root/Shizuku commands run in these tests. Validation results are reported by the ART filter scrolling regression workflow.
+          BODY
+          gh pr create --base main --head codex/fix-art-filter-scroll --title "Fix ART optimizer crash when scrolling to app filters" --body-file "$RUNNER_TEMP/pr.md"
+  android-scroll:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: '21'
+      - uses: gradle/actions/setup-gradle@v6
+        with:
+          cache-provider: basic
+      - name: Compile actual UI and regression APK
+        run: bash ./gradlew :app:ui:assembleDefaultDebugAndroidTest --no-daemon --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process -Dorg.gradle.jvmargs=-Xmx3072m --stacktrace
+      - name: Enable emulator acceleration
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          arch: x86_64
+          target: google_apis
+          profile: pixel_7
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          script: bash ./gradlew :app:ui:connectedDefaultDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=de.mm20.launcher2.ui.settings.art.ArtOptimizerScrollTest --no-daemon --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process -Dorg.gradle.jvmargs=-Xmx2048m --stacktrace
+      - name: Require both regression cases to execute successfully
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import xml.etree.ElementTree as ET
+          expected = {'artFiltersRemainReachableAfterScrollingDown', 'sharedAppFiltersUseTheSameSingleScrollingOwner'}
+          executed = set()
+          for report in Path('app/ui/build/outputs/androidTest-results').rglob('TEST-*.xml'):
+              root = ET.parse(report).getroot()
+              for case in root.iter('testcase'):
+                  if case.get('classname') == 'de.mm20.launcher2.ui.settings.art.ArtOptimizerScrollTest':
+                      assert not any(case.find(tag) is not None for tag in ('failure', 'error', 'skipped')), ET.tostring(case, encoding='unicode')
+                      executed.add(case.get('name'))
+          assert expected <= executed, f'Missing or crashed test cases: {expected - executed}'
+          print('::notice title=ART scroll regression::Both Android regression cases passed, covering Greek labels at font scales 1.0 and 2.0.')
+          PY
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: art-scroll-regression-results
+          path: |
+            app/ui/build/outputs/androidTest-results/
+            app/ui/build/reports/androidTests/
+          if-no-files-found: warn
