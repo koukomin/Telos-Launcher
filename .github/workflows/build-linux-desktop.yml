@@ -75,7 +75,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build Linux Desktop UberJar Package
-        run: ./gradlew :desktop-linux:packageUberJarForCurrentOS --stacktrace
+        run: ./gradlew :desktop-linux:packageUberJarForCurrentOS -x externalNativeBuildDebug -x externalNativeBuildRelease --stacktrace
 
       - name: Upload Linux Desktop Artifact
         uses: actions/upload-artifact@v7
