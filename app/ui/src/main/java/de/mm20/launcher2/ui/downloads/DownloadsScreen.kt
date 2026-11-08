@@ -3,6 +3,8 @@ import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
 
 import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -23,9 +25,14 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
@@ -201,6 +208,9 @@ fun DownloadsScreen(initialUrls: List<String> = emptyList()) {
         }
     }
 
+    var showUploadSheet by rememberSaveable { mutableStateOf(false) }
+    var showTorrentCreatorSheet by rememberSaveable { mutableStateOf(false) }
+
     MediaFrame(
         stringResource(I18nR.string.dl_title),
         askNotifications = true,
@@ -210,7 +220,7 @@ fun DownloadsScreen(initialUrls: List<String> = emptyList()) {
             if (showFontDialog) {
                 de.mm20.launcher2.ui.component.PerAppFontScaleDialog(
                     appKey = "downloader",
-                    appName = "Telos Downloader",
+                    appName = "Telos Transfer",
                     onDismiss = { showFontDialog = false }
                 )
             }
@@ -224,6 +234,8 @@ fun DownloadsScreen(initialUrls: List<String> = emptyList()) {
                 Icon(painterResource(BaseR.drawable.more_vert_24px), stringResource(I18nR.string.action_more_actions))
             }
             DropdownMenu(expanded = menu, onDismissRequest = { menu = false }) {
+                DropdownMenuItem(text = { Text("Upload File to Cloud") }, onClick = { menu = false; showUploadSheet = true })
+                DropdownMenuItem(text = { Text("Create Torrent / Magnet") }, onClick = { menu = false; showTorrentCreatorSheet = true })
                 DropdownMenuItem(text = { Text(stringResource(I18nR.string.dl_pause_all)) }, onClick = { menu = false; manager.pauseAll() })
                 DropdownMenuItem(text = { Text(stringResource(I18nR.string.dl_resume_all)) }, onClick = { menu = false; manager.resumeAll() })
                 DropdownMenuItem(text = { Text(stringResource(I18nR.string.dl_clear_completed)) }, onClick = { menu = false; manager.clearFinished(false) })
@@ -340,6 +352,12 @@ fun DownloadsScreen(initialUrls: List<String> = emptyList()) {
             manager.remove(t.id, withFile)
             deleting = null
         }
+    }
+    if (showUploadSheet) {
+        TransferUploadSheet(onDismiss = { showUploadSheet = false })
+    }
+    if (showTorrentCreatorSheet) {
+        TransferTorrentCreatorSheet(onDismiss = { showTorrentCreatorSheet = false })
     }
 }
 
@@ -599,4 +617,207 @@ private fun DeleteDialog(task: DownloadTask, onDismiss: () -> Unit, onConfirm: (
         },
         dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(I18nR.string.dl_cancel)) } },
     )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun TransferUploadSheet(onDismiss: () -> Unit) {
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
+    var selectedUri by remember { mutableStateOf<android.net.Uri?>(null) }
+    var selectedService by remember { mutableStateOf(de.mm20.launcher2.downloads.UploadService.FileIo) }
+    var busy by remember { mutableStateOf(false) }
+    var uploadResult by remember { mutableStateOf<de.mm20.launcher2.downloads.UploadResult?>(null) }
+    var error by remember { mutableStateOf<String?>(null) }
+
+    val picker = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+        if (uri != null) selectedUri = uri
+    }
+
+    ModalBottomSheet(onDismissRequest = onDismiss) {
+        Column(
+            Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp, vertical = 12.dp),
+            verticalArrangement = Arrangement.spacedBy(14.dp)
+        ) {
+            Text("Upload File to Cloud", style = MaterialTheme.typography.titleLarge, fontWeight = androidx.compose.ui.text.font.FontWeight.Bold)
+
+            Text("Select a file from your device and upload to anonymous cloud file hosting.", style = MaterialTheme.typography.bodyMedium)
+
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
+                Button(onClick = { picker.launch("*/*") }, enabled = !busy) {
+                    Text(if (selectedUri != null) "Change File" else "Choose File")
+                }
+                selectedUri?.let { uri ->
+                    Text(uri.lastPathSegment ?: "File selected", style = MaterialTheme.typography.bodySmall, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                }
+            }
+
+            Text("Target Hosting Service:", style = MaterialTheme.typography.titleSmall)
+
+            Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                de.mm20.launcher2.downloads.UploadService.entries.forEach { service ->
+                    FilterChip(
+                        selected = selectedService == service,
+                        onClick = { selectedService = service },
+                        label = { Text(service.displayName) }
+                    )
+                }
+            }
+
+            if (busy) {
+                LinearProgressIndicator(Modifier.fillMaxWidth())
+            }
+
+            error?.let { err ->
+                Text(err, color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall)
+            }
+
+            uploadResult?.let { result ->
+                Card(colors = androidx.compose.material3.CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh)) {
+                    Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                        Text("Upload Complete!", fontWeight = androidx.compose.ui.text.font.FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
+                        Text("File: ${result.fileName} (${Formatting.size(result.sizeBytes)})", style = MaterialTheme.typography.bodySmall)
+                        androidx.compose.material3.OutlinedTextField(
+                            value = result.downloadUrl,
+                            onValueChange = {},
+                            readOnly = true,
+                            label = { Text("Share Link") },
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                        Button(
+                            onClick = {
+                                val clipboard = context.getSystemService(android.content.Context.CLIPBOARD_SERVICE) as android.content.ClipboardManager
+                                clipboard.setPrimaryClip(android.content.ClipData.newPlainText("Upload Link", result.downloadUrl))
+                                Toast.makeText(context, "Link copied to clipboard!", Toast.LENGTH_SHORT).show()
+                            },
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text("Copy Link")
+                        }
+                    }
+                }
+            }
+
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End, verticalAlignment = Alignment.CenterVertically) {
+                TextButton(onClick = onDismiss) { Text(stringResource(I18nR.string.dl_cancel)) }
+                Spacer(Modifier.width(8.dp))
+                Button(
+                    onClick = {
+                        val uri = selectedUri ?: return@Button
+                        busy = true
+                        error = null
+                        scope.launch {
+                            val res = de.mm20.launcher2.downloads.TransferUploader.upload(context, uri, selectedService)
+                            busy = false
+                            res.onSuccess {
+                                uploadResult = it
+                            }.onFailure {
+                                error = it.message ?: "Upload failed"
+                            }
+                        }
+                    },
+                    enabled = selectedUri != null && !busy
+                ) {
+                    Text("Start Upload")
+                }
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun TransferTorrentCreatorSheet(onDismiss: () -> Unit) {
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
+    var selectedUri by remember { mutableStateOf<android.net.Uri?>(null) }
+    var busy by remember { mutableStateOf(false) }
+    var torrentResult by remember { mutableStateOf<de.mm20.launcher2.downloads.TorrentResult?>(null) }
+    var error by remember { mutableStateOf<String?>(null) }
+
+    val picker = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+        if (uri != null) selectedUri = uri
+    }
+
+    ModalBottomSheet(onDismissRequest = onDismiss) {
+        Column(
+            Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp, vertical = 12.dp),
+            verticalArrangement = Arrangement.spacedBy(14.dp)
+        ) {
+            Text("Create Torrent & Magnet", style = MaterialTheme.typography.titleLarge, fontWeight = androidx.compose.ui.text.font.FontWeight.Bold)
+
+            Text("Generate a .torrent file and Magnet URI to seed or share any local file.", style = MaterialTheme.typography.bodyMedium)
+
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
+                Button(onClick = { picker.launch("*/*") }, enabled = !busy) {
+                    Text(if (selectedUri != null) "Change File" else "Choose File")
+                }
+                selectedUri?.let { uri ->
+                    Text(uri.lastPathSegment ?: "File selected", style = MaterialTheme.typography.bodySmall, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                }
+            }
+
+            if (busy) {
+                LinearProgressIndicator(Modifier.fillMaxWidth())
+            }
+
+            error?.let { err ->
+                Text(err, color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall)
+            }
+
+            torrentResult?.let { result ->
+                Card(colors = androidx.compose.material3.CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh)) {
+                    Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                        Text("Torrent & Magnet Generated!", fontWeight = androidx.compose.ui.text.font.FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
+                        Text("File: ${result.name} (${Formatting.size(result.sizeBytes)})", style = MaterialTheme.typography.bodySmall)
+                        androidx.compose.material3.OutlinedTextField(
+                            value = result.magnetUrl,
+                            onValueChange = {},
+                            readOnly = true,
+                            label = { Text("Magnet Link") },
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                        Button(
+                            onClick = {
+                                val clipboard = context.getSystemService(android.content.Context.CLIPBOARD_SERVICE) as android.content.ClipboardManager
+                                clipboard.setPrimaryClip(android.content.ClipData.newPlainText("Magnet Link", result.magnetUrl))
+                                Toast.makeText(context, "Magnet link copied to clipboard!", Toast.LENGTH_SHORT).show()
+                            },
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text("Copy Magnet Link")
+                        }
+                    }
+                }
+            }
+
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End, verticalAlignment = Alignment.CenterVertically) {
+                TextButton(onClick = onDismiss) { Text(stringResource(I18nR.string.dl_cancel)) }
+                Spacer(Modifier.width(8.dp))
+                Button(
+                    onClick = {
+                        val uri = selectedUri ?: return@Button
+                        busy = true
+                        error = null
+                        scope.launch {
+                            val res = de.mm20.launcher2.downloads.TorrentCreator.create(context, uri)
+                            busy = false
+                            res.onSuccess {
+                                torrentResult = it
+                            }.onFailure {
+                                error = it.message ?: "Torrent creation failed"
+                            }
+                        }
+                    },
+                    enabled = selectedUri != null && !busy
+                ) {
+                    Text("Create Torrent")
+                }
+            }
+        }
+    }
 }

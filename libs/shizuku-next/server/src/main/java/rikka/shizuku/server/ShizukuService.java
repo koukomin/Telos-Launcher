@@ -38,8 +38,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.io.File;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -68,6 +66,7 @@ import rikka.shizuku.server.util.UsersCompat;
 
 public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuClientManager, ShizukuConfigManager> {
 
+    @Nullable
     public static final String MANAGER_APPLICATION_ID;
 
     static {
@@ -129,6 +128,7 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
         }
     }
 
+    @Nullable
     public static ApplicationInfo getManagerApplicationInfo() {
         return Android17Compat.getApplicationInfo(MANAGER_APPLICATION_ID, 0, 0);
     }
@@ -243,16 +243,19 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
     /** A phone that is not unlocked within this is not going to be, as far as a boot start is concerned. */
     private static final long UNLOCK_SWEEP_GIVE_UP_MS = 30 * 60 * 1000;
 
+    @NonNull
     @Override
     public ShizukuUserServiceManager onCreateUserServiceManager() {
         return new ShizukuUserServiceManager();
     }
 
+    @NonNull
     @Override
     public ShizukuClientManager onCreateClientManager() {
         return new ShizukuClientManager(getConfigManager());
     }
 
+    @NonNull
     @Override
     public ShizukuConfigManager onCreateConfigManager() {
         return new ShizukuConfigManager();
@@ -303,7 +306,7 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
     }
 
     @Override
-    public void attachApplication(IShizukuApplication application, Bundle args) {
+    public void attachApplication(@Nullable IShizukuApplication application, @Nullable Bundle args) {
         if (application == null || args == null) {
             return;
         }
@@ -412,7 +415,7 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
     }
 
     @Override
-    public void dispatchPermissionConfirmationResult(int requestUid, int requestPid, int requestCode, Bundle data) throws RemoteException {
+    public void dispatchPermissionConfirmationResult(int requestUid, int requestPid, int requestCode, @Nullable Bundle data) throws RemoteException {
         if (UserHandleCompat.getAppId(Binder.getCallingUid()) != managerAppId) {
             LOGGER.w("dispatchPermissionConfirmationResult called not from the manager package");
             return;
@@ -560,6 +563,7 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
         getUserServiceManager().removeUserServicesForPackage(packageName);
     }
 
+    @NonNull
     private ParcelableListSlice<PackageInfo> getApplications(int userId) {
         List<PackageInfo> list = new ArrayList<>();
         List<Integer> users = new ArrayList<>();
@@ -598,7 +602,7 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
     }
 
     @Override
-    public boolean onTransact(int code, Parcel data, Parcel reply, int flags) throws RemoteException {
+    public boolean onTransact(int code, @NonNull Parcel data, @NonNull Parcel reply, int flags) throws RemoteException {
         //LOGGER.d("transact: code=%d, calling uid=%d", code, Binder.getCallingUid());
         if (code == ServerConstants.BINDER_TRANSACTION_getApplications) {
             data.enforceInterface(ShizukuApiConstants.BINDER_DESCRIPTOR);
@@ -627,7 +631,7 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
      * @param listed the packages of the user, when they are already at hand; null or empty lists
      *     them again (an empty one is as likely an unreadable list as an empty phone).
      */
-    private static void sendBinderToClient(Binder binder, int userId, List<PackageInfo> listed) {
+    private static void sendBinderToClient(Binder binder, int userId, @Nullable List<PackageInfo> listed) {
         try {
             List<PackageInfo> all = listed != null && !listed.isEmpty()
                     ? listed

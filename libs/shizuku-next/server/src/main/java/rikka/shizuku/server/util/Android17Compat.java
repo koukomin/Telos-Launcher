@@ -6,6 +6,9 @@ import android.os.IBinder;
 import android.os.ServiceManager;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -42,9 +45,11 @@ public class Android17Compat {
     /** What the platform records as the caller of a permission change made from here. */
     private static final String CALLER = "shizuku";
 
+    @Nullable
     private static volatile Object sPackageManager;
     private static volatile boolean sPackageManagerFailed;
 
+    @Nullable
     private static volatile Object sPermissionManager;
     private static volatile boolean sPermissionManagerFailed;
 
@@ -86,6 +91,7 @@ public class Android17Compat {
         return sPermissionManager;
     }
 
+    @Nullable
     public static PackageInfo getPackageInfo(String packageName, long flags, int userId) {
         try {
             return PackageManagerApis.getPackageInfoNoThrow(packageName, flags, userId);
@@ -107,6 +113,7 @@ public class Android17Compat {
         }
     }
 
+    @Nullable
     public static ApplicationInfo getApplicationInfo(String packageName, long flags, int userId) {
         try {
             return PackageManagerApis.getApplicationInfoNoThrow(packageName, flags, userId);
@@ -256,7 +263,8 @@ public class Android17Compat {
     }
 
     /** Every overload of [name], whatever its parameters: the shapes are tried, not guessed. */
-    private static List<Method> overloads(Object target, String name) {
+    @NonNull
+    private static List<Method> overloads(@NonNull Object target, @NonNull String name) {
         List<Method> found = new ArrayList<>();
         for (Method method : target.getClass().getMethods()) {
             if (name.equals(method.getName())) found.add(method);
@@ -272,6 +280,7 @@ public class Android17Compat {
      */
     private static final class Invocation {
         boolean ran;
+        @Nullable
         Object result;
     }
 
@@ -283,7 +292,8 @@ public class Android17Compat {
      * InvocationTargetException means the call reached the platform and the platform refused
      * it, which is an answer rather than a wrong guess, so it is not retried as one.
      */
-    private static Invocation invokeFirst(Method method, Object target, Object[]... candidates) {
+    @NonNull
+    private static Invocation invokeFirst(@NonNull Method method, Object target, @NonNull Object[]... candidates) {
         Invocation outcome = new Invocation();
 
         for (Object[] args : candidates) {

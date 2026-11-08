@@ -4,6 +4,9 @@ import android.content.pm.PackageInfo;
 import android.os.Build;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Collections;
@@ -18,6 +21,7 @@ public final class InstalledPackagesCompat {
     private InstalledPackagesCompat() {
     }
 
+    @NonNull
     public static List<PackageInfo> getInstalledPackagesNoThrow(long flags, int userId) {
         try {
             List<PackageInfo> packages = getInstalledPackages(flags, userId);
@@ -28,6 +32,7 @@ public final class InstalledPackagesCompat {
         }
     }
 
+    @NonNull
     @SuppressWarnings("unchecked")
     public static List<PackageInfo> getInstalledPackages(long flags, int userId) throws ReflectiveOperationException {
         // A process with an Application has a context and so a package manager of its own, and that
@@ -57,14 +62,16 @@ public final class InstalledPackagesCompat {
         return viaPackageManagerObject(getSystemContextPackageManager(), flags, userId);
     }
 
+    @NonNull
     @SuppressWarnings("unchecked")
-    private static List<PackageInfo> viaPackageManagerObject(Object packageManager, long flags, int userId)
+    private static List<PackageInfo> viaPackageManagerObject(@NonNull Object packageManager, long flags, int userId)
             throws ReflectiveOperationException {
         Method method = packageManager.getClass().getMethod("getInstalledPackagesAsUser", int.class, int.class);
         Object result = invoke(method, packageManager, (int) flags, userId);
         return result == null ? Collections.emptyList() : (List<PackageInfo>) result;
     }
 
+    @NonNull
     @SuppressWarnings("unchecked")
     private static List<PackageInfo> viaHiddenService(long flags, int userId) throws ReflectiveOperationException {
         Object packageManager = getPackageManager();
@@ -98,7 +105,8 @@ public final class InstalledPackagesCompat {
      * the object's own class. A binder proxy is a private nested class, and a method found on it
      * cannot be invoked from here, where the interface's is a public one the proxy answers to.
      */
-    private static Class<?> packageManagerInterface(Object packageManager) {
+    @NonNull
+    private static Class<?> packageManagerInterface(@NonNull Object packageManager) {
         try {
             Class<?> iface = Class.forName("android.content.pm.IPackageManager");
             if (iface.isInstance(packageManager)) {
@@ -109,6 +117,7 @@ public final class InstalledPackagesCompat {
         return packageManager.getClass();
     }
 
+    @Nullable
     private static Object getPackageManager() throws ReflectiveOperationException {
         Class<?> servicesClass = Class.forName("rikka.hidden.compat.Services");
         var field = servicesClass.getDeclaredField("packageManager");
@@ -118,6 +127,7 @@ public final class InstalledPackagesCompat {
     }
 
     /** The package manager of the Application this process has, or null when it has none. */
+    @Nullable
     private static Object applicationPackageManagerOrNull() throws ReflectiveOperationException {
         Class<?> activityThreadClass = Class.forName("android.app.ActivityThread");
         Object activityThread = activityThreadClass.getMethod("currentActivityThread").invoke(null);
@@ -131,6 +141,7 @@ public final class InstalledPackagesCompat {
     }
 
     /** The package manager of a system context, which has to be built: the expensive way. */
+    @Nullable
     private static Object getSystemContextPackageManager() throws ReflectiveOperationException {
         Class<?> activityThreadClass = Class.forName("android.app.ActivityThread");
         Object activityThread = activityThreadClass.getMethod("systemMain").invoke(null);
@@ -138,7 +149,8 @@ public final class InstalledPackagesCompat {
         return systemContext.getClass().getMethod("getPackageManager").invoke(systemContext);
     }
 
-    private static Object invoke(Method method, Object receiver, Object... args) throws ReflectiveOperationException {
+    @Nullable
+    private static Object invoke(@NonNull Method method, Object receiver, Object... args) throws ReflectiveOperationException {
         try {
             return method.invoke(receiver, args);
         } catch (InvocationTargetException e) {

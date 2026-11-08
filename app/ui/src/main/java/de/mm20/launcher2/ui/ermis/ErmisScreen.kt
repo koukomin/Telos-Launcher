@@ -4,6 +4,7 @@ import de.mm20.launcher2.base.R as BaseR
 
 import android.net.Uri
 import android.content.Intent
+import android.widget.Toast
 import android.provider.ContactsContract
 import androidx.compose.foundation.lazy.LazyColumn
 import kotlinx.coroutines.flow.first
@@ -441,7 +442,29 @@ private fun ComposeDialog(accounts: List<ErmisAccount>, initialAccount: String?,
             if (contactError) Text(stringResource(I18nR.string.hc_no_contacts_found), color = MaterialTheme.colorScheme.error)
             OutlinedTextField(subject, { subject = it }, label = { Text(stringResource(I18nR.string.ermis_subject)) }, modifier = Modifier.fillMaxWidth())
             OutlinedTextField(body, { body = it }, label = { Text(stringResource(I18nR.string.ermis_body)) }, minLines = 5, modifier = Modifier.fillMaxWidth())
-            TextButton(onClick = { picker.launch(arrayOf("*/*")) }) { Icon(painterResource(BaseR.drawable.attach_file_24px), null); Spacer(Modifier.width(8.dp)); Text(stringResource(I18nR.string.ermis_attach)) }
+    var cloudUploading by remember { mutableStateOf(false) }
+    val cloudUploadPicker = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+        if (uri != null) {
+            cloudUploading = true
+            scope.launch {
+                val res = de.mm20.launcher2.downloads.TransferUploader.upload(context, uri, de.mm20.launcher2.downloads.UploadService.FileIo)
+                cloudUploading = false
+                res.onSuccess { r ->
+                    body += (if (body.isNotBlank()) "\n\n" else "") + "Attachment Link (${r.fileName}): ${r.downloadUrl}"
+                    Toast.makeText(context, "Attachment uploaded & link added to email!", Toast.LENGTH_SHORT).show()
+                }.onFailure { err ->
+                    Toast.makeText(context, "Upload failed: ${err.message}", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+    TextButton(onClick = { picker.launch(arrayOf("*/*")) }) { Icon(painterResource(BaseR.drawable.attach_file_24px), null); Spacer(Modifier.width(8.dp)); Text(stringResource(I18nR.string.ermis_attach)) }
+    TextButton(onClick = { cloudUploadPicker.launch("*/*") }, enabled = !cloudUploading) {
+        if (cloudUploading) CircularProgressIndicator(Modifier.size(18.dp), strokeWidth = 2.dp)
+        else Icon(painterResource(BaseR.drawable.share_24px), null)
+        Spacer(Modifier.width(8.dp))
+        Text(if (cloudUploading) "Uploading..." else "Upload & Attach Link")
+    }
             Text(stringResource(I18nR.string.ermis_saf_help), style = MaterialTheme.typography.bodySmall)
             if (original != null) Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(stringResource(I18nR.string.ermis_forward_original), Modifier.weight(1f))

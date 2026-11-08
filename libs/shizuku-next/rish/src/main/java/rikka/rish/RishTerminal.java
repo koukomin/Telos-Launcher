@@ -6,6 +6,8 @@ import android.system.ErrnoException;
 import android.system.Os;
 import android.util.Log;
 
+import androidx.annotation.Nullable;
+
 import java.io.File;
 import java.io.FileDescriptor;
 import java.util.ArrayList;
@@ -16,14 +18,14 @@ public class RishTerminal {
 
     private static final String TAG = "RishTerminal";
 
-    public static int getFd(FileDescriptor[] fileDescriptor, int i) {
+    public static int getFd(@Nullable FileDescriptor[] fileDescriptor, int i) {
         if (fileDescriptor == null) {
             return -1;
         }
         return FileDescriptors.getFd(fileDescriptor[i]);
     }
 
-    public static void closeFd(FileDescriptor[] fileDescriptor, int i) {
+    public static void closeFd(@Nullable FileDescriptor[] fileDescriptor, int i) {
         if (fileDescriptor == null) {
             return;
         }

@@ -21,11 +21,11 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
-import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 import de.mm20.launcher2.crashreporter.R;
@@ -41,12 +41,13 @@ public class CrashUtil {
         //this class is not publicly instantiable
     }
 
+    @NonNull
     private static String getCrashLogTime() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
         return dateFormat.format(new Date());
     }
 
-    public static void saveCrashReport(final Throwable throwable) {
+    public static void saveCrashReport(@NonNull final Throwable throwable) {
 
         String crashReportPath = CrashReporter.getCrashReportPath();
         String filename = getCrashLogTime() + Constants.CRASH_SUFFIX + Constants.FILE_EXTENSION;
@@ -61,7 +62,7 @@ public class CrashUtil {
         }
     }
 
-    public static void logException(final Exception exception) {
+    public static void logException(@NonNull final Exception exception) {
         if (!CrashReporter.isEnabled()) return;
 
         new Thread(new Runnable() {
@@ -103,7 +104,7 @@ public class CrashUtil {
         }
     }
 
-    private static void showNotification(String localisedMsg, String fileName) throws UnsupportedEncodingException {
+    private static void showNotification(String localisedMsg, @NonNull String fileName) throws UnsupportedEncodingException {
 
         if (CrashReporter.isNotificationEnabled()) {
             Context context = CrashReporter.getContext();
@@ -142,7 +143,7 @@ public class CrashUtil {
         }
     }
 
-    private static void createNotificationChannel(NotificationManager notificationManager, Context context) {
+    private static void createNotificationChannel(@NonNull NotificationManager notificationManager, @NonNull Context context) {
         CharSequence name = context.getString(R.string.notification_crash_report_title);
         String description = "";
         NotificationChannel channel = new NotificationChannel(CHANNEL_NOTIFICATION_ID, name, NotificationManager.IMPORTANCE_DEFAULT);
@@ -150,7 +151,8 @@ public class CrashUtil {
         notificationManager.createNotificationChannel(channel);
     }
 
-    private static String getStackTrace(Throwable e) {
+    @NonNull
+    private static String getStackTrace(@NonNull Throwable e) {
         final Writer result = new StringWriter();
         final PrintWriter printWriter = new PrintWriter(result);
 
@@ -160,6 +162,7 @@ public class CrashUtil {
         return crashLog;
     }
 
+    @NonNull
     public static String getDefaultPath() {
         String defaultPath = CrashReporter.getContext().getExternalFilesDir(null).getAbsolutePath()
                 + File.separator + Constants.CRASH_REPORT_DIR;

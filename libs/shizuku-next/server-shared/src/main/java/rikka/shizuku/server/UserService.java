@@ -10,6 +10,7 @@ import android.os.UserHandle;
 import android.util.Log;
 import android.util.Pair;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.lang.reflect.Constructor;
@@ -25,7 +26,7 @@ public class UserService {
     }
 
     @Nullable
-    public static Pair<IBinder, String> create(String[] args) {
+    public static Pair<IBinder, String> create(@NonNull String[] args) {
         String name = null;
         String token = null;
         String pkg = null;

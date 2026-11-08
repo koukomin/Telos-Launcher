@@ -4,6 +4,8 @@ package com.balsikandar.crashreporter.utils;
  * Created by bali on 02/08/17.
  */
 
+import androidx.annotation.NonNull;
+
 /**
  * Represents an error condition specific to the Crash Reporter for Android.
  */
@@ -32,7 +34,7 @@ public class CrashReporterException extends RuntimeException {
      * @param format the format string (see {@link java.util.Formatter#format})
      * @param args   the list of arguments passed to the formatter.
      */
-    public CrashReporterException(String format, Object... args) {
+    public CrashReporterException(@NonNull String format, Object... args) {
         this(String.format(format, args));
     }
 
@@ -55,6 +57,7 @@ public class CrashReporterException extends RuntimeException {
         super(throwable);
     }
 
+    @NonNull
     @Override
     public String toString() {
         // Throwable.toString() returns "CrashReporterException:{message}". Returning just "{message}"

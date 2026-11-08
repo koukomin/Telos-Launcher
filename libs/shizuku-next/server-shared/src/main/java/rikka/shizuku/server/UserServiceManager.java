@@ -20,6 +20,9 @@ import android.os.Parcel;
 import android.text.format.DateUtils;
 import android.util.ArrayMap;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -47,6 +50,7 @@ public abstract class UserServiceManager {
     public UserServiceManager() {
     }
 
+    @NonNull
     public PackageInfo ensureCallingPackageForUserService(String packageName, int appId, int userId) {
         @SuppressLint("UnsafeOptInUsageError")
         PackageInfo packageInfo = PackageManagerApis.getPackageInfoNoThrow(packageName, 0x00002000 /*PackageManager.MATCH_UNINSTALLED_PACKAGES*/, userId);
@@ -60,7 +64,7 @@ public abstract class UserServiceManager {
         return packageInfo;
     }
 
-    public int removeUserService(IShizukuServiceConnection conn, Bundle options) {
+    public int removeUserService(IShizukuServiceConnection conn, @NonNull Bundle options) {
         ComponentName componentName = Objects.requireNonNull(options.getParcelable(USER_SERVICE_ARG_COMPONENT), "component is null");
 
         int uid = Binder.getCallingUid();
@@ -92,14 +96,14 @@ public abstract class UserServiceManager {
         return 0;
     }
 
-    private void removeUserServiceLocked(UserServiceRecord record) {
+    private void removeUserServiceLocked(@NonNull UserServiceRecord record) {
         if (userServiceRecords.values().remove(record)) {
             record.destroy();
             onUserServiceRecordRemoved(record);
         }
     }
 
-    public int addUserService(IShizukuServiceConnection conn, Bundle options, int callingApiVersion) {
+    public int addUserService(IShizukuServiceConnection conn, @NonNull Bundle options, int callingApiVersion) {
         Objects.requireNonNull(conn, "connection is null");
         Objects.requireNonNull(options, "options is null");
 
@@ -163,12 +167,14 @@ public abstract class UserServiceManager {
         }
     }
 
+    @Nullable
     private UserServiceRecord getUserServiceRecordLocked(String key) {
         return userServiceRecords.get(key);
     }
 
+    @NonNull
     private UserServiceRecord createUserServiceRecordIfNeededLocked(
-            UserServiceRecord record, String key, int versionCode, boolean daemon, PackageInfo packageInfo) {
+            @Nullable UserServiceRecord record, String key, int versionCode, boolean daemon, @NonNull PackageInfo packageInfo) {
 
         if (record != null) {
             if (record.versionCode != versionCode) {
@@ -267,7 +273,7 @@ public abstract class UserServiceManager {
         record.setBinder(binder);
     }
 
-    private void destroyOrphanBinder(IBinder binder) {
+    private void destroyOrphanBinder(@Nullable IBinder binder) {
         if (binder == null || !binder.pingBinder()) {
             return;
         }
@@ -285,7 +291,7 @@ public abstract class UserServiceManager {
         }
     }
 
-    public void attachUserService(IBinder binder, Bundle options) {
+    public void attachUserService(IBinder binder, @NonNull Bundle options) {
         Objects.requireNonNull(binder, "binder is null");
         String token = Objects.requireNonNull(options.getString(ShizukuApiConstants.USER_SERVICE_ARG_TOKEN), "token is null");
 

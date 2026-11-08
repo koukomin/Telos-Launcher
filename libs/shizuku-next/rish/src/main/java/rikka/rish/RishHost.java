@@ -3,13 +3,15 @@ package rikka.rish;
 import android.os.ParcelFileDescriptor;
 import android.util.Log;
 
+import androidx.annotation.Nullable;
+
 public class RishHost {
 
     private static final String TAG = "RishHost";
 
     // libcore/ojluni/src/main/java/java/lang/ProcessImpl.java
 
-    private static byte[] createCBytesForStringArray(String[] array) {
+    private static byte[] createCBytesForStringArray(@Nullable String[] array) {
         if (array == null) {
             return null;
         }
@@ -30,7 +32,7 @@ public class RishHost {
         return block;
     }
 
-    private static byte[] createCBytesForString(String s) {
+    private static byte[] createCBytesForString(@Nullable String s) {
         if (s == null) {
             return null;
         }
@@ -44,7 +46,7 @@ public class RishHost {
         return result;
     }
 
-    private static int detachFd(ParcelFileDescriptor pfd) {
+    private static int detachFd(@Nullable ParcelFileDescriptor pfd) {
         if (pfd == null) {
             return -1;
         }

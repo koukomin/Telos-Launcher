@@ -42,6 +42,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.annotation)
     implementation(libs.bundles.kotlin)
     implementation(libs.jackson.core)
     implementation(libs.jackson.dataformat.yaml)

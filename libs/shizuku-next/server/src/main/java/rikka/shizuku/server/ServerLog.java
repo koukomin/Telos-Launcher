@@ -4,6 +4,9 @@ import android.os.Process;
 import android.os.SystemClock;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.text.SimpleDateFormat;
@@ -71,7 +74,7 @@ public class ServerLog {
      * so such a server left no account of itself anywhere. The file is tried again at the next
      * line rather than given up on, since the same server can reach it a minute later.
      */
-    public static void mark(String message) {
+    public static void mark(@NonNull String message) {
         Log.i(TAG, message);
 
         try {
@@ -101,6 +104,7 @@ public class ServerLog {
      * is locked until the first unlock) is not a decision, and remembering it as one left a server
      * started in that window without a file for the rest of its life.
      */
+    @Nullable
     private static synchronized File target() {
         if (file != null) {
             return file;

@@ -1,7 +1,11 @@
 package com.balsikandar.crashreporter.utils;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 public class CrashReporterExceptionHandler implements Thread.UncaughtExceptionHandler {
 
+    @Nullable
     private Thread.UncaughtExceptionHandler exceptionHandler;
 
     public CrashReporterExceptionHandler() {
@@ -9,7 +13,7 @@ public class CrashReporterExceptionHandler implements Thread.UncaughtExceptionHa
     }
 
     @Override
-    public void uncaughtException(Thread thread, Throwable throwable) {
+    public void uncaughtException(@NonNull Thread thread, @NonNull Throwable throwable) {
 
         boolean enabled = true;
         try {

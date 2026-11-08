@@ -4,6 +4,9 @@ import android.annotation.SuppressLint;
 import android.system.ErrnoException;
 import android.system.Os;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import java.io.FileDescriptor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -25,6 +28,7 @@ class FileDescriptors {
         }
     }
 
+    @NonNull
     public static FileDescriptor fromFd(int fd) {
         FileDescriptor fileDescriptor = new FileDescriptor();
         try {
@@ -43,7 +47,7 @@ class FileDescriptors {
         }
     }
 
-    public static void closeSilently(FileDescriptor fileDescriptor) {
+    public static void closeSilently(@Nullable FileDescriptor fileDescriptor) {
         if (fileDescriptor == null) {
             return;
         }

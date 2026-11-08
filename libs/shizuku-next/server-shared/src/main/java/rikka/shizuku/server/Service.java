@@ -38,6 +38,7 @@ public abstract class Service<
     private final UserServiceMgr userServiceManager;
     private final ConfigMgr configManager;
     private final ClientMgr clientManager;
+    @NonNull
     private final RishService rishService;
 
     protected static final Logger LOGGER = new Logger("Service");
@@ -133,7 +134,7 @@ public abstract class Service<
         }
     }
 
-    public final void transactRemote(Parcel data, Parcel reply, int flags) throws RemoteException {
+    public final void transactRemote(@NonNull Parcel data, Parcel reply, int flags) throws RemoteException {
         enforceCallingPermission("transactRemote");
 
         IBinder targetBinder = data.readStrongBinder();
@@ -196,6 +197,7 @@ public abstract class Service<
         }
     }
 
+    @NonNull
     @Override
     public final String getSystemProperty(String name, String defaultValue) {
         enforceCallingPermission("getSystemProperty");
@@ -219,7 +221,7 @@ public abstract class Service<
     }
 
     @Override
-    public final int removeUserService(IShizukuServiceConnection conn, Bundle options) {
+    public final int removeUserService(IShizukuServiceConnection conn, @NonNull Bundle options) {
         enforceCallingPermission("removeUserService");
 
         return userServiceManager.removeUserService(conn, options);
@@ -243,7 +245,7 @@ public abstract class Service<
     }
 
     @Override
-    public void attachUserService(IBinder binder, Bundle options) {
+    public void attachUserService(IBinder binder, @NonNull Bundle options) {
         userServiceManager.attachUserService(binder, options);
     }
 
@@ -303,8 +305,9 @@ public abstract class Service<
         return entry != null && entry.isDenied();
     }
 
+    @NonNull
     @Override
-    public final IRemoteProcess newProcess(String[] cmd, String[] env, String dir) {
+    public final IRemoteProcess newProcess(String[] cmd, String[] env, @Nullable String dir) {
         enforceCallingPermission("newProcess");
 
         LOGGER.d("newProcess: uid=%d, cmd=%s, env=%s, dir=%s", Binder.getCallingUid(), Arrays.toString(cmd), Arrays.toString(env), dir);
@@ -324,7 +327,7 @@ public abstract class Service<
 
     @CallSuper
     @Override
-    public boolean onTransact(int code, Parcel data, Parcel reply, int flags) throws RemoteException {
+    public boolean onTransact(int code, @NonNull Parcel data, @NonNull Parcel reply, int flags) throws RemoteException {
         if (code == ShizukuApiConstants.BINDER_TRANSACTION_transact) {
             data.enforceInterface(ShizukuApiConstants.BINDER_DESCRIPTOR);
             transactRemote(data, reply, flags);

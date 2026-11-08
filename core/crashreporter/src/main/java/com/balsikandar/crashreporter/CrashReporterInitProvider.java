@@ -11,6 +11,8 @@ import android.content.pm.ProviderInfo;
 import android.database.Cursor;
 import android.net.Uri;
 
+import androidx.annotation.NonNull;
+
 /**
  * Created by amitshekhar on 16/11/16.
  */
@@ -53,7 +55,7 @@ public class CrashReporterInitProvider extends ContentProvider {
     }
 
     @Override
-    public void attachInfo(Context context, ProviderInfo providerInfo) {
+    public void attachInfo(Context context, @NonNull ProviderInfo providerInfo) {
         if (providerInfo == null) {
             throw new NullPointerException("CrashReporterInitProvider ProviderInfo cannot be null.");
         }

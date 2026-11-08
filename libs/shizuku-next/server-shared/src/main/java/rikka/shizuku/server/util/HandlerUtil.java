@@ -1,7 +1,8 @@
 package rikka.shizuku.server.util;
 
 import android.os.Handler;
-import android.os.Looper;
+
+import androidx.annotation.NonNull;
 
 import java.util.Objects;
 
@@ -13,6 +14,7 @@ public class HandlerUtil {
         HandlerUtil.mainHandler = mainHandler;
     }
 
+    @NonNull
     public static Handler getMainHandler() {
         Objects.requireNonNull(mainHandler, "Please call setMainHandler first");
         return HandlerUtil.mainHandler;

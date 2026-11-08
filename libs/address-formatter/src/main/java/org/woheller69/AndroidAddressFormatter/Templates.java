@@ -1,5 +1,7 @@
 package org.woheller69.AndroidAddressFormatter;
 
+import androidx.annotation.Nullable;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
@@ -19,6 +21,7 @@ enum Templates {
     ObjectMapper jsonWriter = new ObjectMapper();
   }
 
+  @Nullable
   private final JsonNode data;
 
   Templates(String fileName) {
@@ -29,6 +32,7 @@ enum Templates {
     return this.data;
   }
 
+  @Nullable
   synchronized private static JsonNode setData(String fileName) {
     JsonNode node = null;
     try {

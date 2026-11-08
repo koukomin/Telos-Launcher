@@ -1,5 +1,7 @@
 package rikka.shizuku.server;
 
+import androidx.annotation.NonNull;
+
 public class ServerConstants {
 
     public static final int MANAGER_APP_NOT_FOUND = 50;
@@ -21,6 +23,7 @@ public class ServerConstants {
      * from, see [ShizukuService.MANAGER_APPLICATION_ID] - so the request is built from that rather
      * than from moe.shizuku.server.BuildConfig.MANAGER_APPLICATION_ID.
      */
+    @NonNull
     public static String requestPermissionAction(String managerPackage) {
         return managerPackage + ".intent.action.REQUEST_PERMISSION";
     }

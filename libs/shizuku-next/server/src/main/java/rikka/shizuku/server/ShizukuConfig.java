@@ -14,6 +14,7 @@ public class ShizukuConfig {
     @SerializedName("version")
     public int version = LATEST_VERSION;
 
+    @NonNull
     @SerializedName("packages")
     public List<PackageEntry> packages = new ArrayList<>();
 

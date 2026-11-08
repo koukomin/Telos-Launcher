@@ -3,8 +3,9 @@ package rikka.shizuku.server;
 import android.content.pm.PackageInfo;
 import android.util.ArrayMap;
 
+import androidx.annotation.NonNull;
+
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -12,7 +13,6 @@ import java.util.Map;
 import moe.shizuku.starter.ServiceStarter;
 import rikka.shizuku.server.util.Android17Compat;
 import rikka.shizuku.server.util.UsersCompat;
-import rikka.shizuku.server.util.UserHandleCompat;
 
 public class ShizukuUserServiceManager extends UserServiceManager {
 
@@ -23,6 +23,7 @@ public class ShizukuUserServiceManager extends UserServiceManager {
         super();
     }
 
+    @NonNull
     @Override
     public String getUserServiceStartCmd(
             UserServiceRecord record, String key, String token, String packageName,
@@ -40,7 +41,7 @@ public class ShizukuUserServiceManager extends UserServiceManager {
     }
 
     @Override
-    public void onUserServiceRecordCreated(UserServiceRecord record, PackageInfo packageInfo) {
+    public void onUserServiceRecordCreated(@NonNull UserServiceRecord record, @NonNull PackageInfo packageInfo) {
         super.onUserServiceRecordCreated(record, packageInfo);
 
         String packageName = packageInfo.packageName;

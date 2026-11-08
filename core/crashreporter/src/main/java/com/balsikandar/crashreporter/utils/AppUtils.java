@@ -12,12 +12,15 @@ import java.util.TimeZone;
 
 import static com.balsikandar.crashreporter.utils.AppUtilsKt.getAppSignature;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 /**
  * Created by bali on 12/08/17.
  */
 
 public class AppUtils {
-    private static String getCurrentLauncherApp(Context context) {
+    private static String getCurrentLauncherApp(@NonNull Context context) {
         String str = "";
         PackageManager localPackageManager = context.getPackageManager();
         Intent intent = new Intent("android.intent.action.MAIN");
@@ -34,7 +37,8 @@ public class AppUtils {
         return str;
     }
 
-    public static String getDeviceDetails(Context context) {
+    @NonNull
+    public static String getDeviceDetails(@NonNull Context context) {
 
         return "APP.VERSION : " + getAppVersion(context)
                 + "\nAPP.VERSIONCODE : " + getAppVersionCode(context)
@@ -67,7 +71,7 @@ public class AppUtils {
         return tz.getID();
     }
 
-    private static int getAppVersionCode(Context context) {
+    private static int getAppVersionCode(@NonNull Context context) {
         try {
             PackageInfo packageInfo = context.getPackageManager()
                     .getPackageInfo(context.getPackageName(), 0);
@@ -77,7 +81,8 @@ public class AppUtils {
         }
     }
 
-    private static String getAppVersion(Context context) {
+    @Nullable
+    private static String getAppVersion(@NonNull Context context) {
         try {
             PackageInfo packageInfo = context.getPackageManager()
                     .getPackageInfo(context.getPackageName(), 0);

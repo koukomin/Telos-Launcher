@@ -3,6 +3,9 @@ package rikka.shizuku.server;
 import android.os.IBinder;
 import android.os.RemoteException;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -25,6 +28,7 @@ public class ClientManager<ConfigMgr extends ConfigManager> {
         return configManager;
     }
 
+    @NonNull
     public List<ClientRecord> findClients(int uid) {
         synchronized (this) {
             List<ClientRecord> res = new ArrayList<>();
@@ -37,6 +41,7 @@ public class ClientManager<ConfigMgr extends ConfigManager> {
         }
     }
 
+    @Nullable
     public ClientRecord findClient(int uid, int pid) {
         for (ClientRecord clientRecord : clientRecords) {
             if (clientRecord.pid == pid && clientRecord.uid == uid) {
@@ -50,6 +55,7 @@ public class ClientManager<ConfigMgr extends ConfigManager> {
         return requireClient(callingUid, callingPid, false);
     }
 
+    @NonNull
     public ClientRecord requireClient(int callingUid, int callingPid, boolean requiresPermission) {
         ClientRecord clientRecord = findClient(callingUid, callingPid);
         if (clientRecord == null) {
@@ -62,7 +68,8 @@ public class ClientManager<ConfigMgr extends ConfigManager> {
         return clientRecord;
     }
 
-    public ClientRecord addClient(int uid, int pid, IShizukuApplication client, String packageName, int apiVersion) {
+    @Nullable
+    public ClientRecord addClient(int uid, int pid, @NonNull IShizukuApplication client, String packageName, int apiVersion) {
         ClientRecord clientRecord = new ClientRecord(uid, pid, client, packageName, apiVersion);
 
         ConfigPackageEntry entry = configManager.find(uid);

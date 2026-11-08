@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.util.AtomicFile;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.google.gson.Gson;
@@ -52,6 +53,7 @@ public class ShizukuConfigManager extends ConfigManager {
     private static final File FILE = new File("/data/user_de/0/com.android.shell/shizuku.json");
     private static final AtomicFile ATOMIC_FILE = new AtomicFile(FILE);
 
+    @NonNull
     public static ShizukuConfig load() {
         FileInputStream stream;
         try {
@@ -108,6 +110,7 @@ public class ShizukuConfigManager extends ConfigManager {
         }
     };
 
+    @NonNull
     private final ShizukuConfig config;
 
     /**
@@ -115,6 +118,7 @@ public class ShizukuConfigManager extends ConfigManager {
      * same packages next ([takeInstalledSnapshot]): the server listed them twice in a row at
      * start-up, the second time to find the apps to give the binder to.
      */
+    @Nullable
     private Map<Integer, List<PackageInfo>> installedSnapshot;
 
     /** Whether user 0 had not unlocked when the packages were listed, so the list is the partial one. */
@@ -309,7 +313,7 @@ public class ShizukuConfigManager extends ConfigManager {
      * [UidPackages] is handed to decide, and it hands back null when neither of them spoke.
      */
     @Nullable
-    private static Set<String> packagesStillThere(int uid, Map<Integer, List<PackageInfo>> installed) {
+    private static Set<String> packagesStillThere(int uid, @NonNull Map<Integer, List<PackageInfo>> installed) {
         String[] lookup = null;
         try {
             lookup = PackageManagerApis.getPackagesForUid(uid);
@@ -347,6 +351,7 @@ public class ShizukuConfigManager extends ConfigManager {
         HandlerKt.getWorkerHandler().postDelayed(mWriteRunner, WRITE_DELAY);
     }
 
+    @Nullable
     private ShizukuConfig.PackageEntry findLocked(int uid) {
         for (ShizukuConfig.PackageEntry entry : config.packages) {
             if (uid == entry.uid) {
@@ -363,7 +368,7 @@ public class ShizukuConfigManager extends ConfigManager {
         }
     }
 
-    private void updateLocked(int uid, List<String> packages, int mask, int values) {
+    private void updateLocked(int uid, @Nullable List<String> packages, int mask, int values) {
         ShizukuConfig.PackageEntry entry = findLocked(uid);
         if (entry == null) {
             entry = new ShizukuConfig.PackageEntry(uid, mask & values);

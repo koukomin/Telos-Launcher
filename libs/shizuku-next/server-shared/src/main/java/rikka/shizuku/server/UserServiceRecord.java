@@ -7,6 +7,8 @@ import android.os.IBinder;
 import android.os.Parcel;
 import android.os.RemoteCallbackList;
 
+import androidx.annotation.NonNull;
+
 import java.util.UUID;
 
 import moe.shizuku.server.IShizukuServiceConnection;
@@ -32,6 +34,7 @@ public abstract class UserServiceRecord {
 
     protected static final Logger LOGGER = new Logger("UserServiceRecord");
 
+    @NonNull
     private final IBinder.DeathRecipient deathRecipient;
     public final int versionCode;
     public String token;
@@ -72,7 +75,7 @@ public abstract class UserServiceRecord {
         this.daemon = daemon;
     }
 
-    public void setBinder(IBinder binder) {
+    public void setBinder(@NonNull IBinder binder) {
         LOGGER.v("Binder received for service record %s", token);
 
         HandlerUtil.getMainHandler().removeCallbacks(startTimeoutCallback);

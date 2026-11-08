@@ -5,6 +5,9 @@ import android.os.IBinder;
 import android.os.ServiceManager;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -48,6 +51,7 @@ public final class UsersCompat {
     private static final Object[] THREE_BOOLEANS = {true, true, true};
     private static final Object[] ONE_BOOLEAN = {true};
 
+    @Nullable
     private static volatile Object sUserManager;
     private static volatile boolean sUserManagerFailed;
 
@@ -80,6 +84,7 @@ public final class UsersCompat {
      * written against: this never throws, and it never returns an empty list, because a caller
      * iterating users would then list nothing at all.
      */
+    @NonNull
     public static Collection<Integer> getUserIdsNoThrow() {
         Object um = userManager();
         if (um == null) {
@@ -124,6 +129,7 @@ public final class UsersCompat {
      * before the unlock (the manager does that, to have the server up when the PIN is typed) must
      * know which of the two it is looking at.
      */
+    @Nullable
     public static Boolean isUserUnlocked(int userId) {
         Object um = userManager();
         if (um == null) {
@@ -154,7 +160,8 @@ public final class UsersCompat {
     }
 
     /** Every overload of [name], whatever its parameters: the shapes are tried, not guessed. */
-    private static List<Method> overloads(Object target, String name) {
+    @NonNull
+    private static List<Method> overloads(@NonNull Object target, @NonNull String name) {
         List<Method> found = new ArrayList<>();
         for (Method method : target.getClass().getMethods()) {
             if (name.equals(method.getName())) {
@@ -172,6 +179,7 @@ public final class UsersCompat {
      */
     private static final class Invocation {
         boolean ran;
+        @Nullable
         Object result;
     }
 
@@ -183,7 +191,8 @@ public final class UsersCompat {
      * call reached the platform and the platform refused it, which is an answer rather than a
      * wrong guess, so it is not retried as one.
      */
-    private static Invocation invokeFirst(Method method, Object target, Object[]... candidates) {
+    @NonNull
+    private static Invocation invokeFirst(@NonNull Method method, Object target, @NonNull Object[]... candidates) {
         Invocation outcome = new Invocation();
 
         for (Object[] args : candidates) {

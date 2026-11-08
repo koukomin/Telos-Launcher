@@ -1,7 +1,9 @@
 package com.balsikandar.crashreporter;
 
 import android.content.Context;
-import android.content.Intent;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.balsikandar.crashreporter.utils.CrashReporterNotInitializedException;
 import com.balsikandar.crashreporter.utils.CrashReporterExceptionHandler;
@@ -62,6 +64,7 @@ public class CrashReporter {
 
     private static final String PREFS = "telos_crash_reporter";
     private static final String KEY_ENABLED = "enabled";
+    @Nullable
     private static volatile Boolean enabledCache = null;
 
     /**
@@ -83,7 +86,7 @@ public class CrashReporter {
         return value;
     }
 
-    public static void setEnabled(Context context, boolean enabled) {
+    public static void setEnabled(@NonNull Context context, boolean enabled) {
         enabledCache = enabled;
         try {
             context.getApplicationContext().getSharedPreferences(PREFS, Context.MODE_PRIVATE)

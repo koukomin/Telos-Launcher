@@ -22,7 +22,7 @@ public abstract class RishService {
     private static final boolean IS_ROOT = Os.getuid() == 0;
 
     private void createHost(
-            String[] args, String[] env, String dir,
+            String[] args, @NonNull String[] env, String dir,
             byte tty,
             ParcelFileDescriptor stdin, ParcelFileDescriptor stdout, ParcelFileDescriptor stderr) {
 

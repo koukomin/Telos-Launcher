@@ -4,6 +4,8 @@ import android.os.IBinder;
 import android.os.ParcelFileDescriptor;
 import android.os.RemoteException;
 
+import androidx.annotation.Nullable;
+
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
@@ -19,7 +21,7 @@ public class RemoteProcessHolder extends IRemoteProcess.Stub {
     private ParcelFileDescriptor in;
     private ParcelFileDescriptor out;
 
-    public RemoteProcessHolder(Process process, IBinder token) {
+    public RemoteProcessHolder(Process process, @Nullable IBinder token) {
         this.process = process;
 
         if (token != null) {

@@ -1,13 +1,14 @@
 package moe.shizuku.starter;
 
 import android.content.IContentProvider;
-import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Looper;
 import android.util.Log;
 import android.util.Pair;
+
+import androidx.annotation.NonNull;
 
 import java.util.Locale;
 
@@ -28,6 +29,7 @@ public class ServiceStarter {
     private static final int PROVIDER_ATTEMPTS = 5;
     private static final long PROVIDER_RETRY_DELAY_MS = 200L;
 
+    @NonNull
     public static final String DEBUG_ARGS;
 
     static {
@@ -55,6 +57,7 @@ public class ServiceStarter {
     @SuppressWarnings("FieldCanBeLocal")
     private static IBinder shizukuBinder;
 
+    @NonNull
     public static String commandForUserService(String appProcess, String managerApkPath, String managerPackageName, String token, String packageName, String classname, String processNameSuffix, int callingUid, boolean debug) {
         String processName = String.format("%s:%s", packageName, processNameSuffix);
         return String.format(Locale.ENGLISH, USER_SERVICE_CMD_FORMAT,
@@ -63,9 +66,10 @@ public class ServiceStarter {
                 managerPackageName, token, packageName, classname, callingUid, debug ? (" " + "--debug-name=" + processName) : "");
     }
 
+    @NonNull
     private static String managerPackageName = BuildConfig.MANAGER_APPLICATION_ID;
 
-    public static void main(String[] args) {
+    public static void main(@NonNull String[] args) {
         if (Looper.getMainLooper() == null) {
             Looper.prepareMainLooper();
         }

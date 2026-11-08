@@ -1,5 +1,8 @@
 package org.woheller69.AndroidAddressFormatter;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
@@ -62,7 +65,7 @@ public class OsmAddressFormatter {
     return format(json, null);
   }
 
-  public String format(String json, String fallbackCountryCode) throws IOException {
+  public String format(String json, @Nullable String fallbackCountryCode) throws IOException {
     TypeFactory factory = TypeFactory.defaultInstance();
     MapType type = factory.constructMapType(HashMap.class, String.class, String.class);
     Map<String, Object> components = null;
@@ -93,7 +96,8 @@ public class OsmAddressFormatter {
     return renderTemplate(template, components);
   }
 
-  Map<String, Object> normalizeFields(Map<String, Object> components) {
+  @NonNull
+  Map<String, Object> normalizeFields(@NonNull Map<String, Object> components) {
     Map<String, Object> normalizedComponents = new HashMap<>();
     for (Map.Entry<String, Object> entry : components.entrySet()) {
       String field = entry.getKey();
@@ -106,15 +110,17 @@ public class OsmAddressFormatter {
     return normalizedComponents;
   }
 
-  private String lowerCamelToUnderscore(String input) {
+  @NonNull
+  private String lowerCamelToUnderscore(@NonNull String input) {
     Pattern pattern = Pattern.compile("([a-z])([A-Z])");
     Matcher matcher = pattern.matcher(input);
     String result = matcher.replaceAll("$1_$2");
     return result.toLowerCase();
   }
 
-  Map<String, Object> determineCountryCode(Map<String, Object> components,
-    String fallbackCountryCode) {
+  @NonNull
+  Map<String, Object> determineCountryCode(@NonNull Map<String, Object> components,
+                                           @Nullable String fallbackCountryCode) {
     String countryCode;
 
     if (components.get("country_code") != null) {
@@ -195,7 +201,8 @@ public class OsmAddressFormatter {
     return components;
   }
 
-  Map<String, Object> cleanupInput(Map<String, Object> components, JsonNode replacements) {
+  @NonNull
+  Map<String, Object> cleanupInput(@NonNull Map<String, Object> components, @Nullable JsonNode replacements) {
     Object country = components.get("country");
     Object state = components.get("state");
 
@@ -317,7 +324,8 @@ public class OsmAddressFormatter {
     }).collect(Collectors.toMap(Entry::getKey, Entry::getValue));
   }
 
-  Map<String, Object> applyAliases(Map<String, Object> components) {
+  @NonNull
+  Map<String, Object> applyAliases(@NonNull Map<String, Object> components) {
     Map<String, Object> aliasedComponents = new HashMap<>();
     components.forEach((key, value) -> {
       String newKey = key;
@@ -337,7 +345,7 @@ public class OsmAddressFormatter {
     return aliasedComponents;
   }
 
-  JsonNode findTemplate(Map<String, Object> components) {
+  JsonNode findTemplate(@NonNull Map<String, Object> components) {
     JsonNode template;
     if (Templates.WORLDWIDE.getData().has(components.get("country_code").toString())) {
       template = Templates.WORLDWIDE.getData().get(components.get("country_code").toString());
@@ -348,7 +356,7 @@ public class OsmAddressFormatter {
     return template;
   }
 
-  JsonNode chooseTemplateText(JsonNode template, Map<String, Object> components) {
+  JsonNode chooseTemplateText(@NonNull JsonNode template, @NonNull Map<String, Object> components) {
     JsonNode selected;
     if (template.has("address_template")) {
       if (Templates.WORLDWIDE.getData().has(template.get("address_template").asText())) {
@@ -378,7 +386,8 @@ public class OsmAddressFormatter {
     return selected;
   }
 
-  String getStateCode(String state, String countryCode) {
+  @Nullable
+  String getStateCode(@NonNull String state, String countryCode) {
     if (!Templates.STATE_CODES.getData().has(countryCode)) {
       return null;
     }
@@ -400,7 +409,8 @@ public class OsmAddressFormatter {
     }).findFirst().orElse(null);
   }
 
-  String getCountyCode(String county, String countryCode) {
+  @Nullable
+  String getCountyCode(@NonNull String county, String countryCode) {
     if (!Templates.COUNTY_CODES.getData().has(countryCode)) {
       return null;
     }
@@ -419,7 +429,8 @@ public class OsmAddressFormatter {
     return countyCode.map(JsonNode::asText).orElse(null);
   }
 
-  String renderTemplate(JsonNode template, Map<String, Object> components) {
+  @NonNull
+  String renderTemplate(@NonNull JsonNode template, @NonNull Map<String, Object> components) {
     Map<String, Object> callback = new HashMap<>();
     callback.put("first", (Function<String, String>) s -> {
       String[] splitted = s.split("\\s*\\|\\|\\s*");
@@ -462,7 +473,7 @@ public class OsmAddressFormatter {
     return deduped;
   }
 
-  String dedupe(String rendered) {
+  String dedupe(@NonNull String rendered) {
      return Arrays.stream(rendered.split("\n"))
         .map(s -> Arrays.stream(s.trim().split(", "))
             .map(String::trim).distinct().collect(Collectors.joining(", ")))
@@ -470,6 +481,7 @@ public class OsmAddressFormatter {
         .collect(Collectors.joining("\n"));
   }
 
+  @NonNull
   static List<String> getKnownComponents() {
     List<String> knownComponents = new ArrayList<>();
     Iterator<JsonNode> fields = Templates.ALIASES.getData().elements();

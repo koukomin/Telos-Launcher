@@ -2,6 +2,9 @@ package com.balsikandar.crashreporter.utils;
 
 import android.text.TextUtils;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -19,7 +22,7 @@ public class FileUtils {
         //this class is not publicly instantiable
     }
 
-    public static boolean delete(String absPath) {
+    public static boolean delete(@NonNull String absPath) {
         if (TextUtils.isEmpty(absPath)) {
             return false;
         }
@@ -28,7 +31,7 @@ public class FileUtils {
         return delete(file);
     }
 
-    public static boolean delete(File file) {
+    public static boolean delete(@NonNull File file) {
         if (!exists(file)) {
             return true;
         }
@@ -48,11 +51,12 @@ public class FileUtils {
         return result;
     }
 
-    public static boolean exists(File file) {
+    public static boolean exists(@Nullable File file) {
         return file != null && file.exists();
     }
 
-    public static String cleanPath(String absPath) {
+    @Nullable
+    public static String cleanPath(@NonNull String absPath) {
         if (TextUtils.isEmpty(absPath)) {
             return absPath;
         }
@@ -65,10 +69,11 @@ public class FileUtils {
         return absPath;
     }
 
-    public final static String getParent(File file) {
+    public final static String getParent(@Nullable File file) {
         return file == null ? null : file.getParent();
     }
 
+    @Nullable
     public final static String getParent(String absPath) {
         if (TextUtils.isEmpty(absPath)) {
             return null;
@@ -101,6 +106,7 @@ public class FileUtils {
         return line;
     }
 
+    @NonNull
     public static String readFromFile(File file) {
         StringBuilder crash = new StringBuilder();
         try {

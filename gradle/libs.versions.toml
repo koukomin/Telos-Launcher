@@ -81,6 +81,7 @@ youtubedl = "0.18.1"
 
 # Go network engine of Rethink DNS (MPL-2.0), pinned like Rethink pins it (firestackCommit)
 firestack = "c4a33649be"
+annotation = "1.11.0"
 
 [libraries]
 taglib = { group = "io.github.kyant0", name = "taglib", version.ref = "taglib" }
@@ -215,6 +216,7 @@ shizuku-provider = { group = "dev.rikka.shizuku", name = "provider", version.ref
 shizuku-aidl = { group = "dev.rikka.shizuku", name = "aidl", version.ref = "shizuku" }
 dhizuku-api = { group = "io.github.iamr0s", name = "Dhizuku-API", version.ref = "dhizuku" }
 hiddenapibypass = { group = "org.lsposed.hiddenapibypass", name = "hiddenapibypass", version = "6.2" }
+androidx-annotation = { group = "androidx.annotation", name = "annotation", version.ref = "annotation" }
 
 [bundles]
 kotlin = ["kotlin-stdlib", "kotlinx-coroutines-core", "kotlinx-coroutines-android", "kotlinx-collections-immutable", "kotlinx-serialization-json"]

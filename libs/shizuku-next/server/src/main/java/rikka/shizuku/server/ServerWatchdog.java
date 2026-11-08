@@ -7,6 +7,9 @@ import android.os.ServiceManager;
 import android.os.SystemClock;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import rikka.shizuku.server.util.Logger;
 
 /**
@@ -68,7 +71,9 @@ public final class ServerWatchdog {
 
     private static volatile long lastBeat;
     private static volatile boolean stopped;
+    @Nullable
     private static Handler handler;
+    @Nullable
     private static Thread thread;
 
     private static final Runnable BEAT = new Runnable() {
@@ -90,7 +95,7 @@ public final class ServerWatchdog {
      * Called once, from the constructor that has the looper to watch and the system services
      * already waited for.
      */
-    public static synchronized void start(Handler mainHandler) {
+    public static synchronized void start(@NonNull Handler mainHandler) {
         if (thread != null) {
             return;
         }
@@ -154,6 +159,7 @@ public final class ServerWatchdog {
      * whether the platform still has the service, and a cached proxy is exactly what cannot be
      * trusted here.
      */
+    @NonNull
     private static String deadSystemService() {
         for (String name : REQUIRED_SERVICES) {
             try {
@@ -189,7 +195,7 @@ public final class ServerWatchdog {
     }
 
     /** [ServerLog.mark] over several lines, because it writes one, and this has many. */
-    private static void serverLog(String message) {
+    private static void serverLog(@NonNull String message) {
         for (String line : message.split("\n")) {
             ServerLog.mark(line);
         }
