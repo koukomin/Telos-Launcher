@@ -139,12 +139,8 @@ fun FlashlightScreen() {
         onDispose { activity?.volumeControlStream = previousStream }
     }
 
-    // Lock Orientation to Portrait by Default
-    DisposableEffect(allowLandscape) {
-        val orig = activity?.requestedOrientation ?: ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
-        activity?.requestedOrientation = if (allowLandscape) ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED else ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-        onDispose { activity?.requestedOrientation = orig }
-    }
+    // Don't Lock Orientation - let it naturally rotate
+    // Removed portrait locking to avoid visual glitches in landscape
 
     // Hardware Torch Strength (Dimming) API 33+
     LaunchedEffect(cameraId) {

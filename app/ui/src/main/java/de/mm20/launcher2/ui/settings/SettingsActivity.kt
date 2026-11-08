@@ -931,6 +931,7 @@ open class SettingsActivity : BaseActivity() {
             ROUTE_DOWNLOADS -> de.mm20.launcher2.ui.downloads.DownloadsRoute(
                 initialUrls = intent.getStringArrayListExtra(SettingsDeepLinkContract.EXTRA_DOWNLOAD_URLS).orEmpty(),
             )
+            SettingsDeepLinkContract.ROUTE_TELOS_PAGE -> de.mm20.launcher2.ui.help.HelpDashboardRoute
             // === TELOS_PENDING_REVIEW_END: comms_virtual_apps ===
             ROUTE_CRASH_REPORT if (intent.hasExtra(EXTRA_CRASH_REPORT_PATH)) -> {
                 CrashReportRoute(intent.getStringExtra(EXTRA_CRASH_REPORT_PATH)!!)

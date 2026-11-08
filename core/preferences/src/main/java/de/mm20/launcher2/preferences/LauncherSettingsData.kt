@@ -290,7 +290,7 @@ data class GridGroup(
     val dockBackgroundOpacity: Float = 0.3f,
     val dockBackgroundBlur: Int = 0,
     val dockBackgroundShadow: Int = 0,
-    val drawerFullWidth: Boolean = true,
+    val drawerFullWidth: Boolean = false,
     val drawerBackgroundEnabled: Boolean = true,
     @Serializable(with = ColorIntAsHexSerializer::class)
     val drawerBackgroundColor: Int? = null,

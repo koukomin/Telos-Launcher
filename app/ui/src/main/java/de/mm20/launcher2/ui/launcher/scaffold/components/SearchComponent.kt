@@ -117,8 +117,12 @@ internal class SearchComponent(
                 contentAlignment = Alignment.Center
             ) {
                 val availableWidth = if (drawerFullWidth) maxWidth else minOf(maxWidth, 916.dp)
-                val effectiveGrid = if (drawerFullWidth && availableWidth >= 600.dp && gridSettings.adaptiveColumns) {
-                    gridSettings.copy(columnCount = maxOf(gridSettings.columnCount, (availableWidth.value / maxOf(96f, gridSettings.iconSize + 40f)).toInt()))
+                val isTablet = availableWidth >= 600.dp
+                val effectiveGrid = if (isTablet) {
+                    val targetCols = if (gridSettings.adaptiveColumns) {
+                        maxOf(gridSettings.columnCount, (availableWidth.value / maxOf(96f, gridSettings.iconSize + 40f)).toInt())
+                    } else 6 // Default tablet mode columns
+                    gridSettings.copy(columnCount = targetCols)
                 } else gridSettings
                 CompositionLocalProvider(LocalGridSettings provides effectiveGrid) {
                 SearchColumn(
