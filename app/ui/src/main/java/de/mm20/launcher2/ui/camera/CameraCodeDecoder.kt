@@ -9,7 +9,11 @@ import com.google.zxing.PlanarYUVLuminanceSource
 import com.google.zxing.common.HybridBinarizer
 import java.nio.ByteBuffer
 
-internal data class CameraCode(val text: String, val format: BarcodeFormat)
+internal data class CameraCode(
+    val text: String,
+    val format: BarcodeFormat,
+    val points: List<Pair<Float, Float>> = emptyList()
+)
 
 /** One analyzer-thread instance. Samples only luminance, including padded/interleaved camera planes. */
 internal class CameraCodeDecoder {
@@ -36,7 +40,8 @@ internal class CameraCodeDecoder {
             for (candidate in listOf(source, source.invert())) {
                 try {
                     val result = reader.decodeWithState(BinaryBitmap(HybridBinarizer(candidate)))
-                    return result.text?.takeIf { it.isNotBlank() && it.length <= 32_768 }?.let { CameraCode(it, result.barcodeFormat) }
+                    val pts = result.resultPoints?.map { p -> Pair(p.x * step, p.y * step) } ?: emptyList()
+                    return result.text?.takeIf { it.isNotBlank() && it.length <= 32_768 }?.let { CameraCode(it, result.barcodeFormat, pts) }
                 } catch (_: NotFoundException) { /* No readable code in this orientation. */ }
                 finally { reader.reset() }
             }

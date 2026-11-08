@@ -257,6 +257,14 @@ fun CameraScreen() {
                     if (histogram && bins.isNotEmpty() && mode == NativeCamera.MODE_PHOTO && !discreet) Canvas(Modifier.align(Alignment.TopStart).padding(12.dp).size(128.dp, 56.dp).background(Color.Black.copy(alpha = .5f))) {
                         bins.forEachIndexed { index, height -> drawRect(Color.White.copy(alpha = .8f), Offset(index * size.width / bins.size, size.height * (1f - height)), Size(size.width / bins.size, size.height * height)) }
                     }
+                    if (detectedCode != null && !discreet) Canvas(Modifier.fillMaxSize()) {
+                        drawRect(
+                            color = Color(0xFF00FF66),
+                            topLeft = Offset(size.width * 0.15f, size.height * 0.25f),
+                            size = Size(size.width * 0.7f, size.height * 0.5f),
+                            style = androidx.compose.ui.graphics.drawscope.Stroke(width = 4.dp.toPx())
+                        )
+                    }
                     if (countdown > 0) Text(countdown.toString(), Modifier.align(Alignment.Center), style = MaterialTheme.typography.displayLarge, color = Color.White)
                     message?.let { Text(it, Modifier.align(Alignment.TopCenter).background(Color.Black.copy(alpha = .8f)).padding(12.dp), color = Color.White) }
                     if (!ready) CircularProgressIndicator(Modifier.align(Alignment.Center))
