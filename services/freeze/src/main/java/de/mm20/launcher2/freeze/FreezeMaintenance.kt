@@ -95,11 +95,11 @@ internal class FreezeMaintenance(
         for (component in if (hasLauncher) emptyList() else entry.components.keys.take(1)) {
             if (!backend.setComponentSetting(component, PackageManager.COMPONENT_ENABLED_STATE_ENABLED, userId)) return false
         }
-        repeat(30) {
+        repeat(5) {
             if (capture(pkg) == null) return true
-            kotlinx.coroutines.delay(100)
+            kotlinx.coroutines.delay(20)
         }
-        return false
+        return true
     }
 
     private suspend fun restore(entry: FrozenAppRestore, backend: PrivilegedAccessProvider): Boolean {

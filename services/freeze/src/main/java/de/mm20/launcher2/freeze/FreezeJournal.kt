@@ -20,7 +20,7 @@ internal suspend fun <T> launchWhenReady(
     attempts: Int = 40,
     find: suspend () -> T?,
     launch: (T) -> Boolean,
-    wait: suspend () -> Unit = { kotlinx.coroutines.delay(125) },
+    wait: suspend () -> Unit = { kotlinx.coroutines.delay(25) },
 ): Boolean {
     require(attempts in 1..100)
     repeat(attempts) { index ->
