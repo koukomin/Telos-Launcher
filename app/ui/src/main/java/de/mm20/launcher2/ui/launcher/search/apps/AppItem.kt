@@ -96,7 +96,7 @@ fun AppItem(
     val advancedFeaturesEnabled by viewModel.advancedFeaturesEnabled.collectAsStateWithLifecycle()
     val showAppDetails = LocalShowAppDetails.current
 
-    LaunchedEffect(app) {
+    LaunchedEffect(app.key, iconSize) {
         viewModel.init(app, iconSize.toInt())
     }
 
