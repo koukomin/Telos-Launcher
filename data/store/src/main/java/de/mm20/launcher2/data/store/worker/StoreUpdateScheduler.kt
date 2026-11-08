@@ -51,10 +51,9 @@ class StoreUpdateScheduler(
      */
     private suspend fun trackTelosItself() {
         val pkg = context.packageName
-        if (!pkg.endsWith(".release")) return
-        val versionName = context.packageManager.getPackageInfo(pkg, 0).versionName.orEmpty()
+        val versionName = runCatching { context.packageManager.getPackageInfo(pkg, 0).versionName.orEmpty() }.getOrDefault("")
         if (versionName.endsWith("-fdroid")) return
-        if (repository.getAll().any { it.packageName == pkg }) return
+        if (repository.getAll().any { it.packageName == pkg || it.id == "telos-self" }) return
         repository.insertItem(
             StoreItem(
                 id = "telos-self",

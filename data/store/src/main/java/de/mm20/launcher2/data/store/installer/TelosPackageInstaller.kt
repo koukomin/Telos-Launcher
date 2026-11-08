@@ -81,7 +81,8 @@ class TelosPackageInstaller(
         // Automatic Pre-Update Rollback Backup
         runCatching {
             val pm = context.packageManager
-            val info = pm.getApplicationInfo(packageName, 0)
+            val flags = android.content.pm.PackageManager.MATCH_DISABLED_COMPONENTS or android.content.pm.PackageManager.MATCH_UNINSTALLED_PACKAGES
+            val info = pm.getApplicationInfo(packageName, flags)
             val installedApk = File(info.sourceDir)
             if (installedApk.exists()) {
                 val backupDir = File(context.cacheDir, "apk-backups").apply { mkdirs() }
@@ -106,7 +107,7 @@ class TelosPackageInstaller(
             var lease: String? = null
             try {
                 lease = freezeManager.beginFrozenUpdate(packageName,
-                    if (backend === shizuku) "Shizuku" else "Root", thawFirst = false)
+                    if (backend === shizuku) "Shizuku" else "Root", thawFirst = true)
                 result = backend.install(apk, packageName, allowDowngrade = options.global.value.allowDowngrade)
             } catch (cancelled: kotlinx.coroutines.CancellationException) {
                 throw cancelled
