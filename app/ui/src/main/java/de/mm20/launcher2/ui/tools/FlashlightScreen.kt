@@ -719,14 +719,101 @@ private fun MorseDecoderCard() {
     val scope = rememberCoroutineScope()
 
     var isAudioDecoding by remember { mutableStateOf(false) }
+    var isOpticalDecoding by remember { mutableStateOf(false) }
     var decodedMorse by remember { mutableStateOf("") }
     var decodedText by remember { mutableStateOf("") }
 
     var audioJob by remember { mutableStateOf<Job?>(null) }
+    var opticalJob by remember { mutableStateOf<Job?>(null) }
 
     fun stopDecoder() {
         audioJob?.cancel()
         isAudioDecoding = false
+    }
+
+    fun stopOpticalDecoder() {
+        opticalJob?.cancel()
+        isOpticalDecoding = false
+    }
+
+    fun startOpticalDecoder() {
+        stopOpticalDecoder()
+        isOpticalDecoding = true
+        opticalJob = scope.launch(Dispatchers.IO) {
+            val cameraProviderFuture = androidx.camera.lifecycle.ProcessCameraProvider.getInstance(context)
+            val cameraProvider = cameraProviderFuture.get()
+            val imageAnalysis = androidx.camera.core.ImageAnalysis.Builder()
+                .setBackpressureStrategy(androidx.camera.core.ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
+                .build()
+
+            var isHigh = false
+            var pulseStartMs = System.currentTimeMillis()
+            var gapStartMs = System.currentTimeMillis()
+            var currentWordMorse = ""
+
+            imageAnalysis.setAnalyzer(androidx.core.content.ContextCompat.getMainExecutor(context)) { imageProxy ->
+                val buffer = imageProxy.planes[0].buffer
+                val data = ByteArray(buffer.remaining())
+                buffer.get(data)
+                
+                var sum = 0L
+                for(b in data) {
+                    sum += (b.toInt() and 0xFF)
+                }
+                val avgLuminance = sum.toDouble() / data.size
+                val now = System.currentTimeMillis()
+                
+                if (avgLuminance > 220) { // bright
+                    if (!isHigh) {
+                        isHigh = true
+                        val gapDuration = now - gapStartMs
+                        if (gapDuration > 1200 && currentWordMorse.isNotBlank()) {
+                            currentWordMorse += " / "
+                        } else if (gapDuration > 450 && currentWordMorse.isNotBlank() && !currentWordMorse.endsWith(" ") && !currentWordMorse.endsWith("/ ")) {
+                            currentWordMorse += " "
+                        }
+                        pulseStartMs = now
+                    }
+                } else { // dark
+                    if (isHigh) {
+                        isHigh = false
+                        val pulseDuration = now - pulseStartMs
+                        val symbol = if (pulseDuration > 220) "-" else "."
+                        currentWordMorse += symbol
+                        gapStartMs = now
+
+                        scope.launch(Dispatchers.Main) {
+                            decodedMorse = currentWordMorse
+                            decodedText = MorseCodec.decode(currentWordMorse)
+                        }
+                    }
+                }
+                imageProxy.close()
+            }
+            
+            try {
+                withContext(Dispatchers.Main) {
+                    val lifecycleOwner = context as androidx.lifecycle.LifecycleOwner
+                    cameraProvider.unbindAll()
+                    cameraProvider.bindToLifecycle(
+                        lifecycleOwner,
+                        androidx.camera.core.CameraSelector.DEFAULT_BACK_CAMERA,
+                        imageAnalysis
+                    )
+                }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) { isOpticalDecoding = false }
+            }
+            
+            // Cleanup on cancel
+            try {
+                kotlinx.coroutines.awaitCancellation()
+            } finally {
+                withContext(Dispatchers.Main) {
+                    cameraProvider.unbindAll()
+                }
+            }
+        }
     }
 
     fun startAudioDecoder() {
@@ -838,7 +925,15 @@ private fun MorseDecoderCard() {
                     modifier = Modifier.weight(1f),
                     colors = ButtonDefaults.buttonColors(containerColor = if (isAudioDecoding) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary)
                 ) {
-                    Text(if (isAudioDecoding) "Stop Audio" else "Decode Audio")
+                    Text(if (isAudioDecoding) "Stop Audio" else "Audio")
+                }
+
+                Button(
+                    onClick = { if (isOpticalDecoding) stopOpticalDecoder() else startOpticalDecoder() },
+                    modifier = Modifier.weight(1f),
+                    colors = ButtonDefaults.buttonColors(containerColor = if (isOpticalDecoding) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary)
+                ) {
+                    Text(if (isOpticalDecoding) "Stop Camera" else "Camera")
                 }
 
                 OutlinedButton(
