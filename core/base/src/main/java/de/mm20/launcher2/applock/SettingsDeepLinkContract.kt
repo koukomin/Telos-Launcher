@@ -53,6 +53,9 @@ object SettingsDeepLinkContract {
     const val ROUTE_TRASH = "settings/trash"
     const val ROUTE_SYNC = "settings/sync"
     const val ROUTE_BACKUP = "settings/backup"
+    /** Telos Help */
+    const val ROUTE_TELOS_PAGE = "settings/telos_page"
+    const val EXTRA_TELOS_PAGE_KEY = "de.mm20.launcher2.settings.TELOS_PAGE_KEY"
     /** Links (string array) to offer in the add sheet of Telos Downloads, from a share or an Open with */
     const val EXTRA_DOWNLOAD_URLS = "de.mm20.launcher2.settings.DOWNLOAD_URLS"
     /** Stable identity for one Recents task per built-in app, independent of launch payload. */
