@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="photos_filter_all">Összes</string>
+    <string name="photos_filter_images">Képek</string>
+    <string name="photos_filter_video">Videó</string>
+    <string name="photos_filter_gif">GIF</string>
+    <string name="photos_filter_folders">Mappák</string>
+    <string name="viewer_add_to_wallpapers">Hozzáadás a háttérképekhez</string>
+    <string name="viewer_remove_from_wallpapers">Eltávolítás a háttérképekből</string>
+    <string name="preference_wallpaper_browse_telos">Böngésszen fotókat, videókat és GIF-eket a Telos Viewerben. A címkézett háttérképek elöl vannak.</string>
+    <string name="preference_wallpaper_choose_video">Videóháttér választása</string>
+    <string name="preference_wallpaper_choose_video_summary">Válasszon videót a rendszer választóból, majd erősítse meg az élő hátteret</string>
+</resources>

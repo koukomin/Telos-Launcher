@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="photos_filter_all">Alla</string>
+    <string name="photos_filter_images">Bilder</string>
+    <string name="photos_filter_video">Video</string>
+    <string name="photos_filter_gif">GIF</string>
+    <string name="photos_filter_folders">Mappar</string>
+    <string name="viewer_add_to_wallpapers">Lägg till bland bakgrunder</string>
+    <string name="viewer_remove_from_wallpapers">Ta bort från bakgrunder</string>
+    <string name="preference_wallpaper_browse_telos">Bläddra bland foton, videor och GIF:ar i Telos Viewer. Taggade bakgrunder visas först.</string>
+    <string name="preference_wallpaper_choose_video">Välj videobakgrund</string>
+    <string name="preference_wallpaper_choose_video_summary">Välj en video i systemväljaren och bekräfta livebakgrunden</string>
+</resources>

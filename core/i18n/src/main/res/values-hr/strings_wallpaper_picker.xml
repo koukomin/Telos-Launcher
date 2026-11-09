@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="photos_filter_all">Sve</string>
+    <string name="photos_filter_images">Slike</string>
+    <string name="photos_filter_video">Video</string>
+    <string name="photos_filter_gif">GIF</string>
+    <string name="photos_filter_folders">Mape</string>
+    <string name="viewer_add_to_wallpapers">Dodaj u pozadine</string>
+    <string name="viewer_remove_from_wallpapers">Ukloni iz pozadina</string>
+    <string name="preference_wallpaper_browse_telos">Pregledajte fotografije, videozapise i GIF-ove u Telos Vieweru. Označene pozadine su prve.</string>
+    <string name="preference_wallpaper_choose_video">Odaberi video pozadinu</string>
+    <string name="preference_wallpaper_choose_video_summary">Odaberite video u sistemskom izborniku pa potvrdite live pozadinu</string>
+</resources>

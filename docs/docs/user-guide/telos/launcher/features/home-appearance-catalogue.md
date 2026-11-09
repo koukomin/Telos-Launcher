@@ -147,7 +147,8 @@ bar menu. (Older docs say Home screen > Wallpaper; the entry moved to Appearance
 
 | Setting | Default | Effect |
 | --- | --- | --- |
-| Change wallpaper | n/a | Pick a photo or a video. For photos a dialog asks: home screen, lock screen or both |
+| Change wallpaper | n/a | Opens Telos Viewer with filters for images, video, GIF and folders. Items tagged **Add to wallpapers** appear first. Photos ask home, lock or both |
+| Choose video wallpaper | n/a | Always available. Uses the system video picker, then the live-wallpaper confirmation |
 | System wallpaper picker | n/a | Opens the Android chooser |
 | Dim wallpaper | Off | Darkens the wallpaper while a dark theme is active |
 | Blur wallpaper | On | Blurs the wallpaper behind the search view. Needs Android 12 or newer, else the switch is disabled |
@@ -155,8 +156,10 @@ bar menu. (Older docs say Home screen > Wallpaper; the entry moved to Appearance
 
 ### Video wallpaper <Badge type="warning" text="experimental" />
 
-The video section appears once a video wallpaper exists. Videos form a playlist; **Clear playlist**
-empties it.
+The video section appears once a video wallpaper file is stored. Videos form a playlist; **Clear playlist**
+empties it. Telos copies the file with a real extension (`.mp4`, `.webm`, `.gif`) into private storage
+so Media3 can play it. GIFs use the GIF renderer; videos use ExoPlayer. From Telos Viewer, **Set wallpaper**
+on a video or GIF uses the same path.
 
 | Setting | Default | Range or choices |
 | --- | --- | --- |

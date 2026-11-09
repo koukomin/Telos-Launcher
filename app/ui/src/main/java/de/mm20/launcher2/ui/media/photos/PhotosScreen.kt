@@ -72,7 +72,10 @@ data class PhotoItem(
     val mime: String = "image/*",
 ) {
     val isVideo: Boolean get() = mime.startsWith("video/")
+    val isGif: Boolean get() = mime.equals("image/gif", true) || name.endsWith(".gif", true)
 }
+
+private enum class MediaKind { All, Images, Video, Gif }
 
 class PhotosViewModel : ViewModel() {
     private val _items = MutableStateFlow<List<PhotoItem>>(emptyList())
@@ -172,7 +175,11 @@ private fun Thumb(item: PhotoItem, modifier: Modifier) {
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 /** The photo library. With [embedded] it sits inside Telos Viewer, which draws the status bar space and the tabs. */
-fun PhotosScreen(embedded: Boolean = false) {
+fun PhotosScreen(
+    embedded: Boolean = false,
+    wallpaperPick: Boolean = false,
+    onWallpaperPicked: ((PhotoItem) -> Unit)? = null,
+) {
     val viewModel: PhotosViewModel = viewModel()
     // the guard of the whole app is set by Telos Viewer
     val context = LocalContext.current
@@ -192,6 +199,12 @@ fun PhotosScreen(embedded: Boolean = false) {
     LaunchedEffect(Unit) { if (hasPermission) viewModel.load(context) }
 
     var tab by de.mm20.launcher2.ui.component.rememberPersistentUiState("photos.tab", 0)
+    var kind by de.mm20.launcher2.ui.component.rememberPersistentUiState(
+        "photos.kind",
+        MediaKind.All,
+        { it.name },
+        { runCatching { MediaKind.valueOf(it) }.getOrNull() },
+    )
     var album by remember { mutableStateOf<Album?>(null) }
     var columns by rememberSaveable { mutableIntStateOf(4) }
     var selected by remember { mutableStateOf<Set<Uri>>(emptySet()) }
@@ -203,13 +216,24 @@ fun PhotosScreen(embedded: Boolean = false) {
     val bar = virtualAppElevated()
 
     var query by androidx.compose.runtime.saveable.rememberSaveable { mutableStateOf("") }
-    val filteredItems = remember(items, query) {
-        de.mm20.launcher2.comms.search.TelosSearch.filter(items, query) {
+    var wallpaperTagRev by remember { mutableIntStateOf(0) }
+    val taggedUris = remember(wallpaperTagRev) { ViewerLibrary.wallpaperUris(context) }
+    val filteredItems = remember(items, query, kind, taggedUris, wallpaperPick) {
+        val searched = de.mm20.launcher2.comms.search.TelosSearch.filter(items, query) {
             listOf(
                 it.name, it.folder, dayLabel(context, it.taken),
                 java.text.SimpleDateFormat("d MMMM yyyy MMMM yyyy M/d/yyyy", java.util.Locale.getDefault()).format(java.util.Date(it.taken)),
             )
         }
+        val kinded = when (kind) {
+            MediaKind.All -> searched
+            MediaKind.Images -> searched.filter { !it.isVideo && !it.isGif }
+            MediaKind.Video -> searched.filter { it.isVideo }
+            MediaKind.Gif -> searched.filter { it.isGif }
+        }
+        if (wallpaperPick || taggedUris.isNotEmpty()) {
+            kinded.sortedByDescending { it.uri.toString() in taggedUris }
+        } else kinded
     }
     val albums = remember(filteredItems) {
         filteredItems.groupBy { it.folder }.map { (name, list) -> Album(name.ifBlank { context.getString(I18nR.string.au_viewer_other) }, list) }
@@ -255,6 +279,16 @@ fun PhotosScreen(embedded: Boolean = false) {
                         },
                         icon = { Icon(painterResource(BaseR.drawable.share_24px), contentDescription = null) },
                         label = { Text(stringResource(I18nR.string.hc_share)) },
+                    )
+                    NavigationBarItem(
+                        selected = false,
+                        onClick = {
+                            selected.forEach { ViewerLibrary.toggleWallpaper(context, it) }
+                            wallpaperTagRev++
+                            selected = emptySet()
+                        },
+                        icon = { Icon(painterResource(BaseR.drawable.wallpaper_24px), contentDescription = null) },
+                        label = { Text(stringResource(I18nR.string.viewer_add_to_wallpapers)) },
                     )
                     NavigationBarItem(
                         selected = false,
@@ -305,6 +339,46 @@ fun PhotosScreen(embedded: Boolean = false) {
 
             if (hasPermission && items.isNotEmpty()) {
                 de.mm20.launcher2.ui.media.MediaSearchBar(query, { query = it }, stringResource(I18nR.string.tsm_search_photos))
+                LazyRow(
+                    contentPadding = PaddingValues(horizontal = 16.dp, vertical = 4.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    item {
+                        FilterChip(
+                            selected = kind == MediaKind.All,
+                            onClick = { kind = MediaKind.All },
+                            label = { Text(stringResource(I18nR.string.photos_filter_all)) },
+                        )
+                    }
+                    item {
+                        FilterChip(
+                            selected = kind == MediaKind.Images,
+                            onClick = { kind = MediaKind.Images },
+                            label = { Text(stringResource(I18nR.string.photos_filter_images)) },
+                        )
+                    }
+                    item {
+                        FilterChip(
+                            selected = kind == MediaKind.Video,
+                            onClick = { kind = MediaKind.Video },
+                            label = { Text(stringResource(I18nR.string.photos_filter_video)) },
+                        )
+                    }
+                    item {
+                        FilterChip(
+                            selected = kind == MediaKind.Gif,
+                            onClick = { kind = MediaKind.Gif },
+                            label = { Text(stringResource(I18nR.string.photos_filter_gif)) },
+                        )
+                    }
+                    item {
+                        FilterChip(
+                            selected = tab == 1 && album == null,
+                            onClick = { tab = 1; album = null },
+                            label = { Text(stringResource(I18nR.string.photos_filter_folders)) },
+                        )
+                    }
+                }
             }
             if (hasPermission && query.isNotBlank() && shown.isEmpty()) {
                 de.mm20.launcher2.ui.component.SearchEmptyState(query)
@@ -400,6 +474,8 @@ fun PhotosScreen(embedded: Boolean = false) {
                                         onClick = {
                                             if (selecting) {
                                                 selected = if (on) selected - item.uri else selected + item.uri
+                                            } else if (wallpaperPick && onWallpaperPicked != null) {
+                                                onWallpaperPicked(item)
                                             } else openViewer(context, shown, shown.indexOf(item))
                                         },
                                     ),

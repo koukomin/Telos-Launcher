@@ -11,6 +11,7 @@ import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.AlertDialog
@@ -41,16 +42,82 @@ import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.component.preferences.SliderPreference
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
+import de.mm20.launcher2.ui.locals.LocalBackStack
+import de.mm20.launcher2.ui.media.photos.PhotosScreen
 import de.mm20.launcher2.wallpapers.StaticWallpaperTarget
 import kotlinx.serialization.Serializable
 
 @Serializable
 data object WallpaperSettingsRoute : NavKey
 
+@Serializable
+data class WallpaperLibraryRoute(val appendVideo: Boolean = false) : NavKey
+
+@Composable
+fun WallpaperLibraryScreen(appendVideo: Boolean = false) {
+    val viewModel: WallpaperSettingsScreenVM = viewModel()
+    val context = LocalContext.current
+    val backStack = LocalBackStack.current
+    val setResultToast: (Boolean) -> Unit = { ok ->
+        Toast.makeText(
+            context,
+            if (ok) I18nR.string.wallpaper_set_success else I18nR.string.wallpaper_set_failure,
+            Toast.LENGTH_SHORT,
+        ).show()
+    }
+    fun activateVideoIfNeeded(ok: Boolean) {
+        if (ok && !viewModel.isVideoWallpaperActive) {
+            context.tryStartActivity(viewModel.getActivationIntent())
+        } else {
+            setResultToast(ok)
+        }
+        if (ok) backStack.removeLastOrNull()
+    }
+    var pendingImageUri by rememberSaveable { mutableStateOf<Uri?>(null) }
+    pendingImageUri?.let { uri ->
+        AlertDialog(
+            onDismissRequest = { pendingImageUri = null },
+            title = { Text(stringResource(I18nR.string.wallpaper_target_dialog_title)) },
+            text = {
+                Column {
+                    TextButton(modifier = Modifier.fillMaxWidth(), onClick = {
+                        viewModel.setStaticWallpaper(uri, StaticWallpaperTarget.Home, setResultToast)
+                        pendingImageUri = null
+                        backStack.removeLastOrNull()
+                    }) { Text(stringResource(I18nR.string.preference_wallpaper_set_home)) }
+                    TextButton(modifier = Modifier.fillMaxWidth(), onClick = {
+                        viewModel.setStaticWallpaper(uri, StaticWallpaperTarget.Lock, setResultToast)
+                        pendingImageUri = null
+                        backStack.removeLastOrNull()
+                    }) { Text(stringResource(I18nR.string.preference_wallpaper_set_lock)) }
+                    TextButton(modifier = Modifier.fillMaxWidth(), onClick = {
+                        viewModel.setStaticWallpaper(uri, StaticWallpaperTarget.Both, setResultToast)
+                        pendingImageUri = null
+                        backStack.removeLastOrNull()
+                    }) { Text(stringResource(I18nR.string.preference_wallpaper_set_both)) }
+                }
+            },
+            confirmButton = {
+                TextButton(onClick = { pendingImageUri = null }) { Text(stringResource(android.R.string.cancel)) }
+            },
+        )
+    }
+    Column(Modifier.fillMaxSize()) {
+        PhotosScreen(embedded = true, wallpaperPick = true) { item ->
+            if (item.isVideo || item.isGif) {
+                viewModel.setVideoWallpaper(item.uri, appendVideo, ::activateVideoIfNeeded)
+            } else {
+                pendingImageUri = item.uri
+            }
+        }
+    }
+}
+
 @Composable
 fun WallpaperSettingsScreen() {
     val viewModel: WallpaperSettingsScreenVM = viewModel()
     val context = LocalContext.current
+    val backStack = LocalBackStack.current
     val lifecycleOwner = LocalLifecycleOwner.current
 
     LaunchedEffect(lifecycleOwner) {
@@ -88,19 +155,6 @@ fun WallpaperSettingsScreen() {
     }
 
     var pendingImageUri by rememberSaveable { mutableStateOf<Uri?>(null) }
-    val wallpaperPicker = rememberLauncherForActivityResult(
-        ActivityResultContracts.PickVisualMedia()
-    ) { uri ->
-        if (uri != null) {
-            val mimeType = context.contentResolver.getType(uri)
-            if (mimeType?.startsWith("video/") == true || mimeType == "image/gif") {
-                viewModel.setVideoWallpaper(uri, false, ::activateVideoIfNeeded)
-            } else {
-                pendingImageUri = uri
-            }
-        }
-    }
-
     var appendToPlaylist by rememberSaveable { mutableStateOf(false) }
     val videoPicker = rememberLauncherForActivityResult(
         ActivityResultContracts.PickVisualMedia()
@@ -169,10 +223,16 @@ fun WallpaperSettingsScreen() {
                 Preference(
                     icon = BaseR.drawable.wallpaper_24px,
                     title = stringResource(I18nR.string.preference_wallpaper_change),
-                    summary = stringResource(I18nR.string.frosted_glass_wallpaper_help),
+                    summary = stringResource(I18nR.string.preference_wallpaper_browse_telos),
+                    onClick = { backStack.add(WallpaperLibraryRoute()) },
+                )
+                Preference(
+                    title = stringResource(I18nR.string.preference_wallpaper_choose_video),
+                    summary = stringResource(I18nR.string.preference_wallpaper_choose_video_summary),
                     onClick = {
-                        wallpaperPicker.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageAndVideo))
-                    }
+                        appendToPlaylist = false
+                        videoPicker.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.VideoOnly))
+                    },
                 )
                 Preference(
                     title = stringResource(I18nR.string.preference_wallpaper_system_picker),
@@ -217,7 +277,7 @@ fun WallpaperSettingsScreen() {
                         title = stringResource(I18nR.string.preference_wallpaper_add_video),
                         onClick = {
                             appendToPlaylist = true
-                            videoPicker.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.VideoOnly))
+                            backStack.add(WallpaperLibraryRoute(appendVideo = true))
                         }
                     )
                     Preference(

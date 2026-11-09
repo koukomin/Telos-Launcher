@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="photos_filter_all">Alles</string>
+    <string name="photos_filter_images">Afbeeldingen</string>
+    <string name="photos_filter_video">Video</string>
+    <string name="photos_filter_gif">GIF</string>
+    <string name="photos_filter_folders">Mappen</string>
+    <string name="viewer_add_to_wallpapers">Toevoegen aan achtergronden</string>
+    <string name="viewer_remove_from_wallpapers">Verwijderen van achtergronden</string>
+    <string name="preference_wallpaper_browse_telos">Blader door foto’s, video’s en GIF’s in Telos Viewer. Getagde achtergronden staan eerst.</string>
+    <string name="preference_wallpaper_choose_video">Videowallpaper kiezen</string>
+    <string name="preference_wallpaper_choose_video_summary">Kies een video in de systeemkiezer en bevestig de live wallpaper</string>
+</resources>

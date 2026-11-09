@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="photos_filter_all">Усе</string>
+    <string name="photos_filter_images">Зображення</string>
+    <string name="photos_filter_video">Відео</string>
+    <string name="photos_filter_gif">GIF</string>
+    <string name="photos_filter_folders">Теки</string>
+    <string name="viewer_add_to_wallpapers">Додати до шпалер</string>
+    <string name="viewer_remove_from_wallpapers">Прибрати зі шпалер</string>
+    <string name="preference_wallpaper_browse_telos">Переглядайте фото, відео та GIF у Telos Viewer. Позначені шпалери показуються першими.</string>
+    <string name="preference_wallpaper_choose_video">Вибрати відеошпалери</string>
+    <string name="preference_wallpaper_choose_video_summary">Виберіть відео в системному виборі та підтвердіть живі шпалери</string>
+</resources>

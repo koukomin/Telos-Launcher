@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="photos_filter_all">Vše</string>
+    <string name="photos_filter_images">Obrázky</string>
+    <string name="photos_filter_video">Video</string>
+    <string name="photos_filter_gif">GIF</string>
+    <string name="photos_filter_folders">Složky</string>
+    <string name="viewer_add_to_wallpapers">Přidat k tapetám</string>
+    <string name="viewer_remove_from_wallpapers">Odebrat z tapet</string>
+    <string name="preference_wallpaper_browse_telos">Procházejte fotky, videa a GIF v Telos Viewer. Označené tapety jsou první.</string>
+    <string name="preference_wallpaper_choose_video">Vybrat video tapetu</string>
+    <string name="preference_wallpaper_choose_video_summary">Vyberte video v systémovém výběru a potvrďte živou tapetu</string>
+</resources>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="photos_filter_all">Viskas</string>
+    <string name="photos_filter_images">Vaizdai</string>
+    <string name="photos_filter_video">Vaizdo įrašas</string>
+    <string name="photos_filter_gif">GIF</string>
+    <string name="photos_filter_folders">Aplankai</string>
+    <string name="viewer_add_to_wallpapers">Pridėti prie tapetų</string>
+    <string name="viewer_remove_from_wallpapers">Pašalinti iš tapetų</string>
+    <string name="preference_wallpaper_browse_telos">Naršykite nuotraukas, vaizdo įrašus ir GIF „Telos Viewer“. Pažymėti tapetai rodomi pirmi.</string>
+    <string name="preference_wallpaper_choose_video">Pasirinkti vaizdo tapetą</string>
+    <string name="preference_wallpaper_choose_video_summary">Pasirinkite vaizdo įrašą sistemos parinkiklyje ir patvirtinkite gyvą tapetą</string>
+</resources>

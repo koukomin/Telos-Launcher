@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="photos_filter_all">전체</string>
+    <string name="photos_filter_images">이미지</string>
+    <string name="photos_filter_video">동영상</string>
+    <string name="photos_filter_gif">GIF</string>
+    <string name="photos_filter_folders">폴더</string>
+    <string name="viewer_add_to_wallpapers">배경화면에 추가</string>
+    <string name="viewer_remove_from_wallpapers">배경화면에서 제거</string>
+    <string name="preference_wallpaper_browse_telos">Telos Viewer에서 사진, 동영상, GIF를 둘러봅니다. 태그가 지정된 배경화면이 먼저 나옵니다.</string>
+    <string name="preference_wallpaper_choose_video">동영상 배경화면 선택</string>
+    <string name="preference_wallpaper_choose_video_summary">시스템 선택기에서 동영상을 고른 뒤 라이브 배경화면을 확인하세요</string>
+</resources>

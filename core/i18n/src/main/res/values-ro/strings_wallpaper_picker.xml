@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="photos_filter_all">Toate</string>
+    <string name="photos_filter_images">Imagini</string>
+    <string name="photos_filter_video">Video</string>
+    <string name="photos_filter_gif">GIF</string>
+    <string name="photos_filter_folders">Dosare</string>
+    <string name="viewer_add_to_wallpapers">Adaugă la fundaluri</string>
+    <string name="viewer_remove_from_wallpapers">Elimină din fundaluri</string>
+    <string name="preference_wallpaper_browse_telos">Răsfoiește poze, video și GIF în Telos Viewer. Fundalurile etichetate apar primele.</string>
+    <string name="preference_wallpaper_choose_video">Alege fundal video</string>
+    <string name="preference_wallpaper_choose_video_summary">Alege un video din selectorul de sistem, apoi confirmă fundalul live</string>
+</resources>

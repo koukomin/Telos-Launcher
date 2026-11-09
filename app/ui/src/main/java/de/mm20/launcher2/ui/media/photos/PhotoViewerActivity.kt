@@ -53,6 +53,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.core.content.FileProvider
 import coil.compose.AsyncImage
+import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.base.BaseActivity
 import de.mm20.launcher2.ui.base.ProvideCompositionLocals
@@ -235,6 +236,7 @@ private fun PhotoViewer(uris: List<Uri>, start: Int, onClose: () -> Unit) {
     var confirmDelete by remember { mutableStateOf(false) }
     var more by remember { mutableStateOf(false) }
     var starred by remember { mutableStateOf(false) }
+    var wallpaperTagged by remember { mutableStateOf(false) }
     var wallpaperUri by remember { mutableStateOf<Uri?>(null) }
     var settingWallpaper by remember { mutableStateOf(false) }
     val wallpaperScope = rememberCoroutineScope()
@@ -265,7 +267,10 @@ private fun PhotoViewer(uris: List<Uri>, start: Int, onClose: () -> Unit) {
     val blur = rememberVirtualAppBlur()
     val onWhite = Color.White
 
-    LaunchedEffect(current) { starred = ViewerLibrary.isFavorite(context, current) }
+    LaunchedEffect(current) {
+        starred = ViewerLibrary.isFavorite(context, current)
+        wallpaperTagged = ViewerLibrary.isWallpaper(context, current)
+    }
 
     if (confirmDelete) de.mm20.launcher2.ui.trash.UriDeleteDialog(current, onClose, { confirmDelete = false })
 
@@ -329,13 +334,33 @@ private fun PhotoViewer(uris: List<Uri>, start: Int, onClose: () -> Unit) {
                             text = { Text(stringResource(I18nR.string.viewer_set_wallpaper)) },
                             onClick = {
                                 more = false
-                                if (!isVideo && mime != "image/gif") wallpaperUri = current
-                                else runCatching {
-                                    context.startActivity(
-                                        Intent(Intent.ACTION_ATTACH_DATA).setDataAndType(current, mime.ifBlank { "image/*" })
-                                            .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION),
-                                    )
-                                }
+                                if (isVideo || mime == "image/gif") {
+                                    wallpaperScope.launch {
+                                        val ok = withContext(Dispatchers.IO) {
+                                            wallpapers.setVideoWallpaper(current, false)
+                                        }
+                                        Toast.makeText(
+                                            context,
+                                            context.getString(if (ok) I18nR.string.wallpaper_set_success else I18nR.string.wallpaper_set_failure),
+                                            Toast.LENGTH_SHORT,
+                                        ).show()
+                                        if (ok) context.tryStartActivity(wallpapers.getActivationIntent())
+                                    }
+                                } else wallpaperUri = current
+                            },
+                        )
+                        DropdownMenuItem(
+                            text = {
+                                Text(
+                                    stringResource(
+                                        if (wallpaperTagged) I18nR.string.viewer_remove_from_wallpapers
+                                        else I18nR.string.viewer_add_to_wallpapers,
+                                    ),
+                                )
+                            },
+                            onClick = {
+                                more = false
+                                wallpaperTagged = ViewerLibrary.toggleWallpaper(context, current)
                             },
                         )
                         if (Build.VERSION.SDK_INT >= 30 && current.authority == MediaStore.AUTHORITY) {
