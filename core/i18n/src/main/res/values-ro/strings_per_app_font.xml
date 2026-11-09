@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="per_app_font_size">Dimensiune text</string>
+    <string name="per_app_font_scale_percent">%1$d%%</string>
+    <string name="per_app_font_reset">Resetare</string>
+    <string name="per_app_font_preview">Textul din această aplicație urmează glisorul imediat.</string>
+    <string name="per_app_font_dialog_title">Dimensiune text: %1$s</string>
+    <string name="per_app_fonts_screen_title">Dimensiune text per aplicație</string>
+    <string name="per_app_fonts_category">Aplicații Telos</string>
+</resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="per_app_font_size">टेक्स्ट आकार</string>
+    <string name="per_app_font_scale_percent">%1$d%%</string>
+    <string name="per_app_font_reset">रीसेट</string>
+    <string name="per_app_font_preview">इस ऐप का टेक्स्ट स्लाइडर के साथ तुरंत बदलता है।</string>
+    <string name="per_app_font_dialog_title">टेक्स्ट आकार: %1$s</string>
+    <string name="per_app_fonts_screen_title">ऐप के अनुसार टेक्स्ट आकार</string>
+    <string name="per_app_fonts_category">Telos ऐप्स</string>
+</resources>

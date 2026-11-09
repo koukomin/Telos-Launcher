@@ -341,7 +341,7 @@ fun VoiceRecorderScreen() {
                         if (showFontDialog) {
                             de.mm20.launcher2.ui.component.PerAppFontScaleDialog(
                                 appKey = "voice",
-                                appName = "Telos Voice Recorder",
+                                appName = stringResource(I18nR.string.voice_title),
                                 onDismiss = { showFontDialog = false }
                             )
                         }
@@ -350,7 +350,7 @@ fun VoiceRecorderScreen() {
                             Icon(painterResource(BaseR.drawable.search_24px), contentDescription = stringResource(I18nR.string.voice_search))
                         }
                         IconButton(onClick = { showFontDialog = true }) {
-                            Icon(painterResource(BaseR.drawable.settings_24px), contentDescription = "Font Settings")
+                            Icon(painterResource(BaseR.drawable.settings_24px), contentDescription = stringResource(I18nR.string.per_app_font_size))
                         }
                         Box {
                             IconButton(onClick = { menu = true }) {

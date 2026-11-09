@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="per_app_font_size">Teksta lielums</string>
+    <string name="per_app_font_scale_percent">%1$d%%</string>
+    <string name="per_app_font_reset">Atiestatīt</string>
+    <string name="per_app_font_preview">Teksts šajā lietotnē uzreiz seko slīdnim.</string>
+    <string name="per_app_font_dialog_title">Teksta lielums: %1$s</string>
+    <string name="per_app_fonts_screen_title">Teksta lielums katrā lietotnē</string>
+    <string name="per_app_fonts_category">Telos lietotnes</string>
+</resources>

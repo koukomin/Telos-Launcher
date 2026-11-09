@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="per_app_font_size">Tamanho do texto</string>
+    <string name="per_app_font_scale_percent">%1$d%%</string>
+    <string name="per_app_font_reset">Repor</string>
+    <string name="per_app_font_preview">O texto nesta app segue a barra de imediato.</string>
+    <string name="per_app_font_dialog_title">Tamanho do texto: %1$s</string>
+    <string name="per_app_fonts_screen_title">Tamanho do texto por app</string>
+    <string name="per_app_fonts_category">Apps Telos</string>
+</resources>

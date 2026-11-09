@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="per_app_font_size">حجم النص</string>
+    <string name="per_app_font_scale_percent">%1$d٪٪</string>
+    <string name="per_app_font_reset">إعادة ضبط</string>
+    <string name="per_app_font_preview">يتبع النص في هذا التطبيق الشريط فورًا.</string>
+    <string name="per_app_font_dialog_title">حجم النص: %1$s</string>
+    <string name="per_app_fonts_screen_title">حجم النص لكل تطبيق</string>
+    <string name="per_app_fonts_category">تطبيقات Telos</string>
+</resources>

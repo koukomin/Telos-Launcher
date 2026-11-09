@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="per_app_font_size">Розмір тексту</string>
+    <string name="per_app_font_scale_percent">%1$d%%</string>
+    <string name="per_app_font_reset">Скинути</string>
+    <string name="per_app_font_preview">Текст у цій програмі одразу повторює повзунок.</string>
+    <string name="per_app_font_dialog_title">Розмір тексту: %1$s</string>
+    <string name="per_app_fonts_screen_title">Розмір тексту для програм</string>
+    <string name="per_app_fonts_category">Програми Telos</string>
+</resources>

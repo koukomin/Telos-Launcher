@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="per_app_font_size">Μέγεθος κειμένου</string>
+    <string name="per_app_font_scale_percent">%1$d%%</string>
+    <string name="per_app_font_reset">Επαναφορά</string>
+    <string name="per_app_font_preview">Το κείμενο σε αυτή την εφαρμογή ακολουθεί αμέσως τη μπάρα.</string>
+    <string name="per_app_font_dialog_title">Μέγεθος κειμένου: %1$s</string>
+    <string name="per_app_fonts_screen_title">Μέγεθος κειμένου ανά εφαρμογή</string>
+    <string name="per_app_fonts_category">Εφαρμογές Telos</string>
+</resources>

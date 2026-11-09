@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="per_app_font_size">Размер текста</string>
+    <string name="per_app_font_scale_percent">%1$d%%</string>
+    <string name="per_app_font_reset">Сбросить</string>
+    <string name="per_app_font_preview">Текст в этом приложении сразу следует за ползунком.</string>
+    <string name="per_app_font_dialog_title">Размер текста: %1$s</string>
+    <string name="per_app_fonts_screen_title">Размер текста для приложений</string>
+    <string name="per_app_fonts_category">Приложения Telos</string>
+</resources>

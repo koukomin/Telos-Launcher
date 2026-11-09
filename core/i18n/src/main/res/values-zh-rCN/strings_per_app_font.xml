@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="per_app_font_size">文字大小</string>
+    <string name="per_app_font_scale_percent">%1$d%%</string>
+    <string name="per_app_font_reset">重置</string>
+    <string name="per_app_font_preview">此应用中的文字会立刻跟随滑块。</string>
+    <string name="per_app_font_dialog_title">文字大小：%1$s</string>
+    <string name="per_app_fonts_screen_title">按应用设置文字大小</string>
+    <string name="per_app_fonts_category">Telos 应用</string>
+</resources>

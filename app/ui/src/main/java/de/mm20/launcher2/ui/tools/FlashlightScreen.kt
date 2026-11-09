@@ -313,12 +313,12 @@ fun FlashlightScreen() {
                         if (showFontDialog) {
                             de.mm20.launcher2.ui.component.PerAppFontScaleDialog(
                                 appKey = "flashlight",
-                                appName = "Telos Flashlight",
+                                appName = stringResource(I18nR.string.telos_flashlight_app_label),
                                 onDismiss = { showFontDialog = false }
                             )
                         }
                         IconButton(onClick = { showFontDialog = true }) {
-                            Icon(painterResource(BaseR.drawable.settings_24px), contentDescription = "Font Settings", tint = MaterialTheme.colorScheme.onSurface)
+                            Icon(painterResource(BaseR.drawable.settings_24px), contentDescription = stringResource(I18nR.string.per_app_font_size), tint = MaterialTheme.colorScheme.onSurface)
                         }
                         Text(stringResource(I18nR.string.desktop_mode_orientation_landscape), color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp)
                         Switch(
@@ -750,6 +750,7 @@ private fun MorseDecoderCard() {
             var pulseStartMs = System.currentTimeMillis()
             var gapStartMs = System.currentTimeMillis()
             var currentWordMorse = ""
+            var baselineLuminance = 50.0
 
             imageAnalysis.setAnalyzer(androidx.core.content.ContextCompat.getMainExecutor(context)) { imageProxy ->
                 val buffer = imageProxy.planes[0].buffer
@@ -763,13 +764,18 @@ private fun MorseDecoderCard() {
                 val avgLuminance = sum.toDouble() / data.size
                 val now = System.currentTimeMillis()
                 
-                if (avgLuminance > 220) { // bright
+                if (!isHigh) {
+                    baselineLuminance = baselineLuminance * 0.95 + avgLuminance * 0.05
+                }
+                val isFlashOn = avgLuminance > maxOf(130.0, baselineLuminance + 25.0)
+
+                if (isFlashOn) { // bright flash detected
                     if (!isHigh) {
                         isHigh = true
                         val gapDuration = now - gapStartMs
-                        if (gapDuration > 1200 && currentWordMorse.isNotBlank()) {
+                        if (gapDuration > 600 && currentWordMorse.isNotBlank()) {
                             currentWordMorse += " / "
-                        } else if (gapDuration > 450 && currentWordMorse.isNotBlank() && !currentWordMorse.endsWith(" ") && !currentWordMorse.endsWith("/ ")) {
+                        } else if (gapDuration > 180 && currentWordMorse.isNotBlank() && !currentWordMorse.endsWith(" ") && !currentWordMorse.endsWith("/ ")) {
                             currentWordMorse += " "
                         }
                         pulseStartMs = now
@@ -778,7 +784,7 @@ private fun MorseDecoderCard() {
                     if (isHigh) {
                         isHigh = false
                         val pulseDuration = now - pulseStartMs
-                        val symbol = if (pulseDuration > 220) "-" else "."
+                        val symbol = if (pulseDuration > 160) "-" else "."
                         currentWordMorse += symbol
                         gapStartMs = now
 
@@ -865,9 +871,9 @@ private fun MorseDecoderCard() {
                             if (!isHigh) {
                                 isHigh = true
                                 val gapDuration = now - gapStartMs
-                                if (gapDuration > 1200 && currentWordMorse.isNotBlank()) {
+                                if (gapDuration > 600 && currentWordMorse.isNotBlank()) {
                                     currentWordMorse += " / "
-                                } else if (gapDuration > 450 && currentWordMorse.isNotBlank() && !currentWordMorse.endsWith(" ") && !currentWordMorse.endsWith("/ ")) {
+                                } else if (gapDuration > 180 && currentWordMorse.isNotBlank() && !currentWordMorse.endsWith(" ") && !currentWordMorse.endsWith("/ ")) {
                                     currentWordMorse += " "
                                 }
                                 pulseStartMs = now
@@ -876,7 +882,7 @@ private fun MorseDecoderCard() {
                             if (isHigh) {
                                 isHigh = false
                                 val pulseDuration = now - pulseStartMs
-                                val symbol = if (pulseDuration > 220) "-" else "."
+                                val symbol = if (pulseDuration > 160) "-" else "."
                                 currentWordMorse += symbol
                                 gapStartMs = now
 

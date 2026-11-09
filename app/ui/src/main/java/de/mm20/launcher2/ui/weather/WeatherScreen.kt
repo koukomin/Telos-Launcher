@@ -73,7 +73,7 @@ fun WeatherScreen() {
     if (showFontDialog) {
         de.mm20.launcher2.ui.component.PerAppFontScaleDialog(
             appKey = "weather",
-            appName = "Telos Weather",
+            appName = stringResource(I18nR.string.widget_name_weather),
             onDismiss = { showFontDialog = false }
         )
     }
@@ -111,7 +111,7 @@ fun WeatherScreen() {
                             Icon(painterResource(BaseR.drawable.settings_backup_restore_24px), contentDescription = "Refresh")
                         }
                         IconButton(onClick = { showFontDialog = true }) {
-                            Icon(painterResource(BaseR.drawable.settings_24px), contentDescription = "Font Settings")
+                            Icon(painterResource(BaseR.drawable.settings_24px), contentDescription = stringResource(I18nR.string.per_app_font_size))
                         }
                     }
                 )

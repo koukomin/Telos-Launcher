@@ -136,7 +136,7 @@ fun NotesScreen() {
                     if (showFontDialog) {
                         de.mm20.launcher2.ui.component.PerAppFontScaleDialog(
                             appKey = "notes",
-                            appName = "Telos Notes",
+                            appName = stringResource(I18nR.string.notes_title),
                             onDismiss = { showFontDialog = false }
                         )
                     }
@@ -144,7 +144,7 @@ fun NotesScreen() {
                         Icon(painterResource(if (searching) BaseR.drawable.close_24px else BaseR.drawable.search_24px), stringResource(I18nR.string.notes_search))
                     }
                     IconButton(onClick = { showFontDialog = true }) {
-                        Icon(painterResource(BaseR.drawable.settings_24px), contentDescription = "Font Settings")
+                        Icon(painterResource(BaseR.drawable.settings_24px), contentDescription = stringResource(I18nR.string.per_app_font_size))
                     }
                     if (syncing) CircularProgressIndicator(Modifier.size(24.dp)) else Box {
                         IconButton(onClick = { menu = true }) { Icon(painterResource(BaseR.drawable.more_vert_24px), stringResource(I18nR.string.notes_title)) }

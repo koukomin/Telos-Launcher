@@ -130,7 +130,7 @@ private fun ErmisMailbox() {
     if (showFontDialog) {
         de.mm20.launcher2.ui.component.PerAppFontScaleDialog(
             appKey = "ermis",
-            appName = "Telos Mail & Chat",
+            appName = stringResource(I18nR.string.ermis_title),
             onDismiss = { showFontDialog = false }
         )
     }
@@ -161,7 +161,7 @@ private fun ErmisMailbox() {
                         )
                     )
                     IconButton(onClick = { showFontDialog = true }) {
-                        Icon(painterResource(BaseR.drawable.settings_24px), contentDescription = "Font Settings")
+                        Icon(painterResource(BaseR.drawable.settings_24px), contentDescription = stringResource(I18nR.string.per_app_font_size))
                     }
                     IconButton(onClick = { accounts = true }) {
                         Icon(painterResource(BaseR.drawable.person_24px), stringResource(I18nR.string.ermis_accounts))

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="per_app_font_size">Teksto dydis</string>
+    <string name="per_app_font_scale_percent">%1$d %%</string>
+    <string name="per_app_font_reset">Atstatyti</string>
+    <string name="per_app_font_preview">Šios programėlės tekstas iškart seka slankiklį.</string>
+    <string name="per_app_font_dialog_title">Teksto dydis: %1$s</string>
+    <string name="per_app_fonts_screen_title">Teksto dydis pagal programėlę</string>
+    <string name="per_app_fonts_category">Telos programėlės</string>
+</resources>

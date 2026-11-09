@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="per_app_font_size">Tekstgrootte</string>
+    <string name="per_app_font_scale_percent">%1$d%%</string>
+    <string name="per_app_font_reset">Resetten</string>
+    <string name="per_app_font_preview">De tekst in deze app volgt de schuifregelaar meteen.</string>
+    <string name="per_app_font_dialog_title">Tekstgrootte: %1$s</string>
+    <string name="per_app_fonts_screen_title">Tekstgrootte per app</string>
+    <string name="per_app_fonts_category">Telos-apps</string>
+</resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="per_app_font_size">Veľkosť textu</string>
+    <string name="per_app_font_scale_percent">%1$d %%</string>
+    <string name="per_app_font_reset">Obnoviť</string>
+    <string name="per_app_font_preview">Text v tejto aplikácii sleduje posuvník okamžite.</string>
+    <string name="per_app_font_dialog_title">Veľkosť textu: %1$s</string>
+    <string name="per_app_fonts_screen_title">Veľkosť textu podľa aplikácie</string>
+    <string name="per_app_fonts_category">Aplikácie Telos</string>
+</resources>
