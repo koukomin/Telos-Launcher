@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="photos_filter_all">Все</string>
+    <string name="photos_filter_images">Изображения</string>
+    <string name="photos_filter_video">Видео</string>
+    <string name="photos_filter_gif">GIF</string>
+    <string name="photos_filter_folders">Папки</string>
+    <string name="viewer_add_to_wallpapers">Добавить к обоям</string>
+    <string name="viewer_remove_from_wallpapers">Убрать из обоев</string>
+    <string name="preference_wallpaper_browse_telos">Просматривайте фото, видео и GIF в Telos Viewer. Помеченные обои показываются первыми.</string>
+    <string name="preference_wallpaper_choose_video">Выбрать видеообои</string>
+    <string name="preference_wallpaper_choose_video_summary">Выберите видео в системном выборе и подтвердите живые обои</string>
+</resources>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="photos_filter_all">全部</string>
+    <string name="photos_filter_images">圖片</string>
+    <string name="photos_filter_video">影片</string>
+    <string name="photos_filter_gif">GIF</string>
+    <string name="photos_filter_folders">資料夾</string>
+    <string name="viewer_add_to_wallpapers">加入桌布</string>
+    <string name="viewer_remove_from_wallpapers">從桌布移除</string>
+    <string name="preference_wallpaper_browse_telos">在 Telos Viewer 瀏覽照片、影片與 GIF。已標記的桌布會排在前面。</string>
+    <string name="preference_wallpaper_choose_video">選擇影片桌布</string>
+    <string name="preference_wallpaper_choose_video_summary">在系統選擇器選影片，然後確認動態桌布</string>
+</resources>

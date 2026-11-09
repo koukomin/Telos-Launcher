@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hc_graphics_api">Grafiikka-API</string>
+    <string name="hc_graphics_api_about">Mitä tämä tekee</string>
+    <string name="hc_graphics_api_about_summary">Pakottaa Androidin käyttöliittymän renderöijän (HWUI / Skia) Vulkaniksi tai OpenGL ES:ksi, sama debug.hwui.renderer-kytkin kuin GAMAssa. Vulkan käyttää usein vähemmän virtaa ja lämpenee vähemmän; OpenGL on varavaihtoehto, jos Vulkan takkuilee. Sovellukset ja pelit voivat valita oman API:nsa. Uudelleenkäynnistys tyhjentää ominaisuuden, ellei palautus käynnistyksessä ole päällä ja Shizuku tai root ole käytettävissä. Jos näyttö jumittuu, pidä äänenvoimakkuus alas ja virtapainike.</string>
+    <string name="hc_graphics_renderer">Renderöijä</string>
+    <string name="hc_graphics_renderer_summary">Tarvitaan Shizuku, root tai ADB (kopioi komento alta)</string>
+    <string name="hc_graphics_default">Järjestelmän oletus</string>
+    <string name="hc_graphics_vulkan">Vulkan</string>
+    <string name="hc_graphics_opengl">OpenGL</string>
+    <string name="hc_graphics_current">Aktiivinen renderöijä</string>
+    <string name="hc_graphics_unknown">Tuntematon</string>
+    <string name="hc_graphics_priv_ok">Shizuku tai root valmis</string>
+    <string name="hc_graphics_priv_missing">Ei Shizukua tai rootia — käytä ADB:tä</string>
+    <string name="hc_graphics_restore_boot">Palauta uudelleenkäynnistyksen jälkeen</string>
+    <string name="hc_graphics_restore_boot_summary">Soveltaa Vulkanin tai OpenGL:n uudelleen käynnistyksen jälkeen, kun Shizuku tai root on käytettävissä. Android tyhjentää ominaisuuden aina uudelleenkäynnistyksessä.</string>
+    <string name="hc_graphics_copy_adb">Kopioi ADB-komento</string>
+    <string name="hc_graphics_adb_copied">ADB-komento kopioitu</string>
+    <string name="hc_graphics_applied">Renderöijä sovellettu. Jotkin näytöt saattavat tarvita uudelleenkäynnistyksen.</string>
+    <string name="hc_graphics_need_privilege">Ei voitu soveltaa. Anna Shizuku, käytä rootia tai suorita:\n%1$s</string>
+    <string name="hc_graphics_widget_switch">Vaihda Järjestelmä-widgetistä</string>
+    <string name="hc_graphics_widget_switch_summary">Sallii aloitusnäytön Järjestelmä-widgetin vaihtaa Vulkanin tai OpenGL:n. Oletuksena pois. Tarvitaan Shizuku, root tai ADB.</string>
+    <string name="hc_graphics_widget_locked">Ota ensin käyttöön «Vaihda Järjestelmä-widgetistä» kohdassa Asetukset → Lisäasetukset → Grafiikka-API</string>
+    <string name="hc_system_widget_enable">Järjestelmä-widget aloitusnäytöllä</string>
+    <string name="hc_system_widget_enable_summary">Oletuksena pois. Kun se on päällä, voit lisätä Järjestelmä-widgetin (Vulkan, RAM, verkko) widget-valitsimesta.</string>
+</resources>

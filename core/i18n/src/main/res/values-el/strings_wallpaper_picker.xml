@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="photos_filter_all">Όλα</string>
+    <string name="photos_filter_images">Εικόνες</string>
+    <string name="photos_filter_video">Βίντεο</string>
+    <string name="photos_filter_gif">GIF</string>
+    <string name="photos_filter_folders">Φάκελοι</string>
+    <string name="viewer_add_to_wallpapers">Προσθήκη στα wallpapers</string>
+    <string name="viewer_remove_from_wallpapers">Αφαίρεση από τα wallpapers</string>
+    <string name="preference_wallpaper_browse_telos">Περιήγηση σε φωτογραφίες, βίντεο και GIF στο Telos Viewer. Τα tagged wallpapers εμφανίζονται πρώτα.</string>
+    <string name="preference_wallpaper_choose_video">Επιλογή video wallpaper</string>
+    <string name="preference_wallpaper_choose_video_summary">Επιλέξτε βίντεο από τον επιλογέα συστήματος και επιβεβαιώστε το live wallpaper</string>
+</resources>

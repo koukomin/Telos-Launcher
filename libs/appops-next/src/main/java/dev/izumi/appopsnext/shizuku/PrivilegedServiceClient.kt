@@ -4,7 +4,10 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.ServiceConnection
 import android.os.Build
+import android.os.Handler
 import android.os.IBinder
+import android.os.Looper
+import android.system.Os
 import android.util.Log
 import dev.izumi.appopsnext.BuildConfig
 import dev.izumi.appopsnext.appops.PrivilegedAppOpsGateway
@@ -18,7 +21,10 @@ import dev.izumi.appopsnext.shizuku.model.PrivilegedBackendType
 import dev.izumi.appopsnext.shizuku.model.PrivilegedServiceInfo
 import dev.izumi.appopsnext.shizuku.model.PrivilegedServiceFailureReason
 import dev.izumi.appopsnext.shizuku.model.PrivilegedServiceState
+import dev.izumi.appopsnext.appops.command.AppOpsCommands
+import dev.izumi.appopsnext.history.AppOpsHistoryOutputExtractor
 import dev.izumi.appopsnext.shizuku.service.AppOpsUserService
+import de.mm20.launcher2.ktx.TelosShellEngine
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -35,6 +41,7 @@ class PrivilegedServiceClient(
     context: Context,
     private val diagnosticLog: DiagnosticLogRepository,
 ) : PrivilegedAppOpsGateway {
+    private val appContext = context.applicationContext
     private val mutableState =
         MutableStateFlow<PrivilegedServiceState>(PrivilegedServiceState.Disconnected)
     val state: StateFlow<PrivilegedServiceState> = mutableState.asStateFlow()
@@ -43,6 +50,8 @@ class PrivilegedServiceClient(
     private var service: IPrivilegedAppOpsService? = null
     @Volatile
     private var nativeGateway: NativeDaemonGateway? = null
+    @Volatile
+    private var shellBackend = false
     private var bound = false
     private var connectionTimeoutJob: Job? = null
     private var nativeConnectionJob: Job? = null
@@ -144,6 +153,18 @@ class PrivilegedServiceClient(
             return
         }
 
+        val hasDaemonAsset = runCatching {
+            appContext.assets.open("arm64-v8a/appopsnextd").close()
+            true
+        }.getOrDefault(false)
+        if (!hasDaemonAsset) {
+            diagnosticLog.info(
+                source = NATIVE_LOG_SOURCE,
+                message = "Native daemon asset missing; using UserService then shell.",
+            )
+            bindUserService()
+            return
+        }
         mutableState.value = PrivilegedServiceState.Connecting(
             PrivilegedBackendType.NATIVE_DAEMON,
         )
@@ -216,14 +237,22 @@ class PrivilegedServiceClient(
                     "clientVersion=${BuildConfig.VERSION_CODE}",
         )
         runCatching {
-            Shizuku.bindUserService(userServiceArgs, connection)
-            bound = true
-            diagnosticLog.info(
-                source = LOG_SOURCE,
-                message =
-                    "bindUserService returned; waiting for connection callback.",
-            )
-            startConnectionTimeout()
+            Handler(Looper.getMainLooper()).post {
+                runCatching {
+                    Shizuku.bindUserService(userServiceArgs, connection)
+                    bound = true
+                    diagnosticLog.info(
+                        source = LOG_SOURCE,
+                        message =
+                            "bindUserService returned; waiting for connection callback.",
+                    )
+                    startConnectionTimeout()
+                }.onFailure { error ->
+                    Log.e(TAG, "Unable to bind UserService", error)
+                    bound = false
+                    activateShellBackend()
+                }
+            }
         }.onFailure { error ->
             Log.e(TAG, "Unable to bind UserService", error)
             diagnosticLog.error(
@@ -232,9 +261,7 @@ class PrivilegedServiceClient(
                 error = error,
             )
             bound = false
-            mutableState.value = PrivilegedServiceState.Failure(
-                PrivilegedServiceFailureReason.BIND_FAILED,
-            )
+            activateShellBackend()
         }
     }
 
@@ -281,6 +308,7 @@ class PrivilegedServiceClient(
         }
         service = null
         bound = false
+        shellBackend = false
         mutableState.value = PrivilegedServiceState.Disconnected
     }
 
@@ -298,10 +326,33 @@ class PrivilegedServiceClient(
                         "UserService connection callback timed out after " +
                             "${CONNECTION_TIMEOUT_MILLIS / 1_000}s.",
                 )
+                activateShellBackend()
+            }
+        }
+    }
+
+    private fun activateShellBackend() {
+        connectionScope.launch(Dispatchers.IO) {
+            val ready = TelosShellEngine.isPrivilegedAvailable()
+            if (!ready) {
                 mutableState.value = PrivilegedServiceState.Failure(
                     PrivilegedServiceFailureReason.BIND_TIMED_OUT,
                 )
+                return@launch
             }
+            shellBackend = true
+            mutableState.value = PrivilegedServiceState.Connected(
+                PrivilegedServiceInfo(
+                    uid = runCatching { Os.getuid() }.getOrDefault(2000),
+                    pid = 0,
+                    apiLevel = Build.VERSION.SDK_INT,
+                    backendType = PrivilegedBackendType.USER_SERVICE,
+                ),
+            )
+            diagnosticLog.info(
+                source = LOG_SOURCE,
+                message = "Using privileged shell backend for AppOps commands.",
+            )
         }
     }
 
@@ -309,7 +360,7 @@ class PrivilegedServiceClient(
         withContext(Dispatchers.IO) {
             executeNative { it.getPackageOps(packageName) }
                 ?: service?.getPackageOps(packageName)
-                ?: throw IllegalStateException("Privileged service is unavailable")
+                ?: executeShell(AppOpsCommands.getPackageOps(packageName))
         }
 
     override suspend fun getPackageOp(
@@ -319,35 +370,35 @@ class PrivilegedServiceClient(
         withContext(Dispatchers.IO) {
             executeNative { it.getPackageOp(packageName, operationName) }
                 ?: service?.getPackageOp(packageName, operationName)
-                ?: throw IllegalStateException("Privileged service is unavailable")
+                ?: executeShell(AppOpsCommands.getPackageOp(packageName, operationName))
         }
 
     override suspend fun getUidOps(uid: Int): ShellCommandResult =
         withContext(Dispatchers.IO) {
             executeNative { it.getUidOps(uid) }
                 ?: service?.getUidOps(uid)
-                ?: throw IllegalStateException("Privileged service is unavailable")
+                ?: executeShell(AppOpsCommands.getUidOps(uid))
         }
 
     override suspend fun getUidStates(packageName: String): ShellCommandResult =
         withContext(Dispatchers.IO) {
             executeNative { it.getUidStates(packageName) }
                 ?: service?.getUidStates(packageName)
-                ?: throw IllegalStateException("Privileged service is unavailable")
+                ?: executeShell(AppOpsCommands.getUidStates(packageName))
         }
 
     override suspend fun getOpStates(operationName: String): ShellCommandResult =
         withContext(Dispatchers.IO) {
             executeNative { it.getOpStates(operationName) }
                 ?: service?.getOpStates(operationName)
-                ?: throw IllegalStateException("Privileged service is unavailable")
+                ?: executeShell(AppOpsCommands.getOpStates(operationName))
         }
 
     override suspend fun getWatchers(): ShellCommandResult =
         withContext(Dispatchers.IO) {
             val result = executeNative { it.getWatchers() }
                 ?: service?.getWatchers()
-                ?: throw IllegalStateException("Privileged service is unavailable")
+                ?: executeShell(AppOpsCommands.getWatchers())
             result.copy(stdout = WatcherResponseCodec.decode(result.stdout))
         }
 
@@ -357,7 +408,14 @@ class PrivilegedServiceClient(
         withContext(Dispatchers.IO) {
             executeNative { it.getHistory(operationName) }
                 ?: service?.getHistory(operationName)
-                ?: throw IllegalStateException("Privileged service is unavailable")
+                ?: executeShell(AppOpsCommands.getHistory(operationName)).let { result ->
+                    result.copy(
+                        stdout = AppOpsHistoryOutputExtractor.extract(
+                            commandOutput = result.stdout,
+                            operationName = operationName,
+                        ),
+                    )
+                }
         }
 
     override suspend fun getPackagePermissions(
@@ -366,7 +424,7 @@ class PrivilegedServiceClient(
         withContext(Dispatchers.IO) {
             executeNative { it.getPackagePermissions(packageName) }
                 ?: service?.getPackagePermissions(packageName)
-                ?: throw IllegalStateException("Privileged service is unavailable")
+                ?: executeShell(AppOpsCommands.getPackagePermissions(packageName))
         }
 
     override suspend fun setRevokedCompat(
@@ -385,7 +443,14 @@ class PrivilegedServiceClient(
                     permissionName,
                     revoked,
                 )
-                ?: throw IllegalStateException("Privileged service is unavailable")
+                ?: executeShell(
+                    AppOpsCommands.setRevokedCompat(
+                        userId = userId,
+                        packageName = packageName,
+                        permissionName = permissionName,
+                        revoked = revoked,
+                    ),
+                )
         }
 
     override suspend fun setPackageOpMode(
@@ -399,7 +464,9 @@ class PrivilegedServiceClient(
                     operationName,
                     mode.shellValue,
                 )
-                ?: throw IllegalStateException("Privileged service is unavailable")
+                ?: executeShell(
+                    AppOpsCommands.setPackageOpMode(packageName, operationName, mode),
+                )
         }
 
     override suspend fun setUidOpMode(
@@ -413,8 +480,23 @@ class PrivilegedServiceClient(
                     operationName,
                     mode.shellValue,
                 )
-                ?: throw IllegalStateException("Privileged service is unavailable")
+                ?: executeShell(
+                    AppOpsCommands.setUidOpMode(packageName, operationName, mode),
+                )
         }
+
+    private suspend fun executeShell(arguments: List<String>): ShellCommandResult {
+        if (!shellBackend && service == null && nativeGateway == null) {
+            activateShellBackend()
+        }
+        val res = TelosShellEngine.execArgsResult(arguments.toTypedArray())
+        return ShellCommandResult(
+            exitCode = res.exitCode,
+            stdout = res.stdout,
+            stderr = res.stderr,
+            timedOut = res.timedOut,
+        )
+    }
 
     private suspend fun executeNative(
         action: suspend (NativeDaemonGateway) -> ShellCommandResult,

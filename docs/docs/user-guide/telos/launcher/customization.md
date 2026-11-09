@@ -165,7 +165,7 @@ Settings > Language and region.
 
 - Fallback icon packs, as described above, have no UI.
 - A layout preset overwrites settings, there is no one-tap undo.
-- Video wallpaper theming and the wallpaper settings are in [Home screen](./home-screen#wallpaper).
+- Video wallpaper theming and the wallpaper settings are in [Home screen](./features/home-appearance-catalogue#wallpaper).
 
 ## Shared frosted glass
 

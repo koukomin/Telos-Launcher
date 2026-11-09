@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="photos_filter_all">Wszystko</string>
+    <string name="photos_filter_images">Obrazy</string>
+    <string name="photos_filter_video">Wideo</string>
+    <string name="photos_filter_gif">GIF</string>
+    <string name="photos_filter_folders">Foldery</string>
+    <string name="viewer_add_to_wallpapers">Dodaj do tapet</string>
+    <string name="viewer_remove_from_wallpapers">Usuń z tapet</string>
+    <string name="preference_wallpaper_browse_telos">Przeglądaj zdjęcia, wideo i GIF w Telos Viewer. Otagowane tapety są pierwsze.</string>
+    <string name="preference_wallpaper_choose_video">Wybierz tapetę wideo</string>
+    <string name="preference_wallpaper_choose_video_summary">Wybierz wideo w systemie, potem potwierdź tapetę na żywo</string>
+</resources>

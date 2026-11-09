@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="photos_filter_all">Tümü</string>
+    <string name="photos_filter_images">Görseller</string>
+    <string name="photos_filter_video">Video</string>
+    <string name="photos_filter_gif">GIF</string>
+    <string name="photos_filter_folders">Klasörler</string>
+    <string name="viewer_add_to_wallpapers">Duvar kağıtlarına ekle</string>
+    <string name="viewer_remove_from_wallpapers">Duvar kağıtlarından çıkar</string>
+    <string name="preference_wallpaper_browse_telos">Telos Viewer’da fotoğraf, video ve GIF gezin. Etiketlenen duvar kağıtları önce görünür.</string>
+    <string name="preference_wallpaper_choose_video">Video duvar kağıdı seç</string>
+    <string name="preference_wallpaper_choose_video_summary">Sistem seçiciden bir video seçin, ardından canlı duvar kağıdını onaylayın</string>
+</resources>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="photos_filter_all">すべて</string>
+    <string name="photos_filter_images">画像</string>
+    <string name="photos_filter_video">動画</string>
+    <string name="photos_filter_gif">GIF</string>
+    <string name="photos_filter_folders">フォルダ</string>
+    <string name="viewer_add_to_wallpapers">壁紙に追加</string>
+    <string name="viewer_remove_from_wallpapers">壁紙から削除</string>
+    <string name="preference_wallpaper_browse_telos">Telos Viewer で写真・動画・GIF を閲覧します。タグ付き壁紙が先頭に出ます。</string>
+    <string name="preference_wallpaper_choose_video">動画壁紙を選ぶ</string>
+    <string name="preference_wallpaper_choose_video_summary">システムの選択画面で動画を選び、ライブ壁紙を確認します</string>
+</resources>

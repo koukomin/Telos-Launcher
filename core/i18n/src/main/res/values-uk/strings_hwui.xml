@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hc_graphics_api">Графічний API</string>
+    <string name="hc_graphics_api_about">Що це робить</string>
+    <string name="hc_graphics_api_about_summary">Примусово задає відтворення інтерфейсу Android (HWUI / Skia) як Vulkan або OpenGL ES — той самий перемикач debug.hwui.renderer, що й у GAMA. Vulkan часто споживає менше енергії й менше гріється; OpenGL — запасний варіант, якщо Vulkan збоїть. Програми та ігри можуть обирати свій API. Перезавантаження скидає властивість, якщо не ввімкнено відновлення після запуску і немає Shizuku чи root. Якщо екран зависне, утримуйте гучність униз і живлення.</string>
+    <string name="hc_graphics_renderer">Відтворювач</string>
+    <string name="hc_graphics_renderer_summary">Потрібні Shizuku, root або ADB (скопіюйте команду нижче)</string>
+    <string name="hc_graphics_default">Системне значення</string>
+    <string name="hc_graphics_vulkan">Vulkan</string>
+    <string name="hc_graphics_opengl">OpenGL</string>
+    <string name="hc_graphics_current">Активний відтворювач</string>
+    <string name="hc_graphics_unknown">Невідомо</string>
+    <string name="hc_graphics_priv_ok">Shizuku або root готові</string>
+    <string name="hc_graphics_priv_missing">Немає Shizuku чи root — використайте ADB</string>
+    <string name="hc_graphics_restore_boot">Відновлювати після перезавантаження</string>
+    <string name="hc_graphics_restore_boot_summary">Знову застосовує Vulkan або OpenGL після запуску, коли є Shizuku або root. Android завжди скидає властивість під час перезавантаження.</string>
+    <string name="hc_graphics_copy_adb">Копіювати команду ADB</string>
+    <string name="hc_graphics_adb_copied">Команду ADB скопійовано</string>
+    <string name="hc_graphics_applied">Відтворювач застосовано. Деяким екранам може знадобитися перезавантаження.</string>
+    <string name="hc_graphics_need_privilege">Не вдалося застосувати. Надайте Shizuku, використайте root або виконайте:\n%1$s</string>
+    <string name="hc_graphics_widget_switch">Перемикати з віджета Система</string>
+    <string name="hc_graphics_widget_switch_summary">Дозволяє віджету Система на головному екрані змінювати Vulkan або OpenGL. Типово вимкнено. Потрібні Shizuku, root або ADB.</string>
+    <string name="hc_graphics_widget_locked">Спочатку ввімкніть «Перемикати з віджета Система» в Налаштування → Додатково → Графічний API</string>
+    <string name="hc_system_widget_enable">Віджет Система на головному екрані</string>
+    <string name="hc_system_widget_enable_summary">Типово вимкнено. Коли ввімкнено, віджет Система (Vulkan, RAM, мережа) можна додати з вибору віджетів.</string>
+</resources>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="photos_filter_all">Viss</string>
+    <string name="photos_filter_images">Attēli</string>
+    <string name="photos_filter_video">Video</string>
+    <string name="photos_filter_gif">GIF</string>
+    <string name="photos_filter_folders">Mapes</string>
+    <string name="viewer_add_to_wallpapers">Pievienot fona attēliem</string>
+    <string name="viewer_remove_from_wallpapers">Noņemt no fona attēliem</string>
+    <string name="preference_wallpaper_browse_telos">Pārlūkojiet foto, video un GIF Telos Viewer. Atzīmētie fona attēli ir pirmie.</string>
+    <string name="preference_wallpaper_choose_video">Izvēlēties video fona attēlu</string>
+    <string name="preference_wallpaper_choose_video_summary">Izvēlieties video sistēmas atlasītājā un apstipriniet dzīvo fona attēlu</string>
+</resources>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hc_graphics_api">Grafikos API</string>
+    <string name="hc_graphics_api_about">Ką tai daro</string>
+    <string name="hc_graphics_api_about_summary">Priverčia Android sąsajos vaizduoklį (HWUI / Skia) naudoti Vulkan arba OpenGL ES – tą patį debug.hwui.renderer jungiklį kaip GAMA. Vulkan dažnai naudoja mažiau energijos ir mažiau kaista; OpenGL yra atsarginis, jei Vulkan stringa. Programos ir žaidimai gali rinktis savo API. Paleidimas iš naujo išvalo savybę, nebent atkūrimas po paleidimo įjungtas ir yra Shizuku arba root. Jei ekranas užstringa, laikykite Garsumą žemyn ir Maitinimą.</string>
+    <string name="hc_graphics_renderer">Vaizduoklis</string>
+    <string name="hc_graphics_renderer_summary">Reikia Shizuku, root arba ADB (nukopijuokite komandą žemiau)</string>
+    <string name="hc_graphics_default">Sistemos numatytasis</string>
+    <string name="hc_graphics_vulkan">Vulkan</string>
+    <string name="hc_graphics_opengl">OpenGL</string>
+    <string name="hc_graphics_current">Aktyvus vaizduoklis</string>
+    <string name="hc_graphics_unknown">Nežinoma</string>
+    <string name="hc_graphics_priv_ok">Shizuku arba root paruošta</string>
+    <string name="hc_graphics_priv_missing">Nėra Shizuku ar root — naudokite ADB</string>
+    <string name="hc_graphics_restore_boot">Atkurti po paleidimo iš naujo</string>
+    <string name="hc_graphics_restore_boot_summary">Vėl taiko Vulkan arba OpenGL po paleidimo, kai yra Shizuku arba root. Android visada išvalo savybę paleidžiant iš naujo.</string>
+    <string name="hc_graphics_copy_adb">Kopijuoti ADB komandą</string>
+    <string name="hc_graphics_adb_copied">ADB komanda nukopijuota</string>
+    <string name="hc_graphics_applied">Vaizduoklis pritaikytas. Kai kuriems ekranams gali prireikti paleidimo iš naujo.</string>
+    <string name="hc_graphics_need_privilege">Nepavyko pritaikyti. Suteikite Shizuku, naudokite root arba vykdykite:\n%1$s</string>
+    <string name="hc_graphics_widget_switch">Perjungti iš Sistemos valdiklio</string>
+    <string name="hc_graphics_widget_switch_summary">Leidžia pradžios ekrano Sistemos valdikliui keisti Vulkan arba OpenGL. Numatytai išjungta. Reikia Shizuku, root arba ADB.</string>
+    <string name="hc_graphics_widget_locked">Pirmiausia įjunkite «Perjungti iš Sistemos valdiklio» skiltyje Nustatymai → Išplėstiniai → Grafikos API</string>
+    <string name="hc_system_widget_enable">Sistemos valdiklis pradžios ekrane</string>
+    <string name="hc_system_widget_enable_summary">Numatytai išjungta. Kai įjungta, Sistemos valdiklį (Vulkan, RAM, tinklas) galite pridėti iš valdiklių parinkiklio.</string>
+</resources>

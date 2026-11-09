@@ -117,6 +117,8 @@ import de.mm20.launcher2.ui.settings.dynamicisland.DynamicIslandSettingsRoute
 import de.mm20.launcher2.ui.settings.dynamicisland.DynamicIslandSettingsScreen
 import de.mm20.launcher2.ui.settings.homescreen.dock.DockSettingsRoute
 import de.mm20.launcher2.ui.settings.homescreen.dock.DockSettingsScreen
+import de.mm20.launcher2.ui.settings.homescreen.wallpaper.WallpaperLibraryRoute
+import de.mm20.launcher2.ui.settings.homescreen.wallpaper.WallpaperLibraryScreen
 import de.mm20.launcher2.ui.settings.homescreen.wallpaper.WallpaperSettingsRoute
 import de.mm20.launcher2.ui.settings.homescreen.wallpaper.WallpaperSettingsScreen
 import de.mm20.launcher2.ui.settings.webapps.WebAppsSettingsRoute
@@ -647,6 +649,9 @@ open class SettingsActivity : BaseActivity() {
             entry<WallpaperSettingsRoute> {
                 WallpaperSettingsScreen()
             }
+            entry<WallpaperLibraryRoute> { key ->
+                WallpaperLibraryScreen(appendVideo = key.appendVideo)
+            }
             entry<DockSettingsRoute> {
                 DockSettingsScreen()
             }
@@ -905,6 +910,8 @@ open class SettingsActivity : BaseActivity() {
             SettingsDeepLinkContract.ROUTE_YOUTUBE -> de.mm20.launcher2.ui.media.hub.MediaHubRoute("youtube")
             SettingsDeepLinkContract.ROUTE_YOUTUBE_MUSIC -> de.mm20.launcher2.ui.media.hub.MediaHubRoute("youtube_music")
             ROUTE_VIDEO -> de.mm20.launcher2.ui.media.hub.MediaHubRoute("video")
+            "settings/tv" -> de.mm20.launcher2.ui.media.hub.MediaHubRoute("tv")
+            "settings/stremio" -> de.mm20.launcher2.ui.media.hub.MediaHubRoute("stremio")
             ROUTE_MEDIA -> de.mm20.launcher2.ui.media.hub.MediaHubRoute(
                 intent.getStringExtra(SettingsDeepLinkContract.EXTRA_MEDIA_SPACE).orEmpty()
             )

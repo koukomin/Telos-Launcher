@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="photos_filter_all">Tout</string>
+    <string name="photos_filter_images">Images</string>
+    <string name="photos_filter_video">Vidéo</string>
+    <string name="photos_filter_gif">GIF</string>
+    <string name="photos_filter_folders">Dossiers</string>
+    <string name="viewer_add_to_wallpapers">Ajouter aux fonds</string>
+    <string name="viewer_remove_from_wallpapers">Retirer des fonds</string>
+    <string name="preference_wallpaper_browse_telos">Parcourez photos, vidéos et GIF dans Telos Viewer. Les fonds étiquetés apparaissent en premier.</string>
+    <string name="preference_wallpaper_choose_video">Choisir un fond vidéo</string>
+    <string name="preference_wallpaper_choose_video_summary">Choisissez une vidéo dans le sélecteur système, puis confirmez le fond animé</string>
+</resources>

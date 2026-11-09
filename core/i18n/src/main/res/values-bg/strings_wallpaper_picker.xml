@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="photos_filter_all">Всички</string>
+    <string name="photos_filter_images">Изображения</string>
+    <string name="photos_filter_video">Видео</string>
+    <string name="photos_filter_gif">GIF</string>
+    <string name="photos_filter_folders">Папки</string>
+    <string name="viewer_add_to_wallpapers">Добавяне към тапети</string>
+    <string name="viewer_remove_from_wallpapers">Премахване от тапети</string>
+    <string name="preference_wallpaper_browse_telos">Разглеждайте снимки, видеа и GIF в Telos Viewer. Маркираните тапети са първи.</string>
+    <string name="preference_wallpaper_choose_video">Избор на видео тапет</string>
+    <string name="preference_wallpaper_choose_video_summary">Изберете видео от системния избор и потвърдете живия тапет</string>
+</resources>

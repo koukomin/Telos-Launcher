@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="photos_filter_all">Kõik</string>
+    <string name="photos_filter_images">Pildid</string>
+    <string name="photos_filter_video">Video</string>
+    <string name="photos_filter_gif">GIF</string>
+    <string name="photos_filter_folders">Kaustad</string>
+    <string name="viewer_add_to_wallpapers">Lisa taustapiltidesse</string>
+    <string name="viewer_remove_from_wallpapers">Eemalda taustapiltidest</string>
+    <string name="preference_wallpaper_browse_telos">Sirvi fotosid, videoid ja GIF-e Telos Vieweris. Sildistatud taustapildid on esimesed.</string>
+    <string name="preference_wallpaper_choose_video">Vali video-taustapilt</string>
+    <string name="preference_wallpaper_choose_video_summary">Vali video süsteemi valijast ja kinnita live-taustapilt</string>
+</resources>

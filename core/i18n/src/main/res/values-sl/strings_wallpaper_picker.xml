@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="photos_filter_all">Vse</string>
+    <string name="photos_filter_images">Slike</string>
+    <string name="photos_filter_video">Video</string>
+    <string name="photos_filter_gif">GIF</string>
+    <string name="photos_filter_folders">Mape</string>
+    <string name="viewer_add_to_wallpapers">Dodaj k ozadjem</string>
+    <string name="viewer_remove_from_wallpapers">Odstrani iz ozadij</string>
+    <string name="preference_wallpaper_browse_telos">Brskajte po fotografijah, videih in GIF v Telos Viewer. Označena ozadja so prva.</string>
+    <string name="preference_wallpaper_choose_video">Izberi video ozadje</string>
+    <string name="preference_wallpaper_choose_video_summary">Izberite video v sistemskem izbirniku in potrdite živo ozadje</string>
+</resources>

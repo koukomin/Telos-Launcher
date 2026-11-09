@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hc_graphics_api">API tal-grafika</string>
+    <string name="hc_graphics_api_about">X’jagħmel dan</string>
+    <string name="hc_graphics_api_about_summary">Iġġiegħel ir-renderer tal-interface tal-Android (HWUI / Skia) għal Vulkan jew OpenGL ES, l-istess swiċċ debug.hwui.renderer bħal GAMA. Vulkan ħafna drabi juża inqas enerġija u jibqa’ aktar frisk; OpenGL huwa l-fallback jekk Vulkan jieqaf. L-apps u l-logħob jistgħu jagħżlu l-API tagħhom. Restart ineħħi l-proprjetà sakemm ir-restawr wara l-istartjar ma jkunx mixgħul u Shizuku jew root ma jkunux disponibbli. Jekk l-iskrin jiffriża, żomm Volume isfel u Power.</string>
+    <string name="hc_graphics_renderer">Renderer</string>
+    <string name="hc_graphics_renderer_summary">Jeħtieġ Shizuku, root jew ADB (ikkopja l-kmand hawn taħt)</string>
+    <string name="hc_graphics_default">Default tas-sistema</string>
+    <string name="hc_graphics_vulkan">Vulkan</string>
+    <string name="hc_graphics_opengl">OpenGL</string>
+    <string name="hc_graphics_current">Renderer attiv</string>
+    <string name="hc_graphics_unknown">Mhux magħruf</string>
+    <string name="hc_graphics_priv_ok">Shizuku jew root lesti</string>
+    <string name="hc_graphics_priv_missing">Ebda Shizuku jew root — uża ADB</string>
+    <string name="hc_graphics_restore_boot">Irrestawra wara restart</string>
+    <string name="hc_graphics_restore_boot_summary">Jerġa’ japplika Vulkan jew OpenGL wara l-istartjar meta Shizuku jew root ikunu disponibbli. Android dejjem ineħħi l-proprjetà mal-restart.</string>
+    <string name="hc_graphics_copy_adb">Ikkopja l-kmand ADB</string>
+    <string name="hc_graphics_adb_copied">Kmand ADB ikkupjat</string>
+    <string name="hc_graphics_applied">Renderer applikat. Xi skrins jista’ jkollhom bżonn restart.</string>
+    <string name="hc_graphics_need_privilege">Ma setax jiġi applikat. Agħti Shizuku, uża root, jew wettaq:\n%1$s</string>
+    <string name="hc_graphics_widget_switch">Ibdel mill-widget Sistema</string>
+    <string name="hc_graphics_widget_switch_summary">Jħalli l-widget Sistema tal-iskrin ewlieni jibdel Vulkan jew OpenGL. Mitfi b’mod default. Jeħtieġ Shizuku, root jew ADB.</string>
+    <string name="hc_graphics_widget_locked">L-ewwel ixgħel «Ibdel mill-widget Sistema» f’Settings → Avvanzat → API tal-grafika</string>
+    <string name="hc_system_widget_enable">Widget Sistema fuq l-iskrin ewlieni</string>
+    <string name="hc_system_widget_enable_summary">Mitfi b’mod default. Meta jkun mixgħul, tista’ żżid il-widget Sistema (Vulkan, RAM, netwerk) mill-magħżla tal-widgets.</string>
+</resources>

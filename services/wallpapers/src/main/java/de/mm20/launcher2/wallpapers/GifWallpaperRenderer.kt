@@ -95,9 +95,16 @@ internal class GifWallpaperRenderer(
     override fun unscheduleDrawable(who: Drawable, what: Runnable) { handler.removeCallbacks(what) }
 
     companion object {
-        fun isGif(file: File): Boolean = file.inputStream().use { input ->
-            val header = ByteArray(6)
-            input.read(header) == 6 && String(header, Charsets.US_ASCII) in setOf("GIF87a", "GIF89a")
+        fun isGif(file: File): Boolean {
+            if (file.extension.equals("mp4", true) || file.extension.equals("webm", true) ||
+                file.extension.equals("mkv", true) || file.extension.equals("3gp", true)
+            ) {
+                return false
+            }
+            return file.inputStream().use { input ->
+                val header = ByteArray(6)
+                input.read(header) == 6 && String(header, Charsets.US_ASCII) in setOf("GIF87a", "GIF89a")
+            }
         }
 
         /** Header and file-size limits apply before invoking a native decoder. */

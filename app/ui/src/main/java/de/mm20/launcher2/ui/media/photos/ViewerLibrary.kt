@@ -26,6 +26,20 @@ internal object ViewerLibrary {
         return now
     }
 
+    fun wallpaperUris(context: Context): Set<String> =
+        prefs(context).getStringSet("wallpaper_tag", emptySet()).orEmpty()
+
+    fun isWallpaper(context: Context, uri: Uri): Boolean =
+        wallpaperUris(context).contains(uri.toString())
+
+    fun toggleWallpaper(context: Context, uri: Uri): Boolean {
+        val s = uri.toString()
+        val next = wallpaperUris(context).toMutableSet()
+        val now = if (s in next) { next.remove(s); false } else { next.add(s); true }
+        prefs(context).edit().putStringSet("wallpaper_tag", next).apply()
+        return now
+    }
+
     data class EpubStyle(
         val fontSp: Int = 18,
         val marginDp: Int = 20,

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hc_graphics_api">গ্রাফিক্স API</string>
+    <string name="hc_graphics_api_about">এটি কী করে</string>
+    <string name="hc_graphics_api_about_summary">Android-এর UI রেন্ডারারকে (HWUI / Skia) Vulkan বা OpenGL ES-এ বাধ্য করে, GAMA-এর মতোই debug.hwui.renderer সুইচ। Vulkan প্রায়ই কম বিদ্যুৎ খরচ করে ও ঠান্ডা থাকে; Vulkan সমস্যা করলে OpenGL বিকল্প। অ্যাপ ও গেম নিজের API বেছে নিতে পারে। রিবুট বৈশিষ্ট্য মুছে দেয় যদি না বুটের পর পুনরুদ্ধার চালু থাকে এবং Shizuku বা root থাকে। স্ক্রিন আটকে গেলে ভলিউম ডাউন ও পাওয়ার চেপে ধরুন।</string>
+    <string name="hc_graphics_renderer">রেন্ডারার</string>
+    <string name="hc_graphics_renderer_summary">Shizuku, root বা ADB লাগে (নিচের কমান্ড কপি করুন)</string>
+    <string name="hc_graphics_default">সিস্টেম ডিফল্ট</string>
+    <string name="hc_graphics_vulkan">Vulkan</string>
+    <string name="hc_graphics_opengl">OpenGL</string>
+    <string name="hc_graphics_current">সক্রিয় রেন্ডারার</string>
+    <string name="hc_graphics_unknown">অজানা</string>
+    <string name="hc_graphics_priv_ok">Shizuku বা root প্রস্তুত</string>
+    <string name="hc_graphics_priv_missing">Shizuku বা root নেই — ADB ব্যবহার করুন</string>
+    <string name="hc_graphics_restore_boot">রিবুটের পর পুনরুদ্ধার</string>
+    <string name="hc_graphics_restore_boot_summary">বুটের পর Vulkan বা OpenGL আবার প্রয়োগ করে যখন Shizuku বা root থাকে। Android রিবুটে সবসময় বৈশিষ্ট্য মুছে দেয়।</string>
+    <string name="hc_graphics_copy_adb">ADB কমান্ড কপি করুন</string>
+    <string name="hc_graphics_adb_copied">ADB কমান্ড কপি হয়েছে</string>
+    <string name="hc_graphics_applied">রেন্ডারার প্রয়োগ হয়েছে। কিছু স্ক্রিনে রিবুট লাগতে পারে।</string>
+    <string name="hc_graphics_need_privilege">প্রয়োগ করা যায়নি। Shizuku দিন, root ব্যবহার করুন, বা চালান:\n%1$s</string>
+    <string name="hc_graphics_widget_switch">সিস্টেম উইজেট থেকে বদলান</string>
+    <string name="hc_graphics_widget_switch_summary">হোম স্ক্রিনের সিস্টেম উইজেটকে Vulkan বা OpenGL বদলাতে দেয়। ডিফল্ট বন্ধ। Shizuku, root বা ADB লাগে।</string>
+    <string name="hc_graphics_widget_locked">আগে সেটিংস → উন্নত → গ্রাফিক্স API-তে «সিস্টেম উইজেট থেকে বদলান» চালু করুন</string>
+    <string name="hc_system_widget_enable">হোম স্ক্রিন সিস্টেম উইজেট</string>
+    <string name="hc_system_widget_enable_summary">ডিফল্ট বন্ধ। চালু থাকলে উইজেট পিকার থেকে সিস্টেম উইজেট (Vulkan, RAM, নেটওয়ার্ক) যোগ করতে পারেন।</string>
+</resources>

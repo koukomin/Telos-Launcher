@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="photos_filter_all">الكل</string>
+    <string name="photos_filter_images">صور</string>
+    <string name="photos_filter_video">فيديو</string>
+    <string name="photos_filter_gif">GIF</string>
+    <string name="photos_filter_folders">مجلدات</string>
+    <string name="viewer_add_to_wallpapers">إضافة إلى الخلفيات</string>
+    <string name="viewer_remove_from_wallpapers">إزالة من الخلفيات</string>
+    <string name="preference_wallpaper_browse_telos">تصفح الصور والفيديو وGIF في Telos Viewer. تظهر الخلفيات الموسومة أولاً.</string>
+    <string name="preference_wallpaper_choose_video">اختيار خلفية فيديو</string>
+    <string name="preference_wallpaper_choose_video_summary">اختر فيديو من منتقي النظام ثم أكد الخلفية الحية</string>
+</resources>

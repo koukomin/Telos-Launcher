@@ -62,24 +62,37 @@ class WallpapersService(private val context: Context) {
         return withContext(Dispatchers.IO) {
             val dir = getVideoDir(context)
             dir.mkdirs()
-            
-            val filename = if (appendToPlaylist) "video_${System.currentTimeMillis()}" else "video"
-            val target = File(dir, filename)
-            
-            
-            val tmp = File(dir, "$filename.tmp")
+            val stem = if (appendToPlaylist) "video_${System.currentTimeMillis()}" else "video"
+            val tmp = File(dir, "$stem.tmp")
             try {
+                runCatching {
+                    context.contentResolver.takePersistableUriPermission(
+                        uri,
+                        android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION,
+                    )
+                }
                 context.contentResolver.openInputStream(uri)?.use { input ->
-                    tmp.outputStream().use { output ->
-                        input.copyTo(output)
-                    }
+                    tmp.outputStream().buffered(64 * 1024).use { output -> input.copyTo(output, 64 * 1024) }
                 } ?: return@withContext false
-                if (GifWallpaperRenderer.isGif(tmp)) {
-                    val header = tmp.inputStream().use { stream -> ByteArray(10).also { java.io.DataInputStream(stream).readFully(it) } }
+                if (tmp.length() < 16L) {
+                    tmp.delete()
+                    return@withContext false
+                }
+                val gif = GifWallpaperRenderer.isGif(tmp)
+                if (gif) {
+                    val header = tmp.inputStream().use { stream ->
+                        ByteArray(10).also { java.io.DataInputStream(stream).readFully(it) }
+                    }
                     gifWallpaperDimensions(header, tmp.length())
                 }
+                val target = File(dir, stem + extensionFor(uri, gif))
+                if (target.exists() && !target.delete()) return@withContext false
                 if (!tmp.renameTo(target)) return@withContext false
-                if (!appendToPlaylist) dir.listFiles()?.filter { it != target }?.forEach { it.delete() }
+                if (!appendToPlaylist) {
+                    dir.listFiles()?.forEach { file ->
+                        if (file != target) file.delete()
+                    }
+                }
                 VideoWallpaperService.videoChanged.tryEmit(Unit)
                 true
             } catch (e: Exception) {
@@ -87,6 +100,18 @@ class WallpapersService(private val context: Context) {
                 tmp.delete()
                 false
             }
+        }
+    }
+
+    private fun extensionFor(uri: Uri, gif: Boolean): String {
+        if (gif) return ".gif"
+        val mime = context.contentResolver.getType(uri)?.lowercase().orEmpty()
+        val path = uri.lastPathSegment.orEmpty().lowercase()
+        return when {
+            "webm" in mime || path.endsWith(".webm") -> ".webm"
+            "matroska" in mime || path.endsWith(".mkv") -> ".mkv"
+            "3gpp" in mime || path.endsWith(".3gp") -> ".3gp"
+            else -> ".mp4"
         }
     }
 

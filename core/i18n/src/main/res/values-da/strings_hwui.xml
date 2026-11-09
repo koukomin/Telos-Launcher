@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hc_graphics_api">Grafik-API</string>
+    <string name="hc_graphics_api_about">Hvad dette gør</string>
+    <string name="hc_graphics_api_about_summary">Tvinger Androids UI-renderer (HWUI / Skia) til Vulkan eller OpenGL ES, samme debug.hwui.renderer-kontakt som GAMA. Vulkan bruger ofte mindre strøm og bliver mindre varm; OpenGL er reserve, hvis Vulkan driller. Apps og spil kan stadig vælge deres eget API. En genstart rydder egenskaben, medmindre gendan efter start er slået til, og Shizuku eller root er tilgængelig. Hvis skærmen fryser, hold Volume ned og Power.</string>
+    <string name="hc_graphics_renderer">Renderer</string>
+    <string name="hc_graphics_renderer_summary">Kræver Shizuku, root eller ADB (kopiér kommandoen nedenfor)</string>
+    <string name="hc_graphics_default">Systemstandard</string>
+    <string name="hc_graphics_vulkan">Vulkan</string>
+    <string name="hc_graphics_opengl">OpenGL</string>
+    <string name="hc_graphics_current">Aktiv renderer</string>
+    <string name="hc_graphics_unknown">Ukendt</string>
+    <string name="hc_graphics_priv_ok">Shizuku eller root klar</string>
+    <string name="hc_graphics_priv_missing">Ingen Shizuku eller root — brug ADB</string>
+    <string name="hc_graphics_restore_boot">Gendan efter genstart</string>
+    <string name="hc_graphics_restore_boot_summary">Anvender Vulkan eller OpenGL igen efter start, når Shizuku eller root er tilgængelig. Android rydder altid egenskaben ved genstart.</string>
+    <string name="hc_graphics_copy_adb">Kopiér ADB-kommando</string>
+    <string name="hc_graphics_adb_copied">ADB-kommando kopieret</string>
+    <string name="hc_graphics_applied">Renderer anvendt. Nogle skærme kan kræve en genstart.</string>
+    <string name="hc_graphics_need_privilege">Kunne ikke anvende. Giv Shizuku, brug root, eller kør:\n%1$s</string>
+    <string name="hc_graphics_widget_switch">Skift fra System-widget</string>
+    <string name="hc_graphics_widget_switch_summary">Lader startskærmens System-widget skifte Vulkan eller OpenGL. Fra som standard. Kræver Shizuku, root eller ADB.</string>
+    <string name="hc_graphics_widget_locked">Slå først «Skift fra System-widget» til i Indstillinger → Avanceret → Grafik-API</string>
+    <string name="hc_system_widget_enable">System-widget på startskærmen</string>
+    <string name="hc_system_widget_enable_summary">Fra som standard. Når den er til, kan du tilføje System-widgeten (Vulkan, RAM, netværk) fra widgetvælgeren.</string>
+</resources>

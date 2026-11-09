@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="photos_filter_all">সব</string>
+    <string name="photos_filter_images">ছবি</string>
+    <string name="photos_filter_video">ভিডিও</string>
+    <string name="photos_filter_gif">GIF</string>
+    <string name="photos_filter_folders">ফোল্ডার</string>
+    <string name="viewer_add_to_wallpapers">ওয়ালপেপারে যোগ করুন</string>
+    <string name="viewer_remove_from_wallpapers">ওয়ালপেপার থেকে সরান</string>
+    <string name="preference_wallpaper_browse_telos">Telos Viewer-এ ছবি, ভিডিও ও GIF দেখুন। ট্যাগ করা ওয়ালপেপার আগে দেখায়।</string>
+    <string name="preference_wallpaper_choose_video">ভিডিও ওয়ালপেপার বেছে নিন</string>
+    <string name="preference_wallpaper_choose_video_summary">সিস্টেম পিকার থেকে ভিডিও বেছে নিন, তারপর লাইভ ওয়ালপেপার নিশ্চিত করুন</string>
+</resources>

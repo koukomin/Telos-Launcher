@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="photos_filter_all">Kaikki</string>
+    <string name="photos_filter_images">Kuvat</string>
+    <string name="photos_filter_video">Video</string>
+    <string name="photos_filter_gif">GIF</string>
+    <string name="photos_filter_folders">Kansiot</string>
+    <string name="viewer_add_to_wallpapers">Lisää taustakuviin</string>
+    <string name="viewer_remove_from_wallpapers">Poista taustakuvista</string>
+    <string name="preference_wallpaper_browse_telos">Selaa kuvia, videoita ja GIF-tiedostoja Telos Viewerissä. Tunnistetut taustakuvat näkyvät ensin.</string>
+    <string name="preference_wallpaper_choose_video">Valitse videotaustakuva</string>
+    <string name="preference_wallpaper_choose_video_summary">Valitse video järjestelmän valitsimesta ja vahvista live-taustakuva</string>
+</resources>

@@ -378,7 +378,7 @@ class VideoWallpaperService : WallpaperService() {
                 p.setVideoSurfaceHolder(surfaceHolder)
                 p.repeatMode = Player.REPEAT_MODE_ALL
 
-                val mediaItems = allFiles.map { MediaItem.fromUri(it.absolutePath) }
+                val mediaItems = allFiles.map { MediaItem.fromUri(android.net.Uri.fromFile(it)) }
                 p.setMediaItems(mediaItems)
 
                 p.setPlaybackSpeed(speed)

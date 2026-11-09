@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="photos_filter_all">全部</string>
+    <string name="photos_filter_images">图片</string>
+    <string name="photos_filter_video">视频</string>
+    <string name="photos_filter_gif">GIF</string>
+    <string name="photos_filter_folders">文件夹</string>
+    <string name="viewer_add_to_wallpapers">添加到壁纸</string>
+    <string name="viewer_remove_from_wallpapers">从壁纸移除</string>
+    <string name="preference_wallpaper_browse_telos">在 Telos Viewer 中浏览照片、视频和 GIF。已标记的壁纸排在前面。</string>
+    <string name="preference_wallpaper_choose_video">选择视频壁纸</string>
+    <string name="preference_wallpaper_choose_video_summary">在系统选择器中选视频，然后确认动态壁纸</string>
+</resources>
