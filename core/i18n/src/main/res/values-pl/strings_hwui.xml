@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hc_graphics_api">API grafiki</string>
+    <string name="hc_graphics_api_about">Co to robi</string>
+    <string name="hc_graphics_api_about_summary">Wymusza renderer interfejsu Androida (HWUI / Skia) na Vulkan lub OpenGL ES — ten sam przełącznik debug.hwui.renderer co GAMA. Vulkan często zużywa mniej energii i mniej się nagrzewa; OpenGL to zapas, gdy Vulkan szwankuje. Aplikacje i gry mogą wybrać własne API. Restart czyści właściwość, chyba że przywracanie po starcie jest włączone i jest Shizuku lub root. Gdy ekran zamarznie, przytrzymaj Głośność w dół i Zasilanie.</string>
+    <string name="hc_graphics_renderer">Renderer</string>
+    <string name="hc_graphics_renderer_summary">Potrzeba Shizuku, root lub ADB (skopiuj polecenie poniżej)</string>
+    <string name="hc_graphics_default">Domyślne systemowe</string>
+    <string name="hc_graphics_vulkan">Vulkan</string>
+    <string name="hc_graphics_opengl">OpenGL</string>
+    <string name="hc_graphics_current">Aktywny renderer</string>
+    <string name="hc_graphics_unknown">Nieznany</string>
+    <string name="hc_graphics_priv_ok">Shizuku lub root gotowe</string>
+    <string name="hc_graphics_priv_missing">Brak Shizuku lub root — użyj ADB</string>
+    <string name="hc_graphics_restore_boot">Przywróć po restarcie</string>
+    <string name="hc_graphics_restore_boot_summary">Ponownie stosuje Vulkan lub OpenGL po starcie, gdy jest Shizuku lub root. Android zawsze czyści właściwość przy restarcie.</string>
+    <string name="hc_graphics_copy_adb">Kopiuj polecenie ADB</string>
+    <string name="hc_graphics_adb_copied">Skopiowano polecenie ADB</string>
+    <string name="hc_graphics_applied">Renderer zastosowany. Niektóre ekrany mogą wymagać restartu.</string>
+    <string name="hc_graphics_need_privilege">Nie udało się zastosować. Nadaj Shizuku, użyj root lub uruchom:\n%1$s</string>
+    <string name="hc_graphics_widget_switch">Przełącz z widżetu System</string>
+    <string name="hc_graphics_widget_switch_summary">Pozwala widżetowi System na ekranie głównym zmieniać Vulkan lub OpenGL. Domyślnie wył. Potrzeba Shizuku, root lub ADB.</string>
+    <string name="hc_graphics_widget_locked">Najpierw włącz «Przełącz z widżetu System» w Ustawienia → Zaawansowane → API grafiki</string>
+    <string name="hc_system_widget_enable">Widżet System na ekranie głównym</string>
+    <string name="hc_system_widget_enable_summary">Domyślnie wył. Gdy włączony, możesz dodać widżet System (Vulkan, RAM, sieć) z wyboru widżetów.</string>
+</resources>

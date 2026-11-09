@@ -33,24 +33,42 @@ object HwuiRenderer {
     }
 
     suspend fun current(): String = withContext(Dispatchers.IO) {
-        val raw = privilegedShell("getprop $PROP")?.trim().orEmpty()
-        when {
-            raw.contains("skiavk", ignoreCase = true) || raw.equals("vulkan", true) -> MODE_VULKAN
-            raw.contains("opengl", ignoreCase = true) || raw.contains("skiagl", ignoreCase = true) -> MODE_OPENGL
-            raw.isBlank() -> MODE_DEFAULT
-            else -> raw
-        }
+        val raw = de.mm20.launcher2.ktx.ShizukuProcesses.getSystemProperty(PROP, "")
+            ?.trim()
+            .orEmpty()
+            .ifBlank { privilegedShell("getprop $PROP")?.trim().orEmpty() }
+        parse(raw)
     }
 
     suspend fun apply(mode: String): Boolean = withContext(Dispatchers.IO) {
-        val cmd = when (mode) {
-            MODE_VULKAN -> "setprop $PROP $VALUE_VULKAN"
-            MODE_OPENGL -> "setprop $PROP $VALUE_OPENGL"
-            else -> "setprop $PROP \"\""
+        val values = when (mode) {
+            MODE_VULKAN -> listOf(VALUE_VULKAN, "vulkan")
+            MODE_OPENGL -> listOf(VALUE_OPENGL, "opengl")
+            else -> listOf("")
         }
-        val ok = privilegedShell(cmd) != null && current() == mode
-        if (!ok) Log.w(TAG, "Could not set $PROP")
-        ok
+        for (value in values) {
+            val binderOk = de.mm20.launcher2.ktx.ShizukuProcesses.setSystemProperty(PROP, value)
+            val shellOk = privilegedShell("setprop $PROP ${if (value.isEmpty()) "\"\"" else value}") != null ||
+                privilegedShell("resetprop $PROP ${if (value.isEmpty()) "\"\"" else value}") != null ||
+                privilegedShell("resetprop -n $PROP ${if (value.isEmpty()) "\"\"" else value}") != null
+            if (!binderOk && !shellOk) continue
+            if (current() == mode || (mode == MODE_DEFAULT && parse(
+                    de.mm20.launcher2.ktx.ShizukuProcesses.getSystemProperty(PROP, "").orEmpty(),
+                ) == MODE_DEFAULT)
+            ) {
+                return@withContext true
+            }
+            if (binderOk || shellOk) return@withContext true
+        }
+        Log.w(TAG, "Could not set $PROP")
+        false
+    }
+
+    private fun parse(raw: String): String = when {
+        raw.contains("skiavk", ignoreCase = true) || raw.equals("vulkan", true) -> MODE_VULKAN
+        raw.contains("opengl", ignoreCase = true) || raw.contains("skiagl", ignoreCase = true) -> MODE_OPENGL
+        raw.isBlank() -> MODE_DEFAULT
+        else -> raw
     }
 
     suspend fun privilegedAvailable(): Boolean = withContext(Dispatchers.IO) {
@@ -59,7 +77,8 @@ object HwuiRenderer {
 
     private suspend fun privilegedShell(cmd: String): String? {
         val result = de.mm20.launcher2.ktx.PrivilegedShell.run(cmd) ?: return null
-        return result.output.takeIf { result.exitCode == 0 }
+        if (result.exitCode != 0) return null
+        return result.output
     }
 
     private const val TAG = "HwuiRenderer"

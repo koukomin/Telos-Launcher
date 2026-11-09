@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hc_graphics_api">Grafik API</string>
+    <string name="hc_graphics_api_about">Bu ne işe yarar</string>
+    <string name="hc_graphics_api_about_summary">Android’in arayüz oluşturucusunu (HWUI / Skia) Vulkan veya OpenGL ES’e zorlar; GAMA’nın kullandığı debug.hwui.renderer anahtarıdır. Vulkan genelde daha az güç harcar ve daha serin kalır; Vulkan takılırsa OpenGL yedektir. Uygulamalar ve oyunlar kendi API’lerini seçebilir. Yeniden başlatma özelliği siler; önyüklemede geri yükleme açıksa ve Shizuku veya root varsa kalır. Ekran donarsa Ses kıs ve Güç tuşuna basılı tutun.</string>
+    <string name="hc_graphics_renderer">Oluşturucu</string>
+    <string name="hc_graphics_renderer_summary">Shizuku, root veya ADB gerekir (aşağıdaki komutu kopyalayın)</string>
+    <string name="hc_graphics_default">Sistem varsayılanı</string>
+    <string name="hc_graphics_vulkan">Vulkan</string>
+    <string name="hc_graphics_opengl">OpenGL</string>
+    <string name="hc_graphics_current">Etkin oluşturucu</string>
+    <string name="hc_graphics_unknown">Bilinmiyor</string>
+    <string name="hc_graphics_priv_ok">Shizuku veya root hazır</string>
+    <string name="hc_graphics_priv_missing">Shizuku veya root yok — ADB kullanın</string>
+    <string name="hc_graphics_restore_boot">Yeniden başlatmadan sonra geri yükle</string>
+    <string name="hc_graphics_restore_boot_summary">Shizuku veya root varsa açılıştan sonra Vulkan veya OpenGL’i yeniden uygular. Android yeniden başlatınca özelliği her zaman temizler.</string>
+    <string name="hc_graphics_copy_adb">ADB komutunu kopyala</string>
+    <string name="hc_graphics_adb_copied">ADB komutu kopyalandı</string>
+    <string name="hc_graphics_applied">Oluşturucu uygulandı. Bazı ekranlar yeniden başlatma gerektirebilir.</string>
+    <string name="hc_graphics_need_privilege">Uygulanamadı. Shizuku verin, root kullanın veya şunu çalıştırın:\n%1$s</string>
+    <string name="hc_graphics_widget_switch">Sistem widget’ından değiştir</string>
+    <string name="hc_graphics_widget_switch_summary">Ana ekrandaki Sistem widget’ının Vulkan veya OpenGL’i değiştirmesine izin verir. Varsayılan kapalı. Shizuku, root veya ADB gerekir.</string>
+    <string name="hc_graphics_widget_locked">Önce Ayarlar → Gelişmiş → Grafik API içinde «Sistem widget’ından değiştir»i açın</string>
+    <string name="hc_system_widget_enable">Ana ekran Sistem widget’ı</string>
+    <string name="hc_system_widget_enable_summary">Varsayılan kapalı. Açıkken widget seçiciden Sistem widget’ını (Vulkan, RAM, ağ) ekleyebilirsiniz.</string>
+</resources>

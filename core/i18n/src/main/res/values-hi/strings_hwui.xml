@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hc_graphics_api">ग्राफ़िक्स API</string>
+    <string name="hc_graphics_api_about">यह क्या करता है</string>
+    <string name="hc_graphics_api_about_summary">Android के UI रेंडरर (HWUI / Skia) को Vulkan या OpenGL ES पर बाध्य करता है, वही debug.hwui.renderer स्विच जो GAMA उपयोग करता है। Vulkan अक्सर कम बिजली खर्च करता है और ठंडा रहता है; Vulkan अटकने पर OpenGL विकल्प है। ऐप और गेम अपना API चुन सकते हैं। रीबूट गुण साफ़ करता है जब तक बूट के बाद पुनर्स्थापना चालू न हो और Shizuku या root उपलब्ध न हो। स्क्रीन जम जाए तो वॉल्यूम डाउन और पावर दबाए रखें।</string>
+    <string name="hc_graphics_renderer">रेंडरर</string>
+    <string name="hc_graphics_renderer_summary">Shizuku, root या ADB चाहिए (नीचे कमांड कॉपी करें)</string>
+    <string name="hc_graphics_default">सिस्टम डिफ़ॉल्ट</string>
+    <string name="hc_graphics_vulkan">Vulkan</string>
+    <string name="hc_graphics_opengl">OpenGL</string>
+    <string name="hc_graphics_current">सक्रिय रेंडरर</string>
+    <string name="hc_graphics_unknown">अज्ञात</string>
+    <string name="hc_graphics_priv_ok">Shizuku या root तैयार</string>
+    <string name="hc_graphics_priv_missing">Shizuku या root नहीं — ADB उपयोग करें</string>
+    <string name="hc_graphics_restore_boot">रीबूट के बाद पुनर्स्थापित करें</string>
+    <string name="hc_graphics_restore_boot_summary">बूट के बाद Vulkan या OpenGL फिर लागू करता है जब Shizuku या root उपलब्ध हो। Android रीबूट पर गुण हमेशा साफ़ करता है।</string>
+    <string name="hc_graphics_copy_adb">ADB कमांड कॉपी करें</string>
+    <string name="hc_graphics_adb_copied">ADB कमांड कॉपी हुई</string>
+    <string name="hc_graphics_applied">रेंडरर लागू हो गया। कुछ स्क्रीन को रीबूट चाहिए हो सकता है।</string>
+    <string name="hc_graphics_need_privilege">लागू नहीं हो सका। Shizuku दें, root उपयोग करें, या चलाएँ:\n%1$s</string>
+    <string name="hc_graphics_widget_switch">सिस्टम विजेट से बदलें</string>
+    <string name="hc_graphics_widget_switch_summary">होम स्क्रीन सिस्टम विजेट को Vulkan या OpenGL बदलने देता है। डिफ़ॉल्ट बंद। Shizuku, root या ADB चाहिए।</string>
+    <string name="hc_graphics_widget_locked">पहले सेटिंग्स → उन्नत → ग्राफ़िक्स API में «सिस्टम विजेट से बदलें» चालू करें</string>
+    <string name="hc_system_widget_enable">होम स्क्रीन सिस्टम विजेट</string>
+    <string name="hc_system_widget_enable_summary">डिफ़ॉल्ट बंद। चालू होने पर विजेट पिकर से सिस्टम विजेट (Vulkan, RAM, नेटवर्क) जोड़ सकते हैं।</string>
+</resources>

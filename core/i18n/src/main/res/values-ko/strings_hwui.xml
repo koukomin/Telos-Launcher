@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hc_graphics_api">그래픽 API</string>
+    <string name="hc_graphics_api_about">이 기능의 역할</string>
+    <string name="hc_graphics_api_about_summary">Android UI 렌더러(HWUI / Skia)를 Vulkan 또는 OpenGL ES로 강제합니다. GAMA와 같은 debug.hwui.renderer 스위치입니다. Vulkan은 전력과 발열을 줄이는 경우가 많고, Vulkan이 불안정하면 OpenGL로 바꿉니다. 앱과 게임은 자체 API를 고를 수 있습니다. 재시작하면 속성이 지워집니다. 부팅 후 복원이 켜져 있고 Shizuku 또는 root가 있으면 다시 적용합니다. 화면이 멈추면 볼륨 낮춤과 전원을 길게 누르세요.</string>
+    <string name="hc_graphics_renderer">렌더러</string>
+    <string name="hc_graphics_renderer_summary">Shizuku, root 또는 ADB가 필요합니다(아래 명령 복사)</string>
+    <string name="hc_graphics_default">시스템 기본값</string>
+    <string name="hc_graphics_vulkan">Vulkan</string>
+    <string name="hc_graphics_opengl">OpenGL</string>
+    <string name="hc_graphics_current">활성 렌더러</string>
+    <string name="hc_graphics_unknown">알 수 없음</string>
+    <string name="hc_graphics_priv_ok">Shizuku 또는 root 준비됨</string>
+    <string name="hc_graphics_priv_missing">Shizuku나 root가 없습니다 — ADB를 사용하세요</string>
+    <string name="hc_graphics_restore_boot">재시작 후 복원</string>
+    <string name="hc_graphics_restore_boot_summary">Shizuku 또는 root가 있으면 부팅 후 Vulkan 또는 OpenGL을 다시 적용합니다. Android는 재시작 시 항상 속성을 지웁니다.</string>
+    <string name="hc_graphics_copy_adb">ADB 명령 복사</string>
+    <string name="hc_graphics_adb_copied">ADB 명령을 복사했습니다</string>
+    <string name="hc_graphics_applied">렌더러가 적용되었습니다. 일부 화면은 재시작이 필요할 수 있습니다.</string>
+    <string name="hc_graphics_need_privilege">적용할 수 없습니다. Shizuku를 허용하거나 root를 사용하거나 다음을 실행하세요:\n%1$s</string>
+    <string name="hc_graphics_widget_switch">시스템 위젯에서 전환</string>
+    <string name="hc_graphics_widget_switch_summary">홈 화면 시스템 위젯이 Vulkan 또는 OpenGL을 바꾸도록 합니다. 기본값은 꺼짐. Shizuku, root 또는 ADB가 필요합니다.</string>
+    <string name="hc_graphics_widget_locked">먼저 설정 → 고급 → 그래픽 API에서 «시스템 위젯에서 전환»을 켜세요</string>
+    <string name="hc_system_widget_enable">홈 화면 시스템 위젯</string>
+    <string name="hc_system_widget_enable_summary">기본값은 꺼짐. 켜면 위젯 선택기에서 시스템 위젯(Vulkan, RAM, 네트워크)을 추가할 수 있습니다.</string>
+</resources>

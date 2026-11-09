@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hc_graphics_api">グラフィック API</string>
+    <string name="hc_graphics_api_about">この機能について</string>
+    <string name="hc_graphics_api_about_summary">Android の UI レンダラー（HWUI / Skia）を Vulkan または OpenGL ES に強制します。GAMA と同じ debug.hwui.renderer スイッチです。Vulkan は電力が少なく熱も抑えられることが多く、不具合時は OpenGL に切り替えます。アプリやゲームは独自の API を選べます。再起動でプロパティは消えます。起動時復元がオンで Shizuku または root がある場合は再適用します。画面が固まったら音量下と電源を長押ししてください。</string>
+    <string name="hc_graphics_renderer">レンダラー</string>
+    <string name="hc_graphics_renderer_summary">Shizuku、root、または ADB が必要です（下のコマンドをコピー）</string>
+    <string name="hc_graphics_default">システムの既定</string>
+    <string name="hc_graphics_vulkan">Vulkan</string>
+    <string name="hc_graphics_opengl">OpenGL</string>
+    <string name="hc_graphics_current">使用中のレンダラー</string>
+    <string name="hc_graphics_unknown">不明</string>
+    <string name="hc_graphics_priv_ok">Shizuku または root の準備完了</string>
+    <string name="hc_graphics_priv_missing">Shizuku も root もありません — ADB を使ってください</string>
+    <string name="hc_graphics_restore_boot">再起動後に復元</string>
+    <string name="hc_graphics_restore_boot_summary">Shizuku または root があるとき、起動後に Vulkan または OpenGL を再適用します。Android は再起動時に必ずプロパティを消します。</string>
+    <string name="hc_graphics_copy_adb">ADB コマンドをコピー</string>
+    <string name="hc_graphics_adb_copied">ADB コマンドをコピーしました</string>
+    <string name="hc_graphics_applied">レンダラーを適用しました。一部の画面は再起動が必要なことがあります。</string>
+    <string name="hc_graphics_need_privilege">適用できませんでした。Shizuku を許可するか、root を使うか、次を実行してください:\n%1$s</string>
+    <string name="hc_graphics_widget_switch">システムウィジェットから切り替え</string>
+    <string name="hc_graphics_widget_switch_summary">ホーム画面のシステムウィジェットで Vulkan または OpenGL を切り替えられます。初期値はオフ。Shizuku、root、または ADB が必要です。</string>
+    <string name="hc_graphics_widget_locked">先に設定 → 詳細設定 → グラフィック API で「システムウィジェットから切り替え」をオンにしてください</string>
+    <string name="hc_system_widget_enable">ホーム画面のシステムウィジェット</string>
+    <string name="hc_system_widget_enable_summary">初期値はオフ。オンにすると、ウィジェット選択からシステムウィジェット（Vulkan、RAM、ネットワーク）を追加できます。</string>
+</resources>

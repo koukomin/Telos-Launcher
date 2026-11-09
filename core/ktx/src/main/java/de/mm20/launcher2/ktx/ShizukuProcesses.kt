@@ -41,6 +41,7 @@ object ShizukuProcesses {
     fun start(args: Array<String>, environment: Array<String>? = null, directory: String? = null, retryOnSpawnFailure: Boolean = true): Process {
         check(Looper.myLooper() != Looper.getMainLooper()) { "Privileged processes must start off Main" }
         check(args.isNotEmpty() && available())
+        runCatching { startViaNewProcess(args, environment, directory) }.getOrNull()?.let { return it }
         val context = requireNotNull(appContext) { "ShizukuProcesses is not initialized" }
         val current = synchronized(monitor) {
             binding?.takeIf { it.ready.count > 0 || it.service?.asBinder()?.pingBinder() == true } ?: Binding().also { state ->
@@ -91,6 +92,74 @@ object ShizukuProcesses {
             IRemoteProcess.Stub.asInterface(retryService.start(args, environment, directory))
         }
         return fromRemoteProcess(requireNotNull(remote))
+    }
+
+    /**
+     * Direct IShizukuService.newProcess (transaction 7). Built-in Telos Shizuku
+     * always exposes this; UserService spawning can still fail when the manager
+     * provider races or the APK id has a flavor suffix.
+     */
+    private fun startViaNewProcess(
+        args: Array<String>,
+        environment: Array<String>?,
+        directory: String?,
+    ): Process {
+        val binder = requireNotNull(Shizuku.getBinder()) { "Shizuku binder missing" }
+        val data = android.os.Parcel.obtain()
+        val reply = android.os.Parcel.obtain()
+        try {
+            data.writeInterfaceToken("moe.shizuku.server.IShizukuService")
+            data.writeStringArray(args)
+            data.writeStringArray(environment)
+            data.writeString(directory)
+            check(binder.transact(7, data, reply, 0)) { "newProcess transact rejected" }
+            reply.readException()
+            val remote = IRemoteProcess.Stub.asInterface(reply.readStrongBinder())
+            return fromRemoteProcess(requireNotNull(remote) { "newProcess returned an empty binder" })
+        } finally {
+            data.recycle()
+            reply.recycle()
+        }
+    }
+
+    fun getSystemProperty(name: String, defaultValue: String = ""): String? {
+        if (!available()) return null
+        val binder = Shizuku.getBinder() ?: return null
+        val data = android.os.Parcel.obtain()
+        val reply = android.os.Parcel.obtain()
+        return try {
+            data.writeInterfaceToken("moe.shizuku.server.IShizukuService")
+            data.writeString(name)
+            data.writeString(defaultValue)
+            if (!binder.transact(9, data, reply, 0)) return null
+            reply.readException()
+            reply.readString()
+        } catch (_: Throwable) {
+            null
+        } finally {
+            data.recycle()
+            reply.recycle()
+        }
+    }
+
+    fun setSystemProperty(name: String, value: String): Boolean {
+        if (!available()) return false
+        val binder = Shizuku.getBinder() ?: return false
+        val data = android.os.Parcel.obtain()
+        val reply = android.os.Parcel.obtain()
+        return try {
+            data.writeInterfaceToken("moe.shizuku.server.IShizukuService")
+            data.writeString(name)
+            data.writeString(value)
+            if (!binder.transact(10, data, reply, 0)) return false
+            reply.readException()
+            true
+        } catch (_: Throwable) {
+            false
+        } finally {
+            data.recycle()
+            reply.recycle()
+        }
     }
 
     /** Descriptor ownership boundary, also exercised with a fake binder by Android regression tests. */
