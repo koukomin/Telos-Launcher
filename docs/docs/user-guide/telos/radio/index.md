@@ -52,7 +52,7 @@ address yourself.
 
 | Tab | Contents |
 | --- | --- |
-| **Collection** | Your stations (the list of recordings is in the ⋮ menu, see below). Tap to play, long-press to rename or remove, the heart removes a station from the collection. An empty collection says "No stations yet. Search for a station, add one with its address, or import a playlist." |
+| **Collection** | Your favorite stations listed alphabetically, with the last played station pinned at the top. Live audio spectrum visualizer bar at the top of the collection. Tap to play, long-press to rename or remove. |
 | **Search** | A search field "Search by station name" with a progress bar. Results show a heart that saves a station to your collection |
 | **History** | The tracks announced by the stations you listen to, newest first, with **Clear history** |
 

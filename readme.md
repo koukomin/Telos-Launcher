@@ -908,6 +908,7 @@ Records the screen to a video with MediaProjection. [Docs](https://koukomin.gith
 
 - Morse accepts text in every supported Telos language offline: Greek uses the Greek radio alphabet; other scripts use visible Latin romanization into international Morse (not national Wabun, SKATS or Chinese telegraph codes). Unsupported symbols are reported.
 - Choose light, sound or both; light can use the camera flash, screen, or both. Media volume controls sound. Dot/dash and gaps use 1/3 and 1/3/7 units; Stop, leaving the app or tapping the screen-light view stops output and restores brightness.
+- **Live Real-time Morse Decoder:** Decodes incoming Morse signals in real-time via camera light flashing (with adaptive ambient brightness thresholding) or microphone audio tones, displaying decoded Greek radio Morse with Latin transliteration side-by-side.
 
 ### Telos Notes
 
