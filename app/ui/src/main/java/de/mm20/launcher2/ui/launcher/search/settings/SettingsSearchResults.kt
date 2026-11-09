@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.ui.Modifier
 import de.mm20.launcher2.search.SettingsSearchItem
+import de.mm20.launcher2.ui.launcher.search.common.ShowAllButton
 import de.mm20.launcher2.ui.launcher.search.common.list.ListItem
 import de.mm20.launcher2.ui.launcher.search.common.list.ListResults
 import kotlin.math.min
@@ -32,7 +33,7 @@ fun LazyListScope.SettingsSearchResults(
         },
         after = if (truncate && items.size > 6) {
             {
-                de.mm20.launcher2.ui.launcher.search.common.ShowAllButton(onShowAll = onShowAll)
+                ShowAllButton(onShowAll = onShowAll)
             }
         } else null,
     )
