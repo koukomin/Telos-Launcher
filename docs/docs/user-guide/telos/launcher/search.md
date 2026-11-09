@@ -30,6 +30,9 @@ All search settings live in **Settings > Search**. Some sources open their own s
 | Quick actions | Call, message, web search and more for what you typed | Depends on the action | No | On |
 | Agents | Optional **Ask** chip that sends the query to Grok, Claude, ChatGPT, Gemini or Copilot | Agent app, website, or Termux CLI | Yes, to that agent | Off |
 | Tags and custom names | Items you tagged or renamed | Nothing | No | Always |
+| Android system settings | Wi-Fi, Bluetooth, display, sound and other Android settings screens | Nothing | No | On |
+| Telos settings | Launcher screens such as appearance, search and wallpaper | Nothing | No | On |
+| Telos app settings | Settings of built-in Telos apps; each result shows which app it belongs to | Nothing | No | On |
 
 Sources that are marked "Online" never run on a normal search. See [Online results](#online-results).
 
@@ -214,15 +217,22 @@ Quick actions. A text classifier decides which built-in actions fit what you typ
 
 ## Search bar behavior
 
+Tap the magnifying-glass icon to open search and focus the field. Matching allows small spelling
+mistakes and Greeklish: Latin spellings such as `tilefono` or `anazitisi` find Greek labels. Wikipedia
+retries a Greeklish-to-Greek query when the Latin spelling finds nothing.
+
 | Setting | Where | Default | What it does |
 | --- | --- | --- | --- |
+| Android system settings | Settings > Search | On | Include Android settings screens in results |
+| Telos settings | Settings > Search | On | Include launcher settings screens |
+| Telos app settings | Settings > Search | On | Include built-in Telos app settings, labelled with the app name |
 | Open keyboard | Settings > Search | On | Show the keyboard when the drawer opens |
 | Launch on enter | Settings > Search | On | The Go key launches the best match or quick action |
 | Private keyboard | Settings > Search | Off | Asks the keyboard not to learn from what you type |
 | Search bar position | Settings > Home screen | Bottom | Top or bottom, see [Home screen](./home-screen#search-bar) |
 
 **Launch on enter** picks the best match in this order: apps, shortcuts, events, reminders, places,
-contacts, articles, websites, files (and types), then quick actions.
+contacts, articles, websites, files (and types), quick actions, then settings.
 
 ## Agents
 

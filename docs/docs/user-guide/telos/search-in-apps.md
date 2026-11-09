@@ -49,4 +49,5 @@ Letters that sound alike are merged, so a few similar words may match too.
 - Search inside the Telos apps does not use the network.
 - The text of documents is searched only inside a PDF you have open, not across all files.
 - Plugins search by their own rules, so Greeklish may not work for them. The
-  [launcher search](./launcher/search) is a separate system.
+  [launcher search](./launcher/search) is a separate system and also matches Greeklish for apps,
+  settings, Wikipedia and the other local sources.

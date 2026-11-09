@@ -61,7 +61,7 @@ The pages above explain how the launcher works. These three list every feature a
 | Overlays | Floating launcher, Dynamic Island, desktop mode, web apps panel, assistant mode |
 | Automation | Context profiles |
 | Protection | Settings lock, launcher lock, App Lock with intruder photos, crash guard, exception containment |
-| Customization | Presets, font scale, extra icon shapes, more badge options, German and Greek |
+| Customization | Presets, launcher font scale, per-app text size in Telos apps, extra icon shapes, more badge options, German and Greek |
 
 ## Status of features
 

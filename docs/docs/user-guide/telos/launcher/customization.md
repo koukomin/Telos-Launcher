@@ -14,6 +14,7 @@ schemes](../../customization/color-schemes), [Themed icons](../../customization/
 | Theme | Appearance | Follow system | Follow system, Light, Dark, or **Time of day** |
 | Dark theme starts at, light theme starts at | Appearance | 20:00 and 07:00 | Only used by "Time of day" |
 | Text size | Appearance | 1.0 | A launcher-only multiplier on top of the system font size, with a live preview |
+| Text size per Telos app | Each Telos app, or Appearance > Text size per app | 1.0 | 75 to 150 percent for that app. Follows the slider immediately. Telos System: System tab only |
 | Source for dynamic colors | Appearance > Advanced | System | System colors, or colors taken from the wallpaper (compat mode) |
 | Presets | Appearance > Presets | n/a | Apply a ready-made bundle |
 | Color scheme, Typography, Shapes, Transparency | Appearance | Default | Each has its own list of schemes to pick, edit or duplicate |
@@ -168,7 +169,7 @@ Settings > Language and region.
 
 ## Shared frosted glass
 
-Drawer, glass-enabled widgets and Telos app backgrounds and toolbars use the same frosted wallpaper snapshot. In **Appearance → Wallpaper**, choose a static image and apply it to **Home** or **Both**. This also creates the small private glass snapshot; lock-screen-only changes leave the home snapshot alone. Existing or externally selected wallpapers require reselecting the home image inside Telos. Telos video wallpapers also provide animated blur. Other live and external wallpapers use tinted translucency.
+Drawer, glass-enabled widgets and Telos app backgrounds and toolbars use the same frosted wallpaper snapshot. In **Appearance → Wallpaper**, browse Telos Viewer (images, video, GIF, folders) or choose a video from the system picker, then apply a still image to **Home** or **Both**. This also creates the small private glass snapshot; lock-screen-only changes leave the home snapshot alone. Existing or externally selected wallpapers require reselecting the home image inside Telos. Telos video wallpapers also provide animated blur. Other live and external wallpapers use tinted translucency.
 
 Drawer opacity covers 0–100% without an extra hidden tint. Blur radius is independent. App and widget opacity comes from the selected transparency theme; the widget-glass switch remains available. Camera/video/photo/document content is not blurred; their toolbars use shared glass. The thumbnail is center-cropped to the window, so external OEM wallpaper scrolling/crops may differ. Selecting a new wallpaper invalidates the old snapshot. The wallpaper-blur preference uses its own cached radius on secondary pages; radius zero disables it. It does not blur the main home wallpaper.
 

@@ -68,8 +68,8 @@ Privacy Shield (clients, freeze external Shizuku, banking cloak, clipboard) stay
 
 | Tab | What it does |
 | --- | --- |
-| Dashboard | CPU, RAM, uptime, graphics API, battery |
-| Apps | Installed packages, AppOps Next |
+| Dashboard | CPU, RAM, uptime, graphics API, battery, **text size** for Telos System (this tab only) |
+| Apps | Installed packages, AppOps Next (native daemon, Shizuku UserService, or privileged `cmd appops` shell) |
 | Tweaks | System tweaks |
 | Privacy Shield | Shizuku clients, cloak, clipboard |
 | Shizuku | Built-in server, pairing, ADB command, labs |

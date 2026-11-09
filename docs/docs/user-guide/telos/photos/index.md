@@ -75,7 +75,7 @@ The screen has two tabs.
 
 | Tab | Details |
 | --- | --- |
-| **Photos** | Pictures and videos, newest first. Month headings, a stories strip (Recents, Screenshots, Favorites), pinch on the grid for 3–5 columns. Long-press to multi-select and share one or more files together. Glass bars follow the launcher blur theme |
+| **Photos** | Pictures and videos, newest first. Filter chips for All, Images, Video, GIF and Folders. Month headings, a stories strip (Recents, Screenshots, Favorites), pinch on the grid for 3–5 columns. Long-press to multi-select, share, or **Add to wallpapers**. Items tagged for wallpapers appear first the next time you pick a wallpaper. Glass bars follow the launcher blur theme |
 | **Albums** | One album per folder (for example Camera or Screenshots), as 2 columns of cards with the picture count. Albums are sorted by how many pictures they hold. Pictures without a folder name go to "Other" |
 
 - The list comes from the system media library, ordered by the time Android added the picture. The heading date is
@@ -178,4 +178,4 @@ viewer add-on.
 Files, Viewer and Media share a delete/trash choice and restore UI. Local files use an atomic same-volume move with durable metadata, a default 30-day retention configurable to 1–365 days for future deletions, and daily expiry cleanup. Restore never overwrites an existing file. Android-managed media trash uses the system’s fixed 30-day retention and permission dialog. Unsupported storages offer explicitly confirmed permanent deletion. The private trash is removed on app uninstall or app-data deletion.
 
 
-Static photos chosen with **Set wallpaper** now offer **Home**, **Lock**, or **Both** directly through Telos. Home/Both also creates the small private snapshot used by shared frosted backgrounds. Lock-only changes do not replace that snapshot. Animated GIFs and video retain the external wallpaper handoff.
+Static photos chosen with **Set wallpaper** offer **Home**, **Lock**, or **Both** directly through Telos. Home/Both also creates the small private snapshot used by shared frosted backgrounds. Lock-only changes do not replace that snapshot. Video and GIF use the Telos video wallpaper path (copy with a real file extension, then the live-wallpaper confirmation). **Add to wallpapers** tags items so they sort first the next time you pick a wallpaper.

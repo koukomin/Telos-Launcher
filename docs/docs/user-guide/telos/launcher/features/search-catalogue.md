@@ -27,6 +27,9 @@ source answer. Shorter queries return nothing from that source.
 | Telos apps | Phone, Messages, Radio, Music, Video, Viewer, Files, Calculator, Screenshot, Screen Recorder, Voice Recorder and Store as app results | 1 | The app is not switched off in its own settings | No | Apps |
 | Web apps | [Web app shortcuts](../desktop-and-overlays#web-apps) that are shown in the grid | 1 | Nothing | No | Apps |
 | Activity by component name | One app entry for a typed `package/class` name | 1 | The activity exists | No | Apps |
+| Android system settings | Wi-Fi, Bluetooth, display and other Android settings | 1 | Settings > Search > Android system settings | No | — |
+| Telos settings | Launcher settings screens | 1 | Settings > Search > Telos settings | No | — |
+| Telos app settings | Built-in Telos app settings, labelled with the app name | 1 | Settings > Search > Telos app settings | No | — |
 | App shortcuts | Launcher shortcuts that apps publish (pinned, dynamic, static, cached) | 3 | Telos is the default home app | No | App shortcuts |
 | Contacts | Device contacts | 2 | Contacts permission | No | Contacts |
 | Calendar events | Events in the next 730 days | 2 | Calendar permission | No | Calendar |
@@ -173,7 +176,7 @@ All ranked lists use one formula: **0.6 x match score + 0.4 x usage weight**.
 | --- | --- |
 | Match score | Jaro-Winkler similarity, plus a prefix bonus and a substring bonus, capped at 1. A match on a secondary field is scaled by 0.8 |
 | Usage weight | Increases each time you launch an item. The step per launch is set by **Ranking flexibility**: Stable 0.01, Balanced 0.03 (default), Variable 0.1 |
-| Greek and Greeklish | Greek is found with or without accents, in any case and with any sigma, and also when typed with Latin letters (Greeklish): `kalimera`, `kalhmera` and `Καλημέρα` are the same, so are `mpala` and `μπάλα`, `thelw` and `θέλω`, `chartis` and `χάρτης`. Greeklish has no standard, so letters that sound alike are merged (i, y, h, ei, oi; o, w; b, v, f; th, t; ch, x, ks), which can also let a few similar sounding English words match. This works for apps, shortcuts, contacts, files, calendar events, tags, notes, the Telos apps (Music, Video, Files, Voice Recorder, Store, Recents) and the widget and sidebar pickers. It does not work for results that a plugin app searches itself, or for what is sent to online services |
+| Greek and Greeklish | Greek is found with or without accents, in any case and with any sigma, and also when typed with Latin letters (Greeklish): `kalimera`, `kalhmera` and `Καλημέρα` are the same, so are `mpala` and `μπάλα`, `thelw` and `θέλω`, `chartis` and `χάρτης`, `tilefono` and `Τηλέφωνο`. Greeklish has no standard, so letters that sound alike are merged (i, y, h, ei, oi; o, w; b, v, f; th, t; ch, x, ks), which can also let a few similar sounding English words match. This works for apps, shortcuts, web apps, contacts, files, calendar events, tags, notes, settings (Android, Telos and Telos apps), Wikipedia (a second query in Greek letters when the Latin spelling finds nothing), the Telos apps and the widget and sidebar pickers. It does not work for results that a plugin app searches itself |
 | Normalization | Text is lower-cased and accents are stripped. A transliterator (Settings > Language and region) lets non-Latin names match Latin input. `ae`, `oe` and `ss` are expanded for the letters ae, oe and sharp s |
 | Duplicates | Results with the same item key are removed |
 | Places | When a location is cached, places are sorted by distance. Otherwise they use the formula above |
@@ -181,7 +184,7 @@ All ranked lists use one formula: **0.6 x match score + 0.4 x usage weight**.
 | Drawer (empty search) | Alphabetical, per profile. Frozen apps can be moved to the end |
 
 Group order on screen, top to bottom: favorites (only with an empty query), pending store updates (empty
-query), apps, web apps, app shortcuts, unit converter, calculator, events, reminders, contacts, places,
+query), apps, web apps, app shortcuts, settings, unit converter, calculator, events, reminders, contacts, places,
 Wikipedia, websites, files, documents, images, video, music, recommended app. With
 **Arrangement of search results** set to bottom-up the list is reversed so the best result sits next
 to a bottom search bar.
@@ -369,6 +372,9 @@ source gives up.
 | Tags | Settings > Search > Tags | None | Create, rename, delete, duplicate tags. Pin a tag as a favorite to use it as a folder |
 | Auto-organize | Settings > Search > Tags | n/a | One-off action that tags installed apps by their system category. It does not run again by itself |
 | Default filter | Settings > Search | See [Filters](#5-filters) | Edit with the same chips |
+| Android system settings | Settings > Search | On | Search Android settings screens |
+| Telos settings | Settings > Search | On | Search launcher settings screens |
+| Telos app settings | Settings > Search | On | Search built-in Telos app settings, with the app name on each result |
 | Customize filter bar | Settings > Search | See above | Drag to reorder, remove or add chips |
 
 ### Search related settings elsewhere
@@ -390,10 +396,10 @@ source gives up.
 
 | Behavior | Detail |
 | --- | --- |
-| Text field | Single line, no auto-correct, no automatic capital letters |
+| Text field | Single line, no auto-correct, no automatic capital letters. Tap the magnifying-glass icon to open search |
 | Action key | The keyboard shows **Go** |
 | Launch on enter | With the setting on, Go launches the best match, or starts the highlighted quick action. The best match is highlighted in the list or on its chip. With it off, Go does nothing |
-| Best match order | Apps, app shortcuts, events, reminders, places, contacts, Wikipedia, websites, files, documents, images, video, music, then quick actions |
+| Best match order | Apps, app shortcuts, events, reminders, places, contacts, Wikipedia, websites, files, documents, images, video, music, quick actions, then settings |
 | Private keyboard | Sets the "no personalized learning" flag on the field |
 | Opening the drawer | Opens the keyboard if *Open keyboard* is on. A swipe-down "peek" does not open it. Tapping the field always does |
 | Scrolling | Scrolling the results hides the keyboard and clears the best match |

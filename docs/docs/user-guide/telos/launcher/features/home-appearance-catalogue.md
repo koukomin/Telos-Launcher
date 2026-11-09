@@ -147,7 +147,8 @@ bar menu. (Older docs say Home screen > Wallpaper; the entry moved to Appearance
 
 | Setting | Default | Effect |
 | --- | --- | --- |
-| Change wallpaper | n/a | Pick a photo or a video. For photos a dialog asks: home screen, lock screen or both |
+| Change wallpaper | n/a | Opens Telos Viewer with filters for images, video, GIF and folders. Items tagged **Add to wallpapers** appear first. Photos ask home, lock or both |
+| Choose video wallpaper | n/a | Always available. Uses the system video picker, then the live-wallpaper confirmation |
 | System wallpaper picker | n/a | Opens the Android chooser |
 | Dim wallpaper | Off | Darkens the wallpaper while a dark theme is active |
 | Blur wallpaper | On | Blurs the wallpaper behind the search view. Needs Android 12 or newer, else the switch is disabled |
@@ -155,8 +156,10 @@ bar menu. (Older docs say Home screen > Wallpaper; the entry moved to Appearance
 
 ### Video wallpaper <Badge type="warning" text="experimental" />
 
-The video section appears once a video wallpaper exists. Videos form a playlist; **Clear playlist**
-empties it.
+The video section appears once a video wallpaper file is stored. Videos form a playlist; **Clear playlist**
+empties it. Telos copies the file with a real extension (`.mp4`, `.webm`, `.gif`) into private storage
+so Media3 can play it. GIFs use the GIF renderer; videos use ExoPlayer. From Telos Viewer, **Set wallpaper**
+on a video or GIF uses the same path.
 
 | Setting | Default | Range or choices |
 | --- | --- | --- |
@@ -258,6 +261,7 @@ a tag list and "skip rows" (0 to 8). They are edited in its configure sheet. Nob
 | Theme | Appearance | System | System, Light, Dark or **Time of day** |
 | Dark theme starts, light theme starts | Appearance, with Time of day | 20:00 and 07:00 | Hour sliders 0 to 23. Clock hours, not sunrise |
 | Text size | Appearance | 100 percent | 80 to 200 percent in 5 percent steps, a launcher-only multiplier with a live preview |
+| Text size per Telos app | The app itself (gear or **Text size**), or Appearance > Text size per app | 100 percent | 75 to 150 percent. The slider updates the app immediately; the value is written when you release it. Telos System keeps this control on its System tab only |
 | Source for dynamic colors | Appearance > Advanced (Android 12+) | System | System colors, or colors from the wallpaper (compat mode) |
 | Presets | Appearance > Presets | n/a | See below |
 | Color scheme | Appearance | Default | List of schemes. Pick, create, duplicate, edit, delete |
@@ -480,6 +484,7 @@ There is no single accessibility page. These settings serve that purpose.
 | Setting | Where | Effect |
 | --- | --- | --- |
 | Text size | Appearance | 80 to 200 percent on top of the system font size |
+| Text size per Telos app | The app, or Appearance > Text size per app | 75 to 150 percent for that app; follows the slider immediately |
 | High contrast color scheme | Appearance > Color scheme | Built-in scheme |
 | Black and white color scheme | Appearance > Color scheme | Built-in scheme |
 | Reduce animations | Performance | Instant transitions |
