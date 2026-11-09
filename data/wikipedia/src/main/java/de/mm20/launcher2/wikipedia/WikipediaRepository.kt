@@ -32,7 +32,9 @@ internal class WikipediaRepository(
             val baseUrl =
                 url.takeIf { !it.isNullOrBlank() } ?: context.getString(I18nR.string.wikipedia_url)
 
+            val greekQuery = de.mm20.launcher2.search.GreekFold.greeklishToGreek(query)
             val results = queryWikipedia(baseUrl, query)
+                ?: greekQuery.takeIf { it != query }?.let { queryWikipedia(baseUrl, it) }
             if (results != null) {
                 emit(persistentListOf(results))
             }

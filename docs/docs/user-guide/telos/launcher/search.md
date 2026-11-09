@@ -218,7 +218,7 @@ Quick actions. A text classifier decides which built-in actions fit what you typ
 ## Search bar behavior
 
 Tap the magnifying-glass icon to open search and focus the field. Matching allows small spelling
-mistakes (Jaro–Winkler plus word tokens, Greek and Greeklish folding).
+mistakes and Greeklish: Latin spellings such as `tilefono` or `anazitisi` find Greek labels.
 
 | Setting | Where | Default | What it does |
 | --- | --- | --- | --- |

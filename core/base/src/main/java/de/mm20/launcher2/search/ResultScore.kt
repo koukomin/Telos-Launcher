@@ -60,15 +60,19 @@ value class ResultScore private constructor(private val packed: Long) : Comparab
             primaryFields: Iterable<String> = emptyList(),
             secondaryFields: Iterable<String> = emptyList(),
         ): ResultScore {
-            if (GreekFold.hasGreek(query) || primaryFields.any { GreekFold.hasGreek(it) } || secondaryFields.any { GreekFold.hasGreek(it) }) {
-                return from(
-                    GreekFold.fold(query),
-                    expandTokens(primaryFields.map { GreekFold.fold(it) }),
-                    expandTokens(secondaryFields.map { GreekFold.fold(it) }),
-                    folded = true,
-                )
-            }
-            return from(query, expandTokens(primaryFields), expandTokens(secondaryFields), folded = true)
+            val literal = from(
+                query.lowercase(),
+                expandTokens(primaryFields.map { it.lowercase() }),
+                expandTokens(secondaryFields.map { it.lowercase() }),
+                folded = true,
+            )
+            val greeklish = from(
+                GreekFold.fold(query),
+                expandTokens(primaryFields.map { GreekFold.fold(it) }),
+                expandTokens(secondaryFields.map { GreekFold.fold(it) }),
+                folded = true,
+            )
+            return maxOf(literal, greeklish)
         }
 
         private fun expandTokens(fields: Iterable<String>): List<String> {

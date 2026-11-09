@@ -32,7 +32,7 @@ class WorkProfileLockActionBuilder(
             query = classifiedQuery.text.lowercase(),
             primaryFields = listOf(keyword),
         )
-        if (score.score < 0.8f) return null
+        if (score.score < ResultScore.MATCH_THRESHOLD) return null
 
         return WorkProfileLockAction(
             label = context.getString(

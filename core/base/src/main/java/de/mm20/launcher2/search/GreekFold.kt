@@ -91,6 +91,43 @@ object GreekFold {
     /** The key two spellings of the same Greek word have in common. Latin text is folded too, which only makes matching looser. */
     fun fold(text: String): String = latinFold(greekToLatin(stripAccents(text)))
 
+    /**
+     * Best-effort Greeklish → Greek for network searches (Wikipedia, maps) that need Greek letters.
+     * Local matching should keep using [fold] on both sides.
+     */
+    fun greeklishToGreek(text: String): String {
+        if (hasGreek(text) || text.none { it in 'a'..'z' || it in 'A'..'Z' }) return text
+        val latin = stripAccents(text)
+        val out = StringBuilder(latin.length)
+        var i = 0
+        while (i < latin.length) {
+            val pair = if (i + 1 < latin.length) latin.substring(i, i + 2) else ""
+            val mapped = GREEKLISH_DIGRAPHS[pair]
+            if (mapped != null) {
+                out.append(mapped)
+                i += 2
+            } else {
+                out.append(GREEKLISH_SINGLE[latin[i]] ?: latin[i])
+                i++
+            }
+        }
+        return out.toString()
+    }
+
+    private val GREEKLISH_DIGRAPHS = mapOf(
+        "th" to "θ", "ps" to "ψ", "ch" to "χ", "ph" to "φ", "dh" to "δ", "ks" to "ξ",
+        "ou" to "ου", "ai" to "αι", "ei" to "ει", "oi" to "οι",
+        "gk" to "γκ", "nt" to "ντ", "mp" to "μπ",
+    )
+    private val GREEKLISH_SINGLE = mapOf(
+        'a' to 'α', 'b' to 'β', 'c' to 'κ', 'd' to 'δ', 'e' to 'ε',
+        'f' to 'φ', 'g' to 'γ', 'h' to 'η', 'i' to 'ι', 'j' to 'ζ',
+        'k' to 'κ', 'l' to 'λ', 'm' to 'μ', 'n' to 'ν', 'o' to 'ο',
+        'p' to 'π', 'q' to 'κ', 'r' to 'ρ', 's' to 'σ', 't' to 'τ',
+        'u' to 'υ', 'v' to 'β', 'w' to 'ω', 'x' to 'ξ', 'y' to 'υ',
+        'z' to 'ζ',
+    )
+
     /** True if [query] contains letters, i.e. SQL LIKE could miss accented or greeklish matches and an in-memory fold match is needed. */
     fun needsFold(query: String): Boolean = query.any { it.isLetter() }
 
