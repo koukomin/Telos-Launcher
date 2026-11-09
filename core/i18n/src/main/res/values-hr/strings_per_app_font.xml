@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="per_app_font_size">Veličina teksta</string>
+    <string name="per_app_font_scale_percent">%1$d %%</string>
+    <string name="per_app_font_reset">Poništi</string>
+    <string name="per_app_font_preview">Tekst u ovoj aplikaciji odmah prati klizač.</string>
+    <string name="per_app_font_dialog_title">Veličina teksta: %1$s</string>
+    <string name="per_app_fonts_screen_title">Veličina teksta po aplikaciji</string>
+    <string name="per_app_fonts_category">Telos aplikacije</string>
+</resources>

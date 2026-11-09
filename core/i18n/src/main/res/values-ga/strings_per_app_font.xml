@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="per_app_font_size">Clómhéid</string>
+    <string name="per_app_font_scale_percent">%1$d%%</string>
+    <string name="per_app_font_reset">Athshocraigh</string>
+    <string name="per_app_font_preview">Leanann an téacs san aip seo an sleamhnán láithreach.</string>
+    <string name="per_app_font_dialog_title">Clómhéid: %1$s</string>
+    <string name="per_app_fonts_screen_title">Clómhéid in aghaidh na haipe</string>
+    <string name="per_app_fonts_category">Aipeanna Telos</string>
+</resources>

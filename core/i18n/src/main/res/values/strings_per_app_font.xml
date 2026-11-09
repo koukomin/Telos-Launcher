@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="per_app_font_size">Text size</string>
+    <string name="per_app_font_scale_percent">%1$d%%</string>
+    <string name="per_app_font_reset">Reset</string>
+    <string name="per_app_font_preview">The text in this app follows the slider immediately.</string>
+    <string name="per_app_font_dialog_title">Text size: %1$s</string>
+    <string name="per_app_fonts_screen_title">Text size per app</string>
+    <string name="per_app_fonts_category">Telos apps</string>
+</resources>

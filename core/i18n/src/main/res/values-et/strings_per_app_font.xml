@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="per_app_font_size">Teksti suurus</string>
+    <string name="per_app_font_scale_percent">%1$d%%</string>
+    <string name="per_app_font_reset">Lähtesta</string>
+    <string name="per_app_font_preview">Selle rakenduse tekst järgib liugurit kohe.</string>
+    <string name="per_app_font_dialog_title">Teksti suurus: %1$s</string>
+    <string name="per_app_fonts_screen_title">Teksti suurus rakenduse kaupa</string>
+    <string name="per_app_fonts_category">Telose rakendused</string>
+</resources>

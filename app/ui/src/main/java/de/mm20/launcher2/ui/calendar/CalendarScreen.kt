@@ -373,7 +373,7 @@ private fun CalendarContent(vm: CalendarViewModel) {
                 if (showFontDialog) {
                     de.mm20.launcher2.ui.component.PerAppFontScaleDialog(
                         appKey = "calendar",
-                        appName = "Telos Calendar",
+                        appName = stringResource(I18nR.string.backup_group_calendar),
                         onDismiss = { showFontDialog = false }
                     )
                 }
@@ -381,7 +381,7 @@ private fun CalendarContent(vm: CalendarViewModel) {
                     Icon(painterResource(if (searching) BaseR.drawable.close_24px else BaseR.drawable.search_24px), stringResource(I18nR.string.ts_search))
                 }
                 IconButton(onClick = { showFontDialog = true }) {
-                    Icon(painterResource(BaseR.drawable.settings_24px), contentDescription = "Font Settings")
+                    Icon(painterResource(BaseR.drawable.settings_24px), contentDescription = stringResource(I18nR.string.per_app_font_size))
                 }
                 Box {
                     IconButton(onClick = { menu = true }) { Icon(painterResource(BaseR.drawable.more_vert_24px), null) }

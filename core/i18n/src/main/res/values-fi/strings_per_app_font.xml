@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="per_app_font_size">Tekstin koko</string>
+    <string name="per_app_font_scale_percent">%1$d %%</string>
+    <string name="per_app_font_reset">Palauta</string>
+    <string name="per_app_font_preview">Tämän sovelluksen teksti seuraa liukusäädintä heti.</string>
+    <string name="per_app_font_dialog_title">Tekstin koko: %1$s</string>
+    <string name="per_app_fonts_screen_title">Tekstin koko sovelluksittain</string>
+    <string name="per_app_fonts_category">Telos-sovellukset</string>
+</resources>

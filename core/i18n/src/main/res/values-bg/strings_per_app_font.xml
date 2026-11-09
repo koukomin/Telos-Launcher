@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="per_app_font_size">Размер на текста</string>
+    <string name="per_app_font_scale_percent">%1$d%%</string>
+    <string name="per_app_font_reset">Нулиране</string>
+    <string name="per_app_font_preview">Текстът в това приложение следва плъзгача веднага.</string>
+    <string name="per_app_font_dialog_title">Размер на текста: %1$s</string>
+    <string name="per_app_fonts_screen_title">Размер на текста по приложение</string>
+    <string name="per_app_fonts_category">Приложения Telos</string>
+</resources>

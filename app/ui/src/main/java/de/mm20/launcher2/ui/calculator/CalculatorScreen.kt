@@ -155,7 +155,7 @@ private fun TopBar(title: String, onBack: () -> Unit, actions: @Composable () ->
     if (showFontDialog) {
         de.mm20.launcher2.ui.component.PerAppFontScaleDialog(
             appKey = "calculator",
-            appName = "Telos Calculator",
+            appName = stringResource(I18nR.string.calculator_title),
             onDismiss = { showFontDialog = false }
         )
     }
@@ -168,7 +168,7 @@ private fun TopBar(title: String, onBack: () -> Unit, actions: @Composable () ->
         }
         Text(title, style = MaterialTheme.typography.titleLarge, modifier = Modifier.weight(1f).padding(start = if (backStack.size > 1) 4.dp else 12.dp), maxLines = 1, overflow = TextOverflow.Ellipsis)
         IconButton(onClick = { showFontDialog = true }) {
-            Icon(painterResource(BaseR.drawable.settings_24px), contentDescription = "Font Settings")
+            Icon(painterResource(BaseR.drawable.settings_24px), contentDescription = stringResource(I18nR.string.per_app_font_size))
         }
         actions()
     }

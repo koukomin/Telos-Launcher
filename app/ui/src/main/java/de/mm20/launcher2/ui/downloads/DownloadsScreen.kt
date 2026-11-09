@@ -220,7 +220,7 @@ fun DownloadsScreen(initialUrls: List<String> = emptyList()) {
             if (showFontDialog) {
                 de.mm20.launcher2.ui.component.PerAppFontScaleDialog(
                     appKey = "downloader",
-                    appName = "Telos Transfer",
+                    appName = stringResource(I18nR.string.dl_title),
                     onDismiss = { showFontDialog = false }
                 )
             }
@@ -228,7 +228,7 @@ fun DownloadsScreen(initialUrls: List<String> = emptyList()) {
                 Icon(painterResource(BaseR.drawable.search_24px), stringResource(I18nR.string.dl_search))
             }
             IconButton(onClick = { showFontDialog = true }) {
-                Icon(painterResource(BaseR.drawable.settings_24px), contentDescription = "Font Settings")
+                Icon(painterResource(BaseR.drawable.settings_24px), contentDescription = stringResource(I18nR.string.per_app_font_size))
             }
             IconButton(onClick = { menu = true }) {
                 Icon(painterResource(BaseR.drawable.more_vert_24px), stringResource(I18nR.string.action_more_actions))

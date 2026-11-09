@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="per_app_font_size">Szövegméret</string>
+    <string name="per_app_font_scale_percent">%1$d%%</string>
+    <string name="per_app_font_reset">Visszaállítás</string>
+    <string name="per_app_font_preview">Az alkalmazás szövege azonnal követi a csúszkát.</string>
+    <string name="per_app_font_dialog_title">Szövegméret: %1$s</string>
+    <string name="per_app_fonts_screen_title">Szövegméret alkalmazásonként</string>
+    <string name="per_app_fonts_category">Telos alkalmazások</string>
+</resources>

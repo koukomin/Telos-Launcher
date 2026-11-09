@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="per_app_font_size">Daqs tat-test</string>
+    <string name="per_app_font_scale_percent">%1$d%%</string>
+    <string name="per_app_font_reset">Irrisettja</string>
+    <string name="per_app_font_preview">It-test f’din l-app isegwi s-slider mill-ewwel.</string>
+    <string name="per_app_font_dialog_title">Daqs tat-test: %1$s</string>
+    <string name="per_app_fonts_screen_title">Daqs tat-test għal kull app</string>
+    <string name="per_app_fonts_category">Apps Telos</string>
+</resources>

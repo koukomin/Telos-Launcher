@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="per_app_font_size">Textstorlek</string>
+    <string name="per_app_font_scale_percent">%1$d %%</string>
+    <string name="per_app_font_reset">Återställ</string>
+    <string name="per_app_font_preview">Texten i den här appen följer reglaget direkt.</string>
+    <string name="per_app_font_dialog_title">Textstorlek: %1$s</string>
+    <string name="per_app_fonts_screen_title">Textstorlek per app</string>
+    <string name="per_app_fonts_category">Telos-appar</string>
+</resources>

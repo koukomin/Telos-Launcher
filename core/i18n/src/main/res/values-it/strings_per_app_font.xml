@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="per_app_font_size">Dimensione testo</string>
+    <string name="per_app_font_scale_percent">%1$d%%</string>
+    <string name="per_app_font_reset">Reimposta</string>
+    <string name="per_app_font_preview">Il testo in questa app segue subito il cursore.</string>
+    <string name="per_app_font_dialog_title">Dimensione testo: %1$s</string>
+    <string name="per_app_fonts_screen_title">Dimensione testo per app</string>
+    <string name="per_app_fonts_category">App Telos</string>
+</resources>

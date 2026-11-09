@@ -144,7 +144,7 @@ fun CommsDashboardScreen(
     if (showFontDialog) {
         de.mm20.launcher2.ui.component.PerAppFontScaleDialog(
             appKey = "comms",
-            appName = "Telos Phone & SMS",
+            appName = stringResource(I18nR.string.virtual_app_phone),
             onDismiss = { showFontDialog = false }
         )
     }

@@ -1,13 +1,10 @@
 package de.mm20.launcher2.ui.component
 
-import android.content.SharedPreferences
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Density
@@ -26,16 +23,7 @@ fun ProvidePerAppFontScale(appKey: String?, content: @Composable () -> Unit) {
     }
     val context = LocalContext.current
     val settings = remember(context) { AppFontSettings(context) }
-    var scale by remember(key) { mutableFloatStateOf(settings.getFontScale(key)) }
-    DisposableEffect(key, settings) {
-        val listener = SharedPreferences.OnSharedPreferenceChangeListener { _, changed ->
-            if (changed == settings.prefKey(key)) {
-                scale = settings.getFontScale(key)
-            }
-        }
-        settings.register(listener)
-        onDispose { settings.unregister(listener) }
-    }
+    val scale by settings.scaleFlow(key).collectAsState(initial = settings.getFontScale(key))
     val base = LocalDensity.current
     CompositionLocalProvider(
         LocalDensity provides Density(base.density, base.fontScale * scale),

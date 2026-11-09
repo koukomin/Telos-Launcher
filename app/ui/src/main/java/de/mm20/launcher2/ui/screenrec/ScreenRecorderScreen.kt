@@ -197,14 +197,14 @@ fun ScreenRecorderScreen() {
             if (showFontDialog) {
                 de.mm20.launcher2.ui.component.PerAppFontScaleDialog(
                     appKey = "screenrec",
-                    appName = "Telos Screen Recorder",
+                    appName = stringResource(I18nR.string.screenrec_title),
                     onDismiss = { showFontDialog = false }
                 )
             }
             Row(Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 8.dp), verticalAlignment = Alignment.CenterVertically) {
                 Spacer(Modifier.weight(1f))
                 IconButton(onClick = { showFontDialog = true }) {
-                    Icon(painterResource(BaseR.drawable.text_fields_24px), contentDescription = "Font Settings")
+                    Icon(painterResource(BaseR.drawable.text_fields_24px), contentDescription = stringResource(I18nR.string.per_app_font_size))
                 }
                 IconButton(onClick = { backStack.add(ScreenRecorderSettingsRoute) }) {
                     Icon(painterResource(BaseR.drawable.settings_24px), contentDescription = stringResource(I18nR.string.voice_settings))

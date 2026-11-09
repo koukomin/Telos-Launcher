@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="per_app_font_size">Tekststørrelse</string>
+    <string name="per_app_font_scale_percent">%1$d %%</string>
+    <string name="per_app_font_reset">Tilbakestill</string>
+    <string name="per_app_font_preview">Teksten i denne appen følger glidebryteren med en gang.</string>
+    <string name="per_app_font_dialog_title">Tekststørrelse: %1$s</string>
+    <string name="per_app_fonts_screen_title">Tekststørrelse per app</string>
+    <string name="per_app_fonts_category">Telos-apper</string>
+</resources>

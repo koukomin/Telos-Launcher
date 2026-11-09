@@ -67,7 +67,7 @@ fun SyncScreen() {
                     },
                     actions = {
                         IconButton(onClick = { showFontDialog = true }) {
-                            Icon(painterResource(BaseR.drawable.text_fields_24px), contentDescription = "Font Size")
+                            Icon(painterResource(BaseR.drawable.text_fields_24px), contentDescription = stringResource(I18nR.string.per_app_font_size))
                         }
                         TextButton(
                             onClick = {
@@ -254,7 +254,7 @@ fun SyncScreen() {
     if (showFontDialog) {
         de.mm20.launcher2.ui.component.PerAppFontScaleDialog(
             appKey = "sync",
-            appName = "Telos Sync",
+            appName = stringResource(I18nR.string.notes_sync_settings),
             onDismiss = { showFontDialog = false }
         )
     }

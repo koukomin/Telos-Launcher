@@ -64,10 +64,10 @@ fun NetworkSettingsScreen() {
     PreferenceScreen(title = { Text(stringResource(I18nR.string.net_settings_title), modifier = Modifier.padding(horizontal = 16.dp)) }, bottomBar = { NetworkNavigationBar(NetworkSection.Settings) }) {
         item { de.mm20.launcher2.ui.component.preferences.Preference(title = stringResource(I18nR.string.netproxy_title), onClick = { networkBackStack.add(NetworkProxiesRoute) }) }
         item {
-            PreferenceCategory(title = "Font / Γραμματοσειρά") {
+            PreferenceCategory(title = stringResource(I18nR.string.per_app_font_size)) {
                 Preference(
-                    title = "Font Size / Γραμματοσειρά",
-                    summary = "Adjust font scale specifically for Telos Network",
+                    title = stringResource(I18nR.string.per_app_font_size),
+                    summary = stringResource(I18nR.string.per_app_font_preview),
                     icon = IconsNetworkSettingsScreen.text_fields_24px,
                     onClick = { showFontDialog = true }
                 )
@@ -243,7 +243,7 @@ fun NetworkSettingsScreen() {
     if (showFontDialog) {
         de.mm20.launcher2.ui.component.PerAppFontScaleDialog(
             appKey = "network",
-            appName = "Telos Network",
+            appName = stringResource(I18nR.string.net_hub_title),
             onDismiss = { showFontDialog = false }
         )
     }
