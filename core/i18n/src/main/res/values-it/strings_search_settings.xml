@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preference_search_android_settings">Impostazioni di sistema Android</string>
+    <string name="preference_search_android_settings_summary">Trova Wi-Fi, Bluetooth, display e altre schermate di sistema. Sono ammessi errori di battitura.</string>
+    <string name="preference_search_telos_settings">Impostazioni Telos</string>
+    <string name="preference_search_telos_settings_summary">Cerca schermate del launcher come aspetto, ricerca e sfondo</string>
+    <string name="preference_search_telos_app_settings">Impostazioni app Telos</string>
+    <string name="preference_search_telos_app_settings_summary">Cerca le impostazioni delle app Telos integrate. Ogni risultato mostra l’app.</string>
+    <string name="search_settings_source_android">Impostazioni Android</string>
+    <string name="search_settings_source_telos">Impostazioni Telos</string>
+    <string name="search_settings_source_telos_app">Impostazioni %1$s</string>
+    <string name="search_android_wifi">Wi-Fi</string>
+    <string name="search_android_bluetooth">Bluetooth</string>
+    <string name="search_android_display">Display</string>
+    <string name="search_android_sound">Suono</string>
+    <string name="search_android_date">Data e ora</string>
+    <string name="search_android_language">Lingua</string>
+    <string name="search_android_accessibility">Accessibilità</string>
+    <string name="search_android_security">Sicurezza</string>
+    <string name="search_android_storage">Archiviazione</string>
+    <string name="search_android_apps">App</string>
+    <string name="search_android_location">Posizione</string>
+    <string name="search_android_nfc">NFC</string>
+    <string name="search_android_airplane">Modalità aereo</string>
+    <string name="search_android_mobile_data">Dati mobili</string>
+    <string name="search_android_vpn">VPN</string>
+    <string name="search_android_notifications">Notifiche</string>
+    <string name="search_android_battery">Batteria</string>
+    <string name="search_android_home">App home predefinita</string>
+    <string name="search_android_all">Tutte le impostazioni di sistema</string>
+    <string name="search_android_about">Informazioni sul telefono</string>
+    <string name="search_android_privacy">Privacy</string>
+    <string name="search_android_keyboard">Tastiera</string>
+    <string name="search_android_defaults">App predefinite</string>
+    <string name="search_android_developer">Opzioni sviluppatore</string>
+</resources>

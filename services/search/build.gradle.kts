@@ -59,6 +59,7 @@ dependencies {
     implementation(project(":data:search-actions"))
 
     implementation(project(":core:base"))
+    implementation(project(":core:i18n"))
     implementation(project(":core:preferences"))
     implementation(project(":core:profiles"))
     implementation(project(":core:crashreporter"))

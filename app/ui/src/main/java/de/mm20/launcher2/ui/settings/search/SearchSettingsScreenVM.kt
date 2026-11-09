@@ -65,6 +65,27 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
         searchUiSettings.setTvChannelsInSearch(enabled)
     }
 
+    val searchAndroidSettings = searchUiSettings.searchAndroidSettings
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
+
+    fun setSearchAndroidSettings(enabled: Boolean) {
+        searchUiSettings.setSearchAndroidSettings(enabled)
+    }
+
+    val searchTelosSettings = searchUiSettings.searchTelosSettings
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
+
+    fun setSearchTelosSettings(enabled: Boolean) {
+        searchUiSettings.setSearchTelosSettings(enabled)
+    }
+
+    val searchTelosAppSettings = searchUiSettings.searchTelosAppSettings
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
+
+    fun setSearchTelosAppSettings(enabled: Boolean) {
+        searchUiSettings.setSearchTelosAppSettings(enabled)
+    }
+
     val allApps = searchUiSettings.allApps
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 

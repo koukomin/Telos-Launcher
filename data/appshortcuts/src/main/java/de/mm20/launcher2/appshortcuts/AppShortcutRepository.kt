@@ -164,7 +164,7 @@ internal class AppShortcutRepositoryImpl(
                                         ?.let { stringNormalizer.normalize(it) },
                                 )
                             )
-                            if (score.score < 0.8f) return@mapNotNull null
+                            if (score.score < de.mm20.launcher2.search.ResultScore.MATCH_THRESHOLD) return@mapNotNull null
                             LauncherShortcut(
                                 context,
                                 it,

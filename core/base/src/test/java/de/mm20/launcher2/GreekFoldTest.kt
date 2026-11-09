@@ -49,6 +49,11 @@ class GreekFoldTest {
         assertTrue(GreekFold.hasGreek("aβ"))
         assertTrue(!GreekFold.hasGreek("abc"))
     }
+    @Test fun greeklishToGreekProducesGreekLetters() {
+        assertTrue(GreekFold.hasGreek(GreekFold.greeklishToGreek("kalimera")))
+        assertEquals("Καλημέρα", GreekFold.greeklishToGreek("Καλημέρα"))
+    }
+
     @Test fun prepareFinishEqualsFold() {
         for (w in listOf("Καλημέρα", "plain text", "Σάββατο", "thelw")) {
             assertEquals(GreekFold.fold(w), GreekFold.finish(GreekFold.prepare(w)))

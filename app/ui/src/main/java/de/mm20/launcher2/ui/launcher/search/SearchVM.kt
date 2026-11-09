@@ -37,6 +37,7 @@ import de.mm20.launcher2.search.SearchFilters
 import de.mm20.launcher2.search.SearchResults
 import de.mm20.launcher2.search.SearchService
 import de.mm20.launcher2.search.Searchable
+import de.mm20.launcher2.search.SettingsSearchItem
 import de.mm20.launcher2.search.WebAppShortcut
 import de.mm20.launcher2.search.Website
 import de.mm20.launcher2.search.data.Calculator
@@ -160,6 +161,7 @@ class SearchVM : ViewModel(), KoinComponent {
     val articleResults = mutableStateListOf<Article>()
     val websiteResults = mutableStateListOf<Website>()
     val webAppShortcutResults = mutableStateListOf<WebAppShortcut>()
+    val settingsResults = mutableStateListOf<SettingsSearchItem>()
     val calculatorResults = mutableStateListOf<Calculator>()
     /** Telos Notes that match the query. They come straight from the notes store, not from the search service. */
     val noteResults = mutableStateListOf<de.mm20.launcher2.ui.notes.Note>()
@@ -514,6 +516,7 @@ class SearchVM : ViewModel(), KoinComponent {
                         websiteResults.updateItems(
                             results.websites?.filterNot { hiddenKeys.contains(it.key) }?.applyRanking(query)
                         )
+                        settingsResults.updateItems(results.settings)
                         webAppShortcutResults.updateItems(
                             results.webAppShortcuts?.filterNot { hiddenKeys.contains(it.key) }?.applyRanking(query)
                         )
@@ -540,6 +543,7 @@ class SearchVM : ViewModel(), KoinComponent {
                                 videoResults.isNotEmpty() -> videoResults.first()
                                 musicResults.isNotEmpty() -> musicResults.first()
                                 searchActionResults.isNotEmpty() -> searchActionResults.first()
+                                settingsResults.isNotEmpty() -> settingsResults.first()
                                 else -> null
                             }
                         } else {
@@ -674,4 +678,5 @@ enum class SearchCategory {
     Website,
     Location,
     Shortcuts,
+    Settings,
 }

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preference_search_android_settings">Android sistem ayarları</string>
+    <string name="preference_search_android_settings_summary">Wi-Fi, Bluetooth, ekran ve diğer sistem ekranlarını bulun. Yazım hatalarına izin verilir.</string>
+    <string name="preference_search_telos_settings">Telos ayarları</string>
+    <string name="preference_search_telos_settings_summary">Görünüm, arama ve duvar kâğıdı gibi başlatıcı ekranlarını arayın</string>
+    <string name="preference_search_telos_app_settings">Telos uygulama ayarları</string>
+    <string name="preference_search_telos_app_settings_summary">Yerleşik Telos uygulamalarının ayarlarını arayın. Her sonuç hangi uygulamaya ait olduğunu gösterir.</string>
+    <string name="search_settings_source_android">Android ayarları</string>
+    <string name="search_settings_source_telos">Telos ayarları</string>
+    <string name="search_settings_source_telos_app">%1$s ayarları</string>
+    <string name="search_android_wifi">Wi-Fi</string>
+    <string name="search_android_bluetooth">Bluetooth</string>
+    <string name="search_android_display">Ekran</string>
+    <string name="search_android_sound">Ses</string>
+    <string name="search_android_date">Tarih ve saat</string>
+    <string name="search_android_language">Dil</string>
+    <string name="search_android_accessibility">Erişilebilirlik</string>
+    <string name="search_android_security">Güvenlik</string>
+    <string name="search_android_storage">Depolama</string>
+    <string name="search_android_apps">Uygulamalar</string>
+    <string name="search_android_location">Konum</string>
+    <string name="search_android_nfc">NFC</string>
+    <string name="search_android_airplane">Uçak modu</string>
+    <string name="search_android_mobile_data">Mobil veri</string>
+    <string name="search_android_vpn">VPN</string>
+    <string name="search_android_notifications">Bildirimler</string>
+    <string name="search_android_battery">Pil</string>
+    <string name="search_android_home">Varsayılan ana uygulama</string>
+    <string name="search_android_all">Tüm sistem ayarları</string>
+    <string name="search_android_about">Telefon hakkında</string>
+    <string name="search_android_privacy">Gizlilik</string>
+    <string name="search_android_keyboard">Klavye</string>
+    <string name="search_android_defaults">Varsayılan uygulamalar</string>
+    <string name="search_android_developer">Geliştirici seçenekleri</string>
+</resources>

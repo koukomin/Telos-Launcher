@@ -1,9 +1,11 @@
 package de.mm20.launcher2.search
 
+import org.koin.android.ext.koin.androidContext
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val searchModule = module {
+    single { SettingsSearchRepository(androidContext()) }
     single<SearchService> {
         SearchServiceImpl(
             get(named<Application>()),
@@ -20,6 +22,8 @@ val searchModule = module {
             get(),
             get(),
             get(named<WebAppShortcut>()),
+            get(),
+            get(),
         )
     }
 }

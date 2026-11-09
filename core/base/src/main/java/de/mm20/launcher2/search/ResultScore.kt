@@ -52,21 +52,40 @@ value class ResultScore private constructor(private val packed: Long) : Comparab
     }
 
     companion object {
+        /** Lowest combined score that still counts as a match, including one-letter typos. */
+        const val MATCH_THRESHOLD = 0.62f
+
         fun from(
             query: String,
             primaryFields: Iterable<String> = emptyList(),
             secondaryFields: Iterable<String> = emptyList(),
         ): ResultScore {
-            if (GreekFold.hasGreek(query) || primaryFields.any { GreekFold.hasGreek(it) } || secondaryFields.any { GreekFold.hasGreek(it) }) {
-                // Greek is involved on either side: compare accent/case/greeklish-insensitive
-                return from(
-                    GreekFold.fold(query),
-                    primaryFields.map { GreekFold.fold(it) },
-                    secondaryFields.map { GreekFold.fold(it) },
-                    folded = true,
-                )
+            val literal = from(
+                query.lowercase(),
+                expandTokens(primaryFields.map { it.lowercase() }),
+                expandTokens(secondaryFields.map { it.lowercase() }),
+                folded = true,
+            )
+            val greeklish = from(
+                GreekFold.fold(query),
+                expandTokens(primaryFields.map { GreekFold.fold(it) }),
+                expandTokens(secondaryFields.map { GreekFold.fold(it) }),
+                folded = true,
+            )
+            return maxOf(literal, greeklish)
+        }
+
+        private fun expandTokens(fields: Iterable<String>): List<String> {
+            val out = ArrayList<String>()
+            for (field in fields) {
+                if (field.isBlank()) continue
+                out.add(field)
+                val parts = field.split(' ', '-', '_', '/', '.', ',', ':', ';', '|')
+                if (parts.size > 1) {
+                    for (part in parts) if (part.length >= 2) out.add(part)
+                }
             }
-            return from(query, primaryFields, secondaryFields, folded = true)
+            return out
         }
 
         private fun from(

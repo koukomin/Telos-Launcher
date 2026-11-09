@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preference_search_android_settings">Android 系統設定</string>
+    <string name="preference_search_android_settings_summary">尋找 Wi-Fi、藍牙、顯示等系統畫面。允許拼寫錯誤。</string>
+    <string name="preference_search_telos_settings">Telos 設定</string>
+    <string name="preference_search_telos_settings_summary">搜尋啟動器畫面，如外觀、搜尋與桌布</string>
+    <string name="preference_search_telos_app_settings">Telos 應用程式設定</string>
+    <string name="preference_search_telos_app_settings_summary">搜尋內建 Telos 應用程式的設定。每筆結果會標示所屬應用程式。</string>
+    <string name="search_settings_source_android">Android 設定</string>
+    <string name="search_settings_source_telos">Telos 設定</string>
+    <string name="search_settings_source_telos_app">%1$s 設定</string>
+    <string name="search_android_wifi">Wi-Fi</string>
+    <string name="search_android_bluetooth">藍牙</string>
+    <string name="search_android_display">顯示</string>
+    <string name="search_android_sound">聲音</string>
+    <string name="search_android_date">日期和時間</string>
+    <string name="search_android_language">語言</string>
+    <string name="search_android_accessibility">無障礙</string>
+    <string name="search_android_security">安全性</string>
+    <string name="search_android_storage">儲存空間</string>
+    <string name="search_android_apps">應用程式</string>
+    <string name="search_android_location">位置</string>
+    <string name="search_android_nfc">NFC</string>
+    <string name="search_android_airplane">飛航模式</string>
+    <string name="search_android_mobile_data">行動數據</string>
+    <string name="search_android_vpn">VPN</string>
+    <string name="search_android_notifications">通知</string>
+    <string name="search_android_battery">電池</string>
+    <string name="search_android_home">預設主畫面應用程式</string>
+    <string name="search_android_all">全部系統設定</string>
+    <string name="search_android_about">關於手機</string>
+    <string name="search_android_privacy">隱私權</string>
+    <string name="search_android_keyboard">鍵盤</string>
+    <string name="search_android_defaults">預設應用程式</string>
+    <string name="search_android_developer">開發人員選項</string>
+</resources>

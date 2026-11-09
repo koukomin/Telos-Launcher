@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preference_search_android_settings">Android 系统设置</string>
+    <string name="preference_search_android_settings_summary">查找 WLAN、蓝牙、显示等系统界面。允许拼写错误。</string>
+    <string name="preference_search_telos_settings">Telos 设置</string>
+    <string name="preference_search_telos_settings_summary">搜索启动器界面，如外观、搜索和壁纸</string>
+    <string name="preference_search_telos_app_settings">Telos 应用设置</string>
+    <string name="preference_search_telos_app_settings_summary">搜索内置 Telos 应用的设置。每条结果会标明所属应用。</string>
+    <string name="search_settings_source_android">Android 设置</string>
+    <string name="search_settings_source_telos">Telos 设置</string>
+    <string name="search_settings_source_telos_app">%1$s 设置</string>
+    <string name="search_android_wifi">WLAN</string>
+    <string name="search_android_bluetooth">蓝牙</string>
+    <string name="search_android_display">显示</string>
+    <string name="search_android_sound">声音</string>
+    <string name="search_android_date">日期和时间</string>
+    <string name="search_android_language">语言</string>
+    <string name="search_android_accessibility">无障碍</string>
+    <string name="search_android_security">安全</string>
+    <string name="search_android_storage">存储</string>
+    <string name="search_android_apps">应用</string>
+    <string name="search_android_location">位置</string>
+    <string name="search_android_nfc">NFC</string>
+    <string name="search_android_airplane">飞行模式</string>
+    <string name="search_android_mobile_data">移动数据</string>
+    <string name="search_android_vpn">VPN</string>
+    <string name="search_android_notifications">通知</string>
+    <string name="search_android_battery">电池</string>
+    <string name="search_android_home">默认主屏幕应用</string>
+    <string name="search_android_all">全部系统设置</string>
+    <string name="search_android_about">关于手机</string>
+    <string name="search_android_privacy">隐私</string>
+    <string name="search_android_keyboard">键盘</string>
+    <string name="search_android_defaults">默认应用</string>
+    <string name="search_android_developer">开发者选项</string>
+</resources>

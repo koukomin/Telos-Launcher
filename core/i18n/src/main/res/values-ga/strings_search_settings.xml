@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preference_search_android_settings">Socruithe córais Android</string>
+    <string name="preference_search_android_settings_summary">Aimsigh Wi-Fi, Bluetooth, taispeáint agus scáileáin chórais eile. Ceadaítear botúin litrithe.</string>
+    <string name="preference_search_telos_settings">Socruithe Telos</string>
+    <string name="preference_search_telos_settings_summary">Cuardaigh scáileáin an tosaitheora mar chuma, cuardach agus cúlra</string>
+    <string name="preference_search_telos_app_settings">Socruithe aipeanna Telos</string>
+    <string name="preference_search_telos_app_settings_summary">Cuardaigh socruithe na n-aipeanna Telos ionsuite. Taispeánann gach toradh an aip.</string>
+    <string name="search_settings_source_android">Socruithe Android</string>
+    <string name="search_settings_source_telos">Socruithe Telos</string>
+    <string name="search_settings_source_telos_app">Socruithe %1$s</string>
+    <string name="search_android_wifi">Wi-Fi</string>
+    <string name="search_android_bluetooth">Bluetooth</string>
+    <string name="search_android_display">Taispeáint</string>
+    <string name="search_android_sound">Fuaim</string>
+    <string name="search_android_date">Dáta agus am</string>
+    <string name="search_android_language">Teanga</string>
+    <string name="search_android_accessibility">Inrochtaineacht</string>
+    <string name="search_android_security">Slándáil</string>
+    <string name="search_android_storage">Stóras</string>
+    <string name="search_android_apps">Aipeanna</string>
+    <string name="search_android_location">Suíomh</string>
+    <string name="search_android_nfc">NFC</string>
+    <string name="search_android_airplane">Mód eitleáin</string>
+    <string name="search_android_mobile_data">Sonraí móibíleacha</string>
+    <string name="search_android_vpn">VPN</string>
+    <string name="search_android_notifications">Fógraí</string>
+    <string name="search_android_battery">Cadhnra</string>
+    <string name="search_android_home">Aip bhaile réamhshocraithe</string>
+    <string name="search_android_all">Gach socrú córais</string>
+    <string name="search_android_about">Maidir leis an bhfón</string>
+    <string name="search_android_privacy">Príobháideachas</string>
+    <string name="search_android_keyboard">Méarchlár</string>
+    <string name="search_android_defaults">Aipeanna réamhshocraithe</string>
+    <string name="search_android_developer">Roghanna forbróra</string>
+</resources>

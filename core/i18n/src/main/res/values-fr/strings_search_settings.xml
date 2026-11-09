@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preference_search_android_settings">Réglages système Android</string>
+    <string name="preference_search_android_settings_summary">Trouvez Wi-Fi, Bluetooth, affichage et d’autres écrans système. Les fautes d’orthographe sont acceptées.</string>
+    <string name="preference_search_telos_settings">Réglages Telos</string>
+    <string name="preference_search_telos_settings_summary">Recherchez les écrans du lanceur : apparence, recherche, fond d’écran</string>
+    <string name="preference_search_telos_app_settings">Réglages des apps Telos</string>
+    <string name="preference_search_telos_app_settings_summary">Recherchez les réglages des apps Telos intégrées. Chaque résultat indique l’app.</string>
+    <string name="search_settings_source_android">Réglages Android</string>
+    <string name="search_settings_source_telos">Réglages Telos</string>
+    <string name="search_settings_source_telos_app">Réglages %1$s</string>
+    <string name="search_android_wifi">Wi-Fi</string>
+    <string name="search_android_bluetooth">Bluetooth</string>
+    <string name="search_android_display">Affichage</string>
+    <string name="search_android_sound">Son</string>
+    <string name="search_android_date">Date et heure</string>
+    <string name="search_android_language">Langue</string>
+    <string name="search_android_accessibility">Accessibilité</string>
+    <string name="search_android_security">Sécurité</string>
+    <string name="search_android_storage">Stockage</string>
+    <string name="search_android_apps">Applis</string>
+    <string name="search_android_location">Localisation</string>
+    <string name="search_android_nfc">NFC</string>
+    <string name="search_android_airplane">Mode avion</string>
+    <string name="search_android_mobile_data">Données mobiles</string>
+    <string name="search_android_vpn">VPN</string>
+    <string name="search_android_notifications">Notifications</string>
+    <string name="search_android_battery">Batterie</string>
+    <string name="search_android_home">Applis d’accueil par défaut</string>
+    <string name="search_android_all">Tous les réglages système</string>
+    <string name="search_android_about">À propos du téléphone</string>
+    <string name="search_android_privacy">Confidentialité</string>
+    <string name="search_android_keyboard">Clavier</string>
+    <string name="search_android_defaults">Applis par défaut</string>
+    <string name="search_android_developer">Options pour les développeurs</string>
+</resources>

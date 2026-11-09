@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preference_search_android_settings">Android-järjestelmäasetukset</string>
+    <string name="preference_search_android_settings_summary">Etsi Wi-Fi, Bluetooth, näyttö ja muita järjestelmänäkymiä. Kirjoitusvirheet sallitaan.</string>
+    <string name="preference_search_telos_settings">Telos-asetukset</string>
+    <string name="preference_search_telos_settings_summary">Hae käynnistimen näkymiä, kuten ulkoasu, haku ja taustakuva</string>
+    <string name="preference_search_telos_app_settings">Telos-sovellusasetukset</string>
+    <string name="preference_search_telos_app_settings_summary">Hae sisäänrakennettujen Telos-sovellusten asetuksia. Jokainen tulos näyttää sovelluksen.</string>
+    <string name="search_settings_source_android">Android-asetukset</string>
+    <string name="search_settings_source_telos">Telos-asetukset</string>
+    <string name="search_settings_source_telos_app">%1$s-asetukset</string>
+    <string name="search_android_wifi">Wi-Fi</string>
+    <string name="search_android_bluetooth">Bluetooth</string>
+    <string name="search_android_display">Näyttö</string>
+    <string name="search_android_sound">Ääni</string>
+    <string name="search_android_date">Päivämäärä ja aika</string>
+    <string name="search_android_language">Kieli</string>
+    <string name="search_android_accessibility">Esteettömyys</string>
+    <string name="search_android_security">Turvallisuus</string>
+    <string name="search_android_storage">Tallennustila</string>
+    <string name="search_android_apps">Sovellukset</string>
+    <string name="search_android_location">Sijainti</string>
+    <string name="search_android_nfc">NFC</string>
+    <string name="search_android_airplane">Lentokonetila</string>
+    <string name="search_android_mobile_data">Mobiilidata</string>
+    <string name="search_android_vpn">VPN</string>
+    <string name="search_android_notifications">Ilmoitukset</string>
+    <string name="search_android_battery">Akku</string>
+    <string name="search_android_home">Oletusaloitussovellus</string>
+    <string name="search_android_all">Kaikki järjestelmäasetukset</string>
+    <string name="search_android_about">Tietoja puhelimesta</string>
+    <string name="search_android_privacy">Tietosuoja</string>
+    <string name="search_android_keyboard">Näppäimistö</string>
+    <string name="search_android_defaults">Oletussovellukset</string>
+    <string name="search_android_developer">Kehittäjäasetukset</string>
+</resources>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preference_search_android_settings">Ustawienia systemowe Androida</string>
+    <string name="preference_search_android_settings_summary">Znajdź Wi-Fi, Bluetooth, ekran i inne ekrany systemu. Literówki są dozwolone.</string>
+    <string name="preference_search_telos_settings">Ustawienia Telos</string>
+    <string name="preference_search_telos_settings_summary">Szukaj ekranów launchera, np. wygląd, wyszukiwanie, tapeta</string>
+    <string name="preference_search_telos_app_settings">Ustawienia aplikacji Telos</string>
+    <string name="preference_search_telos_app_settings_summary">Szukaj ustawień wbudowanych aplikacji Telos. Każdy wynik pokazuje aplikację.</string>
+    <string name="search_settings_source_android">Ustawienia Androida</string>
+    <string name="search_settings_source_telos">Ustawienia Telos</string>
+    <string name="search_settings_source_telos_app">Ustawienia: %1$s</string>
+    <string name="search_android_wifi">Wi-Fi</string>
+    <string name="search_android_bluetooth">Bluetooth</string>
+    <string name="search_android_display">Ekran</string>
+    <string name="search_android_sound">Dźwięk</string>
+    <string name="search_android_date">Data i godzina</string>
+    <string name="search_android_language">Język</string>
+    <string name="search_android_accessibility">Ułatwienia</string>
+    <string name="search_android_security">Bezpieczeństwo</string>
+    <string name="search_android_storage">Pamięć</string>
+    <string name="search_android_apps">Aplikacje</string>
+    <string name="search_android_location">Lokalizacja</string>
+    <string name="search_android_nfc">NFC</string>
+    <string name="search_android_airplane">Tryb samolotowy</string>
+    <string name="search_android_mobile_data">Dane mobilne</string>
+    <string name="search_android_vpn">VPN</string>
+    <string name="search_android_notifications">Powiadomienia</string>
+    <string name="search_android_battery">Bateria</string>
+    <string name="search_android_home">Domyślna aplikacja startowa</string>
+    <string name="search_android_all">Wszystkie ustawienia systemu</string>
+    <string name="search_android_about">Informacje o telefonie</string>
+    <string name="search_android_privacy">Prywatność</string>
+    <string name="search_android_keyboard">Klawiatura</string>
+    <string name="search_android_defaults">Domyślne aplikacje</string>
+    <string name="search_android_developer">Opcje programisty</string>
+</resources>

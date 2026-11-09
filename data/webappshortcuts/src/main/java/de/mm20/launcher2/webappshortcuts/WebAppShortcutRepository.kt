@@ -86,7 +86,7 @@ internal class WebAppShortcutRepositoryImpl(
         return savableSearchableRepository.get(includeTypes = listOf(WebAppShortcutImpl.Domain))
             .map { items ->
                 items.filterIsInstance<WebAppShortcut>()
-                    .filter { query.isBlank() || it.label.contains(query, ignoreCase = true) }
+                    .filter { query.isBlank() || de.mm20.launcher2.search.GreekFold.contains(it.label, query) }
             }
     }
 

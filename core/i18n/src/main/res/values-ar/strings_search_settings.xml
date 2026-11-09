@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preference_search_android_settings">إعدادات نظام أندرويد</string>
+    <string name="preference_search_android_settings_summary">اعثر على Wi-Fi وبلوتوث والشاشة وشاشات النظام الأخرى. يُسمح بالأخطاء الإملائية.</string>
+    <string name="preference_search_telos_settings">إعدادات Telos</string>
+    <string name="preference_search_telos_settings_summary">ابحث في شاشات المشغّل مثل المظهر والبحث والخلفية</string>
+    <string name="preference_search_telos_app_settings">إعدادات تطبيقات Telos</string>
+    <string name="preference_search_telos_app_settings_summary">ابحث في إعدادات تطبيقات Telos المدمجة. يظهر كل نتيجة مع اسم التطبيق.</string>
+    <string name="search_settings_source_android">إعدادات أندرويد</string>
+    <string name="search_settings_source_telos">إعدادات Telos</string>
+    <string name="search_settings_source_telos_app">إعدادات %1$s</string>
+    <string name="search_android_wifi">Wi-Fi</string>
+    <string name="search_android_bluetooth">بلوتوث</string>
+    <string name="search_android_display">الشاشة</string>
+    <string name="search_android_sound">الصوت</string>
+    <string name="search_android_date">التاريخ والوقت</string>
+    <string name="search_android_language">اللغة</string>
+    <string name="search_android_accessibility">إمكانية الوصول</string>
+    <string name="search_android_security">الأمان</string>
+    <string name="search_android_storage">التخزين</string>
+    <string name="search_android_apps">التطبيقات</string>
+    <string name="search_android_location">الموقع</string>
+    <string name="search_android_nfc">NFC</string>
+    <string name="search_android_airplane">وضع الطيران</string>
+    <string name="search_android_mobile_data">بيانات الجوال</string>
+    <string name="search_android_vpn">VPN</string>
+    <string name="search_android_notifications">الإشعارات</string>
+    <string name="search_android_battery">البطارية</string>
+    <string name="search_android_home">تطبيق الشاشة الرئيسية الافتراضي</string>
+    <string name="search_android_all">كل إعدادات النظام</string>
+    <string name="search_android_about">حول الهاتف</string>
+    <string name="search_android_privacy">الخصوصية</string>
+    <string name="search_android_keyboard">لوحة المفاتيح</string>
+    <string name="search_android_defaults">التطبيقات الافتراضية</string>
+    <string name="search_android_developer">خيارات المطوّر</string>
+</resources>

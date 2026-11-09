@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preference_search_android_settings">Android system settings</string>
+    <string name="preference_search_android_settings_summary">Find Wi-Fi, Bluetooth, display and other system screens. Typos are allowed.</string>
+    <string name="preference_search_telos_settings">Telos settings</string>
+    <string name="preference_search_telos_settings_summary">Search launcher screens such as appearance, search and wallpaper</string>
+    <string name="preference_search_telos_app_settings">Telos app settings</string>
+    <string name="preference_search_telos_app_settings_summary">Search settings of built-in Telos apps. Each result shows which app it belongs to.</string>
+    <string name="search_settings_source_android">Android settings</string>
+    <string name="search_settings_source_telos">Telos settings</string>
+    <string name="search_settings_source_telos_app">%1$s settings</string>
+    <string name="search_android_wifi">Wi-Fi</string>
+    <string name="search_android_bluetooth">Bluetooth</string>
+    <string name="search_android_display">Display</string>
+    <string name="search_android_sound">Sound</string>
+    <string name="search_android_date">Date and time</string>
+    <string name="search_android_language">Language</string>
+    <string name="search_android_accessibility">Accessibility</string>
+    <string name="search_android_security">Security</string>
+    <string name="search_android_storage">Storage</string>
+    <string name="search_android_apps">Apps</string>
+    <string name="search_android_location">Location</string>
+    <string name="search_android_nfc">NFC</string>
+    <string name="search_android_airplane">Airplane mode</string>
+    <string name="search_android_mobile_data">Mobile data</string>
+    <string name="search_android_vpn">VPN</string>
+    <string name="search_android_notifications">Notifications</string>
+    <string name="search_android_battery">Battery</string>
+    <string name="search_android_home">Default home app</string>
+    <string name="search_android_all">All system settings</string>
+    <string name="search_android_about">About the phone</string>
+    <string name="search_android_privacy">Privacy</string>
+    <string name="search_android_keyboard">Keyboard</string>
+    <string name="search_android_defaults">Default apps</string>
+    <string name="search_android_developer">Developer options</string>
+</resources>

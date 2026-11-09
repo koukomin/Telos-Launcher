@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preference_search_android_settings">Android-systeminnstillinger</string>
+    <string name="preference_search_android_settings_summary">Finn Wi-Fi, Bluetooth, skjerm og andre systemskjermer. Skrivefeil er tillatt.</string>
+    <string name="preference_search_telos_settings">Telos-innstillinger</string>
+    <string name="preference_search_telos_settings_summary">Søk i launcher-skjermer som utseende, søk og bakgrunn</string>
+    <string name="preference_search_telos_app_settings">Telos-appinnstillinger</string>
+    <string name="preference_search_telos_app_settings_summary">Søk i innstillinger for innebygde Telos-apper. Hvert resultat viser appen.</string>
+    <string name="search_settings_source_android">Android-innstillinger</string>
+    <string name="search_settings_source_telos">Telos-innstillinger</string>
+    <string name="search_settings_source_telos_app">Innstillinger for %1$s</string>
+    <string name="search_android_wifi">Wi-Fi</string>
+    <string name="search_android_bluetooth">Bluetooth</string>
+    <string name="search_android_display">Skjerm</string>
+    <string name="search_android_sound">Lyd</string>
+    <string name="search_android_date">Dato og tid</string>
+    <string name="search_android_language">Språk</string>
+    <string name="search_android_accessibility">Tilgjengelighet</string>
+    <string name="search_android_security">Sikkerhet</string>
+    <string name="search_android_storage">Lagring</string>
+    <string name="search_android_apps">Apper</string>
+    <string name="search_android_location">Plassering</string>
+    <string name="search_android_nfc">NFC</string>
+    <string name="search_android_airplane">Flymodus</string>
+    <string name="search_android_mobile_data">Mobildata</string>
+    <string name="search_android_vpn">VPN</string>
+    <string name="search_android_notifications">Varsler</string>
+    <string name="search_android_battery">Batteri</string>
+    <string name="search_android_home">Standard startapp</string>
+    <string name="search_android_all">Alle systeminnstillinger</string>
+    <string name="search_android_about">Om telefonen</string>
+    <string name="search_android_privacy">Personvern</string>
+    <string name="search_android_keyboard">Tastatur</string>
+    <string name="search_android_defaults">Standardapper</string>
+    <string name="search_android_developer">Utvikleralternativer</string>
+</resources>

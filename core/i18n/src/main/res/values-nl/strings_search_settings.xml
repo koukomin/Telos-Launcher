@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preference_search_android_settings">Android-systeeminstellingen</string>
+    <string name="preference_search_android_settings_summary">Zoek wifi, bluetooth, beeldscherm en andere systeemschermen. Typefouten zijn toegestaan.</string>
+    <string name="preference_search_telos_settings">Telos-instellingen</string>
+    <string name="preference_search_telos_settings_summary">Zoek in launcher-schermen zoals weergave, zoeken en achtergrond</string>
+    <string name="preference_search_telos_app_settings">Telos-app-instellingen</string>
+    <string name="preference_search_telos_app_settings_summary">Zoek instellingen van ingebouwde Telos-apps. Elk resultaat toont de app.</string>
+    <string name="search_settings_source_android">Android-instellingen</string>
+    <string name="search_settings_source_telos">Telos-instellingen</string>
+    <string name="search_settings_source_telos_app">Instellingen van %1$s</string>
+    <string name="search_android_wifi">Wifi</string>
+    <string name="search_android_bluetooth">Bluetooth</string>
+    <string name="search_android_display">Beeldscherm</string>
+    <string name="search_android_sound">Geluid</string>
+    <string name="search_android_date">Datum en tijd</string>
+    <string name="search_android_language">Taal</string>
+    <string name="search_android_accessibility">Toegankelijkheid</string>
+    <string name="search_android_security">Beveiliging</string>
+    <string name="search_android_storage">Opslag</string>
+    <string name="search_android_apps">Apps</string>
+    <string name="search_android_location">Locatie</string>
+    <string name="search_android_nfc">NFC</string>
+    <string name="search_android_airplane">Vliegtuigmodus</string>
+    <string name="search_android_mobile_data">Mobiele data</string>
+    <string name="search_android_vpn">VPN</string>
+    <string name="search_android_notifications">Meldingen</string>
+    <string name="search_android_battery">Batterij</string>
+    <string name="search_android_home">Standaard start-app</string>
+    <string name="search_android_all">Alle systeeminstellingen</string>
+    <string name="search_android_about">Over de telefoon</string>
+    <string name="search_android_privacy">Privacy</string>
+    <string name="search_android_keyboard">Toetsenbord</string>
+    <string name="search_android_defaults">Standaard-apps</string>
+    <string name="search_android_developer">Ontwikkelaarsopties</string>
+</resources>
