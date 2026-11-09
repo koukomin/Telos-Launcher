@@ -233,17 +233,14 @@ private fun RadioDashboardContent(
                         expanded = collectionSearchExpanded, onClose = { collectionQuery = ""; collectionSearchExpanded = false },
                     )
                 }
-                var chip by rememberSaveable { mutableStateOf(RadioChip.All) }
                 RadioHome(
                     favorites = shownFavorites,
                     player = playerViewModel,
-                    chip = chip,
-                    onChip = { chip = it },
                     onLongClick = { editTarget = it },
                     modifier = Modifier.fillMaxSize(),
                     header = {
                         Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                            if (values.controlsScroll) RadioNowPlayingBar(favorites, onOpen = { showNowPlaying = true })
+                            if (values.controlsScroll) RadioNowPlayingBar(favorites, onOpen = {})
                             if (shownFavorites.isEmpty() && favorites.isNotEmpty() && collectionQuery.isNotBlank()) {
                                 de.mm20.launcher2.ui.component.SearchEmptyState(collectionQuery)
                             }
@@ -285,7 +282,7 @@ private fun RadioDashboardContent(
                         verticalArrangement = Arrangement.spacedBy(10.dp),
                         modifier = Modifier.fillMaxSize()
                     ) {
-                        if (values.controlsScroll) item { RadioNowPlayingBar(favorites, onOpen = { showNowPlaying = true }) }
+                        if (values.controlsScroll) item { RadioNowPlayingBar(favorites, onOpen = {}) }
                         items(searchResults.distinctBy { it.id }, key = { it.id }) { station ->
                             val isFavorite = favorites.any { it.id == station.id }
                             StationRow(
@@ -345,8 +342,7 @@ private fun RadioDashboardContent(
         }
     }
     if (!values.controlsScroll) {
-        if (!de.mm20.launcher2.ui.media.LocalInMediaHub.current) de.mm20.launcher2.ui.comms.RadioMiniPlayer()
-        else RadioNowPlayingBar(favorites, onOpen = { showNowPlaying = true })
+        RadioNowPlayingBar(favorites, onOpen = {})
     }
     }
     }

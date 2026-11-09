@@ -553,7 +553,7 @@ private fun TvHomeBody(
                                         ch, playing = ch.id == playingId, favorite = ch.id in favoriteIds,
                                         reduceAnimations = reduceAnimations, actions = actionsFor(ch),
                                         onClick = { vm.play(ch, recents) },
-                                        modifier = Modifier.width(104.dp),
+                                        modifier = Modifier.width(136.dp),
                                     )
                                 }
                             }
@@ -568,7 +568,7 @@ private fun TvHomeBody(
                                         ch, playing = ch.id == playingId, favorite = ch.id in favoriteIds,
                                         reduceAnimations = reduceAnimations, actions = actionsFor(ch),
                                         onClick = { vm.play(ch, custom) },
-                                        modifier = Modifier.width(104.dp),
+                                        modifier = Modifier.width(136.dp),
                                     )
                                 }
                             }

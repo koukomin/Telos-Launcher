@@ -197,35 +197,20 @@ fun RadioStationCard(
     }
 }
 
-/** Pill filter chip with an animated selection colour */
-@Composable
-private fun RadioPill(selected: Boolean, label: String, reduce: Boolean, onClick: () -> Unit) {
-    de.mm20.launcher2.ui.media.MediaFilterButton(selected, onClick, label)
-
-}
-
-/** Home of the collection: pill chips, a shelf of recently played stations and a two column grid */
+/** Home of the collection: a two column grid showing favorites alphabetically, with the last played station first */
 @Composable
 fun RadioHome(
     favorites: List<RadioStation>,
     player: RadioViewModel,
-    chip: RadioChip,
-    onChip: (RadioChip) -> Unit,
     onLongClick: (RadioStation) -> Unit,
     header: @Composable () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val reduce by koinInject<PerformanceSettings>().reduceAnimations.collectAsState(false)
-    val recent = remember(favorites) {
-        favorites.filter { it.lastPlayedAt > 0 }.sortedByDescending { it.lastPlayedAt }.take(10)
-    }
-    val shown = remember(favorites, chip) {
-        when (chip) {
-            RadioChip.All -> favorites
-            RadioChip.Recent -> favorites.filter { it.lastPlayedAt > 0 }.sortedByDescending { it.lastPlayedAt }
-            RadioChip.Mine -> favorites.filter { it.id.startsWith("local-") }
-            RadioChip.Browser -> favorites.filter { !it.id.startsWith("local-") }
-        }
+    val shown = remember(favorites) {
+        val lastPlayed = favorites.maxByOrNull { it.lastPlayedAt }
+        val rest = favorites.filter { it.id != lastPlayed?.id }.sortedBy { it.name }
+        if (lastPlayed != null && lastPlayed.lastPlayedAt > 0) listOf(lastPlayed) + rest else rest
     }
     LazyVerticalGrid(
         columns = GridCells.Adaptive(260.dp),
@@ -235,42 +220,6 @@ fun RadioHome(
         modifier = modifier,
     ) {
         item(span = { GridItemSpan(maxLineSpan) }) { header() }
-        item(span = { GridItemSpan(maxLineSpan) }) {
-            LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                items(RadioChip.values().toList()) { c ->
-                    RadioPill(
-                        selected = chip == c,
-                        reduce = reduce,
-                        onClick = { onChip(c) },
-                        label = stringResource(
-                            when (c) {
-                                RadioChip.All -> I18nR.string.au10_radio_chip_all
-                                RadioChip.Recent -> I18nR.string.au10_radio_chip_recent
-                                RadioChip.Mine -> I18nR.string.au10_radio_chip_mine
-                                RadioChip.Browser -> I18nR.string.au10_radio_chip_browser
-                            }
-                        ),
-                    )
-                }
-            }
-        }
-        if (chip == RadioChip.All && recent.isNotEmpty()) {
-            item(span = { GridItemSpan(maxLineSpan) }) {
-                Column(Modifier.padding(top = 12.dp)) {
-                    Text(
-                        stringResource(I18nR.string.au10_radio_recent_title),
-                        style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.SemiBold,
-                        modifier = Modifier.padding(bottom = 12.dp),
-                    )
-                    LazyRow(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                        items(recent, key = { it.id }) { s ->
-                            RadioStationCard(s, player, { onLongClick(s) }, Modifier.width(260.dp))
-                        }
-                    }
-                }
-            }
-        }
         items(shown, key = { it.id }) { s ->
             RadioStationCard(s, player, { onLongClick(s) }, if (reduce) Modifier else Modifier.animateItem())
         }

@@ -89,7 +89,7 @@ class TvExtraSources(
                 name = "ΣΚΑΪ",
                 tvgName = "SKAI",
                 tvgId = "skai.gr",
-                logo = "https://i.imgur.com/8QzXkQx.png",
+                logo = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Skai_TV.svg/512px-Skai_TV.svg.png",
                 group = "General",
                 url = "https://skai-live.siliconweb.com/media/cambria4/index.m3u8"
             ),
@@ -129,7 +129,7 @@ class TvExtraSources(
                 name = "ANT1",
                 tvgName = "ANT1",
                 tvgId = "ant1.gr",
-                logo = "https://i.imgur.com/Ant1Logo.png",
+                logo = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/ANT1_logo.svg/512px-ANT1_logo.svg.png",
                 group = "General",
                 url = "https://mcdn.antennaplus.gr/live/media0/Ant1/HLS/Ant1.m3u8"
             ),
@@ -137,7 +137,7 @@ class TvExtraSources(
                 name = "ALPHA",
                 tvgName = "ALPHA",
                 tvgId = "alphatv.gr",
-                logo = "https://i.imgur.com/Y34YQzZ.png",
+                logo = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Alpha_TV_Logo_2020.svg/512px-Alpha_TV_Logo_2020.svg.png",
                 group = "General",
                 url = "https://alphatvlive2.siliconweb.com/alphatvlive/live_abr/playlist.m3u8"
             ),
@@ -145,7 +145,7 @@ class TvExtraSources(
                 name = "MEGA",
                 tvgName = "MEGA",
                 tvgId = "megatv.gr",
-                logo = "https://i.imgur.com/7A2xL3a.png",
+                logo = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Mega_Channel_logo.svg/512px-Mega_Channel_logo.svg.png",
                 group = "General",
                 url = "http://cdn.smart-tv-data.com/mega/MegaCosmos/mpeg.2ts"
             ),
@@ -153,7 +153,7 @@ class TvExtraSources(
                 name = "STAR",
                 tvgName = "STAR",
                 tvgId = "startv.gr",
-                logo = "https://i.imgur.com/6X9mQ3b.png",
+                logo = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Star_Channel_%28Greece%29.svg/512px-Star_Channel_%28Greece%29.svg.png",
                 group = "General",
                 url = "https://livestar.siliconweb.com/starvod/star4/star4.m3u8"
             ),
@@ -161,7 +161,7 @@ class TvExtraSources(
                 name = "OPEN BEYOND",
                 tvgName = "OPEN",
                 tvgId = "opentv.gr",
-                logo = "https://i.imgur.com/9B2yX4c.png",
+                logo = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Open_TV_Logo.svg/512px-Open_TV_Logo.svg.png",
                 group = "General",
                 url = "https://liveopen.siliconweb.com/openTvLive/liveopen/playlist.m3u8"
             ),
