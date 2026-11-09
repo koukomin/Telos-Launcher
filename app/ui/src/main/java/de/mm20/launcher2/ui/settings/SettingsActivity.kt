@@ -514,6 +514,9 @@ open class SettingsActivity : BaseActivity() {
             entry<UnitConverterHelpSettingsRoute> {
                 UnitConverterHelpSettingsScreen()
             }
+            entry<de.mm20.launcher2.ui.help.HelpDashboardRoute> {
+                de.mm20.launcher2.ui.help.HelpDashboardScreen()
+            }
             entry<WikipediaSettingsRoute> {
                 WikipediaSettingsScreen()
             }

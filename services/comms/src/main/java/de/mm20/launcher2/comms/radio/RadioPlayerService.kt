@@ -87,8 +87,10 @@ class RadioPlayerService : MediaSessionService(), KoinComponent {
             private var effectSession = -1
             override fun onAudioSessionIdChanged(audioSessionId: Int) {
                 de.mm20.launcher2.comms.media.MediaAudioFx.detachFromSession(effectSession)
+                de.mm20.launcher2.comms.media.PlaybackSpectrum.detach(effectSession)
                 effectSession = audioSessionId
                 de.mm20.launcher2.comms.media.MediaAudioFx.attachToSession(audioSessionId)
+                de.mm20.launcher2.comms.media.PlaybackSpectrum.attach(audioSessionId)
             }
         })
         player = exo
@@ -278,7 +280,10 @@ class RadioPlayerService : MediaSessionService(), KoinComponent {
         RadioSleepTimer.onExpire = null
         scope.cancel()
         mediaSession?.run {
-            de.mm20.launcher2.comms.media.MediaAudioFx.detachFromSession((player as? ExoPlayer)?.audioSessionId ?: -1); player.release()
+            val audioSessionId = (player as? ExoPlayer)?.audioSessionId ?: -1
+            de.mm20.launcher2.comms.media.MediaAudioFx.detachFromSession(audioSessionId)
+            de.mm20.launcher2.comms.media.PlaybackSpectrum.detach(audioSessionId)
+            player.release()
             release()
             mediaSession = null
         }
