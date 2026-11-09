@@ -242,7 +242,7 @@ private fun ShizukuDiagnosticDialog(
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Shizuku Auto-Start Diagnostics & Setup") },
+        title = { Text(stringResource(I18nR.string.settings_shizuku_dialog_title)) },
         text = {
             Column(
                 modifier = Modifier
@@ -250,38 +250,39 @@ private fun ShizukuDiagnosticDialog(
                     .verticalScroll(rememberScrollState()),
                 verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
-                Text("Live OS Compatibility Checklist:", fontWeight = FontWeight.Bold)
+                Text(stringResource(I18nR.string.settings_shizuku_checklist), fontWeight = FontWeight.Bold)
 
-                ChecklistItem("Android 11+ (Wireless Debugging Support)", status?.isAndroid11OrHigher == true)
+                ChecklistItem(stringResource(I18nR.string.settings_shizuku_check_android11), status?.isAndroid11OrHigher == true)
                 ChecklistItem(stringResource(I18nR.string.telos_shizuku_diag_builtin), status?.isShizukuInstalled == true || status?.isShizukuRunning == true)
-                ChecklistItem("Developer Options Enabled", status?.isDeveloperOptionsEnabled == true)
-                ChecklistItem("Wi-Fi Connected (Active Network)", status?.isWifiConnected == true)
-                ChecklistItem("WRITE_SECURE_SETTINGS Granted", status?.hasWriteSecureSettings == true)
-                ChecklistItem("Shizuku Daemon Running & Authorized", status?.isShizukuRunning == true && status.isShizukuAuthorized)
+                ChecklistItem(stringResource(I18nR.string.settings_shizuku_check_dev_opts), status?.isDeveloperOptionsEnabled == true)
+                ChecklistItem(stringResource(I18nR.string.settings_shizuku_check_wifi), status?.isWifiConnected == true)
+                ChecklistItem(stringResource(I18nR.string.settings_shizuku_check_write_secure), status?.hasWriteSecureSettings == true)
+                ChecklistItem(stringResource(I18nR.string.settings_shizuku_check_daemon), status?.isShizukuRunning == true && status.isShizukuAuthorized)
 
                 HorizontalDivider(Modifier.padding(vertical = 4.dp))
 
-                Text("Step 1 (Automatic without PC):", fontWeight = FontWeight.Bold)
-                Text("Open the Shizuku app, start it once via Wireless Debugging, and tap 'Grant via Shizuku' below so the Launcher can configure itself automatically.", style = MaterialTheme.typography.bodySmall)
+                Text(stringResource(I18nR.string.settings_shizuku_step1_title), fontWeight = FontWeight.Bold)
+                Text(stringResource(I18nR.string.settings_shizuku_step1_desc), style = MaterialTheme.typography.bodySmall)
 
                 Button(
                     onClick = {
                         vm.trySelfGrant(context) { ok ->
-                            if (ok) {
-                                Toast.makeText(context, "Permission WRITE_SECURE_SETTINGS granted successfully!", Toast.LENGTH_SHORT).show()
-                            } else {
-                                Toast.makeText(context, "Could not self-grant via Shizuku. Start Shizuku first.", Toast.LENGTH_SHORT).show()
-                            }
+                            Toast.makeText(
+                                context,
+                                if (ok) context.getString(I18nR.string.settings_shizuku_grant_ok)
+                                else context.getString(I18nR.string.settings_shizuku_grant_fail),
+                                Toast.LENGTH_SHORT,
+                            ).show()
                         }
                     },
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text("Grant via Shizuku & Retry")
+                    Text(stringResource(I18nR.string.settings_shizuku_grant_retry))
                 }
 
                 HorizontalDivider(Modifier.padding(vertical = 4.dp))
 
-                Text("Step 2 (Manual via ADB / Termux):", fontWeight = FontWeight.Bold)
+                Text(stringResource(I18nR.string.settings_shizuku_step2_title), fontWeight = FontWeight.Bold)
                 Card(colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh)) {
                     Column(Modifier.padding(10.dp)) {
                         Text(adbCmd, style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.Bold)
@@ -290,21 +291,21 @@ private fun ShizukuDiagnosticDialog(
                             onClick = {
                                 val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
                                 clipboard.setPrimaryClip(android.content.ClipData.newPlainText("ADB Command", adbCmd))
-                                Toast.makeText(context, "ADB command copied to clipboard!", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, context.getString(I18nR.string.settings_shizuku_adb_copied), Toast.LENGTH_SHORT).show()
                             },
                             modifier = Modifier.align(Alignment.End)
                         ) {
-                            Text("Copy ADB Command")
+                            Text(stringResource(I18nR.string.settings_shizuku_copy_adb))
                         }
                     }
                 }
 
                 HorizontalDivider(Modifier.padding(vertical = 4.dp))
 
-                Text("Step 3 (Preventing OS Background Killing):", fontWeight = FontWeight.Bold)
-                Text("• Enable 'Start on boot (Wireless debugging)' inside Shizuku settings.", style = MaterialTheme.typography.bodySmall)
-                Text("• Enable 'Disable adb authorization timeout' in Android Developer Options.", style = MaterialTheme.typography.bodySmall)
-                Text("• Set Battery Optimization for Shizuku and Telos to 'Unrestricted'.", style = MaterialTheme.typography.bodySmall)
+                Text(stringResource(I18nR.string.settings_shizuku_step3_title), fontWeight = FontWeight.Bold)
+                Text(stringResource(I18nR.string.settings_shizuku_step3_boot), style = MaterialTheme.typography.bodySmall)
+                Text(stringResource(I18nR.string.settings_shizuku_step3_adb_timeout), style = MaterialTheme.typography.bodySmall)
+                Text(stringResource(I18nR.string.settings_shizuku_step3_battery), style = MaterialTheme.typography.bodySmall)
             }
         },
         confirmButton = {

@@ -217,7 +217,7 @@ fun SystemDashboardScreen(initialTab: String = "") {
                 androidx.compose.material3.Tab(
                     selected = currentTab == 2,
                     onClick = { currentTab = 2 },
-                    text = { Text("Tweaks") }
+                    text = { Text(stringResource(I18nR.string.preference_screen_tweaks)) }
                 )
                 androidx.compose.material3.Tab(
                     selected = currentTab == 3,
@@ -492,35 +492,34 @@ private fun BatteryCard() {
                 val voltage = intent.getIntExtra(BatteryManager.EXTRA_VOLTAGE, -1)
                 val temp = intent.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, -1)
                 val tech = intent.getStringExtra(BatteryManager.EXTRA_TECHNOLOGY) ?: "Li-ion"
-
-                val statusText = when (status) {
-                    BatteryManager.BATTERY_STATUS_CHARGING -> "Charging"
-                    BatteryManager.BATTERY_STATUS_DISCHARGING -> "Discharging"
-                    BatteryManager.BATTERY_STATUS_FULL -> "Full"
-                    BatteryManager.BATTERY_STATUS_NOT_CHARGING -> "Not Charging"
-                    else -> "Unknown"
-                }
-                val healthText = when (health) {
-                    BatteryManager.BATTERY_HEALTH_GOOD -> "Good"
-                    BatteryManager.BATTERY_HEALTH_OVERHEAT -> "Overheat"
-                    BatteryManager.BATTERY_HEALTH_DEAD -> "Dead"
-                    BatteryManager.BATTERY_HEALTH_OVER_VOLTAGE -> "Over Voltage"
-                    BatteryManager.BATTERY_HEALTH_UNSPECIFIED_FAILURE -> "Failure"
-                    else -> "Unknown"
-                }
-                val pluggedText = when (plugged) {
-                    BatteryManager.BATTERY_PLUGGED_AC -> "AC Charger"
-                    BatteryManager.BATTERY_PLUGGED_USB -> "USB Cable"
-                    BatteryManager.BATTERY_PLUGGED_WIRELESS -> "Wireless"
-                    else -> "Unplugged"
-                }
-
-                batteryInfo = BatteryStats(pct, statusText, healthText, pluggedText, voltage, temp, tech)
+                batteryInfo = BatteryStats(pct, status, health, plugged, voltage, temp, tech)
             }
         }
     }
 
     batteryInfo?.let { info ->
+        val statusText = when (info.status) {
+            BatteryManager.BATTERY_STATUS_CHARGING -> stringResource(I18nR.string.battery_status_charging)
+            BatteryManager.BATTERY_STATUS_DISCHARGING -> stringResource(I18nR.string.battery_status_discharging)
+            BatteryManager.BATTERY_STATUS_FULL -> stringResource(I18nR.string.battery_status_full)
+            BatteryManager.BATTERY_STATUS_NOT_CHARGING -> stringResource(I18nR.string.battery_status_not_charging)
+            else -> stringResource(I18nR.string.freeze_hub_unknown)
+        }
+        val healthText = when (info.health) {
+            BatteryManager.BATTERY_HEALTH_GOOD -> stringResource(I18nR.string.battery_health_good)
+            BatteryManager.BATTERY_HEALTH_OVERHEAT -> stringResource(I18nR.string.battery_health_overheat)
+            BatteryManager.BATTERY_HEALTH_DEAD -> stringResource(I18nR.string.battery_health_dead)
+            BatteryManager.BATTERY_HEALTH_OVER_VOLTAGE -> stringResource(I18nR.string.battery_health_over_voltage)
+            BatteryManager.BATTERY_HEALTH_UNSPECIFIED_FAILURE -> stringResource(I18nR.string.battery_health_failure)
+            else -> stringResource(I18nR.string.freeze_hub_unknown)
+        }
+        val pluggedText = when (info.plugged) {
+            BatteryManager.BATTERY_PLUGGED_AC -> stringResource(I18nR.string.battery_plugged_ac)
+            BatteryManager.BATTERY_PLUGGED_USB -> stringResource(I18nR.string.battery_plugged_usb)
+            BatteryManager.BATTERY_PLUGGED_WIRELESS -> stringResource(I18nR.string.battery_plugged_wireless)
+            else -> stringResource(I18nR.string.battery_plugged_unplugged)
+        }
+        val tempC = info.temp / 10f
         GlassCard {
             Row(
                 Modifier.fillMaxWidth().clickable { showDetails = true },
@@ -528,9 +527,13 @@ private fun BatteryCard() {
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Column(Modifier.weight(1f)) {
-                    Text("Battery & Power Hub", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
-                    Text("${info.percent}% · ${info.status} (${info.plugged})", style = MaterialTheme.typography.bodyMedium)
-                    Text("Health: ${info.health} · ${info.temp / 10f}°C · ${info.voltage} mV", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text(stringResource(I18nR.string.battery_power_hub), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+                    Text("${info.percent}% · $statusText ($pluggedText)", style = MaterialTheme.typography.bodyMedium)
+                    Text(
+                        stringResource(I18nR.string.battery_health_line, healthText, tempC.toString(), info.voltage),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
                 }
                 CircularProgressIndicator(
                     progress = { info.percent / 100f },
@@ -543,16 +546,16 @@ private fun BatteryCard() {
         if (showDetails) {
             ModalBottomSheet(onDismissRequest = { showDetails = false }, sheetState = rememberModalBottomSheetState()) {
                 Column(Modifier.fillMaxWidth().padding(24.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                    Text("Battery Details & Health", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
-                    InfoLine("Charge Level", "${info.percent}%")
-                    InfoLine("Status", info.status)
-                    InfoLine("Health", info.health)
-                    InfoLine("Power Source", info.plugged)
-                    InfoLine("Temperature", "${info.temp / 10f}°C (${(info.temp / 10f * 9/5 + 32)}°F)")
-                    InfoLine("Voltage", "${info.voltage} mV")
-                    InfoLine("Technology", info.tech)
+                    Text(stringResource(I18nR.string.battery_details_health), style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
+                    InfoLine(stringResource(I18nR.string.battery_charge_level), "${info.percent}%")
+                    InfoLine(stringResource(I18nR.string.battery_status), statusText)
+                    InfoLine(stringResource(I18nR.string.battery_health), healthText)
+                    InfoLine(stringResource(I18nR.string.battery_power_source), pluggedText)
+                    InfoLine(stringResource(I18nR.string.battery_temperature), "${tempC}°C (${(tempC * 9 / 5 + 32)}°F)")
+                    InfoLine(stringResource(I18nR.string.battery_voltage), "${info.voltage} mV")
+                    InfoLine(stringResource(I18nR.string.battery_technology), info.tech)
                     Button(onClick = { showDetails = false }, modifier = Modifier.fillMaxWidth().padding(top = 8.dp)) {
-                        Text("Close")
+                        Text(stringResource(I18nR.string.close))
                     }
                 }
             }
@@ -562,9 +565,9 @@ private fun BatteryCard() {
 
 private data class BatteryStats(
     val percent: Int,
-    val status: String,
-    val health: String,
-    val plugged: String,
+    val status: Int,
+    val health: Int,
+    val plugged: Int,
     val voltage: Int,
     val temp: Int,
     val tech: String,

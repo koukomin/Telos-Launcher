@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.weather
 import de.mm20.launcher2.base.R as BaseR
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.Context
 import androidx.compose.animation.core.*
@@ -355,16 +356,16 @@ private fun WeatherMetricsGrid(
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             MetricTile(
-                title = "Wind",
+                title = stringResource(I18nR.string.weather_metric_wind),
                 value = "$windKmh km/h",
-                subtitle = "Gusts up to ${(windKmh * 1.25).roundToInt()} km/h",
+                subtitle = stringResource(I18nR.string.weather_wind_gusts, (windKmh * 1.25).roundToInt()),
                 iconRes = BaseR.drawable.air_24px,
                 modifier = Modifier.weight(1f)
             )
             MetricTile(
-                title = "Humidity",
+                title = stringResource(I18nR.string.weather_metric_humidity),
                 value = "$humidity%",
-                subtitle = "Dew point: ${formatTemp((forecast.temperature - 273.15) - 4, unitSystem)}",
+                subtitle = stringResource(I18nR.string.weather_dew_point, formatTemp((forecast.temperature - 273.15) - 4, unitSystem)),
                 iconRes = BaseR.drawable.humidity_percentage_20px,
                 modifier = Modifier.weight(1f)
             )
@@ -375,16 +376,16 @@ private fun WeatherMetricsGrid(
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             MetricTile(
-                title = "UV Index",
+                title = stringResource(I18nR.string.weather_metric_uv),
                 value = "$uv",
-                subtitle = if (uv > 6) "High - Wear Sunscreen" else "Moderate",
+                subtitle = if (uv > 6) stringResource(I18nR.string.weather_uv_high) else stringResource(I18nR.string.weather_uv_moderate),
                 iconRes = BaseR.drawable.light_mode_24px,
                 modifier = Modifier.weight(1f)
             )
             MetricTile(
-                title = "Pressure",
+                title = stringResource(I18nR.string.weather_metric_pressure),
                 value = "$pressure hPa",
-                subtitle = "Barometer",
+                subtitle = stringResource(I18nR.string.weather_barometer),
                 iconRes = BaseR.drawable.speed_24px,
                 modifier = Modifier.weight(1f)
             )

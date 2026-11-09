@@ -58,13 +58,18 @@ fun PerformanceSettingsScreen() {
                 var forcing by androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf(false) }
                 Preference(
                     icon = BaseR.drawable.memory_24px,
-                    title = "Telos Automated Self-Tuning Engine",
-                    summary = if (forcing) "Optimizing System Environment..." else "Force Re-Optimize Now (Thread Priority, Memory Pin, JIT)",
+                    title = stringResource(I18nR.string.self_tuning_engine_title),
+                    summary = if (forcing) stringResource(I18nR.string.self_tuning_engine_busy) else stringResource(I18nR.string.self_tuning_engine_summary),
                     onClick = {
                         forcing = true
                         scope.launch {
                             val success = de.mm20.launcher2.ui.performance.TelosSelfOptimizer.forceOptimizeNow(context)
-                            android.widget.Toast.makeText(context, if (success) "Optimization Applied!" else "Shizuku Unreachable or Failed", android.widget.Toast.LENGTH_SHORT).show()
+                            android.widget.Toast.makeText(
+                                context,
+                                if (success) context.getString(I18nR.string.self_tuning_engine_ok)
+                                else context.getString(I18nR.string.self_tuning_engine_fail),
+                                android.widget.Toast.LENGTH_SHORT,
+                            ).show()
                             forcing = false
                         }
                     },

@@ -66,13 +66,13 @@ fun TweaksSettingsScreen() {
             ) {
                 androidx.compose.foundation.layout.Column(modifier = Modifier.padding(12.dp)) {
                     Text(
-                        text = "⚠️ Προειδοποίηση / Warning",
+                        text = stringResource(I18nR.string.tweaks_warning_title),
                         style = MaterialTheme.typography.titleSmall,
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.onErrorContainer
                     )
                     Text(
-                        text = "Οι ρυθμίσεις Tweaks τροποποιούν χαμηλού επιπέδου παραμέτρους του Android. Ορισμένες αλλαγές ενδέχεται να απαιτούν επανεκκίνηση ή να προκαλέσουν ασυμβατότητες σε ορισμένες συσκευές.",
+                        text = stringResource(I18nR.string.tweaks_warning_body),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onErrorContainer.copy(alpha = 0.9f)
                     )
@@ -95,29 +95,29 @@ fun TweaksSettingsScreen() {
         item {
             PreferenceCategory(title = stringResource(I18nR.string.tweaks_cat_display)) {
                 SwitchPreference(
-                    title = "Show Seconds in Status Bar Clock",
-                    summary = if (hasPrivilegedBackend) "Displays seconds on the status bar clock" else "Requires Shizuku or Root",
+                    title = stringResource(I18nR.string.tweaks_clock_seconds),
+                    summary = if (hasPrivilegedBackend) stringResource(I18nR.string.tweaks_clock_seconds_sum) else stringResource(I18nR.string.tweaks_requires_privileged),
                     value = state.clockSeconds,
                     enabled = hasPrivilegedBackend,
                     onValueChanged = { vm.toggleClockSeconds(it) },
                 )
                 SwitchPreference(
-                    title = "Hide Gesture Navigation Bar (Pill)",
+                    title = stringResource(I18nR.string.tweaks_hide_nav_pill),
                     summary = stringResource(I18nR.string.virtual_telemetry_unavailable),
                     value = false,
                     enabled = false,
                     onValueChanged = { vm.toggleHideNavPill(it) },
                 )
                 SwitchPreference(
-                    title = "Force Peak Refresh Rate (120Hz)",
-                    summary = if (hasPrivilegedBackend) "Forces max display refresh rate across all apps" else "Requires Shizuku or Root",
+                    title = stringResource(I18nR.string.tweaks_peak_refresh),
+                    summary = if (hasPrivilegedBackend) stringResource(I18nR.string.tweaks_peak_refresh_sum) else stringResource(I18nR.string.tweaks_requires_privileged),
                     value = state.peakRefresh120,
                     enabled = hasPrivilegedBackend,
                     onValueChanged = { vm.togglePeakRefresh120(it) },
                 )
                 SwitchPreference(
-                    title = "Always On Display (AOD)",
-                    summary = if (hasPrivilegedBackend) "Toggles Ambient / Always On Display mode" else "Requires Shizuku or Root",
+                    title = stringResource(I18nR.string.tweaks_aod),
+                    summary = if (hasPrivilegedBackend) stringResource(I18nR.string.tweaks_aod_sum) else stringResource(I18nR.string.tweaks_requires_privileged),
                     value = state.alwaysOnDisplay,
                     enabled = hasPrivilegedBackend,
                     onValueChanged = { vm.toggleAlwaysOnDisplay(it) },
@@ -128,22 +128,22 @@ fun TweaksSettingsScreen() {
         item {
             PreferenceCategory(title = stringResource(I18nR.string.tweaks_cat_sound)) {
                 SwitchPreference(
-                    title = "Extended 30-Step Volume Control",
+                    title = stringResource(I18nR.string.tweaks_volume_30),
                     summary = stringResource(I18nR.string.virtual_telemetry_unavailable),
                     value = false,
                     enabled = false,
                     onValueChanged = { vm.toggleVolume30Steps(it) },
                 )
                 SwitchPreference(
-                    title = "Disable High Volume Hearing Protection",
-                    summary = if (hasPrivilegedBackend) "Disables high volume safety warning dialog" else "Requires Shizuku or Root",
+                    title = stringResource(I18nR.string.tweaks_disable_safe_volume),
+                    summary = if (hasPrivilegedBackend) stringResource(I18nR.string.tweaks_disable_safe_volume_sum) else stringResource(I18nR.string.tweaks_requires_privileged),
                     value = state.disableSafeVolume,
                     enabled = hasPrivilegedBackend,
                     onValueChanged = { vm.toggleDisableSafeVolume(it) },
                 )
                 SwitchPreference(
-                    title = "Vibrate on Call Connected",
-                    summary = if (hasPrivilegedBackend) "Provides haptic vibration feedback when an outgoing call connects" else "Requires Shizuku or Root",
+                    title = stringResource(I18nR.string.tweaks_call_vibrate),
+                    summary = if (hasPrivilegedBackend) stringResource(I18nR.string.tweaks_call_vibrate_sum) else stringResource(I18nR.string.tweaks_requires_privileged),
                     value = state.callVibrateConnect,
                     enabled = hasPrivilegedBackend,
                     onValueChanged = { vm.toggleCallVibrateConnect(it) },
@@ -154,7 +154,7 @@ fun TweaksSettingsScreen() {
         item {
             PreferenceCategory(title = stringResource(I18nR.string.tweaks_cat_notifications)) {
                 SwitchPreference(
-                    title = "Flashlight Pulse on Call Alert",
+                    title = stringResource(I18nR.string.tweaks_flash_pulse),
                     summary = stringResource(I18nR.string.virtual_telemetry_unavailable),
                     value = false,
                     enabled = false,
@@ -166,8 +166,8 @@ fun TweaksSettingsScreen() {
         item {
             PreferenceCategory(title = stringResource(I18nR.string.tweaks_cat_network)) {
                 SwitchPreference(
-                    title = "Mobile Data Always Active",
-                    summary = if (hasPrivilegedBackend) "Keeps mobile data connected in background during Wi-Fi for fast switching" else "Requires Shizuku or Root",
+                    title = stringResource(I18nR.string.tweaks_mobile_data_always),
+                    summary = if (hasPrivilegedBackend) stringResource(I18nR.string.tweaks_mobile_data_always_sum) else stringResource(I18nR.string.tweaks_requires_privileged),
                     value = state.mobileDataAlwaysOn,
                     enabled = hasPrivilegedBackend,
                     onValueChanged = { vm.toggleMobileDataAlwaysOn(it) },
@@ -178,28 +178,28 @@ fun TweaksSettingsScreen() {
         item {
             PreferenceCategory(title = stringResource(I18nR.string.tweaks_cat_battery)) {
                 SwitchPreference(
-                    title = "Aggressive Doze Mode",
+                    title = stringResource(I18nR.string.tweaks_aggressive_doze),
                     summary = stringResource(I18nR.string.virtual_telemetry_unavailable),
                     value = false,
                     enabled = false,
                     onValueChanged = { vm.toggleForceDoze(it) },
                 )
                 SwitchPreference(
-                    title = "Caffeinate (Keep Screen Awake)",
+                    title = stringResource(I18nR.string.tweaks_caffeinate),
                     summary = stringResource(I18nR.string.virtual_telemetry_unavailable),
                     value = false,
                     enabled = false,
                     onValueChanged = { vm.toggleCaffeinate(it) },
                 )
                 SwitchPreference(
-                    title = "Pocket Mode",
+                    title = stringResource(I18nR.string.tweaks_pocket),
                     summary = stringResource(I18nR.string.virtual_telemetry_unavailable),
                     value = false,
                     enabled = false,
                     onValueChanged = { vm.togglePocketMode(it) },
                 )
                 SwitchPreference(
-                    title = "Double-Tap Status Bar to Sleep",
+                    title = stringResource(I18nR.string.tweaks_double_tap_sleep),
                     summary = stringResource(I18nR.string.virtual_telemetry_unavailable),
                     value = false,
                     enabled = false,
