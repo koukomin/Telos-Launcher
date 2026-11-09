@@ -82,7 +82,7 @@ the Work Mode switch and the private space lock.
 
 ## First steps
 
-1. **Search.** Swipe down on the home screen, or tap the search bar. Type a few letters of anything: an app, a
+1. **Search.** Swipe down on the home screen, tap the search bar, or tap the magnifying-glass icon. Type a few letters of anything: an app, a
    contact, a file, a calendar event, a calculation (`12*7`), a unit conversion (`5 km in miles`) or a web search.
    See [Search](./telos/launcher/search).
 2. **Open the settings.** Tap the **more** button in the search bar (three dots): the menu has **Wallpaper**,

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preference_search_android_settings">Android-Systemeinstellungen</string>
+    <string name="preference_search_android_settings_summary">Finden Sie WLAN, Bluetooth, Anzeige und andere Systembildschirme. Tippfehler sind erlaubt.</string>
+    <string name="preference_search_telos_settings">Telos-Einstellungen</string>
+    <string name="preference_search_telos_settings_summary">Launcher-Bildschirme wie Darstellung, Suche und Hintergrund durchsuchen</string>
+    <string name="preference_search_telos_app_settings">Telos-App-Einstellungen</string>
+    <string name="preference_search_telos_app_settings_summary">Einstellungen der eingebauten Telos-Apps. Jedes Ergebnis zeigt die zugehörige App.</string>
+    <string name="search_settings_source_android">Android-Einstellungen</string>
+    <string name="search_settings_source_telos">Telos-Einstellungen</string>
+    <string name="search_settings_source_telos_app">%1$s-Einstellungen</string>
+    <string name="search_android_wifi">WLAN</string>
+    <string name="search_android_bluetooth">Bluetooth</string>
+    <string name="search_android_display">Anzeige</string>
+    <string name="search_android_sound">Ton</string>
+    <string name="search_android_date">Datum und Uhrzeit</string>
+    <string name="search_android_language">Sprache</string>
+    <string name="search_android_accessibility">Bedienungshilfen</string>
+    <string name="search_android_security">Sicherheit</string>
+    <string name="search_android_storage">Speicher</string>
+    <string name="search_android_apps">Apps</string>
+    <string name="search_android_location">Standort</string>
+    <string name="search_android_nfc">NFC</string>
+    <string name="search_android_airplane">Flugmodus</string>
+    <string name="search_android_mobile_data">Mobile Daten</string>
+    <string name="search_android_vpn">VPN</string>
+    <string name="search_android_notifications">Benachrichtigungen</string>
+    <string name="search_android_battery">Akku</string>
+    <string name="search_android_home">Standard-Start-App</string>
+    <string name="search_android_all">Alle Systemeinstellungen</string>
+    <string name="search_android_about">Über das Telefon</string>
+    <string name="search_android_privacy">Datenschutz</string>
+    <string name="search_android_keyboard">Tastatur</string>
+    <string name="search_android_defaults">Standard-Apps</string>
+    <string name="search_android_developer">Entwickleroptionen</string>
+</resources>

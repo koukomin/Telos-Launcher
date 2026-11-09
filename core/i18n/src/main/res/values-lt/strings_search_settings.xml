@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preference_search_android_settings">Android sistemos nustatymai</string>
+    <string name="preference_search_android_settings_summary">Raskite „Wi-Fi“, „Bluetooth“, ekraną ir kitus sistemos langus. Rašybos klaidos leidžiamos.</string>
+    <string name="preference_search_telos_settings">Telos nustatymai</string>
+    <string name="preference_search_telos_settings_summary">Ieškokite paleidimo langų: išvaizda, paieška, tapetai</string>
+    <string name="preference_search_telos_app_settings">Telos programėlių nustatymai</string>
+    <string name="preference_search_telos_app_settings_summary">Ieškokite įtaisytųjų Telos programėlių nustatymų. Kiekvienas rezultatas rodo programėlę.</string>
+    <string name="search_settings_source_android">Android nustatymai</string>
+    <string name="search_settings_source_telos">Telos nustatymai</string>
+    <string name="search_settings_source_telos_app">%1$s nustatymai</string>
+    <string name="search_android_wifi">„Wi-Fi“</string>
+    <string name="search_android_bluetooth">„Bluetooth“</string>
+    <string name="search_android_display">Ekranas</string>
+    <string name="search_android_sound">Garsas</string>
+    <string name="search_android_date">Data ir laikas</string>
+    <string name="search_android_language">Kalba</string>
+    <string name="search_android_accessibility">Prieinamumas</string>
+    <string name="search_android_security">Sauga</string>
+    <string name="search_android_storage">Saugykla</string>
+    <string name="search_android_apps">Programėlės</string>
+    <string name="search_android_location">Vieta</string>
+    <string name="search_android_nfc">NFC</string>
+    <string name="search_android_airplane">Lėktuvo režimas</string>
+    <string name="search_android_mobile_data">Mobilieji duomenys</string>
+    <string name="search_android_vpn">VPN</string>
+    <string name="search_android_notifications">Pranešimai</string>
+    <string name="search_android_battery">Baterija</string>
+    <string name="search_android_home">Numatytoji pradžios programėlė</string>
+    <string name="search_android_all">Visi sistemos nustatymai</string>
+    <string name="search_android_about">Apie telefoną</string>
+    <string name="search_android_privacy">Privatumas</string>
+    <string name="search_android_keyboard">Klaviatūra</string>
+    <string name="search_android_defaults">Numatytosios programėlės</string>
+    <string name="search_android_developer">Kūrėjo parinktys</string>
+</resources>

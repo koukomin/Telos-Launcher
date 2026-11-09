@@ -30,6 +30,9 @@ All search settings live in **Settings > Search**. Some sources open their own s
 | Quick actions | Call, message, web search and more for what you typed | Depends on the action | No | On |
 | Agents | Optional **Ask** chip that sends the query to Grok, Claude, ChatGPT, Gemini or Copilot | Agent app, website, or Termux CLI | Yes, to that agent | Off |
 | Tags and custom names | Items you tagged or renamed | Nothing | No | Always |
+| Android system settings | Wi-Fi, Bluetooth, display, sound and other Android settings screens | Nothing | No | On |
+| Telos settings | Launcher screens such as appearance, search and wallpaper | Nothing | No | On |
+| Telos app settings | Settings of built-in Telos apps, with the app name on each result | Nothing | No | On |
 
 Sources that are marked "Online" never run on a normal search. See [Online results](#online-results).
 
@@ -213,6 +216,9 @@ exists) and **Pause or resume the work profile**. They appear when your text mat
 Quick actions. A text classifier decides which built-in actions fit what you typed.
 
 ## Search bar behavior
+
+Tap the magnifying-glass icon to open search and focus the field. Matching allows small spelling
+mistakes (Jaro–Winkler plus word tokens, Greek and Greeklish folding).
 
 | Setting | Where | Default | What it does |
 | --- | --- | --- | --- |

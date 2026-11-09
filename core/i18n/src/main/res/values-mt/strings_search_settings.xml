@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preference_search_android_settings">Settings tas-sistema Android</string>
+    <string name="preference_search_android_settings_summary">Sib Wi-Fi, Bluetooth, skrin u screens oħra tas-sistema. Żbalji tal-ortografija huma permessi.</string>
+    <string name="preference_search_telos_settings">Settings Telos</string>
+    <string name="preference_search_telos_settings_summary">Fittex screens tal-launcher bħal dehra, tiftix u wallpaper</string>
+    <string name="preference_search_telos_app_settings">Settings tal-apps Telos</string>
+    <string name="preference_search_telos_app_settings_summary">Fittex settings tal-apps Telos integrati. Kull riżultat juri l-app.</string>
+    <string name="search_settings_source_android">Settings Android</string>
+    <string name="search_settings_source_telos">Settings Telos</string>
+    <string name="search_settings_source_telos_app">Settings ta’ %1$s</string>
+    <string name="search_android_wifi">Wi-Fi</string>
+    <string name="search_android_bluetooth">Bluetooth</string>
+    <string name="search_android_display">Skrin</string>
+    <string name="search_android_sound">Ħoss</string>
+    <string name="search_android_date">Data u ħin</string>
+    <string name="search_android_language">Lingwa</string>
+    <string name="search_android_accessibility">Aċċessibbiltà</string>
+    <string name="search_android_security">Sigurtà</string>
+    <string name="search_android_storage">Ħażna</string>
+    <string name="search_android_apps">Apps</string>
+    <string name="search_android_location">Post</string>
+    <string name="search_android_nfc">NFC</string>
+    <string name="search_android_airplane">Modalità ajruplan</string>
+    <string name="search_android_mobile_data">Data mobbli</string>
+    <string name="search_android_vpn">VPN</string>
+    <string name="search_android_notifications">Notifiki</string>
+    <string name="search_android_battery">Batterija</string>
+    <string name="search_android_home">App tad-dar default</string>
+    <string name="search_android_all">Is-settings kollha tas-sistema</string>
+    <string name="search_android_about">Dwar it-telefon</string>
+    <string name="search_android_privacy">Privatezza</string>
+    <string name="search_android_keyboard">Tastiera</string>
+    <string name="search_android_defaults">Apps default</string>
+    <string name="search_android_developer">Għażliet tal-iżviluppatur</string>
+</resources>

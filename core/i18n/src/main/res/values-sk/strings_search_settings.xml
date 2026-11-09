@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preference_search_android_settings">Systémové nastavenia Androidu</string>
+    <string name="preference_search_android_settings_summary">Nájdite Wi-Fi, Bluetooth, displej a ďalšie systémové obrazovky. Preklepy sú povolené.</string>
+    <string name="preference_search_telos_settings">Nastavenia Telos</string>
+    <string name="preference_search_telos_settings_summary">Hľadajte obrazovky launchera: vzhľad, hľadanie, tapeta</string>
+    <string name="preference_search_telos_app_settings">Nastavenia aplikácií Telos</string>
+    <string name="preference_search_telos_app_settings_summary">Hľadajte nastavenia vstavaných aplikácií Telos. Každý výsledok ukazuje aplikáciu.</string>
+    <string name="search_settings_source_android">Nastavenia Androidu</string>
+    <string name="search_settings_source_telos">Nastavenia Telos</string>
+    <string name="search_settings_source_telos_app">Nastavenia: %1$s</string>
+    <string name="search_android_wifi">Wi-Fi</string>
+    <string name="search_android_bluetooth">Bluetooth</string>
+    <string name="search_android_display">Displej</string>
+    <string name="search_android_sound">Zvuk</string>
+    <string name="search_android_date">Dátum a čas</string>
+    <string name="search_android_language">Jazyk</string>
+    <string name="search_android_accessibility">Dostupnosť</string>
+    <string name="search_android_security">Zabezpečenie</string>
+    <string name="search_android_storage">Úložisko</string>
+    <string name="search_android_apps">Aplikácie</string>
+    <string name="search_android_location">Poloha</string>
+    <string name="search_android_nfc">NFC</string>
+    <string name="search_android_airplane">Režim v lietadle</string>
+    <string name="search_android_mobile_data">Mobilné dáta</string>
+    <string name="search_android_vpn">VPN</string>
+    <string name="search_android_notifications">Oznámenia</string>
+    <string name="search_android_battery">Batéria</string>
+    <string name="search_android_home">Predvolená úvodná aplikácia</string>
+    <string name="search_android_all">Všetky systémové nastavenia</string>
+    <string name="search_android_about">O telefóne</string>
+    <string name="search_android_privacy">Súkromie</string>
+    <string name="search_android_keyboard">Klávesnica</string>
+    <string name="search_android_defaults">Predvolené aplikácie</string>
+    <string name="search_android_developer">Možnosti pre vývojárov</string>
+</resources>

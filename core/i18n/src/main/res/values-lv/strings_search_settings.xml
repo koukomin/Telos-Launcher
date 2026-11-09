@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preference_search_android_settings">Android sistēmas iestatījumi</string>
+    <string name="preference_search_android_settings_summary">Atrodiet Wi-Fi, Bluetooth, displeju un citus sistēmas ekrānus. Pārakstīšanās ir atļauta.</string>
+    <string name="preference_search_telos_settings">Telos iestatījumi</string>
+    <string name="preference_search_telos_settings_summary">Meklējiet palaidēja ekrānus, piemēram, izskats, meklēšana, fona attēls</string>
+    <string name="preference_search_telos_app_settings">Telos lietotņu iestatījumi</string>
+    <string name="preference_search_telos_app_settings_summary">Meklējiet iebūvēto Telos lietotņu iestatījumus. Katrā rezultātā redzama lietotne.</string>
+    <string name="search_settings_source_android">Android iestatījumi</string>
+    <string name="search_settings_source_telos">Telos iestatījumi</string>
+    <string name="search_settings_source_telos_app">%1$s iestatījumi</string>
+    <string name="search_android_wifi">Wi-Fi</string>
+    <string name="search_android_bluetooth">Bluetooth</string>
+    <string name="search_android_display">Displejs</string>
+    <string name="search_android_sound">Skaņa</string>
+    <string name="search_android_date">Datums un laiks</string>
+    <string name="search_android_language">Valoda</string>
+    <string name="search_android_accessibility">Pieejamība</string>
+    <string name="search_android_security">Drošība</string>
+    <string name="search_android_storage">Krātuve</string>
+    <string name="search_android_apps">Lietotnes</string>
+    <string name="search_android_location">Atrašanās vieta</string>
+    <string name="search_android_nfc">NFC</string>
+    <string name="search_android_airplane">Lidmašīnas režīms</string>
+    <string name="search_android_mobile_data">Mobilie dati</string>
+    <string name="search_android_vpn">VPN</string>
+    <string name="search_android_notifications">Paziņojumi</string>
+    <string name="search_android_battery">Akumulators</string>
+    <string name="search_android_home">Noklusējuma sākuma lietotne</string>
+    <string name="search_android_all">Visi sistēmas iestatījumi</string>
+    <string name="search_android_about">Par tālruni</string>
+    <string name="search_android_privacy">Konfidencialitāte</string>
+    <string name="search_android_keyboard">Tastatūra</string>
+    <string name="search_android_defaults">Noklusējuma lietotnes</string>
+    <string name="search_android_developer">Izstrādātāja opcijas</string>
+</resources>

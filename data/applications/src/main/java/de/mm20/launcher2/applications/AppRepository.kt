@@ -416,7 +416,7 @@ internal class AppRepositoryImpl(
                                 }
                             ),
                         )
-                        if (score.score < 0.8f) return@mapNotNullTo null
+                        if (score.score < ResultScore.MATCH_THRESHOLD) return@mapNotNullTo null
                         app.copy(
                             score = score
                         )
@@ -436,7 +436,7 @@ internal class AppRepositoryImpl(
                             primaryFields = listOf(stringNormalizer.normalize(vApp.label)) +
                                 aliases.map { stringNormalizer.normalize(it) }
                         )
-                        if (score.score >= 0.8f) {
+                        if (score.score >= ResultScore.MATCH_THRESHOLD) {
                             appResults.add(vApp)
                         } else if (foldedQuery.length >= 2 && (
                                 de.mm20.launcher2.search.GreekFold.matches(vApp.label, foldedQuery) ||

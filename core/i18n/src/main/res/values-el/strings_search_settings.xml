@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preference_search_android_settings">Ρυθμίσεις συστήματος Android</string>
+    <string name="preference_search_android_settings_summary">Βρείτε Wi-Fi, Bluetooth, οθόνη και άλλες οθόνες συστήματος. Επιτρέπονται ορθογραφικά.</string>
+    <string name="preference_search_telos_settings">Ρυθμίσεις Telos</string>
+    <string name="preference_search_telos_settings_summary">Αναζήτηση οθονών του εκκινητή όπως εμφάνιση, αναζήτηση και ταπετσαρία</string>
+    <string name="preference_search_telos_app_settings">Ρυθμίσεις εφαρμογών Telos</string>
+    <string name="preference_search_telos_app_settings_summary">Αναζήτηση ρυθμίσεων των ενσωματωμένων εφαρμογών Telos. Κάθε αποτέλεσμα δείχνει σε ποια εφαρμογή ανήκει.</string>
+    <string name="search_settings_source_android">Ρυθμίσεις Android</string>
+    <string name="search_settings_source_telos">Ρυθμίσεις Telos</string>
+    <string name="search_settings_source_telos_app">Ρυθμίσεις %1$s</string>
+    <string name="search_android_wifi">Wi-Fi</string>
+    <string name="search_android_bluetooth">Bluetooth</string>
+    <string name="search_android_display">Οθόνη</string>
+    <string name="search_android_sound">Ήχος</string>
+    <string name="search_android_date">Ημερομηνία και ώρα</string>
+    <string name="search_android_language">Γλώσσα</string>
+    <string name="search_android_accessibility">Προσβασιμότητα</string>
+    <string name="search_android_security">Ασφάλεια</string>
+    <string name="search_android_storage">Αποθήκευση</string>
+    <string name="search_android_apps">Εφαρμογές</string>
+    <string name="search_android_location">Τοποθεσία</string>
+    <string name="search_android_nfc">NFC</string>
+    <string name="search_android_airplane">Λειτουργία πτήσης</string>
+    <string name="search_android_mobile_data">Δεδομένα κινητής</string>
+    <string name="search_android_vpn">VPN</string>
+    <string name="search_android_notifications">Ειδοποιήσεις</string>
+    <string name="search_android_battery">Μπαταρία</string>
+    <string name="search_android_home">Προεπιλεγμένη αρχική εφαρμογή</string>
+    <string name="search_android_all">Όλες οι ρυθμίσεις συστήματος</string>
+    <string name="search_android_about">Σχετικά με το τηλέφωνο</string>
+    <string name="search_android_privacy">Απόρρητο</string>
+    <string name="search_android_keyboard">Πληκτρολόγιο</string>
+    <string name="search_android_defaults">Προεπιλεγμένες εφαρμογές</string>
+    <string name="search_android_developer">Επιλογές προγραμματιστή</string>
+</resources>

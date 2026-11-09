@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preference_search_android_settings">Системные настройки Android</string>
+    <string name="preference_search_android_settings_summary">Найдите Wi-Fi, Bluetooth, экран и другие системные экраны. Опечатки допускаются.</string>
+    <string name="preference_search_telos_settings">Настройки Telos</string>
+    <string name="preference_search_telos_settings_summary">Ищите экраны лаунчера: оформление, поиск, обои</string>
+    <string name="preference_search_telos_app_settings">Настройки приложений Telos</string>
+    <string name="preference_search_telos_app_settings_summary">Ищите настройки встроенных приложений Telos. У каждого результата указано приложение.</string>
+    <string name="search_settings_source_android">Настройки Android</string>
+    <string name="search_settings_source_telos">Настройки Telos</string>
+    <string name="search_settings_source_telos_app">Настройки: %1$s</string>
+    <string name="search_android_wifi">Wi-Fi</string>
+    <string name="search_android_bluetooth">Bluetooth</string>
+    <string name="search_android_display">Экран</string>
+    <string name="search_android_sound">Звук</string>
+    <string name="search_android_date">Дата и время</string>
+    <string name="search_android_language">Язык</string>
+    <string name="search_android_accessibility">Спец. возможности</string>
+    <string name="search_android_security">Безопасность</string>
+    <string name="search_android_storage">Память</string>
+    <string name="search_android_apps">Приложения</string>
+    <string name="search_android_location">Геолокация</string>
+    <string name="search_android_nfc">NFC</string>
+    <string name="search_android_airplane">Режим полёта</string>
+    <string name="search_android_mobile_data">Мобильные данные</string>
+    <string name="search_android_vpn">VPN</string>
+    <string name="search_android_notifications">Уведомления</string>
+    <string name="search_android_battery">Батарея</string>
+    <string name="search_android_home">Домашнее приложение по умолчанию</string>
+    <string name="search_android_all">Все системные настройки</string>
+    <string name="search_android_about">О телефоне</string>
+    <string name="search_android_privacy">Конфиденциальность</string>
+    <string name="search_android_keyboard">Клавиатура</string>
+    <string name="search_android_defaults">Приложения по умолчанию</string>
+    <string name="search_android_developer">Для разработчиков</string>
+</resources>

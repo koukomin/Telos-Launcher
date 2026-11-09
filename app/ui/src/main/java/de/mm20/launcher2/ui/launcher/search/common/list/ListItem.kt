@@ -30,6 +30,7 @@ import de.mm20.launcher2.search.Contact
 import de.mm20.launcher2.search.File
 import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.SavableSearchable
+import de.mm20.launcher2.search.SettingsSearchItem
 import de.mm20.launcher2.search.Website
 import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.launcher.search.apps.AppItem
@@ -83,6 +84,16 @@ fun ListItem(
             LocalContentColor provides MaterialTheme.colorScheme.onSurface
         ) {
             when (item) {
+                is SettingsSearchItem -> {
+                    de.mm20.launcher2.ui.launcher.search.settings.SettingsSearchRow(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .combinedClickable(
+                                onClick = { viewModel.launch(context, bounds) },
+                            ),
+                        item = item,
+                    )
+                }
                 is Application -> {
                     AppItem(
                         modifier = Modifier

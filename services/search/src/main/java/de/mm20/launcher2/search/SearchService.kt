@@ -51,6 +51,8 @@ internal class SearchServiceImpl(
     private val customAttributesRepository: CustomAttributesRepository,
     private val profileManager: ProfileManager,
     private val webAppShortcutRepository: SearchableRepository<WebAppShortcut>,
+    private val settingsSearchRepository: SettingsSearchRepository,
+    private val searchUiSettings: de.mm20.launcher2.preferences.ui.SearchUiSettings,
 ) : SearchService {
 
     override fun search(
@@ -80,6 +82,7 @@ internal class SearchServiceImpl(
                         wikipedia = if (filters.articles) it.wikipedia else null,
                         locations = if (filters.places) it.locations else null,
                         webAppShortcuts = if (filters.apps) it.webAppShortcuts else null,
+                        settings = it.settings,
                     )
                 }
                     ?: SearchResults())
@@ -327,6 +330,19 @@ internal class SearchServiceImpl(
                         }
                 }
             }
+            launch {
+                kotlinx.coroutines.flow.combine(
+                    searchUiSettings.searchAndroidSettings,
+                    searchUiSettings.searchTelosSettings,
+                    searchUiSettings.searchTelosAppSettings,
+                ) { android, telos, apps -> Triple(android, telos, apps) }
+                    .flatMapLatest { (android, telos, apps) ->
+                        settingsSearchRepository.search(query, android, telos, apps)
+                    }
+                    .collectLatest { r ->
+                        results.update { it.copy(settings = r) }
+                    }
+            }
             emitAll(results)
         }
     }
@@ -396,6 +412,7 @@ data class SearchResults(
     val locations: List<Location>? = null,
     val searchActions: List<SearchAction>? = null,
     val webAppShortcuts: List<WebAppShortcut>? = null,
+    val settings: List<SettingsSearchItem>? = null,
 )
 
 data class AllAppsResults(
@@ -423,5 +440,6 @@ fun SearchResults.toList(): List<Searchable> {
         wikipedia,
         searchActions,
         webAppShortcuts,
+        settings,
     ).flatten()
 }

@@ -54,6 +54,33 @@ class SearchUiSettings internal constructor(
         }
     }
 
+    val searchAndroidSettings
+        get() = launcherDataStore.data.map { it.searchResults.searchAndroidSettings }.distinctUntilChanged()
+
+    fun setSearchAndroidSettings(enabled: Boolean) {
+        launcherDataStore.update {
+            it.copy(searchResults = it.searchResults.copy(searchAndroidSettings = enabled))
+        }
+    }
+
+    val searchTelosSettings
+        get() = launcherDataStore.data.map { it.searchResults.searchTelosSettings }.distinctUntilChanged()
+
+    fun setSearchTelosSettings(enabled: Boolean) {
+        launcherDataStore.update {
+            it.copy(searchResults = it.searchResults.copy(searchTelosSettings = enabled))
+        }
+    }
+
+    val searchTelosAppSettings
+        get() = launcherDataStore.data.map { it.searchResults.searchTelosAppSettings }.distinctUntilChanged()
+
+    fun setSearchTelosAppSettings(enabled: Boolean) {
+        launcherDataStore.update {
+            it.copy(searchResults = it.searchResults.copy(searchTelosAppSettings = enabled))
+        }
+    }
+
     val favorites
         get() = launcherDataStore.data.map { it.favorites.favoritesEnabled }.distinctUntilChanged()
 

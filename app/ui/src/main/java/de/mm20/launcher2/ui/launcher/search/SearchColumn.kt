@@ -63,6 +63,7 @@ import de.mm20.launcher2.ui.launcher.search.unitconverter.UnitConverterResults
 import de.mm20.launcher2.ui.launcher.search.webappshortcut.WebAppShortcutResults
 import de.mm20.launcher2.ui.launcher.search.website.WebsiteResults
 import de.mm20.launcher2.ui.launcher.search.wikipedia.ArticleResults
+import de.mm20.launcher2.ui.launcher.search.settings.SettingsSearchResults
 import de.mm20.launcher2.ui.launcher.sheets.HiddenItemsSheet
 import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
 import de.mm20.launcher2.ui.locals.LocalGridSettings
@@ -114,6 +115,7 @@ fun SearchColumn(
     val wikipedia = viewModel.articleResults
     val locations = viewModel.locationResults
     val website = viewModel.websiteResults
+    val settingsSearch = viewModel.settingsResults
     val webAppShortcuts = viewModel.webAppShortcutResults
     val hiddenResults = viewModel.hiddenResults
     val updateResults = viewModel.updateResults
@@ -167,6 +169,7 @@ fun SearchColumn(
     var selectedShortcutIndex: Int by remember(query) { mutableIntStateOf(-1) }
     var selectedArticleIndex: Int by remember(query) { mutableIntStateOf(-1) }
     var selectedWebsiteIndex: Int by remember(query) { mutableIntStateOf(-1) }
+    var selectedSettingsIndex: Int by remember(query) { mutableIntStateOf(-1) }
 
     val showFilters by viewModel.showFilters
 
@@ -303,6 +306,15 @@ fun SearchColumn(
                         onShowAll = {
                             viewModel.expandCategory(SearchCategory.Shortcuts)
                         },
+                    )
+
+                    SettingsSearchResults(
+                        items = settingsSearch,
+                        selectedIndex = selectedSettingsIndex,
+                        onSelect = { selectedSettingsIndex = it },
+                        reverse = reverse,
+                        truncate = expandedCategory != SearchCategory.Settings,
+                        onShowAll = { viewModel.expandCategory(SearchCategory.Settings) },
                     )
 
                     UnitConverterResults(

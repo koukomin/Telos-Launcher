@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preference_search_android_settings">Sistemske nastavitve Androida</string>
+    <string name="preference_search_android_settings_summary">Poiščite Wi-Fi, Bluetooth, zaslon in druge sistemske zaslone. Tipkarske napake so dovoljene.</string>
+    <string name="preference_search_telos_settings">Nastavitve Telos</string>
+    <string name="preference_search_telos_settings_summary">Iščite zaslone zaganjalnika, npr. videz, iskanje, ozadje</string>
+    <string name="preference_search_telos_app_settings">Nastavitve aplikacij Telos</string>
+    <string name="preference_search_telos_app_settings_summary">Iščite nastavitve vgrajenih aplikacij Telos. Vsak rezultat pokaže aplikacijo.</string>
+    <string name="search_settings_source_android">Nastavitve Androida</string>
+    <string name="search_settings_source_telos">Nastavitve Telos</string>
+    <string name="search_settings_source_telos_app">Nastavitve: %1$s</string>
+    <string name="search_android_wifi">Wi-Fi</string>
+    <string name="search_android_bluetooth">Bluetooth</string>
+    <string name="search_android_display">Zaslon</string>
+    <string name="search_android_sound">Zvok</string>
+    <string name="search_android_date">Datum in ura</string>
+    <string name="search_android_language">Jezik</string>
+    <string name="search_android_accessibility">Dostopnost</string>
+    <string name="search_android_security">Varnost</string>
+    <string name="search_android_storage">Shramba</string>
+    <string name="search_android_apps">Aplikacije</string>
+    <string name="search_android_location">Lokacija</string>
+    <string name="search_android_nfc">NFC</string>
+    <string name="search_android_airplane">Letalski način</string>
+    <string name="search_android_mobile_data">Mobilni podatki</string>
+    <string name="search_android_vpn">VPN</string>
+    <string name="search_android_notifications">Obvestila</string>
+    <string name="search_android_battery">Baterija</string>
+    <string name="search_android_home">Privzeta začetna aplikacija</string>
+    <string name="search_android_all">Vse sistemske nastavitve</string>
+    <string name="search_android_about">O telefonu</string>
+    <string name="search_android_privacy">Zasebnost</string>
+    <string name="search_android_keyboard">Tipkovnica</string>
+    <string name="search_android_defaults">Privzete aplikacije</string>
+    <string name="search_android_developer">Možnosti za razvijalce</string>
+</resources>

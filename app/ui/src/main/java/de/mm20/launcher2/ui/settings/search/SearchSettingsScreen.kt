@@ -107,6 +107,9 @@ fun SearchSettingsScreen() {
     val websites by viewModel.websites.collectAsStateWithLifecycle(null)
     val radioStations by viewModel.radioStationsInSearch.collectAsStateWithLifecycle(null)
     val tvChannels by viewModel.tvChannelsInSearch.collectAsStateWithLifecycle(null)
+    val androidSettings by viewModel.searchAndroidSettings.collectAsStateWithLifecycle(null)
+    val telosSettings by viewModel.searchTelosSettings.collectAsStateWithLifecycle(null)
+    val telosAppSettings by viewModel.searchTelosAppSettings.collectAsStateWithLifecycle(null)
 
 
     val autoFocus by viewModel.autoFocus.collectAsStateWithLifecycle(null)
@@ -297,6 +300,27 @@ fun SearchSettingsScreen() {
                     onValueChanged = {
                         viewModel.setWebsites(it)
                     }
+                )
+                SwitchPreference(
+                    title = stringResource(I18nR.string.preference_search_android_settings),
+                    summary = stringResource(I18nR.string.preference_search_android_settings_summary),
+                    icon = BaseR.drawable.settings_24px,
+                    value = androidSettings == true,
+                    onValueChanged = { viewModel.setSearchAndroidSettings(it) },
+                )
+                SwitchPreference(
+                    title = stringResource(I18nR.string.preference_search_telos_settings),
+                    summary = stringResource(I18nR.string.preference_search_telos_settings_summary),
+                    icon = BaseR.drawable.tune_24px,
+                    value = telosSettings == true,
+                    onValueChanged = { viewModel.setSearchTelosSettings(it) },
+                )
+                SwitchPreference(
+                    title = stringResource(I18nR.string.preference_search_telos_app_settings),
+                    summary = stringResource(I18nR.string.preference_search_telos_app_settings_summary),
+                    icon = BaseR.drawable.apps_24px,
+                    value = telosAppSettings == true,
+                    onValueChanged = { viewModel.setSearchTelosAppSettings(it) },
                 )
                 SwitchPreference(
                     title = stringResource(I18nR.string.au5_radiosearch_pref_title),

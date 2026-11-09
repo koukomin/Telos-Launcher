@@ -8,6 +8,7 @@ import androidx.compose.animation.core.animateDp
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.core.updateTransition
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -154,9 +155,14 @@ fun SearchBar(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Icon(
-                        modifier = Modifier.padding(12.dp),
+                        modifier = Modifier
+                            .clickable(
+                                onClick = onFocus,
+                                onClickLabel = context.getString(I18nR.string.search_bar_placeholder),
+                            )
+                            .padding(12.dp),
                         painter = painterResource(BaseR.drawable.search_24px),
-                        contentDescription = null,
+                        contentDescription = stringResource(I18nR.string.search_bar_placeholder),
                         tint = resolvedContentColor
                     )
                     Box(

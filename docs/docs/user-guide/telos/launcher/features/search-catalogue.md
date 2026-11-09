@@ -27,6 +27,9 @@ source answer. Shorter queries return nothing from that source.
 | Telos apps | Phone, Messages, Radio, Music, Video, Viewer, Files, Calculator, Screenshot, Screen Recorder, Voice Recorder and Store as app results | 1 | The app is not switched off in its own settings | No | Apps |
 | Web apps | [Web app shortcuts](../desktop-and-overlays#web-apps) that are shown in the grid | 1 | Nothing | No | Apps |
 | Activity by component name | One app entry for a typed `package/class` name | 1 | The activity exists | No | Apps |
+| Android system settings | Wi-Fi, Bluetooth, display and other Android settings | 1 | Settings > Search > Android system settings | No | — |
+| Telos settings | Launcher settings screens | 1 | Settings > Search > Telos settings | No | — |
+| Telos app settings | Built-in Telos app settings, labelled with the app name | 1 | Settings > Search > Telos app settings | No | — |
 | App shortcuts | Launcher shortcuts that apps publish (pinned, dynamic, static, cached) | 3 | Telos is the default home app | No | App shortcuts |
 | Contacts | Device contacts | 2 | Contacts permission | No | Contacts |
 | Calendar events | Events in the next 730 days | 2 | Calendar permission | No | Calendar |

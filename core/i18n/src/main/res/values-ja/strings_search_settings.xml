@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preference_search_android_settings">Android のシステム設定</string>
+    <string name="preference_search_android_settings_summary">Wi-Fi、Bluetooth、画面などシステム画面を探します。誤字も検索できます。</string>
+    <string name="preference_search_telos_settings">Telos の設定</string>
+    <string name="preference_search_telos_settings_summary">外観、検索、壁紙などランチャー画面を検索します</string>
+    <string name="preference_search_telos_app_settings">Telos アプリの設定</string>
+    <string name="preference_search_telos_app_settings_summary">内蔵 Telos アプリの設定を検索します。各結果に所属アプリを表示します。</string>
+    <string name="search_settings_source_android">Android の設定</string>
+    <string name="search_settings_source_telos">Telos の設定</string>
+    <string name="search_settings_source_telos_app">%1$s の設定</string>
+    <string name="search_android_wifi">Wi-Fi</string>
+    <string name="search_android_bluetooth">Bluetooth</string>
+    <string name="search_android_display">ディスプレイ</string>
+    <string name="search_android_sound">音</string>
+    <string name="search_android_date">日付と時刻</string>
+    <string name="search_android_language">言語</string>
+    <string name="search_android_accessibility">ユーザー補助</string>
+    <string name="search_android_security">セキュリティ</string>
+    <string name="search_android_storage">ストレージ</string>
+    <string name="search_android_apps">アプリ</string>
+    <string name="search_android_location">位置情報</string>
+    <string name="search_android_nfc">NFC</string>
+    <string name="search_android_airplane">機内モード</string>
+    <string name="search_android_mobile_data">モバイルデータ</string>
+    <string name="search_android_vpn">VPN</string>
+    <string name="search_android_notifications">通知</string>
+    <string name="search_android_battery">電池</string>
+    <string name="search_android_home">デフォルトのホームアプリ</string>
+    <string name="search_android_all">すべてのシステム設定</string>
+    <string name="search_android_about">端末情報</string>
+    <string name="search_android_privacy">プライバシー</string>
+    <string name="search_android_keyboard">キーボード</string>
+    <string name="search_android_defaults">デフォルトアプリ</string>
+    <string name="search_android_developer">開発者向けオプション</string>
+</resources>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preference_search_android_settings">Android rendszerbeállítások</string>
+    <string name="preference_search_android_settings_summary">Keressen Wi-Fi, Bluetooth, kijelző és más rendszerképernyőket. Elgépelés megengedett.</string>
+    <string name="preference_search_telos_settings">Telos beállítások</string>
+    <string name="preference_search_telos_settings_summary">Keressen indítóképernyőket: megjelenés, keresés, háttérkép</string>
+    <string name="preference_search_telos_app_settings">Telos alkalmazásbeállítások</string>
+    <string name="preference_search_telos_app_settings_summary">Keresse a beépített Telos alkalmazások beállításait. Minden találat mutatja az alkalmazást.</string>
+    <string name="search_settings_source_android">Android beállítások</string>
+    <string name="search_settings_source_telos">Telos beállítások</string>
+    <string name="search_settings_source_telos_app">%1$s beállításai</string>
+    <string name="search_android_wifi">Wi-Fi</string>
+    <string name="search_android_bluetooth">Bluetooth</string>
+    <string name="search_android_display">Kijelző</string>
+    <string name="search_android_sound">Hang</string>
+    <string name="search_android_date">Dátum és idő</string>
+    <string name="search_android_language">Nyelv</string>
+    <string name="search_android_accessibility">Kisegítő lehetőségek</string>
+    <string name="search_android_security">Biztonság</string>
+    <string name="search_android_storage">Tárhely</string>
+    <string name="search_android_apps">Alkalmazások</string>
+    <string name="search_android_location">Helymeghatározás</string>
+    <string name="search_android_nfc">NFC</string>
+    <string name="search_android_airplane">Repülőgép üzemmód</string>
+    <string name="search_android_mobile_data">Mobiladat</string>
+    <string name="search_android_vpn">VPN</string>
+    <string name="search_android_notifications">Értesítések</string>
+    <string name="search_android_battery">Akkumulátor</string>
+    <string name="search_android_home">Alapértelmezett kezdőalkalmazás</string>
+    <string name="search_android_all">Összes rendszerbeállítás</string>
+    <string name="search_android_about">A telefon névjegye</string>
+    <string name="search_android_privacy">Adatvédelem</string>
+    <string name="search_android_keyboard">Billentyűzet</string>
+    <string name="search_android_defaults">Alapértelmezett alkalmazások</string>
+    <string name="search_android_developer">Fejlesztői beállítások</string>
+</resources>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preference_search_android_settings">Android सिस्टम सेटिंग्स</string>
+    <string name="preference_search_android_settings_summary">Wi-Fi, ब्लूटूथ, डिस्प्ले और अन्य सिस्टम स्क्रीन खोजें। वर्तनी की गलतियाँ मान्य हैं।</string>
+    <string name="preference_search_telos_settings">Telos सेटिंग्स</string>
+    <string name="preference_search_telos_settings_summary">दिखावट, खोज और वॉलपेपर जैसी लॉन्चर स्क्रीन खोजें</string>
+    <string name="preference_search_telos_app_settings">Telos ऐप सेटिंग्स</string>
+    <string name="preference_search_telos_app_settings_summary">इनबिल्ट Telos ऐप्स की सेटिंग्स खोजें। हर परिणाम में ऐप का नाम दिखता है।</string>
+    <string name="search_settings_source_android">Android सेटिंग्स</string>
+    <string name="search_settings_source_telos">Telos सेटिंग्स</string>
+    <string name="search_settings_source_telos_app">%1$s सेटिंग्स</string>
+    <string name="search_android_wifi">Wi-Fi</string>
+    <string name="search_android_bluetooth">ब्लूटूथ</string>
+    <string name="search_android_display">डिस्प्ले</string>
+    <string name="search_android_sound">ध्वनि</string>
+    <string name="search_android_date">तारीख और समय</string>
+    <string name="search_android_language">भाषा</string>
+    <string name="search_android_accessibility">सुगम्यता</string>
+    <string name="search_android_security">सुरक्षा</string>
+    <string name="search_android_storage">स्टोरेज</string>
+    <string name="search_android_apps">ऐप्स</string>
+    <string name="search_android_location">लोकेशन</string>
+    <string name="search_android_nfc">NFC</string>
+    <string name="search_android_airplane">एयरप्लेन मोड</string>
+    <string name="search_android_mobile_data">मोबाइल डेटा</string>
+    <string name="search_android_vpn">VPN</string>
+    <string name="search_android_notifications">सूचनाएँ</string>
+    <string name="search_android_battery">बैटरी</string>
+    <string name="search_android_home">डिफ़ॉल्ट होम ऐप</string>
+    <string name="search_android_all">सभी सिस्टम सेटिंग्स</string>
+    <string name="search_android_about">फ़ोन के बारे में</string>
+    <string name="search_android_privacy">गोपनीयता</string>
+    <string name="search_android_keyboard">कीबोर्ड</string>
+    <string name="search_android_defaults">डिफ़ॉल्ट ऐप्स</string>
+    <string name="search_android_developer">डेवलपर विकल्प</string>
+</resources>

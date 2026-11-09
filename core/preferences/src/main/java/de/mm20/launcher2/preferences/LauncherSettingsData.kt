@@ -337,6 +337,9 @@ data class SearchResultsGroup(
     val radioStationsInSearch: Boolean = false,
     /** Telos Media TV: show favorite, custom and recent TV channels that match the query as search results */
     val tvChannelsInSearch: Boolean = false,
+    val searchAndroidSettings: Boolean = true,
+    val searchTelosSettings: Boolean = true,
+    val searchTelosAppSettings: Boolean = true,
 )
 
 @Serializable

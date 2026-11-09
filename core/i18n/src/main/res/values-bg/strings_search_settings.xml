@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preference_search_android_settings">Системни настройки на Android</string>
+    <string name="preference_search_android_settings_summary">Намерете Wi-Fi, Bluetooth, дисплей и други системни екрани. Правописни грешки са позволени.</string>
+    <string name="preference_search_telos_settings">Настройки на Telos</string>
+    <string name="preference_search_telos_settings_summary">Търсете екрани на стартера: изглед, търсене, тапет</string>
+    <string name="preference_search_telos_app_settings">Настройки на приложения Telos</string>
+    <string name="preference_search_telos_app_settings_summary">Търсете настройки на вградените приложения Telos. Всеки резултат показва приложението.</string>
+    <string name="search_settings_source_android">Настройки на Android</string>
+    <string name="search_settings_source_telos">Настройки на Telos</string>
+    <string name="search_settings_source_telos_app">Настройки: %1$s</string>
+    <string name="search_android_wifi">Wi-Fi</string>
+    <string name="search_android_bluetooth">Bluetooth</string>
+    <string name="search_android_display">Дисплей</string>
+    <string name="search_android_sound">Звук</string>
+    <string name="search_android_date">Дата и час</string>
+    <string name="search_android_language">Език</string>
+    <string name="search_android_accessibility">Достъпност</string>
+    <string name="search_android_security">Сигурност</string>
+    <string name="search_android_storage">Хранилище</string>
+    <string name="search_android_apps">Приложения</string>
+    <string name="search_android_location">Местоположение</string>
+    <string name="search_android_nfc">NFC</string>
+    <string name="search_android_airplane">Самолетен режим</string>
+    <string name="search_android_mobile_data">Мобилни данни</string>
+    <string name="search_android_vpn">VPN</string>
+    <string name="search_android_notifications">Известия</string>
+    <string name="search_android_battery">Батерия</string>
+    <string name="search_android_home">Начално приложение по подразбиране</string>
+    <string name="search_android_all">Всички системни настройки</string>
+    <string name="search_android_about">За телефона</string>
+    <string name="search_android_privacy">Поверителност</string>
+    <string name="search_android_keyboard">Клавиатура</string>
+    <string name="search_android_defaults">Приложения по подразбиране</string>
+    <string name="search_android_developer">Опции за разработчици</string>
+</resources>
