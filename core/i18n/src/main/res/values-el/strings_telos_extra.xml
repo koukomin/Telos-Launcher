@@ -16,4 +16,21 @@
     <string name="desktop_mode_kde_connect">Ενσωμάτωση KDE Connect</string>
     <string name="desktop_mode_kde_connect_open">Άνοιγμα του KDE Connect για σύζευξη με υπολογιστή ή τάμπλετ</string>
     <string name="desktop_mode_kde_connect_install">Πατήστε για εγκατάσταση του KDE Connect από το Telos Store</string>
+
+    <string name="backup_group_app_data">App Data (Root/Shizuku)</string>
+    <string name="backup_group_app_data_summary">Application data and preferences</string>
+    <string name="backup_group_apps">Apps (APK &amp; Splits)</string>
+    <string name="backup_group_apps_summary">Installable packages for selected applications</string>
+    <string name="backup_group_system_data">System Data</string>
+    <string name="backup_group_system_data_summary">SMS, Call Logs, Wi-Fi Networks</string>
+    <string name="backup_group_virtual_apps">Telos Virtual Apps</string>
+    <string name="backup_group_virtual_apps_summary">Configurations for Telos Sync, Viewer, Calculator, etc.</string>
+    <string name="flow_tab_library">@string/au_video_tab_library</string>
+    <string name="flow_tab_music">@string/file_search_type_music</string>
+    <string name="flow_tab_videos">@string/file_search_type_videos</string>
+    <string name="installerx_install_btn">@string/action_install</string>
+    <string name="search_action_ai">@string/search_action_websearch</string>
+    <string name="store_show_system_apps">@string/preference_freeze_show_system_apps</string>
+    <string name="system_appopsnext_name">AppOpsNext · Android 15+</string>
+    <string name="tweaks_title">@string/preference_screen_tweaks</string>
 </resources>
