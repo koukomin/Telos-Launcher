@@ -6,12 +6,12 @@
   },
   "devDependencies": {
     "qrcode": "^1.5.4",
-    "sass": "^1.86.0",
+    "sass": "^1.108.1",
     "vitepress": "^1.6.4",
-    "vue": "^3.5.44"
+    "vue": "^3.5.45"
   },
   "dependencies": {
-    "material-symbols": "^0.48.2"
+    "material-symbols": "^0.48.3"
   },
   "overrides": {
     "vite": "6.4.5",
