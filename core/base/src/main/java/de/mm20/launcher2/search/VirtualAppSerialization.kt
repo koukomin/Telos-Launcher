@@ -22,9 +22,10 @@ class VirtualAppDeserializer(
 ) : SearchableDeserializer {
     override suspend fun deserialize(serialized: String): SavableSearchable? {
         if (serialized.isEmpty()) return null
+        val key = if (serialized == "telos_system_app://shizuku") "telos_system_app://system" else serialized
         return providers()
             .asSequence()
             .flatMap { it.getVirtualApps().asSequence() }
-            .firstOrNull { it.domain == domain && it.key == serialized }
+            .firstOrNull { it.domain == domain && it.key == key }
     }
 }

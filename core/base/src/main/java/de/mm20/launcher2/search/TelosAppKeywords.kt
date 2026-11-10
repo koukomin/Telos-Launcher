@@ -36,8 +36,8 @@ object TelosAppKeywords {
         "telos_calendar_app" to listOf("events", "agenda", "schedule", "ημερολόγιο", "εκδηλώσεις"),
         "telos_downloads_app" to listOf("download", "downloader", "λήψεις", "κατεβάσματα"),
         "telos_network_app" to listOf("nextdns", "vpn", "dns", "firewall", "wifi", "internet", "δίκτυο", "τείχος προστασίας"),
-        "telos_system_app" to listOf("system", "cpu", "ram", "wifi", "ip", "processes", "σύστημα", "επεξεργαστής"),
-        "telos_system_app://shizuku" to listOf(
+        "telos_system_app" to listOf(
+            "system", "cpu", "ram", "wifi", "ip", "processes", "σύστημα", "επεξεργαστής",
             "shizuku", "shizuko", "shizukou", "shizukku", "shizukuu", "sizuku", "sizuuku", "shizuk",
             "σιζούκου", "σιζουκου", "σιζούκο", "σιζουκο", "σιζούκκου", "σίζουκου",
         ),
