@@ -56,6 +56,7 @@ object SettingsDeepLinkContract {
     /** Telos Help */
     const val ROUTE_TELOS_PAGE = "settings/telos_page"
     const val EXTRA_TELOS_PAGE_KEY = "de.mm20.launcher2.settings.TELOS_PAGE_KEY"
+    const val EXTRA_HELP_TOPIC = "de.mm20.launcher2.settings.HELP_TOPIC"
     /** Links (string array) to offer in the add sheet of Telos Downloads, from a share or an Open with */
     const val EXTRA_DOWNLOAD_URLS = "de.mm20.launcher2.settings.DOWNLOAD_URLS"
     /** Stable identity for one Recents task per built-in app, independent of launch payload. */

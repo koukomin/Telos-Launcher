@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="telos_help_title">Βοήθεια</string>
-    <string name="telos_help_subtitle">Πώς να χρησιμοποιείτε τις εφαρμογές Telos και τις λειτουργίες τους.</string>
+    <string name="telos_help_subtitle">Μάθετε τον launcher, τις εφαρμογές Telos και τις ρυθμίσεις που μετράνε.</string>
     <string name="telos_help_start_tutorial">Έναρξη οδηγού</string>
     <string name="telos_help_tutorial">Οδηγός</string>
     <string name="telos_help_preview_body">Ο διαδραστικός οδηγός για το %1$s δεν είναι ακόμα έτοιμος. Μπορείτε να ανοίξετε την εφαρμογή από εδώ.</string>

@@ -142,6 +142,8 @@ adb shell …/libshizuku.so --apk=…/base.apk
 
 Telos Phone now reads the full Android contact list across synced accounts, including email-only contacts, rather than seeding its directory only from phone-number rows.
 
+**Help** is a built-in tour: launcher in one minute, Telos apps with short lessons, and settings that matter. The first home launch offers it once; Settings → Home screen can show the intro again.
+
 Built-in apps display short localized names such as **Phone / Τηλέφωνο** and **Files / Αρχεία**, without the Telos prefix. Searching `telos` still finds them, and English/Greek aliases work independently of the display language. Stable virtual keys preserve dock/favorites/gesture entries. Built-in artwork takes priority over generated icon-pack fallbacks; explicit user-selected icons remain supported. Recents use explicit icon resources that survive release shrinking. Virtual entries keep their own internal launch routes; frozen-package recovery only applies to real Android applications.
 
 ### Contacts, Media, home and Terminal updates

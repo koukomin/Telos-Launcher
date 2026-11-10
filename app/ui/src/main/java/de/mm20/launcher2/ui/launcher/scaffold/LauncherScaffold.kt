@@ -1560,6 +1560,8 @@ internal fun LauncherScaffold(
                     .statusBarsPadding()
             )
         }
+        de.mm20.launcher2.ui.help.HelpIntroHost()
+
         AnimatedVisibility(
             state.navBarScrim,
             enter = fadeIn(),

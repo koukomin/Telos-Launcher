@@ -666,6 +666,17 @@ class UiSettings internal constructor(
         }
     }
 
+    val helpIntroShown
+        get() = launcherDataStore.data.map {
+            it.home.helpIntroShown
+        }.distinctUntilChanged()
+
+    fun setHelpIntroShown(shown: Boolean) {
+        launcherDataStore.update {
+            it.copy(home = it.home.copy(helpIntroShown = shown))
+        }
+    }
+
     val homeScreenPageCount
         get() = launcherDataStore.data.map {
             it.home.homeScreenPageCount

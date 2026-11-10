@@ -126,6 +126,10 @@ class HomescreenSettingsScreenVM(
         uiSettings.setWidgetsTutorialShown(false)
     }
 
+    fun resetHelpIntro() {
+        uiSettings.setHelpIntroShown(false)
+    }
+
     val chargingAnimation = uiSettings.chargingAnimation
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 

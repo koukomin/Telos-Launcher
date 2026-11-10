@@ -32,6 +32,7 @@ gallery, music, video and radio players, an app store and an app freezer.
 <a href="./video/"><b>🎬 Video</b><span>Library, player, NextLib decoders, streams, torrents, subtitles, Trakt</span></a>
 <a href="./radio/"><b>📻 Radio</b><span>Internet radio with station search, sleep timer, NextLib decoders</span></a>
 <a href="./network/"><b>🛡️ Network</b><span>VPN based firewall and DNS filter: DNS servers, per-app rules, blocklists, WireGuard</span></a>
+<a href="./help/"><b>❓ Help</b><span>In-app tour of the launcher, Telos apps and useful settings</span></a>
 <a href="./store/"><b>🛍️ Store</b><span>Install and update apps from GitHub, F-Droid and more</span></a>
 <a href="./system/"><b>⚙️ System</b><span>CPU, RAM, Wi-Fi, AppOps, built-in Shizuku server, pairing, ADB</span></a>
 <a href="./freeze/"><b>❄️ Smart Freeze</b><span>Freeze or hide apps through Shizuku, Dhizuku, root, Island or device owner</span></a>

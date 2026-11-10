@@ -519,6 +519,9 @@ open class SettingsActivity : BaseActivity() {
             entry<de.mm20.launcher2.ui.help.HelpDashboardRoute> {
                 de.mm20.launcher2.ui.help.HelpDashboardScreen()
             }
+            entry<de.mm20.launcher2.ui.help.HelpLessonRoute> {
+                de.mm20.launcher2.ui.help.HelpLessonScreen(it.topicId)
+            }
             entry<de.mm20.launcher2.ui.help.HelpAppDetailRoute> {
                 de.mm20.launcher2.ui.help.HelpAppDetailScreen(it.appKey)
             }
@@ -944,7 +947,15 @@ open class SettingsActivity : BaseActivity() {
             ROUTE_DOWNLOADS -> de.mm20.launcher2.ui.downloads.DownloadsRoute(
                 initialUrls = intent.getStringArrayListExtra(SettingsDeepLinkContract.EXTRA_DOWNLOAD_URLS).orEmpty(),
             )
-            SettingsDeepLinkContract.ROUTE_TELOS_PAGE -> de.mm20.launcher2.ui.help.HelpDashboardRoute
+            SettingsDeepLinkContract.ROUTE_TELOS_PAGE -> {
+                val topic = intent.getStringExtra(SettingsDeepLinkContract.EXTRA_HELP_TOPIC)
+                if (topic.isNullOrEmpty()) de.mm20.launcher2.ui.help.HelpDashboardRoute
+                else de.mm20.launcher2.ui.help.HelpLessonRoute(topic)
+            }
+            "settings/appearance" -> AppearanceSettingsRoute
+            "settings/search" -> SearchSettingsRoute
+            "settings/gestures" -> GesturesSettingsRoute
+            "settings/homescreen" -> HomescreenSettingsRoute
             // === TELOS_PENDING_REVIEW_END: comms_virtual_apps ===
             ROUTE_CRASH_REPORT if (intent.hasExtra(EXTRA_CRASH_REPORT_PATH)) -> {
                 CrashReportRoute(intent.getStringExtra(EXTRA_CRASH_REPORT_PATH)!!)

@@ -187,6 +187,13 @@ fun HomescreenSettingsScreen() {
                         viewModel.resetWidgetsTutorial()
                     }
                 )
+                Preference(
+                    title = stringResource(I18nR.string.preference_reset_help_tutorial),
+                    summary = stringResource(I18nR.string.preference_reset_help_tutorial_summary),
+                    onClick = {
+                        viewModel.resetHelpIntro()
+                    }
+                )
             }
 
         }

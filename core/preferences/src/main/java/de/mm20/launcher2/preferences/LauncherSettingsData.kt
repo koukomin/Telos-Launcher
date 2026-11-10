@@ -169,6 +169,8 @@ data class HomeGroup(
     val homeScreenDockDefaultPage: Int = 0,
     val homeScreenWidgets: Boolean = false,
     val widgetsTutorialShown: Boolean = false,
+    /** False until the user accepts or skips the one-time Help intro on the home screen. */
+    val helpIntroShown: Boolean = false,
     /** 1 = the single, original home screen (default, matches all prior behavior). Up to 9
      * enables extra swipeable pages to the right, each an independent widget area. */
     val homeScreenPageCount: Int = 1,
