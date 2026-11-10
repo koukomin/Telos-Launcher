@@ -33,35 +33,30 @@ object HwuiRenderer {
     }
 
     suspend fun current(): String = withContext(Dispatchers.IO) {
-        val raw = de.mm20.launcher2.ktx.ShizukuProcesses.getSystemProperty(PROP, "")
-            ?.trim()
-            .orEmpty()
-            .ifBlank { privilegedShell("getprop $PROP")?.trim().orEmpty() }
+        val raw = privilegedShell("getprop $PROP")?.trim().orEmpty()
         parse(raw)
     }
 
     suspend fun apply(mode: String): Boolean = withContext(Dispatchers.IO) {
-        val values = when (mode) {
-            MODE_VULKAN -> listOf(VALUE_VULKAN, "vulkan")
-            MODE_OPENGL -> listOf(VALUE_OPENGL, "opengl")
-            else -> listOf("")
+        val value = when (mode) {
+            MODE_VULKAN -> VALUE_VULKAN
+            MODE_OPENGL -> VALUE_OPENGL
+            else -> ""
         }
-        for (value in values) {
-            val binderOk = de.mm20.launcher2.ktx.ShizukuProcesses.setSystemProperty(PROP, value)
-            val shellOk = privilegedShell("setprop $PROP ${if (value.isEmpty()) "\"\"" else value}") != null ||
-                privilegedShell("resetprop $PROP ${if (value.isEmpty()) "\"\"" else value}") != null ||
-                privilegedShell("resetprop -n $PROP ${if (value.isEmpty()) "\"\"" else value}") != null
-            if (!binderOk && !shellOk) continue
-            if (current() == mode || (mode == MODE_DEFAULT && parse(
-                    de.mm20.launcher2.ktx.ShizukuProcesses.getSystemProperty(PROP, "").orEmpty(),
-                ) == MODE_DEFAULT)
-            ) {
-                return@withContext true
-            }
-            if (binderOk || shellOk) return@withContext true
+        
+        val cmd = if (value.isEmpty()) {
+            "setprop $PROP \"\"; resetprop -n $PROP \"\""
+        } else {
+            "setprop $PROP $value; resetprop -n $PROP $value"
         }
-        Log.w(TAG, "Could not set $PROP")
-        false
+
+        val res = privilegedShell(cmd)
+        val success = res != null || current() == mode
+        
+        if (!success) {
+            Log.w(TAG, "Could not set $PROP to $value")
+        }
+        success
     }
 
     private fun parse(raw: String): String = when {

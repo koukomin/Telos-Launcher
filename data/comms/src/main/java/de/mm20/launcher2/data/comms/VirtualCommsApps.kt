@@ -1258,6 +1258,123 @@ internal class VirtualHelpApp(private val context: Context) : Application {
     }
 }
 
+internal class VirtualBackupApp(private val context: Context) : Application {
+
+    override val key: String = "$Domain://backup"
+    override val label: String get() = de.mm20.launcher2.search.TelosAppLabels.forDomain(context, Domain)
+    override val labelOverride: String? = null
+    override val keywords: List<String> = TelosAppKeywords.forDomain(Domain)
+    override val domain: String = Domain
+    override val score: ResultScore = ResultScore.Unspecified
+
+    override val componentName: ComponentName = ComponentName(
+        context.packageName,
+        "de.mm20.launcher2.comms.VirtualBackupApp",
+    )
+    override val isSuspended: Boolean = false
+    override val user: UserHandle = Process.myUserHandle()
+    override val versionName: String? = null
+
+    override val canUninstall: Boolean = false
+    override fun uninstall(context: Context) {}
+    override fun openAppDetails(context: Context) {}
+
+    override val canShareApk: Boolean = false
+
+    override fun overrideLabel(label: String): SavableSearchable = this
+
+    override fun launch(context: Context, options: Bundle?): Boolean {
+        return try {
+            val intent = Intent().apply {
+                setClassName(context.packageName, SettingsDeepLinkContract.ACTIVITY_CLASS_NAME)
+                putExtra(SettingsDeepLinkContract.EXTRA_ROUTE, SettingsDeepLinkContract.ROUTE_TELOS_PAGE)
+                putExtra(SettingsDeepLinkContract.EXTRA_TELOS_PAGE_KEY, key)
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            context.startActivity(intent, options)
+            true
+        } catch (e: Exception) {
+            false
+        }
+    }
+
+    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? {
+        val drawable = androidx.core.content.ContextCompat.getDrawable(
+            context,
+            de.mm20.launcher2.search.TelosAppIcons.forDomain(Domain)
+                ?: de.mm20.launcher2.base.R.drawable.ic_app_backup_full,
+        ) ?: return null
+        return StaticLauncherIcon(
+            foregroundLayer = StaticIconLayer(drawable, 1f),
+            backgroundLayer = StaticIconLayer(android.graphics.drawable.ColorDrawable(0xFF102A43.toInt()), 1f),
+        )
+    }
+
+    override fun getSerializer(): SearchableSerializer = VirtualAppSerializer()
+
+    companion object {
+        const val Domain = "telos_backup_app"
+    }
+}
+
+internal class VirtualKeyboardApp(private val context: Context) : Application {
+
+    override val key: String = "$Domain://keyboard"
+    override val label: String get() = de.mm20.launcher2.search.TelosAppLabels.forDomain(context, Domain)
+    override val labelOverride: String? = null
+    override val keywords: List<String> = TelosAppKeywords.forDomain(Domain)
+    override val domain: String = Domain
+    override val score: ResultScore = ResultScore.Unspecified
+
+    override val componentName: ComponentName = ComponentName(
+        context.packageName,
+        "de.mm20.launcher2.comms.VirtualKeyboardApp",
+    )
+    override val isSuspended: Boolean = false
+    override val user: UserHandle = Process.myUserHandle()
+    override val versionName: String? = null
+
+    override val canUninstall: Boolean = false
+    override fun uninstall(context: Context) {}
+    override fun openAppDetails(context: Context) {}
+
+    override val canShareApk: Boolean = false
+
+    override fun overrideLabel(label: String): SavableSearchable = this
+
+    override fun launch(context: Context, options: Bundle?): Boolean {
+        return try {
+            val intent = Intent().apply {
+                setClassName(context.packageName, SettingsDeepLinkContract.ACTIVITY_CLASS_NAME)
+                putExtra(SettingsDeepLinkContract.EXTRA_ROUTE, SettingsDeepLinkContract.ROUTE_KEYBOARD)
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            context.startActivity(intent, options)
+            true
+        } catch (e: Exception) {
+            false
+        }
+    }
+
+    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? {
+        val drawable = androidx.core.content.ContextCompat.getDrawable(
+            context,
+            de.mm20.launcher2.search.TelosAppIcons.forDomain(Domain)
+                ?: de.mm20.launcher2.base.R.drawable.ic_app_keyboard_full,
+        ) ?: return null
+        return StaticLauncherIcon(
+            foregroundLayer = StaticIconLayer(drawable, 1f),
+            backgroundLayer = StaticIconLayer(android.graphics.drawable.ColorDrawable(0xFF102A43.toInt()), 1f),
+        )
+    }
+
+    override fun getSerializer(): SearchableSerializer = VirtualAppSerializer()
+
+    companion object {
+        const val Domain = "telos_keyboard_app"
+    }
+}
+
 internal class CommsVirtualAppProvider(private val context: Context) : VirtualAppProvider {
     override fun getVirtualApps(): List<Application> = listOf(
         VirtualPhoneApp(context),
@@ -1281,6 +1398,8 @@ internal class CommsVirtualAppProvider(private val context: Context) : VirtualAp
         VirtualDownloadsApp(context),
         VirtualNetworkApp(context),
         VirtualSystemApp(context),
+        VirtualBackupApp(context),
+        VirtualKeyboardApp(context),
         VirtualHelpApp(context),
     )
 }

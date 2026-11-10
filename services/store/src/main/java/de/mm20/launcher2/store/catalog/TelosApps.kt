@@ -166,6 +166,19 @@ object TelosApps {
             route = SettingsDeepLinkContract.ROUTE_VIEWER,
         ),
         TelosApp(
+            key = "telos_keyboard_app://keyboard",
+            name = "Keyboard",
+            description = "A privacy-focused, Material 3 input method keyboard with Greek & English layouts, emojis, clipboard manager, haptic feedback, and Incognito mode.",
+            features = listOf(
+                "Greek (Ελληνικά) & English QWERTY layouts with accent tones",
+                "Theme integration matching Telos Launcher colors",
+                "Privacy / Incognito mode (zero learning in password/private fields)",
+                "Emojis & Clipboard manager panel",
+            ),
+            iconRes = de.mm20.launcher2.base.R.drawable.keyboard_24px,
+            route = SettingsDeepLinkContract.ROUTE_KEYBOARD,
+        ),
+        TelosApp(
             key = "telos_files_app://files",
             name = "Files",
             description = "A file manager: browse and manage the files on your phone, with an optional root explorer for system files.",

@@ -128,9 +128,19 @@ internal object PrivilegedWifiStore {
     suspend fun load(context: Context): List<WifiEntry> = withContext(Dispatchers.IO) {
         val api = privilegedConfigurations()
         val fromApi = api.mapNotNull { it.toWifiEntry() }
-        val fromXml = if (fromApi.none { !it.psk.isNullOrBlank() }) readXmlStore() else emptyList()
+        val xmlStore = readXmlStore()
         val merged = LinkedHashMap<String, WifiEntry>()
-        (fromApi + fromXml).forEach { merged[it.ssid] = it }
+        fromApi.forEach { merged[it.ssid] = it }
+        xmlStore.forEach { entry ->
+            val existing = merged[entry.ssid]
+            if (existing != null) {
+                if (existing.psk.isNullOrBlank() && !entry.psk.isNullOrBlank()) {
+                    merged[entry.ssid] = existing.copy(psk = entry.psk)
+                }
+            } else {
+                merged[entry.ssid] = entry
+            }
+        }
         loadAppOnly(context).forEach { local ->
             merged.putIfAbsent(local.ssid, local.copy(existInSystem = false))
         }
@@ -364,8 +374,10 @@ internal object PrivilegedWifiStore {
             "/data/misc/wifi/WifiConfigStore.xml",
             "/data/misc/wifi/wpa_supplicant.conf",
         )
-        val raw = files.mapNotNull { PrivilegedShell.run("cat $it 2>/dev/null")?.output?.takeIf { out -> out.isNotBlank() } } +
+        val fileOutputs = files.mapNotNull { PrivilegedShell.run("cat $it 2>/dev/null")?.output?.takeIf { out -> out.isNotBlank() } } +
             listOfNotNull(PrivilegedShell.run("cat /data/misc_ce/*/wifi/WifiConfigStore.xml /data/misc_ce/*/apexdata/com.android.wifi/WifiConfigStore.xml 2>/dev/null")?.output?.takeIf { it.isNotBlank() })
+        val dumpsysOutput = listOfNotNull(PrivilegedShell.run("dumpsys wifi 2>/dev/null")?.output?.takeIf { it.isNotBlank() })
+        val raw = fileOutputs + dumpsysOutput
         return raw.flatMap(SavedWifiParser::parse).distinctBy { it.ssid }
     }
 

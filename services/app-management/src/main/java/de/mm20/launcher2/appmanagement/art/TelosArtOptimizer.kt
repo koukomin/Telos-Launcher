@@ -239,7 +239,10 @@ object TelosArtOptimizer {
             else -> return@withContext CompilePackageOutcome(false, effectiveProfile)
         }
 
-        val result = TelosShellEngine.execResult(cmd, timeoutMs = 180_000L)
+        val isCoreSystem = packageName in SYSTEM_CORE_HEAVY_PACKAGES || packageName == "android" || packageName.startsWith("com.android.systemui")
+        val timeout = if (isCoreSystem) 15_000L else 60_000L
+
+        val result = TelosShellEngine.execResult(cmd, timeoutMs = timeout)
         Log.d(TAG, "Package $packageName compiled with profile $effectiveProfile, success=${result.isSuccess}")
         CompilePackageOutcome(
             success = result.isSuccess,
@@ -247,6 +250,16 @@ object TelosArtOptimizer {
             upgradedFromEmptyProfile = upgraded,
         )
     }
+
+    private val SYSTEM_CORE_HEAVY_PACKAGES = setOf(
+        "android",
+        "com.android.systemui",
+        "com.google.android.gms",
+        "com.google.android.webview",
+        "com.android.bluetooth",
+        "com.android.networkstack",
+        "com.android.providers.telephony",
+    )
 
     suspend fun optimizePackage(
         context: Context,
