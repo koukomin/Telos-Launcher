@@ -240,7 +240,6 @@ private fun RadioDashboardContent(
                     modifier = Modifier.fillMaxSize(),
                     header = {
                         Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                            if (values.controlsScroll) RadioNowPlayingBar(favorites, onOpen = {})
                             if (shownFavorites.isEmpty() && favorites.isNotEmpty() && collectionQuery.isNotBlank()) {
                                 de.mm20.launcher2.ui.component.SearchEmptyState(collectionQuery)
                             }
@@ -282,7 +281,6 @@ private fun RadioDashboardContent(
                         verticalArrangement = Arrangement.spacedBy(10.dp),
                         modifier = Modifier.fillMaxSize()
                     ) {
-                        if (values.controlsScroll) item { RadioNowPlayingBar(favorites, onOpen = {}) }
                         items(searchResults.distinctBy { it.id }, key = { it.id }) { station ->
                             val isFavorite = favorites.any { it.id == station.id }
                             StationRow(
@@ -340,9 +338,6 @@ private fun RadioDashboardContent(
                 }
             }
         }
-    }
-    if (!values.controlsScroll) {
-        RadioNowPlayingBar(favorites, onOpen = {})
     }
     }
     }

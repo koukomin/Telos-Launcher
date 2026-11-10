@@ -61,17 +61,6 @@ allprojects {
 }
 
 subprojects {
-    pluginManager.withPlugin("org.jetbrains.kotlin.plugin.compose") {
-        tasks.withType<KotlinCompile>().configureEach {
-            compilerOptions.freeCompilerArgs.addAll(
-                "-P",
-                "plugin:androidx.compose.compiler.plugins.kotlin:featureFlag=StrongSkipping",
-                "-P",
-                "plugin:androidx.compose.compiler.plugins.kotlin:featureFlag=OptimizeNonSkippingGroups",
-            )
-        }
-    }
-    
     tasks.withType<AbstractArchiveTask>().configureEach {
         isPreserveFileTimestamps = false
         isReproducibleFileOrder = true

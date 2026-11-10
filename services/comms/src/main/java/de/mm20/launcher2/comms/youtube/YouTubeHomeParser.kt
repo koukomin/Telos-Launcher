@@ -3,6 +3,16 @@ package de.mm20.launcher2.comms.youtube
 import org.json.JSONArray
 import org.json.JSONObject
 
+internal fun cleanThumbnailUrl(url: String?): String? {
+    if (url.isNullOrBlank()) return null
+    var clean = url.trim()
+    if (clean.startsWith("//")) clean = "https:$clean"
+    if (!clean.startsWith("http://") && !clean.startsWith("https://")) return null
+    clean = clean.replace(Regex("=w\\d+-h\\d+"), "=w512-h512")
+        .replace(Regex("=s\\d+"), "=s512")
+    return clean
+}
+
 /** Balanced JSON, not a regex that stops on braces inside titles. Response size is bounded upstream. */
 internal fun initialYouTubeData(html: String): String? {
     val marker = html.indexOf("ytInitialData")
@@ -41,7 +51,7 @@ internal fun homeVideoEntries(data: String): List<YouTubeEntry> {
         val owner = text(row.optJSONObject("ownerText")).ifBlank { text(row.optJSONObject("shortBylineText")) }
         val thumbnails = if (lockup) row.optJSONObject("contentImage")?.optJSONObject("thumbnailViewModel")
             ?.optJSONObject("image")?.optJSONArray("sources") else row.optJSONObject("thumbnail")?.optJSONArray("thumbnails")
-        val thumbnail = thumbnails?.optJSONObject((thumbnails.length() - 1).coerceAtLeast(0))?.optString("url")?.takeIf { it.startsWith("https://") }
+        val thumbnail = cleanThumbnailUrl(thumbnails?.optJSONObject((thumbnails.length() - 1).coerceAtLeast(0))?.optString("url"))
         found.putIfAbsent(id, YouTubeEntry("https://www.youtube.com/watch?v=$id", title, owner, thumbnail, -1))
     }
     fun music(row: JSONObject) {
@@ -55,7 +65,7 @@ internal fun homeVideoEntries(data: String): List<YouTubeEntry> {
         if (title.isBlank()) return
         val owner = text(row.optJSONObject("subtitle")).ifBlank { column(1) }
         val thumbs = row.optJSONObject("thumbnail")?.optJSONObject("musicThumbnailRenderer")?.optJSONObject("thumbnail")?.optJSONArray("thumbnails")
-        val thumbnail = thumbs?.optJSONObject((thumbs.length() - 1).coerceAtLeast(0))?.optString("url")?.takeIf { it.startsWith("https://") }
+        val thumbnail = cleanThumbnailUrl(thumbs?.optJSONObject((thumbs.length() - 1).coerceAtLeast(0))?.optString("url"))
         found.putIfAbsent(id, YouTubeEntry("https://www.youtube.com/watch?v=$id", title, owner, thumbnail, -1))
     }
     fun visit(node: Any?, depth: Int) {

@@ -143,6 +143,17 @@ fun NextDnsScreen() {
                                 TextButton(enabled = !state.loading, onClick = { loginDialog = true }) { Text("Web Sign In") }
                             }
                         }
+                        Card(
+                            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh),
+                            modifier = Modifier.fillMaxWidth().padding(top = 8.dp)
+                        ) {
+                            Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                                Text("📖 Οδηγίες Εύρεσης Στοιχείων NextDNS:", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
+                                Text("1. Συνδεθείτε στο my.nextdns.io στον φυλλομετρητή σας.", style = MaterialTheme.typography.bodySmall)
+                                Text("2. Profile ID: Στην καρτέλα Setup, δείτε τον 6ψήφιο κωδικό δίπλα στο \"ID\" (π.χ. abc123).", style = MaterialTheme.typography.bodySmall)
+                                Text("3. API Key: Πηγαίνετε στο my.nextdns.io/account (Settings), κατεβείτε στα API Keys και πατήστε \"Show\".", style = MaterialTheme.typography.bodySmall)
+                            }
+                        }
                     }
                     if (state.loading) LinearProgressIndicator(Modifier.fillMaxWidth())
                     if (state.dnsApplied) Text(stringResource(I18nR.string.nd_applied), color = MaterialTheme.colorScheme.primary)

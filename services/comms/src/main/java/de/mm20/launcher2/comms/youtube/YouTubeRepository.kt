@@ -359,7 +359,8 @@ class YouTubeRepository(private val context: Context) {
             ?: thumbContainer.optJSONArray("thumbnails")
             ?: return null
         if (thumbnails.length() == 0) return null
-        return thumbnails.optJSONObject(thumbnails.length() - 1)?.optString("url")
+        val url = thumbnails.optJSONObject(thumbnails.length() - 1)?.optString("url")
+        return cleanThumbnailUrl(url)
     }
 
     suspend fun search(query: String, music: Boolean): List<YouTubeEntry> = withContext(Dispatchers.IO) {
@@ -377,7 +378,7 @@ class YouTubeRepository(private val context: Context) {
         val service = ServiceList.YouTube
         val handler = service.searchQHFactory.fromQuery(query, if (music) listOf("music_songs") else listOf("videos"), "")
         SearchInfo.getInfo(service, handler).relatedItems.filterIsInstance<StreamInfoItem>().map {
-            YouTubeEntry(it.url, it.name, it.uploaderName.orEmpty(), it.thumbnails.lastOrNull()?.url, it.duration)
+            YouTubeEntry(it.url, it.name, it.uploaderName.orEmpty(), cleanThumbnailUrl(it.thumbnails.lastOrNull()?.url), it.duration)
         }
     }
 
@@ -385,7 +386,7 @@ class YouTubeRepository(private val context: Context) {
         initialize()
         StreamInfo.getInfo(ServiceList.YouTube, item.url).relatedItems
             .filterIsInstance<StreamInfoItem>().map {
-                YouTubeEntry(it.url, it.name, it.uploaderName.orEmpty(), it.thumbnails.lastOrNull()?.url, it.duration)
+                YouTubeEntry(it.url, it.name, it.uploaderName.orEmpty(), cleanThumbnailUrl(it.thumbnails.lastOrNull()?.url), it.duration)
             }.distinctBy { it.url }
     }
 
@@ -411,7 +412,7 @@ class YouTubeRepository(private val context: Context) {
         info.url,
         info.name,
         info.uploaderName.orEmpty(),
-        info.thumbnails.lastOrNull()?.url,
+        cleanThumbnailUrl(info.thumbnails.lastOrNull()?.url),
         info.duration
     )
 

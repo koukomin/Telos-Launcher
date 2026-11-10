@@ -68,7 +68,15 @@
                 <category android:name="android.intent.category.HOME" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.QUICKSTEP_SERVICE" />
+                <action android:name="com.android.launcher3.action.QUICKSTEP" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
 
+            <meta-data
+                android:name="com.android.launcher3.grid.control"
+                android:value="true" />
             <meta-data
                 android:name="android.app.shortcuts"
                 android:resource="@xml/shortcuts" />

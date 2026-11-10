@@ -57,23 +57,32 @@ internal object ViewerThumbnails {
             }
             return resolver.openInputStream(uri)?.use { BitmapFactory.decodeStream(it, null, options) }
         }
-        if (mime.startsWith("video/") || ext in setOf("mp4", "mkv", "webm", "mov", "3gp", "avi", "m4v")) {
+        if (mime.startsWith("video/") || ext in setOf("mp4", "mkv", "webm", "mov", "3gp", "avi", "m4v", "ts", "flv", "wmv", "mpg", "mpeg", "m2ts", "mts", "vob", "ogv", "asf", "hevc", "h265") || uri.scheme == "content" || name.contains("video", ignoreCase = true)) {
             val retriever = MediaMetadataRetriever()
             return try {
                 retriever.setDataSource(context, uri)
+                val width = if (Build.VERSION.SDK_INT >= 27) {
+                    retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH)?.toIntOrNull()?.coerceAtLeast(1) ?: EDGE
+                } else EDGE
+                val height = if (Build.VERSION.SDK_INT >= 27) {
+                    retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT)?.toIntOrNull()?.coerceAtLeast(1) ?: EDGE
+                } else EDGE
+                val scale = EDGE.toFloat() / maxOf(width, height)
+                val w = (width * scale).toInt().coerceAtLeast(1)
+                val h = (height * scale).toInt().coerceAtLeast(1)
                 if (Build.VERSION.SDK_INT >= 27) {
-                    val width = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH)?.toIntOrNull()?.coerceAtLeast(1) ?: EDGE
-                    val height = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT)?.toIntOrNull()?.coerceAtLeast(1) ?: EDGE
-                    val scale = EDGE.toFloat() / maxOf(width, height)
-                    val w = (width * scale).toInt().coerceAtLeast(1)
-                    val h = (height * scale).toInt().coerceAtLeast(1)
                     retriever.getScaledFrameAtTime(1_000_000L, MediaMetadataRetriever.OPTION_CLOSEST_SYNC, w, h)
                         ?: retriever.getScaledFrameAtTime(0L, MediaMetadataRetriever.OPTION_CLOSEST, w, h)
+                } else {
+                    retriever.getFrameAtTime(-1)?.let { source ->
+                        Bitmap.createScaledBitmap(source, w, h, true).also { if (it !== source) source.recycle() }
+                    }
                 }
-                else retriever.getFrameAtTime(-1)?.let { source ->
-                    Bitmap.createScaledBitmap(source, EDGE, EDGE, true).also { if (it !== source) source.recycle() }
-                }
-            } finally { retriever.release() }
+            } catch (_: Exception) {
+                null
+            } finally {
+                runCatching { retriever.release() }
+            }
         }
         if (ext == "pdf") {
             resolver.openFileDescriptor(uri, "r")?.use { descriptor ->

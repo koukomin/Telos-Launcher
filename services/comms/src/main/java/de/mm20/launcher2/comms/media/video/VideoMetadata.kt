@@ -81,6 +81,14 @@ object VideoMetadata {
         return memory.containsKey(k) || loadDisk(context).has(k)
     }
 
+    internal fun sanitizeTitle(raw: String): String {
+        return raw.replace(Regex("(?i)\\b(1080p|720p|480p|2160p|4k|webrip|web-dl|bluray|bdrip|hdrip|x264|x265|hevc|aac|dts|5\\.1|repack|proper|h264|h265)\\b"), " ")
+            .replace('.', ' ')
+            .replace('_', ' ')
+            .replace(Regex("\\s+"), " ")
+            .trim()
+    }
+
     suspend fun lookup(
         context: Context,
         apiKey: String,
@@ -89,13 +97,14 @@ object VideoMetadata {
         year: Int?,
         language: String = "en",
     ): VideoMeta? = withContext(Dispatchers.IO) {
-        if (title.isBlank()) return@withContext null
+        val cleanTitle = sanitizeTitle(title)
+        if (cleanTitle.isBlank()) return@withContext null
         val tmdb = apiKey.isNotBlank()
-        if (known(context, series, title, year, tmdb)) return@withContext cached(context, series, title, year, tmdb)
-        val k = key(series, title, year, tmdb)
+        if (known(context, series, cleanTitle, year, tmdb)) return@withContext cached(context, series, cleanTitle, year, tmdb)
+        val k = key(series, cleanTitle, year, tmdb)
         try {
             if (!tmdb) {
-                val meta = wikipedia(series, title, year)
+                val meta = wikipedia(series, cleanTitle, year)
                 synchronized(this@VideoMetadata) { memory[k] = meta }
                 saveDisk(context, k, meta)
                 return@withContext meta
@@ -107,7 +116,7 @@ object VideoMetadata {
                 else -> "&year=$year"
             }
             val url = "https://api.themoviedb.org/3/search/$kind?api_key=${URLEncoder.encode(apiKey, "UTF-8")}" +
-                "&query=${URLEncoder.encode(title, "UTF-8")}&language=$language$yearParam"
+                "&query=${URLEncoder.encode(cleanTitle, "UTF-8")}&language=$language$yearParam"
             val body = get(url)
             val first = JSONObject(body).optJSONArray("results")?.optJSONObject(0)
             val meta = first?.let {

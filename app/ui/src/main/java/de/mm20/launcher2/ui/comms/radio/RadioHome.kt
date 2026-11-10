@@ -194,6 +194,22 @@ fun RadioStationCard(
             overflow = TextOverflow.Ellipsis,
         )
         }
+        if (playingId == station.id) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                androidx.compose.material3.IconButton(onClick = { player.togglePlayPause() }) {
+                    Icon(
+                        painterResource(if (playWhenReady) BaseR.drawable.pause_24px else BaseR.drawable.play_arrow_24px),
+                        contentDescription = null,
+                    )
+                }
+                androidx.compose.material3.IconButton(onClick = { player.stop() }) {
+                    Icon(
+                        painterResource(BaseR.drawable.close_24px),
+                        contentDescription = null,
+                    )
+                }
+            }
+        }
     }
 }
 

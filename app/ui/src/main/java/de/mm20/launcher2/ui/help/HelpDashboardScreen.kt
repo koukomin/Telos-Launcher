@@ -23,7 +23,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -64,13 +66,14 @@ fun HelpDashboardScreen() {
     val settingsSum = stringResource(I18nR.string.telos_help_chapter_settings_sum)
     val needle = query.trim().lowercase()
 
-    val visibleApps = HelpCatalog.apps.filter { app ->
-        if (needle.isEmpty()) true
-        else listOf(
-            stringResource(app.nameRes),
-            stringResource(app.descRes),
-            stringResource(app.caveatRes),
-        ).any { it.lowercase().contains(needle) }
+    val appTextMap = HelpCatalog.apps.associateWith { app ->
+        (stringResource(app.nameRes) + " " + stringResource(app.descRes) + " " + stringResource(app.caveatRes)).lowercase()
+    }
+    val visibleApps = remember(needle, appTextMap) {
+        HelpCatalog.apps.filter { app ->
+            if (needle.isEmpty()) true
+            else appTextMap[app]?.contains(needle) == true
+        }
     }
     val showLauncher = needle.isEmpty() || launcherTitle.lowercase().contains(needle) || launcherSum.lowercase().contains(needle)
     val showSettings = needle.isEmpty() || settingsTitle.lowercase().contains(needle) || settingsSum.lowercase().contains(needle)
