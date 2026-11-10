@@ -519,6 +519,9 @@ open class SettingsActivity : BaseActivity() {
             entry<de.mm20.launcher2.ui.help.HelpDashboardRoute> {
                 de.mm20.launcher2.ui.help.HelpDashboardScreen()
             }
+            entry<de.mm20.launcher2.ui.help.HelpAppDetailRoute> {
+                de.mm20.launcher2.ui.help.HelpAppDetailScreen(it.appKey)
+            }
             entry<WikipediaSettingsRoute> {
                 WikipediaSettingsScreen()
             }
