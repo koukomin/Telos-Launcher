@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="telos_help_title">সহায়তা</string>
+    <string name="telos_help_subtitle">Telos অ্যাপ ও তাদের ফিচার কীভাবে ব্যবহার করবেন।</string>
+    <string name="telos_help_start_tutorial">টিউটোরিয়াল শুরু</string>
+    <string name="telos_help_tutorial">টিউটোরিয়াল</string>
+    <string name="telos_help_preview_body">%1$s-এর গাইড এখনও তৈরি হয়নি। এখান থেকে অ্যাপ খুলতে পারেন।</string>
+    <string name="telos_help_open_app">%1$s খুলুন</string>
+    <string name="telos_calculator_help_desc">হিসাব, একক রূপান্তর ও VAT.</string>
+    <string name="telos_media_help_desc">সঙ্গীত ও ভিডিও চালান, লাইব্রেরি পরিচালনা করুন।</string>
+    <string name="telos_files_help_desc">ফাইল, নথি ও বাইরের স্টোরেজ।</string>
+    <string name="telos_notes_help_desc">নোট এবং ডিভাইসের মধ্যে সিঙ্ক।</string>
+    <string name="telos_system_help_desc">উন্নত সিস্টেম সেটিং, Freeze Manager ও AppOps.</string>
+    <string name="telos_network_help_desc">VPN, DNS, ফায়ারওয়াল ও নেটওয়ার্ক গোপনীয়তা।</string>
+    <string name="telos_store_help_desc">Shizuku দিয়ে ব্যাকগ্রাউন্ডে অ্যাপ ইনস্টল ও আপডেট।</string>
+    <string name="telos_phone_help_desc">কল, ইতিহাস ও স্প্যাম ব্লক।</string>
+    <string name="telos_messages_help_desc">এনক্রিপ্টেড SMS/MMS.</string>
+    <string name="telos_ermis_help_desc">একাধিক অ্যাকাউন্টে মেইল, আগে গোপনীয়তা।</string>
+    <string name="telos_akou_help_desc">আশপাশের গান চেনা।</string>
+    <string name="telos_sync_help_desc">Syncthing দিয়ে নিরাপদে ফাইল সিঙ্ক।</string>
+</resources>

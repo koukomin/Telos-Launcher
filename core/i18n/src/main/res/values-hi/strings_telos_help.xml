@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="telos_help_title">सहायता</string>
+    <string name="telos_help_subtitle">Telos ऐप और उनकी सुविधाएँ कैसे इस्तेमाल करें।</string>
+    <string name="telos_help_start_tutorial">ट्यूटोरियल शुरू करें</string>
+    <string name="telos_help_tutorial">ट्यूटोरियल</string>
+    <string name="telos_help_preview_body">%1$s का गाइड अभी तैयार नहीं है। ऐप यहाँ से खोल सकते हैं।</string>
+    <string name="telos_help_open_app">%1$s खोलें</string>
+    <string name="telos_calculator_help_desc">गणना, इकाई रूपांतरण और VAT.</string>
+    <string name="telos_media_help_desc">संगीत और वीडियो चलाएँ, लाइब्रेरी प्रबंधित करें।</string>
+    <string name="telos_files_help_desc">फ़ाइलें, दस्तावेज़ और बाहरी संग्रहण।</string>
+    <string name="telos_notes_help_desc">नोट्स और डिवाइस के बीच सिंक।</string>
+    <string name="telos_system_help_desc">उन्नत सिस्टम सेटिंग, Freeze Manager और AppOps.</string>
+    <string name="telos_network_help_desc">VPN, DNS, फ़ायरवॉल और नेटवर्क गोपनीयता।</string>
+    <string name="telos_store_help_desc">Shizuku से पृष्ठभूमि में ऐप इंस्टॉल और अपडेट।</string>
+    <string name="telos_phone_help_desc">कॉल, इतिहास और स्पैम ब्लॉक।</string>
+    <string name="telos_messages_help_desc">एन्क्रिप्टेड SMS/MMS.</string>
+    <string name="telos_ermis_help_desc">कई खातों पर मेल, पहले गोपनीयता।</string>
+    <string name="telos_akou_help_desc">आस-पास बज रहे गाने पहचानें।</string>
+    <string name="telos_sync_help_desc">Syncthing से फ़ाइलें सुरक्षित सिंक करें।</string>
+</resources>

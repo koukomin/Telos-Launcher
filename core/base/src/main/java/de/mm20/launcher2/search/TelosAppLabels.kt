@@ -38,6 +38,7 @@ object TelosAppLabels {
         "telos_tv_app" -> I18nR.string.au12_tvui_title
         "telos_sync_app" -> I18nR.string.notes_sync_settings
         "telos_backup_app" -> I18nR.string.preference_backup
+        "telos_help_app" -> I18nR.string.telos_help_title
         else -> null
     }
 

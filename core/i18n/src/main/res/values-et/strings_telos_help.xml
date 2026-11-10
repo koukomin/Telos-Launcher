@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="telos_help_title">Spikker</string>
+    <string name="telos_help_subtitle">Kuidas kasutada Telose rakendusi ja nende funktsioone.</string>
+    <string name="telos_help_start_tutorial">Alusta juhendit</string>
+    <string name="telos_help_tutorial">Juhend</string>
+    <string name="telos_help_preview_body">%1$s ülevaade pole veel valmis. Rakenduse saab avada siit.</string>
+    <string name="telos_help_open_app">Ava %1$s</string>
+    <string name="telos_calculator_help_desc">Arvutused, ühikute teisendus ja käibemaks.</string>
+    <string name="telos_media_help_desc">Muusika, video ja teek.</string>
+    <string name="telos_files_help_desc">Failid, dokumendid ja väline salvestusruum.</string>
+    <string name="telos_notes_help_desc">Märkmed ja sünkroonimine seadmete vahel.</string>
+    <string name="telos_system_help_desc">Täpsemad süsteemiseaded, Freeze Manager ja AppOps.</string>
+    <string name="telos_network_help_desc">VPN, DNS, tulemüür ja võrgu privaatsus.</string>
+    <string name="telos_store_help_desc">Rakenduste paigaldus ja värskendused Shizukuga taustal.</string>
+    <string name="telos_phone_help_desc">Kõned, ajalugu ja rämpsu blokeerimine.</string>
+    <string name="telos_messages_help_desc">Krüptitud SMS/MMS.</string>
+    <string name="telos_ermis_help_desc">E-post mitmel kontol, esmalt privaatsus.</string>
+    <string name="telos_akou_help_desc">Tuvasta ümberringi mängivad lood.</string>
+    <string name="telos_sync_help_desc">Failide turvaline sünkroonimine Syncthingiga.</string>
+</resources>

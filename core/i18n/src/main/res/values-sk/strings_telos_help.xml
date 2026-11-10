@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="telos_help_title">Pomocník</string>
+    <string name="telos_help_subtitle">Ako používať aplikácie Telos a ich funkcie.</string>
+    <string name="telos_help_start_tutorial">Spustiť návod</string>
+    <string name="telos_help_tutorial">Návod</string>
+    <string name="telos_help_preview_body">Prehliadka %1$s ešte nie je pripravená. Aplikáciu môžete otvoriť odtiaľto.</string>
+    <string name="telos_help_open_app">Otvoriť %1$s</string>
+    <string name="telos_calculator_help_desc">Výpočty, prevody jednotiek a DPH.</string>
+    <string name="telos_media_help_desc">Hudba, video a knižnica.</string>
+    <string name="telos_files_help_desc">Súbory, dokumenty a externé úložisko.</string>
+    <string name="telos_notes_help_desc">Poznámky a synchronizácia medzi zariadeniami.</string>
+    <string name="telos_system_help_desc">Pokročilé systémové nastavenia, Freeze Manager a AppOps.</string>
+    <string name="telos_network_help_desc">VPN, DNS, brána a súkromie siete.</string>
+    <string name="telos_store_help_desc">Inštalácia a aktualizácie aplikácií cez Shizuku na pozadí.</string>
+    <string name="telos_phone_help_desc">Hovory, história a blokovanie spamu.</string>
+    <string name="telos_messages_help_desc">SMS/MMS so šifrovaním.</string>
+    <string name="telos_ermis_help_desc">Pošta na viacerých účtoch, najprv súkromie.</string>
+    <string name="telos_akou_help_desc">Rozpoznanie skladieb okolo vás.</string>
+    <string name="telos_sync_help_desc">Bezpečná synchronizácia súborov cez Syncthing.</string>
+</resources>

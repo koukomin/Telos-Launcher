@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="telos_help_title">Cabhair</string>
+    <string name="telos_help_subtitle">Conas aipeanna Telos agus a ngnéithe a úsáid.</string>
+    <string name="telos_help_start_tutorial">Tosaigh an teagasc</string>
+    <string name="telos_help_tutorial">Teagasc</string>
+    <string name="telos_help_preview_body">Níl siúlóid %1$s réidh fós. Is féidir an aip a oscailt anseo.</string>
+    <string name="telos_help_open_app">Oscail %1$s</string>
+    <string name="telos_calculator_help_desc">Ríomhanna, tiontú aonad agus CBL.</string>
+    <string name="telos_media_help_desc">Ceol, físeán agus leabharlann.</string>
+    <string name="telos_files_help_desc">Comhaid, doiciméid agus stóras seachtrach.</string>
+    <string name="telos_notes_help_desc">Nótaí agus sioncrónú idir gléasanna.</string>
+    <string name="telos_system_help_desc">Socruithe córais casta, Freeze Manager agus AppOps.</string>
+    <string name="telos_network_help_desc">VPN, DNS, balla dóiteáin agus príobháideachas líonra.</string>
+    <string name="telos_store_help_desc">Suiteáil agus nuashonruithe aipeanna le Shizuku sa chúlra.</string>
+    <string name="telos_phone_help_desc">Glaonna, stair agus bac ar thurscar.</string>
+    <string name="telos_messages_help_desc">SMS/MMS le criptiú.</string>
+    <string name="telos_ermis_help_desc">Ríomhphost ar iliomad cuntas, príobháideachas ar dtús.</string>
+    <string name="telos_akou_help_desc">Aithin amhráin timpeall ort.</string>
+    <string name="telos_sync_help_desc">Sioncrónaigh comhaid go slán le Syncthing.</string>
+</resources>

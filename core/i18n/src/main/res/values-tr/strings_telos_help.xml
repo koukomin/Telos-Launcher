@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="telos_help_title">Yardım</string>
+    <string name="telos_help_subtitle">Telos uygulamalarını ve özelliklerini kullanma.</string>
+    <string name="telos_help_start_tutorial">Eğitime başla</string>
+    <string name="telos_help_tutorial">Eğitim</string>
+    <string name="telos_help_preview_body">%1$s için rehber henüz hazır değil. Uygulamayı buradan açabilirsiniz.</string>
+    <string name="telos_help_open_app">%1$s uygulamasını aç</string>
+    <string name="telos_calculator_help_desc">Hesap, birim dönüştürme ve KDV.</string>
+    <string name="telos_media_help_desc">Müzik ve video oynatma, kitaplık yönetimi.</string>
+    <string name="telos_files_help_desc">Dosyalar, belgeler ve harici depolama.</string>
+    <string name="telos_notes_help_desc">Notlar ve cihazlar arası eşitleme.</string>
+    <string name="telos_system_help_desc">Gelişmiş sistem ayarları, Freeze Manager ve AppOps.</string>
+    <string name="telos_network_help_desc">VPN, DNS, güvenlik duvarı ve ağ gizliliği.</string>
+    <string name="telos_store_help_desc">Shizuku ile arka planda uygulama kurma ve güncelleme.</string>
+    <string name="telos_phone_help_desc">Aramalar, geçmiş ve spam engelleme.</string>
+    <string name="telos_messages_help_desc">Şifreli SMS/MMS.</string>
+    <string name="telos_ermis_help_desc">Birden fazla hesapta e-posta, önce gizlilik.</string>
+    <string name="telos_akou_help_desc">Çevrenizdeki şarkıları tanıma.</string>
+    <string name="telos_sync_help_desc">Syncthing ile güvenli dosya eşitleme.</string>
+</resources>

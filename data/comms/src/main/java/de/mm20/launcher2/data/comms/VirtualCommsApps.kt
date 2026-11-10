@@ -1256,7 +1256,7 @@ internal class VirtualShizukuSettingsApp(private val context: Context) : Applica
 
 internal class VirtualHelpApp(private val context: Context) : Application {
     override val key: String = "telos_help_app://help"
-    override val label: String get() = "Telos Help"
+    override val label: String get() = de.mm20.launcher2.search.TelosAppLabels.forDomain(context, Domain)
     override val labelOverride: String? = null
     override val keywords: List<String> = TelosAppKeywords.forKey(key)
     override val domain: String = Domain

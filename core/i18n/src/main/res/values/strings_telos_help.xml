@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="telos_help_title">Telos Help</string>
-    <string name="telos_help_subtitle">Discover how to use Telos Apps and their unique features.</string>
-    <string name="telos_help_start_tutorial">Start Tutorial</string>
+    <string name="telos_help_title">Help</string>
+    <string name="telos_help_subtitle">How to use Telos apps and their features.</string>
+    <string name="telos_help_start_tutorial">Start tutorial</string>
+    <string name="telos_help_tutorial">Tutorial</string>
+    <string name="telos_help_preview_body">A walkthrough of %1$s is not ready yet. You can open the app from here.</string>
+    <string name="telos_help_open_app">Open %1$s</string>
 
     <string name="telos_calculator_help_desc">Learn how to perform calculations, convert units, and apply VAT.</string>
     <string name="telos_media_help_desc">Find out how to play music, videos, and manage your media library.</string>

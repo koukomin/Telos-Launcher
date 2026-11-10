@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="telos_help_title">ヘルプ</string>
+    <string name="telos_help_subtitle">Telos アプリとその機能の使い方。</string>
+    <string name="telos_help_start_tutorial">チュートリアルを開始</string>
+    <string name="telos_help_tutorial">チュートリアル</string>
+    <string name="telos_help_preview_body">%1$s の案内はまだ準備できていません。ここからアプリを開けます。</string>
+    <string name="telos_help_open_app">%1$s を開く</string>
+    <string name="telos_calculator_help_desc">計算、単位換算、VAT。</string>
+    <string name="telos_media_help_desc">音楽と動画の再生、ライブラリ管理。</string>
+    <string name="telos_files_help_desc">ファイル、文書、外部ストレージ。</string>
+    <string name="telos_notes_help_desc">メモとデバイス間同期。</string>
+    <string name="telos_system_help_desc">高度なシステム設定、Freeze Manager、AppOps。</string>
+    <string name="telos_network_help_desc">VPN、DNS、ファイアウォール、ネットワークのプライバシー。</string>
+    <string name="telos_store_help_desc">Shizuku でバックグラウンドからアプリをインストール／更新。</string>
+    <string name="telos_phone_help_desc">通話、履歴、迷惑番号のブロック。</string>
+    <string name="telos_messages_help_desc">暗号化された SMS/MMS。</string>
+    <string name="telos_ermis_help_desc">複数アカウントのメール、プライバシー優先。</string>
+    <string name="telos_akou_help_desc">周囲の曲を識別。</string>
+    <string name="telos_sync_help_desc">Syncthing でファイルを安全に同期。</string>
+</resources>

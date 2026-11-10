@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="telos_help_title">مساعدة</string>
+    <string name="telos_help_subtitle">كيفية استخدام تطبيقات Telos وميزاتها.</string>
+    <string name="telos_help_start_tutorial">بدء الدليل</string>
+    <string name="telos_help_tutorial">دليل</string>
+    <string name="telos_help_preview_body">جولة %1$s ليست جاهزة بعد. يمكنك فتح التطبيق من هنا.</string>
+    <string name="telos_help_open_app">فتح %1$s</string>
+    <string name="telos_calculator_help_desc">الحسابات وتحويل الوحدات وضريبة القيمة المضافة.</string>
+    <string name="telos_media_help_desc">تشغيل الموسيقى والفيديو وإدارة المكتبة.</string>
+    <string name="telos_files_help_desc">الملفات والمستندات والتخزين الخارجي.</string>
+    <string name="telos_notes_help_desc">الملاحظات والمزامنة بين الأجهزة.</string>
+    <string name="telos_system_help_desc">إعدادات النظام المتقدمة وFreeze Manager وAppOps.</string>
+    <string name="telos_network_help_desc">VPN وDNS وجدار الحماية وخصوصية الشبكة.</string>
+    <string name="telos_store_help_desc">تثبيت التطبيقات وتحديثها عبر Shizuku في الخلفية.</string>
+    <string name="telos_phone_help_desc">المكالمات والسجل وحظر الأرقام المزعجة.</string>
+    <string name="telos_messages_help_desc">رسائل SMS/MMS مع التشفير.</string>
+    <string name="telos_ermis_help_desc">البريد على حسابات متعددة، الخصوصية أولاً.</string>
+    <string name="telos_akou_help_desc">التعرف على الأغاني من حولك.</string>
+    <string name="telos_sync_help_desc">مزامنة الملفات بأمان عبر Syncthing.</string>
+</resources>

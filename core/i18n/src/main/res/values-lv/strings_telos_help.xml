@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="telos_help_title">Palīdzība</string>
+    <string name="telos_help_subtitle">Kā lietot Telos lietotnes un to funkcijas.</string>
+    <string name="telos_help_start_tutorial">Sākt pamācību</string>
+    <string name="telos_help_tutorial">Pamācība</string>
+    <string name="telos_help_preview_body">%1$s ceļvedis vēl nav gatavs. Lietotni var atvērt no šejienes.</string>
+    <string name="telos_help_open_app">Atvērt %1$s</string>
+    <string name="telos_calculator_help_desc">Aprēķini, mērvienību pārrēķins un PVN.</string>
+    <string name="telos_media_help_desc">Mūzika, video un bibliotēka.</string>
+    <string name="telos_files_help_desc">Faili, dokumenti un ārējā krātuve.</string>
+    <string name="telos_notes_help_desc">Piezīmes un sinhronizācija starp ierīcēm.</string>
+    <string name="telos_system_help_desc">Paplašināti sistēmas iestatījumi, Freeze Manager un AppOps.</string>
+    <string name="telos_network_help_desc">VPN, DNS, ugunsmūris un tīkla privātums.</string>
+    <string name="telos_store_help_desc">Lietotņu instalēšana un atjauninājumi ar Shizuku fonā.</string>
+    <string name="telos_phone_help_desc">Zvani, vēsture un surogātpasta bloķēšana.</string>
+    <string name="telos_messages_help_desc">SMS/MMS ar šifrēšanu.</string>
+    <string name="telos_ermis_help_desc">Pasts vairākos kontos, vispirms privātums.</string>
+    <string name="telos_akou_help_desc">Atpazīt dziesmas apkārt jums.</string>
+    <string name="telos_sync_help_desc">Droša failu sinhronizācija ar Syncthing.</string>
+</resources>

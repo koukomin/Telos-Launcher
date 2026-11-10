@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="telos_help_title">Žinynas</string>
+    <string name="telos_help_subtitle">Kaip naudoti „Telos“ programas ir jų funkcijas.</string>
+    <string name="telos_help_start_tutorial">Pradėti vadovą</string>
+    <string name="telos_help_tutorial">Vadovas</string>
+    <string name="telos_help_preview_body">%1$s apžvalga dar neparengta. Programą galite atidaryti čia.</string>
+    <string name="telos_help_open_app">Atidaryti %1$s</string>
+    <string name="telos_calculator_help_desc">Skaičiavimai, vienetų keitimas ir PVM.</string>
+    <string name="telos_media_help_desc">Muzika, vaizdo įrašai ir biblioteka.</string>
+    <string name="telos_files_help_desc">Failai, dokumentai ir išorinė saugykla.</string>
+    <string name="telos_notes_help_desc">Užrašai ir sinchronizavimas tarp įrenginių.</string>
+    <string name="telos_system_help_desc">Išplėstiniai sistemos parametrai, Freeze Manager ir AppOps.</string>
+    <string name="telos_network_help_desc">VPN, DNS, užkarda ir tinklo privatumas.</string>
+    <string name="telos_store_help_desc">Programų diegimas ir naujinimas su Shizuku fone.</string>
+    <string name="telos_phone_help_desc">Skambučiai, žurnalas ir brukalo blokavimas.</string>
+    <string name="telos_messages_help_desc">SMS/MMS su šifravimu.</string>
+    <string name="telos_ermis_help_desc">Paštas keliose paskyrose, pirmiausia privatumas.</string>
+    <string name="telos_akou_help_desc">Atpažinti aplink skambančias dainas.</string>
+    <string name="telos_sync_help_desc">Saugus failų sinchronizavimas su Syncthing.</string>
+</resources>

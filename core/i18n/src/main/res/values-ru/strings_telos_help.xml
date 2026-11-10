@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="telos_help_title">Справка</string>
+    <string name="telos_help_subtitle">Как пользоваться приложениями Telos и их функциями.</string>
+    <string name="telos_help_start_tutorial">Начать руководство</string>
+    <string name="telos_help_tutorial">Руководство</string>
+    <string name="telos_help_preview_body">Интерактивный обзор %1$s ещё не готов. Приложение можно открыть отсюда.</string>
+    <string name="telos_help_open_app">Открыть %1$s</string>
+    <string name="telos_calculator_help_desc">Расчёты, перевод единиц и НДС.</string>
+    <string name="telos_media_help_desc">Музыка, видео и медиатека.</string>
+    <string name="telos_files_help_desc">Файлы, документы и внешнее хранилище.</string>
+    <string name="telos_notes_help_desc">Заметки и синхронизация между устройствами.</string>
+    <string name="telos_system_help_desc">Расширенные системные настройки, Freeze Manager и AppOps.</string>
+    <string name="telos_network_help_desc">VPN, DNS, брандмауэр и конфиденциальность сети.</string>
+    <string name="telos_store_help_desc">Установка и обновление приложений через Shizuku в фоне.</string>
+    <string name="telos_phone_help_desc">Звонки, журнал и блокировка спама.</string>
+    <string name="telos_messages_help_desc">SMS/MMS с шифрованием.</string>
+    <string name="telos_ermis_help_desc">Почта на нескольких ящиках, сначала конфиденциальность.</string>
+    <string name="telos_akou_help_desc">Распознавание песен вокруг вас.</string>
+    <string name="telos_sync_help_desc">Безопасная синхронизация файлов через Syncthing.</string>
+</resources>

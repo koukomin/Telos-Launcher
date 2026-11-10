@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="telos_help_title">Βοήθεια</string>
+    <string name="telos_help_subtitle">Πώς να χρησιμοποιείτε τις εφαρμογές Telos και τις λειτουργίες τους.</string>
+    <string name="telos_help_start_tutorial">Έναρξη οδηγού</string>
+    <string name="telos_help_tutorial">Οδηγός</string>
+    <string name="telos_help_preview_body">Ο διαδραστικός οδηγός για το %1$s δεν είναι ακόμα έτοιμος. Μπορείτε να ανοίξετε την εφαρμογή από εδώ.</string>
+    <string name="telos_help_open_app">Άνοιγμα: %1$s</string>
+    <string name="telos_calculator_help_desc">Μάθετε υπολογισμούς, μετατροπές μονάδων και ΦΠΑ.</string>
+    <string name="telos_media_help_desc">Αναπαραγωγή μουσικής και βίντεο και διαχείριση της βιβλιοθήκης σας.</string>
+    <string name="telos_files_help_desc">Διαχείριση αρχείων, εγγράφων και εξωτερικού αποθηκευτικού χώρου.</string>
+    <string name="telos_notes_help_desc">Σημειώσεις, συγχρονισμός συσκευών και οργάνωση ιδεών.</string>
+    <string name="telos_system_help_desc">Προχωρημένες ρυθμίσεις συστήματος, Freeze Manager και AppOps.</string>
+    <string name="telos_network_help_desc">VPN, DNS, τείχος προστασίας και ιδιωτικότητα δικτύου.</string>
+    <string name="telos_store_help_desc">Εγκατάσταση και ενημερώσεις εφαρμογών με Shizuku στο παρασκήνιο.</string>
+    <string name="telos_phone_help_desc">Κλήσεις, ιστορικό και αποκλεισμός ανεπιθύμητων αριθμών.</string>
+    <string name="telos_messages_help_desc">Αποστολή και λήψη SMS/MMS με κρυπτογράφηση.</string>
+    <string name="telos_ermis_help_desc">Ηλεκτρονική αλληλογραφία σε πολλούς λογαριασμούς, με προτεραιότητα την ιδιωτικότητα.</string>
+    <string name="telos_akou_help_desc">Αναγνώριση τραγουδιών που παίζουν γύρω σας.</string>
+    <string name="telos_sync_help_desc">Ασφαλής συγχρονισμός αρχείων με Syncthing.</string>
+</resources>

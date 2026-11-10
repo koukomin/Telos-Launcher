@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="telos_help_title">Ajutor</string>
+    <string name="telos_help_subtitle">Cum să folosiți aplicațiile Telos și funcțiile lor.</string>
+    <string name="telos_help_start_tutorial">Pornește tutorialul</string>
+    <string name="telos_help_tutorial">Tutorial</string>
+    <string name="telos_help_preview_body">Ghidul pentru %1$s nu este gata. Puteți deschide aplicația de aici.</string>
+    <string name="telos_help_open_app">Deschide %1$s</string>
+    <string name="telos_calculator_help_desc">Calcule, conversii de unități și TVA.</string>
+    <string name="telos_media_help_desc">Muzică, video și bibliotecă.</string>
+    <string name="telos_files_help_desc">Fișiere, documente și stocare externă.</string>
+    <string name="telos_notes_help_desc">Note și sincronizare între dispozitive.</string>
+    <string name="telos_system_help_desc">Setări avansate de sistem, Freeze Manager și AppOps.</string>
+    <string name="telos_network_help_desc">VPN, DNS, firewall și confidențialitate rețea.</string>
+    <string name="telos_store_help_desc">Instalare și actualizări de aplicații cu Shizuku în fundal.</string>
+    <string name="telos_phone_help_desc">Apeluri, istoric și blocare spam.</string>
+    <string name="telos_messages_help_desc">SMS/MMS cu criptare.</string>
+    <string name="telos_ermis_help_desc">E-mail pe mai multe conturi, confidențialitate întâi.</string>
+    <string name="telos_akou_help_desc">Identificarea melodiilor din jur.</string>
+    <string name="telos_sync_help_desc">Sincronizare sigură a fișierelor cu Syncthing.</string>
+</resources>

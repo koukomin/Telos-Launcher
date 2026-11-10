@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="telos_help_title">帮助</string>
+    <string name="telos_help_subtitle">如何使用 Telos 应用及其功能。</string>
+    <string name="telos_help_start_tutorial">开始教程</string>
+    <string name="telos_help_tutorial">教程</string>
+    <string name="telos_help_preview_body">%1$s 的导览尚未就绪。你可以从这里打开该应用。</string>
+    <string name="telos_help_open_app">打开 %1$s</string>
+    <string name="telos_calculator_help_desc">计算、单位换算和增值税。</string>
+    <string name="telos_media_help_desc">播放音乐和视频并管理媒体库。</string>
+    <string name="telos_files_help_desc">管理文件、文档和外部存储。</string>
+    <string name="telos_notes_help_desc">笔记以及跨设备同步。</string>
+    <string name="telos_system_help_desc">高级系统设置、Freeze Manager 和 AppOps。</string>
+    <string name="telos_network_help_desc">VPN、DNS、防火墙和网络隐私。</string>
+    <string name="telos_store_help_desc">通过 Shizuku 在后台安装和更新应用。</string>
+    <string name="telos_phone_help_desc">通话、记录和拦截骚扰号码。</string>
+    <string name="telos_messages_help_desc">加密收发短信/彩信。</string>
+    <string name="telos_ermis_help_desc">多账户邮件，隐私优先。</string>
+    <string name="telos_akou_help_desc">识别周围正在播放的歌曲。</string>
+    <string name="telos_sync_help_desc">通过 Syncthing 安全同步文件。</string>
+</resources>

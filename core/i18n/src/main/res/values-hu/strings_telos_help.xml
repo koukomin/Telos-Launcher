@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="telos_help_title">Súgó</string>
+    <string name="telos_help_subtitle">A Telos alkalmazások és funkcióik használata.</string>
+    <string name="telos_help_start_tutorial">Oktató indítása</string>
+    <string name="telos_help_tutorial">Oktató</string>
+    <string name="telos_help_preview_body">A(z) %1$s bemutatója még nem kész. Innen megnyithatja az alkalmazást.</string>
+    <string name="telos_help_open_app">%1$s megnyitása</string>
+    <string name="telos_calculator_help_desc">Számítások, mértékegység-váltás és áfa.</string>
+    <string name="telos_media_help_desc">Zene, videó és könyvtár.</string>
+    <string name="telos_files_help_desc">Fájlok, dokumentumok és külső tárhely.</string>
+    <string name="telos_notes_help_desc">Jegyzetek és eszközök közötti szinkron.</string>
+    <string name="telos_system_help_desc">Speciális rendszerbeállítások, Freeze Manager és AppOps.</string>
+    <string name="telos_network_help_desc">VPN, DNS, tűzfal és hálózati adatvédelem.</string>
+    <string name="telos_store_help_desc">Alkalmazások telepítése és frissítése Shizukuval a háttérben.</string>
+    <string name="telos_phone_help_desc">Hívások, előzmények és spam tiltása.</string>
+    <string name="telos_messages_help_desc">Titkosított SMS/MMS.</string>
+    <string name="telos_ermis_help_desc">Levelezés több fiókon, először adatvédelem.</string>
+    <string name="telos_akou_help_desc">Környező dalok felismerése.</string>
+    <string name="telos_sync_help_desc">Fájlok biztonságos szinkronizálása Syncthinggel.</string>
+</resources>

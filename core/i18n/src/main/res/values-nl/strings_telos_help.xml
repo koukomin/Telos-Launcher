@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="telos_help_title">Help</string>
+    <string name="telos_help_subtitle">Telos-apps en hun functies gebruiken.</string>
+    <string name="telos_help_start_tutorial">Tutorial starten</string>
+    <string name="telos_help_tutorial">Handleiding</string>
+    <string name="telos_help_preview_body">Een rondleiding voor %1$s is nog niet klaar. U kunt de app hier openen.</string>
+    <string name="telos_help_open_app">%1$s openen</string>
+    <string name="telos_calculator_help_desc">Berekenen, eenheden omrekenen en btw.</string>
+    <string name="telos_media_help_desc">Muziek en video afspelen en de bibliotheek beheren.</string>
+    <string name="telos_files_help_desc">Bestanden, documenten en externe opslag beheren.</string>
+    <string name="telos_notes_help_desc">Notities en synchronisatie tussen apparaten.</string>
+    <string name="telos_system_help_desc">Geavanceerde systeeminstellingen, Freeze Manager en AppOps.</string>
+    <string name="telos_network_help_desc">VPN, DNS, firewall en netwerkprivacy.</string>
+    <string name="telos_store_help_desc">Apps installeren en bijwerken met Shizuku op de achtergrond.</string>
+    <string name="telos_phone_help_desc">Oproepen, geschiedenis en spamnummers blokkeren.</string>
+    <string name="telos_messages_help_desc">SMS/MMS verzenden en ontvangen met versleuteling.</string>
+    <string name="telos_ermis_help_desc">E-mail op meerdere accounts, privacy eerst.</string>
+    <string name="telos_akou_help_desc">Nummers om u heen herkennen.</string>
+    <string name="telos_sync_help_desc">Bestanden veilig synchroniseren met Syncthing.</string>
+</resources>

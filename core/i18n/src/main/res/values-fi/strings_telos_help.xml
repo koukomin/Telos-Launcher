@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="telos_help_title">Ohje</string>
+    <string name="telos_help_subtitle">Telos-sovellusten ja niiden ominaisuuksien käyttö.</string>
+    <string name="telos_help_start_tutorial">Aloita opastus</string>
+    <string name="telos_help_tutorial">Opastus</string>
+    <string name="telos_help_preview_body">%1$s-esittely ei ole vielä valmis. Voit avata sovelluksen täältä.</string>
+    <string name="telos_help_open_app">Avaa %1$s</string>
+    <string name="telos_calculator_help_desc">Laskenta, yksikkömuunnokset ja ALV.</string>
+    <string name="telos_media_help_desc">Musiikki, video ja kirjasto.</string>
+    <string name="telos_files_help_desc">Tiedostot, asiakirjat ja ulkoinen tallennus.</string>
+    <string name="telos_notes_help_desc">Muistiinpanot ja synkronointi laitteiden välillä.</string>
+    <string name="telos_system_help_desc">Edistyneet järjestelmäasetukset, Freeze Manager ja AppOps.</string>
+    <string name="telos_network_help_desc">VPN, DNS, palomuuri ja verkon yksityisyys.</string>
+    <string name="telos_store_help_desc">Sovellusten asennus ja päivitys Shizukulla taustalla.</string>
+    <string name="telos_phone_help_desc">Puhelut, historia ja roskapuhelimien esto.</string>
+    <string name="telos_messages_help_desc">Salattu SMS/MMS.</string>
+    <string name="telos_ermis_help_desc">Sähköposti useilla tileillä, yksityisyys ensin.</string>
+    <string name="telos_akou_help_desc">Tunnista ympärilläsi soivat kappaleet.</string>
+    <string name="telos_sync_help_desc">Synkronoi tiedostot turvallisesti Syncthingillä.</string>
+</resources>

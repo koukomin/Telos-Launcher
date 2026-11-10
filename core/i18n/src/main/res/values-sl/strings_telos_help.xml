@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="telos_help_title">Pomoč</string>
+    <string name="telos_help_subtitle">Kako uporabljati aplikacije Telos in njihove funkcije.</string>
+    <string name="telos_help_start_tutorial">Začni vodnik</string>
+    <string name="telos_help_tutorial">Vodnik</string>
+    <string name="telos_help_preview_body">Voden ogled %1$s še ni pripravljen. Aplikacijo lahko odprete od tukaj.</string>
+    <string name="telos_help_open_app">Odpri %1$s</string>
+    <string name="telos_calculator_help_desc">Izračuni, pretvorbe enot in DDV.</string>
+    <string name="telos_media_help_desc">Glasba, video in knjižnica.</string>
+    <string name="telos_files_help_desc">Datoteke, dokumenti in zunanja shramba.</string>
+    <string name="telos_notes_help_desc">Zapiski in sinhronizacija med napravami.</string>
+    <string name="telos_system_help_desc">Napredne sistemske nastavitve, Freeze Manager in AppOps.</string>
+    <string name="telos_network_help_desc">VPN, DNS, požarni zid in zasebnost omrežja.</string>
+    <string name="telos_store_help_desc">Namestitev in posodobitve aplikacij s Shizuku v ozadju.</string>
+    <string name="telos_phone_help_desc">Klici, zgodovina in blokiranje vsiljene pošte.</string>
+    <string name="telos_messages_help_desc">SMS/MMS s šifriranjem.</string>
+    <string name="telos_ermis_help_desc">Pošta na več računih, najprej zasebnost.</string>
+    <string name="telos_akou_help_desc">Prepoznava pesmi okoli vas.</string>
+    <string name="telos_sync_help_desc">Varna sinhronizacija datotek s Syncthing.</string>
+</resources>

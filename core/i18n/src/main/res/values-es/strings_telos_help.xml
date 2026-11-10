@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="telos_help_title">Ayuda</string>
+    <string name="telos_help_subtitle">Cómo usar las apps de Telos y sus funciones.</string>
+    <string name="telos_help_start_tutorial">Iniciar tutorial</string>
+    <string name="telos_help_tutorial">Tutorial</string>
+    <string name="telos_help_preview_body">El recorrido de %1$s aún no está listo. Puede abrir la app desde aquí.</string>
+    <string name="telos_help_open_app">Abrir %1$s</string>
+    <string name="telos_calculator_help_desc">Cálculos, conversión de unidades e IVA.</string>
+    <string name="telos_media_help_desc">Reproducir música y vídeos y gestionar la biblioteca.</string>
+    <string name="telos_files_help_desc">Gestionar archivos, documentos y almacenamiento externo.</string>
+    <string name="telos_notes_help_desc">Notas, sincronización entre dispositivos.</string>
+    <string name="telos_system_help_desc">Ajustes avanzados del sistema, Freeze Manager y AppOps.</string>
+    <string name="telos_network_help_desc">VPN, DNS, cortafuegos y privacidad de red.</string>
+    <string name="telos_store_help_desc">Instalar y actualizar apps con Shizuku en segundo plano.</string>
+    <string name="telos_phone_help_desc">Llamadas, historial y bloqueo de spam.</string>
+    <string name="telos_messages_help_desc">Enviar y recibir SMS/MMS con cifrado.</string>
+    <string name="telos_ermis_help_desc">Correo en varias cuentas, con la privacidad primero.</string>
+    <string name="telos_akou_help_desc">Identificar canciones a su alrededor.</string>
+    <string name="telos_sync_help_desc">Sincronizar archivos de forma segura con Syncthing.</string>
+</resources>

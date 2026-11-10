@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="telos_help_title">Hjelp</string>
+    <string name="telos_help_subtitle">Slik bruker du Telos-apper og funksjonene deres.</string>
+    <string name="telos_help_start_tutorial">Start veiledning</string>
+    <string name="telos_help_tutorial">Veiledning</string>
+    <string name="telos_help_preview_body">En gjennomgang av %1$s er ikke klar ennå. Du kan åpne appen herfra.</string>
+    <string name="telos_help_open_app">Åpne %1$s</string>
+    <string name="telos_calculator_help_desc">Beregninger, enhetsomregning og merverdiavgift.</string>
+    <string name="telos_media_help_desc">Musikk, video og bibliotek.</string>
+    <string name="telos_files_help_desc">Filer, dokumenter og ekstern lagring.</string>
+    <string name="telos_notes_help_desc">Notater og synkronisering mellom enheter.</string>
+    <string name="telos_system_help_desc">Avanserte systeminnstillinger, Freeze Manager og AppOps.</string>
+    <string name="telos_network_help_desc">VPN, DNS, brannmur og nettverksvern.</string>
+    <string name="telos_store_help_desc">Installer og oppdater apper med Shizuku i bakgrunnen.</string>
+    <string name="telos_phone_help_desc">Anrop, historikk og blokkering av spam.</string>
+    <string name="telos_messages_help_desc">SMS/MMS med kryptering.</string>
+    <string name="telos_ermis_help_desc">E-post på flere kontoer, personvern først.</string>
+    <string name="telos_akou_help_desc">Gjenkjenn sanger rundt deg.</string>
+    <string name="telos_sync_help_desc">Synkroniser filer sikkert med Syncthing.</string>
+</resources>

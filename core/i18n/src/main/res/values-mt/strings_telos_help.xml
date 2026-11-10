@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="telos_help_title">Għajnuna</string>
+    <string name="telos_help_subtitle">Kif tuża l-apps Telos u l-funzjonijiet tagħhom.</string>
+    <string name="telos_help_start_tutorial">Ibda t-tutorial</string>
+    <string name="telos_help_tutorial">Tutorial</string>
+    <string name="telos_help_preview_body">Il-gwida ta’ %1$s għadha mhix lesta. Tista’ tiftaħ l-app minn hawn.</string>
+    <string name="telos_help_open_app">Iftaħ %1$s</string>
+    <string name="telos_calculator_help_desc">Kalkoli, konverżjoni ta’ unitajiet u VAT.</string>
+    <string name="telos_media_help_desc">Mużika, vidjo u librerija.</string>
+    <string name="telos_files_help_desc">Fajls, dokumenti u ħażna esterna.</string>
+    <string name="telos_notes_help_desc">Noti u sinkronizzazzjoni bejn apparati.</string>
+    <string name="telos_system_help_desc">Settings avvanzati tas-sistema, Freeze Manager u AppOps.</string>
+    <string name="telos_network_help_desc">VPN, DNS, firewall u privatezza tan-netwerk.</string>
+    <string name="telos_store_help_desc">Installa u aġġorna apps b’Shizuku fl-isfond.</string>
+    <string name="telos_phone_help_desc">Sejħiet, storja u blokk ta’ spam.</string>
+    <string name="telos_messages_help_desc">SMS/MMS b’encryption.</string>
+    <string name="telos_ermis_help_desc">Email fuq diversi kontijiet, privatezza l-ewwel.</string>
+    <string name="telos_akou_help_desc">Identifika kanzunetti madwarek.</string>
+    <string name="telos_sync_help_desc">Sinkronizza fajls b’mod sigur b’Syncthing.</string>
+</resources>
