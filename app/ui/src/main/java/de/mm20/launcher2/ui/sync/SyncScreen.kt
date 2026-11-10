@@ -63,7 +63,7 @@ fun SyncScreen() {
                                 tint = MaterialTheme.colorScheme.primary
                             )
                             Spacer(Modifier.width(12.dp))
-                            Text("Sync", fontWeight = FontWeight.Bold)
+                            Text(stringResource(I18nR.string.notes_sync_settings), fontWeight = FontWeight.Bold)
                         }
                     },
                     actions = {
@@ -78,7 +78,7 @@ fun SyncScreen() {
                         ) {
                             Icon(painterResource(BaseR.drawable.open_in_new_24px), contentDescription = null)
                             Spacer(Modifier.width(4.dp))
-                            Text("Web UI")
+                            Text(stringResource(I18nR.string.telos_sync_web_ui))
                         }
                     }
                 )
@@ -142,17 +142,17 @@ fun SyncScreen() {
                     Tab(
                         selected = selectedTab == 0,
                         onClick = { selectedTab = 0 },
-                        text = { Text("Shared Folders (${folders.size})") }
+                        text = { Text(stringResource(I18nR.string.telos_sync_folders, folders.size)) }
                     )
                     Tab(
                         selected = selectedTab == 1,
                         onClick = { selectedTab = 1 },
-                        text = { Text("Devices (${devices.size})") }
+                        text = { Text(stringResource(I18nR.string.telos_sync_devices, devices.size)) }
                     )
                     Tab(
                         selected = selectedTab == 2,
                         onClick = { selectedTab = 2 },
-                        text = { Text("Settings") }
+                        text = { Text(stringResource(I18nR.string.hc_settings)) }
                     )
                 }
 
@@ -180,20 +180,20 @@ fun SyncScreen() {
 
         AlertDialog(
             onDismissRequest = { showAddFolderDialog = false },
-            title = { Text("Add Shared Folder") },
+            title = { Text(stringResource(I18nR.string.telos_sync_add_folder)) },
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     OutlinedTextField(
                         value = label,
                         onValueChange = { label = it },
-                        label = { Text("Folder Label") },
+                        label = { Text(stringResource(I18nR.string.telos_sync_folder_label)) },
                         singleLine = true,
                         modifier = Modifier.fillMaxWidth()
                     )
                     OutlinedTextField(
                         value = path,
                         onValueChange = { path = it },
-                        label = { Text("Local Folder Path") },
+                        label = { Text(stringResource(I18nR.string.telos_sync_folder_path)) },
                         singleLine = true,
                         modifier = Modifier.fillMaxWidth()
                     )
@@ -205,10 +205,10 @@ fun SyncScreen() {
                         viewModel.addFolder(label, path, type)
                         showAddFolderDialog = false
                     }
-                ) { Text("Add") }
+                ) { Text(stringResource(I18nR.string.hc_add)) }
             },
             dismissButton = {
-                TextButton(onClick = { showAddFolderDialog = false }) { Text("Cancel") }
+                TextButton(onClick = { showAddFolderDialog = false }) { Text(stringResource(I18nR.string.hc_cancel)) }
             }
         )
     }
@@ -219,20 +219,20 @@ fun SyncScreen() {
 
         AlertDialog(
             onDismissRequest = { showAddDeviceDialog = false },
-            title = { Text("Add Device / Peer") },
+            title = { Text(stringResource(I18nR.string.telos_sync_add_device)) },
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     OutlinedTextField(
                         value = deviceId,
                         onValueChange = { deviceId = it },
-                        label = { Text("Syncthing Device ID") },
+                        label = { Text(stringResource(I18nR.string.telos_sync_device_id)) },
                         singleLine = true,
                         modifier = Modifier.fillMaxWidth()
                     )
                     OutlinedTextField(
                         value = deviceName,
                         onValueChange = { deviceName = it },
-                        label = { Text("Device Name / Alias") },
+                        label = { Text(stringResource(I18nR.string.telos_sync_device_name)) },
                         singleLine = true,
                         modifier = Modifier.fillMaxWidth()
                     )
@@ -244,10 +244,10 @@ fun SyncScreen() {
                         viewModel.addDevice(deviceId, deviceName)
                         showAddDeviceDialog = false
                     }
-                ) { Text("Add") }
+                ) { Text(stringResource(I18nR.string.hc_add)) }
             },
             dismissButton = {
-                TextButton(onClick = { showAddDeviceDialog = false }) { Text("Cancel") }
+                TextButton(onClick = { showAddDeviceDialog = false }) { Text(stringResource(I18nR.string.hc_cancel)) }
             }
         )
     }
@@ -387,8 +387,8 @@ private fun SettingsTab(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Column(Modifier.weight(1f)) {
-                        Text("Sync on Wi-Fi Only", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
-                        Text("Prevent sync over cellular data", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        Text(stringResource(I18nR.string.telos_sync_wifi_only), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+                        Text(stringResource(I18nR.string.telos_sync_wifi_only_sum), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
                     Switch(checked = wifiOnly, onCheckedChange = onWifiChange)
                 }
@@ -401,15 +401,15 @@ private fun SettingsTab(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Column(Modifier.weight(1f)) {
-                        Text("Sync when Charging Only", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
-                        Text("Pause background sync while running on battery", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        Text(stringResource(I18nR.string.telos_sync_charging_only), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+                        Text(stringResource(I18nR.string.telos_sync_charging_only_sum), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
                     Switch(checked = chargingOnly, onCheckedChange = onChargingChange)
                 }
             }
         }
         
-        Text("SleepSync (Optimized Night Sync)", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(top = 8.dp, start = 8.dp))
+        Text(stringResource(I18nR.string.telos_sync_sleep_title), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(top = 8.dp, start = 8.dp))
         
         Surface(
             shape = RoundedCornerShape(16.dp),
@@ -423,8 +423,8 @@ private fun SettingsTab(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Column(Modifier.weight(1f)) {
-                        Text("Enable SleepSync", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
-                        Text("Automatically sync large files at night while device is inactive", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        Text(stringResource(I18nR.string.telos_sync_sleep_enable), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+                        Text(stringResource(I18nR.string.telos_sync_sleep_enable_sum), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
                     Switch(checked = sleepSyncEnabled, onCheckedChange = { viewModel.setSleepSyncEnabled(it) })
                 }
@@ -440,8 +440,16 @@ private fun SettingsTab(
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Column(Modifier.weight(1f).padding(vertical = 8.dp)) {
-                            Text("Network Mode", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
-                            Text(sleepSyncMode, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                            Text(stringResource(I18nR.string.telos_sync_network_mode), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+                            Text(
+                                when (sleepSyncMode) {
+                                    "Wi-Fi and Cellular" -> stringResource(I18nR.string.telos_sync_mode_wifi_cell)
+                                    "Any Unmetered" -> stringResource(I18nR.string.telos_sync_mode_unmetered)
+                                    else -> stringResource(I18nR.string.telos_sync_mode_wifi)
+                                },
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
                         }
                     }
                     
@@ -453,8 +461,8 @@ private fun SettingsTab(
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Column(Modifier.weight(1f)) {
-                            Text("DND During SleepSync", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
-                            Text("Suppress sync notifications while sleeping", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                            Text(stringResource(I18nR.string.telos_sync_dnd), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+                            Text(stringResource(I18nR.string.telos_sync_dnd_sum), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                         }
                         Switch(checked = dndDuringSync, onCheckedChange = { viewModel.setDndDuringSync(it) })
                     }
@@ -467,8 +475,8 @@ private fun SettingsTab(
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Column(Modifier.weight(1f)) {
-                            Text("Sync on Screen Off", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
-                            Text("Start sync tasks immediately when screen turns off", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                            Text(stringResource(I18nR.string.telos_sync_screen_off), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+                            Text(stringResource(I18nR.string.telos_sync_screen_off_sum), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                         }
                         Switch(checked = syncOnScreenOff, onCheckedChange = { viewModel.setSyncOnScreenOff(it) })
                     }
@@ -480,11 +488,15 @@ private fun SettingsTab(
     if (showModeDialog) {
         AlertDialog(
             onDismissRequest = { showModeDialog = false },
-            title = { Text("Network Mode") },
+            title = { Text(stringResource(I18nR.string.telos_sync_network_mode)) },
             text = {
                 Column {
-                    val modes = listOf("Only on Wi-Fi", "Wi-Fi and Cellular", "Any Unmetered")
-                    modes.forEach { mode ->
+                    val modes = listOf(
+                        "Only on Wi-Fi" to stringResource(I18nR.string.telos_sync_mode_wifi),
+                        "Wi-Fi and Cellular" to stringResource(I18nR.string.telos_sync_mode_wifi_cell),
+                        "Any Unmetered" to stringResource(I18nR.string.telos_sync_mode_unmetered),
+                    )
+                    modes.forEach { (mode, label) ->
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -503,13 +515,13 @@ private fun SettingsTab(
                                 }
                             )
                             Spacer(Modifier.width(12.dp))
-                            Text(mode)
+                            Text(label)
                         }
                     }
                 }
             },
             confirmButton = {
-                TextButton(onClick = { showModeDialog = false }) { Text("Close") }
+                TextButton(onClick = { showModeDialog = false }) { Text(stringResource(I18nR.string.hc_close)) }
             }
         )
     }

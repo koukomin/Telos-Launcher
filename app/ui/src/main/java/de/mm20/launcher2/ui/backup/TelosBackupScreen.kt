@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.backup
+import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
 
 
@@ -16,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -59,12 +61,12 @@ fun TelosBackupScreen() {
                                 tint = MaterialTheme.colorScheme.primary
                             )
                             Spacer(Modifier.width(12.dp))
-                            Text("Telos Backup", fontWeight = FontWeight.Bold)
+                            Text(stringResource(I18nR.string.preference_backup), fontWeight = FontWeight.Bold)
                         }
                     },
                     actions = {
                         IconButton(onClick = { /* Open Settings */ }) {
-                            Icon(painterResource(BaseR.drawable.settings_24px), contentDescription = "Settings")
+                            Icon(painterResource(BaseR.drawable.settings_24px), contentDescription = stringResource(I18nR.string.hc_settings))
                         }
                     }
                 )
@@ -74,7 +76,7 @@ fun TelosBackupScreen() {
                     onClick = { /* Start batch backup */ },
                     containerColor = MaterialTheme.colorScheme.primary
                 ) {
-                    Icon(painterResource(BaseR.drawable.save_24px), contentDescription = "Backup All")
+                    Icon(painterResource(BaseR.drawable.save_24px), contentDescription = stringResource(I18nR.string.telos_backup_all))
                 }
             }
         ) { paddingValues ->
@@ -96,8 +98,8 @@ fun TelosBackupScreen() {
                             Icon(painterResource(BaseR.drawable.warning_24px), contentDescription = null, tint = MaterialTheme.colorScheme.onErrorContainer)
                             Spacer(Modifier.width(12.dp))
                             Column {
-                                Text("Shizuku / Root Required", fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onErrorContainer)
-                                Text("App data backup requires elevated permissions.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onErrorContainer.copy(alpha = 0.8f))
+                                Text(stringResource(I18nR.string.telos_backup_shizuku_required), fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onErrorContainer)
+                                Text(stringResource(I18nR.string.telos_backup_shizuku_body), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onErrorContainer.copy(alpha = 0.8f))
                             }
                         }
                     }
@@ -126,17 +128,17 @@ fun TelosBackupScreen() {
                     Tab(
                         selected = selectedTab == 0,
                         onClick = { selectedTab = 0 },
-                        text = { Text("Apps (${appList.size})") }
+                        text = { Text(stringResource(I18nR.string.telos_backup_tab_apps, appList.size)) }
                     )
                     Tab(
                         selected = selectedTab == 1,
                         onClick = { selectedTab = 1 },
-                        text = { Text("System Data") }
+                        text = { Text(stringResource(I18nR.string.telos_backup_tab_system)) }
                     )
                     Tab(
                         selected = selectedTab == 2,
                         onClick = { selectedTab = 2 },
-                        text = { Text("Schedules") }
+                        text = { Text(stringResource(I18nR.string.telos_backup_tab_schedules)) }
                     )
                 }
 
@@ -144,7 +146,7 @@ fun TelosBackupScreen() {
                     when (selectedTab) {
                         0 -> AppListTab(appList)
                         1 -> SystemDataTab(systemDataList)
-                        2 -> Text("Scheduled Backups (Nightly / Weekly)", modifier = Modifier.padding(16.dp))
+                        2 -> Text(stringResource(I18nR.string.telos_backup_schedules_heading), modifier = Modifier.padding(16.dp))
                     }
                 }
             }
@@ -180,24 +182,24 @@ private fun AppListTab(apps: List<AppBackupEntry>) {
                         Text(app.label, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold, maxLines = 1, overflow = TextOverflow.Ellipsis)
                         Text(app.versionName, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                         Row(horizontalArrangement = Arrangement.spacedBy(4.dp), modifier = Modifier.padding(top = 4.dp)) {
-                            if (app.hasApkBackup) Badge(containerColor = MaterialTheme.colorScheme.tertiaryContainer) { Text("APK") }
-                            if (app.hasDataBackup) Badge(containerColor = MaterialTheme.colorScheme.primaryContainer) { Text("DATA") }
-                            if (!app.hasApkBackup && !app.hasDataBackup) Badge(containerColor = MaterialTheme.colorScheme.surfaceContainerHighest) { Text("NO BACKUP") }
+                            if (app.hasApkBackup) Badge(containerColor = MaterialTheme.colorScheme.tertiaryContainer) { Text(stringResource(I18nR.string.telos_backup_apk)) }
+                            if (app.hasDataBackup) Badge(containerColor = MaterialTheme.colorScheme.primaryContainer) { Text(stringResource(I18nR.string.telos_backup_data)) }
+                            if (!app.hasApkBackup && !app.hasDataBackup) Badge(containerColor = MaterialTheme.colorScheme.surfaceContainerHighest) { Text(stringResource(I18nR.string.telos_backup_none)) }
                         }
                     }
                     var menuOpen by remember { mutableStateOf(false) }
                     Box {
                         IconButton(onClick = { menuOpen = true }) {
-                            Icon(painterResource(BaseR.drawable.more_vert_24px), contentDescription = "Options")
+                            Icon(painterResource(BaseR.drawable.more_vert_24px), contentDescription = stringResource(I18nR.string.hc_settings))
                         }
                         DropdownMenu(expanded = menuOpen, onDismissRequest = { menuOpen = false }) {
                             DropdownMenuItem(
-                                text = { Text("Backup APK & Data") },
+                                text = { Text(stringResource(I18nR.string.telos_backup_apk_and_data)) },
                                 onClick = { menuOpen = false },
                                 leadingIcon = { Icon(painterResource(BaseR.drawable.save_24px), null) }
                             )
                             DropdownMenuItem(
-                                text = { Text("Restore Data") },
+                                text = { Text(stringResource(I18nR.string.telos_backup_restore_data)) },
                                 onClick = { menuOpen = false },
                                 leadingIcon = { Icon(painterResource(BaseR.drawable.settings_backup_restore_24px), null) }
                             )

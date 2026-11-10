@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="telos_backup_shizuku_required">Shizuku or Root required</string>
+    <string name="telos_backup_shizuku_body">App data backup needs elevated permissions.</string>
+    <string name="telos_backup_tab_apps">Apps (%1$d)</string>
+    <string name="telos_backup_tab_system">System data</string>
+    <string name="telos_backup_tab_schedules">Schedules</string>
+    <string name="telos_backup_schedules_heading">Scheduled backups (nightly / weekly)</string>
+    <string name="telos_backup_apk">APK</string>
+    <string name="telos_backup_data">Data</string>
+    <string name="telos_backup_none">No backup</string>
+    <string name="telos_backup_apk_and_data">Back up APK and data</string>
+    <string name="telos_backup_restore_data">Restore data</string>
+    <string name="telos_backup_all">Back up all</string>
+    <string name="telos_sync_web_ui">Web UI</string>
+    <string name="telos_sync_folders">Shared folders (%1$d)</string>
+    <string name="telos_sync_devices">Devices (%1$d)</string>
+    <string name="telos_sync_add_folder">Add shared folder</string>
+    <string name="telos_sync_folder_label">Folder label</string>
+    <string name="telos_sync_folder_path">Local folder path</string>
+    <string name="telos_sync_add_device">Add device / peer</string>
+    <string name="telos_sync_device_id">Syncthing device ID</string>
+    <string name="telos_sync_device_name">Device name / alias</string>
+    <string name="telos_sync_wifi_only">Sync on Wi-Fi only</string>
+    <string name="telos_sync_wifi_only_sum">Do not sync over mobile data</string>
+    <string name="telos_sync_charging_only">Sync while charging only</string>
+    <string name="telos_sync_charging_only_sum">Pause background sync on battery</string>
+    <string name="telos_sync_sleep_title">SleepSync (night sync)</string>
+    <string name="telos_sync_sleep_enable">Enable SleepSync</string>
+    <string name="telos_sync_sleep_enable_sum">Sync large files at night while the device is idle</string>
+    <string name="telos_sync_network_mode">Network mode</string>
+    <string name="telos_sync_dnd">Do not disturb during SleepSync</string>
+    <string name="telos_sync_dnd_sum">Hide sync notifications while SleepSync runs</string>
+    <string name="telos_sync_screen_off">Sync when the screen turns off</string>
+    <string name="telos_sync_screen_off_sum">Start sync as soon as the screen turns off</string>
+    <string name="telos_sync_mode_wifi">Wi-Fi only</string>
+    <string name="telos_sync_mode_wifi_cell">Wi-Fi and mobile data</string>
+    <string name="telos_sync_mode_unmetered">Any unmetered network</string>
+</resources>
