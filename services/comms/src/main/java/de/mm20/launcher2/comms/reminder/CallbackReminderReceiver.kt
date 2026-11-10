@@ -15,7 +15,12 @@ class CallbackReminderReceiver : BroadcastReceiver() {
         val number = intent.getStringExtra(CallbackReminder.EXTRA_NUMBER).orEmpty()
         if (number.isBlank()) return
         val name = intent.getStringExtra(CallbackReminder.EXTRA_NAME)?.takeIf { it.isNotBlank() } ?: number
-        val dial = Intent().setClassName(
+        val dial = Intent().setComponent(
+            android.content.ComponentName(
+                context.packageName,
+                de.mm20.launcher2.applock.SettingsDeepLinkContract.ACTIVITY_CLASS_NAME,
+            ),
+        ).setClassName(
             context.packageName,
             de.mm20.launcher2.applock.SettingsDeepLinkContract.ACTIVITY_CLASS_NAME,
         ).setPackage(context.packageName)

@@ -46,10 +46,11 @@ fun TrashUnlockScreen() {
             androidx.biometric.BiometricPrompt(host, androidx.core.content.ContextCompat.getMainExecutor(host),
                 object : androidx.biometric.BiometricPrompt.AuthenticationCallback() {
                     override fun onAuthenticationSucceeded(result: androidx.biometric.BiometricPrompt.AuthenticationResult) {
-                        val cipher = result.cryptoObject?.cipher
-                        state.unlocked = cipher != null && runCatching {
-                            cipher.doFinal(byteArrayOf(0x74, 0x65, 0x6c, 0x6f, 0x73))
-                        }.isSuccess
+                        state.unlocked = try {
+                            result.cryptoObject!!.cipher!!.doFinal(byteArrayOf(0x74, 0x65, 0x6c, 0x6f, 0x73)).isNotEmpty()
+                        } catch (_: Exception) {
+                            false
+                        }
                     }
                     override fun onAuthenticationError(code: Int, message: CharSequence) {
                         if (!host.isChangingConfigurations) { state.started = false; backStack.removeLastOrNull() }

@@ -151,10 +151,13 @@ fun authenticateSettings(
         ContextCompat.getMainExecutor(activity),
         object : BiometricPrompt.AuthenticationCallback() {
             override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
-                val cipher = result.cryptoObject?.cipher
-                onResult(cipher != null && runCatching {
-                    cipher.doFinal(byteArrayOf(0x74, 0x65, 0x6c, 0x6f, 0x73))
-                }.isSuccess)
+                onResult(
+                    try {
+                        result.cryptoObject!!.cipher!!.doFinal(byteArrayOf(0x74, 0x65, 0x6c, 0x6f, 0x73)).isNotEmpty()
+                    } catch (_: Exception) {
+                        false
+                    },
+                )
             }
 
             override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {

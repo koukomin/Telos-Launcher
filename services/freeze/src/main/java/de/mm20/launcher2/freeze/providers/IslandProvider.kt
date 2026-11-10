@@ -85,11 +85,10 @@ internal class IslandProvider(private val context: Context) {
             )
         }
 
-        val explicit = Intent(intent).setPackage(ISLAND_PACKAGE).setComponent(intent.component)
         val pendingIntent = PendingIntent.getActivity(
             context,
             NOTIFICATION_ID,
-            explicit,
+            intent,
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
         )
 
@@ -117,14 +116,15 @@ internal class IslandProvider(private val context: Context) {
 
     private fun buildFreezeIntent(packageNames: List<String>, suspended: Boolean): Intent? {
         val action = if (suspended) ACTION_FREEZE else ACTION_UNFREEZE
-        val intent = Intent(action).apply {
-            data = Uri.parse("packages:" + packageNames.joinToString(","))
+        val probe = Intent(action).setPackage(ISLAND_PACKAGE)
+        val resolved = probe.resolveActivity(context.packageManager) ?: return null
+        return Intent().apply {
+            setComponent(resolved)
+            setClassName(resolved.packageName, resolved.className)
             setPackage(ISLAND_PACKAGE)
+            data = Uri.parse("packages:" + packageNames.joinToString(","))
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         }
-        val component = intent.resolveActivity(context.packageManager) ?: return null
-        intent.component = component
-        return intent
     }
 
     companion object {

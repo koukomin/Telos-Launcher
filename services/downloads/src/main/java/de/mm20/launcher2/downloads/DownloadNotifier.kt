@@ -44,11 +44,22 @@ class DownloadNotifier(private val context: Context, private val settings: Downl
     private fun openApp(): PendingIntent = PendingIntent.getActivity(
         context, 0,
         Intent().setClassName(context.packageName, SettingsDeepLinkContract.ACTIVITY_CLASS_NAME).apply {
+            setPackage(context.packageName)
             putExtra(SettingsDeepLinkContract.EXTRA_ROUTE, SettingsDeepLinkContract.ROUTE_DOWNLOADS)
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         },
         PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
     )
+
+    private fun explicitDownloadAction(action: String, uri: Uri, mime: String): Intent {
+        val intent = Intent(context, DownloadNotificationActionActivity::class.java)
+        intent.action = action
+        intent.setDataAndType(uri, mime)
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_ACTIVITY_NEW_TASK)
+        intent.setClass(context, DownloadNotificationActionActivity::class.java)
+        intent.setPackage(context.packageName)
+        return intent
+    }
 
     private fun serviceAction(action: String, taskId: String?, request: Int): PendingIntent {
         val intent = Intent(context, DownloadService::class.java).setAction(action)
@@ -184,16 +195,8 @@ class DownloadNotifier(private val context: Context, private val settings: Downl
             .setContentIntent(openApp())
         if (uri != null && uri.scheme == "content" && task.torrent == null) {
             val mime = task.mimeType ?: "*/*"
-            val view = Intent(context, DownloadNotificationActionActivity::class.java)
-                .setAction(DownloadNotificationActionActivity.ACTION_OPEN)
-                .setDataAndType(uri, mime)
-                .setClass(context, DownloadNotificationActionActivity::class.java)
-                .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_ACTIVITY_NEW_TASK)
-            val send = Intent(context, DownloadNotificationActionActivity::class.java)
-                .setAction(DownloadNotificationActionActivity.ACTION_SHARE)
-                .setDataAndType(uri, mime)
-                .setClass(context, DownloadNotificationActionActivity::class.java)
-                .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_ACTIVITY_NEW_TASK)
+            val view = explicitDownloadAction(DownloadNotificationActionActivity.ACTION_OPEN, uri, mime)
+            val send = explicitDownloadAction(DownloadNotificationActionActivity.ACTION_SHARE, uri, mime)
             b.addAction(0, context.getString(I18nR.string.dl_open), PendingIntent.getActivity(context, notificationId(task.id), view, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT))
             b.addAction(0, context.getString(I18nR.string.dl_share), PendingIntent.getActivity(context, notificationId(task.id) + 1, send, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT))
         }

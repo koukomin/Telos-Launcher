@@ -27,8 +27,11 @@ class AuthManager : KoinComponent {
 
                 override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                     super.onAuthenticationSucceeded(result)
-                    val cipher = result.cryptoObject?.cipher
-                    val ok = cipher?.let { runCatching { it.doFinal(byteArrayOf(0x74, 0x65, 0x6c, 0x6f, 0x73)) }.isSuccess } ?: true
+                    val ok = try {
+                        result.cryptoObject!!.cipher!!.doFinal(byteArrayOf(0x74, 0x65, 0x6c, 0x6f, 0x73)).isNotEmpty()
+                    } catch (_: Exception) {
+                        false
+                    }
                     if (cont.isActive) cont.resume(ok)
                 }
 
