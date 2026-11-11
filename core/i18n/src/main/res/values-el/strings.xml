@@ -2039,5 +2039,19 @@
     <string name="fit_title">Telos Fit</string>
     <string name="backup_group_fit">Δεδομένα Υγείας Telos Fit</string>
     <string name="backup_group_fit_summary">Βήματα, ύπνος, προπονήσεις και βιομετρικά δεδομένα</string>
+    <string name="fit_dashboard">Επισκόπηση</string>
+    <string name="fit_nutrition">Διατροφή &amp; Μακροστοιχεία</string>
+    <string name="fit_steps">Ημερήσια Βήματα</string>
+    <string name="fit_calories">Θερμίδες</string>
+    <string name="fit_protein">Πρωτεΐνη</string>
+    <string name="fit_carbs">Υδατάνθρακες</string>
+    <string name="fit_fat">Λιπαρά</string>
+    <string name="fit_water">Πρόσληψη Νερού</string>
+    <string name="fit_weight">Σωματικό Βάρος</string>
+    <string name="fit_heart_rate">Καρδιακός Παλμός</string>
+    <string name="fit_sleep">Ποιότητα Ύπνου</string>
+    <string name="fit_search_food">Αναζήτηση τροφίμου, πρωτεΐνης, συμπληρώματος...</string>
+    <string name="fit_add_food">+ Προσθήκη Τροφίμου</string>
+    <string name="fit_meals">Σημερινά Γεύματα</string>
 </resources>
 

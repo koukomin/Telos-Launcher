@@ -1784,4 +1784,19 @@
 
     <string name="backup_group_fit">Telos Fit Health Data</string>
     <string name="backup_group_fit_summary">Steps, sleep, workouts and biometric records</string>
+
+    <string name="fit_add_food">+ Add Food</string>
+    <string name="fit_calories">Calories</string>
+    <string name="fit_carbs">Carbs</string>
+    <string name="fit_dashboard">Dashboard</string>
+    <string name="fit_fat">Fat</string>
+    <string name="fit_heart_rate">Heart Rate</string>
+    <string name="fit_meals">Today\'s Meals</string>
+    <string name="fit_nutrition">Nutrition &amp; Macros</string>
+    <string name="fit_protein">Protein</string>
+    <string name="fit_search_food">Search food, protein, supplement...</string>
+    <string name="fit_sleep">Sleep Score</string>
+    <string name="fit_steps">Daily Steps</string>
+    <string name="fit_water">Water Intake</string>
+    <string name="fit_weight">Body Weight</string>
 </resources>
