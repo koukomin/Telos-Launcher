@@ -49,14 +49,16 @@ Sources that are marked "Online" never run on a normal search. See [Online resul
 ## Ranking
 
 Most lists (apps, shortcuts, files, contacts, events, reminders, articles, websites, web apps) are
-ordered by one number: **0.6 x match score + 0.4 x usage weight**.
+ordered using a **Tiered Match Architecture** (`matchScore + normalizedUsageWeight`):
 
-- **Match score** compares your text with the item name. A name that starts with your text or contains
-  it scores higher, and similar-sounding names (Jaro-Winkler similarity) get partial credit. Matches on
-  a secondary field count 20 percent less than a match on the name.
-- **Usage weight** grows each time you launch an item and decays for everything else, so what you use
-  often moves up.
-- Apps need a match score of at least 0.8 to appear at all, which keeps the list short.
+- **Tier 1 — Exact Matches** (`score` 9.0 – 10.0): Items whose label or alias matches what you typed exactly.
+- **Tier 2 — Prefix Matches** (`score` 5.0 – 5.5): Items starting with your typed query (e.g. `Set` -> `Settings`).
+- **Tier 3 — Substring Matches** (`score` 2.0 – 2.5): Items containing your typed query as a substring.
+- **Tier 4 — Fuzzy Matches / Typos** (`score` 0.3 – 0.7): Typos and phonetic similar-sounding names via Jaro-Winkler similarity and Greek/Greeklish folding (`GreekFold`).
+
+**Usage Weight Normalization**:
+Historical launch frequency (`weight`) is normalized to `[0.0, 0.9]` and acts strictly as a **tie-breaker within the same match tier**. This guarantees that exact and prefix query matches **always rank above fuzzy or unrelated historical items**.
+
 - A custom name (see [Customization](./customization#per-item-customization)) is what is matched
   and shown. Tags are searched too, see [Favorites and tags](./favorites-tags).
 - Places are sorted by **distance** from your last known location when one is cached. Without a

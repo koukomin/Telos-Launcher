@@ -18,10 +18,24 @@ schemes](../../customization/color-schemes), [Themed icons](../../customization/
 | Source for dynamic colors | Appearance > Advanced | System | System colors, or colors taken from the wallpaper (compat mode) |
 | Presets | Appearance > Presets | n/a | Apply a ready-made bundle |
 | Color scheme, Typography, Shapes, Transparency | Appearance | Default | Each has its own list of schemes to pick, edit or duplicate |
+| Drawer Animation Style | Settings > Search & Apps | Classic Slide | Select the presentation animation: Classic Slide, Cyber-Matrix Reveal, Holo-Portal Expansion, or Command Deck HUD, with a live interactive preview |
 | AMOLED theme in Battery Saver | Appearance | off | While power saving is on, colors switch to AMOLED Black. When it turns off, the previous scheme returns. If you already use AMOLED or Cyberpunk, nothing changes. |
 | Import theme, Export theme | Appearance | n/a | Share a theme as a `.kvtheme` file |
 
 The "Time of day" mode switches by the clock hours you set, not by sunrise.
+
+## Cyber-Tech Drawer Styles
+
+Configure the app drawer presentation in **Settings > Search & Apps > Drawer Animation Style**:
+
+- **Classic Slide**: Standard smooth Material 3 slide-up animation.
+- **Cyber-Matrix Reveal**: Holographic laser scanline sweep (`TelosScanlineOverlay`) and pixel de-fragmentation with `TelosDotMatrix` headers.
+- **Holo-Portal Expansion**: Spatial holographic radial lens expansion (`TelosHoloGlow` + `TelosRadialGauge`) with 3D tilt parallax (`TelosTiltParallax`).
+- **Command Deck HUD**: Tactical Cyber-HUD with live animated CPU/RAM telemetry gauges (`CyberGauges`), Dot-Matrix headers, and `TelosTechBorder` cards.
+
+::: tip Live Demo Preview
+Settings includes an interactive **Live Preview** device frame. Tap **Replay Demo** to audition animations and color palettes in real-time before applying.
+:::
 
 ## Presets
 

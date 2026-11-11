@@ -90,7 +90,7 @@ from Telos Store.
 
 | Part | What it is | Docs |
 | --- | --- | --- |
-| **The launcher** | Unified search, home screen, widgets, favorites and tags, themes, plugins, desktop mode, overlays, protection | [Launcher](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/launcher/) |
+| **The launcher** | Unified search with tiered match ranking (exact > prefix > substring > fuzzy), 4 Cyber-Tech App Drawer animation styles (Classic Slide, Cyber-Matrix Reveal, Holo-Portal Expansion, Command Deck HUD) with live demo preview, home screen, widgets, favorites and tags, themes, plugins, desktop mode, overlays, protection | [Launcher](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/launcher/) |
 | **Telos Phone** | Dialer, recents, contacts, dual SIM, call recording (VOICE_CALL first, silence retry, Shizuku/root CAPTURE_AUDIO_OUTPUT), call screening (prefix/regex/outgoing, max priority), SIP | [Phone](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/phone/) |
 | **Telos Messages** | SMS and MMS conversations, default SMS app, scheduled messages | [Messages](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/messages/) |
 | **Telos Files** | File manager: local/USB/remote space, ISO and zip folders, RAW/HEIC/HEVC previews, SMB by name or IP, archives, Cryptomator vaults, SSH key generation, Shizuku access, search across all storage, direct network music playback | [Files](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/files/) |
