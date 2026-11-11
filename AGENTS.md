@@ -201,6 +201,15 @@ rotation, process recreation and explicit close independently. Biometric screens
 reattach their callbacks to the retained AndroidX prompt after rotation; do not
 start another prompt from every new composition or persist an unlocked flag to disk.
 
+### Mandatory Cyber-Tech UI & Theming Guidelines (all coding agents)
+
+All Telos virtual apps, mini players, and launcher controls must adhere to the Cyber-Tech design language:
+- **Glowing Tech Borders**: Cards and container items must use `Modifier.telosTechCard(borderColor, shape, borderWidth, alpha)` with neon accent highlights (Neon Green `#00E676`, Neon Cyan `#00F0FF`, Neon Magenta `#FF007F`, Neon Orange `#FF9100`).
+- **Telemetry & Dot Matrix**: Header labels, status HUDs, and technical metrics must use `TelosDotMatrixText` and `TelosRadialGauge` / `CyberGauges` for visual hierarchy and high-tech telemetry readouts.
+- **Morphe-Style Tech Pills**: Interactive tabs, category chips, and filter toggles must use `TelosTechPill` with matching glowing accent borders and container fills.
+- **Mini Player Surface**: The mini player across Telos Media, Radio, Music, TV, and Stremio must feature `telosTechCard` translucent glass borders, neon playback status indicators, marquee titles, and instant full-surface touch controls.
+- **Opaque Popups Over Glass**: All dialogs, pickers, and popups over glass must use `virtualAppPopup()` (`surfaceContainer` at alpha 1) with opaque background tones to prevent background text bleed.
+
 Do not reintroduce an embedded terminal or bootstrap downloader. Termux is an external Store recommendation; its app, prefix and sessions belong to com.termux. Keep any external launch integration separate from Telos virtual-app registration.
 
 HWUI property values are skiavk/skiagl; the process chooses its pipeline once.

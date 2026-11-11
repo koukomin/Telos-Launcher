@@ -27,6 +27,9 @@ private fun title(group: BackupGroup) = when (group) {
     BackupGroup.AppData -> I18nR.string.backup_group_app_data
     BackupGroup.SystemData -> I18nR.string.backup_group_system_data
     BackupGroup.VirtualApps -> I18nR.string.backup_group_virtual_apps
+    BackupGroup.KeePassTL -> I18nR.string.backup_group_keepass
+    BackupGroup.Aether -> I18nR.string.backup_group_aether
+    BackupGroup.Fit -> I18nR.string.backup_group_fit
 }
 
 private fun summary(group: BackupGroup) = when (group) {
@@ -38,6 +41,9 @@ private fun summary(group: BackupGroup) = when (group) {
     BackupGroup.AppData -> I18nR.string.backup_group_app_data_summary
     BackupGroup.SystemData -> I18nR.string.backup_group_system_data_summary
     BackupGroup.VirtualApps -> I18nR.string.backup_group_virtual_apps_summary
+    BackupGroup.KeePassTL -> I18nR.string.backup_group_keepass_summary
+    BackupGroup.Aether -> I18nR.string.backup_group_aether_summary
+    BackupGroup.Fit -> I18nR.string.backup_group_fit_summary
 }
 
 /**

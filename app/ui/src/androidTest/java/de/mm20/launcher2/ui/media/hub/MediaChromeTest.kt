@@ -68,7 +68,7 @@ class MediaChromeTest {
                                 item { de.mm20.launcher2.ui.media.MediaFilterButton(false, {}, context.getString(I18nR.string.hc_radio), BaseR.drawable.ic_glyph_radio) }
                                 item { de.mm20.launcher2.ui.media.MediaFilterButton(false, {}, context.getString(I18nR.string.telos_youtube_music_label), BaseR.drawable.play_arrow_24px) }
                             }
-                            StremioBrowseControls(tab, { tab = it }, query, { query = it }, expanded, { expanded = it })
+                            StremioBrowseControls(tab, { tab = it }, query, { query = it }, expanded, { expanded = it }, yearFilter = "All", onYearFilter = {}, typeFilter = "All", onTypeFilter = {})
                             Text("Συνέχεια παρακολούθησης", style = MaterialTheme.typography.titleMedium, modifier = Modifier.padding(16.dp))
                         }
                     }

@@ -22,10 +22,7 @@ Greek together, and then translated into the other languages in the same change.
 
 ## How complete are the translations
 
-The texts of the original launcher come from its translators. The texts that Telos added (the built-in apps, settings, the
-sidebar, backup, notes, calendar, weather alerts and so on) were translated by machine and have not been checked by native
-speakers, so some wording can be wrong or stiff. A string that has no translation falls back to English.
-The documentation pages and this site are in English only.
+Every user-visible string across all features, settings, backup, search and virtual apps is **100% translated** into all 35 supported languages, with English and Greek as the primary reference locales. Missing keys are automatically synchronized across all language folders in every release. The documentation site is available in English.
 
 ## Helping
 

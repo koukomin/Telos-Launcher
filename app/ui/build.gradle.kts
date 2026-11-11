@@ -99,6 +99,7 @@ dependencies {
     implementation("androidx.camera:camera-view:1.6.2")
     implementation("androidx.camera:camera-video:1.6.2")
     implementation("androidx.camera:camera-extensions:1.6.2")
+    implementation("androidx.health.connect:connect-client:1.1.0")
 
     implementation(libs.bundles.kotlin)
 
@@ -242,6 +243,9 @@ dependencies {
     implementation("com.anyascii:anyascii:0.3.3")
     testImplementation(libs.bundles.tests)
     testImplementation("org.json:json:20260814")
+    
+    implementation(project(":services:keepasstl"))
+    implementation(libs.kotpass)
 }
 // Bouncy Castle comes in with several versions (sshj, other libraries); the parts must match or the classes are duplicated
 configurations.all {
@@ -253,3 +257,4 @@ configurations.all {
         if (requested.group == "org.bouncycastle") useVersion(libs.versions.bouncycastle.get())
     }
 }
+

@@ -2214,5 +2214,33 @@
     <string name="art_optimizer_app_btn_optimize_selected">Compile (%1$s)</string>
     <string name="art_optimizer_app_btn_optimize_speed">Compile Full Speed (AOT)</string>
     <string name="art_optimizer_app_btn_reset">Reset (--reset)</string>
+    <string name="drawer_style_title">Drawer Animation Style</string>
+    <string name="drawer_style_summary">Choose how the app drawer is presented on gestures and search</string>
+    <string name="drawer_style_classic">Classic Slide</string>
+    <string name="drawer_style_classic_sum">Standard smooth Material 3 slide-up drawer</string>
+    <string name="drawer_style_cyber_matrix">Cyber-Matrix Reveal</string>
+    <string name="drawer_style_cyber_matrix_sum">Holographic scanlines and pixel de-fragmentation</string>
+    <string name="drawer_style_holo_portal">Holo-Portal Expansion</string>
+    <string name="drawer_style_holo_portal_sum">Spatial holographic lens expansion with 3D tilt parallax</string>
+    <string name="drawer_style_command_deck">Command Deck HUD</string>
+    <string name="drawer_style_command_deck_sum">Tactical Cyber-HUD with live telemetry gauges</string>
+    <string name="drawer_style_live_preview">Live Preview</string>
+    <string name="fit_title">Telos Fit</string>
+    <string name="backup_group_fit">Telos Fit Health Data</string>
+    <string name="backup_group_fit_summary">Steps, sleep, workouts and biometric records</string>
+    <string name="fit_dashboard">Dashboard</string>
+    <string name="fit_nutrition">Nutrition &amp; Macros</string>
+    <string name="fit_steps">Daily Steps</string>
+    <string name="fit_calories">Calories</string>
+    <string name="fit_protein">Protein</string>
+    <string name="fit_carbs">Carbs</string>
+    <string name="fit_fat">Fat</string>
+    <string name="fit_water">Water Intake</string>
+    <string name="fit_weight">Body Weight</string>
+    <string name="fit_heart_rate">Heart Rate</string>
+    <string name="fit_sleep">Sleep Score</string>
+    <string name="fit_search_food">Search food, protein, supplement...</string>
+    <string name="fit_add_food">+ Add Food</string>
+    <string name="fit_meals">Today\'s Meals</string>
 </resources>
 

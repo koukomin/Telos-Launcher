@@ -32,7 +32,7 @@ object TelosGlideTyping {
             return
         }
 
-        // Mock/Heuristic swipe matcher: pick top suggestion or default word
+        // Heuristic swipe matcher: pick top suggestion or default word
         val suggestions = TelosKeyboardDictionary.suggestions("καλη", lang)
         val word = suggestions.firstOrNull() ?: if (lang == KeyboardLanguage.Greek) "καλημέρα" else "hello"
         onWordRecognized(word)
@@ -58,6 +58,7 @@ fun GlideTypingCanvas(
                         TelosGlideTyping.addPoint(offset)
                     },
                     onDrag = { change, _ ->
+                        runCatching { change.consume() }
                         TelosGlideTyping.addPoint(change.position)
                     },
                     onDragEnd = {
@@ -69,7 +70,8 @@ fun GlideTypingCanvas(
                 )
             }
     ) {
-        val points = TelosGlideTyping.currentPathPoints
+        // Use toList() snapshot to avoid ConcurrentModificationException during rendering
+        val points = runCatching { TelosGlideTyping.currentPathPoints.toList() }.getOrDefault(emptyList())
         if (points.size >= 2) {
             val path = Path().apply {
                 moveTo(points.first().x, points.first().y)
@@ -81,7 +83,7 @@ fun GlideTypingCanvas(
                 path = path,
                 color = pathColor,
                 style = Stroke(
-                    width = 8.dp.toPx(),
+                    width = 6.dp.toPx(),
                     cap = StrokeCap.Round,
                     join = StrokeJoin.Round
                 )

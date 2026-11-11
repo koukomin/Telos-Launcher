@@ -148,6 +148,8 @@ class RadioPlayerService : MediaSessionService(), KoinComponent {
         handler.postDelayed(idleStop, IDLE_STOP_MS)
 
         mediaSession = MediaSession.Builder(this, stationSwitchingPlayer(exo))
+            .setId("telos_radio")
+            .setBitmapLoader(de.mm20.launcher2.comms.media.AlbumArtBitmapLoader(this))
             .setSessionActivity(de.mm20.launcher2.comms.media.MediaPlaybackNotifications.open(
                 this, "radio", de.mm20.launcher2.comms.media.MediaPlaybackNotifications.RADIO))
             .build()

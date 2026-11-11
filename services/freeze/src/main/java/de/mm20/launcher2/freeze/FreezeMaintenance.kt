@@ -177,9 +177,20 @@ internal class FreezeMaintenance(
     suspend fun beginInstall(packageName: String, backendName: String, thawFirst: Boolean): String? = withContext(NonCancellable + Dispatchers.IO) {
         mutex.withLock {
             val existing = settings.maintenance.first()[key(packageName)]
-            check(existing?.operationId.isNullOrEmpty()) { "An update is already pending" }
+            if (existing != null && existing.operationId.isNotEmpty()) {
+                val hasActiveSession = pm.packageInstaller.mySessions.any { it.appPackageName == packageName }
+                val isCurrentlyActive = key(packageName) in activeInstalls
+                if (!hasActiveSession && !isCurrentlyActive) {
+                    android.util.Log.i("FreezeMaintenance", "Clearing stale update operation token for $packageName")
+                    val cleared = existing.copy(operationId = "")
+                    settings.saveMaintenance(key(packageName), cleared)
+                } else {
+                    check(false) { "An update is already pending" }
+                }
+            }
+            val currentEntry = settings.maintenance.first()[key(packageName)]
             val token = java.util.UUID.randomUUID().toString()
-            val entry = existing?.copy(operationId = token)
+            val entry = currentEntry?.copy(operationId = token)
                 ?: capture(packageName, backendName, installer = true)?.copy(operationId = token)
                 ?: return@withLock null
             valid(entry)

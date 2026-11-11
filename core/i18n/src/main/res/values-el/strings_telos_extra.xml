@@ -33,4 +33,13 @@
     <string name="store_show_system_apps">@string/preference_freeze_show_system_apps</string>
     <string name="system_appopsnext_name">AppOpsNext · Android 15+</string>
     <string name="tweaks_title">@string/preference_screen_tweaks</string>
+    <string name="settings_keyboard">Πληκτρολόγιο</string>
+    <string name="keepass_title">KeePassTL</string>
+    <string name="aether_title">Telos Aether</string>
+
+    <string name="backup_group_keepass">Κωδικοί KeePassTL</string>
+    <string name="backup_group_keepass_summary">Αποθηκευμένοι κωδικοί πρόσβασης και λογαριασμοί</string>
+    <string name="backup_group_aether">Telos Aether Nostr</string>
+    <string name="backup_group_aether_summary">Nostr κλειδιά και ρυθμίσεις relays</string>
+
 </resources>

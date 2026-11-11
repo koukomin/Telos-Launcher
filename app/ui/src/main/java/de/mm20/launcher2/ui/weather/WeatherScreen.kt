@@ -40,6 +40,8 @@ import de.mm20.launcher2.preferences.weather.WeatherLocation
 import de.mm20.launcher2.ui.common.WeatherLocationSearchDialog
 import de.mm20.launcher2.ui.locals.LocalBackStack
 import de.mm20.launcher2.ui.component.VirtualAppWindow
+import de.mm20.launcher2.ui.component.telosAmbientGlow
+import de.mm20.launcher2.ui.component.telosScanlines
 import de.mm20.launcher2.ui.component.weather.AnimatedWeatherIcon
 import de.mm20.launcher2.ui.component.weather.WeatherIcon as UIWeatherIcon
 import de.mm20.launcher2.weather.DailyForecast
@@ -127,7 +129,7 @@ fun WeatherScreen() {
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 // Cyber Radar HUD Banner
-                CyberWeatherRadarHUD()
+                CyberWeatherRadarHUD(currentForecast)
 
                 // Today Weather Hero Card
                 TodayHeroCard(currentForecast, unitSystem)
@@ -464,8 +466,12 @@ private fun formatTemp(celsius: Double, system: MeasurementSystem): String {
 }
 
 @Composable
-private fun CyberWeatherRadarHUD(modifier: Modifier = Modifier) {
+private fun CyberWeatherRadarHUD(
+    forecast: Forecast? = null,
+    modifier: Modifier = Modifier
+) {
     val cyan = Color(0xFF00F2FE)
+    val pink = Color(0xFFFF007F)
     val darkBg = Color(0xFF0D0E15)
 
     val transition = rememberInfiniteTransition(label = "radar")
@@ -482,9 +488,9 @@ private fun CyberWeatherRadarHUD(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(20.dp))
-            .background(darkBg.copy(alpha = 0.85f))
-            .border(1.dp, cyan.copy(alpha = 0.4f), RoundedCornerShape(20.dp))
+            .telosAmbientGlow(glowColor = cyan, borderRadius = 20.dp, glowRadius = 10.dp, alpha = 0.25f)
+            .telosScanlines(scanlineColor = cyan, lineSpacing = 4.dp, alpha = 0.06f)
+            .border(1.2.dp, cyan.copy(alpha = 0.45f), RoundedCornerShape(20.dp))
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -506,31 +512,68 @@ private fun CyberWeatherRadarHUD(modifier: Modifier = Modifier) {
                 style = MaterialTheme.typography.labelSmall,
                 fontWeight = FontWeight.Bold,
                 fontFamily = FontFamily.Monospace,
-                color = Color(0xFFFF007F)
+                color = pink
             )
         }
 
         Spacer(Modifier.height(12.dp))
 
-        Box(contentAlignment = Alignment.Center, modifier = Modifier.size(120.dp)) {
-            Canvas(modifier = Modifier.size(120.dp)) {
-                val center = Offset(size.width / 2, size.height / 2)
-                val radius = size.minDimension / 2 - 4.dp.toPx()
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            // Radar Animation
+            Box(contentAlignment = Alignment.Center, modifier = Modifier.size(110.dp)) {
+                Canvas(modifier = Modifier.size(110.dp)) {
+                    val center = Offset(size.width / 2, size.height / 2)
+                    val radius = size.minDimension / 2 - 4.dp.toPx()
 
-                // Radar rings
-                drawCircle(color = cyan.copy(alpha = 0.15f), radius = radius, center = center, style = Stroke(width = 1.5.dp.toPx()))
-                drawCircle(color = cyan.copy(alpha = 0.15f), radius = radius * 0.66f, center = center, style = Stroke(width = 1.dp.toPx()))
-                drawCircle(color = cyan.copy(alpha = 0.15f), radius = radius * 0.33f, center = center, style = Stroke(width = 1.dp.toPx()))
+                    // Radar rings
+                    drawCircle(color = cyan.copy(alpha = 0.18f), radius = radius, center = center, style = Stroke(width = 1.5.dp.toPx()))
+                    drawCircle(color = cyan.copy(alpha = 0.18f), radius = radius * 0.66f, center = center, style = Stroke(width = 1.dp.toPx()))
+                    drawCircle(color = cyan.copy(alpha = 0.18f), radius = radius * 0.33f, center = center, style = Stroke(width = 1.dp.toPx()))
 
-                // Radar crosshairs
-                drawLine(color = cyan.copy(alpha = 0.2f), start = Offset(center.x, 0f), end = Offset(center.x, size.height), strokeWidth = 1.dp.toPx())
-                drawLine(color = cyan.copy(alpha = 0.2f), start = Offset(0f, center.y), end = Offset(size.width, center.y), strokeWidth = 1.dp.toPx())
+                    // Radar crosshairs
+                    drawLine(color = cyan.copy(alpha = 0.22f), start = Offset(center.x, 0f), end = Offset(center.x, size.height), strokeWidth = 1.dp.toPx())
+                    drawLine(color = cyan.copy(alpha = 0.22f), start = Offset(0f, center.y), end = Offset(size.width, center.y), strokeWidth = 1.dp.toPx())
 
-                // Radar sweep line
-                val rad = Math.toRadians((angle - 90).toDouble())
-                val endX = center.x + radius * Math.cos(rad).toFloat()
-                val endY = center.y + radius * Math.sin(rad).toFloat()
-                drawLine(color = cyan, start = center, end = Offset(endX, endY), strokeWidth = 2.dp.toPx())
+                    // Radar sweep line
+                    val rad = Math.toRadians((angle - 90).toDouble())
+                    val endX = center.x + radius * Math.cos(rad).toFloat()
+                    val endY = center.y + radius * Math.sin(rad).toFloat()
+                    drawLine(color = cyan, start = center, end = Offset(endX, endY), strokeWidth = 2.dp.toPx())
+                }
+            }
+
+            // Real-time Telemetry Metrics
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(start = 12.dp),
+                verticalArrangement = Arrangement.spacedBy(6.dp)
+            ) {
+                val humVal = (forecast?.humidity ?: 0.5).toFloat()
+                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                    Text("ΥΓΡΑΣΙΑ:", fontSize = 11.sp, fontFamily = FontFamily.Monospace, color = cyan)
+                    Text("${(humVal * 100).toInt()}%", fontSize = 11.sp, fontWeight = FontWeight.Bold, fontFamily = FontFamily.Monospace, color = Color.White)
+                }
+                de.mm20.launcher2.ui.component.TelosWaveProgress(
+                    progress = humVal,
+                    color = cyan,
+                    waveAmplitude = 2.5.dp,
+                    modifier = Modifier.fillMaxWidth().height(10.dp)
+                )
+
+                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                    Text("ΑΝΕΜΟΣ:", fontSize = 11.sp, fontFamily = FontFamily.Monospace, color = pink)
+                    Text("${forecast?.windSpeed?.roundToInt() ?: 12} km/h", fontSize = 11.sp, fontWeight = FontWeight.Bold, fontFamily = FontFamily.Monospace, color = Color.White)
+                }
+
+                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                    Text("ΠΙΕΣΗ:", fontSize = 11.sp, fontFamily = FontFamily.Monospace, color = Color(0xFFA855F7))
+                    Text("${forecast?.pressure?.roundToInt() ?: 1013} hPa", fontSize = 11.sp, fontWeight = FontWeight.Bold, fontFamily = FontFamily.Monospace, color = Color.White)
+                }
             }
         }
     }

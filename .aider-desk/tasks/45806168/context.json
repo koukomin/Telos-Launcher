@@ -1,0 +1,56 @@
+{
+  "version": 2,
+  "contextMessages": [
+    {
+      "id": "ce918ac5-b06c-466f-9629-1486c171ab07",
+      "role": "user",
+      "content": "vlepeis ton kodika tou project?",
+      "promptContext": {
+        "id": "0a3c059a-05e7-41f8-af84-d5b90866ec16",
+        "userMessageId": "ce918ac5-b06c-466f-9629-1486c171ab07"
+      },
+      "timestamp": 1794318302931
+    },
+    {
+      "id": "171d2b6e-411d-43e5-938d-fd6d104b900c",
+      "role": "user",
+      "content": "vlepeis ton kodika?",
+      "promptContext": {
+        "id": "171d2b6e-411d-43e5-938d-fd6d104b900c",
+        "userMessageId": "171d2b6e-411d-43e5-938d-fd6d104b900c"
+      },
+      "timestamp": 1794318352342
+    },
+    {
+      "id": "83c992d9-d322-42dd-8cc7-4d49ac6b93eb",
+      "role": "user",
+      "content": "?",
+      "promptContext": {
+        "id": "9e94bf13-429f-449c-9207-e6edb78a830c",
+        "userMessageId": "83c992d9-d322-42dd-8cc7-4d49ac6b93eb"
+      },
+      "timestamp": 1794318394037
+    },
+    {
+      "id": "514ff972-08b1-4d87-b536-714579c9af48",
+      "role": "user",
+      "content": "vlepeis ton kodika?",
+      "promptContext": {
+        "id": "c5e10fe9-6738-4f61-858f-9d3c4c49d4da",
+        "userMessageId": "514ff972-08b1-4d87-b536-714579c9af48"
+      },
+      "timestamp": 1794318574533
+    },
+    {
+      "id": "5a492beb-623b-466b-b7de-fa7c8c5013df",
+      "role": "user",
+      "content": "vlepis ton kodika?",
+      "promptContext": {
+        "id": "5a492beb-623b-466b-b7de-fa7c8c5013df",
+        "userMessageId": "5a492beb-623b-466b-b7de-fa7c8c5013df"
+      },
+      "timestamp": 1794318594731
+    }
+  ],
+  "contextFiles": []
+}

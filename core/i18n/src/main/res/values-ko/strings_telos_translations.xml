@@ -1643,4 +1643,36 @@
     <string name="preference_virtual_app_page_effects_summary">화면 전환 시 슬라이드와 확대/축소. 기본값은 끔.</string>
     <string name="net_waveform_title">네트워크 트래픽 파형</string>
     <string name="net_waveform_rates">↓ %1$s  ·  ↑ %2$s</string>
+
+    <string name="drawer_style_classic">클래식 슬라이드</string>
+    <string name="drawer_style_classic_sum">Standard smooth Material 3 slide-up drawer</string>
+    <string name="drawer_style_command_deck">커맨드 덱 HUD</string>
+    <string name="drawer_style_command_deck_sum">Tactical Cyber-HUD with live telemetry gauges</string>
+    <string name="drawer_style_cyber_matrix">사이버 매트릭스 리빌</string>
+    <string name="drawer_style_cyber_matrix_sum">Holographic scanlines and pixel de-fragmentation</string>
+    <string name="drawer_style_holo_portal">홀로 포털 확장</string>
+    <string name="drawer_style_holo_portal_sum">Spatial holographic lens expansion with 3D tilt parallax</string>
+    <string name="drawer_style_live_preview">라이브 미리보기</string>
+    <string name="drawer_style_summary">제스처 및 검색 시 앱 서랍이 표시되는 방식 선택</string>
+    <string name="drawer_style_title">서랍 애니메이션 스타일</string>
+
+    <string name="fit_title">Telos Fit</string>
+
+    <string name="backup_group_fit">Telos Fit Health Data</string>
+    <string name="backup_group_fit_summary">Steps, sleep, workouts and biometric records</string>
+
+    <string name="fit_add_food">+ Add Food</string>
+    <string name="fit_calories">Calories</string>
+    <string name="fit_carbs">Carbs</string>
+    <string name="fit_dashboard">Dashboard</string>
+    <string name="fit_fat">Fat</string>
+    <string name="fit_heart_rate">Heart Rate</string>
+    <string name="fit_meals">Today\'s Meals</string>
+    <string name="fit_nutrition">Nutrition &amp; Macros</string>
+    <string name="fit_protein">Protein</string>
+    <string name="fit_search_food">Search food, protein, supplement...</string>
+    <string name="fit_sleep">Sleep Score</string>
+    <string name="fit_steps">Daily Steps</string>
+    <string name="fit_water">Water Intake</string>
+    <string name="fit_weight">Body Weight</string>
 </resources>

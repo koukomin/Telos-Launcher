@@ -630,19 +630,27 @@ class SearchVM : ViewModel(), KoinComponent {
     private suspend fun <T : SavableSearchable> List<T>.applyRanking(query: String): List<T> {
         if (size <= 1) return this
         val weights = searchableRepository.getWeights(map { it.key }).first()
-        // Fold the query once and score every item once, not once per comparison
-        val foldedQuery = GreekFold.fold(query)
         val keyed = map { item ->
-            val score = if (item.score.isUnspecified) {
-                ResultScore.from(
-                    query = foldedQuery,
-                    primaryFields = listOf(GreekFold.fold(item.labelOverride ?: item.label))
-                ).score
+            val keywords = when (item) {
+                is de.mm20.launcher2.search.Application -> item.keywords + de.mm20.launcher2.search.TelosAppKeywords.forKey(item.key)
+                is de.mm20.launcher2.search.SettingsSearchItem -> item.keywords
+                else -> emptyList()
+            }
+            val primary = listOfNotNull(item.labelOverride, item.label)
+            val computedScore = ResultScore.from(
+                query = query,
+                primaryFields = primary,
+                secondaryFields = keywords
+            ).score
+
+            val score = if (!item.score.isUnspecified) {
+                maxOf(item.score.score, computedScore)
             } else {
-                item.score.score
+                computedScore
             }
             val weight = weights[item.key] ?: 0.0
-            item to (score * 0.6f + weight.toFloat() * 0.4f)
+            val normalizedWeight = if (weight > 0) (weight.toFloat() / (weight.toFloat() + 5.0f)) * 0.9f else 0.0f
+            item to (score + normalizedWeight)
         }
         return keyed.sortedByDescending { it.second }.map { it.first }.distinctBy { it.key }
     }

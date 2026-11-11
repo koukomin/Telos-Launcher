@@ -176,9 +176,12 @@ class TelosKeyboardService : InputMethodService(), LifecycleOwner, ViewModelStor
     private fun updateClipboardSnippet() {
         runCatching {
             val cm = getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
-            val clip = cm?.primaryClip?.getItemAt(0)?.text?.toString()
-            if (!clip.isNullOrBlank()) {
-                TelosKeyboardState.lastClipboardText = clip.take(120)
+            val clip = cm?.primaryClip
+            if (clip != null && clip.itemCount > 0) {
+                val text = clip.getItemAt(0)?.text?.toString()
+                if (!text.isNullOrBlank()) {
+                    TelosKeyboardState.lastClipboardText = text.take(120)
+                }
             }
         }
     }

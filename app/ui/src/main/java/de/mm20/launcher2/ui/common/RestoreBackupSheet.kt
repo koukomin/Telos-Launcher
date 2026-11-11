@@ -23,15 +23,20 @@ import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.FlexibleBottomAppBar
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.backup.BackupCompatibility
@@ -51,15 +56,26 @@ fun RestoreBackupSheet(
     ) {
 
         val viewModel: RestoreBackupSheetVM = viewModel()
+        var password by remember { mutableStateOf("") }
+        var showPasswordPrompt by remember { mutableStateOf(false) }
 
         if (uri != null) {
-            LaunchedEffect(uri) {
-                viewModel.setInputUri(uri)
+            LaunchedEffect(uri, password) {
+                if (showPasswordPrompt && password.isBlank()) return@LaunchedEffect
+                viewModel.setInputUri(uri, password.takeIf { it.isNotBlank() })
             }
         }
 
         val state by viewModel.state
         val compatibility by viewModel.compatibility
+        
+        LaunchedEffect(state) {
+            if (state == RestoreBackupState.InvalidFile) {
+                if (password.isBlank() && !showPasswordPrompt) {
+                    showPasswordPrompt = true
+                }
+            }
+        }
 
         Column(
             modifier = Modifier
@@ -99,11 +115,30 @@ fun RestoreBackupSheet(
                     }
 
                     RestoreBackupState.InvalidFile -> {
-                        LargeMessage(
-                            modifier = Modifier.navigationBarsPadding(),
-                            icon = BaseR.drawable.error_48px,
-                            text = stringResource(id = I18nR.string.restore_invalid_file)
-                        )
+                        Column(
+                            modifier = Modifier.fillMaxWidth().navigationBarsPadding(),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                        ) {
+                            LargeMessage(
+                                icon = BaseR.drawable.error_48px,
+                                text = stringResource(id = I18nR.string.restore_invalid_file)
+                            )
+                            if (showPasswordPrompt) {
+                                OutlinedTextField(
+                                    value = password,
+                                    onValueChange = { password = it },
+                                    modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
+                                    label = { Text("Κωδικός Προστασίας") },
+                                    singleLine = true,
+                                    visualTransformation = PasswordVisualTransformation()
+                                )
+                                Button(
+                                    onClick = { viewModel.setInputUri(uri!!, password) },
+                                    enabled = password.isNotBlank(),
+                                    modifier = Modifier.padding(top = 16.dp),
+                                ) { Text("Ξεκλείδωμα Backup") }
+                            }
+                        }
                     }
 
                     RestoreBackupState.Failed -> {

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+    <string name="settings_keyboard">Keyboard</string>
+    <string name="keepass_title">KeePassTL</string>
+    <string name="aether_title">Telos Aether</string>
+    <string name="backup_group_keepass">KeePassTL Vault</string>
+    <string name="backup_group_keepass_summary">Saved passwords and credentials</string>
+    <string name="backup_group_aether">Telos Aether Nostr</string>
+    <string name="backup_group_aether_summary">Nostr keys and relay configurations</string>
+</resources>

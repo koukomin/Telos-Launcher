@@ -31,9 +31,48 @@ fun AppSearchSettingsScreen() {
     val moveFrozenAppsToEnd by viewModel.moveFrozenAppsToEnd.collectAsStateWithLifecycle()
     // === TELOS_PENDING_REVIEW_END: ui_i18n_and_features_batch ===
 
+    val drawerStyle by viewModel.drawerStyle.collectAsStateWithLifecycle()
+
     PreferenceScreen(
         title = stringResource(I18nR.string.preference_search_apps)
     ) {
+        item {
+            PreferenceCategory(
+                title = stringResource(I18nR.string.drawer_style_title)
+            ) {
+                de.mm20.launcher2.ui.component.preferences.ListPreference(
+                    title = stringResource(I18nR.string.drawer_style_title),
+                    summary = stringResource(I18nR.string.drawer_style_summary),
+                    value = drawerStyle,
+                    items = listOf(
+                        de.mm20.launcher2.ui.component.preferences.ListPreferenceItem(
+                            stringResource(I18nR.string.drawer_style_classic),
+                            de.mm20.launcher2.preferences.DrawerStyle.Classic
+                        ),
+                        de.mm20.launcher2.ui.component.preferences.ListPreferenceItem(
+                            stringResource(I18nR.string.drawer_style_cyber_matrix),
+                            de.mm20.launcher2.preferences.DrawerStyle.CyberMatrix
+                        ),
+                        de.mm20.launcher2.ui.component.preferences.ListPreferenceItem(
+                            stringResource(I18nR.string.drawer_style_holo_portal),
+                            de.mm20.launcher2.preferences.DrawerStyle.HoloPortal
+                        ),
+                        de.mm20.launcher2.ui.component.preferences.ListPreferenceItem(
+                            stringResource(I18nR.string.drawer_style_command_deck),
+                            de.mm20.launcher2.preferences.DrawerStyle.CommandDeck
+                        ),
+                    ),
+                    onValueChanged = {
+                        viewModel.setDrawerStyle(it)
+                    }
+                )
+
+                de.mm20.launcher2.ui.component.DrawerStylePreview(
+                    style = drawerStyle
+                )
+            }
+        }
+
         item {
             PreferenceCategory {
                 SwitchPreference(

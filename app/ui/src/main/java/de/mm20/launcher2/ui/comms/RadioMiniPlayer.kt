@@ -27,6 +27,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import android.text.format.Formatter
 import android.widget.Toast
 import de.mm20.launcher2.comms.radio.RadioRecorder
+import androidx.compose.ui.graphics.Color
+import de.mm20.launcher2.ui.component.telosTechCard
 import de.mm20.launcher2.ui.R
 
 @Composable
@@ -65,9 +67,12 @@ fun RadioMiniPlayer(modifier: Modifier = Modifier) {
     ) {
         Surface(
             shape = RoundedCornerShape(16.dp),
-            // Glassmorphic translucent fallback using Surface
-            color = MaterialTheme.colorScheme.surfaceContainer,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
+                .telosTechCard(
+                    borderColor = Color(0xFF00E676),
+                    shape = RoundedCornerShape(16.dp)
+                )
         ) {
             Row(
                 modifier = Modifier

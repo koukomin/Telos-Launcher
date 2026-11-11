@@ -191,11 +191,20 @@ data class FavoritesGroup(
 )
 
 @Serializable
+enum class DrawerStyle {
+    Classic,
+    CyberMatrix,
+    HoloPortal,
+    CommandDeck,
+}
+
+@Serializable
 data class AppSearchGroup(
     val searchAllApps: Boolean = true,
     val appsShowDetails: Boolean = true,
     // === TELOS_PENDING_REVIEW_START: ui_i18n_and_features_batch ===
     val moveFrozenAppsToEnd: Boolean = false,
+    val drawerStyle: DrawerStyle = DrawerStyle.Classic,
     // === TELOS_PENDING_REVIEW_END: ui_i18n_and_features_batch ===
 )
 

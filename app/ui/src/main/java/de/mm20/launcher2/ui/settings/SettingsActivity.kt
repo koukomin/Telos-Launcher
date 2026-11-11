@@ -528,6 +528,15 @@ open class SettingsActivity : BaseActivity() {
             entry<de.mm20.launcher2.ui.keyboard.TelosKeyboardRoute> {
                 de.mm20.launcher2.ui.keyboard.TelosKeyboardSettingsScreen()
             }
+            entry<de.mm20.launcher2.ui.keepass.KeePassDashboardRoute> {
+                de.mm20.launcher2.ui.keepass.KeePassDashboardScreen()
+            }
+            entry<de.mm20.launcher2.ui.fit.FitDashboardRoute> {
+                de.mm20.launcher2.ui.fit.FitDashboardScreen()
+            }
+            entry<de.mm20.launcher2.ui.aether.AetherDashboardRoute> {
+                de.mm20.launcher2.ui.aether.AetherDashboardScreen()
+            }
             entry<WikipediaSettingsRoute> {
                 WikipediaSettingsScreen()
             }
@@ -832,6 +841,7 @@ open class SettingsActivity : BaseActivity() {
             "settings/akou" -> "telos_akou_app"
             "settings/magnifier" -> "telos_magnifier_app"
             "settings/flashlight" -> "telos_flashlight_app"
+            SettingsDeepLinkContract.ROUTE_FIT -> "telos_fit_app"
             else -> return
         }
         de.mm20.launcher2.search.VirtualAppAppearance.applyRecents(this, domain)
@@ -944,6 +954,13 @@ open class SettingsActivity : BaseActivity() {
             ROUTE_CALCULATOR -> de.mm20.launcher2.ui.calculator.CalculatorRoute
             ROUTE_VOICE_RECORDER -> de.mm20.launcher2.ui.voice.VoiceRecorderRoute
             SettingsDeepLinkContract.ROUTE_KEYBOARD -> de.mm20.launcher2.ui.keyboard.TelosKeyboardRoute
+            SettingsDeepLinkContract.ROUTE_KEEPASS -> de.mm20.launcher2.ui.keepass.KeePassDashboardRoute
+            SettingsDeepLinkContract.ROUTE_AETHER -> de.mm20.launcher2.ui.aether.AetherDashboardRoute(
+                sharedText = intent.getStringExtra(Intent.EXTRA_TEXT) ?: intent.getCharSequenceExtra(Intent.EXTRA_TEXT)?.toString(),
+                sharedMediaUri = (intent.getParcelableExtra(Intent.EXTRA_STREAM) as? android.net.Uri)?.toString()
+            )
+            SettingsDeepLinkContract.ROUTE_BACKUP -> de.mm20.launcher2.ui.backup.BackupRoute
+            SettingsDeepLinkContract.ROUTE_FIT -> de.mm20.launcher2.ui.fit.FitDashboardRoute
             ROUTE_SCREEN_RECORDER -> de.mm20.launcher2.ui.screenrec.ScreenRecorderRoute
             ROUTE_SCREENSHOT -> de.mm20.launcher2.ui.screenshot.ScreenshotRoute
             ROUTE_NOTES -> de.mm20.launcher2.ui.notes.NotesRoute
