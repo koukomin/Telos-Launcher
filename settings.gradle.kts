@@ -154,3 +154,4 @@ val isFdroidBuild = providers.gradleProperty("fdroidBuild").orNull?.toBoolean() 
 if (!isFdroidBuild) {
     include(":desktop-linux")
 }
+include(":services:keepasstl")

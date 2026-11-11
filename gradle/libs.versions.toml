@@ -78,6 +78,8 @@ sqlcipher = "4.20.0"
 taglib = "1.0.6"
 libtorrent4j = "2.1.0-39"
 youtubedl = "0.18.1"
+kotpass = "0.10.0"
+robolectric = "4.12.1"
 
 # Go network engine of Rethink DNS (MPL-2.0), pinned like Rethink pins it (firestackCommit)
 firestack = "c4a33649be"
@@ -217,6 +219,8 @@ shizuku-aidl = { group = "dev.rikka.shizuku", name = "aidl", version.ref = "shiz
 dhizuku-api = { group = "io.github.iamr0s", name = "Dhizuku-API", version.ref = "dhizuku" }
 hiddenapibypass = { group = "org.lsposed.hiddenapibypass", name = "hiddenapibypass", version = "6.2" }
 androidx-annotation = { group = "androidx.annotation", name = "annotation", version.ref = "annotation" }
+kotpass = { group = "app.keemobile", name = "kotpass", version.ref = "kotpass" }
+robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "robolectric" }
 
 [bundles]
 kotlin = ["kotlin-stdlib", "kotlinx-coroutines-core", "kotlinx-coroutines-android", "kotlinx-collections-immutable", "kotlinx-serialization-json"]
