@@ -40,6 +40,8 @@ import de.mm20.launcher2.preferences.weather.WeatherLocation
 import de.mm20.launcher2.ui.common.WeatherLocationSearchDialog
 import de.mm20.launcher2.ui.locals.LocalBackStack
 import de.mm20.launcher2.ui.component.VirtualAppWindow
+import de.mm20.launcher2.ui.component.telosAmbientGlow
+import de.mm20.launcher2.ui.component.telosScanlines
 import de.mm20.launcher2.ui.component.weather.AnimatedWeatherIcon
 import de.mm20.launcher2.ui.component.weather.WeatherIcon as UIWeatherIcon
 import de.mm20.launcher2.weather.DailyForecast
@@ -486,8 +488,8 @@ private fun CyberWeatherRadarHUD(
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(20.dp))
-            .background(darkBg.copy(alpha = 0.88f))
+            .telosAmbientGlow(glowColor = cyan, borderRadius = 20.dp, glowRadius = 10.dp, alpha = 0.25f)
+            .telosScanlines(scanlineColor = cyan, lineSpacing = 4.dp, alpha = 0.06f)
             .border(1.2.dp, cyan.copy(alpha = 0.45f), RoundedCornerShape(20.dp))
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
