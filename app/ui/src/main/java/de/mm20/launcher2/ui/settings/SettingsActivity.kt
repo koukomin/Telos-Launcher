@@ -528,6 +528,9 @@ open class SettingsActivity : BaseActivity() {
             entry<de.mm20.launcher2.ui.keyboard.TelosKeyboardRoute> {
                 de.mm20.launcher2.ui.keyboard.TelosKeyboardSettingsScreen()
             }
+            entry<de.mm20.launcher2.ui.keepass.KeePassDashboardRoute> {
+                de.mm20.launcher2.ui.keepass.KeePassDashboardScreen()
+            }
             entry<WikipediaSettingsRoute> {
                 WikipediaSettingsScreen()
             }
@@ -944,6 +947,7 @@ open class SettingsActivity : BaseActivity() {
             ROUTE_CALCULATOR -> de.mm20.launcher2.ui.calculator.CalculatorRoute
             ROUTE_VOICE_RECORDER -> de.mm20.launcher2.ui.voice.VoiceRecorderRoute
             SettingsDeepLinkContract.ROUTE_KEYBOARD -> de.mm20.launcher2.ui.keyboard.TelosKeyboardRoute
+            SettingsDeepLinkContract.ROUTE_KEEPASS -> de.mm20.launcher2.ui.keepass.KeePassDashboardRoute
             ROUTE_SCREEN_RECORDER -> de.mm20.launcher2.ui.screenrec.ScreenRecorderRoute
             ROUTE_SCREENSHOT -> de.mm20.launcher2.ui.screenshot.ScreenshotRoute
             ROUTE_NOTES -> de.mm20.launcher2.ui.notes.NotesRoute

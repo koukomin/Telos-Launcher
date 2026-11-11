@@ -18,6 +18,15 @@ android {
             jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
         }
     }
+    flavorDimensions += "variant"
+    productFlavors {
+        create("default") {
+            dimension = "variant"
+        }
+        create("fdroid") {
+            dimension = "variant"
+        }
+    }
 }
 
 dependencies {

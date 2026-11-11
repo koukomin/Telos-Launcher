@@ -37,6 +37,7 @@ object TelosAppIcons {
         "telos_flashlight_app" -> R.drawable.ic_app_flashlight_full
         "telos_weather_app" -> R.drawable.ic_app_weather_full
         "telos_keyboard_app" -> R.drawable.ic_app_keyboard_full
+        "telos_keepass_app" -> R.drawable.ic_app_keepass_full
         "telos_tv_app" -> R.drawable.ic_app_tv_full
         else -> null
     }

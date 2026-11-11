@@ -20,7 +20,9 @@ enum class BackupGroup(val key: String) {
     /** SMS, Call Logs, Wi-Fi networks */
     SystemData("system_data"),
     /** Virtual Apps settings and configuration */
-    VirtualApps("virtual_apps");
+    VirtualApps("virtual_apps"),
+    /** Password manager vault */
+    KeePassTL("keepass");
 
     companion object {
         fun fromKey(key: String): BackupGroup? = entries.firstOrNull { it.key == key }

@@ -37,6 +37,7 @@ object SettingsDeepLinkContract {
     const val ROUTE_CALCULATOR = "settings/calculator"
     const val ROUTE_VOICE_RECORDER = "settings/voice_recorder"
     const val ROUTE_KEYBOARD = "settings/keyboard"
+    const val ROUTE_KEEPASS = "settings/keepass"
     const val ROUTE_CAMERA = "settings/camera"
     const val ROUTE_SCREEN_RECORDER = "settings/screen_recorder"
     const val ROUTE_SCREENSHOT = "settings/screenshot"

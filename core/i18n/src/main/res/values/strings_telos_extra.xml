@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+    <string name="settings_keyboard">Keyboard</string>
+    <string name="keepass_title">KeePassTL</string>
+    <string name="backup_group_keepass">KeePassTL Vault</string>
+    <string name="backup_group_keepass_summary">Saved passwords and credentials</string>
+</resources>
