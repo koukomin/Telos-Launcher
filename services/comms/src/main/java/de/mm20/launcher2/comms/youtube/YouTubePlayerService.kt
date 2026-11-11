@@ -107,6 +107,7 @@ class YouTubePlayerService : MediaSessionService(), KoinComponent {
             .putExtra(SettingsDeepLinkContract.EXTRA_ROUTE, SettingsDeepLinkContract.ROUTE_MEDIA)
             .putExtra(SettingsDeepLinkContract.EXTRA_MEDIA_SPACE, "youtube")
         session = MediaSession.Builder(this, player).setId("telos_youtube")
+            .setBitmapLoader(de.mm20.launcher2.comms.media.AlbumArtBitmapLoader(this))
             .setSessionActivity(PendingIntent.getActivity(this, 2301, open, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)).build()
         handler.postDelayed(idleStop, 5 * 60 * 1000L)
     }

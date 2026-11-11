@@ -102,6 +102,7 @@ class TvPlaybackService : MediaSessionService(), KoinComponent {
         val s = runCatching {
             MediaSession.Builder(this, ControllerPlayer(p))
                 .setId("telos_tv") // Media3 throws "Session ID must be unique" when music/radio use the default id
+                .setBitmapLoader(de.mm20.launcher2.comms.media.AlbumArtBitmapLoader(this))
                 .setCallback(SessionCallback())
                 .setSessionActivity(openTvIntent())
                 .setCustomLayout(ImmutableList.of(stopButton()))
