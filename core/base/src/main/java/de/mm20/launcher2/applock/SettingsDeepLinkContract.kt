@@ -43,6 +43,7 @@ object SettingsDeepLinkContract {
     const val ROUTE_SCREENSHOT = "settings/screenshot"
     const val ROUTE_NOTES = "settings/notes"
     const val ROUTE_ERMIS = "settings/ermis"
+    const val ROUTE_AETHER = "settings/aether"
     const val ROUTE_CALENDAR = "settings/calendar"
     const val ROUTE_DOWNLOADS = "settings/downloads"
     const val ROUTE_NETWORK = "settings/network"

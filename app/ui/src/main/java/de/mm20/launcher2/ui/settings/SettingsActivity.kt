@@ -531,6 +531,9 @@ open class SettingsActivity : BaseActivity() {
             entry<de.mm20.launcher2.ui.keepass.KeePassDashboardRoute> {
                 de.mm20.launcher2.ui.keepass.KeePassDashboardScreen()
             }
+            entry<de.mm20.launcher2.ui.aether.AetherDashboardRoute> {
+                de.mm20.launcher2.ui.aether.AetherDashboardScreen()
+            }
             entry<WikipediaSettingsRoute> {
                 WikipediaSettingsScreen()
             }
@@ -948,6 +951,7 @@ open class SettingsActivity : BaseActivity() {
             ROUTE_VOICE_RECORDER -> de.mm20.launcher2.ui.voice.VoiceRecorderRoute
             SettingsDeepLinkContract.ROUTE_KEYBOARD -> de.mm20.launcher2.ui.keyboard.TelosKeyboardRoute
             SettingsDeepLinkContract.ROUTE_KEEPASS -> de.mm20.launcher2.ui.keepass.KeePassDashboardRoute
+            SettingsDeepLinkContract.ROUTE_AETHER -> de.mm20.launcher2.ui.aether.AetherDashboardRoute
             SettingsDeepLinkContract.ROUTE_BACKUP -> de.mm20.launcher2.ui.backup.BackupRoute
             ROUTE_SCREEN_RECORDER -> de.mm20.launcher2.ui.screenrec.ScreenRecorderRoute
             ROUTE_SCREENSHOT -> de.mm20.launcher2.ui.screenshot.ScreenshotRoute

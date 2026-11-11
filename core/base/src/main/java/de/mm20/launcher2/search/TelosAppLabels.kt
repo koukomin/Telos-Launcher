@@ -40,6 +40,7 @@ object TelosAppLabels {
         "telos_backup_app" -> I18nR.string.preference_backup
         "telos_keyboard_app" -> I18nR.string.settings_keyboard
         "telos_keepass_app" -> I18nR.string.keepass_title
+        "telos_aether_app" -> I18nR.string.aether_title
         "telos_help_app" -> I18nR.string.telos_help_title
         else -> null
     }

@@ -48,6 +48,7 @@ object TelosAppKeywords {
         "telos_backup_app" to listOf("backup", "restore", "titanium", "swift", "cloud", "αντίγραφα", "επαναφορά"),
         "telos_keyboard_app" to listOf("keyboard", "ime", "typing", "input", "gboard", "florisboard", "anysoftkeyboard", "heliboard", "futo", "πληκτρολόγιο", "πληκτρολογιο", "πληκτρολογηση", "pliktrologio"),
         "telos_keepass_app" to listOf("keepass", "password", "passwords", "manager", "autofill", "vault", "κωδικοί", "κωδικοι", "ασφάλεια"),
+        "telos_aether_app" to listOf("aether", "nostr", "relays", "zaps", "lightning", "damus", "amethyst", "decentralized", "crypto", "αιθέρας", "αιθερας"),
         "telos_magnifier_app" to listOf("magnifier", "zoom", "zoom in", "μεγεθυντικός", "φακός"),
         "telos_flashlight_app" to listOf("flashlight", "torch", "siren", "morse", "φακός", "σειρήνα", "μορς"),
         "telos_clock_app" to listOf("clock", "alarm", "time", "world clock", "timer", "stopwatch", "night clock", "ρολόι", "ρολοι", "ξυπνητήρι", "ώρα", "roloi", "xypnitiri", "ora", "χρονόμετρο", "αντίστροφη μέτρηση"),
