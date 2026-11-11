@@ -1,0 +1,23 @@
+{
+  "id": "45806168",
+  "baseDir": "/home/koukos/Projects/Telos-Launcher",
+  "name": "vlepeis ton kodika tou project?",
+  "archived": false,
+  "aiderTotalCost": 0,
+  "agentTotalCost": 0,
+  "mainModel": "",
+  "currentMode": "ask",
+  "weakModelLocked": false,
+  "parentId": null,
+  "reasoningEffort": null,
+  "thinkingTokens": null,
+  "agentProfileId": "default",
+  "provider": "gemini",
+  "model": "gemini-3.8-flash",
+  "workingMode": "local",
+  "createdAt": "2026-11-10T13:45:02.720Z",
+  "updatedAt": "2026-11-10T13:49:54.824Z",
+  "startedAt": "2026-11-10T13:49:45.764Z",
+  "state": "READY_FOR_REVIEW",
+  "completedAt": "2026-11-10T13:49:54.824Z"
+}

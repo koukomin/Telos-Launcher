@@ -308,3 +308,19 @@ desktop-linux/build/
 sip-native/distribution/
 sip-native/*/
 \n# Compiled outputs\n*.apk\n*.jar\n*.so\n*.dex\n\n# Temporary telos backups\n*.telos_backup\n
+# Disk images (μεγάλα αρχεία)
+*.qcow2
+*.img
+*.raw
+*.iso
+
+# Binaries & portable builds
+/bin/
+/qemu/
+/scrcpy/
+*.exe
+*.dll
+
+# Αρχεία καταγραφής & προσωρινά
+*.log
+/build/

@@ -107,11 +107,9 @@ internal class ShizukuProvider(private val ownPackage: String) : PrivilegedAcces
                 .getOrDefault(false)
 
             // A binder compatibility failure may use the equivalent shell command, never uninstall.
-            if (!suspended) {
-                // Clear the shell-owned restriction left by ADB mode or a previous pm fallback,
-                // even if the root binder call successfully cleared our own suspension entry.
-                success = runPackageCommand("unsuspend", pkg, userId) || success
-            } else if (!success) success = runPackageCommand("suspend", pkg, userId)
+            if (!success) {
+                success = runPackageCommand(if (suspended) "suspend" else "unsuspend", pkg, userId)
+            }
             success
         }
     }

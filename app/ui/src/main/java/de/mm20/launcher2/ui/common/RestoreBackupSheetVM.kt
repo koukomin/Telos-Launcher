@@ -33,12 +33,15 @@ class RestoreBackupSheetVM : ViewModel(), KoinComponent {
         selected.value = metadata.value?.groups ?: emptySet()
     }
 
-    fun setInputUri(uri: Uri) {
+    private var currentPassword: String? = null
+
+    fun setInputUri(uri: Uri, password: String? = null) {
         restoreUri = uri
+        currentPassword = password
         state.value = RestoreBackupState.Parsing
         viewModelScope.launch {
             val metadata = try {
-                backupManager.readBackupMeta(uri)
+                backupManager.readBackupMeta(uri, password)
             } catch (e: Exception) {
                 if (e is kotlinx.coroutines.CancellationException) throw e
                 android.util.Log.e("MM20", "Could not read backup", e)
@@ -64,7 +67,7 @@ class RestoreBackupSheetVM : ViewModel(), KoinComponent {
         viewModelScope.launch {
             state.value = RestoreBackupState.Restoring
             try {
-                val failed = backupManager.restore(uri, selected.value)
+                val failed = backupManager.restore(uri, selected.value, currentPassword)
                 state.value = if (failed == 0) RestoreBackupState.Restored else RestoreBackupState.RestoredPartially
             } catch (e: Exception) {
                 if (e is kotlinx.coroutines.CancellationException) throw e

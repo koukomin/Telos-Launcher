@@ -18,12 +18,17 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.ui.R
@@ -42,11 +47,12 @@ fun CreateBackupSheet(
         onDismissRequest = onDismissRequest
     ) {
         val viewModel: CreateBackupSheetVM = viewModel()
+        var password by remember { mutableStateOf("") }
 
         val backupLauncher = rememberLauncherForActivityResult(
             contract = ActivityResultContracts.CreateDocument("application/vnd.de.mm20.launcher2.backup"),
             onResult = {
-                if (it != null) viewModel.createBackup(it)
+                if (it != null) viewModel.createBackup(it, password.takeIf { p -> p.isNotBlank() })
                 else onDismissRequest()
             }
         )
@@ -77,6 +83,14 @@ fun CreateBackupSheet(
                         selected = viewModel.selected.value,
                         onToggle = viewModel::toggle,
                         onSelectAll = viewModel::selectAll,
+                    )
+                    OutlinedTextField(
+                        value = password,
+                        onValueChange = { password = it },
+                        modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
+                        label = { Text("Κωδικός Προστασίας (Προαιρετικό)") },
+                        singleLine = true,
+                        visualTransformation = PasswordVisualTransformation()
                     )
                     Button(
                         onClick = ::chooseFile,
