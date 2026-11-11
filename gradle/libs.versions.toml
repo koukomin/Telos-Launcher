@@ -1,9 +1,9 @@
 [versions]
 mustache = "0.9.14"
-jacksonCore = "2.22.4"
+jacksonCore = "2.23.0"
 # annotations ship 2.22, not 2.22.4 — do not force the core patch version onto this module
-jacksonAnnotations = "2.22"
-jacksonDataformatYaml = "2.22.4"
+jacksonAnnotations = "2.23"
+jacksonDataformatYaml = "2.23.0"
 minSdk = "26"
 compileSdk = "37"
 compileSdkMinor = "2"

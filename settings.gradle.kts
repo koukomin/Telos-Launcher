@@ -32,10 +32,10 @@ val telosPluginCvePins = listOf(
     "org.apache.httpcomponents:httpclient:4.5.14",
     "org.bitbucket.b_c:jose4j:0.9.7",
     "org.apache.commons:commons-lang3:3.21.0",
-    "com.fasterxml.jackson.core:jackson-core:2.22.4",
-    "com.fasterxml.jackson.core:jackson-databind:2.22.4",
-    "com.fasterxml.jackson.core:jackson-annotations:2.22",
-    "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.22.4",
+    "com.fasterxml.jackson.core:jackson-core:2.23.0",
+    "com.fasterxml.jackson.core:jackson-databind:2.23.0",
+    "com.fasterxml.jackson.core:jackson-annotations:2.23",
+    "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.23.0",
 )
 
 gradle.beforeProject {
