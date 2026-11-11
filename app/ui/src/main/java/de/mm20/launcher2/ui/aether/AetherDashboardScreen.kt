@@ -17,12 +17,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.base.R as BaseR
+import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.ui.component.TelosDotMatrixText
 import de.mm20.launcher2.ui.component.TelosRadialGauge
 import de.mm20.launcher2.ui.component.TelosTechPill
@@ -32,7 +34,10 @@ import de.mm20.launcher2.ui.component.telosAmbientGlow
 import kotlinx.serialization.Serializable
 
 @Serializable
-data object AetherDashboardRoute : NavKey
+data class AetherDashboardRoute(
+    val sharedText: String? = null,
+    val sharedMediaUri: String? = null
+) : NavKey
 
 data class NostrNote(
     val id: String,
@@ -56,9 +61,11 @@ enum class AetherTab { Feed, MediaGrid, DirectMessages, RelaysHUD }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AetherDashboardScreen() {
+fun AetherDashboardScreen(route: AetherDashboardRoute = AetherDashboardRoute()) {
     var selectedTab by remember { mutableStateOf(AetherTab.Feed) }
     var zapCount by remember { mutableIntStateOf(1450) }
+    var showComposeDialog by remember { mutableStateOf(!route.sharedText.isNullOrEmpty() || !route.sharedMediaUri.isNullOrEmpty()) }
+    var postText by remember { mutableStateOf(route.sharedText.orEmpty()) }
 
     val mockNotes = remember {
         listOf(
@@ -81,6 +88,39 @@ fun AetherDashboardScreen() {
     val cyan = Color(0xFF00F2FE)
     val pink = Color(0xFFFF007F)
 
+    if (showComposeDialog) {
+        AlertDialog(
+            onDismissRequest = { showComposeDialog = false },
+            title = { Text("New Aether Nostr Post", fontWeight = FontWeight.Bold, color = purple) },
+            text = {
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    OutlinedTextField(
+                        value = postText,
+                        onValueChange = { postText = it },
+                        placeholder = { Text("What's happening on Nostr?") },
+                        modifier = Modifier.fillMaxWidth().height(120.dp)
+                    )
+                    if (!route.sharedMediaUri.isNullOrEmpty()) {
+                        Text("📎 Attached Media: ${route.sharedMediaUri}", fontSize = 11.sp, color = cyan)
+                    }
+                }
+            },
+            confirmButton = {
+                Button(
+                    onClick = { showComposeDialog = false },
+                    colors = ButtonDefaults.buttonColors(containerColor = purple)
+                ) {
+                    Text("Broadcast Note")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showComposeDialog = false }) {
+                    Text("Cancel")
+                }
+            }
+        )
+    }
+
     VirtualAppWindow {
         Scaffold(
             containerColor = Color.Transparent,
@@ -95,7 +135,7 @@ fun AetherDashboardScreen() {
                                     .clip(CircleShape)
                                     .background(Color(0xFF10B981))
                             )
-                            TelosDotMatrixText("TELOS AETHER", fontSize = 16.sp, color = purple)
+                            TelosDotMatrixText(stringResource(I18nR.string.aether_title).uppercase(), fontSize = 16.sp, color = purple)
                         }
                     },
                     actions = {
@@ -107,7 +147,7 @@ fun AetherDashboardScreen() {
             },
             floatingActionButton = {
                 FloatingActionButton(
-                    onClick = { /* Compose Post */ },
+                    onClick = { showComposeDialog = true },
                     containerColor = purple,
                     contentColor = Color.White,
                     shape = RoundedCornerShape(18.dp),
