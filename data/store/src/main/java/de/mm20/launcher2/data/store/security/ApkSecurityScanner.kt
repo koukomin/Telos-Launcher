@@ -105,20 +105,41 @@ object ApkSecurityScanner {
         )
     }
 
-    @Suppress("DEPRECATION")
     fun verifyInstalledSignatureMatch(context: Context, apkFile: File): Boolean {
         val pm = context.packageManager
-        val archiveInfo = pm.getPackageArchiveInfo(apkFile.path, PackageManager.GET_SIGNATURES) ?: return true
+        val flags = if (android.os.Build.VERSION.SDK_INT >= 28) {
+            PackageManager.GET_SIGNING_CERTIFICATES
+        } else {
+            @Suppress("DEPRECATION")
+            PackageManager.GET_SIGNATURES
+        }
+        val archiveInfo = pm.getPackageArchiveInfo(apkFile.path, flags) ?: return true
         val packageName = archiveInfo.packageName ?: return true
 
         val installedInfo = runCatching {
-            pm.getPackageInfo(packageName, PackageManager.GET_SIGNATURES)
+            pm.getPackageInfo(packageName, flags)
         }.getOrNull() ?: return true // Clean install, app not present yet
 
-        val archiveSigs = archiveInfo.signatures?.map { it.toCharsString() }?.toSet().orEmpty()
-        val installedSigs = installedInfo.signatures?.map { it.toCharsString() }?.toSet().orEmpty()
+        val archiveSigs = getSignatures(archiveInfo)
+        val installedSigs = getSignatures(installedInfo)
 
         if (archiveSigs.isEmpty() || installedSigs.isEmpty()) return true
         return archiveSigs.intersect(installedSigs).isNotEmpty()
+    }
+
+    @Suppress("DEPRECATION")
+    private fun getSignatures(info: android.content.pm.PackageInfo): Set<String> {
+        if (android.os.Build.VERSION.SDK_INT >= 28) {
+            val signingInfo = info.signingInfo
+            if (signingInfo != null) {
+                val sigs = if (signingInfo.hasMultipleSigners()) {
+                    signingInfo.apkContentsSigners
+                } else {
+                    signingInfo.signingCertificateHistory
+                }
+                return sigs?.map { it.toCharsString() }?.toSet().orEmpty()
+            }
+        }
+        return info.signatures?.map { it.toCharsString() }?.toSet().orEmpty()
     }
 }
