@@ -242,6 +242,9 @@ dependencies {
     implementation("com.anyascii:anyascii:0.3.3")
     testImplementation(libs.bundles.tests)
     testImplementation("org.json:json:20260814")
+    
+    implementation(project(":services:keepasstl"))
+    implementation(libs.kotpass)
 }
 // Bouncy Castle comes in with several versions (sshj, other libraries); the parts must match or the classes are duplicated
 configurations.all {
@@ -253,3 +256,4 @@ configurations.all {
         if (requested.group == "org.bouncycastle") useVersion(libs.versions.bouncycastle.get())
     }
 }
+

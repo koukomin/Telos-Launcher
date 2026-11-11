@@ -40,7 +40,6 @@ dependencies {
     implementation(project(":core:ktx"))
     implementation(project(":core:preferences"))
     implementation(project(":core:i18n"))
-    implementation(project(":app:ui"))
 
     testImplementation(libs.junit)
     testImplementation(libs.robolectric)
