@@ -948,6 +948,7 @@ open class SettingsActivity : BaseActivity() {
             ROUTE_VOICE_RECORDER -> de.mm20.launcher2.ui.voice.VoiceRecorderRoute
             SettingsDeepLinkContract.ROUTE_KEYBOARD -> de.mm20.launcher2.ui.keyboard.TelosKeyboardRoute
             SettingsDeepLinkContract.ROUTE_KEEPASS -> de.mm20.launcher2.ui.keepass.KeePassDashboardRoute
+            SettingsDeepLinkContract.ROUTE_BACKUP -> de.mm20.launcher2.ui.backup.BackupRoute
             ROUTE_SCREEN_RECORDER -> de.mm20.launcher2.ui.screenrec.ScreenRecorderRoute
             ROUTE_SCREENSHOT -> de.mm20.launcher2.ui.screenshot.ScreenshotRoute
             ROUTE_NOTES -> de.mm20.launcher2.ui.notes.NotesRoute

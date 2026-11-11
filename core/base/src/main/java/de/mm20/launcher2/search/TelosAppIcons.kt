@@ -39,6 +39,7 @@ object TelosAppIcons {
         "telos_keyboard_app" -> R.drawable.ic_app_keyboard_full
         "telos_keepass_app" -> R.drawable.ic_app_keepass_full
         "telos_tv_app" -> R.drawable.ic_app_tv_full
+        "telos_stremio_app" -> R.drawable.ic_app_stremio_full
         else -> null
     }
 }
