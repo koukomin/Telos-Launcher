@@ -4,6 +4,7 @@
     <application>
         <service
             android:name=".LauncherAccessibilityService"
+            android:label="Telos - Χειρονομίες &amp; Πλοήγηση"
             android:exported="true"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
             <intent-filter>

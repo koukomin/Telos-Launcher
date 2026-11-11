@@ -20,6 +20,7 @@
 
         <service
             android:name=".shizuku.TelosAdbPairingAccessibilityService"
+            android:label="Telos - ADB Pairing &amp; Shizuku"
             android:exported="true"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
             <intent-filter>
