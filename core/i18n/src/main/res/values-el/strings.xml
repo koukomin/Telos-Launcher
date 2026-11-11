@@ -2025,5 +2025,16 @@
     <string name="art_optimizer_app_btn_optimize_selected">Μεταγλώττιση (%1$s)</string>
     <string name="art_optimizer_app_btn_optimize_speed">Πλήρης Μεταγλώττιση Speed (AOT)</string>
     <string name="art_optimizer_app_btn_reset">Επαναφορά (--reset)</string>
+    <string name="drawer_style_title">Στυλ Εμφάνισης Drawer</string>
+    <string name="drawer_style_summary">Επιλέξτε τον τρόπο εμφάνισης του συρταριού εφαρμογών</string>
+    <string name="drawer_style_classic">Classic Slide</string>
+    <string name="drawer_style_classic_sum">Κλασική ομαλή κύλιση Material 3</string>
+    <string name="drawer_style_cyber_matrix">Cyber-Matrix Reveal</string>
+    <string name="drawer_style_cyber_matrix_sum">Ολογραφικές γραμμές σάρωσης &amp; αποσυναρμολόγηση Matrix</string>
+    <string name="drawer_style_holo_portal">Holo-Portal Expansion</string>
+    <string name="drawer_style_holo_portal_sum">Ακτινωτή επέκταση ολογραφικού φακού με 3D Tilt Parallax</string>
+    <string name="drawer_style_command_deck">Command Deck HUD</string>
+    <string name="drawer_style_command_deck_sum">Τακτικός πίνακα ελέγxου Cyber-HUD με ζωντανά μετρητικά</string>
+    <string name="drawer_style_live_preview">Ζωντανή Προεπισκόπηση</string>
 </resources>
 

@@ -25,6 +25,15 @@ class SearchUiSettings internal constructor(
             it.copy(appSearch = it.appSearch.copy(moveFrozenAppsToEnd = move))
         }
     }
+
+    val drawerStyle
+        get() = launcherDataStore.data.map { it.appSearch.drawerStyle }.distinctUntilChanged()
+
+    fun setDrawerStyle(drawerStyle: de.mm20.launcher2.preferences.DrawerStyle) {
+        launcherDataStore.update {
+            it.copy(appSearch = it.appSearch.copy(drawerStyle = drawerStyle))
+        }
+    }
     // === TELOS_PENDING_REVIEW_END: ui_i18n_and_features_batch ===
 
     val hiddenItemsButton

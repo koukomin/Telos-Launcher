@@ -1151,4 +1151,16 @@
     <string name="preference_virtual_app_page_effects_summary">Glissement et échelle au changement d’écran. Désactivé par défaut.</string>
     <string name="net_waveform_title">Forme d’onde du trafic réseau</string>
     <string name="net_waveform_rates">↓ %1$s  ·  ↑ %2$s</string>
+
+    <string name="drawer_style_classic">Glissement classique</string>
+    <string name="drawer_style_classic_sum">Standard smooth Material 3 slide-up drawer</string>
+    <string name="drawer_style_command_deck">Command Deck HUD</string>
+    <string name="drawer_style_command_deck_sum">Tactical Cyber-HUD with live telemetry gauges</string>
+    <string name="drawer_style_cyber_matrix">Révélation Cyber-Matrix</string>
+    <string name="drawer_style_cyber_matrix_sum">Holographic scanlines and pixel de-fragmentation</string>
+    <string name="drawer_style_holo_portal">Expansion Holo-Portal</string>
+    <string name="drawer_style_holo_portal_sum">Spatial holographic lens expansion with 3D tilt parallax</string>
+    <string name="drawer_style_live_preview">Aperçu en direct</string>
+    <string name="drawer_style_summary">Choisissez comment le tiroir d\'applications est présenté lors des gestes et recherches</string>
+    <string name="drawer_style_title">Style d\'animation du tiroir</string>
 </resources>

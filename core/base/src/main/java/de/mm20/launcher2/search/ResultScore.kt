@@ -9,12 +9,20 @@ value class ResultScore private constructor(private val packed: Long) : Comparab
         isSubstring: Boolean,
         isPrimary: Boolean,
         similarity: Float,
+        isExact: Boolean = false,
     ) : this(
         (similarity.toRawBits().toLong()) or
                 (if (isPrefix) (1L shl 32) else 0) or
                 (if (isSubstring) (1L shl 33) else 0) or
-                (if (isPrimary) (1L shl 34) else 0)
+                (if (isPrimary) (1L shl 34) else 0) or
+                (if (isExact) (1L shl 35) else 0)
     )
+
+    /**
+     * Whether the query is an exact match for the term.
+     */
+    val isExact: Boolean
+        get() = (packed and (1L shl 35)) != 0L
 
     /**
      * Whether the query is a literal prefix of the result.
@@ -41,37 +49,59 @@ value class ResultScore private constructor(private val packed: Long) : Comparab
         get() = Float.fromBits((packed and 0xffffffffL).toInt())
 
     /**
-     * A total score for the result, combining the similarity with additional factors.
-     * The score is normalized to be between 0 and 1.
+     * Tiered ranking score ensuring Exact > Prefix > Substring > High Similarity Fuzzy Match.
+     * Prevents false-positive fuzzy matches from overriding exact/prefix query results.
      */
     val score: Float
-        get() = (similarity + (if (isPrefix) 0.2f else 0f) + (if (isSubstring) 0.8f else 0f)).coerceIn(0f, 1f) * (if (isPrimary) 1f else 0.8f)
+        get() = when {
+            isExact -> 10.0f * (if (isPrimary) 1.0f else 0.9f)
+            isPrefix -> 5.0f + (similarity * 0.5f) * (if (isPrimary) 1.0f else 0.8f)
+            isSubstring -> 2.0f + (similarity * 0.5f) * (if (isPrimary) 1.0f else 0.8f)
+            else -> if (similarity >= MATCH_THRESHOLD) similarity * (if (isPrimary) 0.7f else 0.4f) else 0.0f
+        }
 
     override fun compareTo(other: ResultScore): Int {
         return score.compareTo(other.score)
     }
 
     companion object {
-        /** Lowest combined score that still counts as a match, including one-letter typos. */
-        const val MATCH_THRESHOLD = 0.62f
+        /** Minimum similarity required for fuzzy matching (78%). Short typos or unrelated words fail below this. */
+        const val MATCH_THRESHOLD = 0.78f
+
+        private val NON_ALPHANUM_REGEX = Regex("[^\\p{L}\\p{N}]")
+        private val jaroWinkler = JaroWinkler()
 
         fun from(
             query: String,
             primaryFields: Iterable<String> = emptyList(),
             secondaryFields: Iterable<String> = emptyList(),
         ): ResultScore {
-            val literal = from(
-                query.lowercase(),
-                expandTokens(primaryFields.map { it.lowercase() }),
-                expandTokens(secondaryFields.map { it.lowercase() }),
-                folded = true,
+            if (query.isBlank()) return Zero
+            val qLower = query.lowercase()
+            val qClean = qLower.replace(NON_ALPHANUM_REGEX, "")
+
+            val primaryTokens = expandTokens(primaryFields.map { it.lowercase() })
+            val secondaryTokens = expandTokens(secondaryFields.map { it.lowercase() })
+
+            val literal = maxOf(
+                fromInternal(qLower, primaryTokens, secondaryTokens),
+                if (qClean.isNotEmpty() && qClean != qLower) {
+                    fromInternal(qClean, primaryTokens, secondaryTokens)
+                } else Zero
             )
-            val greeklish = from(
-                GreekFold.fold(query),
-                expandTokens(primaryFields.map { GreekFold.fold(it) }),
-                expandTokens(secondaryFields.map { GreekFold.fold(it) }),
-                folded = true,
+
+            val qGreek = GreekFold.fold(query)
+            val qGreekClean = qGreek.replace(NON_ALPHANUM_REGEX, "")
+            val primaryGreekTokens = expandTokens(primaryFields.map { GreekFold.fold(it) })
+            val secondaryGreekTokens = expandTokens(secondaryFields.map { GreekFold.fold(it) })
+
+            val greeklish = maxOf(
+                fromInternal(qGreek, primaryGreekTokens, secondaryGreekTokens),
+                if (qGreekClean.isNotEmpty() && qGreekClean != qGreek) {
+                    fromInternal(qGreekClean, primaryGreekTokens, secondaryGreekTokens)
+                } else Zero
             )
+
             return maxOf(literal, greeklish)
         }
 
@@ -80,6 +110,10 @@ value class ResultScore private constructor(private val packed: Long) : Comparab
             for (field in fields) {
                 if (field.isBlank()) continue
                 out.add(field)
+                val clean = field.replace(NON_ALPHANUM_REGEX, "")
+                if (clean.isNotEmpty() && clean != field) {
+                    out.add(clean)
+                }
                 val parts = field.split(' ', '-', '_', '/', '.', ',', ':', ';', '|')
                 if (parts.size > 1) {
                     for (part in parts) if (part.length >= 2) out.add(part)
@@ -88,18 +122,17 @@ value class ResultScore private constructor(private val packed: Long) : Comparab
             return out
         }
 
-        private fun from(
+        private fun fromInternal(
             query: String,
             primaryFields: Iterable<String>,
             secondaryFields: Iterable<String>,
-            folded: Boolean,
         ): ResultScore {
-            val jaroWinkler = JaroWinkler()
             val bestPrimaryScore = primaryFields.maxOfOrNull { term ->
                 val sim = jaroWinkler.similarity(query, term).toFloat()
                 ResultScore(
-                    isPrefix = term.startsWith(query),
-                    isSubstring = query in term,
+                    isExact = term.equals(query, ignoreCase = true),
+                    isPrefix = term.startsWith(query, ignoreCase = true),
+                    isSubstring = term.contains(query, ignoreCase = true),
                     isPrimary = true,
                     similarity = sim
                 )
@@ -107,8 +140,9 @@ value class ResultScore private constructor(private val packed: Long) : Comparab
             val bestSecondaryScore = secondaryFields.maxOfOrNull { term ->
                 val sim = jaroWinkler.similarity(query, term).toFloat()
                 ResultScore(
-                    isPrefix = term.startsWith(query),
-                    isSubstring = query in term,
+                    isExact = term.equals(query, ignoreCase = true),
+                    isPrefix = term.startsWith(query, ignoreCase = true),
+                    isSubstring = term.contains(query, ignoreCase = true),
                     isPrimary = false,
                     similarity = sim
                 )
@@ -121,7 +155,8 @@ value class ResultScore private constructor(private val packed: Long) : Comparab
             isPrefix = false,
             isSubstring = false,
             isPrimary = false,
-            similarity = 0f
+            similarity = 0f,
+            isExact = false
         )
 
         val Unspecified = ResultScore(
@@ -129,6 +164,7 @@ value class ResultScore private constructor(private val packed: Long) : Comparab
             isSubstring = false,
             isPrimary = false,
             similarity = Float.NaN,
+            isExact = false
         )
     }
 }

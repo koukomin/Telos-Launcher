@@ -1194,4 +1194,16 @@
     <string name="preference_virtual_app_page_effects_summary">Deslize e escala ao mudar de ecrã. Desligado por predefinição.</string>
     <string name="net_waveform_title">Forma de onda do tráfego de rede</string>
     <string name="net_waveform_rates">↓ %1$s  ·  ↑ %2$s</string>
+
+    <string name="drawer_style_classic">Deslize clássico</string>
+    <string name="drawer_style_classic_sum">Standard smooth Material 3 slide-up drawer</string>
+    <string name="drawer_style_command_deck">Command Deck HUD</string>
+    <string name="drawer_style_command_deck_sum">Tactical Cyber-HUD with live telemetry gauges</string>
+    <string name="drawer_style_cyber_matrix">Revelação Cyber-Matrix</string>
+    <string name="drawer_style_cyber_matrix_sum">Holographic scanlines and pixel de-fragmentation</string>
+    <string name="drawer_style_holo_portal">Expansão Holo-Portal</string>
+    <string name="drawer_style_holo_portal_sum">Spatial holographic lens expansion with 3D tilt parallax</string>
+    <string name="drawer_style_live_preview">Pré-visualização ao vivo</string>
+    <string name="drawer_style_summary">Escolha como a gaveta de apps é apresentada em gestos e pesquisa</string>
+    <string name="drawer_style_title">Estilo de animação da gaveta</string>
 </resources>

@@ -1137,4 +1137,21 @@
     <string name="desktop_mode_kde_connect">Integração KDE Connect</string>
     <string name="desktop_mode_kde_connect_open">Abrir o KDE Connect para emparelhar com um PC ou tablet</string>
     <string name="desktop_mode_kde_connect_install">Toque para instalar o KDE Connect na Telos Store</string>
+
+    <string name="net_waveform_title">Forma de onda de áudio</string>
+    <string name="preference_virtual_app_page_effects">Efeitos de página de aplicativos virtuais</string>
+    <string name="preference_virtual_app_page_effects_summary">Animações e transições ao navegar nas páginas</string>
+    <string name="net_waveform_rates">↓ %1$s  ·  ↑ %2$s</string>
+
+    <string name="drawer_style_classic">Deslize clássico</string>
+    <string name="drawer_style_classic_sum">Standard smooth Material 3 slide-up drawer</string>
+    <string name="drawer_style_command_deck">Command Deck HUD</string>
+    <string name="drawer_style_command_deck_sum">Tactical Cyber-HUD with live telemetry gauges</string>
+    <string name="drawer_style_cyber_matrix">Revelação Cyber-Matrix</string>
+    <string name="drawer_style_cyber_matrix_sum">Holographic scanlines and pixel de-fragmentation</string>
+    <string name="drawer_style_holo_portal">Expansão Holo-Portal</string>
+    <string name="drawer_style_holo_portal_sum">Spatial holographic lens expansion with 3D tilt parallax</string>
+    <string name="drawer_style_live_preview">Pré-visualização ao vivo</string>
+    <string name="drawer_style_summary">Escolha como a gaveta de apps é apresentada em gestos e busca</string>
+    <string name="drawer_style_title">Estilo de animação da gaveta</string>
 </resources>

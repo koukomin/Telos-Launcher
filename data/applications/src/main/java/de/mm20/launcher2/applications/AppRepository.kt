@@ -404,19 +404,25 @@ internal class AppRepositoryImpl(
                     // === TELOS_PENDING_REVIEW_START: perf_optimizations ===
                     apps.mapNotNullTo(appResults) { app ->
                         val cachedLabel = app.cachedNormalizerResult
+                        val labelStr = if (cachedLabel?.first == normalizerId) {
+                            cachedLabel.second
+                        } else {
+                            stringNormalizer.normalize(app.label).also {
+                                app.cachedNormalizerResult = normalizerId to it
+                            }
+                        }
+                        val keywords = (app.keywords + de.mm20.launcher2.search.TelosAppKeywords.forKey(app.key)).map { stringNormalizer.normalize(it) }
                         val score = ResultScore.from(
-                            query = normalizedQuery,
-                            primaryFields = listOf(
-                                if (cachedLabel?.first == normalizerId) {
-                                    cachedLabel.second
-                                } else {
-                                    stringNormalizer.normalize(app.label).also {
-                                        app.cachedNormalizerResult = normalizerId to it
-                                    }
-                                }
-                            ),
+                            query = query,
+                            primaryFields = listOf(labelStr),
+                            secondaryFields = keywords
                         )
-                        if (score.score < ResultScore.MATCH_THRESHOLD) return@mapNotNullTo null
+                        val foldedQuery = de.mm20.launcher2.search.GreekFold.fold(query)
+                        val matchesFolded = foldedQuery.length >= 2 && (
+                            de.mm20.launcher2.search.GreekFold.matches(app.label, foldedQuery) ||
+                                keywords.any { de.mm20.launcher2.search.GreekFold.matches(it, foldedQuery) }
+                        )
+                        if (score.score < ResultScore.MATCH_THRESHOLD && !matchesFolded) return@mapNotNullTo null
                         app.copy(
                             score = score
                         )

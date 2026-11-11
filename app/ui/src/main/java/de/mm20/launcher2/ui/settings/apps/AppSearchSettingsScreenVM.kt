@@ -49,5 +49,12 @@ class AppSearchSettingsScreenVM: ViewModel(), KoinComponent {
     fun setMoveFrozenAppsToEnd(move: Boolean) {
         searchUiSettings.setMoveFrozenAppsToEnd(move)
     }
+
+    val drawerStyle = searchUiSettings.drawerStyle
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), de.mm20.launcher2.preferences.DrawerStyle.Classic)
+
+    fun setDrawerStyle(style: de.mm20.launcher2.preferences.DrawerStyle) {
+        searchUiSettings.setDrawerStyle(style)
+    }
     // === TELOS_PENDING_REVIEW_END: ui_i18n_and_features_batch ===
 }
