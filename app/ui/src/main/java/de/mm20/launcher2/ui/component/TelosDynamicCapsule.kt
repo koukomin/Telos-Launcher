@@ -201,7 +201,7 @@ fun TelosDynamicCapsule(
 
                     // Download indicator if active
                     if (downloadProgress != null) {
-                        Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
+                        Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
                             Row(
                                 modifier = Modifier.fillMaxWidth(),
                                 horizontalArrangement = Arrangement.SpaceBetween
@@ -209,10 +209,11 @@ fun TelosDynamicCapsule(
                                 Text("Telos Downloader", fontSize = 10.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
                                 Text("${(downloadProgress * 100).toInt()}%", fontSize = 10.sp, fontWeight = FontWeight.Bold)
                             }
-                            LinearProgressIndicator(
-                                progress = { downloadProgress },
-                                modifier = Modifier.fillMaxWidth().height(4.dp).clip(CircleShape),
-                                color = Color(0xFF06B6D4)
+                            TelosWaveProgress(
+                                progress = downloadProgress,
+                                color = Color(0xFF06B6D4),
+                                waveAmplitude = 3.dp,
+                                modifier = Modifier.fillMaxWidth()
                             )
                         }
                     }
