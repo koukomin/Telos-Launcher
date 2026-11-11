@@ -385,7 +385,7 @@ fun FitDashboardScreen() {
                             }
                         }
 
-                        items(meals) { meal ->
+                        items(items = meals, key = { it.name + it.category }) { meal ->
                             Surface(
                                 modifier = Modifier
                                     .fillMaxWidth()
@@ -459,6 +459,7 @@ private fun FoodSearchDialog(
 
     AlertDialog(
         onDismissRequest = onDismiss,
+        containerColor = de.mm20.launcher2.ui.component.virtualAppPopup(),
         title = { Text("Search Open Food Facts") },
         text = {
             Column(modifier = Modifier.fillMaxWidth()) {
