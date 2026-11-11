@@ -2533,4 +2533,9 @@
     <string name="drawer_style_live_preview">लाइव पूर्वावलोकन</string>
     <string name="drawer_style_summary">चुनें कि इशारों और खोज पर ऐप दराज कैसे प्रस्तुत किया जाता है</string>
     <string name="drawer_style_title">दराज एनीमेशन शैली</string>
+
+    <string name="fit_title">Telos Fit</string>
+
+    <string name="backup_group_fit">Telos Fit Health Data</string>
+    <string name="backup_group_fit_summary">Steps, sleep, workouts and biometric records</string>
 </resources>

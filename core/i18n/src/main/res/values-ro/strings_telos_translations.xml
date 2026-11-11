@@ -1779,4 +1779,9 @@
     <string name="drawer_style_live_preview">Previzualizare live</string>
     <string name="drawer_style_summary">Alegeți cum este prezentat sertarul de aplicații la gesturi și căutare</string>
     <string name="drawer_style_title">Stil animație sertar</string>
+
+    <string name="fit_title">Telos Fit</string>
+
+    <string name="backup_group_fit">Telos Fit Health Data</string>
+    <string name="backup_group_fit_summary">Steps, sleep, workouts and biometric records</string>
 </resources>

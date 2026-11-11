@@ -24,7 +24,9 @@ enum class BackupGroup(val key: String) {
     /** Password manager vault */
     KeePassTL("keepass"),
     /** Telos Aether Nostr keys and relays */
-    Aether("aether");
+    Aether("aether"),
+    /** Telos Fit health and fitness records */
+    Fit("fit");
 
     companion object {
         fun fromKey(key: String): BackupGroup? = entries.firstOrNull { it.key == key }

@@ -1138,4 +1138,9 @@
     <string name="drawer_style_live_preview">Vista previa en vivo</string>
     <string name="drawer_style_summary">Elige cómo se presenta el cajón de aplicaciones en gestos y búsqueda</string>
     <string name="drawer_style_title">Estilo de animación del cajón</string>
+
+    <string name="fit_title">Telos Fit</string>
+
+    <string name="backup_group_fit">Telos Fit Health Data</string>
+    <string name="backup_group_fit_summary">Steps, sleep, workouts and biometric records</string>
 </resources>

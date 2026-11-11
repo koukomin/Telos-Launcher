@@ -41,6 +41,7 @@ object TelosAppIcons {
         "telos_tv_app" -> R.drawable.ic_app_tv_full
         "telos_stremio_app" -> R.drawable.ic_app_stremio_full
         "telos_aether_app" -> R.drawable.ic_app_aether_full
+        "telos_fit_app" -> R.drawable.ic_app_fit_full
         else -> null
     }
 }

@@ -2036,5 +2036,8 @@
     <string name="drawer_style_command_deck">Command Deck HUD</string>
     <string name="drawer_style_command_deck_sum">Τακτικός πίνακα ελέγxου Cyber-HUD με ζωντανά μετρητικά</string>
     <string name="drawer_style_live_preview">Ζωντανή Προεπισκόπηση</string>
+    <string name="fit_title">Telos Fit</string>
+    <string name="backup_group_fit">Δεδομένα Υγείας Telos Fit</string>
+    <string name="backup_group_fit_summary">Βήματα, ύπνος, προπονήσεις και βιομετρικά δεδομένα</string>
 </resources>
 

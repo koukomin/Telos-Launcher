@@ -1324,4 +1324,9 @@
     <string name="drawer_style_live_preview">معاينة مباشرة</string>
     <string name="drawer_style_summary">اختر كيفية عرض درج التطبيقات عند الإيماءات والبحث</string>
     <string name="drawer_style_title">نمط حركة الدرج</string>
+
+    <string name="fit_title">Telos Fit</string>
+
+    <string name="backup_group_fit">Telos Fit Health Data</string>
+    <string name="backup_group_fit_summary">Steps, sleep, workouts and biometric records</string>
 </resources>

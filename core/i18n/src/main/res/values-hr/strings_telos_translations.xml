@@ -2685,4 +2685,9 @@
     <string name="drawer_style_live_preview">Pregled uživo</string>
     <string name="drawer_style_summary">Odaberite kako se ladica aplikacija prikazuje pri gestama i pretraživanju</string>
     <string name="drawer_style_title">Stil animacije ladice</string>
+
+    <string name="fit_title">Telos Fit</string>
+
+    <string name="backup_group_fit">Telos Fit Health Data</string>
+    <string name="backup_group_fit_summary">Steps, sleep, workouts and biometric records</string>
 </resources>

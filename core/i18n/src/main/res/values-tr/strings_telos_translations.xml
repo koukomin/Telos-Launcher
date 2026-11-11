@@ -1273,4 +1273,9 @@
     <string name="drawer_style_live_preview">Canlı Önizleme</string>
     <string name="drawer_style_summary">Uygulama çekmecesinin hareketlerde ve aramada nasıl sunulacağını seçin</string>
     <string name="drawer_style_title">Çekmece animasyon stili</string>
+
+    <string name="fit_title">Telos Fit</string>
+
+    <string name="backup_group_fit">Telos Fit Health Data</string>
+    <string name="backup_group_fit_summary">Steps, sleep, workouts and biometric records</string>
 </resources>

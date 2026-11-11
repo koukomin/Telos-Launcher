@@ -56,6 +56,7 @@ object SettingsDeepLinkContract {
     const val ROUTE_TRASH = "settings/trash"
     const val ROUTE_SYNC = "settings/sync"
     const val ROUTE_BACKUP = "settings/backup"
+    const val ROUTE_FIT = "settings/fit"
     /** Telos Help */
     const val ROUTE_TELOS_PAGE = "settings/telos_page"
     const val EXTRA_TELOS_PAGE_KEY = "de.mm20.launcher2.settings.TELOS_PAGE_KEY"
@@ -84,6 +85,7 @@ object SettingsDeepLinkContract {
         ROUTE_DOWNLOADS -> "downloads"
         ROUTE_SYNC -> "sync"
         ROUTE_BACKUP -> "backup"
+        ROUTE_FIT -> "fit"
         "settings/clock" -> "clock"
         "settings/akou" -> "akou"
         "settings/magnifier" -> "magnifier"

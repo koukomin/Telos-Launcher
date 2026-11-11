@@ -3048,4 +3048,9 @@
     <string name="drawer_style_live_preview">Réamhféachaint Bheo</string>
     <string name="drawer_style_summary">Roghnaigh conas a thaispeántar an tarraiceán aipeanna ar ghluaiseachtaí agus ar chuardach</string>
     <string name="drawer_style_title">Stíl beochana tarraiceáin</string>
+
+    <string name="fit_title">Telos Fit</string>
+
+    <string name="backup_group_fit">Telos Fit Health Data</string>
+    <string name="backup_group_fit_summary">Steps, sleep, workouts and biometric records</string>
 </resources>

@@ -2772,4 +2772,9 @@
     <string name="drawer_style_live_preview">Živý náhľad</string>
     <string name="drawer_style_summary">Vyberte, ako sa zobrazuje zásuvka aplikácií pri gestách a vyhľadávaní</string>
     <string name="drawer_style_title">Štýl animácie zásuvky</string>
+
+    <string name="fit_title">Telos Fit</string>
+
+    <string name="backup_group_fit">Telos Fit Health Data</string>
+    <string name="backup_group_fit_summary">Steps, sleep, workouts and biometric records</string>
 </resources>

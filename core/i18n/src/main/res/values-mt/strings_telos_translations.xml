@@ -3048,4 +3048,9 @@
     <string name="drawer_style_live_preview">Previżjoni Live</string>
     <string name="drawer_style_summary">Agħżel kif id-drawer tal-apps jiġi ppreżentat bil-ġesti u t-tfittxija</string>
     <string name="drawer_style_title">Stil ta animazzjoni tad-drawer</string>
+
+    <string name="fit_title">Telos Fit</string>
+
+    <string name="backup_group_fit">Telos Fit Health Data</string>
+    <string name="backup_group_fit_summary">Steps, sleep, workouts and biometric records</string>
 </resources>

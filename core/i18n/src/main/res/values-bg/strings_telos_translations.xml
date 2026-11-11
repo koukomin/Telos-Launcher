@@ -2645,4 +2645,9 @@
     <string name="drawer_style_live_preview">Преглед на живо</string>
     <string name="drawer_style_summary">Изберете как се показва чекмеджето με gestove и търсене</string>
     <string name="drawer_style_title">Стил на анимация на чекмеджето</string>
+
+    <string name="fit_title">Telos Fit</string>
+
+    <string name="backup_group_fit">Telos Fit Health Data</string>
+    <string name="backup_group_fit_summary">Steps, sleep, workouts and biometric records</string>
 </resources>

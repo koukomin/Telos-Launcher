@@ -1793,4 +1793,9 @@
     <string name="drawer_style_live_preview">Tiesioginė peržiūra</string>
     <string name="drawer_style_summary">Pasirinkite, kaip programų stalčius rodomas gestais ir paieška</string>
     <string name="drawer_style_title">Stulčiaus animacijos stilius</string>
+
+    <string name="fit_title">Telos Fit</string>
+
+    <string name="backup_group_fit">Telos Fit Health Data</string>
+    <string name="backup_group_fit_summary">Steps, sleep, workouts and biometric records</string>
 </resources>

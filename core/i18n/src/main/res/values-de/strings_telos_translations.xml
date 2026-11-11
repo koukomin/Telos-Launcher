@@ -1291,4 +1291,9 @@
     <string name="drawer_style_live_preview">Live-Vorschau</string>
     <string name="drawer_style_summary">Wählen Sie, wie die App-Schublade bei Gesten und Suche dargestellt wird</string>
     <string name="drawer_style_title">Schubladen-Animationsstil</string>
+
+    <string name="fit_title">Telos Fit</string>
+
+    <string name="backup_group_fit">Telos Fit Health Data</string>
+    <string name="backup_group_fit_summary">Steps, sleep, workouts and biometric records</string>
 </resources>

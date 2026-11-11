@@ -1139,4 +1139,9 @@
     <string name="drawer_style_live_preview">Anteprima dal vivo</string>
     <string name="drawer_style_summary">Scegli come viene presentato il drawer delle app con gesture e ricerca</string>
     <string name="drawer_style_title">Stile di animazione del drawer</string>
+
+    <string name="fit_title">Telos Fit</string>
+
+    <string name="backup_group_fit">Telos Fit Health Data</string>
+    <string name="backup_group_fit_summary">Steps, sleep, workouts and biometric records</string>
 </resources>

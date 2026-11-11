@@ -2685,4 +2685,9 @@
     <string name="drawer_style_live_preview">Reāllaika priekšskatījums</string>
     <string name="drawer_style_summary">Izvēlieties, kā lietotņu atvilktne tiek attēlota žestos un meklēšanā</string>
     <string name="drawer_style_title">Atvilktnes animācijas stils</string>
+
+    <string name="fit_title">Telos Fit</string>
+
+    <string name="backup_group_fit">Telos Fit Health Data</string>
+    <string name="backup_group_fit_summary">Steps, sleep, workouts and biometric records</string>
 </resources>

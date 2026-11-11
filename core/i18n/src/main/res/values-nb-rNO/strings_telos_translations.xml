@@ -1573,4 +1573,9 @@
     <string name="drawer_style_live_preview">Forhåndsvisning</string>
     <string name="drawer_style_summary">Velg hvordan appskuffen vises ved fakter og søk</string>
     <string name="drawer_style_title">Skuffanimasjonsstil</string>
+
+    <string name="fit_title">Telos Fit</string>
+
+    <string name="backup_group_fit">Telos Fit Health Data</string>
+    <string name="backup_group_fit_summary">Steps, sleep, workouts and biometric records</string>
 </resources>

@@ -1257,4 +1257,9 @@
     <string name="drawer_style_live_preview">實時預覽</string>
     <string name="drawer_style_summary">選擇手勢和搜尋時應用抽屜的展示方式</string>
     <string name="drawer_style_title">抽屜動畫風格</string>
+
+    <string name="fit_title">Telos Fit</string>
+
+    <string name="backup_group_fit">Telos Fit Health Data</string>
+    <string name="backup_group_fit_summary">Steps, sleep, workouts and biometric records</string>
 </resources>

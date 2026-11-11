@@ -2231,4 +2231,9 @@
     <string name="drawer_style_live_preview">লাইভ পূর্বরূপ</string>
     <string name="drawer_style_summary">অঙ্গভঙ্গি এবং অনুসন্ধানে অ্যাপ ড্রয়ারটি কীভাবে উপস্থাপন করা হয় তা নির্বাচন করুন</string>
     <string name="drawer_style_title">ড্রয়ার অ্যানিমেশন শৈলী</string>
+
+    <string name="fit_title">Telos Fit</string>
+
+    <string name="backup_group_fit">Telos Fit Health Data</string>
+    <string name="backup_group_fit_summary">Steps, sleep, workouts and biometric records</string>
 </resources>

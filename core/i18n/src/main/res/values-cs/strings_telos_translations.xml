@@ -1262,4 +1262,9 @@
     <string name="drawer_style_live_preview">Živý náhled</string>
     <string name="drawer_style_summary">Vyberte, jak se zobrazuje zásuvka aplikací při gestech a vyhledávání</string>
     <string name="drawer_style_title">Styl animace zásuvky</string>
+
+    <string name="fit_title">Telos Fit</string>
+
+    <string name="backup_group_fit">Telos Fit Health Data</string>
+    <string name="backup_group_fit_summary">Steps, sleep, workouts and biometric records</string>
 </resources>

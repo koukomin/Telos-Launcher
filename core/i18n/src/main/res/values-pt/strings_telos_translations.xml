@@ -1206,4 +1206,9 @@
     <string name="drawer_style_live_preview">Pré-visualização ao vivo</string>
     <string name="drawer_style_summary">Escolha como a gaveta de apps é apresentada em gestos e pesquisa</string>
     <string name="drawer_style_title">Estilo de animação da gaveta</string>
+
+    <string name="fit_title">Telos Fit</string>
+
+    <string name="backup_group_fit">Telos Fit Health Data</string>
+    <string name="backup_group_fit_summary">Steps, sleep, workouts and biometric records</string>
 </resources>

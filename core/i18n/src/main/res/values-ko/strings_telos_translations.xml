@@ -1655,4 +1655,9 @@
     <string name="drawer_style_live_preview">라이브 미리보기</string>
     <string name="drawer_style_summary">제스처 및 검색 시 앱 서랍이 표시되는 방식 선택</string>
     <string name="drawer_style_title">서랍 애니메이션 스타일</string>
+
+    <string name="fit_title">Telos Fit</string>
+
+    <string name="backup_group_fit">Telos Fit Health Data</string>
+    <string name="backup_group_fit_summary">Steps, sleep, workouts and biometric records</string>
 </resources>
