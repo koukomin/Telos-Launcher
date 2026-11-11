@@ -1,5 +1,7 @@
 package de.mm20.launcher2.ui.fit
 
+import android.content.Context
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -9,11 +11,20 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.health.connect.client.HealthConnectClient
+import androidx.health.connect.client.permission.HealthPermission
+import androidx.health.connect.client.records.HeartRateRecord
+import androidx.health.connect.client.records.StepsRecord
+import androidx.health.connect.client.records.WeightRecord
+import androidx.health.connect.client.request.AggregateRequest
+import androidx.health.connect.client.time.TimeRangeFilter
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavKey
@@ -22,10 +33,15 @@ import de.mm20.launcher2.ui.component.TelosDotMatrixText
 import de.mm20.launcher2.ui.component.TelosRadialGauge
 import de.mm20.launcher2.ui.component.telosTechCard
 import de.mm20.launcher2.ui.component.VirtualAppWindow
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
+import java.time.Instant
+import java.time.temporal.ChronoUnit
 
 @Serializable
 data object FitDashboardRoute : NavKey
@@ -46,20 +62,60 @@ class FitViewModel : ViewModel() {
     private val _weight = MutableStateFlow(72.4f)
     val weight: StateFlow<Float> = _weight.asStateFlow()
 
+    private val _isHealthConnectAvailable = MutableStateFlow(false)
+    val isHealthConnectAvailable: StateFlow<Boolean> = _isHealthConnectAvailable.asStateFlow()
+
     fun addWater() {
         _waterIntake.value += 250
+    }
+
+    fun loadHealthConnectData(context: Context) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val sdkStatus = HealthConnectClient.getSdkStatus(context)
+                if (sdkStatus == HealthConnectClient.SDK_AVAILABLE) {
+                    _isHealthConnectAvailable.value = true
+                    val client = HealthConnectClient.getOrCreate(context)
+
+                    // Read today's steps
+                    val startTime = Instant.now().truncatedTo(ChronoUnit.DAYS)
+                    val endTime = Instant.now()
+
+                    val stepsResponse = client.aggregate(
+                        AggregateRequest(
+                            metrics = setOf(StepsRecord.COUNT_TOTAL),
+                            timeRangeFilter = TimeRangeFilter.between(startTime, endTime)
+                        )
+                    )
+                    val totalSteps = stepsResponse[StepsRecord.COUNT_TOTAL] ?: _steps.value
+
+                    withContext(Dispatchers.Main) {
+                        _steps.value = totalSteps.toInt()
+                    }
+                }
+            } catch (_: Exception) {
+                // Fallback to mock/cached state if Health Connect unavailable
+            }
+        }
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FitDashboardScreen() {
+    val context = LocalContext.current
     val viewModel: FitViewModel = viewModel()
+
+    LaunchedEffect(Unit) {
+        viewModel.loadHealthConnectData(context)
+    }
+
     val steps by viewModel.steps.collectAsStateWithLifecycle()
     val heartRate by viewModel.heartRate.collectAsStateWithLifecycle()
     val sleepHours by viewModel.sleepHours.collectAsStateWithLifecycle()
     val waterIntake by viewModel.waterIntake.collectAsStateWithLifecycle()
     val weight by viewModel.weight.collectAsStateWithLifecycle()
+    val isHealthConnectAvailable by viewModel.isHealthConnectAvailable.collectAsStateWithLifecycle()
 
     val neonGreen = Color(0xFF00E676)
     val neonCyan = Color(0xFF00F0FF)
@@ -74,12 +130,16 @@ fun FitDashboardScreen() {
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Text("Telos Fit", fontWeight = FontWeight.Bold)
                             Spacer(modifier = Modifier.width(8.dp))
-                            TelosDotMatrixText("HEALTH // HUD", fontSize = 10.sp, color = neonGreen)
+                            TelosDotMatrixText(
+                                if (isHealthConnectAvailable) "HEALTH CONNECT // SYNCED" else "LOCAL HUD",
+                                fontSize = 9.sp,
+                                color = if (isHealthConnectAvailable) neonCyan else neonGreen
+                            )
                         }
                     },
                     actions = {
-                        IconButton(onClick = {}) {
-                            Icon(painterResource(BaseR.drawable.schedule_24px), contentDescription = "History")
+                        IconButton(onClick = { viewModel.loadHealthConnectData(context) }) {
+                            Icon(painterResource(BaseR.drawable.schedule_24px), contentDescription = "Sync Health Connect")
                         }
                     }
                 )

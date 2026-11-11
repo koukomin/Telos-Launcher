@@ -99,6 +99,7 @@ dependencies {
     implementation("androidx.camera:camera-view:1.6.2")
     implementation("androidx.camera:camera-video:1.6.2")
     implementation("androidx.camera:camera-extensions:1.6.2")
+    implementation("androidx.health.connect:connect-client:1.1.0")
 
     implementation(libs.bundles.kotlin)
 
