@@ -4,14 +4,15 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawWithCache
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 /**
- * Low-Power Tactical Cyber Grid Background.
- * Renders a lightweight sci-fi grid backdrop with glowing intersection nodes.
+ * Ultra High-Performance Cached Tactical Cyber Grid Background.
+ * Uses drawWithCache to render grid lines without recalculating geometry on every frame pass.
  */
 @Composable
 fun TelosMatrixBackground(
@@ -20,47 +21,53 @@ fun TelosMatrixBackground(
     gridSpacing: Dp = 32.dp,
     alpha: Float = 0.12f
 ) {
-    Canvas(modifier = modifier.fillMaxSize()) {
-        val spacingPx = gridSpacing.toPx()
-        val width = size.width
-        val height = size.height
-        val effectiveColor = gridColor.copy(alpha = alpha)
-        val nodeColor = gridColor.copy(alpha = (alpha * 1.8f).coerceAtMost(1f))
+    Canvas(
+        modifier = modifier
+            .fillMaxSize()
+            .drawWithCache {
+                val spacingPx = gridSpacing.toPx()
+                val width = size.width
+                val height = size.height
+                val effectiveColor = gridColor.copy(alpha = alpha)
+                val nodeColor = gridColor.copy(alpha = (alpha * 1.8f).coerceAtMost(1f))
+                val dotRadius = 2.dp.toPx()
 
-        // Draw Vertical Grid Lines
-        var x = spacingPx
-        while (x < width) {
-            drawLine(
-                color = effectiveColor,
-                start = Offset(x, 0f),
-                end = Offset(x, height),
-                strokeWidth = 1f
-            )
-            x += spacingPx
-        }
+                onDrawBehind {
+                    // Vertical Grid Lines
+                    var x = spacingPx
+                    while (x < width) {
+                        drawLine(
+                            color = effectiveColor,
+                            start = Offset(x, 0f),
+                            end = Offset(x, height),
+                            strokeWidth = 1f
+                        )
+                        x += spacingPx
+                    }
 
-        // Draw Horizontal Grid Lines & Intersection Nodes
-        var y = spacingPx
-        while (y < height) {
-            drawLine(
-                color = effectiveColor,
-                start = Offset(0f, y),
-                end = Offset(width, y),
-                strokeWidth = 1f
-            )
+                    // Horizontal Grid Lines & Intersection Nodes
+                    var y = spacingPx
+                    while (y < height) {
+                        drawLine(
+                            color = effectiveColor,
+                            start = Offset(0f, y),
+                            end = Offset(width, y),
+                            strokeWidth = 1f
+                        )
 
-            // Draw glowing node dots at grid intersections
-            var dotX = spacingPx
-            while (dotX < width) {
-                drawCircle(
-                    color = nodeColor,
-                    radius = 2.dp.toPx(),
-                    center = Offset(dotX, y)
-                )
-                dotX += spacingPx
+                        var dotX = spacingPx
+                        while (dotX < width) {
+                            drawCircle(
+                                color = nodeColor,
+                                radius = dotRadius,
+                                center = Offset(dotX, y)
+                            )
+                            dotX += spacingPx
+                        }
+
+                        y += spacingPx
+                    }
+                }
             }
-
-            y += spacingPx
-        }
-    }
+    ) {}
 }

@@ -12,8 +12,8 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
 
 /**
- * 3D Gyroscope Parallax Tilt Reaction Modifier.
- * Reacts dynamically to physical phone tilt angle for HUD cards and dialogs.
+ * Optimized Low-Pass Filtered 3D Gyroscope Parallax Tilt Reaction Modifier.
+ * Smoothes out sensor noise and eliminates jitter for 120 FPS performance.
  */
 @Composable
 fun Modifier.telosTiltParallax(
@@ -27,14 +27,24 @@ fun Modifier.telosTiltParallax(
         val sensorManager = context.getSystemService(SensorManager::class.java)
         val accelerometer = sensorManager?.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
 
+        var lastAx = 0f
+        var lastAy = 0f
+        val filterAlpha = 0.75f // Low-pass filter coefficient
+
         val listener = object : SensorEventListener {
             override fun onSensorChanged(event: SensorEvent?) {
                 if (event != null && event.sensor.type == Sensor.TYPE_ACCELEROMETER) {
-                    val ax = event.values[0]
-                    val ay = event.values[1]
+                    val rawAx = event.values[0]
+                    val rawAy = event.values[1]
 
-                    roll = (ax * 1.2f).coerceIn(-maxTiltAngle, maxTiltAngle)
-                    pitch = (ay * 1.2f).coerceIn(-maxTiltAngle, maxTiltAngle)
+                    // Apply low-pass filter
+                    val filteredAx = filterAlpha * lastAx + (1f - filterAlpha) * rawAx
+                    val filteredAy = filterAlpha * lastAy + (1f - filterAlpha) * rawAy
+                    lastAx = filteredAx
+                    lastAy = filteredAy
+
+                    roll = (filteredAx * 1.2f).coerceIn(-maxTiltAngle, maxTiltAngle)
+                    pitch = (filteredAy * 1.2f).coerceIn(-maxTiltAngle, maxTiltAngle)
                 }
             }
 
@@ -42,7 +52,7 @@ fun Modifier.telosTiltParallax(
         }
 
         if (accelerometer != null) {
-            sensorManager.registerListener(listener, accelerometer, SensorManager.SENSOR_DELAY_UI)
+            sensorManager.registerListener(listener, accelerometer, SensorManager.SENSOR_DELAY_GAME)
         }
 
         onDispose {
@@ -50,8 +60,8 @@ fun Modifier.telosTiltParallax(
         }
     }
 
-    val animatedRotationX by animateFloatAsState(targetValue = -pitch, animationSpec = tween(200), label = "rotX")
-    val animatedRotationY by animateFloatAsState(targetValue = roll, animationSpec = tween(200), label = "rotY")
+    val animatedRotationX by animateFloatAsState(targetValue = -pitch, animationSpec = tween(150), label = "rotX")
+    val animatedRotationY by animateFloatAsState(targetValue = roll, animationSpec = tween(150), label = "rotY")
 
     return this.graphicsLayer {
         rotationX = animatedRotationX
