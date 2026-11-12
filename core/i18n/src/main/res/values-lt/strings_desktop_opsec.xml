@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_opsec_title">OpSec</string>
+    <string name="desktop_opsec_secure_clipboard">Saugi iškarpinė</string>
+    <string name="desktop_opsec_clipboard_title">Iškarpinė</string>
+    <string name="desktop_opsec_clipboard_hint">Jautrus tekstas saugomas šioje sesijoje ir išvalomas iš sistemos iškarpinės, kad kitos programos negalėtų jo įklijuoti.</string>
+    <string name="desktop_opsec_clipboard_clear_now">Išvalyti iškarpinę dabar</string>
+    <string name="desktop_opsec_clipboard_timer">Automatiškai išvalyti po %1$d s</string>
+    <string name="desktop_opsec_clipboard_timer_off">Išjungta</string>
+    <string name="desktop_opsec_attestation_run">Įrašyti pagrindinio kompiuterio vientisumo momentinę kopiją</string>
+    <string name="desktop_opsec_audit_title">Sesijos audito žurnalas</string>
+    <string name="desktop_opsec_audit_refresh">Atnaujinti žurnalą</string>
+    <string name="desktop_opsec_audit_empty">Dar nėra audito įvykių</string>
+</resources>

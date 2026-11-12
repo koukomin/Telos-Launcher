@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_opsec_title">OpSec</string>
+    <string name="desktop_opsec_secure_clipboard">Area de transferentia secur</string>
+    <string name="desktop_opsec_clipboard_title">Area de transferentia</string>
+    <string name="desktop_opsec_clipboard_hint">Texto sensibile es retenite in iste session e nettate del area de transferentia del systema a fin que altere applications non pote collar lo.</string>
+    <string name="desktop_opsec_clipboard_clear_now">Nettar le area de transferentia ora</string>
+    <string name="desktop_opsec_clipboard_timer">Nettar automaticamente post %1$d secundas</string>
+    <string name="desktop_opsec_clipboard_timer_off">Inactive</string>
+    <string name="desktop_opsec_attestation_run">Registrar le instantanee de integritate del hospite</string>
+    <string name="desktop_opsec_audit_title">Registro de audit del session</string>
+    <string name="desktop_opsec_audit_refresh">Actualisar le registro</string>
+    <string name="desktop_opsec_audit_empty">Ancora nulle eventos de audit</string>
+</resources>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_opsec_title">OpSec</string>
+    <string name="desktop_opsec_secure_clipboard">Gearrthaisce shlán</string>
+    <string name="desktop_opsec_clipboard_title">Gearrthaisce</string>
+    <string name="desktop_opsec_clipboard_hint">Coimeádtar téacs íogair sa seisiún seo agus glantar é ón ngearrthaisce chórais ionas nach féidir le haipeanna eile é a ghreamú.</string>
+    <string name="desktop_opsec_clipboard_clear_now">Glan an ghearrthaisce anois</string>
+    <string name="desktop_opsec_clipboard_timer">Glan go huathoibríoch tar éis %1$d soicind</string>
+    <string name="desktop_opsec_clipboard_timer_off">As</string>
+    <string name="desktop_opsec_attestation_run">Taifead snapshot ionracais an óstaigh</string>
+    <string name="desktop_opsec_audit_title">Log iniúchta an tseisiúin</string>
+    <string name="desktop_opsec_audit_refresh">Athnuaigh an log</string>
+    <string name="desktop_opsec_audit_empty">Níl aon teagmhais iniúchta fós</string>
+</resources>

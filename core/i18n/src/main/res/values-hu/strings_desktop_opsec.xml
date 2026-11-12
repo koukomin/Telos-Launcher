@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_opsec_title">OpSec</string>
+    <string name="desktop_opsec_secure_clipboard">Biztonságos vágólap</string>
+    <string name="desktop_opsec_clipboard_title">Vágólap</string>
+    <string name="desktop_opsec_clipboard_hint">Az érzékeny szöveg a munkamenetben marad, és törlődik a rendszer vágólapjáról, hogy más alkalmazások ne illeszthessék be.</string>
+    <string name="desktop_opsec_clipboard_clear_now">Vágólap törlése most</string>
+    <string name="desktop_opsec_clipboard_timer">Automatikus törlés %1$d másodperc után</string>
+    <string name="desktop_opsec_clipboard_timer_off">Ki</string>
+    <string name="desktop_opsec_attestation_run">Gazdagép-integritás pillanatkép rögzítése</string>
+    <string name="desktop_opsec_audit_title">Munkamenet-auditnapló</string>
+    <string name="desktop_opsec_audit_refresh">Napló frissítése</string>
+    <string name="desktop_opsec_audit_empty">Még nincsenek auditesemények</string>
+</resources>

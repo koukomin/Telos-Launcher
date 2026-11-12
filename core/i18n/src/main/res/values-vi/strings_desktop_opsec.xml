@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_opsec_title">OpSec</string>
+    <string name="desktop_opsec_secure_clipboard">Bảng tạm bảo mật</string>
+    <string name="desktop_opsec_clipboard_title">Bảng tạm</string>
+    <string name="desktop_opsec_clipboard_hint">Văn bản nhạy cảm được giữ trong phiên này và xóa khỏi bảng tạm hệ thống để ứng dụng khác không thể dán.</string>
+    <string name="desktop_opsec_clipboard_clear_now">Xóa bảng tạm ngay</string>
+    <string name="desktop_opsec_clipboard_timer">Tự xóa sau %1$d giây</string>
+    <string name="desktop_opsec_clipboard_timer_off">Tắt</string>
+    <string name="desktop_opsec_attestation_run">Ghi ảnh chụp toàn vẹn máy chủ</string>
+    <string name="desktop_opsec_audit_title">Nhật ký kiểm toán phiên</string>
+    <string name="desktop_opsec_audit_refresh">Làm mới nhật ký</string>
+    <string name="desktop_opsec_audit_empty">Chưa có sự kiện kiểm toán</string>
+</resources>

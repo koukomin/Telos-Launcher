@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_opsec_title">OpSec</string>
+    <string name="desktop_opsec_secure_clipboard">Ἀσφαλὲς πρόχειρον</string>
+    <string name="desktop_opsec_clipboard_title">Πρόχειρον</string>
+    <string name="desktop_opsec_clipboard_hint">Τὸ εὐαίσθητον κείμενον τηρεῖται ἐν τῇ συνεδρίᾳ καὶ καθαίρεται ἐκ τοῦ συστηματικοῦ προχείρου ἵνα μὴ ἄλλαι ἐφαρμογαὶ αὐτὸ ἐπικολλήσωσιν.</string>
+    <string name="desktop_opsec_clipboard_clear_now">Καθαρισμὸς προχείρου νῦν</string>
+    <string name="desktop_opsec_clipboard_timer">Αὐτόματος καθαρισμὸς μετὰ %1$d δευτερόλεπτα</string>
+    <string name="desktop_opsec_clipboard_timer_off">Ἀνενεργόν</string>
+    <string name="desktop_opsec_attestation_run">Καταγραφὴ στιγμιοτύπου ἀκεραιότητος ξενιστοῦ</string>
+    <string name="desktop_opsec_audit_title">Ἡμερολόγιον ἐλέγχου συνεδρίας</string>
+    <string name="desktop_opsec_audit_refresh">Ἀνανέωσις ἡμερολογίου</string>
+    <string name="desktop_opsec_audit_empty">Οὔπω ὑπάρχουσι συμβάντα ἐλέγχου</string>
+</resources>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_opsec_title">OpSec</string>
+    <string name="desktop_opsec_secure_clipboard">Təhlükəsiz bufer</string>
+    <string name="desktop_opsec_clipboard_title">Bufer</string>
+    <string name="desktop_opsec_clipboard_hint">Həssas mətn bu sessiyada saxlanılır və digər proqramların yapışdırmaması üçün sistem buferindən silinir.</string>
+    <string name="desktop_opsec_clipboard_clear_now">Buferi indi təmizlə</string>
+    <string name="desktop_opsec_clipboard_timer">%1$d saniyədən sonra avtomatik təmizlə</string>
+    <string name="desktop_opsec_clipboard_timer_off">Söndürülüb</string>
+    <string name="desktop_opsec_attestation_run">Host bütövlüyü anlıq görüntüsünü yaz</string>
+    <string name="desktop_opsec_audit_title">Sessiya audit jurnalı</string>
+    <string name="desktop_opsec_audit_refresh">Jurnalı yenilə</string>
+    <string name="desktop_opsec_audit_empty">Hələ audit hadisəsi yoxdur</string>
+</resources>

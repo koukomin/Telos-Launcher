@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_opsec_title">OpSec</string>
+    <string name="desktop_opsec_secure_clipboard">Sekura tondujo</string>
+    <string name="desktop_opsec_clipboard_title">Tondujo</string>
+    <string name="desktop_opsec_clipboard_hint">Sentema teksto restas en ĉi tiu seanco kaj estas viŝita de la sistema tondujo, por ke aliaj programoj ne povu ĝin alglui.</string>
+    <string name="desktop_opsec_clipboard_clear_now">Viŝi tondujon nun</string>
+    <string name="desktop_opsec_clipboard_timer">Aŭtomate viŝi post %1$d sekundoj</string>
+    <string name="desktop_opsec_clipboard_timer_off">Malŝaltita</string>
+    <string name="desktop_opsec_attestation_run">Registri gastigan integreco-bildon</string>
+    <string name="desktop_opsec_audit_title">Seanca kontrolprotokolo</string>
+    <string name="desktop_opsec_audit_refresh">Refreŝigi protokolon</string>
+    <string name="desktop_opsec_audit_empty">Ankoraŭ neniuj kontrolaj eventoj</string>
+</resources>

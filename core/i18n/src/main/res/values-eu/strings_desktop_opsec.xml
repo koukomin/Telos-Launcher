@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_opsec_title">OpSec</string>
+    <string name="desktop_opsec_secure_clipboard">Arbela segurua</string>
+    <string name="desktop_opsec_clipboard_title">Arbela</string>
+    <string name="desktop_opsec_clipboard_hint">Testu sentikorra saio honetan gordetzen da eta sistemaren arbelatik garbitzen da, beste aplikazioek itsatsi ez dezaten.</string>
+    <string name="desktop_opsec_clipboard_clear_now">Garbitu arbela orain</string>
+    <string name="desktop_opsec_clipboard_timer">Garbitu automatikoki %1$d segundo igaro ondoren</string>
+    <string name="desktop_opsec_clipboard_timer_off">Desaktibatuta</string>
+    <string name="desktop_opsec_attestation_run">Grabatu ostalariaren osotasun-argazkia</string>
+    <string name="desktop_opsec_audit_title">Saioaren auditoria-egunkaria</string>
+    <string name="desktop_opsec_audit_refresh">Freskatu egunkaria</string>
+    <string name="desktop_opsec_audit_empty">Oraindik ez dago auditoria-gertakaririk</string>
+</resources>

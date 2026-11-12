@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_opsec_title">OpSec</string>
+    <string name="desktop_opsec_secure_clipboard">לוח מוגן</string>
+    <string name="desktop_opsec_clipboard_title">לוח</string>
+    <string name="desktop_opsec_clipboard_hint">טקסט רגיש נשמר בסשן זה ונמחק מלוח המערכת כדי שאפליקציות אחרות לא יוכלו להדביק אותו.</string>
+    <string name="desktop_opsec_clipboard_clear_now">נקה לוח עכשיו</string>
+    <string name="desktop_opsec_clipboard_timer">ניקוי אוטומטי אחרי %1$d שניות</string>
+    <string name="desktop_opsec_clipboard_timer_off">כבוי</string>
+    <string name="desktop_opsec_attestation_run">רשום תמונת מצב שלמות מארח</string>
+    <string name="desktop_opsec_audit_title">יומן ביקורת של הסשן</string>
+    <string name="desktop_opsec_audit_refresh">רענן יומן</string>
+    <string name="desktop_opsec_audit_empty">עדיין אין אירועי ביקורת</string>
+</resources>

@@ -1,0 +1,75 @@
+package com.telos.desktop.vault
+
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
+import org.junit.Assert.assertEquals
+import org.junit.Rule
+import org.junit.Test
+import org.junit.rules.TemporaryFolder
+import java.io.File
+import java.nio.file.Files
+import java.nio.file.attribute.PosixFilePermission
+
+class TelosOpSecGuardTest {
+    @get:Rule
+    val tmp = TemporaryFolder()
+
+    @Test
+    fun looksSensitiveDetectsPrivateKeyAndIban() {
+        val guard = TelosOpSecGuard()
+        assertTrue(guard.looksSensitive("-----BEGIN PRIVATE KEY-----\nabc\n-----END PRIVATE KEY-----"))
+        assertTrue(guard.looksSensitive("PrivateKey = AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEE="))
+        assertTrue(guard.looksSensitive("DE89370400440532013000"))
+        assertFalse(guard.looksSensitive("hello world"))
+        assertFalse(guard.looksSensitive("1234"))
+    }
+
+    @Test
+    fun hostIntegritySnapshotIncludesPortableAndPlatform() {
+        val snap = TelosOpSecGuard().hostIntegritySnapshot()
+        assertTrue(snap.containsKey("os"))
+        assertTrue(snap.containsKey("compositor"))
+        assertTrue(snap.containsKey("portable"))
+        assertTrue(snap.containsKey("platform"))
+        assertEquals(false.toString(), snap["portable"])
+    }
+
+    @Test
+    fun auditLogAppendsOwnerOnlyAndReadTail() {
+        val home = tmp.newFolder("home")
+        PortableEnvironmentIsolator.apply(home, fullSessionHome = false)
+        try {
+            TelosSessionAuditLog.append("unlock", "test")
+            TelosSessionAuditLog.append("network_policy", "firewall_applied")
+            val lines = TelosSessionAuditLog.readTail(10)
+            assertTrue(lines.any { it.contains("unlock") })
+            assertTrue(lines.any { it.contains("network_policy") })
+            val file = TelosSessionAuditLog.auditFile()
+            assertTrue(file.isFile)
+            val perms = runCatching { Files.getPosixFilePermissions(file.toPath()) }.getOrNull()
+            if (perms != null) {
+                assertEquals(
+                    setOf(PosixFilePermission.OWNER_READ, PosixFilePermission.OWNER_WRITE),
+                    perms,
+                )
+            }
+            assertFalse(file.canExecute())
+        } finally {
+            PortableEnvironmentIsolator.clear()
+        }
+    }
+
+    @Test
+    fun profileSwitchWritesAuditEvent() {
+        val home = tmp.newFolder("profile-home")
+        PortableEnvironmentIsolator.apply(home, fullSessionHome = false)
+        try {
+            File(DesktopProfiles.profilesRoot(), "work").mkdirs()
+            DesktopProfiles.setActiveProfile("work")
+            assertEquals("work", DesktopProfiles.activeProfile())
+            assertTrue(TelosSessionAuditLog.readTail(5).any { it.contains("profile_switch") && it.contains("work") })
+        } finally {
+            PortableEnvironmentIsolator.clear()
+        }
+    }
+}

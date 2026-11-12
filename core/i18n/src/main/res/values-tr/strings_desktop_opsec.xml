@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_opsec_title">OpSec</string>
+    <string name="desktop_opsec_secure_clipboard">Güvenli pano</string>
+    <string name="desktop_opsec_clipboard_title">Pano</string>
+    <string name="desktop_opsec_clipboard_hint">Hassas metin bu oturumda saklanır ve diğer uygulamaların yapıştıramaması için sistem panosundan temizlenir.</string>
+    <string name="desktop_opsec_clipboard_clear_now">Panoyu şimdi temizle</string>
+    <string name="desktop_opsec_clipboard_timer">%1$d saniye sonra otomatik temizle</string>
+    <string name="desktop_opsec_clipboard_timer_off">Kapalı</string>
+    <string name="desktop_opsec_attestation_run">Ana makine bütünlük anlık görüntüsü kaydet</string>
+    <string name="desktop_opsec_audit_title">Oturum denetim günlüğü</string>
+    <string name="desktop_opsec_audit_refresh">Günlüğü yenile</string>
+    <string name="desktop_opsec_audit_empty">Henüz denetim olayı yok</string>
+</resources>

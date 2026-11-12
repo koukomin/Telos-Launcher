@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_opsec_title">OpSec</string>
+    <string name="desktop_opsec_secure_clipboard">Turvaline lõikelaud</string>
+    <string name="desktop_opsec_clipboard_title">Lõikelaud</string>
+    <string name="desktop_opsec_clipboard_hint">Tundlik tekst hoitakse selles seansis ja kustutatakse süsteemi lõikelaualt, et teised rakendused ei saaks seda kleepida.</string>
+    <string name="desktop_opsec_clipboard_clear_now">Tühjenda lõikelaud kohe</string>
+    <string name="desktop_opsec_clipboard_timer">Automaatne tühjendus %1$d sekundi pärast</string>
+    <string name="desktop_opsec_clipboard_timer_off">Väljas</string>
+    <string name="desktop_opsec_attestation_run">Salvesta hosti terviklikkuse hetktõmmis</string>
+    <string name="desktop_opsec_audit_title">Seansi auditilogi</string>
+    <string name="desktop_opsec_audit_refresh">Värskenda logi</string>
+    <string name="desktop_opsec_audit_empty">Auditilogis pole veel sündmusi</string>
+</resources>

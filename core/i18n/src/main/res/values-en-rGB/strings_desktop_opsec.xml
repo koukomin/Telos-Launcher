@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_opsec_title">OpSec</string>
+    <string name="desktop_opsec_secure_clipboard">Secure clipboard</string>
+    <string name="desktop_opsec_clipboard_title">Clipboard</string>
+    <string name="desktop_opsec_clipboard_hint">Sensitive text is vaulted in this session and cleared from the system clipboard so other apps cannot paste it.</string>
+    <string name="desktop_opsec_clipboard_clear_now">Clear clipboard now</string>
+    <string name="desktop_opsec_clipboard_timer">Auto-clear after %1$d seconds</string>
+    <string name="desktop_opsec_clipboard_timer_off">Off</string>
+    <string name="desktop_opsec_attestation_run">Record host integrity snapshot</string>
+    <string name="desktop_opsec_audit_title">Session audit log</string>
+    <string name="desktop_opsec_audit_refresh">Refresh audit log</string>
+    <string name="desktop_opsec_audit_empty">No audit events yet</string>
+</resources>

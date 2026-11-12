@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_opsec_title">OpSec</string>
+    <string name="desktop_opsec_secure_clipboard">Presse-papiers sécurisé</string>
+    <string name="desktop_opsec_clipboard_title">Presse-papiers</string>
+    <string name="desktop_opsec_clipboard_hint">Le texte sensible est conservé dans cette session et effacé du presse-papiers système pour empêcher les autres applications de le coller.</string>
+    <string name="desktop_opsec_clipboard_clear_now">Vider le presse-papiers maintenant</string>
+    <string name="desktop_opsec_clipboard_timer">Effacement automatique après %1$d secondes</string>
+    <string name="desktop_opsec_clipboard_timer_off">Désactivé</string>
+    <string name="desktop_opsec_attestation_run">Enregistrer l’instantané d’intégrité de l’hôte</string>
+    <string name="desktop_opsec_audit_title">Journal d’audit de session</string>
+    <string name="desktop_opsec_audit_refresh">Actualiser le journal</string>
+    <string name="desktop_opsec_audit_empty">Aucun événement d’audit pour l’instant</string>
+</resources>

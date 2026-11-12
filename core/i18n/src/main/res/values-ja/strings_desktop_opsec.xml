@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_opsec_title">OpSec</string>
+    <string name="desktop_opsec_secure_clipboard">安全なクリップボード</string>
+    <string name="desktop_opsec_clipboard_title">クリップボード</string>
+    <string name="desktop_opsec_clipboard_hint">機密テキストはこのセッションに保管され、他のアプリが貼り付けできないようシステムクリップボードから消去されます。</string>
+    <string name="desktop_opsec_clipboard_clear_now">今すぐクリップボードを消去</string>
+    <string name="desktop_opsec_clipboard_timer">%1$d 秒後に自動消去</string>
+    <string name="desktop_opsec_clipboard_timer_off">オフ</string>
+    <string name="desktop_opsec_attestation_run">ホスト整合性スナップショットを記録</string>
+    <string name="desktop_opsec_audit_title">セッション監査ログ</string>
+    <string name="desktop_opsec_audit_refresh">監査ログを更新</string>
+    <string name="desktop_opsec_audit_empty">監査イベントはまだありません</string>
+</resources>

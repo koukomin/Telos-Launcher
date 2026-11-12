@@ -45,6 +45,13 @@ fun LinuxDesktopSettingsPanel(
     val filter = PlatformEnvironment.settings
     val themes = remember { icons.listInstalledThemes() }
     val outputs = remember { display.queryOutputs() }
+    androidx.compose.runtime.LaunchedEffect(Unit) {
+        runCatching {
+            val opsec = com.telos.desktop.vault.PhantomVault.engine.opsec
+            opsec.secureClipboardEnabled = settings.secureClipboard
+            opsec.clipboardClearSeconds = settings.clipboardClearSeconds
+        }
+    }
     Column(
         Modifier.fillMaxSize().background(TelosColors.surface).padding(16.dp).verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(12.dp),
@@ -198,6 +205,80 @@ fun LinuxDesktopSettingsPanel(
                 }
             }
         }
+
+        HelixSettingsCard(com.telos.desktop.i18n.TelosI18n.t("desktop_opsec_title")) {
+            val opsec = runCatching { com.telos.desktop.vault.PhantomVault.engine.opsec }.getOrNull()
+            var secure by remember {
+                mutableStateOf(settings.secureClipboard)
+            }
+            var clearSecs by remember { mutableStateOf(settings.clipboardClearSeconds) }
+            var auditLines by remember {
+                mutableStateOf(com.telos.desktop.vault.TelosSessionAuditLog.readTail(24))
+            }
+            Toggle(com.telos.desktop.i18n.TelosI18n.t("desktop_opsec_secure_clipboard"), secure) {
+                secure = it
+                settings.secureClipboard = it
+                opsec?.secureClipboardEnabled = it
+                settings.save()
+            }
+            Text(
+                com.telos.desktop.i18n.TelosI18n.t("desktop_opsec_clipboard_timer", clearSecs),
+                fontSize = 12.sp,
+                color = TelosColors.onSurface,
+            )
+            Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                listOf(0, 15, 45, 120).forEach { secs ->
+                    TextButton(onClick = {
+                        clearSecs = secs
+                        settings.clipboardClearSeconds = secs
+                        opsec?.clipboardClearSeconds = secs
+                        settings.save()
+                    }) {
+                        Text(
+                            if (secs == 0) com.telos.desktop.i18n.TelosI18n.t("desktop_opsec_clipboard_timer_off")
+                            else "${secs}s",
+                        )
+                    }
+                }
+            }
+            TextButton(onClick = {
+                runCatching { com.telos.desktop.overlay.TelosClipboardManager.clearSystemAndHistory() }
+            }) {
+                Text(com.telos.desktop.i18n.TelosI18n.t("desktop_opsec_clipboard_clear_now"))
+            }
+            TextButton(onClick = {
+                runCatching { com.telos.desktop.vault.PhantomVault.engine.opsec.recordAttestation() }
+                auditLines = com.telos.desktop.vault.TelosSessionAuditLog.readTail(24)
+            }) {
+                Text(com.telos.desktop.i18n.TelosI18n.t("desktop_opsec_attestation_run"))
+            }
+            Text(
+                com.telos.desktop.i18n.TelosI18n.t("desktop_opsec_audit_title"),
+                color = TelosColors.secondary,
+                fontSize = 13.sp,
+            )
+            Text(
+                com.telos.desktop.vault.TelosSessionAuditLog.auditFile().absolutePath,
+                fontSize = 10.sp,
+                color = TelosColors.onSurface.copy(0.6f),
+            )
+            TextButton(onClick = {
+                auditLines = com.telos.desktop.vault.TelosSessionAuditLog.readTail(24)
+            }) {
+                Text(com.telos.desktop.i18n.TelosI18n.t("desktop_opsec_audit_refresh"))
+            }
+            auditLines.takeLast(12).forEach { line ->
+                Text(line, fontSize = 10.sp, color = TelosColors.onSurface.copy(0.85f))
+            }
+            if (auditLines.isEmpty()) {
+                Text(
+                    com.telos.desktop.i18n.TelosI18n.t("desktop_opsec_audit_empty"),
+                    fontSize = 11.sp,
+                    color = TelosColors.onSurface.copy(0.6f),
+                )
+            }
+        }
+
         TextButton(onClick = onClose) { Text(com.telos.desktop.i18n.TelosI18n.t("close")) }
     }
 }

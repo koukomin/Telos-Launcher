@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_opsec_title">OpSec</string>
+    <string name="desktop_opsec_secure_clipboard">Sikker udklipsholder</string>
+    <string name="desktop_opsec_clipboard_title">Udklipsholder</string>
+    <string name="desktop_opsec_clipboard_hint">Følsom tekst gemmes i denne session og ryddes fra systemets udklipsholder, så andre apps ikke kan indsætte den.</string>
+    <string name="desktop_opsec_clipboard_clear_now">Ryd udklipsholder nu</string>
+    <string name="desktop_opsec_clipboard_timer">Ryd automatisk efter %1$d sekunder</string>
+    <string name="desktop_opsec_clipboard_timer_off">Fra</string>
+    <string name="desktop_opsec_attestation_run">Registrer værtsintegritetsøjebliksbillede</string>
+    <string name="desktop_opsec_audit_title">Sessionsrevisionslog</string>
+    <string name="desktop_opsec_audit_refresh">Opdater revisionslog</string>
+    <string name="desktop_opsec_audit_empty">Ingen revisionshændelser endnu</string>
+</resources>

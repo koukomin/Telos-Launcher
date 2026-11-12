@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_opsec_title">OpSec</string>
+    <string name="desktop_opsec_secure_clipboard">Bezpieczny schowek</string>
+    <string name="desktop_opsec_clipboard_title">Schowek</string>
+    <string name="desktop_opsec_clipboard_hint">Wrażliwy tekst jest przechowywany w sesji i czyszczony ze schowka systemowego, aby inne aplikacje nie mogły go wkleić.</string>
+    <string name="desktop_opsec_clipboard_clear_now">Wyczyść schowek teraz</string>
+    <string name="desktop_opsec_clipboard_timer">Automatyczne czyszczenie po %1$d s</string>
+    <string name="desktop_opsec_clipboard_timer_off">Wył.</string>
+    <string name="desktop_opsec_attestation_run">Zapisz migawkę integralności hosta</string>
+    <string name="desktop_opsec_audit_title">Dziennik audytu sesji</string>
+    <string name="desktop_opsec_audit_refresh">Odśwież dziennik</string>
+    <string name="desktop_opsec_audit_empty">Brak zdarzeń audytu</string>
+</resources>

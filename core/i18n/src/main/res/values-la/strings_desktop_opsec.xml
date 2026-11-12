@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_opsec_title">OpSec</string>
+    <string name="desktop_opsec_secure_clipboard">Tabula tuta</string>
+    <string name="desktop_opsec_clipboard_title">Tabula</string>
+    <string name="desktop_opsec_clipboard_hint">Textus sensilis in hac sessione servatur et e tabula systematis deletur ne aliae applicationes eum infigere possint.</string>
+    <string name="desktop_opsec_clipboard_clear_now">Tabulam nunc purga</string>
+    <string name="desktop_opsec_clipboard_timer">Automatice purga post %1$d secundas</string>
+    <string name="desktop_opsec_clipboard_timer_off">Exstinctum</string>
+    <string name="desktop_opsec_attestation_run">Integritatis hospitis imaginem nota</string>
+    <string name="desktop_opsec_audit_title">Commentarii auditionis sessionis</string>
+    <string name="desktop_opsec_audit_refresh">Commentarios renovare</string>
+    <string name="desktop_opsec_audit_empty">Nondum eventa auditionis</string>
+</resources>

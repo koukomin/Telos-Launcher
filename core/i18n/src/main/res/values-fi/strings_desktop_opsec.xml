@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_opsec_title">OpSec</string>
+    <string name="desktop_opsec_secure_clipboard">Turvallinen leikepöytä</string>
+    <string name="desktop_opsec_clipboard_title">Leikepöytä</string>
+    <string name="desktop_opsec_clipboard_hint">Arkaluonteinen teksti säilytetään tässä istunnossa ja tyhjennetään järjestelmän leikepöydältä, jotta muut sovellukset eivät voi liittää sitä.</string>
+    <string name="desktop_opsec_clipboard_clear_now">Tyhjennä leikepöytä nyt</string>
+    <string name="desktop_opsec_clipboard_timer">Tyhjennä automaattisesti %1$d sekunnin kuluttua</string>
+    <string name="desktop_opsec_clipboard_timer_off">Pois</string>
+    <string name="desktop_opsec_attestation_run">Tallenna isännän eheyskuva</string>
+    <string name="desktop_opsec_audit_title">Istunnon auditointiloki</string>
+    <string name="desktop_opsec_audit_refresh">Päivitä loki</string>
+    <string name="desktop_opsec_audit_empty">Ei vielä auditointitapahtumia</string>
+</resources>

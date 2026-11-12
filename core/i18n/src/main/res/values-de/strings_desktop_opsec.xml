@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_opsec_title">OpSec</string>
+    <string name="desktop_opsec_secure_clipboard">Sichere Zwischenablage</string>
+    <string name="desktop_opsec_clipboard_title">Zwischenablage</string>
+    <string name="desktop_opsec_clipboard_hint">Sensitiver Text wird in dieser Sitzung verwahrt und aus der System-Zwischenablage gelöscht, damit andere Apps ihn nicht einfügen können.</string>
+    <string name="desktop_opsec_clipboard_clear_now">Zwischenablage jetzt leeren</string>
+    <string name="desktop_opsec_clipboard_timer">Automatisch nach %1$d Sekunden leeren</string>
+    <string name="desktop_opsec_clipboard_timer_off">Aus</string>
+    <string name="desktop_opsec_attestation_run">Host-Integritäts-Schnappschuss speichern</string>
+    <string name="desktop_opsec_audit_title">Sitzungs-Auditprotokoll</string>
+    <string name="desktop_opsec_audit_refresh">Auditprotokoll aktualisieren</string>
+    <string name="desktop_opsec_audit_empty">Noch keine Audit-Ereignisse</string>
+</resources>

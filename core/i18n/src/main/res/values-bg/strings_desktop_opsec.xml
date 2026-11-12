@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_opsec_title">OpSec</string>
+    <string name="desktop_opsec_secure_clipboard">Сигурен клипборд</string>
+    <string name="desktop_opsec_clipboard_title">Клипборд</string>
+    <string name="desktop_opsec_clipboard_hint">Чувствителният текст се пази в сесията и се изчиства от системния клипборд, за да не могат други приложения да го поставят.</string>
+    <string name="desktop_opsec_clipboard_clear_now">Изчисти клипборда сега</string>
+    <string name="desktop_opsec_clipboard_timer">Автоматично изчистване след %1$d секунди</string>
+    <string name="desktop_opsec_clipboard_timer_off">Изкл.</string>
+    <string name="desktop_opsec_attestation_run">Запиши моментна снимка на целостта на хоста</string>
+    <string name="desktop_opsec_audit_title">Одитен дневник на сесията</string>
+    <string name="desktop_opsec_audit_refresh">Обнови дневника</string>
+    <string name="desktop_opsec_audit_empty">Все още няма одитни събития</string>
+</resources>

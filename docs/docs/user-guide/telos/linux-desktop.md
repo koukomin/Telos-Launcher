@@ -69,6 +69,8 @@ The vault password (and optional FIDO2 key) unlocks an encrypted volume that **b
 
 On Windows, optional per-user shell replacement (`tools/windows/install-telos-shell.ps1` or Settings → Portable) launches the UberJar at sign-in; revert restores `explorer.exe`.
 
+**OpSec (VOS-6 partial):** Settings and Network → Status show a session audit log under `~/.config/telos/opsec/audit.log` (owner-only). Sensitive clipboard material is vaulted in memory and cleared from the system clipboard after a timer (or immediately for keys/IBAN/card/OTP patterns). Unlock writes a light host integrity snapshot (OS, compositor, portable flag) — not TPM attestation.
+
 **Session sync:** Network → Status can export/import an AES-encrypted bundle of `desktop.properties` and Telos network prefs. Store the unlock secret in KeePassTL entry **Telos Sync** or enter a passphrase manually; toggle auto-import when the `.kdbx` is available under `~/.config/telos/sync/keepass.kdbx`.
 
 Compose is an xdg-toplevel that labwc pins fullscreen; it is not a native layer-shell client yet.

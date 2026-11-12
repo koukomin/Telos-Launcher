@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_opsec_title">OpSec</string>
+    <string name="desktop_opsec_secure_clipboard">Sikker utklippstavle</string>
+    <string name="desktop_opsec_clipboard_title">Utklippstavle</string>
+    <string name="desktop_opsec_clipboard_hint">Sensitiv tekst lagres i denne økten og tømmes fra systemutklippstavlen slik at andre apper ikke kan lime den inn.</string>
+    <string name="desktop_opsec_clipboard_clear_now">Tøm utklippstavlen nå</string>
+    <string name="desktop_opsec_clipboard_timer">Tøm automatisk etter %1$d sekunder</string>
+    <string name="desktop_opsec_clipboard_timer_off">Av</string>
+    <string name="desktop_opsec_attestation_run">Lagre vertsintegritetsøyeblikksbilde</string>
+    <string name="desktop_opsec_audit_title">Øktrevisjonslogg</string>
+    <string name="desktop_opsec_audit_refresh">Oppdater revisjonsloggen</string>
+    <string name="desktop_opsec_audit_empty">Ingen revisjonshendelser ennå</string>
+</resources>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_opsec_title">OpSec</string>
+    <string name="desktop_opsec_secure_clipboard">安全剪贴板</string>
+    <string name="desktop_opsec_clipboard_title">剪贴板</string>
+    <string name="desktop_opsec_clipboard_hint">敏感文本仅保存在本次会话中，并从系统剪贴板清除，防止其他应用粘贴。</string>
+    <string name="desktop_opsec_clipboard_clear_now">立即清空剪贴板</string>
+    <string name="desktop_opsec_clipboard_timer">%1$d 秒后自动清空</string>
+    <string name="desktop_opsec_clipboard_timer_off">关闭</string>
+    <string name="desktop_opsec_attestation_run">记录主机完整性快照</string>
+    <string name="desktop_opsec_audit_title">会话审计日志</string>
+    <string name="desktop_opsec_audit_refresh">刷新审计日志</string>
+    <string name="desktop_opsec_audit_empty">暂无审计事件</string>
+</resources>
