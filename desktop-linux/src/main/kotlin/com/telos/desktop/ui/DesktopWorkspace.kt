@@ -444,7 +444,8 @@ fun handleDesktopKeys(
         return true
     }
     // Plasma-style Kickoff: Super+Space (logo click also toggles). Avoid Meta-alone vs Meta+Tab race.
-    if (ev.isMetaPressed && key == Key.Space) {
+    // Compose Desktop exposes Key.Spacebar (not Key.Space).
+    if (ev.isMetaPressed && key == Key.Spacebar) {
         DesktopChrome.toggleAppGrid()
         return true
     }
