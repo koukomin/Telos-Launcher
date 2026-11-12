@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_night_light_title">الإضاءة الليلية</string>
+    <string name="desktop_night_light_hint">تدفئ الشاشة بأداة المضيف (gammastep أو redshift أو wlsunset). بلا خدمات موقع ولا يُرسل شيء عبر الشبكة. بدون أداة تُحفظ التفضيلة فقط.</string>
+    <string name="desktop_night_light_enable">تفعيل الإضاءة الليلية</string>
+    <string name="desktop_night_light_temperature">درجة حرارة اللون: %1$d K</string>
+    <string name="desktop_night_light_on">تشغيل</string>
+    <string name="desktop_night_light_off">إيقاف</string>
+    <string name="desktop_night_light_pref_only">تم حفظ التفضيلة؛ ثبّت gammastep أو redshift أو wlsunset لتطبيقها على هذا المضيف</string>
+    <string name="desktop_night_light_failed">فشلت أداة المضيف في تغيير درجة حرارة الشاشة</string>
+    <string name="desktop_night_light_applied">طُبّقت باستخدام %1$s</string>
+    <string name="desktop_night_light_cleared">أُلغيت الإضاءة الليلية</string>
+    <string name="desktop_settings_search_hint">البحث في الإعدادات</string>
+    <string name="desktop_settings_search_empty">لا توجد إعدادات تطابق هذا البحث</string>
+    <string name="desktop_settings_session">الجلسة</string>
+    <string name="desktop_settings_display">العرض</string>
+    <string name="desktop_settings_desktop">سطح المكتب</string>
+    <string name="desktop_settings_windows">النوافذ</string>
+    <string name="desktop_settings_portable">محمول</string>
+    <string name="desktop_settings_vault">الخزنة</string>
+</resources>

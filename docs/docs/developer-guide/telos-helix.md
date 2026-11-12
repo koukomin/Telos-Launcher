@@ -26,7 +26,7 @@ Beat GNOME / Cosmic / Hyprland-default chrome on density and search, using KDE-c
 | **H1** | In tree (panel glyphs) | `TelosTopPanel` system tray uses `CandyCyberIcon` (volume, network, battery, tray, clip, bell, shot) instead of English word chips. Popups stay opaque `TelosColors.surface`. |
 | **H2** | In tree (Kickoff) | `PlasmaAppGrid` Kickoff: left favorites + power, right search (`DesktopSearch`) + Telos/Linux grids. Opens as a **Yakuake-style pull-down under the top panel** (`HelixMotion.drawerEnter`), not a fullscreen DE replace. Logo click + Super+Space (`Key.Spacebar`) toggle `DesktopChrome.toggleAppGrid()`. Host apps stay labwc/niri windows. |
 | **H3** | Already in tree | Klassy titlebars, workspace dots, dock row, Alt-Tab strip. Polish only if gaps. |
-| **H4** | In tree | Settings window: opaque Helix `surface` + grouped `surfaceContainer` cards with `outline`. Same toggles and actions as before. |
+| **H4** | In tree | Settings window: opaque Helix `surface` + grouped `surfaceContainer` cards with `outline`. Same toggles and actions as before. **Settings search** filters cards by title/toggle keywords. **Night Light** toggle + temperature (gammastep / redshift / wlsunset; PreferenceOnly without a host tool; no geolocation / phone-home). |
 | **H5** | In tree | Bottom dock uses `CandyCyberIcon` + labels. Apps opens Kickoff (`toggleAppGrid`). Alt-Tab uses opaque `menu` chips. |
 | **H6** | In tree | Context menu, notifications, clipboard: opaque `menu` + outline. Window chrome: opaque title bar + title text, opaque body. |
 
@@ -42,7 +42,7 @@ Wallpaper is the stage. Menus stay opaque. Motion is 120–160 ms, no bounce.
 | **S1** | In tree | Kickoff, notifications, clipboard, context menu, Overview, Control Center: fade+scale 160 ms. |
 | **S2** | In tree | Clock popup month grid. OSD bottom-center opaque card. Toast 4 s. Slim CPU pill. |
 | **S3** | In tree | Overview: 4 workspace tiles + window titles. Dock button + Meta+Tab. Escape closes. |
-| **S4** | In tree | Control Center: volume, Wi-Fi, brightness, DND, vault, Settings. Volume/Net/Battery open it. |
+| **S4** | In tree | Control Center: volume, Wi-Fi, brightness, Night Light, DND, vault, Settings. Volume/Net/Battery open it. |
 
 ## Files
 

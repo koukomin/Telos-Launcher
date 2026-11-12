@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_night_light_title">Night Light</string>
+    <string name="desktop_night_light_hint">Warms the display with a host tool (gammastep, redshift, or wlsunset). No location services and nothing is sent over the network. Without a tool, the preference is saved only.</string>
+    <string name="desktop_night_light_enable">Enable Night Light</string>
+    <string name="desktop_night_light_temperature">Color temperature: %1$d K</string>
+    <string name="desktop_night_light_on">On</string>
+    <string name="desktop_night_light_off">Off</string>
+    <string name="desktop_night_light_pref_only">Preference saved; install gammastep, redshift, or wlsunset to apply on this host</string>
+    <string name="desktop_night_light_failed">Host tool failed to change the display temperature</string>
+    <string name="desktop_night_light_applied">Applied with %1$s</string>
+    <string name="desktop_night_light_cleared">Night Light cleared</string>
+    <string name="desktop_settings_search_hint">Search settings</string>
+    <string name="desktop_settings_search_empty">No settings match this search</string>
+    <string name="desktop_settings_session">Session</string>
+    <string name="desktop_settings_display">Display</string>
+    <string name="desktop_settings_desktop">Desktop</string>
+    <string name="desktop_settings_windows">Windows</string>
+    <string name="desktop_settings_portable">Portable</string>
+    <string name="desktop_settings_vault">Vault</string>
+</resources>

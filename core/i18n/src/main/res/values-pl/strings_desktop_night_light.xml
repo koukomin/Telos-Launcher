@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_night_light_title">Światło nocne</string>
+    <string name="desktop_night_light_hint">Ociepla ekran narzędziem systemowym (gammastep, redshift lub wlsunset). Bez usług lokalizacji i bez wysyłania czegokolwiek przez sieć. Bez narzędzia zapisywana jest tylko preferencja.</string>
+    <string name="desktop_night_light_enable">Włącz światło nocne</string>
+    <string name="desktop_night_light_temperature">Temperatura barwowa: %1$d K</string>
+    <string name="desktop_night_light_on">Włączone</string>
+    <string name="desktop_night_light_off">Wyłączone</string>
+    <string name="desktop_night_light_pref_only">Preferencja zapisana; zainstaluj gammastep, redshift lub wlsunset, aby zastosować na tym hoście</string>
+    <string name="desktop_night_light_failed">Narzędzie systemowe nie zmieniło temperatury ekranu</string>
+    <string name="desktop_night_light_applied">Zastosowano przez %1$s</string>
+    <string name="desktop_night_light_cleared">Światło nocne wyłączone</string>
+    <string name="desktop_settings_search_hint">Szukaj w ustawieniach</string>
+    <string name="desktop_settings_search_empty">Brak ustawień pasujących do tego wyszukiwania</string>
+    <string name="desktop_settings_session">Sesja</string>
+    <string name="desktop_settings_display">Wyświetlacz</string>
+    <string name="desktop_settings_desktop">Pulpit</string>
+    <string name="desktop_settings_windows">Okna</string>
+    <string name="desktop_settings_portable">Przenośne</string>
+    <string name="desktop_settings_vault">Sejf</string>
+</resources>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_night_light_title">Cahaya malam</string>
+    <string name="desktop_night_light_hint">Menghangatkan tampilan dengan alat host (gammastep, redshift, atau wlsunset). Tanpa layanan lokasi dan tidak ada yang dikirim lewat jaringan. Tanpa alat, hanya preferensi yang disimpan.</string>
+    <string name="desktop_night_light_enable">Aktifkan cahaya malam</string>
+    <string name="desktop_night_light_temperature">Suhu warna: %1$d K</string>
+    <string name="desktop_night_light_on">Aktif</string>
+    <string name="desktop_night_light_off">Nonaktif</string>
+    <string name="desktop_night_light_pref_only">Preferensi disimpan; pasang gammastep, redshift, atau wlsunset untuk menerapkan di host ini</string>
+    <string name="desktop_night_light_failed">Alat host gagal mengubah suhu tampilan</string>
+    <string name="desktop_night_light_applied">Diterapkan dengan %1$s</string>
+    <string name="desktop_night_light_cleared">Cahaya malam dimatikan</string>
+    <string name="desktop_settings_search_hint">Cari pengaturan</string>
+    <string name="desktop_settings_search_empty">Tidak ada pengaturan yang cocok dengan pencarian ini</string>
+    <string name="desktop_settings_session">Sesi</string>
+    <string name="desktop_settings_display">Tampilan</string>
+    <string name="desktop_settings_desktop">Desktop</string>
+    <string name="desktop_settings_windows">Jendela</string>
+    <string name="desktop_settings_portable">Portabel</string>
+    <string name="desktop_settings_vault">Vault</string>
+</resources>

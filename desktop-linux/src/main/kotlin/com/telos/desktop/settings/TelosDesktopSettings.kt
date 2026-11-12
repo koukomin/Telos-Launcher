@@ -38,6 +38,9 @@ class TelosDesktopSettings(private val vaultConfigDir: File) {
     var idleSeconds: Int = 300
     var secureClipboard: Boolean = true
     var clipboardClearSeconds: Int = 45
+    /** Warm display temperature (Night Light); applied via host gammastep/redshift/wlsunset when present. */
+    var nightLightEnabled: Boolean = false
+    var nightLightTemperatureK: Int = 4500
 
     private val file: File get() = File(vaultConfigDir, "desktop.properties")
 
@@ -80,6 +83,9 @@ class TelosDesktopSettings(private val vaultConfigDir: File) {
         idleSeconds = p.getProperty("idleSeconds")?.toIntOrNull()?.coerceIn(30, 3600) ?: 300
         secureClipboard = p.getProperty("opsec.secureClipboard", "true").toBoolean()
         clipboardClearSeconds = p.getProperty("opsec.clipboardClearSeconds")?.toIntOrNull()?.coerceIn(0, 600) ?: 45
+        nightLightEnabled = p.getProperty("nightLight.enabled", "false").toBoolean()
+        nightLightTemperatureK = p.getProperty("nightLight.temperatureK")?.toIntOrNull()
+            ?.coerceIn(1000, 6500) ?: 4500
         outputPrefs.clear()
         p.stringPropertyNames().forEach { key ->
             if (key.startsWith("output.")) {
@@ -125,6 +131,8 @@ class TelosDesktopSettings(private val vaultConfigDir: File) {
         p["idleSeconds"] = idleSeconds.toString()
         p["opsec.secureClipboard"] = secureClipboard.toString()
         p["opsec.clipboardClearSeconds"] = clipboardClearSeconds.toString()
+        p["nightLight.enabled"] = nightLightEnabled.toString()
+        p["nightLight.temperatureK"] = nightLightTemperatureK.toString()
         outputPrefs.forEach { (name, spec) -> p["output.$name"] = spec }
         file.outputStream().use { p.store(it, "Telos Linux Desktop") }
     }

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_night_light_title">Nachtlicht</string>
+    <string name="desktop_night_light_hint">Wärmt die Anzeige mit einem Host-Werkzeug (gammastep, redshift oder wlsunset). Keine Standortdienste und nichts wird übers Netz gesendet. Ohne Werkzeug wird nur die Einstellung gespeichert.</string>
+    <string name="desktop_night_light_enable">Nachtlicht aktivieren</string>
+    <string name="desktop_night_light_temperature">Farbtemperatur: %1$d K</string>
+    <string name="desktop_night_light_on">An</string>
+    <string name="desktop_night_light_off">Aus</string>
+    <string name="desktop_night_light_pref_only">Einstellung gespeichert; installieren Sie gammastep, redshift oder wlsunset zur Anwendung auf diesem Host</string>
+    <string name="desktop_night_light_failed">Host-Werkzeug konnte die Anzeigetemperatur nicht ändern</string>
+    <string name="desktop_night_light_applied">Angewendet mit %1$s</string>
+    <string name="desktop_night_light_cleared">Nachtlicht zurückgesetzt</string>
+    <string name="desktop_settings_search_hint">Einstellungen suchen</string>
+    <string name="desktop_settings_search_empty">Keine Einstellungen passen zu dieser Suche</string>
+    <string name="desktop_settings_session">Sitzung</string>
+    <string name="desktop_settings_display">Anzeige</string>
+    <string name="desktop_settings_desktop">Schreibtisch</string>
+    <string name="desktop_settings_windows">Fenster</string>
+    <string name="desktop_settings_portable">Portabel</string>
+    <string name="desktop_settings_vault">Tresor</string>
+</resources>

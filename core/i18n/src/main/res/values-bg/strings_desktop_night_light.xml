@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_night_light_title">Нощна светлина</string>
+    <string name="desktop_night_light_hint">Затопля екрана със системна програма (gammastep, redshift или wlsunset). Без услуги за местоположение и без изпращане по мрежата. Без програма се запазва само предпочитанието.</string>
+    <string name="desktop_night_light_enable">Включване на нощна светлина</string>
+    <string name="desktop_night_light_temperature">Цветова температура: %1$d K</string>
+    <string name="desktop_night_light_on">Включено</string>
+    <string name="desktop_night_light_off">Изключено</string>
+    <string name="desktop_night_light_pref_only">Предпочитанието е запазено; инсталирайте gammastep, redshift или wlsunset за прилагане на този хост</string>
+    <string name="desktop_night_light_failed">Системната програма не успя да промени температурата на екрана</string>
+    <string name="desktop_night_light_applied">Приложено с %1$s</string>
+    <string name="desktop_night_light_cleared">Нощната светлина е изключена</string>
+    <string name="desktop_settings_search_hint">Търсене в настройките</string>
+    <string name="desktop_settings_search_empty">Няма настройки, които да съвпадат с това търсене</string>
+    <string name="desktop_settings_session">Сесия</string>
+    <string name="desktop_settings_display">Дисплей</string>
+    <string name="desktop_settings_desktop">Работен плот</string>
+    <string name="desktop_settings_windows">Прозорци</string>
+    <string name="desktop_settings_portable">Преносимо</string>
+    <string name="desktop_settings_vault">Хранилище</string>
+</resources>

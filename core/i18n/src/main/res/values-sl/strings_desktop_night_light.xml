@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_night_light_title">Nočna svetloba</string>
+    <string name="desktop_night_light_hint">Ogreje zaslon s sistemskim orodjem (gammastep, redshift ali wlsunset). Brez lokacijskih storitev in brez pošiljanja po omrežju. Brez orodja se shrani le nastavitev.</string>
+    <string name="desktop_night_light_enable">Omogoči nočno svetlobo</string>
+    <string name="desktop_night_light_temperature">Barvna temperatura: %1$d K</string>
+    <string name="desktop_night_light_on">Vklopljeno</string>
+    <string name="desktop_night_light_off">Izklopljeno</string>
+    <string name="desktop_night_light_pref_only">Nastavitev shranjena; namestite gammastep, redshift ali wlsunset za uporabo na tem gostitelju</string>
+    <string name="desktop_night_light_failed">Sistemsko orodje ni spremenilo temperature zaslona</string>
+    <string name="desktop_night_light_applied">Uporabljeno z %1$s</string>
+    <string name="desktop_night_light_cleared">Nočna svetloba izklopljena</string>
+    <string name="desktop_settings_search_hint">Iskanje nastavitev</string>
+    <string name="desktop_settings_search_empty">Nobena nastavitev ne ustreza temu iskanju</string>
+    <string name="desktop_settings_session">Seja</string>
+    <string name="desktop_settings_display">Zaslon</string>
+    <string name="desktop_settings_desktop">Namizje</string>
+    <string name="desktop_settings_windows">Okna</string>
+    <string name="desktop_settings_portable">Prenosno</string>
+    <string name="desktop_settings_vault">Trezor</string>
+</resources>

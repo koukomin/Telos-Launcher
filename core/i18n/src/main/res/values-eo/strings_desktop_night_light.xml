@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_night_light_title">Nokta lumo</string>
+    <string name="desktop_night_light_hint">Varmigas la ekranon per gastigila ilo (gammastep, redshift aŭ wlsunset). Sen lokservoj kaj nenio estas sendita tra la reto. Sen ilo, nur la prefero estas konservita.</string>
+    <string name="desktop_night_light_enable">Ŝalti noktan lumon</string>
+    <string name="desktop_night_light_temperature">Kolortemperaturo: %1$d K</string>
+    <string name="desktop_night_light_on">Ŝaltita</string>
+    <string name="desktop_night_light_off">Malŝaltita</string>
+    <string name="desktop_night_light_pref_only">Prefero konservita; instalu gammastep, redshift aŭ wlsunset por apliki sur ĉi tiu gastigilo</string>
+    <string name="desktop_night_light_failed">Gastigila ilo malsukcesis ŝanĝi la ekranan temperaturon</string>
+    <string name="desktop_night_light_applied">Aplikita per %1$s</string>
+    <string name="desktop_night_light_cleared">Nokta lumo malŝaltita</string>
+    <string name="desktop_settings_search_hint">Serĉi agordojn</string>
+    <string name="desktop_settings_search_empty">Neniu agordo kongruas kun ĉi tiu serĉo</string>
+    <string name="desktop_settings_session">Seanco</string>
+    <string name="desktop_settings_display">Ekrano</string>
+    <string name="desktop_settings_desktop">Labortablo</string>
+    <string name="desktop_settings_windows">Fenestroj</string>
+    <string name="desktop_settings_portable">Portebla</string>
+    <string name="desktop_settings_vault">Trezorejo</string>
+</resources>

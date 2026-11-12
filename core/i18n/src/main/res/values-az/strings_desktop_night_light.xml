@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_night_light_title">Gecə işığı</string>
+    <string name="desktop_night_light_hint">Ekranı host aləti ilə (gammastep, redshift və ya wlsunset) isidir. Məkan xidməti yoxdur və şəbəkəyə heç nə göndərilmir. Alət yoxdursa yalnız üstünlük saxlanılır.</string>
+    <string name="desktop_night_light_enable">Gecə işığını aktiv et</string>
+    <string name="desktop_night_light_temperature">Rəng temperaturu: %1$d K</string>
+    <string name="desktop_night_light_on">Açıq</string>
+    <string name="desktop_night_light_off">Bağlı</string>
+    <string name="desktop_night_light_pref_only">Üstünlük saxlanıldı; bu hostda tətbiq üçün gammastep, redshift və ya wlsunset quraşdırın</string>
+    <string name="desktop_night_light_failed">Host aləti ekran temperaturunu dəyişə bilmədi</string>
+    <string name="desktop_night_light_applied">%1$s ilə tətbiq edildi</string>
+    <string name="desktop_night_light_cleared">Gecə işığı söndürüldü</string>
+    <string name="desktop_settings_search_hint">Ayarlarda axtar</string>
+    <string name="desktop_settings_search_empty">Bu axtarışa uyğun ayar yoxdur</string>
+    <string name="desktop_settings_session">Sessiya</string>
+    <string name="desktop_settings_display">Ekran</string>
+    <string name="desktop_settings_desktop">İş masası</string>
+    <string name="desktop_settings_windows">Pəncərələr</string>
+    <string name="desktop_settings_portable">Portativ</string>
+    <string name="desktop_settings_vault">Seyf</string>
+</resources>

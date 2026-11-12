@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_night_light_title">แสงกลางคืน</string>
+    <string name="desktop_night_light_hint">อุ่นหน้าจอด้วยเครื่องมือโฮสต์ (gammastep, redshift หรือ wlsunset) ไม่ใช้บริการตำแหน่งและไม่ส่งอะไรผ่านเครือข่าย หากไม่มีเครื่องมือจะบันทึกเฉพาะค่าที่ชอบ</string>
+    <string name="desktop_night_light_enable">เปิดใช้แสงกลางคืน</string>
+    <string name="desktop_night_light_temperature">อุณหภูมิสี: %1$d K</string>
+    <string name="desktop_night_light_on">เปิด</string>
+    <string name="desktop_night_light_off">ปิด</string>
+    <string name="desktop_night_light_pref_only">บันทึกค่าแล้ว ติดตั้ง gammastep, redshift หรือ wlsunset เพื่อใช้บนโฮสต์นี้</string>
+    <string name="desktop_night_light_failed">เครื่องมือโฮสต์เปลี่ยนอุณหภูมิหน้าจอไม่สำเร็จ</string>
+    <string name="desktop_night_light_applied">ใช้กับ %1$s แล้ว</string>
+    <string name="desktop_night_light_cleared">ปิดแสงกลางคืนแล้ว</string>
+    <string name="desktop_settings_search_hint">ค้นหาการตั้งค่า</string>
+    <string name="desktop_settings_search_empty">ไม่มีการตั้งค่าที่ตรงกับการค้นหานี้</string>
+    <string name="desktop_settings_session">เซสชัน</string>
+    <string name="desktop_settings_display">จอแสดงผล</string>
+    <string name="desktop_settings_desktop">เดสก์ท็อป</string>
+    <string name="desktop_settings_windows">หน้าต่าง</string>
+    <string name="desktop_settings_portable">แบบพกพา</string>
+    <string name="desktop_settings_vault">ตู้เซฟ</string>
+</resources>

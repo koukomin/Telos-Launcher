@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_night_light_title">Nattlys</string>
+    <string name="desktop_night_light_hint">Varmer skjermen med et vertverktøy (gammastep, redshift eller wlsunset). Ingen posisjonstjenester og ingenting sendes over nettverket. Uten verktøy lagres bare innstillingen.</string>
+    <string name="desktop_night_light_enable">Slå på nattlys</string>
+    <string name="desktop_night_light_temperature">Fargetemperatur: %1$d K</string>
+    <string name="desktop_night_light_on">På</string>
+    <string name="desktop_night_light_off">Av</string>
+    <string name="desktop_night_light_pref_only">Innstilling lagret; installer gammastep, redshift eller wlsunset for å bruke på denne verten</string>
+    <string name="desktop_night_light_failed">Vertverktøyet klarte ikke å endre skjermtemperaturen</string>
+    <string name="desktop_night_light_applied">Brukt med %1$s</string>
+    <string name="desktop_night_light_cleared">Nattlys av</string>
+    <string name="desktop_settings_search_hint">Søk i innstillinger</string>
+    <string name="desktop_settings_search_empty">Ingen innstillinger samsvarer med dette søket</string>
+    <string name="desktop_settings_session">Økt</string>
+    <string name="desktop_settings_display">Skjerm</string>
+    <string name="desktop_settings_desktop">Skrivebord</string>
+    <string name="desktop_settings_windows">Vinduer</string>
+    <string name="desktop_settings_portable">Portabel</string>
+    <string name="desktop_settings_vault">Hvelv</string>
+</resources>

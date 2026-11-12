@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_night_light_title">Öövalgus</string>
+    <string name="desktop_night_light_hint">Soojendab kuvari hostitööriistaga (gammastep, redshift või wlsunset). Asukohateenuseid pole ja midagi ei saadeta võrku. Ilma tööriistata salvestatakse ainult eelistus.</string>
+    <string name="desktop_night_light_enable">Lülita öövalgus sisse</string>
+    <string name="desktop_night_light_temperature">Värvustemperatuur: %1$d K</string>
+    <string name="desktop_night_light_on">Sees</string>
+    <string name="desktop_night_light_off">Väljas</string>
+    <string name="desktop_night_light_pref_only">Eelistus salvestatud; installige gammastep, redshift või wlsunset sellel hostil rakendamiseks</string>
+    <string name="desktop_night_light_failed">Hostitööriist ei saanud kuvari temperatuuri muuta</string>
+    <string name="desktop_night_light_applied">Rakendatud tööriistaga %1$s</string>
+    <string name="desktop_night_light_cleared">Öövalgus välja lülitatud</string>
+    <string name="desktop_settings_search_hint">Otsi sätetest</string>
+    <string name="desktop_settings_search_empty">Ükski säte ei vasta sellele otsingule</string>
+    <string name="desktop_settings_session">Seanss</string>
+    <string name="desktop_settings_display">Kuva</string>
+    <string name="desktop_settings_desktop">Töölaud</string>
+    <string name="desktop_settings_windows">Aknad</string>
+    <string name="desktop_settings_portable">Kaasaskantav</string>
+    <string name="desktop_settings_vault">Hoidla</string>
+</resources>

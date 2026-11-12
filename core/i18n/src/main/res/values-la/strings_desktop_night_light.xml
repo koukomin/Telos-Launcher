@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_night_light_title">Lux nocturna</string>
+    <string name="desktop_night_light_hint">Calefacit monitorem instrumento hospitis (gammastep, redshift, vel wlsunset). Sine servitiis loci et nihil per rete mittitur. Sine instrumento sola praelatio servatur.</string>
+    <string name="desktop_night_light_enable">Lux nocturna activa</string>
+    <string name="desktop_night_light_temperature">Temperatura coloris: %1$d K</string>
+    <string name="desktop_night_light_on">Accensa</string>
+    <string name="desktop_night_light_off">Extincta</string>
+    <string name="desktop_night_light_pref_only">Praelatio servata; installe gammastep, redshift, vel wlsunset ut in hoc hospite adhibeatur</string>
+    <string name="desktop_night_light_failed">Instrumentum hospitis temperaturam monitoris mutare non potuit</string>
+    <string name="desktop_night_light_applied">Adhibitum cum %1$s</string>
+    <string name="desktop_night_light_cleared">Lux nocturna extincta</string>
+    <string name="desktop_settings_search_hint">Quaere optiones</string>
+    <string name="desktop_settings_search_empty">Nullae optiones huic quaestioni conveniunt</string>
+    <string name="desktop_settings_session">Sessio</string>
+    <string name="desktop_settings_display">Monitor</string>
+    <string name="desktop_settings_desktop">Mensa</string>
+    <string name="desktop_settings_windows">Fenestrae</string>
+    <string name="desktop_settings_portable">Portabile</string>
+    <string name="desktop_settings_vault">Armarium</string>
+</resources>
