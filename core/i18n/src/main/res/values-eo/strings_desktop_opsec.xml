@@ -3,8 +3,14 @@
     <string name="desktop_opsec_title">OpSec</string>
     <string name="desktop_opsec_secure_clipboard">Sekura tondujo</string>
     <string name="desktop_opsec_clipboard_title">Tondujo</string>
-    <string name="desktop_opsec_clipboard_hint">Sentema teksto restas en ĉi tiu seanco kaj estas viŝita de la sistema tondujo, por ke aliaj programoj ne povu ĝin alglui.</string>
+    <string name="desktop_opsec_clipboard_hint">Sentema teksto (ŝlosiloj, IBAN, WireGuard) estas forigita el historio, konservata nur en ĉi tiu seanco, kaj viŝita el la sistema tondujo. Historio restas vault-loka — sen nuba sinkronigo.</string>
     <string name="desktop_opsec_clipboard_clear_now">Viŝi tondujon nun</string>
+    <string name="desktop_opsec_clipboard_clear_all">Viŝi ĉion</string>
+    <string name="desktop_opsec_clipboard_history_meta">Ĝis 20 eroj · eksvalidiĝas post 5 minutoj · fiksi ĝis ŝlosado · Super+V</string>
+    <string name="desktop_opsec_clipboard_history_empty">Ankoraŭ neniu tonduja historio</string>
+    <string name="desktop_opsec_clipboard_pin_until_lock">Fiksi</string>
+    <string name="desktop_opsec_clipboard_unpin">Malfiksi</string>
+    <string name="desktop_opsec_clipboard_recall_vaulted">Revoki vaultitan senteman klipon</string>
     <string name="desktop_opsec_clipboard_timer">Aŭtomate viŝi post %1$d sekundoj</string>
     <string name="desktop_opsec_clipboard_timer_off">Malŝaltita</string>
     <string name="desktop_opsec_attestation_run">Registri gastigan integreco-bildon</string>

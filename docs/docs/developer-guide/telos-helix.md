@@ -28,7 +28,7 @@ Beat GNOME / Cosmic / Hyprland-default chrome on density and search, using KDE-c
 | **H3** | Already in tree | Klassy titlebars, workspace dots, dock row, Alt-Tab strip. Polish only if gaps. |
 | **H4** | In tree | Settings window: opaque Helix `surface` + grouped `surfaceContainer` cards with `outline`. Same toggles and actions as before. |
 | **H5** | In tree | Bottom dock uses `CandyCyberIcon` + labels. Apps opens Kickoff (`toggleAppGrid`). Alt-Tab uses opaque `menu` chips. |
-| **H6** | In tree | Context menu, notifications, clipboard: opaque `menu` + outline. Window chrome: opaque title bar + title text, opaque body. |
+| **H6** | In tree | Context menu, notifications, clipboard history (Super+V / panel glyph; TTL + scrub + pin-until-lock; vault-local, no cloud sync): opaque `menu` + outline. Window chrome: opaque title bar + title text, opaque body. |
 
 When a later session asks **what is still pending**: **none of P0–P4, Helix, Surface, or Wayland W0–W3**. See [telos-wayland-shell.md](./telos-wayland-shell.md).
 

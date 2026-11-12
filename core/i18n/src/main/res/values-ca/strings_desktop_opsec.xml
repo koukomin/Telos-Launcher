@@ -3,8 +3,14 @@
     <string name="desktop_opsec_title">OpSec</string>
     <string name="desktop_opsec_secure_clipboard">Porta-retalls segur</string>
     <string name="desktop_opsec_clipboard_title">Porta-retalls</string>
-    <string name="desktop_opsec_clipboard_hint">El text sensible es guarda en aquesta sessió i s’esborra del porta-retalls del sistema perquè altres aplicacions no el puguin enganxar.</string>
+    <string name="desktop_opsec_clipboard_hint">El text sensible (claus, IBAN, WireGuard) s’elimina de l’historial, es guarda només en aquesta sessió i es neteja del porta-retalls del sistema. L’historial és local al vault — sense sincronització al núvol.</string>
     <string name="desktop_opsec_clipboard_clear_now">Buida el porta-retalls ara</string>
+    <string name="desktop_opsec_clipboard_clear_all">Esborra-ho tot</string>
+    <string name="desktop_opsec_clipboard_history_meta">Fins a 20 elements · caduca als 5 minuts · fixa fins al bloqueig · Super+V</string>
+    <string name="desktop_opsec_clipboard_history_empty">Encara no hi ha historial del porta-retalls</string>
+    <string name="desktop_opsec_clipboard_pin_until_lock">Fixa</string>
+    <string name="desktop_opsec_clipboard_unpin">Desfixa</string>
+    <string name="desktop_opsec_clipboard_recall_vaulted">Recupera el clip sensible del vault</string>
     <string name="desktop_opsec_clipboard_timer">Esborra automàticament després de %1$d segons</string>
     <string name="desktop_opsec_clipboard_timer_off">Desactivat</string>
     <string name="desktop_opsec_attestation_run">Desa la instantània d’integritat de l’amfitrió</string>

@@ -3,8 +3,14 @@
     <string name="desktop_opsec_title">OpSec</string>
     <string name="desktop_opsec_secure_clipboard">Gearrthaisce shlán</string>
     <string name="desktop_opsec_clipboard_title">Gearrthaisce</string>
-    <string name="desktop_opsec_clipboard_hint">Coimeádtar téacs íogair sa seisiún seo agus glantar é ón ngearrthaisce chórais ionas nach féidir le haipeanna eile é a ghreamú.</string>
+    <string name="desktop_opsec_clipboard_hint">Baintear téacs íogair (eochracha, IBAN, WireGuard) as an stair, coimeádtar sa seisiún seo amháin é, agus glantar é ón ghearrthaisce córais. Fanann an stair sa vault — gan sync néil.</string>
     <string name="desktop_opsec_clipboard_clear_now">Glan an ghearrthaisce anois</string>
+    <string name="desktop_opsec_clipboard_clear_all">Glan uile</string>
+    <string name="desktop_opsec_clipboard_history_meta">Suas le 20 mír · éagann tar éis 5 nóiméad · bioráin go dtí glas · Super+V</string>
+    <string name="desktop_opsec_clipboard_history_empty">Níl stair ghearrthaisce fós</string>
+    <string name="desktop_opsec_clipboard_pin_until_lock">Bioráin</string>
+    <string name="desktop_opsec_clipboard_unpin">Díbioráin</string>
+    <string name="desktop_opsec_clipboard_recall_vaulted">Athghairm gearrthóg íogair ón vault</string>
     <string name="desktop_opsec_clipboard_timer">Glan go huathoibríoch tar éis %1$d soicind</string>
     <string name="desktop_opsec_clipboard_timer_off">As</string>
     <string name="desktop_opsec_attestation_run">Taifead snapshot ionracais an óstaigh</string>

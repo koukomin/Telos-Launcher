@@ -27,37 +27,61 @@ import androidx.compose.ui.unit.sp
 import com.telos.desktop.i18n.TelosI18n.t
 import com.telos.desktop.linux.Sys
 import com.telos.desktop.ui.TelosColors
+import com.telos.desktop.vault.ClipboardHistoryItem
+import com.telos.desktop.vault.ClipboardHistoryStore
 import com.telos.desktop.vault.PhantomVault
+import com.telos.desktop.vault.TelosOpSecGuard
 import kotlinx.coroutines.delay
 import java.awt.Toolkit
 import java.awt.datatransfer.DataFlavor
 import java.awt.datatransfer.StringSelection
 
-data class ClipItem(val text: String, var pinned: Boolean, val vaulted: Boolean = false)
-
 object TelosClipboardManager {
-    val history = mutableStateListOf<ClipItem>()
+    private val guardProbe = TelosOpSecGuard()
+    val store = ClipboardHistoryStore(
+        looksSensitive = { text ->
+            runCatching { PhantomVault.engine.opsec.looksSensitive(text) }
+                .getOrElse { guardProbe.looksSensitive(text) }
+        },
+    )
+    /** Compose-visible mirror of [store] (newest first). */
+    val history = mutableStateListOf<ClipboardHistoryItem>()
     var popup by mutableStateOf(false)
     private var last = ""
+    private var vaultLoaded = false
+
+    fun ensureLoaded() {
+        if (vaultLoaded) return
+        vaultLoaded = true
+        runCatching { store.loadFromVault() }
+        refreshUi()
+    }
+
+    fun refreshUi() {
+        val snap = store.snapshot()
+        if (history.toList() == snap) return
+        history.clear()
+        history.addAll(snap)
+    }
 
     suspend fun pollLoop() {
+        ensureLoaded()
         while (true) {
+            store.expire()
+            refreshUi()
             val text = current()
             if (!text.isNullOrBlank() && text != last) {
                 last = text
                 val vaulted = runCatching {
                     PhantomVault.engine.opsec.handleClipboardText(text)
                 }.getOrDefault(false)
-                if (vaulted) {
-                    if (history.none { it.vaulted && it.text == text }) {
-                        history.add(0, ClipItem(text, pinned = true, vaulted = true))
-                    }
-                } else if (history.none { it.text == text }) {
-                    history.add(0, ClipItem(text, false))
-                    while (history.count { !it.pinned && !it.vaulted } > 50) {
-                        val i = history.indexOfLast { !it.pinned && !it.vaulted }
-                        if (i >= 0) history.removeAt(i) else break
-                    }
+                if (!vaulted) {
+                    store.offer(text)
+                    refreshUi()
+                } else {
+                    // Sensitive: scrub from history; OpSec keeps a single vaulted recall slot.
+                    store.expire()
+                    refreshUi()
                 }
             }
             delay(700)
@@ -79,12 +103,23 @@ object TelosClipboardManager {
         val copy = Sys.which("wl-copy")
         if (copy != null) Sys.run(copy, input = text)
         runCatching { Toolkit.getDefaultToolkit().systemClipboard.setContents(StringSelection(text), null) }
-        runCatching { PhantomVault.engine.opsec.handleClipboardText(text) }
+        val vaulted = runCatching { PhantomVault.engine.opsec.handleClipboardText(text) }.getOrDefault(false)
+        last = text
+        if (!vaulted) {
+            store.offer(text)
+            refreshUi()
+        }
+    }
+
+    fun togglePin(id: Long) {
+        store.togglePinned(id)
+        refreshUi()
     }
 
     fun clearHistory() {
-        history.clear()
+        store.clear()
         last = ""
+        refreshUi()
     }
 
     fun clearSystemAndHistory() {
@@ -92,6 +127,18 @@ object TelosClipboardManager {
         clearHistory()
         runCatching { PhantomVault.engine.opsec.clearVaultedClip() }
     }
+
+    /** Session lock / vault lock: pin-until-lock expires; wipe vault file. */
+    fun onSessionLock() {
+        store.onLock()
+        last = ""
+        refreshUi()
+        runCatching { PhantomVault.engine.opsec.clearVaultedClip() }
+        runCatching { PhantomVault.engine.opsec.clearSystemClipboard() }
+    }
+
+    fun hasVaultedRecall(): Boolean =
+        runCatching { !PhantomVault.engine.opsec.vaultedClip().isNullOrBlank() }.getOrDefault(false)
 }
 
 @Composable
@@ -105,8 +152,8 @@ fun ClipboardPopup() {
     val shape = RoundedCornerShape(12.dp)
     Column(
         Modifier
-            .width(360.dp)
-            .heightIn(max = 420.dp)
+            .width(380.dp)
+            .heightIn(max = 440.dp)
             .clip(shape)
             .background(TelosColors.menu)
             .border(1.dp, TelosColors.outline, shape)
@@ -119,7 +166,7 @@ fun ClipboardPopup() {
                 modifier = Modifier.weight(1f),
             )
             TextButton(onClick = { TelosClipboardManager.clearSystemAndHistory() }) {
-                Text(t("desktop_opsec_clipboard_clear_now"), fontSize = 11.sp)
+                Text(t("desktop_opsec_clipboard_clear_all"), fontSize = 11.sp)
             }
         }
         Text(
@@ -128,26 +175,62 @@ fun ClipboardPopup() {
             fontSize = 11.sp,
             modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp),
         )
-        LazyColumn {
-            items(TelosClipboardManager.history, key = { it.text.hashCode() xor it.vaulted.hashCode() }) { item ->
-                val prefix = when {
-                    item.vaulted -> "🔒 "
-                    item.pinned -> "★ "
-                    else -> ""
-                }
-                Text(
-                    prefix + item.text.take(120),
-                    color = TelosColors.onSurface,
-                    fontSize = 12.sp,
-                    modifier = Modifier.fillMaxWidth().clickable {
-                        if (item.vaulted) {
-                            runCatching { PhantomVault.engine.opsec.recallVaultedClip() }
-                        } else {
-                            TelosClipboardManager.set(item.text)
+        Text(
+            t("desktop_opsec_clipboard_history_meta"),
+            color = TelosColors.onSurface.copy(alpha = 0.55f),
+            fontSize = 10.sp,
+            modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp),
+        )
+        if (TelosClipboardManager.hasVaultedRecall()) {
+            Text(
+                t("desktop_opsec_clipboard_recall_vaulted"),
+                color = TelosColors.secondary,
+                fontSize = 12.sp,
+                modifier = Modifier.fillMaxWidth().clickable {
+                    runCatching { PhantomVault.engine.opsec.recallVaultedClip() }
+                    TelosClipboardManager.popup = false
+                }.padding(8.dp),
+            )
+        }
+        if (TelosClipboardManager.history.isEmpty()) {
+            Text(
+                t("desktop_opsec_clipboard_history_empty"),
+                color = TelosColors.onSurface.copy(alpha = 0.55f),
+                fontSize = 12.sp,
+                modifier = Modifier.padding(8.dp),
+            )
+        } else {
+            LazyColumn {
+                items(TelosClipboardManager.history, key = { it.id }) { item ->
+                    Row(
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 4.dp, vertical = 2.dp),
+                    ) {
+                        Text(
+                            (if (item.pinned) "★ " else "") + item.text.take(120),
+                            color = TelosColors.onSurface,
+                            fontSize = 12.sp,
+                            modifier = Modifier
+                                .weight(1f)
+                                .clickable {
+                                    TelosClipboardManager.set(item.text)
+                                    TelosClipboardManager.popup = false
+                                }
+                                .padding(8.dp),
+                        )
+                        TextButton(onClick = { TelosClipboardManager.togglePin(item.id) }) {
+                            Text(
+                                if (item.pinned) {
+                                    t("desktop_opsec_clipboard_unpin")
+                                } else {
+                                    t("desktop_opsec_clipboard_pin_until_lock")
+                                },
+                                fontSize = 10.sp,
+                            )
                         }
-                        TelosClipboardManager.popup = false
-                    }.padding(8.dp),
-                )
+                    }
+                }
             }
         }
     }

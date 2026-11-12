@@ -3,8 +3,14 @@
     <string name="desktop_opsec_title">OpSec</string>
     <string name="desktop_opsec_secure_clipboard">Clipboard sikur</string>
     <string name="desktop_opsec_clipboard_title">Clipboard</string>
-    <string name="desktop_opsec_clipboard_hint">Test sensittiv jinżamm f’din is-sessjoni u jitneħħa mill-clipboard tas-sistema biex apps oħra ma jkunux jistgħu jwaħħluh.</string>
+    <string name="desktop_opsec_clipboard_hint">Test sensittiv (ċwievet, IBAN, WireGuard) jitneħħa mill-istorja, jinżamm biss f'din is-sessjoni u jithassar mill-clipboard tas-sistema. L-istorja tibqa' fil-vault — bla sinkronizzazzjoni cloud.</string>
     <string name="desktop_opsec_clipboard_clear_now">Naddaf il-clipboard issa</string>
+    <string name="desktop_opsec_clipboard_clear_all">Ħassar kollox</string>
+    <string name="desktop_opsec_clipboard_history_meta">Sa 20 oġġett · jiskadi wara 5 minuti · waħħal sal-lock · Super+V</string>
+    <string name="desktop_opsec_clipboard_history_empty">Għad m'hemmx storja tal-clipboard</string>
+    <string name="desktop_opsec_clipboard_pin_until_lock">Waħħal</string>
+    <string name="desktop_opsec_clipboard_unpin">Neħħi</string>
+    <string name="desktop_opsec_clipboard_recall_vaulted">Irkupra clip sensittiv mill-vault</string>
     <string name="desktop_opsec_clipboard_timer">Naddaf awtomatikament wara %1$d sekondi</string>
     <string name="desktop_opsec_clipboard_timer_off">Mitfi</string>
     <string name="desktop_opsec_attestation_run">Irreġistra snapshot tal-integrità tal-host</string>

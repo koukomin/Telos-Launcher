@@ -3,8 +3,14 @@
     <string name="desktop_opsec_title">OpSec</string>
     <string name="desktop_opsec_secure_clipboard">Sikker utklippstavle</string>
     <string name="desktop_opsec_clipboard_title">Utklippstavle</string>
-    <string name="desktop_opsec_clipboard_hint">Sensitiv tekst lagres i denne økten og tømmes fra systemutklippstavlen slik at andre apper ikke kan lime den inn.</string>
+    <string name="desktop_opsec_clipboard_hint">Sensitiv tekst (nøkler, IBAN, WireGuard) fjernes fra historikken, lagres bare i denne økten og tømmes fra systemutklippstavlen. Historikken forblir vault-lokal — ingen skysynk.</string>
     <string name="desktop_opsec_clipboard_clear_now">Tøm utklippstavlen nå</string>
+    <string name="desktop_opsec_clipboard_clear_all">Tøm alt</string>
+    <string name="desktop_opsec_clipboard_history_meta">Inntil 20 elementer · utløper etter 5 minutter · fest til låsing · Super+V</string>
+    <string name="desktop_opsec_clipboard_history_empty">Ingen utklippshistorikk ennå</string>
+    <string name="desktop_opsec_clipboard_pin_until_lock">Fest</string>
+    <string name="desktop_opsec_clipboard_unpin">Løsne</string>
+    <string name="desktop_opsec_clipboard_recall_vaulted">Hent vaultet sensitivt klipp</string>
     <string name="desktop_opsec_clipboard_timer">Tøm automatisk etter %1$d sekunder</string>
     <string name="desktop_opsec_clipboard_timer_off">Av</string>
     <string name="desktop_opsec_attestation_run">Lagre vertsintegritetsøyeblikksbilde</string>

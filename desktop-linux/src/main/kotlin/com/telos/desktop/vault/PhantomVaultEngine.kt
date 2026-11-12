@@ -129,6 +129,7 @@ class PhantomVaultEngine(
 
     fun lock(syncCloud: Boolean = true) {
         expander?.stop()
+        runCatching { com.telos.desktop.overlay.TelosClipboardManager.onSessionLock() }
         runCatching { com.telos.desktop.session.SessionNetGuard.clear() }
         runCatching { com.telos.desktop.files.DavSecrets.clear() }
         runCatching { com.telos.desktop.files.OAuthSecrets.clear() }

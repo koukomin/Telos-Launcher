@@ -3,8 +3,14 @@
     <string name="desktop_opsec_title">OpSec</string>
     <string name="desktop_opsec_secure_clipboard">Droša starpliktuve</string>
     <string name="desktop_opsec_clipboard_title">Starpliktuve</string>
-    <string name="desktop_opsec_clipboard_hint">Jutīgs teksts tiek glabāts šajā sesijā un notīrīts no sistēmas starpliktuves, lai citas programmas to nevarētu ielīmēt.</string>
+    <string name="desktop_opsec_clipboard_hint">Jutīgs teksts (atslegas, IBAN, WireGuard) tiek izņemts no vēstures, glabāts tikai šajā sesijā un notīrīts no sistēmas starpliktuves. Vēsture paliek vault — bez mākoņa sinhronizācijas.</string>
     <string name="desktop_opsec_clipboard_clear_now">Notīrīt starpliktuvi tagad</string>
+    <string name="desktop_opsec_clipboard_clear_all">Notīrīt visu</string>
+    <string name="desktop_opsec_clipboard_history_meta">Līdz 20 vienumiem · beidzas pēc 5 minūtēm · piespraust līdz bloķēšanai · Super+V</string>
+    <string name="desktop_opsec_clipboard_history_empty">Vēl nav starpliktuves vēstures</string>
+    <string name="desktop_opsec_clipboard_pin_until_lock">Piespraust</string>
+    <string name="desktop_opsec_clipboard_unpin">Atspraust</string>
+    <string name="desktop_opsec_clipboard_recall_vaulted">Atgūt vaultēto jutīgo klipu</string>
     <string name="desktop_opsec_clipboard_timer">Automātiski notīrīt pēc %1$d sekundēm</string>
     <string name="desktop_opsec_clipboard_timer_off">Izslēgts</string>
     <string name="desktop_opsec_attestation_run">Ierakstīt resursdatora integritātes momentuzņēmumu</string>

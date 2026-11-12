@@ -3,8 +3,14 @@
     <string name="desktop_opsec_title">OpSec</string>
     <string name="desktop_opsec_secure_clipboard">Appunti sicuri</string>
     <string name="desktop_opsec_clipboard_title">Appunti</string>
-    <string name="desktop_opsec_clipboard_hint">Il testo sensibile viene custodito in questa sessione e cancellato dagli appunti di sistema così altre app non possono incollarlo.</string>
+    <string name="desktop_opsec_clipboard_hint">Il testo sensibile (chiavi, IBAN, WireGuard) viene rimosso dalla cronologia, conservato solo in questa sessione e cancellato dagli appunti di sistema. La cronologia resta nel vault — nessun sync cloud.</string>
     <string name="desktop_opsec_clipboard_clear_now">Svuota appunti ora</string>
+    <string name="desktop_opsec_clipboard_clear_all">Cancella tutto</string>
+    <string name="desktop_opsec_clipboard_history_meta">Fino a 20 elementi · scade dopo 5 minuti · blocca fino al lock · Super+V</string>
+    <string name="desktop_opsec_clipboard_history_empty">Nessuna cronologia degli appunti</string>
+    <string name="desktop_opsec_clipboard_pin_until_lock">Blocca</string>
+    <string name="desktop_opsec_clipboard_unpin">Sblocca</string>
+    <string name="desktop_opsec_clipboard_recall_vaulted">Richiamare clip sensibile in vault</string>
     <string name="desktop_opsec_clipboard_timer">Cancellazione automatica dopo %1$d secondi</string>
     <string name="desktop_opsec_clipboard_timer_off">Disattivato</string>
     <string name="desktop_opsec_attestation_run">Registra snapshot di integrità host</string>

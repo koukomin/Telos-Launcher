@@ -3,8 +3,14 @@
     <string name="desktop_opsec_title">OpSec</string>
     <string name="desktop_opsec_secure_clipboard">Ἀσφαλὲς πρόχειρον</string>
     <string name="desktop_opsec_clipboard_title">Πρόχειρον</string>
-    <string name="desktop_opsec_clipboard_hint">Τὸ εὐαίσθητον κείμενον τηρεῖται ἐν τῇ συνεδρίᾳ καὶ καθαίρεται ἐκ τοῦ συστηματικοῦ προχείρου ἵνα μὴ ἄλλαι ἐφαρμογαὶ αὐτὸ ἐπικολλήσωσιν.</string>
+    <string name="desktop_opsec_clipboard_hint">Τὸ εὐαίσθητον κείμενον (κλεῖδες, IBAN, WireGuard) ἐκ τῆς ἱστορίας ἀφαιρεῖται, μόνον ἐν τῇδε τῇ συνόδῳ φυλάσσεται, καὶ ἐκ τοῦ συστήματος καθαίρεται. Ἡ ἱστορία ἐν τῷ vault μένει — ἄνευ νεφοσυγχρονισμοῦ.</string>
     <string name="desktop_opsec_clipboard_clear_now">Καθαρισμὸς προχείρου νῦν</string>
+    <string name="desktop_opsec_clipboard_clear_all">Πάντα καθᾶραι</string>
+    <string name="desktop_opsec_clipboard_history_meta">Μέχρι κʹ · λήγει μετὰ πέντε λεπτά · πῆξις μέχρι κλειδώματος · Super+V</string>
+    <string name="desktop_opsec_clipboard_history_empty">Οὔπω ἱστορία προχείρου</string>
+    <string name="desktop_opsec_clipboard_pin_until_lock">Πῆξαι</string>
+    <string name="desktop_opsec_clipboard_unpin">Λῦσαι</string>
+    <string name="desktop_opsec_clipboard_recall_vaulted">Ἀνακαλέσασθαι τὸ εὐαίσθητον ἐκ τοῦ vault</string>
     <string name="desktop_opsec_clipboard_timer">Αὐτόματος καθαρισμὸς μετὰ %1$d δευτερόλεπτα</string>
     <string name="desktop_opsec_clipboard_timer_off">Ἀνενεργόν</string>
     <string name="desktop_opsec_attestation_run">Καταγραφὴ στιγμιοτύπου ἀκεραιότητος ξενιστοῦ</string>

@@ -3,8 +3,14 @@
     <string name="desktop_opsec_title">OpSec</string>
     <string name="desktop_opsec_secure_clipboard">安全剪贴板</string>
     <string name="desktop_opsec_clipboard_title">剪贴板</string>
-    <string name="desktop_opsec_clipboard_hint">敏感文本仅保存在本次会话中，并从系统剪贴板清除，防止其他应用粘贴。</string>
+    <string name="desktop_opsec_clipboard_hint">敏感文本（密钥、IBAN、WireGuard）会从历史中清除，仅保存在本会话，并从系统剪贴板移除。历史仅存于保险库本地 — 不同步到云端。</string>
     <string name="desktop_opsec_clipboard_clear_now">立即清空剪贴板</string>
+    <string name="desktop_opsec_clipboard_clear_all">全部清除</string>
+    <string name="desktop_opsec_clipboard_history_meta">最多 20 条 · 5 分钟后过期 · 固定到锁定 · Super+V</string>
+    <string name="desktop_opsec_clipboard_history_empty">暂无剪贴板历史</string>
+    <string name="desktop_opsec_clipboard_pin_until_lock">固定</string>
+    <string name="desktop_opsec_clipboard_unpin">取消固定</string>
+    <string name="desktop_opsec_clipboard_recall_vaulted">取回保险库中的敏感剪贴</string>
     <string name="desktop_opsec_clipboard_timer">%1$d 秒后自动清空</string>
     <string name="desktop_opsec_clipboard_timer_off">关闭</string>
     <string name="desktop_opsec_attestation_run">记录主机完整性快照</string>

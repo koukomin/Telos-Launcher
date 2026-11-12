@@ -3,8 +3,14 @@
     <string name="desktop_opsec_title">OpSec</string>
     <string name="desktop_opsec_secure_clipboard">کلیپ‌بورد امن</string>
     <string name="desktop_opsec_clipboard_title">کلیپ‌بورد</string>
-    <string name="desktop_opsec_clipboard_hint">متن حساس در این نشست نگه داشته می‌شود و از کلیپ‌بورد سیستم پاک می‌شود تا برنامه‌های دیگر نتوانند آن را جای‌گذاری کنند.</string>
+    <string name="desktop_opsec_clipboard_hint">متن حساس (کلیدها، IBAN، WireGuard) از تاریخچه حذف می‌شود، فقط در این نشست نگه داشته و از کلیپ‌بورد سامانه پاک می‌شود. تاریخچه فقط در vault محلی است — بدون همگام‌سازی ابری.</string>
     <string name="desktop_opsec_clipboard_clear_now">پاک‌کردن کلیپ‌بورد اکنون</string>
+    <string name="desktop_opsec_clipboard_clear_all">پاک کردن همه</string>
+    <string name="desktop_opsec_clipboard_history_meta">تا ۲۰ مورد · انقضا پس از ۵ دقیقه · سنجاق تا قفل · Super+V</string>
+    <string name="desktop_opsec_clipboard_history_empty">هنوز تاریخچه کلیپ‌بورد نیست</string>
+    <string name="desktop_opsec_clipboard_pin_until_lock">سنجاق</string>
+    <string name="desktop_opsec_clipboard_unpin">برداشتن سنجاق</string>
+    <string name="desktop_opsec_clipboard_recall_vaulted">بازیابی کلیپ حساس از vault</string>
     <string name="desktop_opsec_clipboard_timer">پاک‌سازی خودکار پس از %1$d ثانیه</string>
     <string name="desktop_opsec_clipboard_timer_off">خاموش</string>
     <string name="desktop_opsec_attestation_run">ثبت نمای یکپارچگی میزبان</string>

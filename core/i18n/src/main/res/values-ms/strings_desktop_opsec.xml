@@ -3,8 +3,14 @@
     <string name="desktop_opsec_title">OpSec</string>
     <string name="desktop_opsec_secure_clipboard">Papan klip selamat</string>
     <string name="desktop_opsec_clipboard_title">Papan klip</string>
-    <string name="desktop_opsec_clipboard_hint">Teks sensitif disimpan dalam sesi ini dan dikosongkan daripada papan klip sistem supaya aplikasi lain tidak dapat tampal.</string>
+    <string name="desktop_opsec_clipboard_hint">Teks sensitif (kunci, IBAN, WireGuard) digosok dari sejarah, disimpan hanya dalam sesi ini, dan dikosongkan dari papan klip sistem. Sejarah kekal setempat vault — tiada sync awan.</string>
     <string name="desktop_opsec_clipboard_clear_now">Kosongkan papan klip sekarang</string>
+    <string name="desktop_opsec_clipboard_clear_all">Kosongkan semua</string>
+    <string name="desktop_opsec_clipboard_history_meta">Sehingga 20 item · luput selepas 5 minit · pin hingga kunci · Super+V</string>
+    <string name="desktop_opsec_clipboard_history_empty">Belum ada sejarah papan klip</string>
+    <string name="desktop_opsec_clipboard_pin_until_lock">Pin</string>
+    <string name="desktop_opsec_clipboard_unpin">Nyahpin</string>
+    <string name="desktop_opsec_clipboard_recall_vaulted">Panggil semula klip sensitif dalam vault</string>
     <string name="desktop_opsec_clipboard_timer">Kosongkan secara automatik selepas %1$d saat</string>
     <string name="desktop_opsec_clipboard_timer_off">Mati</string>
     <string name="desktop_opsec_attestation_run">Rekod snapshot integriti hos</string>

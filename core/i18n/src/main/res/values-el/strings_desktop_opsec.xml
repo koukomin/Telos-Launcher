@@ -3,8 +3,14 @@
     <string name="desktop_opsec_title">OpSec</string>
     <string name="desktop_opsec_secure_clipboard">Ασφαλές πρόχειρο</string>
     <string name="desktop_opsec_clipboard_title">Πρόχειρο</string>
-    <string name="desktop_opsec_clipboard_hint">Το ευαίσθητο κείμενο φυλάσσεται στη συνεδρία και καθαρίζεται από το πρόχειρο συστήματος ώστε άλλες εφαρμογές να μην μπορούν να το επικολλήσουν.</string>
+    <string name="desktop_opsec_clipboard_hint">Το ευαίσθητο κείμενο (κλειδιά, IBAN, WireGuard) αφαιρείται από το ιστορικό, φυλάσσεται μόνο στη συνεδρία και καθαρίζεται από το πρόχειρο συστήματος. Το ιστορικό μένει στο vault — χωρίς συγχρονισμό στο cloud.</string>
     <string name="desktop_opsec_clipboard_clear_now">Καθαρισμός προχείρου τώρα</string>
+    <string name="desktop_opsec_clipboard_clear_all">Καθαρισμός όλων</string>
+    <string name="desktop_opsec_clipboard_history_meta">Έως 20 στοιχεία · λήξη μετά από 5 λεπτά · καρφίτσωμα μέχρι το κλείδωμα · Super+V</string>
+    <string name="desktop_opsec_clipboard_history_empty">Δεν υπάρχει ακόμη ιστορικό προχείρου</string>
+    <string name="desktop_opsec_clipboard_pin_until_lock">Καρφίτσωμα</string>
+    <string name="desktop_opsec_clipboard_unpin">Ξεκαρφίτσωμα</string>
+    <string name="desktop_opsec_clipboard_recall_vaulted">Ανάκληση ευαίσθητου αποθηκευμένου αποσπάσματος</string>
     <string name="desktop_opsec_clipboard_timer">Αυτόματος καθαρισμός μετά από %1$d δευτερόλεπτα</string>
     <string name="desktop_opsec_clipboard_timer_off">Ανενεργό</string>
     <string name="desktop_opsec_attestation_run">Καταγραφή στιγμιότυπου ακεραιότητας host</string>

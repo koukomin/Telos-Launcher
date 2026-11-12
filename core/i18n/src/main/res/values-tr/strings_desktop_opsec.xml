@@ -3,8 +3,14 @@
     <string name="desktop_opsec_title">OpSec</string>
     <string name="desktop_opsec_secure_clipboard">Güvenli pano</string>
     <string name="desktop_opsec_clipboard_title">Pano</string>
-    <string name="desktop_opsec_clipboard_hint">Hassas metin bu oturumda saklanır ve diğer uygulamaların yapıştıramaması için sistem panosundan temizlenir.</string>
+    <string name="desktop_opsec_clipboard_hint">Hassas metin (anahtarlar, IBAN, WireGuard) geçmişten temizlenir, yalnızca bu oturumda saklanır ve sistem panosundan silinir. Geçmiş vault yerelde kalır — bulut senkronu yok.</string>
     <string name="desktop_opsec_clipboard_clear_now">Panoyu şimdi temizle</string>
+    <string name="desktop_opsec_clipboard_clear_all">Tümünü temizle</string>
+    <string name="desktop_opsec_clipboard_history_meta">En fazla 20 öğe · 5 dakikada sona erer · kilitlenene kadar sabitle · Super+V</string>
+    <string name="desktop_opsec_clipboard_history_empty">Henüz pano geçmişi yok</string>
+    <string name="desktop_opsec_clipboard_pin_until_lock">Sabitle</string>
+    <string name="desktop_opsec_clipboard_unpin">Kaldır</string>
+    <string name="desktop_opsec_clipboard_recall_vaulted">Kasalanmış hassas klibi geri getir</string>
     <string name="desktop_opsec_clipboard_timer">%1$d saniye sonra otomatik temizle</string>
     <string name="desktop_opsec_clipboard_timer_off">Kapalı</string>
     <string name="desktop_opsec_attestation_run">Ana makine bütünlük anlık görüntüsü kaydet</string>

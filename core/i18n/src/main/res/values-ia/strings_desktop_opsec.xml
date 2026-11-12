@@ -3,8 +3,14 @@
     <string name="desktop_opsec_title">OpSec</string>
     <string name="desktop_opsec_secure_clipboard">Area de transferentia secur</string>
     <string name="desktop_opsec_clipboard_title">Area de transferentia</string>
-    <string name="desktop_opsec_clipboard_hint">Texto sensibile es retenite in iste session e nettate del area de transferentia del systema a fin que altere applications non pote collar lo.</string>
+    <string name="desktop_opsec_clipboard_hint">Texto sensibile (claves, IBAN, WireGuard) es removite del historia, conservate solo in iste session, e nettate del area de transferentia del systema. Le historia resta local al vault — sin synchronisation in le nube.</string>
     <string name="desktop_opsec_clipboard_clear_now">Nettar le area de transferentia ora</string>
+    <string name="desktop_opsec_clipboard_clear_all">Rader toto</string>
+    <string name="desktop_opsec_clipboard_history_meta">Usque a 20 elementos · expira post 5 minutas · fixar usque al bloco · Super+V</string>
+    <string name="desktop_opsec_clipboard_history_empty">Ancora nulle historia del area de transferentia</string>
+    <string name="desktop_opsec_clipboard_pin_until_lock">Fixar</string>
+    <string name="desktop_opsec_clipboard_unpin">Disfixar</string>
+    <string name="desktop_opsec_clipboard_recall_vaulted">Recuperar clip sensibile del vault</string>
     <string name="desktop_opsec_clipboard_timer">Nettar automaticamente post %1$d secundas</string>
     <string name="desktop_opsec_clipboard_timer_off">Inactive</string>
     <string name="desktop_opsec_attestation_run">Registrar le instantanee de integritate del hospite</string>
