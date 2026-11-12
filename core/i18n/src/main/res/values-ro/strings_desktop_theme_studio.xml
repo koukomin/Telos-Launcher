@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_studio_title">Studio teme</string>
+    <string name="desktop_theme_studio_hint">Quiet Ops este valoarea implicită. Vault Neon întărește bordurile Cyber-Tech și indicatorii HUD. Paper Ops este o opțiune deschisă pentru zi. Ferestrele pop-up rămân opace; nu există o a doua estompare.</string>
+    <string name="desktop_theme_intensity">Intensitate</string>
+    <string name="desktop_theme_quiet_ops">Quiet Ops</string>
+    <string name="desktop_theme_vault_neon">Vault Neon</string>
+    <string name="desktop_theme_paper_ops">Paper Ops</string>
+    <string name="desktop_theme_accent">Accent</string>
+    <string name="desktop_theme_from_wallpaper">Accent din fundal</string>
+    <string name="desktop_theme_from_wallpaper_hint">Eșantionează local fundalul vault sau al datelor portabile pentru un seed tonal Material. Nimic nu este încărcat.</string>
+    <string name="desktop_theme_density">Densitate</string>
+    <string name="desktop_theme_density_compact">Compactă</string>
+    <string name="desktop_theme_density_comfort">Confort</string>
+    <string name="desktop_theme_density_touch">Tactil</string>
+    <string name="desktop_theme_panel_height">Înălțime panou: %1$d dp</string>
+    <string name="desktop_theme_panel_icon">Pictograme panou: %1$d dp</string>
+    <string name="desktop_theme_panel_opacity">Opacitate panou: %1$d%%</string>
+</resources>

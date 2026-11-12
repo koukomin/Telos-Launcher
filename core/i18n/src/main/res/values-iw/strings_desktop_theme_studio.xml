@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_studio_title">סטודיו ערכות נושא</string>
+    <string name="desktop_theme_studio_hint">Quiet Ops הוא ברירת המחדל. Vault Neon מחזק מסגרות Cyber-Tech ומדדי HUD. Paper Ops הוא אפשרות בהירה ליום. חלונות קופצים נשארים אטומים; אין טשטוש שני.</string>
+    <string name="desktop_theme_intensity">עוצמה</string>
+    <string name="desktop_theme_quiet_ops">Quiet Ops</string>
+    <string name="desktop_theme_vault_neon">Vault Neon</string>
+    <string name="desktop_theme_paper_ops">Paper Ops</string>
+    <string name="desktop_theme_accent">מבטא</string>
+    <string name="desktop_theme_from_wallpaper">מבטא מהטפט</string>
+    <string name="desktop_theme_from_wallpaper_hint">דוגם מקומית את טפט ה-vault או הנתונים הניידים לזרע טונאלי Material. דבר אינו מועלה.</string>
+    <string name="desktop_theme_density">צפיפות</string>
+    <string name="desktop_theme_density_compact">קומפקטי</string>
+    <string name="desktop_theme_density_comfort">נוחות</string>
+    <string name="desktop_theme_density_touch">מגע</string>
+    <string name="desktop_theme_panel_height">גובה לוח: %1$d dp</string>
+    <string name="desktop_theme_panel_icon">סמלי לוח: %1$d dp</string>
+    <string name="desktop_theme_panel_opacity">אטימות לוח: %1$d%%</string>
+</resources>

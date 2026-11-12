@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_studio_title">Theme-Studio</string>
+    <string name="desktop_theme_studio_hint">Quiet Ops ist die Voreinstellung. Vault Neon verstärkt Cyber-Tech-Rahmen und HUD-Anzeigen. Paper Ops ist eine helle Tagesoption. Popups bleiben undurchsichtig; es gibt keinen zweiten Weichzeichner.</string>
+    <string name="desktop_theme_intensity">Intensität</string>
+    <string name="desktop_theme_quiet_ops">Quiet Ops</string>
+    <string name="desktop_theme_vault_neon">Vault Neon</string>
+    <string name="desktop_theme_paper_ops">Paper Ops</string>
+    <string name="desktop_theme_accent">Akzent</string>
+    <string name="desktop_theme_from_wallpaper">Akzent von der Tapete</string>
+    <string name="desktop_theme_from_wallpaper_hint">Leitet lokal aus der Vault-/Portable-Tapete einen Material-Tonal-Seed ab. Nichts wird hochgeladen.</string>
+    <string name="desktop_theme_density">Dichte</string>
+    <string name="desktop_theme_density_compact">Kompakt</string>
+    <string name="desktop_theme_density_comfort">Komfort</string>
+    <string name="desktop_theme_density_touch">Touch</string>
+    <string name="desktop_theme_panel_height">Panelhöhe: %1$d dp</string>
+    <string name="desktop_theme_panel_icon">Panel-Symbole: %1$d dp</string>
+    <string name="desktop_theme_panel_opacity">Panel-Deckkraft: %1$d%%</string>
+</resources>

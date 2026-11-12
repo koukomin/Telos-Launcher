@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_studio_title">Stiúideo Téama</string>
+    <string name="desktop_theme_studio_hint">Is é Quiet Ops an réamhshocrú. Neartaíonn Vault Neon teorainneacha Cyber-Tech agus tomhasairí HUD. Is rogha gheal lae é Paper Ops. Fanann popups teimhneach; níl an dara doiléiriú ann.</string>
+    <string name="desktop_theme_intensity">Déine</string>
+    <string name="desktop_theme_quiet_ops">Quiet Ops</string>
+    <string name="desktop_theme_vault_neon">Vault Neon</string>
+    <string name="desktop_theme_paper_ops">Paper Ops</string>
+    <string name="desktop_theme_accent">Aiceann</string>
+    <string name="desktop_theme_from_wallpaper">Aiceann ón gcúlra</string>
+    <string name="desktop_theme_from_wallpaper_hint">Samplaíonn go háitiúil cúlra an vault nó sonraí iniompartha le haghaidh síol tonach Material. Ní uaslódáiltear aon rud.</string>
+    <string name="desktop_theme_density">Dlús</string>
+    <string name="desktop_theme_density_compact">Dlúth</string>
+    <string name="desktop_theme_density_comfort">Compord</string>
+    <string name="desktop_theme_density_touch">Tadhall</string>
+    <string name="desktop_theme_panel_height">Airde an phainéil: %1$d dp</string>
+    <string name="desktop_theme_panel_icon">Deilbhíní an phainéil: %1$d dp</string>
+    <string name="desktop_theme_panel_opacity">Teimhneacht an phainéil: %1$d%%</string>
+</resources>

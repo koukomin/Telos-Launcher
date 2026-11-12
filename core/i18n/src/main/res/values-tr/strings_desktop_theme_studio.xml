@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_studio_title">Tema Stüdyosu</string>
+    <string name="desktop_theme_studio_hint">Quiet Ops varsayılandır. Vault Neon Cyber-Tech kenarlarını ve HUD göstergelerini güçlendirir. Paper Ops gündüz için açık bir seçenektir. Açılır pencereler opak kalır; ikinci bir bulanıklık yoktur.</string>
+    <string name="desktop_theme_intensity">Yoğunluk</string>
+    <string name="desktop_theme_quiet_ops">Quiet Ops</string>
+    <string name="desktop_theme_vault_neon">Vault Neon</string>
+    <string name="desktop_theme_paper_ops">Paper Ops</string>
+    <string name="desktop_theme_accent">Vurgu</string>
+    <string name="desktop_theme_from_wallpaper">Duvar kâğıdından vurgu</string>
+    <string name="desktop_theme_from_wallpaper_hint">Vault veya taşınabilir duvar kâğıdından yerelde Material tonal tohum üretir. Hiçbir şey yüklenmez.</string>
+    <string name="desktop_theme_density">Sıklık</string>
+    <string name="desktop_theme_density_compact">Sıkışık</string>
+    <string name="desktop_theme_density_comfort">Konfor</string>
+    <string name="desktop_theme_density_touch">Dokunmatik</string>
+    <string name="desktop_theme_panel_height">Panel yüksekliği: %1$d dp</string>
+    <string name="desktop_theme_panel_icon">Panel simgeleri: %1$d dp</string>
+    <string name="desktop_theme_panel_opacity">Panel opaklığı: %1$d%%</string>
+</resources>

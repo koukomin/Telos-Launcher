@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_studio_title">Theme Studio</string>
+    <string name="desktop_theme_studio_hint">Quiet Ops is the default. Vault Neon strengthens Cyber-Tech borders and HUD gauges. Paper Ops is a light daytime option. Popups stay opaque; there is no second blur.</string>
+    <string name="desktop_theme_intensity">Intensity</string>
+    <string name="desktop_theme_quiet_ops">Quiet Ops</string>
+    <string name="desktop_theme_vault_neon">Vault Neon</string>
+    <string name="desktop_theme_paper_ops">Paper Ops</string>
+    <string name="desktop_theme_accent">Accent</string>
+    <string name="desktop_theme_from_wallpaper">Accent from wallpaper</string>
+    <string name="desktop_theme_from_wallpaper_hint">Samples the vault or portable wallpaper on this device for a Material tonal seed. Nothing is uploaded.</string>
+    <string name="desktop_theme_density">Density</string>
+    <string name="desktop_theme_density_compact">Compact</string>
+    <string name="desktop_theme_density_comfort">Comfort</string>
+    <string name="desktop_theme_density_touch">Touch</string>
+    <string name="desktop_theme_panel_height">Panel height: %1$d dp</string>
+    <string name="desktop_theme_panel_icon">Panel icons: %1$d dp</string>
+    <string name="desktop_theme_panel_opacity">Panel opacity: %1$d%%</string>
+</resources>

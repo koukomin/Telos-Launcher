@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_studio_title">Studio tema</string>
+    <string name="desktop_theme_studio_hint">Quiet Ops je zadano. Vault Neon pojačava Cyber-Tech rubove i HUD pokazatelje. Paper Ops je svijetla dnevna opcija. Skočni prozori ostaju neprozirni; nema drugog zamućenja.</string>
+    <string name="desktop_theme_intensity">Intenzitet</string>
+    <string name="desktop_theme_quiet_ops">Quiet Ops</string>
+    <string name="desktop_theme_vault_neon">Vault Neon</string>
+    <string name="desktop_theme_paper_ops">Paper Ops</string>
+    <string name="desktop_theme_accent">Naglasak</string>
+    <string name="desktop_theme_from_wallpaper">Naglasak s pozadine</string>
+    <string name="desktop_theme_from_wallpaper_hint">Lokalno uzorkuje pozadinu trezora ili prijenosnih podataka za Material tonalni seed. Ništa se ne šalje.</string>
+    <string name="desktop_theme_density">Gustoća</string>
+    <string name="desktop_theme_density_compact">Zbijeno</string>
+    <string name="desktop_theme_density_comfort">Udobno</string>
+    <string name="desktop_theme_density_touch">Dodir</string>
+    <string name="desktop_theme_panel_height">Visina ploče: %1$d dp</string>
+    <string name="desktop_theme_panel_icon">Ikone ploče: %1$d dp</string>
+    <string name="desktop_theme_panel_opacity">Neprozirnost ploče: %1$d%%</string>
+</resources>

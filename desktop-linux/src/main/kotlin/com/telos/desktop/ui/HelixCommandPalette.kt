@@ -84,7 +84,8 @@ fun HelixCommandPalette(
     var apps by remember { mutableStateOf<List<DesktopEntry>>(emptyList()) }
     var results by remember { mutableStateOf<List<HelixPaletteItem>>(emptyList()) }
     val focusRequester = remember { FocusRequester() }
-    val neon = TelosColors.secondary
+    val neon = com.telos.desktop.theme.DesktopThemeChrome.resolvedAccent
+    val neonBorder = neon.copy(alpha = com.telos.desktop.theme.DesktopThemeChrome.techBorderAlpha)
     val shape = RoundedCornerShape(14.dp)
 
     val labels = remember {
@@ -190,7 +191,7 @@ fun HelixCommandPalette(
                     .clip(shape)
                     // virtualAppPopup / opaque surfaceContainer — no transparent surface
                     .background(TelosColors.menu)
-                    .border(1.5.dp, neon.copy(alpha = 0.85f), shape)
+                    .border(1.5.dp, neonBorder, shape)
                     .clickable(
                         indication = null,
                         interactionSource = remember { MutableInteractionSource() },

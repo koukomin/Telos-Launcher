@@ -109,6 +109,7 @@ fun main(args: Array<String>) {
             handleDesktopKeys(ev, wm, telemetry)
         },
     ) {
+        // Theme Studio + local wallpaper tonal seed drive Helix chrome.
         TelosDesktopTheme(accent = chromeAccent) {
             if (!unlocked) {
                 TelosPreBootScreen(vault) {
@@ -119,11 +120,15 @@ fun main(args: Array<String>) {
                 val scope = rememberCoroutineScope()
                 androidx.compose.runtime.LaunchedEffect(Unit) { vault.startDaemons(scope) }
                 val settings = remember {
-                    TelosDesktopSettings(vault.configDir).also { it.load() }
+                    TelosDesktopSettings(vault.configDir).also {
+                        it.load()
+                        it.syncThemeChrome()
+                    }
                 }
                 LaunchedEffect(
                     DesktopChrome.accentEpoch,
                     settings.themeAccent,
+                    settings.themeIntensity,
                     settings.wallpaperTonal,
                     settings.wallpaperPath,
                     settings.followSystemTheme,
@@ -134,7 +139,7 @@ fun main(args: Array<String>) {
                             settings.wallpaperTonal,
                         )
                     ) {
-                        com.telos.desktop.theme.WallpaperTonalSeed.resolveAccent(
+                        val seeded = com.telos.desktop.theme.WallpaperTonalSeed.resolveAccent(
                             themeAccent = settings.themeAccent,
                             wallpaperTonal = settings.wallpaperTonal,
                             wallpaperPath = settings.wallpaperPath.ifBlank { null },
@@ -142,11 +147,15 @@ fun main(args: Array<String>) {
                                 com.telos.desktop.theme.WallpaperTonalSeed.FALLBACK_SEED_ARGB,
                             ),
                         )
+                        com.telos.desktop.theme.DesktopThemeChrome.wallpaperSeedAccent = seeded
+                        seeded
                     } else {
-                        hostTheme.accent
+                        com.telos.desktop.theme.DesktopThemeChrome.wallpaperSeedAccent = null
+                        com.telos.desktop.theme.DesktopThemeChrome.resolvedAccent
                     }
                 }
                 androidx.compose.runtime.LaunchedEffect(settings) {
+                    settings.syncThemeChrome()
                     vault.opsec.secureClipboardEnabled = settings.secureClipboard
                     vault.opsec.clipboardClearSeconds = settings.clipboardClearSeconds
                     com.telos.desktop.search.VaultFileNameIndex.enabled = settings.fileNameIndexEnabled

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_studio_title">Studio giao diện</string>
+    <string name="desktop_theme_studio_hint">Quiet Ops là mặc định. Vault Neon tăng cường viền Cyber-Tech và đồng hồ HUD. Paper Ops là tùy chọn sáng ban ngày. Popup vẫn đục; không có làm mờ thứ hai.</string>
+    <string name="desktop_theme_intensity">Cường độ</string>
+    <string name="desktop_theme_quiet_ops">Quiet Ops</string>
+    <string name="desktop_theme_vault_neon">Vault Neon</string>
+    <string name="desktop_theme_paper_ops">Paper Ops</string>
+    <string name="desktop_theme_accent">Điểm nhấn</string>
+    <string name="desktop_theme_from_wallpaper">Điểm nhấn từ hình nền</string>
+    <string name="desktop_theme_from_wallpaper_hint">Lấy mẫu cục bộ hình nền vault hoặc dữ liệu mang theo cho hạt giống tông Material. Không tải gì lên.</string>
+    <string name="desktop_theme_density">Mật độ</string>
+    <string name="desktop_theme_density_compact">Gọn</string>
+    <string name="desktop_theme_density_comfort">Thoải mái</string>
+    <string name="desktop_theme_density_touch">Chạm</string>
+    <string name="desktop_theme_panel_height">Chiều cao bảng: %1$d dp</string>
+    <string name="desktop_theme_panel_icon">Biểu tượng bảng: %1$d dp</string>
+    <string name="desktop_theme_panel_opacity">Độ đục bảng: %1$d%%</string>
+</resources>

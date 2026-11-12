@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_studio_title">Témastúdió</string>
+    <string name="desktop_theme_studio_hint">A Quiet Ops az alapértelmezett. A Vault Neon erősíti a Cyber-Tech kereteket és a HUD jelzőket. A Paper Ops világos nappali lehetőség. A felugró ablakok átlátszatlanok maradnak; nincs második elmosás.</string>
+    <string name="desktop_theme_intensity">Intenzitás</string>
+    <string name="desktop_theme_quiet_ops">Quiet Ops</string>
+    <string name="desktop_theme_vault_neon">Vault Neon</string>
+    <string name="desktop_theme_paper_ops">Paper Ops</string>
+    <string name="desktop_theme_accent">Kiemelés</string>
+    <string name="desktop_theme_from_wallpaper">Kiemelés a háttérképből</string>
+    <string name="desktop_theme_from_wallpaper_hint">Helyben mintavételezi a vault vagy hordozható háttérképet Material tonális seedhez. Semmi nem kerül feltöltésre.</string>
+    <string name="desktop_theme_density">Sűrűség</string>
+    <string name="desktop_theme_density_compact">Kompakt</string>
+    <string name="desktop_theme_density_comfort">Kényelem</string>
+    <string name="desktop_theme_density_touch">Érintés</string>
+    <string name="desktop_theme_panel_height">Panel magassága: %1$d dp</string>
+    <string name="desktop_theme_panel_icon">Panel ikonok: %1$d dp</string>
+    <string name="desktop_theme_panel_opacity">Panel átlátszatlansága: %1$d%%</string>
+</resources>

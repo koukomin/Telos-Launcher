@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_studio_title">Studio Tema</string>
+    <string name="desktop_theme_studio_hint">Quiet Ops ialah lalai. Vault Neon menguatkan sempadan Cyber-Tech dan penunjuk HUD. Paper Ops ialah pilihan cerah siang. Pop timbul kekal legap; tiada kabur kedua.</string>
+    <string name="desktop_theme_intensity">Keamatan</string>
+    <string name="desktop_theme_quiet_ops">Quiet Ops</string>
+    <string name="desktop_theme_vault_neon">Vault Neon</string>
+    <string name="desktop_theme_paper_ops">Paper Ops</string>
+    <string name="desktop_theme_accent">Aksen</string>
+    <string name="desktop_theme_from_wallpaper">Aksen daripada kertas dinding</string>
+    <string name="desktop_theme_from_wallpaper_hint">Mensampel kertas dinding vault atau mudah alih secara tempatan untuk benih tonal Material. Tiada yang dimuat naik.</string>
+    <string name="desktop_theme_density">Ketumpatan</string>
+    <string name="desktop_theme_density_compact">Padat</string>
+    <string name="desktop_theme_density_comfort">Selesa</string>
+    <string name="desktop_theme_density_touch">Sentuh</string>
+    <string name="desktop_theme_panel_height">Ketinggian panel: %1$d dp</string>
+    <string name="desktop_theme_panel_icon">Ikon panel: %1$d dp</string>
+    <string name="desktop_theme_panel_opacity">Kelegapan panel: %1$d%%</string>
+</resources>
