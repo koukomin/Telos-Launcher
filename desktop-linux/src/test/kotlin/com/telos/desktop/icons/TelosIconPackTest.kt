@@ -32,8 +32,10 @@ class TelosIconPackTest {
             System.setProperty("telos.portable.data", root.absolutePath)
             PortableTraceGuard.selectDataRoot(root)
             System.setProperty("telos.portable.active", "1")
-            val icons = TelosIconPackPaths.iconsRoot()
-            assertTrue(icons.absolutePath.startsWith(root.canonicalFile.absolutePath))
+            val expected = root.canonicalFile
+            val icons = TelosIconPackPaths.iconsRoot().canonicalFile
+            // Windows may rewrite 8.3 vs long paths; compare canonical forms.
+            assertEquals(File(expected, "icons").canonicalFile, icons)
             assertEquals("icons", icons.name)
             PortableTraceGuard.assertNoHostWrites(icons.parentFile ?: icons)
         } finally {
