@@ -117,25 +117,24 @@ fun TelosNetworkApp() {
     var net by remember { mutableStateOf(ConnectivityState(false, null, null, emptyList(), false, emptyList())) }
     var fwActive by remember { mutableStateOf(false) }
     var killStatus by remember { mutableStateOf(DesktopNetworkController.KillSwitchStatus.Disabled) }
-    var wgStatus by remember { mutableStateOf(DesktopNetworkController.wireGuardStatus()) }
-    var torStatus by remember { mutableStateOf(DesktopNetworkController.torStatus()) }
-    var dnsText by remember { mutableStateOf(DesktopNetworkController.readDnsPreference()) }
-    var dnsBlockText by remember { mutableStateOf(DesktopNetworkController.readDnsBlocklistText()) }
-    var dnsAllowText by remember { mutableStateOf(DesktopNetworkController.readDnsAllowlistText()) }
-    var nextDnsId by remember {
-        mutableStateOf(DesktopNetworkController.readNextDnsConfigId().orEmpty())
+    // Defer disk / process probes until LaunchedEffect on IO — do not hit NetworkController in remember {}.
+    var wgStatus by remember {
+        mutableStateOf(DesktopNetworkController.WireGuardStatus(null, false, null, "—"))
     }
-    var dnsFilterStatus by remember { mutableStateOf(DesktopNetworkController.dnsFilterStatus()) }
-    var allowText by remember { mutableStateOf(DesktopNetworkController.readAllowlistText()) }
-    var appRoutingText by remember { mutableStateOf(DesktopNetworkController.readAppRoutingText()) }
-    var wgConfDraft by remember {
-        mutableStateOf(
-            DesktopNetworkController.wireguardConfFile().takeIf { it.isFile }?.readText().orEmpty(),
-        )
+    var torStatus by remember {
+        mutableStateOf(DesktopNetworkController.TorStatus(false, false, false))
     }
+    var dnsText by remember { mutableStateOf("") }
+    var dnsBlockText by remember { mutableStateOf("") }
+    var dnsAllowText by remember { mutableStateOf("") }
+    var nextDnsId by remember { mutableStateOf("") }
+    var dnsFilterStatus by remember { mutableStateOf(DesktopNetworkController.DnsFilterStatus.Disabled) }
+    var allowText by remember { mutableStateOf("") }
+    var appRoutingText by remember { mutableStateOf("") }
+    var wgConfDraft by remember { mutableStateOf("") }
     var dnsApply by remember { mutableStateOf(DesktopNetworkController.DnsApplyResult.PreferenceOnly) }
-    val profiles = remember { DesktopProfiles.listProfileFolders() }
-    val activeProfile = remember { DesktopProfiles.activeProfile() }
+    var profiles by remember { mutableStateOf(emptyList<DesktopProfiles.ProfileFolder>()) }
+    var activeProfile by remember { mutableStateOf<String?>(null) }
     val scope = rememberCoroutineScope()
     val cardShape = remember { RoundedCornerShape(10.dp) }
     val neon = TelosColors.secondary
@@ -147,9 +146,23 @@ fun TelosNetworkApp() {
             wgStatus = DesktopNetworkController.wireGuardStatus()
             torStatus = DesktopNetworkController.torStatus()
             dnsApply = DesktopNetworkController.applyDnsPreference()
+            dnsFilterStatus = DesktopNetworkController.dnsFilterStatus()
         }
     }
     LaunchedEffect(Unit) {
+        withContext(Dispatchers.IO) {
+            dnsText = DesktopNetworkController.readDnsPreference()
+            dnsBlockText = DesktopNetworkController.readDnsBlocklistText()
+            dnsAllowText = DesktopNetworkController.readDnsAllowlistText()
+            nextDnsId = DesktopNetworkController.readNextDnsConfigId().orEmpty()
+            dnsFilterStatus = DesktopNetworkController.dnsFilterStatus()
+            allowText = DesktopNetworkController.readAllowlistText()
+            appRoutingText = DesktopNetworkController.readAppRoutingText()
+            wgConfDraft = DesktopNetworkController.wireguardConfFile()
+                .takeIf { it.isFile }?.readText().orEmpty()
+            profiles = DesktopProfiles.listProfileFolders()
+            activeProfile = DesktopProfiles.activeProfile()
+        }
         refresh()
         while (true) {
             delay(2500)

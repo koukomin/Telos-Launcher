@@ -23,12 +23,32 @@ object DesktopNetworkController {
     private val isLinux: Boolean
         get() = PlatformEnvironment.current == TelosRuntimePlatform.LinuxDesktop
 
-    fun configHome(): File {
+    @Volatile
+    private var configHomeDir: File? = null
+
+    /**
+     * Vault/session config root (`~/.config/telos` or portable equivalent).
+     * @param create mkdir on first use (writes). Cold-start path probes use false.
+     */
+    fun configHome(create: Boolean = true): File {
+        val cached = configHomeDir
+        if (cached != null) {
+            if (create) cached.mkdirs()
+            return cached
+        }
         val home = PortableEnvironmentIsolator.vaultHome ?: File(System.getProperty("user.home"))
-        return File(home, ".config/telos").apply { mkdirs() }
+        val dir = File(home, ".config/telos")
+        if (create) dir.mkdirs()
+        configHomeDir = dir
+        return dir
     }
 
-    fun wireguardDir(): File = File(configHome(), "wireguard").apply { mkdirs() }
+    /** Clears the cached config home (tests / profile switch). */
+    fun clearConfigHomeCache() {
+        configHomeDir = null
+    }
+
+    fun wireguardDir(): File = File(configHome(create = true), "wireguard").apply { mkdirs() }
 
     fun wireguardConfFile(): File = File(wireguardDir(), WIREGUARD_CONF_NAME)
 

@@ -116,9 +116,13 @@ fun DesktopWorkspace(
     val drawComposeCursor = remember(cursorRev) { CursorThemeApplier.usesComposeOverlay() }
 
     LaunchedEffect(cursorState, cursorRev) {
-        runCatching {
-            val awt = CursorThemeApplier.cursorForState(cursorState)
-            java.awt.Window.getWindows().forEach { it.cursor = awt }
+        kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+            runCatching {
+                // First call may finish deferred XCursor scan/decode off the UI thread.
+                CursorThemeApplier.ensureDecoded()
+                val awt = CursorThemeApplier.cursorForState(cursorState)
+                java.awt.Window.getWindows().forEach { it.cursor = awt }
+            }
         }
     }
 

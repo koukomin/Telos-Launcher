@@ -17,6 +17,9 @@ sidebar_position: 8
 
 Main class: `com.telos.desktop.MainKt`. The window is undecorated fullscreen.
 
+Cold-start costs (icon/cursor scans, network probes, stego carriers, HW crypto
+probe) are deferred until first use — see [desktop-startup.md](./desktop-startup).
+
 ## Vault
 
 VOS-5 (partial): `DesktopVaultRestore` confirms AES session-bundle restore into vault `desktop.properties` + `~/.config/telos`; `DesktopLuksImageRestore` copies a locked-vault `telos_vault.img` backup with SHA-256 (never mounts with a password); `DesktopSignedUpdate` verifies Ed25519-signed manifests (`file://`, HTTPS preference, or GitHub Releases default `telos-desktop-update.manifest` via `DesktopGitHubReleasesChannel`) and stages jars under portable/vault temp without auto-install; `DesktopUpdateRestartHelper` offers a best-effort post-stage restart (marker + replace script, then process exit).
