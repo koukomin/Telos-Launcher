@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_lan_pair_title">LAN-koppeling met Android</string>
+    <string name="desktop_lan_pair_hint">Start een kortstondige koppelingsserver op het LAN. Scan of voer de code in bij Telos Sync. Codes en tokens worden nooit gelogd.</string>
+    <string name="desktop_lan_pair_start">LAN-koppeling starten</string>
+    <string name="desktop_lan_pair_stop">LAN-koppeling stoppen</string>
+    <string name="desktop_lan_pair_running">Koppelingsserver luistert op het LAN</string>
+    <string name="desktop_lan_pair_code">Koppelingscode</string>
+    <string name="desktop_lan_pair_qr_uri">Koppelings-URI (QR / plakken)</string>
+    <string name="desktop_lan_pair_stopped">LAN-koppeling gestopt</string>
+    <string name="desktop_lan_pair_bind_reject">Kan geen openbaar adres binden — gebruik een privé-LAN-IP</string>
+    <string name="desktop_lan_pair_android_title">Telos Desktop LAN-koppeling</string>
+    <string name="desktop_lan_pair_host">Desktop-host (LAN-IP)</string>
+    <string name="desktop_lan_pair_port">Desktoppoort</string>
+    <string name="desktop_lan_pair_connect">Koppelen met desktop</string>
+    <string name="desktop_lan_pair_paired">Gekoppeld met desktop</string>
+    <string name="desktop_lan_pair_fetch_bundle">Desktop-sessiebundel ophalen</string>
+    <string name="desktop_lan_pair_fetch_ok">Versleutelde desktop-sessiebundel opgeslagen</string>
+    <string name="desktop_lan_pair_send_bundle">Versleutelde bundel verzenden</string>
+    <string name="desktop_lan_pair_failed">LAN-koppeling mislukt</string>
+    <string name="desktop_lan_pair_scan_hint">Open op Android Sync → Instellingen en plak de URI of voer host, poort en code in.</string>
+</resources>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_lan_pair_title">Android ile LAN eşleştirme</string>
+    <string name="desktop_lan_pair_hint">LAN üzerinde kısa ömürlü bir eşleştirme sunucusu başlatır. Telos Sync’te kodu tarayın veya girin. Kodlar ve belirteçler asla günlüğe yazılmaz.</string>
+    <string name="desktop_lan_pair_start">LAN eşleştirmeyi başlat</string>
+    <string name="desktop_lan_pair_stop">LAN eşleştirmeyi durdur</string>
+    <string name="desktop_lan_pair_running">Eşleştirme sunucusu LAN’da dinliyor</string>
+    <string name="desktop_lan_pair_code">Eşleştirme kodu</string>
+    <string name="desktop_lan_pair_qr_uri">Eşleştirme URI’si (QR / yapıştır)</string>
+    <string name="desktop_lan_pair_stopped">LAN eşleştirme durduruldu</string>
+    <string name="desktop_lan_pair_bind_reject">Herkese açık adres bağlanamaz — özel bir LAN IP kullanın</string>
+    <string name="desktop_lan_pair_android_title">Telos Desktop LAN eşleştirme</string>
+    <string name="desktop_lan_pair_host">Masaüstü ana bilgisayarı (LAN IP)</string>
+    <string name="desktop_lan_pair_port">Masaüstü bağlantı noktası</string>
+    <string name="desktop_lan_pair_connect">Masaüstü ile eşleştir</string>
+    <string name="desktop_lan_pair_paired">Masaüstü ile eşleştirildi</string>
+    <string name="desktop_lan_pair_fetch_bundle">Masaüstü oturum paketini al</string>
+    <string name="desktop_lan_pair_fetch_ok">Şifreli masaüstü oturum paketi kaydedildi</string>
+    <string name="desktop_lan_pair_send_bundle">Şifreli paket gönder</string>
+    <string name="desktop_lan_pair_failed">LAN eşleştirme başarısız</string>
+    <string name="desktop_lan_pair_scan_hint">Android’de Sync → Ayarlar’ı açıp URI’yi yapıştırın veya ana bilgisayar, bağlantı noktası ve kodu girin.</string>
+</resources>

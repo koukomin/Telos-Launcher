@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_lan_pair_title">Σύζευξις LAN μετὰ Android</string>
+    <string name="desktop_lan_pair_hint">Ἄρχει βραχύβιον διακομιστὴν συζεύξεως ἐν τῷ LAN. Σάρωσον ἢ εἴσαγε τὸν κώδικα ἐν Telos Sync. Οἱ κώδικες καὶ τὰ διακριτικὰ οὐδέποτε γράφονται εἰς τὰ ἀρχεῖα καταγραφῆς.</string>
+    <string name="desktop_lan_pair_start">Ἄρξαι σύζευξιν LAN</string>
+    <string name="desktop_lan_pair_stop">Παῦσον σύζευξιν LAN</string>
+    <string name="desktop_lan_pair_running">Ὁ διακομιστὴς συζεύξεως ἀκούει ἐν τῷ LAN</string>
+    <string name="desktop_lan_pair_code">Κῶδιξ συζεύξεως</string>
+    <string name="desktop_lan_pair_qr_uri">URI συζεύξεως (QR / ἐπικόλλησις)</string>
+    <string name="desktop_lan_pair_stopped">Ἡ σύζευξις LAN ἐπαύθη</string>
+    <string name="desktop_lan_pair_bind_reject">Οὐκ ἔξεστι δεσμεῦσαι δημοσίαν διεύθυνσιν — χρῶ ἰδιωτικῇ IP LAN</string>
+    <string name="desktop_lan_pair_android_title">Σύζευξις LAN τοῦ Telos Desktop</string>
+    <string name="desktop_lan_pair_host">Ξενιστὴς ἐπιτραπεζίου (IP LAN)</string>
+    <string name="desktop_lan_pair_port">Θύρα ἐπιτραπεζίου</string>
+    <string name="desktop_lan_pair_connect">Σύζευξον μετὰ τοῦ ἐπιτραπεζίου</string>
+    <string name="desktop_lan_pair_paired">Συνεζεύχθη μετὰ τοῦ ἐπιτραπεζίου</string>
+    <string name="desktop_lan_pair_fetch_bundle">Λάβε τὸ δέμα συνεδρίας ἐπιτραπεζίου</string>
+    <string name="desktop_lan_pair_fetch_ok">Τὸ κεκρυπτογραφημένον δέμα συνεδρίας ἐσώθη</string>
+    <string name="desktop_lan_pair_send_bundle">Πέμψον κεκρυπτογραφημένον δέμα</string>
+    <string name="desktop_lan_pair_failed">Ἡ σύζευξις LAN ἀπέτυχεν</string>
+    <string name="desktop_lan_pair_scan_hint">Ἐν Android ἄνοιξον Sync → Ρυθμίσεις καὶ ἐπικόλλησον τὸ URI ἢ εἴσαγε ξενιστήν, θύραν καὶ κώδικα.</string>
+</resources>

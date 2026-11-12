@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_lan_pair_title">LAN сдвояване с Android</string>
+    <string name="desktop_lan_pair_hint">Стартира краткотраен сървър за сдвояване в LAN. Сканирайте или въведете кода в Telos Sync. Кодовете и токените никога не се записват в дневници.</string>
+    <string name="desktop_lan_pair_start">Стартиране на LAN сдвояване</string>
+    <string name="desktop_lan_pair_stop">Спиране на LAN сдвояване</string>
+    <string name="desktop_lan_pair_running">Сървърът за сдвояване слуша в LAN</string>
+    <string name="desktop_lan_pair_code">Код за сдвояване</string>
+    <string name="desktop_lan_pair_qr_uri">URI за сдвояване (QR / поставяне)</string>
+    <string name="desktop_lan_pair_stopped">LAN сдвояването е спряно</string>
+    <string name="desktop_lan_pair_bind_reject">Не може да се обвърже публичен адрес — използвайте частен LAN IP</string>
+    <string name="desktop_lan_pair_android_title">LAN сдвояване на Telos Desktop</string>
+    <string name="desktop_lan_pair_host">Хост на работния плот (LAN IP)</string>
+    <string name="desktop_lan_pair_port">Порт на работния плот</string>
+    <string name="desktop_lan_pair_connect">Сдвояване с работния плот</string>
+    <string name="desktop_lan_pair_paired">Сдвоено с работния плот</string>
+    <string name="desktop_lan_pair_fetch_bundle">Изтегляне на пакет за сесия на работния плот</string>
+    <string name="desktop_lan_pair_fetch_ok">Шифрованият пакет за сесия е запазен</string>
+    <string name="desktop_lan_pair_send_bundle">Изпращане на шифрован пакет</string>
+    <string name="desktop_lan_pair_failed">LAN сдвояването неуспешно</string>
+    <string name="desktop_lan_pair_scan_hint">На Android отворете Sync → Настройки и поставете URI или въведете хост, порт и код.</string>
+</resources>

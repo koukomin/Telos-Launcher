@@ -22,6 +22,8 @@ probe) are deferred until first use — see [desktop-startup.md](./desktop-start
 
 ## Vault
 
+VOS-4 (partial): `DesktopSessionSync` AES zip4j session bundles; **LAN pairing** via `LanPairingServer` / `LanPairProtocol` (`telos-sync://pair?code=&host=&port=`, private bind only) and Android `DesktopLanPairClient` in Sync → Settings. Pairing tokens are stored as digests; codes/tokens are never logged.
+
 VOS-5 (partial): `DesktopVaultRestore` confirms AES session-bundle restore into vault `desktop.properties` + `~/.config/telos`; `DesktopLuksImageRestore` copies a locked-vault `telos_vault.img` backup with SHA-256 (never mounts with a password); `DesktopSignedUpdate` verifies Ed25519-signed manifests (`file://`, HTTPS preference, or GitHub Releases default `telos-desktop-update.manifest` via `DesktopGitHubReleasesChannel`) and stages jars under portable/vault temp without auto-install; `DesktopUpdateRestartHelper` offers a best-effort post-stage restart (marker + replace script, then process exit).
 
 VOS-6 OpSec (partial): `TelosOpSecGuard` secure clipboard + `TelosSessionAuditLog` (append-only under vault `~/.config/telos/opsec/audit.log`, mode 0600). Attestation light writes os-release / compositor / portable mode into the audit log on unlock, and `TpmAttestation` adds PCR 0/7 digest fields when `tpm2-tools` are on `PATH` (optional quote digest if `tpm/ak.handle` is set). Missing TPM records `tpm=unavailable` without failing unlock. This is local PCR light only — not remote attestation (RAP).

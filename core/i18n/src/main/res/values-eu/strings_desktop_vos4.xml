@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_lan_pair_title">LAN bikotea Androidekin</string>
+    <string name="desktop_lan_pair_hint">LAN sarean bikote-zerbitzari laburra abiarazten du. Eskaneatu edo idatzi kodea Telos Sync-en. Kodeak eta tokenak ez dira inoiz erregistratzen.</string>
+    <string name="desktop_lan_pair_start">Hasi LAN bikotea</string>
+    <string name="desktop_lan_pair_stop">Gelditu LAN bikotea</string>
+    <string name="desktop_lan_pair_running">Bikote-zerbitzaria LAN-en entzuten</string>
+    <string name="desktop_lan_pair_code">Bikote-kodea</string>
+    <string name="desktop_lan_pair_qr_uri">Bikote URI (QR / itsatsi)</string>
+    <string name="desktop_lan_pair_stopped">LAN bikotea gelditu da</string>
+    <string name="desktop_lan_pair_bind_reject">Ezin da helbide publikoa lotu — erabili LAN IP pribatua</string>
+    <string name="desktop_lan_pair_android_title">Telos Desktop LAN bikotea</string>
+    <string name="desktop_lan_pair_host">Mahaigaineko ostalaria (LAN IP)</string>
+    <string name="desktop_lan_pair_port">Mahaigaineko ataka</string>
+    <string name="desktop_lan_pair_connect">Bikotu mahaigainarekin</string>
+    <string name="desktop_lan_pair_paired">Mahaigainarekin bikotuta</string>
+    <string name="desktop_lan_pair_fetch_bundle">Eskuratu mahaigaineko saio-paketea</string>
+    <string name="desktop_lan_pair_fetch_ok">Mahaigaineko saio-pakete enkriptatua gorde da</string>
+    <string name="desktop_lan_pair_send_bundle">Bidali pakete enkriptatua</string>
+    <string name="desktop_lan_pair_failed">LAN bikoteak huts egin du</string>
+    <string name="desktop_lan_pair_scan_hint">Android-en ireki Sync → Ezarpenak eta itsatsi URI edo idatzi ostalaria, ataka eta kodea.</string>
+</resources>

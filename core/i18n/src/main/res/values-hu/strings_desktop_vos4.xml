@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_lan_pair_title">LAN párosítás Androiddal</string>
+    <string name="desktop_lan_pair_hint">Rövid életű párosító kiszolgálót indít a LAN-on. Olvassa be vagy írja be a kódot a Telos Syncben. A kódok és tokenek soha nem kerülnek naplóba.</string>
+    <string name="desktop_lan_pair_start">LAN párosítás indítása</string>
+    <string name="desktop_lan_pair_stop">LAN párosítás leállítása</string>
+    <string name="desktop_lan_pair_running">A párosító kiszolgáló a LAN-on figyel</string>
+    <string name="desktop_lan_pair_code">Párosítási kód</string>
+    <string name="desktop_lan_pair_qr_uri">Párosítási URI (QR / beillesztés)</string>
+    <string name="desktop_lan_pair_stopped">LAN párosítás leállítva</string>
+    <string name="desktop_lan_pair_bind_reject">Nyilvános cím nem köthető — használjon privát LAN IP-t</string>
+    <string name="desktop_lan_pair_android_title">Telos Desktop LAN párosítás</string>
+    <string name="desktop_lan_pair_host">Asztali gazdagép (LAN IP)</string>
+    <string name="desktop_lan_pair_port">Asztali port</string>
+    <string name="desktop_lan_pair_connect">Párosítás az asztallal</string>
+    <string name="desktop_lan_pair_paired">Párosítva az asztallal</string>
+    <string name="desktop_lan_pair_fetch_bundle">Asztali munkamenetcsomag letöltése</string>
+    <string name="desktop_lan_pair_fetch_ok">Titkosított asztali munkamenetcsomag mentve</string>
+    <string name="desktop_lan_pair_send_bundle">Titkosított csomag küldése</string>
+    <string name="desktop_lan_pair_failed">LAN párosítás sikertelen</string>
+    <string name="desktop_lan_pair_scan_hint">Androidon nyissa meg a Sync → Beállítások menüt, és illessze be az URI-t, vagy adja meg a gazdagépet, portot és kódot.</string>
+</resources>

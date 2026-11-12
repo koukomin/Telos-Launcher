@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_lan_pair_title">LAN-спалучэнне з Android</string>
+    <string name="desktop_lan_pair_hint">Запускае кароткачасовы сервер спалучэння ў LAN. Адскануйце або ўвядзіце код у Telos Sync. Коды і токены ніколі не запісваюцца ў журналы.</string>
+    <string name="desktop_lan_pair_start">Запусціць LAN-спалучэнне</string>
+    <string name="desktop_lan_pair_stop">Спыніць LAN-спалучэнне</string>
+    <string name="desktop_lan_pair_running">Сервер спалучэння слухае ў LAN</string>
+    <string name="desktop_lan_pair_code">Код спалучэння</string>
+    <string name="desktop_lan_pair_qr_uri">URI спалучэння (QR / уставіць)</string>
+    <string name="desktop_lan_pair_stopped">LAN-спалучэнне спынена</string>
+    <string name="desktop_lan_pair_bind_reject">Нельга прывязаць публічны адрас — выкарыстоўвайце прыватны LAN IP</string>
+    <string name="desktop_lan_pair_android_title">LAN-спалучэнне Telos Desktop</string>
+    <string name="desktop_lan_pair_host">Хост працоўнага стала (LAN IP)</string>
+    <string name="desktop_lan_pair_port">Порт працоўнага стала</string>
+    <string name="desktop_lan_pair_connect">Спалучыць з працоўным сталом</string>
+    <string name="desktop_lan_pair_paired">Спалучана з працоўным сталом</string>
+    <string name="desktop_lan_pair_fetch_bundle">Атрымаць пакет сеанса працоўнага стала</string>
+    <string name="desktop_lan_pair_fetch_ok">Зашыфраваны пакет сеанса захаваны</string>
+    <string name="desktop_lan_pair_send_bundle">Адправіць зашыфраваны пакет</string>
+    <string name="desktop_lan_pair_failed">Збой LAN-спалучэння</string>
+    <string name="desktop_lan_pair_scan_hint">На Android адкрыйце Sync → Налады і ўстаўце URI або ўвядзіце хост, порт і код.</string>
+</resources>

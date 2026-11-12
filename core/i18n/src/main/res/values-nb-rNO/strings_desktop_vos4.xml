@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_lan_pair_title">LAN-paring med Android</string>
+    <string name="desktop_lan_pair_hint">Starter en kortlivet paringsserver på LAN. Skann eller skriv inn koden i Telos Sync. Koder og tokens logges aldri.</string>
+    <string name="desktop_lan_pair_start">Start LAN-paring</string>
+    <string name="desktop_lan_pair_stop">Stopp LAN-paring</string>
+    <string name="desktop_lan_pair_running">Paringsserver lytter på LAN</string>
+    <string name="desktop_lan_pair_code">Paringskode</string>
+    <string name="desktop_lan_pair_qr_uri">Parings-URI (QR / lim inn)</string>
+    <string name="desktop_lan_pair_stopped">LAN-paring stoppet</string>
+    <string name="desktop_lan_pair_bind_reject">Kan ikke binde en offentlig adresse — bruk en privat LAN-IP</string>
+    <string name="desktop_lan_pair_android_title">Telos Desktop LAN-paring</string>
+    <string name="desktop_lan_pair_host">Skrivebordvert (LAN-IP)</string>
+    <string name="desktop_lan_pair_port">Skrivebordsport</string>
+    <string name="desktop_lan_pair_connect">Par med skrivebord</string>
+    <string name="desktop_lan_pair_paired">Paret med skrivebord</string>
+    <string name="desktop_lan_pair_fetch_bundle">Hent skrivebordsøktpakke</string>
+    <string name="desktop_lan_pair_fetch_ok">Kryptert skrivebordsøktpakke lagret</string>
+    <string name="desktop_lan_pair_send_bundle">Send kryptert pakke</string>
+    <string name="desktop_lan_pair_failed">LAN-paring mislyktes</string>
+    <string name="desktop_lan_pair_scan_hint">Åpne Sync → Innstillinger på Android og lim inn URI eller skriv inn vert, port og kode.</string>
+</resources>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_lan_pair_title">Asociere LAN cu Android</string>
+    <string name="desktop_lan_pair_hint">Pornește un server de asociere de scurtă durată pe LAN. Scanați sau introduceți codul în Telos Sync. Codurile și jetoanele nu sunt niciodată înregistrate.</string>
+    <string name="desktop_lan_pair_start">Pornește asocierea LAN</string>
+    <string name="desktop_lan_pair_stop">Oprește asocierea LAN</string>
+    <string name="desktop_lan_pair_running">Serverul de asociere ascultă pe LAN</string>
+    <string name="desktop_lan_pair_code">Cod de asociere</string>
+    <string name="desktop_lan_pair_qr_uri">URI de asociere (QR / lipire)</string>
+    <string name="desktop_lan_pair_stopped">Asocierea LAN a fost oprită</string>
+    <string name="desktop_lan_pair_bind_reject">Nu se poate lega o adresă publică — folosiți un IP LAN privat</string>
+    <string name="desktop_lan_pair_android_title">Asociere LAN Telos Desktop</string>
+    <string name="desktop_lan_pair_host">Gazdă desktop (IP LAN)</string>
+    <string name="desktop_lan_pair_port">Port desktop</string>
+    <string name="desktop_lan_pair_connect">Asociază cu desktopul</string>
+    <string name="desktop_lan_pair_paired">Asociat cu desktopul</string>
+    <string name="desktop_lan_pair_fetch_bundle">Preia pachetul de sesiune desktop</string>
+    <string name="desktop_lan_pair_fetch_ok">Pachetul de sesiune criptat a fost salvat</string>
+    <string name="desktop_lan_pair_send_bundle">Trimite pachetul criptat</string>
+    <string name="desktop_lan_pair_failed">Asocierea LAN a eșuat</string>
+    <string name="desktop_lan_pair_scan_hint">Pe Android deschideți Sync → Setări și lipiți URI-ul sau introduceți gazda, portul și codul.</string>
+</resources>

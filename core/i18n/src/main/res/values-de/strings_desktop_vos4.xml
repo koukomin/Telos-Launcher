@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_lan_pair_title">LAN-Kopplung mit Android</string>
+    <string name="desktop_lan_pair_hint">Startet einen kurzlebigen Kopplungsserver im LAN. Code in Telos Sync scannen oder eingeben. Codes und Token werden nie protokolliert.</string>
+    <string name="desktop_lan_pair_start">LAN-Kopplung starten</string>
+    <string name="desktop_lan_pair_stop">LAN-Kopplung stoppen</string>
+    <string name="desktop_lan_pair_running">Kopplungsserver horcht im LAN</string>
+    <string name="desktop_lan_pair_code">Kopplungscode</string>
+    <string name="desktop_lan_pair_qr_uri">Kopplungs-URI (QR / Einfügen)</string>
+    <string name="desktop_lan_pair_stopped">LAN-Kopplung gestoppt</string>
+    <string name="desktop_lan_pair_bind_reject">Öffentliche Adresse nicht erlaubt — private LAN-IP verwenden</string>
+    <string name="desktop_lan_pair_android_title">Telos Desktop LAN-Kopplung</string>
+    <string name="desktop_lan_pair_host">Desktop-Host (LAN-IP)</string>
+    <string name="desktop_lan_pair_port">Desktop-Port</string>
+    <string name="desktop_lan_pair_connect">Mit Desktop koppeln</string>
+    <string name="desktop_lan_pair_paired">Mit Desktop gekoppelt</string>
+    <string name="desktop_lan_pair_fetch_bundle">Desktop-Sitzungspaket laden</string>
+    <string name="desktop_lan_pair_fetch_ok">Verschlüsseltes Desktop-Sitzungspaket gespeichert</string>
+    <string name="desktop_lan_pair_send_bundle">Verschlüsseltes Paket senden</string>
+    <string name="desktop_lan_pair_failed">LAN-Kopplung fehlgeschlagen</string>
+    <string name="desktop_lan_pair_scan_hint">Unter Android Sync → Einstellungen öffnen und URI einfügen oder Host, Port und Code eingeben.</string>
+</resources>

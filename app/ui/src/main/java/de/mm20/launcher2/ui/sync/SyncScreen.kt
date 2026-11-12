@@ -36,6 +36,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.VirtualAppWindow
+import de.mm20.launcher2.ui.desktopsync.DesktopLanPairClient
+import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -349,12 +351,21 @@ private fun SettingsTab(
     onWifiChange: (Boolean) -> Unit,
     onChargingChange: (Boolean) -> Unit
 ) {
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
     val sleepSyncEnabled by viewModel.sleepSyncEnabled.collectAsStateWithLifecycle()
     val sleepSyncMode by viewModel.sleepSyncMode.collectAsStateWithLifecycle()
     val dndDuringSync by viewModel.dndDuringSync.collectAsStateWithLifecycle()
     val syncOnScreenOff by viewModel.syncOnScreenOff.collectAsStateWithLifecycle()
     
     var showModeDialog by remember { mutableStateOf(false) }
+    var pairUri by remember { mutableStateOf("") }
+    var pairHost by remember { mutableStateOf("") }
+    var pairPort by remember { mutableStateOf(DesktopLanPairClient.DEFAULT_PORT.toString()) }
+    var pairCode by remember { mutableStateOf("") }
+    var pairMsg by remember { mutableStateOf<String?>(null) }
+    var pairBusy by remember { mutableStateOf(false) }
+    var paired by remember { mutableStateOf(DesktopLanPairClient.storedToken(context) != null) }
 
     Column(
         modifier = Modifier
@@ -363,6 +374,106 @@ private fun SettingsTab(
             .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
+        TelosCyberSectionLabel(stringResource(I18nR.string.desktop_lan_pair_android_title), accent = TelosCyber.NeonGreen)
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .telosTechSurface(borderColor = TelosCyber.NeonGreen)
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp),
+        ) {
+            Text(
+                stringResource(I18nR.string.desktop_lan_pair_hint),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            OutlinedTextField(
+                value = pairUri,
+                onValueChange = {
+                    pairUri = it
+                    DesktopLanPairClient.parseUri(it)?.let { payload ->
+                        pairHost = payload.host
+                        pairPort = payload.port.toString()
+                        pairCode = payload.code
+                    }
+                },
+                label = { Text(stringResource(I18nR.string.desktop_lan_pair_qr_uri)) },
+                singleLine = true,
+                modifier = Modifier.fillMaxWidth(),
+            )
+            OutlinedTextField(
+                value = pairHost,
+                onValueChange = { pairHost = it },
+                label = { Text(stringResource(I18nR.string.desktop_lan_pair_host)) },
+                singleLine = true,
+                modifier = Modifier.fillMaxWidth(),
+            )
+            OutlinedTextField(
+                value = pairPort,
+                onValueChange = { pairPort = it.filter { ch -> ch.isDigit() }.take(5) },
+                label = { Text(stringResource(I18nR.string.desktop_lan_pair_port)) },
+                singleLine = true,
+                modifier = Modifier.fillMaxWidth(),
+            )
+            OutlinedTextField(
+                value = pairCode,
+                onValueChange = { pairCode = DesktopLanPairClient.normalizeCode(it) },
+                label = { Text(stringResource(I18nR.string.desktop_lan_pair_code)) },
+                singleLine = true,
+                modifier = Modifier.fillMaxWidth(),
+            )
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                Button(
+                    enabled = !pairBusy,
+                    onClick = {
+                        scope.launch {
+                            pairBusy = true
+                            pairMsg = null
+                            val payload = DesktopLanPairClient.parseUri(pairUri)
+                                ?: DesktopLanPairClient.PairPayload(
+                                    code = DesktopLanPairClient.normalizeCode(pairCode),
+                                    host = pairHost.trim(),
+                                    port = pairPort.toIntOrNull() ?: DesktopLanPairClient.DEFAULT_PORT,
+                                )
+                            val result = DesktopLanPairClient.pair(context, payload)
+                            if (result.isSuccess) {
+                                paired = true
+                                pairMsg = context.getString(I18nR.string.desktop_lan_pair_paired)
+                            } else {
+                                pairMsg = context.getString(I18nR.string.desktop_lan_pair_failed)
+                            }
+                            pairBusy = false
+                        }
+                    },
+                ) { Text(stringResource(I18nR.string.desktop_lan_pair_connect)) }
+                OutlinedButton(
+                    enabled = !pairBusy && paired,
+                    onClick = {
+                        scope.launch {
+                            pairBusy = true
+                            val result = DesktopLanPairClient.fetchDesktopBundle(context)
+                            pairMsg = if (result.isSuccess) {
+                                context.getString(I18nR.string.desktop_lan_pair_fetch_ok)
+                            } else {
+                                context.getString(I18nR.string.desktop_lan_pair_failed)
+                            }
+                            pairBusy = false
+                        }
+                    },
+                ) { Text(stringResource(I18nR.string.desktop_lan_pair_fetch_bundle)) }
+            }
+            if (paired) {
+                Text(
+                    stringResource(I18nR.string.desktop_lan_pair_paired),
+                    color = TelosCyber.NeonGreen,
+                    style = MaterialTheme.typography.labelMedium,
+                )
+            }
+            pairMsg?.let {
+                Text(it, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.primary)
+            }
+        }
+
         Column(
             modifier = Modifier
                 .fillMaxWidth()

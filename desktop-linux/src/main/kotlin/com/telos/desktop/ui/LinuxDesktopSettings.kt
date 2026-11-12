@@ -41,6 +41,8 @@ import com.telos.desktop.platform.WindowsShellIntegration
 import com.telos.desktop.sync.DesktopLuksImageRestore
 import com.telos.desktop.sync.DesktopSessionSync
 import com.telos.desktop.sync.DesktopVaultRestore
+import com.telos.desktop.sync.pairing.LanPairProtocol
+import com.telos.desktop.sync.pairing.LanPairingServer
 import com.telos.desktop.update.DesktopGitHubReleasesChannel
 import com.telos.desktop.update.DesktopSignedUpdate
 import com.telos.desktop.update.DesktopUpdateRestartHelper
@@ -467,6 +469,52 @@ fun LinuxDesktopSettingsPanel(
                     fontSize = 11.sp,
                     color = TelosColors.onSurface.copy(0.7f),
                 )
+            }
+            HelixSettingsCard(com.telos.desktop.i18n.TelosI18n.t("desktop_lan_pair_title")) {
+                var pairStatus by remember {
+                    mutableStateOf(
+                        LanPairingServer.sharedOrNull()?.status()
+                            ?: LanPairingServer.Status(running = false),
+                    )
+                }
+                Text(
+                    com.telos.desktop.i18n.TelosI18n.t("desktop_lan_pair_hint"),
+                    fontSize = 12.sp,
+                    color = TelosColors.onSurface.copy(0.85f),
+                )
+                Text(
+                    com.telos.desktop.i18n.TelosI18n.t("desktop_lan_pair_scan_hint"),
+                    fontSize = 11.sp,
+                    color = TelosColors.onSurface.copy(0.7f),
+                )
+                pairStatus.session?.let { live ->
+                    Text(
+                        com.telos.desktop.i18n.TelosI18n.t("desktop_lan_pair_code") + ": " + live.code,
+                        fontSize = 14.sp,
+                        color = TelosColors.primary,
+                    )
+                    Text(live.uri, fontSize = 11.sp, color = TelosColors.onSurface)
+                }
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    TextButton(onClick = {
+                        iconScope.launch(Dispatchers.IO) {
+                            val host = LanPairProtocol.suggestLanBindHost()
+                            LanPairingServer.startShared(bindHost = host)
+                            pairStatus = LanPairingServer.sharedOrNull()?.status()
+                                ?: LanPairingServer.Status(running = false)
+                        }
+                    }) {
+                        Text(com.telos.desktop.i18n.TelosI18n.t("desktop_lan_pair_start"))
+                    }
+                    TextButton(onClick = {
+                        iconScope.launch(Dispatchers.IO) {
+                            LanPairingServer.stopShared()
+                            pairStatus = LanPairingServer.Status(running = false)
+                        }
+                    }) {
+                        Text(com.telos.desktop.i18n.TelosI18n.t("desktop_lan_pair_stop"))
+                    }
+                }
             }
         }
         Vos5RestoreAndUpdateCard(settings)

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_lan_pair_title">Emparellament LAN amb Android</string>
+    <string name="desktop_lan_pair_hint">Inicia un servidor d’emparellament de curta durada a la LAN. Escanegeu o introduïu el codi a Telos Sync. Els codis i tokens no es registren mai.</string>
+    <string name="desktop_lan_pair_start">Inicia l’emparellament LAN</string>
+    <string name="desktop_lan_pair_stop">Atura l’emparellament LAN</string>
+    <string name="desktop_lan_pair_running">El servidor d’emparellament escolta a la LAN</string>
+    <string name="desktop_lan_pair_code">Codi d’emparellament</string>
+    <string name="desktop_lan_pair_qr_uri">URI d’emparellament (QR / enganxa)</string>
+    <string name="desktop_lan_pair_stopped">Emparellament LAN aturat</string>
+    <string name="desktop_lan_pair_bind_reject">No es pot enllaçar una adreça pública — useu una IP LAN privada</string>
+    <string name="desktop_lan_pair_android_title">Emparellament LAN de Telos Desktop</string>
+    <string name="desktop_lan_pair_host">Amfitrió de l’escriptori (IP LAN)</string>
+    <string name="desktop_lan_pair_port">Port de l’escriptori</string>
+    <string name="desktop_lan_pair_connect">Emparella amb l’escriptori</string>
+    <string name="desktop_lan_pair_paired">Emparellat amb l’escriptori</string>
+    <string name="desktop_lan_pair_fetch_bundle">Obté el paquet de sessió de l’escriptori</string>
+    <string name="desktop_lan_pair_fetch_ok">Paquet de sessió xifrat desat</string>
+    <string name="desktop_lan_pair_send_bundle">Envia el paquet xifrat</string>
+    <string name="desktop_lan_pair_failed">Ha fallat l’emparellament LAN</string>
+    <string name="desktop_lan_pair_scan_hint">A Android obriu Sync → Configuració i enganxeu l’URI o introduïu amfitrió, port i codi.</string>
+</resources>

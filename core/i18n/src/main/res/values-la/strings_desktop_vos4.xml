@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_lan_pair_title">Coniunctio LAN cum Android</string>
+    <string name="desktop_lan_pair_hint">Servitorem coniunctionis brevem in LAN incipit. Codicem in Telos Sync scande vel insere. Codices et tesserae numquam in commentarios scribuntur.</string>
+    <string name="desktop_lan_pair_start">Incipe coniunctionem LAN</string>
+    <string name="desktop_lan_pair_stop">Siste coniunctionem LAN</string>
+    <string name="desktop_lan_pair_running">Servitor coniunctionis in LAN auscultat</string>
+    <string name="desktop_lan_pair_code">Codex coniunctionis</string>
+    <string name="desktop_lan_pair_qr_uri">URI coniunctionis (QR / adhesive)</string>
+    <string name="desktop_lan_pair_stopped">Coniunctio LAN sistita</string>
+    <string name="desktop_lan_pair_bind_reject">Adressa publica ligari non potest — IP LAN privatam utere</string>
+    <string name="desktop_lan_pair_android_title">Coniunctio LAN Telos Desktop</string>
+    <string name="desktop_lan_pair_host">Hospes mensae (IP LAN)</string>
+    <string name="desktop_lan_pair_port">Portus mensae</string>
+    <string name="desktop_lan_pair_connect">Coniunge cum mensa</string>
+    <string name="desktop_lan_pair_paired">Cum mensa coniunctum</string>
+    <string name="desktop_lan_pair_fetch_bundle">Accipe fasciculum sessionis mensae</string>
+    <string name="desktop_lan_pair_fetch_ok">Fasciculus sessionis encryptus servatus</string>
+    <string name="desktop_lan_pair_send_bundle">Mitte fasciculum encryptum</string>
+    <string name="desktop_lan_pair_failed">Coniunctio LAN defecit</string>
+    <string name="desktop_lan_pair_scan_hint">In Android Sync → Optiones aperi et URI adhaere vel hospitem, portum et codicem insere.</string>
+</resources>

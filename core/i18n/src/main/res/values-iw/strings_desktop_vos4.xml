@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_lan_pair_title">צימוד LAN עם Android</string>
+    <string name="desktop_lan_pair_hint">מפעיל שרת צימוד קצר-חיים ברשת ה-LAN. סרקו או הזינו את הקוד ב-Telos Sync. קודים ואסימונים לעולם אינם נכתבים ליומן.</string>
+    <string name="desktop_lan_pair_start">התחל צימוד LAN</string>
+    <string name="desktop_lan_pair_stop">עצור צימוד LAN</string>
+    <string name="desktop_lan_pair_running">שרת הצימוד מאזין ב-LAN</string>
+    <string name="desktop_lan_pair_code">קוד צימוד</string>
+    <string name="desktop_lan_pair_qr_uri">URI לצימוד (QR / הדבקה)</string>
+    <string name="desktop_lan_pair_stopped">צימוד LAN הופסק</string>
+    <string name="desktop_lan_pair_bind_reject">לא ניתן לקשור כתובת ציבורית — השתמשו ב-IP פרטי ב-LAN</string>
+    <string name="desktop_lan_pair_android_title">צימוד LAN של Telos Desktop</string>
+    <string name="desktop_lan_pair_host">מארח שולחן העבודה (IP LAN)</string>
+    <string name="desktop_lan_pair_port">יציאת שולחן העבודה</string>
+    <string name="desktop_lan_pair_connect">צימוד עם שולחן העבודה</string>
+    <string name="desktop_lan_pair_paired">מצומד לשולחן העבודה</string>
+    <string name="desktop_lan_pair_fetch_bundle">משוך חבילת הפעלת שולחן העבודה</string>
+    <string name="desktop_lan_pair_fetch_ok">חבילת הפעלה מוצפנת נשמרה</string>
+    <string name="desktop_lan_pair_send_bundle">שלח חבילה מוצפנת</string>
+    <string name="desktop_lan_pair_failed">צימוד LAN נכשל</string>
+    <string name="desktop_lan_pair_scan_hint">ב-Android פתחו Sync ← הגדרות והדביקו את ה-URI או הזינו מארח, יציאה וקוד.</string>
+</resources>

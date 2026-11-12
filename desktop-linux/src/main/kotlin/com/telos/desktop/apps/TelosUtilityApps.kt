@@ -46,6 +46,8 @@ import com.telos.desktop.panel.ConnectivityState
 import com.telos.desktop.ui.TelosColors
 import com.telos.desktop.sync.DesktopSessionSync
 import com.telos.desktop.sync.DesktopVaultRestore
+import com.telos.desktop.sync.pairing.LanPairProtocol
+import com.telos.desktop.sync.pairing.LanPairingServer
 import com.telos.desktop.update.DesktopSignedUpdate
 import com.telos.desktop.vault.DesktopProfiles
 import com.telos.desktop.settings.TelosDesktopSettings
@@ -576,6 +578,77 @@ private fun NetworkStatusPane(
                     )
                 }
                 syncMsg?.let { Text(it, color = TelosColors.primary, fontSize = 11.sp) }
+                var pairStatus by remember {
+                    mutableStateOf(
+                        LanPairingServer.sharedOrNull()?.status()
+                            ?: LanPairingServer.Status(running = false),
+                    )
+                }
+                statusCard(
+                    cardShape,
+                    neon,
+                    t("desktop_lan_pair_title"),
+                    if (pairStatus.running && pairStatus.session != null) {
+                        t("desktop_lan_pair_running")
+                    } else {
+                        t("desktop_lan_pair_hint")
+                    },
+                )
+                Text(t("desktop_lan_pair_scan_hint"), color = TelosColors.onSurface.copy(alpha = 0.7f), fontSize = 11.sp)
+                pairStatus.session?.let { live ->
+                    Text(
+                        t("desktop_lan_pair_code") + ": " + live.code,
+                        color = TelosColors.primary,
+                        fontSize = 16.sp,
+                    )
+                    Text(
+                        t("desktop_lan_pair_qr_uri"),
+                        color = TelosColors.onSurface.copy(alpha = 0.7f),
+                        fontSize = 11.sp,
+                    )
+                    Text(live.uri, color = TelosColors.onSurface, fontSize = 11.sp)
+                    Text(
+                        "${live.host}:${live.port}",
+                        color = TelosColors.onSurface.copy(alpha = 0.75f),
+                        fontSize = 11.sp,
+                    )
+                }
+                pairStatus.pairedDeviceId?.let { id ->
+                    Text(t("desktop_lan_pair_paired") + ": $id", color = TelosColors.primary, fontSize = 11.sp)
+                }
+                pairStatus.lastError?.let { err ->
+                    Text(err, color = TelosColors.onSurface.copy(alpha = 0.85f), fontSize = 11.sp)
+                }
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    neonButton(t("desktop_lan_pair_start"), onClick = {
+                        scope.launch(Dispatchers.IO) {
+                            val host = LanPairProtocol.suggestLanBindHost()
+                            val started = LanPairingServer.startShared(bindHost = host)
+                            pairStatus = LanPairingServer.sharedOrNull()?.status()
+                                ?: LanPairingServer.Status(
+                                    running = false,
+                                    lastError = started.exceptionOrNull()?.message,
+                                )
+                            syncMsg = if (started.isSuccess) {
+                                t("desktop_lan_pair_running")
+                            } else {
+                                started.exceptionOrNull()?.message
+                                    ?: t("desktop_lan_pair_bind_reject")
+                            }
+                        }
+                    })
+                    neonButton(
+                        t("desktop_lan_pair_stop"),
+                        onClick = {
+                            scope.launch(Dispatchers.IO) {
+                                LanPairingServer.stopShared()
+                                pairStatus = LanPairingServer.Status(running = false)
+                                syncMsg = t("desktop_lan_pair_stopped")
+                            }
+                        },
+                        filled = false,
+                    )
+                }
                 statusCard(cardShape, neon, t("desktop_vault_restore_title"), t("desktop_vault_restore_hint"))
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     neonButton(t("desktop_vault_restore_preview_btn"), onClick = {

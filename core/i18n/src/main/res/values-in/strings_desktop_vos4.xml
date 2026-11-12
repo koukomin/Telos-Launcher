@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_lan_pair_title">Pempasangan LAN dengan Android</string>
+    <string name="desktop_lan_pair_hint">Memulai server pempasangan berumur pendek di LAN. Pindai atau masukkan kode di Telos Sync. Kode dan token tidak pernah dicatat.</string>
+    <string name="desktop_lan_pair_start">Mulai pempasangan LAN</string>
+    <string name="desktop_lan_pair_stop">Hentikan pempasangan LAN</string>
+    <string name="desktop_lan_pair_running">Server pempasangan mendengarkan di LAN</string>
+    <string name="desktop_lan_pair_code">Kode pempasangan</string>
+    <string name="desktop_lan_pair_qr_uri">URI pempasangan (QR / tempel)</string>
+    <string name="desktop_lan_pair_stopped">Pempasangan LAN dihentikan</string>
+    <string name="desktop_lan_pair_bind_reject">Tidak dapat mengikat alamat publik — gunakan IP LAN pribadi</string>
+    <string name="desktop_lan_pair_android_title">Pempasangan LAN Telos Desktop</string>
+    <string name="desktop_lan_pair_host">Host desktop (IP LAN)</string>
+    <string name="desktop_lan_pair_port">Port desktop</string>
+    <string name="desktop_lan_pair_connect">Pasangkan dengan desktop</string>
+    <string name="desktop_lan_pair_paired">Dipasangkan dengan desktop</string>
+    <string name="desktop_lan_pair_fetch_bundle">Ambil paket sesi desktop</string>
+    <string name="desktop_lan_pair_fetch_ok">Paket sesi desktop terenkripsi disimpan</string>
+    <string name="desktop_lan_pair_send_bundle">Kirim paket terenkripsi</string>
+    <string name="desktop_lan_pair_failed">Pempasangan LAN gagal</string>
+    <string name="desktop_lan_pair_scan_hint">Di Android buka Sync → Pengaturan dan tempel URI atau masukkan host, port, dan kode.</string>
+</resources>

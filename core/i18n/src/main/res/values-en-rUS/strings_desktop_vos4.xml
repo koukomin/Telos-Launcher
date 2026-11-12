@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_lan_pair_title">LAN pair with Android</string>
+    <string name="desktop_lan_pair_hint">Start a short-lived pairing server on this LAN. Scan or enter the code on Telos Sync. Codes and tokens are never written to logs.</string>
+    <string name="desktop_lan_pair_start">Start LAN pairing</string>
+    <string name="desktop_lan_pair_stop">Stop LAN pairing</string>
+    <string name="desktop_lan_pair_running">Pairing server listening on LAN</string>
+    <string name="desktop_lan_pair_code">Pairing code</string>
+    <string name="desktop_lan_pair_qr_uri">Pairing URI (QR / paste)</string>
+    <string name="desktop_lan_pair_stopped">LAN pairing stopped</string>
+    <string name="desktop_lan_pair_bind_reject">Cannot bind a public address — use a private LAN IP</string>
+    <string name="desktop_lan_pair_android_title">Telos Desktop LAN pair</string>
+    <string name="desktop_lan_pair_host">Desktop host (LAN IP)</string>
+    <string name="desktop_lan_pair_port">Desktop port</string>
+    <string name="desktop_lan_pair_connect">Pair with desktop</string>
+    <string name="desktop_lan_pair_paired">Paired with desktop</string>
+    <string name="desktop_lan_pair_fetch_bundle">Fetch desktop session bundle</string>
+    <string name="desktop_lan_pair_fetch_ok">Encrypted desktop session bundle saved</string>
+    <string name="desktop_lan_pair_send_bundle">Send encrypted bundle</string>
+    <string name="desktop_lan_pair_failed">LAN pairing failed</string>
+    <string name="desktop_lan_pair_scan_hint">On Android open Sync → Settings and paste the URI or enter host, port and code.</string>
+</resources>

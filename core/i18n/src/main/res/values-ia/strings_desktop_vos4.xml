@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_lan_pair_title">Accopulation LAN con Android</string>
+    <string name="desktop_lan_pair_hint">Initia un servitor de accopulation breve sur le LAN. Scanna o entra le codice in Telos Sync. Codices e tokens nunquam es registrate.</string>
+    <string name="desktop_lan_pair_start">Initiar accopulation LAN</string>
+    <string name="desktop_lan_pair_stop">Stoppar accopulation LAN</string>
+    <string name="desktop_lan_pair_running">Le servitor de accopulation ascolta sur le LAN</string>
+    <string name="desktop_lan_pair_code">Codice de accopulation</string>
+    <string name="desktop_lan_pair_qr_uri">URI de accopulation (QR / collar)</string>
+    <string name="desktop_lan_pair_stopped">Accopulation LAN stoppate</string>
+    <string name="desktop_lan_pair_bind_reject">Non pote ligar un adresse public — usa un IP LAN private</string>
+    <string name="desktop_lan_pair_android_title">Accopulation LAN de Telos Desktop</string>
+    <string name="desktop_lan_pair_host">Host del scriptorio (IP LAN)</string>
+    <string name="desktop_lan_pair_port">Porta del scriptorio</string>
+    <string name="desktop_lan_pair_connect">Accopular con le scriptorio</string>
+    <string name="desktop_lan_pair_paired">Accopulate con le scriptorio</string>
+    <string name="desktop_lan_pair_fetch_bundle">Obtener pacchetto de session del scriptorio</string>
+    <string name="desktop_lan_pair_fetch_ok">Pacchetto de session cryptate salvate</string>
+    <string name="desktop_lan_pair_send_bundle">Inviar pacchetto cryptate</string>
+    <string name="desktop_lan_pair_failed">Accopulation LAN fallite</string>
+    <string name="desktop_lan_pair_scan_hint">Sur Android aperi Sync → Preferentias e colla le URI o entra host, porta e codice.</string>
+</resources>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_lan_pair_title">Parowanie LAN z Androidem</string>
+    <string name="desktop_lan_pair_hint">Uruchamia krótkotrwały serwer parowania w sieci LAN. Zeskanuj lub wpisz kod w Telos Sync. Kody i tokeny nigdy nie trafiają do dzienników.</string>
+    <string name="desktop_lan_pair_start">Uruchom parowanie LAN</string>
+    <string name="desktop_lan_pair_stop">Zatrzymaj parowanie LAN</string>
+    <string name="desktop_lan_pair_running">Serwer parowania nasłuchuje w LAN</string>
+    <string name="desktop_lan_pair_code">Kod parowania</string>
+    <string name="desktop_lan_pair_qr_uri">URI parowania (QR / wklej)</string>
+    <string name="desktop_lan_pair_stopped">Parowanie LAN zatrzymane</string>
+    <string name="desktop_lan_pair_bind_reject">Nie można powiązać adresu publicznego — użyj prywatnego IP LAN</string>
+    <string name="desktop_lan_pair_android_title">Parowanie LAN Telos Desktop</string>
+    <string name="desktop_lan_pair_host">Host pulpitu (IP LAN)</string>
+    <string name="desktop_lan_pair_port">Port pulpitu</string>
+    <string name="desktop_lan_pair_connect">Sparuj z pulpitem</string>
+    <string name="desktop_lan_pair_paired">Sparowano z pulpitem</string>
+    <string name="desktop_lan_pair_fetch_bundle">Pobierz pakiet sesji pulpitu</string>
+    <string name="desktop_lan_pair_fetch_ok">Zaszyfrowany pakiet sesji zapisany</string>
+    <string name="desktop_lan_pair_send_bundle">Wyślij zaszyfrowany pakiet</string>
+    <string name="desktop_lan_pair_failed">Parowanie LAN nie powiodło się</string>
+    <string name="desktop_lan_pair_scan_hint">Na Androidzie otwórz Sync → Ustawienia i wklej URI albo wpisz host, port i kod.</string>
+</resources>

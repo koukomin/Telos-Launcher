@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_lan_pair_title">LAN susiejimas su „Android“</string>
+    <string name="desktop_lan_pair_hint">Paleidžia trumpalaikį susiejimo serverį LAN tinkle. Nuskaitykite arba įveskite kodą „Telos Sync“. Kodai ir žetonai niekada nerašomi į žurnalus.</string>
+    <string name="desktop_lan_pair_start">Pradėti LAN susiejimą</string>
+    <string name="desktop_lan_pair_stop">Stabdyti LAN susiejimą</string>
+    <string name="desktop_lan_pair_running">Susiejimo serveris klauso LAN</string>
+    <string name="desktop_lan_pair_code">Susiejimo kodas</string>
+    <string name="desktop_lan_pair_qr_uri">Susiejimo URI (QR / įklijuoti)</string>
+    <string name="desktop_lan_pair_stopped">LAN susiejimas sustabdytas</string>
+    <string name="desktop_lan_pair_bind_reject">Negalima susieti viešojo adreso — naudokite privatų LAN IP</string>
+    <string name="desktop_lan_pair_android_title">„Telos Desktop“ LAN susiejimas</string>
+    <string name="desktop_lan_pair_host">Darbalaukio mazgas (LAN IP)</string>
+    <string name="desktop_lan_pair_port">Darbalaukio prievadas</string>
+    <string name="desktop_lan_pair_connect">Susieti su darbalaukiu</string>
+    <string name="desktop_lan_pair_paired">Susieta su darbalaukiu</string>
+    <string name="desktop_lan_pair_fetch_bundle">Gauti darbalaukio seanso paketą</string>
+    <string name="desktop_lan_pair_fetch_ok">Šifruotas darbalaukio seanso paketas išsaugotas</string>
+    <string name="desktop_lan_pair_send_bundle">Siųsti šifruotą paketą</string>
+    <string name="desktop_lan_pair_failed">LAN susiejimas nepavyko</string>
+    <string name="desktop_lan_pair_scan_hint">„Android“ atidarykite „Sync“ → „Nustatymai“ ir įklijuokite URI arba įveskite mazgą, prievadą ir kodą.</string>
+</resources>

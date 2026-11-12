@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_lan_pair_title">Appariement LAN avec Android</string>
+    <string name="desktop_lan_pair_hint">Démarre un serveur d’appariement de courte durée sur le LAN. Scannez ou saisissez le code dans Telos Sync. Codes et jetons ne sont jamais journalisés.</string>
+    <string name="desktop_lan_pair_start">Démarrer l’appariement LAN</string>
+    <string name="desktop_lan_pair_stop">Arrêter l’appariement LAN</string>
+    <string name="desktop_lan_pair_running">Serveur d’appariement à l’écoute sur le LAN</string>
+    <string name="desktop_lan_pair_code">Code d’appariement</string>
+    <string name="desktop_lan_pair_qr_uri">URI d’appariement (QR / coller)</string>
+    <string name="desktop_lan_pair_stopped">Appariement LAN arrêté</string>
+    <string name="desktop_lan_pair_bind_reject">Impossible de lier une adresse publique — utilisez une IP LAN privée</string>
+    <string name="desktop_lan_pair_android_title">Appariement LAN Telos Desktop</string>
+    <string name="desktop_lan_pair_host">Hôte du bureau (IP LAN)</string>
+    <string name="desktop_lan_pair_port">Port du bureau</string>
+    <string name="desktop_lan_pair_connect">Apparier avec le bureau</string>
+    <string name="desktop_lan_pair_paired">Apparié avec le bureau</string>
+    <string name="desktop_lan_pair_fetch_bundle">Récupérer le paquet de session bureau</string>
+    <string name="desktop_lan_pair_fetch_ok">Paquet de session chiffré enregistré</string>
+    <string name="desktop_lan_pair_send_bundle">Envoyer le paquet chiffré</string>
+    <string name="desktop_lan_pair_failed">Échec de l’appariement LAN</string>
+    <string name="desktop_lan_pair_scan_hint">Sur Android ouvrez Sync → Paramètres et collez l’URI ou saisissez hôte, port et code.</string>
+</resources>

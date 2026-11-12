@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_lan_pair_title">Android के साथ LAN पेयरिंग</string>
+    <string name="desktop_lan_pair_hint">LAN पर अल्पकालिक पेयरिंग सर्वर शुरू करता है। Telos Sync में कोड स्कैन या दर्ज करें। कोड और टोकन कभी लॉग नहीं होते।</string>
+    <string name="desktop_lan_pair_start">LAN पेयरिंग शुरू करें</string>
+    <string name="desktop_lan_pair_stop">LAN पेयरिंग रोकें</string>
+    <string name="desktop_lan_pair_running">पेयरिंग सर्वर LAN पर सुन रहा है</string>
+    <string name="desktop_lan_pair_code">पेयरिंग कोड</string>
+    <string name="desktop_lan_pair_qr_uri">पेयरिंग URI (QR / पेस्ट)</string>
+    <string name="desktop_lan_pair_stopped">LAN पेयरिंग रोकी गई</string>
+    <string name="desktop_lan_pair_bind_reject">सार्वजनिक पते से बाँध नहीं सकते — निजी LAN IP उपयोग करें</string>
+    <string name="desktop_lan_pair_android_title">Telos Desktop LAN पेयरिंग</string>
+    <string name="desktop_lan_pair_host">डेस्कटॉप होस्ट (LAN IP)</string>
+    <string name="desktop_lan_pair_port">डेस्कटॉप पोर्ट</string>
+    <string name="desktop_lan_pair_connect">डेस्कटॉप से पेयर करें</string>
+    <string name="desktop_lan_pair_paired">डेस्कटॉप से पेयर हो गया</string>
+    <string name="desktop_lan_pair_fetch_bundle">डेस्कटॉप सत्र बंडल लाएँ</string>
+    <string name="desktop_lan_pair_fetch_ok">एन्क्रिप्टेड डेस्कटॉप सत्र बंडल सहेजा गया</string>
+    <string name="desktop_lan_pair_send_bundle">एन्क्रिप्टेड बंडल भेजें</string>
+    <string name="desktop_lan_pair_failed">LAN पेयरिंग विफल</string>
+    <string name="desktop_lan_pair_scan_hint">Android पर Sync → सेटिंग्स खोलें और URI पेस्ट करें या होस्ट, पोर्ट और कोड दर्ज करें।</string>
+</resources>

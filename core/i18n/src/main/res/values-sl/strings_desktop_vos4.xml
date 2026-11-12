@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_lan_pair_title">LAN seznanjanje z Androidom</string>
+    <string name="desktop_lan_pair_hint">Zažene kratkoživeči strežnik za seznanjanje v omrežju LAN. Skenirajte ali vnesite kodo v Telos Sync. Kode in žetoni se nikoli ne zapisujejo v dnevnike.</string>
+    <string name="desktop_lan_pair_start">Zaženi LAN seznanjanje</string>
+    <string name="desktop_lan_pair_stop">Ustavi LAN seznanjanje</string>
+    <string name="desktop_lan_pair_running">Strežnik za seznanjanje posluša v LAN</string>
+    <string name="desktop_lan_pair_code">Koda za seznanjanje</string>
+    <string name="desktop_lan_pair_qr_uri">URI seznanjanja (QR / prilepi)</string>
+    <string name="desktop_lan_pair_stopped">LAN seznanjanje ustavljeno</string>
+    <string name="desktop_lan_pair_bind_reject">Javnega naslova ni mogoče vezati — uporabite zasebni LAN IP</string>
+    <string name="desktop_lan_pair_android_title">LAN seznanjanje Telos Desktop</string>
+    <string name="desktop_lan_pair_host">Gostitelj namizja (LAN IP)</string>
+    <string name="desktop_lan_pair_port">Vrata namizja</string>
+    <string name="desktop_lan_pair_connect">Seznani z namizjem</string>
+    <string name="desktop_lan_pair_paired">Seznanjeno z namizjem</string>
+    <string name="desktop_lan_pair_fetch_bundle">Pridobi paket seje namizja</string>
+    <string name="desktop_lan_pair_fetch_ok">Šifriran paket seje namizja shranjen</string>
+    <string name="desktop_lan_pair_send_bundle">Pošlji šifriran paket</string>
+    <string name="desktop_lan_pair_failed">LAN seznanjanje ni uspelo</string>
+    <string name="desktop_lan_pair_scan_hint">V Androidu odprite Sync → Nastavitve in prilepite URI ali vnesite gostitelja, vrata in kodo.</string>
+</resources>
