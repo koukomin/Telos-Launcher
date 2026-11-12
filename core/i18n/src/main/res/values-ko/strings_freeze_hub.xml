@@ -31,4 +31,8 @@
     
     
 
+    <string name="freeze_desk_title">Freeze Desk</string>
+    <string name="freeze_desk_filter_bloat">Bloat</string>
+    <string name="freeze_desk_open_summary">시스템 → 앱에서 설치된 패키지를 동결·검색·필터링하세요.</string>
+    <string name="freeze_desk_rules_help">자동 동결 규칙과 백엔드는 여기에 남습니다. 앱별 동결과 AppOps는 Freeze Desk에 있습니다.</string>
 </resources>

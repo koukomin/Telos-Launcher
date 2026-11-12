@@ -31,4 +31,8 @@
     
     
 
+    <string name="freeze_desk_title">Freeze Desk</string>
+    <string name="freeze_desk_filter_bloat">Bloat</string>
+    <string name="freeze_desk_open_summary">Nyisd meg a Rendszer → Alkalmazások menüt a telepített csomagok fagyasztásához, kereséséhez és szűréséhez.</string>
+    <string name="freeze_desk_rules_help">Az automatikus fagyasztási szabályok és backends itt maradnak. Az alkalmazásfagyasztás és az AppOps a Freeze Deskben van.</string>
 </resources>

@@ -31,4 +31,8 @@
     
     
 
+    <string name="freeze_desk_title">Freeze Desk</string>
+    <string name="freeze_desk_filter_bloat">Bloat</string>
+    <string name="freeze_desk_open_summary">Open Systeem → Apps om geïnstalleerde pakketten te bevriezen, zoeken en filteren.</string>
+    <string name="freeze_desk_rules_help">Auto-freeze-regels en backends blijven hier. Per-app-freeze en AppOps staan in Freeze Desk.</string>
 </resources>

@@ -31,4 +31,8 @@
     
     
 
+    <string name="freeze_desk_title">Freeze Desk</string>
+    <string name="freeze_desk_filter_bloat">臃腫</string>
+    <string name="freeze_desk_open_summary">開啟系統 → 應用程式以凍結、搜尋與篩選已安裝的套件。</string>
+    <string name="freeze_desk_rules_help">自動凍結規則與後端保留在此。依應用凍結與 AppOps 位於 Freeze Desk。</string>
 </resources>

@@ -1,6 +1,6 @@
 # Unified freeze management
 
-Two legacy routes (`FreezeSettingsRoute`, `SmartFreezeDashboardRoute`) now resolve to one manager. Tabs preserve their saveable selection/filter state; app search includes package names, actions are explicit, and the history dashboard remains a subordinate diagnostic screen. The Advanced duplicate entry is removed.
+Two legacy routes (`FreezeSettingsRoute`, `SmartFreezeDashboardRoute`) still open Freeze Manager. Tab 0 is a **Rules** alias that links to **Telos System → Apps (Freeze Desk)** for per-app freeze; Auto-freeze and Settings tabs keep their previous content. Freeze Desk reuses `FreezeManager` (no second backend), Cyber-Tech hub chrome, and existing AppOps/Network deep links. Multi-select, detail-sheet AppOps embed, and presets remain later phases. The history dashboard remains a subordinate diagnostic screen.
 
 ## Implementation and constraints
 

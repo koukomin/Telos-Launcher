@@ -31,4 +31,8 @@
     
     
 
+    <string name="freeze_desk_title">Freeze Desk</string>
+    <string name="freeze_desk_filter_bloat">Bloat</string>
+    <string name="freeze_desk_open_summary">Ouvrez Système → Apps pour geler, rechercher et filtrer les paquets installés.</string>
+    <string name="freeze_desk_rules_help">Les règles de gel automatique et les backends restent ici. Le gel par application et AppOps sont dans Freeze Desk.</string>
 </resources>

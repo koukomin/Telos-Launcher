@@ -31,4 +31,8 @@
     
     
 
+    <string name="freeze_desk_title">Freeze Desk</string>
+    <string name="freeze_desk_filter_bloat">Bloat</string>
+    <string name="freeze_desk_open_summary">Άνοιξε Σύστημα → Εφαρμογές για πάγωμα, αναζήτηση και φίλτρα εγκατεστημένων πακέτων.</string>
+    <string name="freeze_desk_rules_help">Οι κανόνες αυτόματου παγώματος και τα backends μένουν εδώ. Το πάγωμα ανά εφαρμογή και το AppOps είναι στο Freeze Desk.</string>
 </resources>

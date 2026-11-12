@@ -31,4 +31,8 @@
     
     
 
+    <string name="freeze_desk_title">Freeze Desk</string>
+    <string name="freeze_desk_filter_bloat">Bloat</string>
+    <string name="freeze_desk_open_summary">システム → アプリを開き、インストール済みパッケージの凍結・検索・絞り込みを行います。</string>
+    <string name="freeze_desk_rules_help">自動凍結ルールとバックエンドはここに残ります。アプリ単位の凍結と AppOps は Freeze Desk にあります。</string>
 </resources>

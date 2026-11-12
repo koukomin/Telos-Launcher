@@ -31,4 +31,8 @@
     
     
 
+    <string name="freeze_desk_title">Freeze Desk</string>
+    <string name="freeze_desk_filter_bloat">Bloat</string>
+    <string name="freeze_desk_open_summary">Otevřete Systém → Aplikace pro zmrazení, hledání a filtrování nainstalovaných balíčků.</string>
+    <string name="freeze_desk_rules_help">Pravidla automatického zmrazení a backends zůstávají zde. Zmrazení aplikací a AppOps jsou ve Freeze Desk.</string>
 </resources>

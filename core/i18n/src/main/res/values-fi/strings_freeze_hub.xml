@@ -31,4 +31,8 @@
     
     
 
+    <string name="freeze_desk_title">Freeze Desk</string>
+    <string name="freeze_desk_filter_bloat">Bloat</string>
+    <string name="freeze_desk_open_summary">Avaa Järjestelmä → Sovellukset jäädyttääksesi, hakeaksesi ja suodataksesi asennettuja paketteja.</string>
+    <string name="freeze_desk_rules_help">Automaattijäädytyksen säännöt ja backends pysyvät täällä. Sovellusjäädytys ja AppOps ovat Freeze Deskissä.</string>
 </resources>

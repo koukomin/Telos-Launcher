@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="freeze_desk_title">Freeze Desk</string>
+    <string name="freeze_desk_filter_bloat">Bloat</string>
+    <string name="freeze_desk_open_summary">Aperi Systema → Applicationes ad fasciculos installatos congelandos, quaerendos et filtrandos.</string>
+    <string name="freeze_desk_rules_help">Regulae autocongelationis et backends hic manent. Congelatio per applicationem et AppOps in Freeze Desk sunt.</string>
+</resources>

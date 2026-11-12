@@ -15,7 +15,8 @@ import de.mm20.launcher2.ui.R
 internal fun FreezeManagementTabs(selected: Int, select: (Int) -> Unit) {
     PrimaryScrollableTabRow(selectedTabIndex = selected, edgePadding = 0.dp,
         modifier = Modifier.fillMaxWidth(), containerColor = MaterialTheme.colorScheme.surfaceContainer) {
-        listOf(I18nR.string.preference_freeze_apps_category, I18nR.string.preference_freeze_auto_category,
+        // Tab 0 is the Rules alias that links to Freeze Desk (System → Apps).
+        listOf(I18nR.string.dl_settings_rules, I18nR.string.preference_freeze_auto_category,
             I18nR.string.settings).forEachIndexed { index, label ->
             Tab(selected = selected == index, onClick = { select(index) },
                 text = { Text(stringResource(label), modifier = Modifier.padding(vertical = 8.dp)) })

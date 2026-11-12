@@ -31,4 +31,8 @@
     
     
 
+    <string name="freeze_desk_title">Freeze Desk</string>
+    <string name="freeze_desk_filter_bloat">Bloat</string>
+    <string name="freeze_desk_open_summary">Ava Süsteem → Rakendused, et külmutada, otsida ja filtreerida installitud pakette.</string>
+    <string name="freeze_desk_rules_help">Automaatse külmutamise reeglid ja backends jäävad siia. Rakenduste külmutamine ja AppOps on Freeze Deskis.</string>
 </resources>

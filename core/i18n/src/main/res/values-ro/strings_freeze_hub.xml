@@ -31,4 +31,8 @@
     
     
 
+    <string name="freeze_desk_title">Freeze Desk</string>
+    <string name="freeze_desk_filter_bloat">Bloat</string>
+    <string name="freeze_desk_open_summary">Deschide Sistem → Aplicații pentru a îngheța, căuta și filtra pachetele instalate.</string>
+    <string name="freeze_desk_rules_help">Regulile de înghețare automată și backends rămân aici. Înghețarea pe aplicație și AppOps sunt în Freeze Desk.</string>
 </resources>

@@ -31,4 +31,8 @@
     
     
 
+    <string name="freeze_desk_title">Freeze Desk</string>
+    <string name="freeze_desk_filter_bloat">Bloat</string>
+    <string name="freeze_desk_open_summary">Ireki Sistema → Aplikazioak instalatutako paketeak izozteko, bilatzeko eta iragazteko.</string>
+    <string name="freeze_desk_rules_help">Izozte automatikoko arauak eta backends hemen geratzen dira. Aplikazioen izoztea eta AppOps Freeze Desk-en daude.</string>
 </resources>

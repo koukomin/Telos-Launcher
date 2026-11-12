@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="freeze_desk_title">Freeze Desk</string>
+    <string name="freeze_desk_filter_bloat">Bloat</string>
+    <string name="freeze_desk_open_summary">Ἄνοιξον Σύστημα → Ἐφαρμογαὶ πρὸς πάγωμα, ζήτησιν καὶ διήθησιν τῶν ἐγκατεστημένων πακέτων.</string>
+    <string name="freeze_desk_rules_help">Οἱ κανόνες αὐτομάτου παγώματος καὶ τὰ backends μένουσιν ἐνθάδε. Τὸ πάγωμα καθʼ ἐφαρμογὴν καὶ τὸ AppOps εἰσὶν ἐν Freeze Desk.</string>
+</resources>

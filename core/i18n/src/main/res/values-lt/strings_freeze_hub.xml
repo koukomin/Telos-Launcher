@@ -31,4 +31,8 @@
     
     
 
+    <string name="freeze_desk_title">Freeze Desk</string>
+    <string name="freeze_desk_filter_bloat">Bloat</string>
+    <string name="freeze_desk_open_summary">Atidarykite Sistema → Programos, kad užšaldytumėte, ieškotumėte ir filtruotumėte įdiegtus paketus.</string>
+    <string name="freeze_desk_rules_help">Automatinio užšaldymo taisyklės ir backends lieka čia. Programų užšaldymas ir AppOps yra Freeze Desk.</string>
 </resources>
