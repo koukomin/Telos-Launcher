@@ -14,4 +14,14 @@
     <string name="desktop_net_apps_title">アプリ別ルーティング</string>
     <string name="desktop_net_apps_hint">1行に desktop-id またはパッケージと allow / deny / vpn。~/.config/telos/app-routing.txt に保存。プロセス単位の適用は未実装。Linux ではキルスイッチが許可リスト外の送信を破棄します。</string>
     <string name="desktop_net_apps_file">ルーティング表</string>
+    <string name="desktop_net_dns_filters_title">DNS フィルター</string>
+    <string name="desktop_net_dns_filters_hint">ブロック／許可リストは vault ~/.config/telos/（dns-block.txt、dns-allow.txt）に保存されます。NextDNS 構成 ID は、利用可能な場合 Linux で resolvectl 経由の DoT を適用します。ローカルリストのみの場合は設定のみで、dns-stub.port が設定され nftables がそのスタブへ DNS をリダイレクトできる場合を除きます。Windows / macOS は設定のみ保存します。</string>
+    <string name="desktop_net_nextdns_id">NextDNS 構成 ID</string>
+    <string name="desktop_net_nextdns_id_invalid">無効な NextDNS 構成 ID（4～12 文字の英数字）</string>
+    <string name="desktop_net_dns_blocklist">DNS ブロックリスト</string>
+    <string name="desktop_net_dns_allowlist">DNS 許可リスト</string>
+    <string name="desktop_net_dns_filter_status">フィルター状態</string>
+    <string name="desktop_net_dns_filter_enforced">適用中（NextDNS DoT および／またはローカル DNS スタブへのリダイレクト）</string>
+    <string name="desktop_net_dns_filter_pref_only">設定を保存しました。この経路ではフィルタリングは適用されません</string>
+    <string name="desktop_net_dns_filter_failed">設定済みですが、resolvectl/nftables でフィルタリングを適用できませんでした</string>
 </resources>

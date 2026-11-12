@@ -14,4 +14,14 @@
     <string name="desktop_net_apps_title">Routing għal kull app</string>
     <string name="desktop_net_apps_hint">Desktop-id jew pakkett wieħed għal kull linja b’allow, deny jew vpn. Maħżun taħt ~/.config/telos/app-routing.txt. L-infurzar fil-livell tal-proċess għadu mhuwiex; il-kill-switch xorta jarmi egress mhux permess fuq Linux.</string>
     <string name="desktop_net_apps_file">Tabella tar-routing</string>
+    <string name="desktop_net_dns_filters_title">Filtri DNS</string>
+    <string name="desktop_net_dns_filters_hint">Listi ta’ blokk u permess jinħażnu taħt il-vault ~/.config/telos/ (dns-block.txt, dns-allow.txt). ID tal-konfigurazzjoni NextDNS japplika DoT permezz ta’ resolvectl fuq Linux meta jkun disponibbli. Listi lokali biss jibqgħu preferenza sakemm dns-stub.port ma jkunx issettjat u nftables ma jkunx jista’ jidderieġi d-DNS lejn dak l-istub. Windows u macOS jaħżnu biss preferenzi.</string>
+    <string name="desktop_net_nextdns_id">ID tal-konfigurazzjoni NextDNS</string>
+    <string name="desktop_net_nextdns_id_invalid">ID tal-konfigurazzjoni NextDNS invalidu (uża 4–12 ittra jew ċifra)</string>
+    <string name="desktop_net_dns_blocklist">Lista ta’ blokk DNS</string>
+    <string name="desktop_net_dns_allowlist">Lista ta’ permess DNS</string>
+    <string name="desktop_net_dns_filter_status">Status tal-filtru</string>
+    <string name="desktop_net_dns_filter_enforced">Applikat (DoT NextDNS u/jew ridirezzjoni stub DNS lokali)</string>
+    <string name="desktop_net_dns_filter_pref_only">Preferenza salvata; l-filtrazzjoni mhix applikata fuq dan il-mogħdija</string>
+    <string name="desktop_net_dns_filter_failed">Ikkonfigurat, imma resolvectl/nftables ma setax japplika l-filtrazzjoni</string>
 </resources>

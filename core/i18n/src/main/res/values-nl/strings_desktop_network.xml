@@ -14,4 +14,14 @@
     <string name="desktop_net_apps_title">Routing per app</string>
     <string name="desktop_net_apps_hint">Eén desktop-id of pakket per regel met allow, deny of vpn. Opgeslagen onder ~/.config/telos/app-routing.txt. Procesafdwinging ontbreekt nog; de kill-switch dropt nog steeds niet-toegestane egress op Linux.</string>
     <string name="desktop_net_apps_file">Routingtabel</string>
+    <string name="desktop_net_dns_filters_title">DNS-filters</string>
+    <string name="desktop_net_dns_filters_hint">Blokkeer- en toelatingslijsten staan in vault ~/.config/telos/ (dns-block.txt, dns-allow.txt). Een NextDNS-configuratie-ID past DoT toe via resolvectl op Linux wanneer beschikbaar. Lokale lijsten alleen blijven voorkeur tenzij dns-stub.port is gezet en nftables DNS naar die stub kan omleiden. Windows en macOS slaan alleen voorkeuren op.</string>
+    <string name="desktop_net_nextdns_id">NextDNS-configuratie-ID</string>
+    <string name="desktop_net_nextdns_id_invalid">Ongeldige NextDNS-configuratie-ID (gebruik 4–12 letters of cijfers)</string>
+    <string name="desktop_net_dns_blocklist">DNS-blokkeerlijst</string>
+    <string name="desktop_net_dns_allowlist">DNS-toelatingslijst</string>
+    <string name="desktop_net_dns_filter_status">Filterstatus</string>
+    <string name="desktop_net_dns_filter_enforced">Afgedwongen (NextDNS-DoT en/of lokale DNS-stub-omleiding)</string>
+    <string name="desktop_net_dns_filter_pref_only">Voorkeur opgeslagen; filtering wordt op dit pad niet toegepast</string>
+    <string name="desktop_net_dns_filter_failed">Geconfigureerd, maar resolvectl/nftables kon filtering niet toepassen</string>
 </resources>

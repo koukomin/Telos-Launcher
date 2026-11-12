@@ -14,4 +14,14 @@
     <string name="desktop_net_apps_title">Usmjeravanje po aplikaciji</string>
     <string name="desktop_net_apps_hint">Jedan desktop-id ili paket po retku s allow, deny ili vpn. Sprema se u ~/.config/telos/app-routing.txt. Provedba na razini procesa još nije; kill-switch i dalje odbacuje nedozvoljeni izlazni promet na Linuxu.</string>
     <string name="desktop_net_apps_file">Tablica usmjeravanja</string>
+    <string name="desktop_net_dns_filters_title">DNS filtri</string>
+    <string name="desktop_net_dns_filters_hint">Popisi blokiranja i dopuštanja spremaju se u vault ~/.config/telos/ (dns-block.txt, dns-allow.txt). NextDNS configuration ID primjenjuje DoT putem resolvectl na Linuxu kada je dostupan. Samo lokalni popisi ostaju samo postavka osim ako je postavljen dns-stub.port i nftables može preusmjeriti DNS na taj stub. Windows i macOS spremaju samo postavke.</string>
+    <string name="desktop_net_nextdns_id">NextDNS configuration ID</string>
+    <string name="desktop_net_nextdns_id_invalid">Nevažeći NextDNS configuration ID (upotrijebite 4–12 slova ili znamenki)</string>
+    <string name="desktop_net_dns_blocklist">DNS popis blokiranja</string>
+    <string name="desktop_net_dns_allowlist">DNS popis dopuštanja</string>
+    <string name="desktop_net_dns_filter_status">Status filtra</string>
+    <string name="desktop_net_dns_filter_enforced">Primijenjeno (NextDNS DoT i/ili preusmjeravanje lokalnog DNS stub-a)</string>
+    <string name="desktop_net_dns_filter_pref_only">Postavka spremljena; filtriranje se ne primjenjuje na ovom putu</string>
+    <string name="desktop_net_dns_filter_failed">Konfigurirano, ali resolvectl/nftables nije mogao primijeniti filtriranje</string>
 </resources>

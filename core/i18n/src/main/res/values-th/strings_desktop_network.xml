@@ -14,4 +14,14 @@
     <string name="desktop_net_apps_title">การกำหนดเส้นทางต่อแอป</string>
     <string name="desktop_net_apps_hint">หนึ่ง desktop-id หรือแพ็กเกจต่อบรรทัดพร้อม allow, deny หรือ vpn เก็บไว้ที่ ~/.config/telos/app-routing.txt ยังไม่บังคับใช้ระดับโปรเซส คิลสวิตช์ยังทิ้งขาออกที่ไม่อนุญาตบน Linux</string>
     <string name="desktop_net_apps_file">ตารางเส้นทาง</string>
+    <string name="desktop_net_dns_filters_title">ตัวกรอง DNS</string>
+    <string name="desktop_net_dns_filters_hint">รายการบล็อกและอนุญาตถูกเก็บใน vault ~/.config/telos/ (dns-block.txt, dns-allow.txt) NextDNS configuration ID จะใช้ DoT ผ่าน resolvectl บน Linux เมื่อมี รายการในเครื่องอย่างเดียวจะเป็นเพียงค่ากำหนด เว้นแต่ตั้ง dns-stub.port และ nftables สามารถเปลี่ยนเส้นทาง DNS ไปยัง stub นั้นได้ Windows และ macOS เก็บเฉพาะค่ากำหนด</string>
+    <string name="desktop_net_nextdns_id">NextDNS configuration ID</string>
+    <string name="desktop_net_nextdns_id_invalid">NextDNS configuration ID ไม่ถูกต้อง (ใช้ตัวอักษรหรือตัวเลข 4–12 ตัว)</string>
+    <string name="desktop_net_dns_blocklist">รายการบล็อก DNS</string>
+    <string name="desktop_net_dns_allowlist">รายการอนุญาต DNS</string>
+    <string name="desktop_net_dns_filter_status">สถานะตัวกรอง</string>
+    <string name="desktop_net_dns_filter_enforced">บังคับใช้แล้ว (NextDNS DoT และ/หรือการเปลี่ยนเส้นทาง DNS stub ในเครื่อง)</string>
+    <string name="desktop_net_dns_filter_pref_only">บันทึกค่ากำหนดแล้ว ไม่ได้ใช้การกรองบนเส้นทางนี้</string>
+    <string name="desktop_net_dns_filter_failed">ตั้งค่าแล้ว แต่ resolvectl/nftables ใช้การกรองไม่ได้</string>
 </resources>

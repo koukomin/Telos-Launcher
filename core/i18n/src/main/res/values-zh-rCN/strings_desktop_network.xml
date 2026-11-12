@@ -14,4 +14,14 @@
     <string name="desktop_net_apps_title">按应用路由</string>
     <string name="desktop_net_apps_hint">每行一个 desktop-id 或软件包，取值 allow、deny 或 vpn。保存在 ~/.config/telos/app-routing.txt。尚未按进程强制执行；Linux 上网络熔断仍会丢弃未允许的出站流量。</string>
     <string name="desktop_net_apps_file">路由表</string>
+    <string name="desktop_net_dns_filters_title">DNS 过滤</string>
+    <string name="desktop_net_dns_filters_hint">拦截与放行列表保存在 vault ~/.config/telos/（dns-block.txt、dns-allow.txt）。NextDNS 配置 ID 在 Linux 上可用时通过 resolvectl 应用 DoT。仅本地列表时仍为偏好设置，除非设置了 dns-stub.port 且 nftables 可将 DNS 重定向到该 stub。Windows 与 macOS 仅保存偏好。</string>
+    <string name="desktop_net_nextdns_id">NextDNS 配置 ID</string>
+    <string name="desktop_net_nextdns_id_invalid">无效的 NextDNS 配置 ID（使用 4–12 个字母或数字）</string>
+    <string name="desktop_net_dns_blocklist">DNS 拦截列表</string>
+    <string name="desktop_net_dns_allowlist">DNS 放行列表</string>
+    <string name="desktop_net_dns_filter_status">过滤状态</string>
+    <string name="desktop_net_dns_filter_enforced">已强制（NextDNS DoT 和/或本地 DNS stub 重定向）</string>
+    <string name="desktop_net_dns_filter_pref_only">偏好已保存；此路径未应用过滤</string>
+    <string name="desktop_net_dns_filter_failed">已配置，但 resolvectl/nftables 无法应用过滤</string>
 </resources>

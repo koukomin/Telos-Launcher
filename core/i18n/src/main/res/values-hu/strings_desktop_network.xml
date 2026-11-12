@@ -14,4 +14,14 @@
     <string name="desktop_net_apps_title">Alkalmazásonkénti útválasztás</string>
     <string name="desktop_net_apps_hint">Soronként egy desktop-id vagy csomag allow, deny vagy vpn értékkel. A ~/.config/telos/app-routing.txt fájlban tárolódik. Folyamatszintű érvényesítés még nincs; a kill-switch továbbra is eldobja a nem engedélyezett kimenő forgalmat Linuxon.</string>
     <string name="desktop_net_apps_file">Útválasztási tábla</string>
+    <string name="desktop_net_dns_filters_title">DNS-szűrők</string>
+    <string name="desktop_net_dns_filters_hint">A tiltó- és engedélyezőlisták a vault ~/.config/telos/ alatt vannak (dns-block.txt, dns-allow.txt). A NextDNS konfigurációs azonosító DoT-ot alkalmaz resolvectl-lel Linuxon, ha elérhető. A helyi listák önmagukban csak beállításként maradnak, hacsak nincs dns-stub.port beállítva, és az nftables át tudja irányítani a DNS-t erre a stubra. A Windows és a macOS csak beállításokat tárol.</string>
+    <string name="desktop_net_nextdns_id">NextDNS konfigurációs azonosító</string>
+    <string name="desktop_net_nextdns_id_invalid">Érvénytelen NextDNS konfigurációs azonosító (4–12 betű vagy számjegy)</string>
+    <string name="desktop_net_dns_blocklist">DNS-tiltólista</string>
+    <string name="desktop_net_dns_allowlist">DNS-engedélyezőlista</string>
+    <string name="desktop_net_dns_filter_status">Szűrő állapota</string>
+    <string name="desktop_net_dns_filter_enforced">Érvényesítve (NextDNS DoT és/vagy helyi DNS-stub átirányítás)</string>
+    <string name="desktop_net_dns_filter_pref_only">Beállítás mentve; a szűrés ezen az útvonalon nem érvényesül</string>
+    <string name="desktop_net_dns_filter_failed">Beállítva, de a resolvectl/nftables nem tudta alkalmazni a szűrést</string>
 </resources>

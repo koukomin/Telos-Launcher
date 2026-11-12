@@ -14,4 +14,14 @@
     <string name="desktop_net_apps_title">Rutare pe aplicație</string>
     <string name="desktop_net_apps_hint">Un desktop-id sau pachet pe linie cu allow, deny sau vpn. Stocat în ~/.config/telos/app-routing.txt. Aplicarea la nivel de proces lipsește încă; kill-switch continuă să abandoneze ieșirea nepermisă pe Linux.</string>
     <string name="desktop_net_apps_file">Tabel de rutare</string>
+    <string name="desktop_net_dns_filters_title">Filtre DNS</string>
+    <string name="desktop_net_dns_filters_hint">Listele de blocare și de permitere sunt stocate în vault ~/.config/telos/ (dns-block.txt, dns-allow.txt). Un ID de configurare NextDNS aplică DoT prin resolvectl pe Linux când este disponibil. Listele locale singure rămân doar preferință, dacă dns-stub.port nu este setat și nftables nu poate redirecționa DNS către acel stub. Windows și macOS stochează doar preferințe.</string>
+    <string name="desktop_net_nextdns_id">ID de configurare NextDNS</string>
+    <string name="desktop_net_nextdns_id_invalid">ID de configurare NextDNS nevalid (folosiți 4–12 litere sau cifre)</string>
+    <string name="desktop_net_dns_blocklist">Listă de blocare DNS</string>
+    <string name="desktop_net_dns_allowlist">Listă de permitere DNS</string>
+    <string name="desktop_net_dns_filter_status">Starea filtrului</string>
+    <string name="desktop_net_dns_filter_enforced">Aplicat (DoT NextDNS și/sau redirecționare stub DNS local)</string>
+    <string name="desktop_net_dns_filter_pref_only">Preferință salvată; filtrarea nu este aplicată pe această cale</string>
+    <string name="desktop_net_dns_filter_failed">Configurat, dar resolvectl/nftables nu a putut aplica filtrarea</string>
 </resources>

@@ -14,4 +14,14 @@
     <string name="desktop_net_apps_title">앱별 라우팅</string>
     <string name="desktop_net_apps_hint">줄마다 desktop-id 또는 패키지와 allow, deny, vpn. ~/.config/telos/app-routing.txt에 저장됩니다. 프로세스 수준 적용은 아직 없습니다. Linux에서는 킬 스위치가 허용되지 않은 송신을 계속 삭제합니다.</string>
     <string name="desktop_net_apps_file">라우팅 테이블</string>
+    <string name="desktop_net_dns_filters_title">DNS 필터</string>
+    <string name="desktop_net_dns_filters_hint">차단/허용 목록은 vault ~/.config/telos/(dns-block.txt, dns-allow.txt)에 저장됩니다. NextDNS 구성 ID는 사용 가능할 때 Linux에서 resolvectl로 DoT를 적용합니다. 로컬 목록만 있으면 기본 설정이며, dns-stub.port가 설정되고 nftables가 해당 스텁으로 DNS를 리다이렉트할 수 있을 때만 강제됩니다. Windows와 macOS는 기본 설정만 저장합니다.</string>
+    <string name="desktop_net_nextdns_id">NextDNS 구성 ID</string>
+    <string name="desktop_net_nextdns_id_invalid">잘못된 NextDNS 구성 ID(문자 또는 숫자 4–12자)</string>
+    <string name="desktop_net_dns_blocklist">DNS 차단 목록</string>
+    <string name="desktop_net_dns_allowlist">DNS 허용 목록</string>
+    <string name="desktop_net_dns_filter_status">필터 상태</string>
+    <string name="desktop_net_dns_filter_enforced">적용됨(NextDNS DoT 및/또는 로컬 DNS 스텁 리다이렉트)</string>
+    <string name="desktop_net_dns_filter_pref_only">기본 설정이 저장됨; 이 경로에서는 필터링이 적용되지 않음</string>
+    <string name="desktop_net_dns_filter_failed">구성되었지만 resolvectl/nftables가 필터링을 적용하지 못함</string>
 </resources>

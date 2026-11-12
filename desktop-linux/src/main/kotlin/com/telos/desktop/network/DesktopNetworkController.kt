@@ -15,6 +15,10 @@ object DesktopNetworkController {
     const val WIREGUARD_CONF_NAME = "telos-wg.conf"
     const val DEFAULT_INTERFACE = "telos-wg"
     private const val TOR_SOCKS_PORT = 9050
+    private val NEXTDNS_ID = Regex("^[0-9a-zA-Z]{4,12}$")
+    private val DNS_DOMAIN_LINE = Regex(
+        "^(?:\\*\\.)?(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\.)*[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$",
+    )
 
     private val isLinux: Boolean
         get() = PlatformEnvironment.current == TelosRuntimePlatform.LinuxDesktop
@@ -29,6 +33,21 @@ object DesktopNetworkController {
     fun wireguardConfFile(): File = File(wireguardDir(), WIREGUARD_CONF_NAME)
 
     fun dnsPreferenceFile(): File = File(configHome(), "dns.txt")
+
+    /** One blocked hostname/domain per line (vault preference; local stub optional). */
+    fun dnsBlocklistFile(): File = File(configHome(), "dns-block.txt")
+
+    /** One allowlisted hostname/domain per line (exceptions over the blocklist). */
+    fun dnsAllowlistFile(): File = File(configHome(), "dns-allow.txt")
+
+    /** Optional NextDNS configuration ID (4–12 alnum). Used for resolvectl DoT when available. */
+    fun nextDnsConfigIdFile(): File = File(configHome(), "nextdns-id.txt")
+
+    /**
+     * Optional local DNS stub listen port. When set and nftables works, Telos can redirect
+     * outbound UDP/TCP 53 to 127.0.0.1:port. Without a real stub process, lists stay PreferenceOnly.
+     */
+    fun dnsStubPortFile(): File = File(configHome(), "dns-stub.port")
 
     fun killSwitchPreferenceFile(): File = File(configHome(), "kill-switch.txt")
 
@@ -79,9 +98,29 @@ object DesktopNetworkController {
         Invalid,
     }
 
+    /**
+     * Honest DNS-filter enforcement status for NextDNS-class foundations.
+     * Local host lists alone never claim filtering without a stub + nft redirect.
+     */
+    enum class DnsFilterStatus {
+        Disabled,
+        PreferenceOnly,
+        Enforced,
+        Failed,
+        Invalid,
+    }
+
     enum class DnsKind { Plain, DoT, DoH }
 
     data class DnsPreference(val kind: DnsKind, val address: String, val raw: String)
+
+    data class DnsFilterSnapshot(
+        val blocklist: List<String>,
+        val allowlist: List<String>,
+        val nextDnsConfigId: String?,
+        val stubPort: Int?,
+        val status: DnsFilterStatus,
+    )
 
     fun snapshotConnectivity(): ConnectivityState =
         runCatching { ConnectivityManager.snapshot() }.getOrElse {
@@ -407,6 +446,272 @@ object DesktopNetworkController {
                 }
             }
         }
+    }
+
+    fun defaultDnsBlocklistTemplate(): String =
+        """
+            # Telos DNS blocklist — one hostname/domain per line
+            # Persisted under vault ~/.config/telos/dns-block.txt
+            # Linux: enforced only with a NextDNS config ID (resolvectl DoT) and/or a
+            # local DNS stub port in dns-stub.port + nftables redirect. Without those,
+            # this file is preference-only. Windows/macOS: preference-only.
+        """.trimIndent() + "\n"
+
+    fun defaultDnsAllowlistTemplate(): String =
+        """
+            # Telos DNS allowlist — exceptions over dns-block.txt (one domain per line)
+            # Persisted under vault ~/.config/telos/dns-allow.txt
+            # Same enforcement rules as the blocklist (no silent fake filtering).
+        """.trimIndent() + "\n"
+
+    fun readDnsBlocklistText(): String {
+        val file = dnsBlocklistFile()
+        if (!file.exists()) {
+            file.parentFile?.mkdirs()
+            file.writeText(defaultDnsBlocklistTemplate())
+        }
+        return file.readText()
+    }
+
+    fun writeDnsBlocklistText(text: String) {
+        dnsBlocklistFile().apply { parentFile?.mkdirs() }.writeText(text)
+        TelosSessionAuditLog.append("network_policy", "dns_blocklist_updated")
+    }
+
+    fun readDnsAllowlistText(): String {
+        val file = dnsAllowlistFile()
+        if (!file.exists()) {
+            file.parentFile?.mkdirs()
+            file.writeText(defaultDnsAllowlistTemplate())
+        }
+        return file.readText()
+    }
+
+    fun writeDnsAllowlistText(text: String) {
+        dnsAllowlistFile().apply { parentFile?.mkdirs() }.writeText(text)
+        TelosSessionAuditLog.append("network_policy", "dns_allowlist_updated")
+    }
+
+    fun parseDnsDomainLines(lines: List<String>): List<String> =
+        lines.map { it.trim().lowercase() }
+            .filter { it.isNotEmpty() && !it.startsWith("#") }
+            .mapNotNull { line ->
+                var host = line.substringBefore('#').trim().trimEnd('.')
+                val fromUrl = host.startsWith("http://") || host.startsWith("https://")
+                when {
+                    host.startsWith("http://") -> host = host.removePrefix("http://")
+                    host.startsWith("https://") -> host = host.removePrefix("https://")
+                }
+                if (host.contains('/')) {
+                    // Allow a single path only when the line was a full URL; reject evil/path.
+                    if (!fromUrl) return@mapNotNull null
+                    val pathIdx = host.indexOf('/')
+                    if (pathIdx <= 0) return@mapNotNull null
+                    host = host.substring(0, pathIdx)
+                }
+                if (host.contains('\\') || host.contains(' ')) return@mapNotNull null
+                host = host.substringBefore(':').trimEnd('.')
+                if (host.isEmpty() || !DNS_DOMAIN_LINE.matches(host)) return@mapNotNull null
+                host
+            }
+            .distinct()
+
+    fun readDnsBlocklist(): List<String> = parseDnsDomainLines(readDnsBlocklistText().lines())
+
+    fun readDnsAllowlist(): List<String> = parseDnsDomainLines(readDnsAllowlistText().lines())
+
+    fun isValidNextDnsConfigId(id: String): Boolean = NEXTDNS_ID.matches(id.trim())
+
+    fun readNextDnsConfigId(): String? {
+        val file = nextDnsConfigIdFile()
+        if (!file.isFile) return null
+        val line = file.readLines().map { it.trim() }.firstOrNull {
+            it.isNotEmpty() && !it.startsWith("#")
+        } ?: return null
+        val id = line.substringBefore('#').trim()
+        return id.takeIf { isValidNextDnsConfigId(it) }
+    }
+
+    fun writeNextDnsConfigId(id: String?) {
+        val trimmed = id?.trim().orEmpty()
+        nextDnsConfigIdFile().apply { parentFile?.mkdirs() }.writeText(
+            buildString {
+                appendLine("# Telos NextDNS configuration ID (4–12 letters/digits)")
+                appendLine("# When set on Linux with resolvectl, Telos applies DoT to")
+                appendLine("# <id>.dns.nextdns.io. Without resolvectl/nft privilege this")
+                appendLine("# stays preference-only (no fake local filtering).")
+                if (trimmed.isNotEmpty()) appendLine(trimmed)
+            },
+        )
+        TelosSessionAuditLog.append(
+            "network_policy",
+            if (trimmed.isEmpty()) "nextdns_id_cleared" else "nextdns_id_updated",
+        )
+    }
+
+    fun readDnsStubPort(): Int? {
+        val file = dnsStubPortFile()
+        if (!file.isFile) return null
+        val line = file.readLines().map { it.trim() }.firstOrNull {
+            it.isNotEmpty() && !it.startsWith("#")
+        } ?: return null
+        val port = line.substringBefore('#').trim().toIntOrNull() ?: return null
+        return port.takeIf { it in 1..65535 }
+    }
+
+    fun nextDnsDotHost(id: String): String = "${id.trim()}.dns.nextdns.io"
+
+    fun nextDnsDotPreferenceLine(id: String): String = "tls://${nextDnsDotHost(id)}"
+
+    /**
+     * Apply NextDNS-class filter foundations:
+     * - Persist lists/ID already expected via write* helpers.
+     * - Linux + valid NextDNS ID + resolvectl → DoT to NextDNS (real cloud filtering).
+     * - Linux + dns-stub.port + nft → redirect DNS to local stub (lists for that stub).
+     * - Otherwise PreferenceOnly — never claim host-list filtering without a path.
+     */
+    fun applyDnsFilters(): DnsFilterStatus {
+        val id = readNextDnsConfigId()
+        val rawId = nextDnsConfigIdFile().takeIf { it.isFile }?.readLines()
+            ?.map { it.trim() }
+            ?.firstOrNull { it.isNotEmpty() && !it.startsWith("#") }
+            ?.substringBefore('#')
+            ?.trim()
+        if (!rawId.isNullOrEmpty() && id == null) return DnsFilterStatus.Invalid
+
+        val hasLists = readDnsBlocklist().isNotEmpty() || readDnsAllowlist().isNotEmpty()
+        val stubPort = readDnsStubPort()
+        val configured = id != null || hasLists || stubPort != null
+
+        if (!isLinux) {
+            return if (configured) DnsFilterStatus.PreferenceOnly else DnsFilterStatus.Disabled
+        }
+
+        var enforced = false
+        var failed = false
+
+        if (id != null) {
+            if (Sys.which("resolvectl") == null) {
+                // Config-only when privileged resolver tooling is missing.
+                // Still try stub redirect below if configured.
+            } else {
+                writeDnsPreference(nextDnsDotPreferenceLine(id))
+                when (applyDnsPreference()) {
+                    DnsApplyResult.Applied -> {
+                        enforced = true
+                        TelosSessionAuditLog.append("network_policy", "nextdns_dot_applied")
+                    }
+                    DnsApplyResult.PreferenceOnly -> Unit
+                    DnsApplyResult.Failed -> failed = true
+                    DnsApplyResult.Invalid -> return DnsFilterStatus.Invalid
+                }
+            }
+        }
+
+        when (applyLocalDnsRedirectIfConfigured()) {
+            DnsApplyResult.Applied -> enforced = true
+            DnsApplyResult.Failed -> failed = true
+            DnsApplyResult.Invalid -> return DnsFilterStatus.Invalid
+            DnsApplyResult.PreferenceOnly -> Unit // lists alone stay preference-only
+        }
+
+        return when {
+            failed && !enforced -> DnsFilterStatus.Failed
+            enforced -> DnsFilterStatus.Enforced
+            configured -> DnsFilterStatus.PreferenceOnly
+            else -> DnsFilterStatus.Disabled
+        }
+    }
+
+    fun dnsFilterStatus(): DnsFilterStatus = dnsFilterSnapshot().status
+
+    fun dnsFilterSnapshot(): DnsFilterSnapshot {
+        val id = readNextDnsConfigId()
+        val rawId = nextDnsConfigIdFile().takeIf { it.isFile }?.readLines()
+            ?.map { it.trim() }
+            ?.firstOrNull { it.isNotEmpty() && !it.startsWith("#") }
+            ?.substringBefore('#')
+            ?.trim()
+        val invalidId = !rawId.isNullOrEmpty() && id == null
+        val block = readDnsBlocklist()
+        val allow = readDnsAllowlist()
+        val stub = readDnsStubPort()
+        val status = when {
+            invalidId -> DnsFilterStatus.Invalid
+            !isLinux -> {
+                if (id != null || block.isNotEmpty() || allow.isNotEmpty() || stub != null) {
+                    DnsFilterStatus.PreferenceOnly
+                } else {
+                    DnsFilterStatus.Disabled
+                }
+            }
+            id != null && Sys.which("resolvectl") != null && nextDnsResolvectlActive(id) ->
+                DnsFilterStatus.Enforced
+            stub != null && localDnsRedirectActive(stub) -> DnsFilterStatus.Enforced
+            id != null || block.isNotEmpty() || allow.isNotEmpty() || stub != null ->
+                DnsFilterStatus.PreferenceOnly
+            else -> DnsFilterStatus.Disabled
+        }
+        return DnsFilterSnapshot(block, allow, id, stub, status)
+    }
+
+    /**
+     * When `dns-stub.port` names a local stub, redirect outbound DNS (53) via nftables NAT.
+     * Without that port file, returns PreferenceOnly (lists are not silently faked).
+     */
+    fun applyLocalDnsRedirectIfConfigured(): DnsApplyResult {
+        val port = readDnsStubPort() ?: return DnsApplyResult.PreferenceOnly
+        if (!isLinux || !PlatformEnvironment.settings.showNftSessionNetGuard) {
+            return DnsApplyResult.PreferenceOnly
+        }
+        if (Sys.which("nft") == null) return DnsApplyResult.PreferenceOnly
+        val script = File.createTempFile("telos-dns-nft", ".nft")
+        script.writeText(dnsRedirectNftRules(port))
+        runCatching {
+            script.setReadable(false, false)
+            script.setWritable(false, false)
+            script.setReadable(true, true)
+            script.setWritable(true, true)
+        }
+        val r = Sys.run("pkexec", "nft", "-f", script.absolutePath, timeoutSec = 20)
+        val ok = r.ok || Sys.run("nft", "-f", script.absolutePath, timeoutSec = 10).ok
+        script.delete()
+        TelosSessionAuditLog.append(
+            "network_policy",
+            if (ok) "dns_stub_redirect_applied" else "dns_stub_redirect_failed",
+        )
+        return if (ok) DnsApplyResult.Applied else DnsApplyResult.Failed
+    }
+
+    fun clearLocalDnsRedirect() {
+        if (!isLinux) return
+        Sys.run("pkexec", "nft", "delete", "table", "inet", "telos_dns", timeoutSec = 10)
+        Sys.run("nft", "delete", "table", "inet", "telos_dns", timeoutSec = 8)
+    }
+
+    internal fun dnsRedirectNftRules(port: Int): String =
+        """
+            destroy table inet telos_dns
+            table inet telos_dns {
+              chain output {
+                type nat hook output priority -100; policy accept;
+                meta l4proto { tcp, udp } th dport 53 redirect to :$port
+              }
+            }
+        """.trimIndent()
+
+    private fun nextDnsResolvectlActive(id: String): Boolean {
+        if (Sys.which("resolvectl") == null) return false
+        val status = Sys.run("resolvectl", "status", timeoutSec = 6)
+        if (!status.ok) return false
+        val host = nextDnsDotHost(id)
+        return status.stdout.contains(host, ignoreCase = true)
+    }
+
+    private fun localDnsRedirectActive(port: Int): Boolean {
+        if (!isLinux) return false
+        val r = Sys.run("nft", "list", "table", "inet", "telos_dns", timeoutSec = 6)
+        return r.ok && r.stdout.contains("telos_dns") && r.stdout.contains(":$port")
     }
 
     fun parseAllowEntries(lines: List<String>): List<String> = SessionNetGuard.parseAllowEntries(lines)

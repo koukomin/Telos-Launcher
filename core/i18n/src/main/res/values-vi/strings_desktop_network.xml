@@ -14,4 +14,14 @@
     <string name="desktop_net_apps_title">Định tuyến theo ứng dụng</string>
     <string name="desktop_net_apps_hint">Mỗi dòng một desktop-id hoặc gói với allow, deny hoặc vpn. Lưu tại ~/.config/telos/app-routing.txt. Chưa có thực thi cấp tiến trình; kill-switch vẫn loại lưu lượng đi ra không được phép trên Linux.</string>
     <string name="desktop_net_apps_file">Bảng định tuyến</string>
+    <string name="desktop_net_dns_filters_title">Bộ lọc DNS</string>
+    <string name="desktop_net_dns_filters_hint">Danh sách chặn và cho phép được lưu trong vault ~/.config/telos/ (dns-block.txt, dns-allow.txt). ID cấu hình NextDNS áp dụng DoT qua resolvectl trên Linux khi có sẵn. Chỉ danh sách cục bộ thì vẫn là tùy chọn trừ khi dns-stub.port được đặt và nftables có thể chuyển DNS tới stub đó. Windows và macOS chỉ lưu tùy chọn.</string>
+    <string name="desktop_net_nextdns_id">ID cấu hình NextDNS</string>
+    <string name="desktop_net_nextdns_id_invalid">ID cấu hình NextDNS không hợp lệ (dùng 4–12 chữ hoặc số)</string>
+    <string name="desktop_net_dns_blocklist">Danh sách chặn DNS</string>
+    <string name="desktop_net_dns_allowlist">Danh sách cho phép DNS</string>
+    <string name="desktop_net_dns_filter_status">Trạng thái bộ lọc</string>
+    <string name="desktop_net_dns_filter_enforced">Đã áp dụng (DoT NextDNS và/hoặc chuyển hướng stub DNS cục bộ)</string>
+    <string name="desktop_net_dns_filter_pref_only">Đã lưu tùy chọn; lọc không được áp dụng trên đường dẫn này</string>
+    <string name="desktop_net_dns_filter_failed">Đã cấu hình nhưng resolvectl/nftables không thể áp dụng lọc</string>
 </resources>

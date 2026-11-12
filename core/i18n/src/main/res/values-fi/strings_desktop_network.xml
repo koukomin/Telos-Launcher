@@ -14,4 +14,14 @@
     <string name="desktop_net_apps_title">Reititys sovelluksittain</string>
     <string name="desktop_net_apps_hint">Yksi desktop-id tai paketti rivillä allow-, deny- tai vpn-arvolla. Tallennetaan polkuun ~/.config/telos/app-routing.txt. Prosessitason valvonta puuttuu vielä; kill-switch pudottaa edelleen sallimattoman lähtevän liikenteen Linuxissa.</string>
     <string name="desktop_net_apps_file">Reititystaulu</string>
+    <string name="desktop_net_dns_filters_title">DNS-suodattimet</string>
+    <string name="desktop_net_dns_filters_hint">Esto- ja sallintalistat tallennetaan vaultiin ~/.config/telos/ (dns-block.txt, dns-allow.txt). NextDNS-määritystunnus käyttää DoT:ia resolvectl:llä Linuxissa, kun se on saatavilla. Pelkät paikalliset listat jäävät vain asetukseksi, ellei dns-stub.port ole asetettu ja nftables voi ohjata DNS:n kyseiseen stubiin. Windows ja macOS tallentavat vain asetukset.</string>
+    <string name="desktop_net_nextdns_id">NextDNS-määritystunnus</string>
+    <string name="desktop_net_nextdns_id_invalid">Virheellinen NextDNS-määritystunnus (käytä 4–12 kirjainta tai numeroa)</string>
+    <string name="desktop_net_dns_blocklist">DNS-estolista</string>
+    <string name="desktop_net_dns_allowlist">DNS-sallintalista</string>
+    <string name="desktop_net_dns_filter_status">Suodattimen tila</string>
+    <string name="desktop_net_dns_filter_enforced">Käytössä (NextDNS-DoT ja/tai paikallinen DNS-stub-ohjaus)</string>
+    <string name="desktop_net_dns_filter_pref_only">Asetus tallennettu; suodatusta ei käytetä tällä polulla</string>
+    <string name="desktop_net_dns_filter_failed">Määritetty, mutta resolvectl/nftables ei voinut käyttää suodatusta</string>
 </resources>

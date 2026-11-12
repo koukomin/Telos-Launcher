@@ -14,4 +14,14 @@
     <string name="desktop_net_apps_title">Penghalaan setiap aplikasi</string>
     <string name="desktop_net_apps_hint">Satu desktop-id atau pakej setiap baris dengan allow, deny atau vpn. Disimpan di ~/.config/telos/app-routing.txt. Penguatkuasaan peringkat proses belum ada; kill-switch masih menggugurkan keluar yang tidak dibenarkan pada Linux.</string>
     <string name="desktop_net_apps_file">Jadual penghalaan</string>
+    <string name="desktop_net_dns_filters_title">Penapis DNS</string>
+    <string name="desktop_net_dns_filters_hint">Senarai sekat dan benarkan disimpan di vault ~/.config/telos/ (dns-block.txt, dns-allow.txt). ID konfigurasi NextDNS menggunakan DoT melalui resolvectl pada Linux apabila tersedia. Senarai tempatan sahaja kekal sebagai pilihan melainkan dns-stub.port ditetapkan dan nftables boleh mengalihkan DNS ke stub itu. Windows dan macOS hanya menyimpan pilihan.</string>
+    <string name="desktop_net_nextdns_id">ID konfigurasi NextDNS</string>
+    <string name="desktop_net_nextdns_id_invalid">ID konfigurasi NextDNS tidak sah (gunakan 4–12 huruf atau digit)</string>
+    <string name="desktop_net_dns_blocklist">Senarai sekat DNS</string>
+    <string name="desktop_net_dns_allowlist">Senarai benarkan DNS</string>
+    <string name="desktop_net_dns_filter_status">Status penapis</string>
+    <string name="desktop_net_dns_filter_enforced">Dikuatkuasakan (DoT NextDNS dan/atau pengalihan stub DNS tempatan)</string>
+    <string name="desktop_net_dns_filter_pref_only">Pilihan disimpan; penapisan tidak digunakan pada laluan ini</string>
+    <string name="desktop_net_dns_filter_failed">Dikonfigurasi, tetapi resolvectl/nftables tidak dapat menggunakan penapisan</string>
 </resources>

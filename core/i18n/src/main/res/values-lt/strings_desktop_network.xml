@@ -14,4 +14,14 @@
     <string name="desktop_net_apps_title">Maršrutizavimas pagal programą</string>
     <string name="desktop_net_apps_hint">Vienas desktop-id arba paketas eilutėje su allow, deny arba vpn. Saugoma ~/.config/telos/app-routing.txt. Proceso lygmens vykdymo dar nėra; kill-switch vis dar atmeta neleidžiamą išeinantį srautą Linux.</string>
     <string name="desktop_net_apps_file">Maršrutizavimo lentelė</string>
+    <string name="desktop_net_dns_filters_title">DNS filtrai</string>
+    <string name="desktop_net_dns_filters_hint">Blokavimo ir leidimo sąrašai saugomi vault ~/.config/telos/ (dns-block.txt, dns-allow.txt). NextDNS konfigūracijos ID taiko DoT per resolvectl Linux, kai prieinama. Vien vietiniai sąrašai lieka tik nuostata, nebent nustatytas dns-stub.port ir nftables gali nukreipti DNS į tą stub. Windows ir macOS saugo tik nuostatas.</string>
+    <string name="desktop_net_nextdns_id">NextDNS konfigūracijos ID</string>
+    <string name="desktop_net_nextdns_id_invalid">Netinkamas NextDNS konfigūracijos ID (naudokite 4–12 raidžių ar skaitmenų)</string>
+    <string name="desktop_net_dns_blocklist">DNS blokavimo sąrašas</string>
+    <string name="desktop_net_dns_allowlist">DNS leidimo sąrašas</string>
+    <string name="desktop_net_dns_filter_status">Filtro būsena</string>
+    <string name="desktop_net_dns_filter_enforced">Taikoma (NextDNS DoT ir (arba) vietinio DNS stub nukreipimas)</string>
+    <string name="desktop_net_dns_filter_pref_only">Nuostata išsaugota; filtravimas šiuo keliu netaikomas</string>
+    <string name="desktop_net_dns_filter_failed">Sukonfigūruota, bet resolvectl/nftables negalėjo taikyti filtravimo</string>
 </resources>
