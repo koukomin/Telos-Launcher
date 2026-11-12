@@ -46,6 +46,8 @@ class ManagedWindow(
     var restoreY by mutableStateOf(restoreY)
     var restoreW by mutableStateOf(restoreW)
     var restoreH by mutableStateOf(restoreH)
+    /** Last Helix [SnapLayout] applied (tracks 2/3–1/3 cycles beyond legacy [SnapZone]). */
+    var layoutHint by mutableStateOf<SnapLayout?>(null)
 }
 // === TELOS_PENDING_REVIEW_END: telos_window_drag_and_ui_fix ===
 
@@ -119,6 +121,7 @@ class TelosWindowManager {
         w.minimized = false
         w.maximized = false
         w.snap = SnapZone.None
+        w.layoutHint = null
         w.x = w.restoreX
         w.y = w.restoreY.coerceAtLeast(workArea.minY)
         w.width = w.restoreW
@@ -184,9 +187,10 @@ class TelosWindowManager {
 
     fun drag(id: Long, delta: Offset, bounds: IntSize) {
         val w = windows.find { it.id == id } ?: return
-        if (w.maximized) {
+        if (w.maximized || w.snap != SnapZone.None) {
             w.maximized = false
             w.snap = SnapZone.None
+            w.layoutHint = null
             w.width = w.restoreW
             w.height = w.restoreH
         }
@@ -240,42 +244,66 @@ class TelosWindowManager {
         bump(w)
     }
 
+    /** Apply a Helix snap layout to a Compose-managed window (and remember legacy [SnapZone]). */
+    fun applySnapLayout(id: Long, layout: SnapLayout) {
+        val w = windows.find { it.id == id } ?: return
+        if (layout == SnapLayout.Restore) {
+            restore(id)
+            return
+        }
+        if (!w.maximized && w.snap == SnapZone.None) {
+            w.restoreX = w.x; w.restoreY = w.y; w.restoreW = w.width; w.restoreH = w.height
+        }
+        applyLayoutRect(w, layout)
+        bump(w)
+    }
+
+    /** Snap the focused window, or no-op when nothing is focused. */
+    fun snapFocused(layout: SnapLayout) {
+        val id = focusedId ?: return
+        applySnapLayout(id, layout)
+        HostWmBridge.applySnapLayout(layout, workArea)
+    }
+
+    fun cycleSnapLeft() {
+        val w = focusedId?.let { id -> windows.find { it.id == id } } ?: return
+        val current = SnapLayoutGeometry.fromLegacyZone(w.snap)
+            ?: w.layoutHint
+        val next = SnapLayoutGeometry.cycleLeft(current)
+        w.layoutHint = next
+        snapFocused(next)
+    }
+
+    fun cycleSnapRight() {
+        val w = focusedId?.let { id -> windows.find { it.id == id } } ?: return
+        val current = w.layoutHint
+            ?: SnapLayoutGeometry.fromLegacyZone(w.snap)
+        val next = SnapLayoutGeometry.cycleRight(current)
+        w.layoutHint = next
+        snapFocused(next)
+    }
+
     // === TELOS_PENDING_REVIEW_START: telos_kde_replacement_suite ===
     private fun applySnap(w: ManagedWindow, zone: SnapZone) {
-        val a = workArea
-        w.snap = zone
-        w.maximized = zone == SnapZone.Maximize
-        when (zone) {
-            SnapZone.None, SnapZone.Restore -> {
-                w.maximized = false
-                w.snap = SnapZone.None
-                w.y = w.y.coerceAtLeast(a.minY)
-            }
-            SnapZone.Maximize -> {
-                w.x = a.minX
-                w.y = a.minY
-                w.width = a.width
-                w.height = a.height
-            }
-            SnapZone.Left -> {
-                w.x = a.minX; w.y = a.minY; w.width = a.width / 2f; w.height = a.height
-            }
-            SnapZone.Right -> {
-                w.x = a.minX + a.width / 2f; w.y = a.minY; w.width = a.width / 2f; w.height = a.height
-            }
-            SnapZone.TopLeft -> {
-                w.x = a.minX; w.y = a.minY; w.width = a.width / 2f; w.height = a.height / 2f
-            }
-            SnapZone.TopRight -> {
-                w.x = a.minX + a.width / 2f; w.y = a.minY; w.width = a.width / 2f; w.height = a.height / 2f
-            }
-            SnapZone.BottomLeft -> {
-                w.x = a.minX; w.y = a.minY + a.height / 2f; w.width = a.width / 2f; w.height = a.height / 2f
-            }
-            SnapZone.BottomRight -> {
-                w.x = a.minX + a.width / 2f; w.y = a.minY + a.height / 2f; w.width = a.width / 2f; w.height = a.height / 2f
-            }
+        val layout = SnapLayoutGeometry.fromLegacyZone(zone) ?: run {
+            w.maximized = false
+            w.snap = SnapZone.None
+            w.layoutHint = null
+            w.y = w.y.coerceAtLeast(workArea.minY)
+            return
         }
+        applyLayoutRect(w, layout)
+    }
+
+    private fun applyLayoutRect(w: ManagedWindow, layout: SnapLayout) {
+        val rect = SnapLayoutGeometry.rect(layout, workArea)
+        w.layoutHint = layout
+        w.snap = SnapLayoutGeometry.toLegacyZone(layout)
+        w.maximized = layout == SnapLayout.Maximize
+        w.x = rect.x
+        w.y = rect.y
+        w.width = rect.width
+        w.height = rect.height
     }
     // === TELOS_PENDING_REVIEW_END: telos_kde_replacement_suite ===
 

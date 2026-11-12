@@ -362,7 +362,7 @@ fun DesktopWorkspace(
                 )
             }
             AnimatedVisibility(DesktopChrome.overviewOpen, modifier = Modifier.fillMaxSize().zIndex(201f), enter = HelixMotion.enter, exit = HelixMotion.exit) {
-                HelixOverview(wm) { DesktopChrome.overviewOpen = false }
+                HelixOverview(wm, settings) { DesktopChrome.overviewOpen = false }
             }
             AnimatedVisibility(
                 DesktopChrome.controlCenterOpen,
@@ -372,6 +372,7 @@ fun DesktopWorkspace(
             ) {
                 HelixControlCenter(
                     wm = wm,
+                    settings = settings,
                     onOpenSettings = { showSettings = true },
                     onDismiss = { DesktopChrome.controlCenterOpen = false },
                 )
@@ -495,6 +496,23 @@ fun handleDesktopKeys(
     // Compose Desktop exposes Key.Spacebar (not Key.Space).
     if (ev.isMetaPressed && key == Key.Spacebar) {
         DesktopChrome.toggleAppGrid()
+        return true
+    }
+    // Helix snap zones: Super+Arrow cycles 50/50 → 2/3 → 1/3; Up maximizes; Down restores.
+    if (ev.isMetaPressed && key == Key.DirectionLeft) {
+        wm.cycleSnapLeft()
+        return true
+    }
+    if (ev.isMetaPressed && key == Key.DirectionRight) {
+        wm.cycleSnapRight()
+        return true
+    }
+    if (ev.isMetaPressed && key == Key.DirectionUp) {
+        wm.snapFocused(com.telos.desktop.wm.SnapLayout.Maximize)
+        return true
+    }
+    if (ev.isMetaPressed && key == Key.DirectionDown) {
+        wm.focusedId?.let { wm.restore(it) }
         return true
     }
     // === TELOS_PENDING_REVIEW_END: telos_de_final_polish ===

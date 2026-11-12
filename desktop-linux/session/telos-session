@@ -8,11 +8,15 @@ case "${1:-}" in
 telos-session — unlock the Telos vault as $HOME and start labwc (or niri)
 
   TELOS_JAR            UberJar path
-  TELOS_COMPOSITOR     labwc (default) or niri
+  TELOS_COMPOSITOR     labwc (default) or niri (wins over desktop.windowMode)
   TELOS_ALLOW_NESTED=1 allow a compositor inside another Wayland session
   TELOS_VAULT_UNLOCKED=1 skip --unlock-only (already mounted)
 
+  When TELOS_COMPOSITOR is unset, vault config/desktop.properties
+  desktop.windowMode=tiling|stacking selects niri (tiling) or labwc (stacking).
+
   Super+Esc  exit the compositor (locks the vault)
+  Super+Arrow Helix snap zones (Compose + best-effort host WM)
   Ctrl+Alt+L panic unmount
 EOF
     exit 0
@@ -57,30 +61,40 @@ if ! command -v java >/dev/null 2>&1; then
   echo "telos-session: java not on PATH" >&2
   exit 1
 fi
-COMPOSITOR="${TELOS_COMPOSITOR:-labwc}"
-case "$COMPOSITOR" in
-  niri)
-    if ! command -v niri >/dev/null 2>&1; then
-      if command -v labwc >/dev/null 2>&1; then
-        COMPOSITOR=labwc
-      else
-        echo "telos-session: install niri or labwc" >&2
-        exit 1
-      fi
-    fi
-    ;;
-  *)
-    COMPOSITOR=labwc
-    if ! command -v labwc >/dev/null 2>&1; then
+# Remember whether the caller forced a compositor (DM desktop file / env).
+COMPOSITOR_FORCED="${TELOS_COMPOSITOR:-}"
+COMPOSITOR="${COMPOSITOR_FORCED:-labwc}"
+resolve_compositor() {
+  case "$1" in
+    niri)
       if command -v niri >/dev/null 2>&1; then
-        COMPOSITOR=niri
+        echo niri
+      elif command -v labwc >/dev/null 2>&1; then
+        echo labwc
       else
-        echo "telos-session: install labwc (or niri)" >&2
-        exit 1
+        echo niri
       fi
-    fi
-    ;;
-esac
+      ;;
+    *)
+      if command -v labwc >/dev/null 2>&1; then
+        echo labwc
+      elif command -v niri >/dev/null 2>&1; then
+        echo niri
+      else
+        echo labwc
+      fi
+      ;;
+  esac
+}
+COMPOSITOR="$(resolve_compositor "$COMPOSITOR")"
+if [ -z "$COMPOSITOR_FORCED" ] && ! command -v labwc >/dev/null 2>&1 && ! command -v niri >/dev/null 2>&1; then
+  echo "telos-session: install labwc (or niri)" >&2
+  exit 1
+fi
+if [ -n "$COMPOSITOR_FORCED" ] && [ "$COMPOSITOR_FORCED" = "niri" ] && ! command -v niri >/dev/null 2>&1 && ! command -v labwc >/dev/null 2>&1; then
+  echo "telos-session: install niri or labwc" >&2
+  exit 1
+fi
 export TELOS_COMPOSITOR="$COMPOSITOR"
 
 if [ -n "${WAYLAND_DISPLAY:-}" ] && [ "${TELOS_ALLOW_NESTED:-0}" != "1" ]; then
@@ -133,6 +147,24 @@ fi
 if [ "${TELOS_VAULT_UNLOCKED:-0}" != "1" ] || [ -z "${TELOS_HOST_HOME:-}" ]; then
   echo "telos-session: vault unlock did not export TELOS_HOST_HOME" >&2
   exit 1
+fi
+
+# Helix tiling/stacking preference from vault desktop.properties (when env unset).
+if [ -z "$COMPOSITOR_FORCED" ]; then
+  PROPS=""
+  if [ -n "${TELOS_VAULT_MOUNT:-}" ] && [ -f "$TELOS_VAULT_MOUNT/config/desktop.properties" ]; then
+    PROPS="$TELOS_VAULT_MOUNT/config/desktop.properties"
+  elif [ -f "${HOME:-}/config/desktop.properties" ]; then
+    PROPS="$HOME/config/desktop.properties"
+  fi
+  if [ -n "$PROPS" ]; then
+    MODE="$(grep -E '^(desktop\.windowMode|windowMode)=' "$PROPS" 2>/dev/null | head -n 1 | cut -d= -f2- | tr -d '\r' | tr '[:upper:]' '[:lower:]')"
+    case "$MODE" in
+      tiling|niri) COMPOSITOR="$(resolve_compositor niri)" ;;
+      stacking|labwc) COMPOSITOR="$(resolve_compositor labwc)" ;;
+    esac
+    export TELOS_COMPOSITOR="$COMPOSITOR"
+  fi
 fi
 
 if [ -z "${DBUS_SESSION_BUS_ADDRESS:-}" ] && command -v dbus-launch >/dev/null 2>&1; then

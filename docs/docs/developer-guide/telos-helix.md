@@ -43,6 +43,7 @@ Wallpaper is the stage. Menus stay opaque. Motion is 120–160 ms, no bounce.
 | **S2** | In tree | Clock popup month grid. OSD bottom-center opaque card. Toast 4 s. Slim CPU pill. |
 | **S3** | In tree | Overview: 4 workspace tiles + window titles. Dock button + Meta+Tab. Escape closes. |
 | **S4** | In tree | Control Center: volume, Wi-Fi, brightness, DND, vault, Settings. Volume/Net/Battery open it. |
+| **Snap** | In tree | Snap layouts 50/50, 2/3–1/3, 2×2 via Super+Arrow and Overview / Control Center Cyber-Tech pills. Compose `TelosWindowManager` + best-effort host bridge (`niri msg`, `wmctrl`; output size via `wlr-randr`). Tiling (niri) vs Stacking (labwc) preference in vault `desktop.windowMode` (next session when `TELOS_COMPOSITOR` unset). |
 
 ## Files
 
@@ -53,6 +54,7 @@ Wallpaper is the stage. Menus stay opaque. Motion is 120–160 ms, no bounce.
 - Status comment: `desktop-linux/.../ui/Helix.kt`
 - Settings: `desktop-linux/.../ui/LinuxDesktopSettings.kt`
 - Surface: `HelixMotion.kt`, `HelixToast.kt`, `HelixControlCenter.kt`, `HelixOverview.kt`
+- Snap: `SnapLayoutGeometry.kt`, `HostWmBridge.kt`, `WindowMode.kt`, `HelixTechPill.kt`
 
 ## Portable Windows / macOS chrome
 

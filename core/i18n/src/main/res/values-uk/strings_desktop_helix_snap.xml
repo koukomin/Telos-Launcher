@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_helix_snap_title">Зони прив’язки</string>
+    <string name="desktop_helix_snap_50_50">50 / 50</string>
+    <string name="desktop_helix_snap_two_thirds">2/3 · 1/3</string>
+    <string name="desktop_helix_snap_grid">Сітка 2×2</string>
+    <string name="desktop_helix_snap_left">Прив’язати ліворуч</string>
+    <string name="desktop_helix_snap_right">Прив’язати праворуч</string>
+    <string name="desktop_helix_snap_maximize">Розгорнути</string>
+    <string name="desktop_helix_window_mode">Режим вікон</string>
+    <string name="desktop_helix_tiling">Плитка (niri)</string>
+    <string name="desktop_helix_stacking">Стос (labwc)</string>
+    <string name="desktop_helix_window_mode_hint">Застосовується під час наступного запуску сеансу Telos, якщо TELOS_COMPOSITOR не задано. Super+стрілка прив’язує активне вікно.</string>
+</resources>

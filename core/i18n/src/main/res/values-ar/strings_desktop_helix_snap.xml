@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_helix_snap_title">مناطق الالتقاط</string>
+    <string name="desktop_helix_snap_50_50">50 / 50</string>
+    <string name="desktop_helix_snap_two_thirds">2/3 · 1/3</string>
+    <string name="desktop_helix_snap_grid">شبكة 2×2</string>
+    <string name="desktop_helix_snap_left">التقاط إلى اليسار</string>
+    <string name="desktop_helix_snap_right">التقاط إلى اليمين</string>
+    <string name="desktop_helix_snap_maximize">تكبير</string>
+    <string name="desktop_helix_window_mode">وضع النوافذ</string>
+    <string name="desktop_helix_tiling">تبليط (niri)</string>
+    <string name="desktop_helix_stacking">تكديس (labwc)</string>
+    <string name="desktop_helix_window_mode_hint">يُطبَّق عند بدء جلسة Telos التالية عندما لا يكون TELOS_COMPOSITOR مضبوطًا. Super+سهم يلتقط النافذة المركَّز عليها.</string>
+</resources>

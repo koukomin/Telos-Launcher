@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_helix_snap_title">Vùng snap</string>
+    <string name="desktop_helix_snap_50_50">50 / 50</string>
+    <string name="desktop_helix_snap_two_thirds">2/3 · 1/3</string>
+    <string name="desktop_helix_snap_grid">Lưới 2×2</string>
+    <string name="desktop_helix_snap_left">Snap trái</string>
+    <string name="desktop_helix_snap_right">Snap phải</string>
+    <string name="desktop_helix_snap_maximize">Phóng to</string>
+    <string name="desktop_helix_window_mode">Chế độ cửa sổ</string>
+    <string name="desktop_helix_tiling">Lát gạch (niri)</string>
+    <string name="desktop_helix_stacking">Xếp chồng (labwc)</string>
+    <string name="desktop_helix_window_mode_hint">Áp dụng khi khởi động phiên Telos tiếp theo nếu TELOS_COMPOSITOR chưa đặt. Super+mũi tên snap cửa sổ đang focus.</string>
+</resources>
