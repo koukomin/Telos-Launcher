@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_workspace_tints">Bandes de teinte des espaces</string>
+    <string name="desktop_theme_workspace_tints_hint">Accents néon discrets sous les chiffres 1–4 du panneau. Masquées en panic mute. Désactiver : theme.workspaceTints=false.</string>
+</resources>

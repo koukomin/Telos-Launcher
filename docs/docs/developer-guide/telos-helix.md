@@ -26,7 +26,7 @@ Beat GNOME / Cosmic / Hyprland-default chrome on density and search, using KDE-c
 | **H1** | In tree (panel glyphs) | `TelosTopPanel` system tray uses `CandyCyberIcon` (volume, network, battery, tray, clip, bell, shot) instead of English word chips. Shot opens the vault-first screenshot menu (full / region / window, clipboard opt-in, optional redaction). Popups stay opaque `TelosColors.surface`. |
 | **H2** | In tree (Kickoff) | `PlasmaAppGrid` Kickoff: left favorites + power, right search (`DesktopSearch`) + Telos/Linux grids. Opens as a **Yakuake-style pull-down under the top panel** (`HelixMotion.drawerEnter`), not a fullscreen DE replace. Logo click + Super+Space (`Key.Spacebar`) toggle `DesktopChrome.toggleAppGrid()`. Host apps stay labwc/niri windows. |
 | **H2b** | In tree (palette) | `HelixCommandPalette`: KRunner / PowerToys Run-class overlay (`Super+Period` or `Ctrl+Space`). Opaque `TelosColors.menu` / `surfaceContainer` Cyber-Tech popup. Actions: launch apps (`DesktopSearch` / `.desktop`), jump to open windows, calculator, Open Files/Settings/Network, kill focused window (Compose `wm.close` + best-effort labwc via `wlrctl`), paste last vault clipboard. File hits use vault/portable roots only — never host home outside the session. Rank/filter logic in `HelixPaletteActions` (unit-tested). |
-| **H3** | Already in tree | Klassy titlebars, workspace dots, dock row, Alt-Tab strip. Polish only if gaps. |
+| **H3** | Already in tree | Klassy titlebars, workspace dots, dock row, Alt-Tab strip. Polish only if gaps. Workspaces 1–4 draw subtle neon tint strips under panel digits (`theme.workspaceTints`, default on; hidden when `theme.panicMute` / Quiet Ops mute keys are set). |
 | **H4** | In tree | Settings window: opaque Helix `surface` + grouped `surfaceContainer` cards with `outline`. Same toggles and actions as before. **Settings search** filters cards by title/toggle keywords. **Night Light** toggle + temperature (gammastep / redshift / wlsunset; PreferenceOnly without a host tool; no geolocation / phone-home). |
 | **H5** | In tree | Bottom dock uses `CandyCyberIcon` + labels. Apps opens Kickoff (`toggleAppGrid`). Alt-Tab uses opaque `menu` chips. |
 | **H6** | In tree | Context menu, notifications, clipboard history (Super+V / panel glyph; TTL + scrub + pin-until-lock; vault-local, no cloud sync): opaque `menu` + outline. Window chrome: opaque title bar + title text, opaque body. |
@@ -50,6 +50,7 @@ Wallpaper is the stage. Menus stay opaque. Motion is 120–160 ms, no bounce.
 
 - Tokens: `ui-kmp/.../TelosSharedTheme.kt`
 - Panel: `desktop-linux/.../panel/TelosTopPanel.kt`
+- Workspace tint strips: `desktop-linux/.../theme/WorkspaceTintStrips.kt` (`theme.workspaceTints`)
 - Kickoff: `desktop-linux/.../ui/AppGrid.kt`
 - Command palette: `desktop-linux/.../ui/HelixCommandPalette.kt`, `…/search/HelixPaletteActions.kt`
 - Icons: `desktop-linux/.../icons/CandyCyberIcons.kt`

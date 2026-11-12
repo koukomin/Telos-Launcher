@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_workspace_tints">İş sahəsi rəng zolaqları</string>
+    <string name="desktop_theme_workspace_tints_hint">Panel rəqəmləri 1–4 altında yumşaq neon vurğular. Panic mute zamanı gizlənir. Söndür: theme.workspaceTints=false.</string>
+</resources>

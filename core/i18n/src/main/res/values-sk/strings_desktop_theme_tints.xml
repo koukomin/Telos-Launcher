@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_workspace_tints">Farebné pásiky plôch</string>
+    <string name="desktop_theme_workspace_tints_hint">Jemné neónové akcenty pod číslicami 1–4 na paneli. Skryté pri panic mute. Vypnúť: theme.workspaceTints=false.</string>
+</resources>

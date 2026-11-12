@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_workspace_tints">Strisce tinta spazi di lavoro</string>
+    <string name="desktop_theme_workspace_tints_hint">Accenti neon sottili sotto le cifre 1–4 del pannello. Nascoste in panic mute. Disattiva: theme.workspaceTints=false.</string>
+</resources>

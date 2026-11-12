@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_workspace_tints">작업 공간 색 띠</string>
+    <string name="desktop_theme_workspace_tints_hint">패널 작업 공간 숫자 1–4 아래의 은은한 네온 액센트. 패닉 뮤트 시 숨김. 끄기: theme.workspaceTints=false.</string>
+</resources>

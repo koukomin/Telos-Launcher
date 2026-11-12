@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_workspace_tints">ওয়ার্কস্পেস রঙের স্ট্রিপ</string>
+    <string name="desktop_theme_workspace_tints_hint">প্যানেলের সংখ্যা ১–৪ এর নিচে হালকা নিয়ন অ্যাকসেন্ট। প্যানিক মিউটে লুকানো। বন্ধ: theme.workspaceTints=false.</string>
+</resources>
