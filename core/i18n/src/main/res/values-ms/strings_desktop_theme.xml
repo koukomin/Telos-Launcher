@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_appearance_title">Penampilan</string>
+    <string name="desktop_theme_intensity">Keamatan tema</string>
+    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
+    <string name="desktop_theme_intensity_neon">Vault Neon</string>
+    <string name="desktop_theme_intensity_paper">Paper Ops</string>
+    <string name="desktop_wallpaper_path">Kertas dinding (laluan vault)</string>
+    <string name="desktop_wallpaper_path_hint">Relatif kepada titik lekap vault (cth. Pictures/wall.jpg). Tidak pernah ditunjukkan pada skrin pra-but terkunci.</string>
+    <string name="desktop_unlock_theatre_title">Telos Phantom Vault</string>
+    <string name="desktop_unlock_theatre_quiet_ops">Quiet Ops — buka kunci untuk dedahkan kertas dinding</string>
+    <string name="desktop_unlock_theatre_hint">But terkunci kekal Quiet Ops dengan glif vault sahaja. Selepas dibuka, Telos membuat crossfade ke kertas dinding vault dan keamatan dipilih — tanpa zarah.</string>
+    <string name="desktop_sandbox_tint_hint">Warna gelang aksen ialah OpSec visual sahaja (Host = oren amaran, Net-isolated = sian, Vault FS = hijau, Standard = magenta).</string>
+    <string name="desktop_matched_packs_title">Pakej ikon + kursor yang dipadankan</string>
+    <string name="desktop_matched_packs_hint">Satu klik menetapkan pasangan GPL didokumenkan (Papirus↔BreezeX, candy-icons↔Bibata; CandyCyber kekal glif chrome terbina dalam). Muat turun kekal dalam folder ikon vault atau portable.</string>
+    <string name="desktop_matched_packs_apply">Padankan pasangan: %1$s</string>
+    <string name="desktop_matched_packs_one_click">Padankan pasangan</string>
+    <string name="desktop_matched_packs_working">Memadankan pakej…</string>
+    <string name="desktop_matched_packs_ok">Pakej dipadankan %1$s digunakan</string>
+    <string name="desktop_matched_packs_fail">Tidak dapat memadankan pakej: %1$s</string>
+</resources>

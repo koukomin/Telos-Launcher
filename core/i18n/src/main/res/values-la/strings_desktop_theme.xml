@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_appearance_title">Species</string>
+    <string name="desktop_theme_intensity">Intensitas thematis</string>
+    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
+    <string name="desktop_theme_intensity_neon">Vault Neon</string>
+    <string name="desktop_theme_intensity_paper">Paper Ops</string>
+    <string name="desktop_wallpaper_path">Tapete (semita vault)</string>
+    <string name="desktop_wallpaper_path_hint">Relativa ad punctum montis vault (ex. Pictures/wall.jpg). Numquam in scrinio prae-boot clauso monstratur.</string>
+    <string name="desktop_unlock_theatre_title">Telos Phantom Vault</string>
+    <string name="desktop_unlock_theatre_quiet_ops">Quiet Ops — resera ut tapete reveletur</string>
+    <string name="desktop_unlock_theatre_hint">Boot clausum in Quiet Ops manet solo cum glypha vault. Post reserationem Telos ad tapete vault et intensitatem electam transit — sine particulis.</string>
+    <string name="desktop_sandbox_tint_hint">Color anuli accentus solum OpSec visualis est (Host = aurantiacus cautela, Net-isolated = cyanus, Vault FS = viridis, Standard = magenta).</string>
+    <string name="desktop_matched_packs_title">Fasces iconum + cursoris congruentes</string>
+    <string name="desktop_matched_packs_hint">Uno ictu par GPL documentatum constituitur (Papirus↔BreezeX, candy-icons↔Bibata; CandyCyber glypha chrome insita manet). Depositiones in plica iconum vault vel portable manent.</string>
+    <string name="desktop_matched_packs_apply">Parem congure: %1$s</string>
+    <string name="desktop_matched_packs_one_click">Parem congure</string>
+    <string name="desktop_matched_packs_working">Fasces congruentur…</string>
+    <string name="desktop_matched_packs_ok">Fascis congruens %1$s adhibitus</string>
+    <string name="desktop_matched_packs_fail">Fasces congruere non potuit: %1$s</string>
+</resources>

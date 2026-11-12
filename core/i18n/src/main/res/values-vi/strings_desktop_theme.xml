@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_appearance_title">Giao diện</string>
+    <string name="desktop_theme_intensity">Cường độ chủ đề</string>
+    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
+    <string name="desktop_theme_intensity_neon">Vault Neon</string>
+    <string name="desktop_theme_intensity_paper">Paper Ops</string>
+    <string name="desktop_wallpaper_path">Hình nền (đường dẫn vault)</string>
+    <string name="desktop_wallpaper_path_hint">Tương đối với điểm gắn vault (ví dụ Pictures/wall.jpg). Không bao giờ hiện trên màn hình tiền khởi động bị khóa.</string>
+    <string name="desktop_unlock_theatre_title">Telos Phantom Vault</string>
+    <string name="desktop_unlock_theatre_quiet_ops">Quiet Ops — mở khóa để hiện hình nền</string>
+    <string name="desktop_unlock_theatre_hint">Khởi động khóa vẫn ở Quiet Ops chỉ với glyph vault. Sau khi mở khóa, Telos chuyển dần sang hình nền vault và cường độ đã chọn — không hạt.</string>
+    <string name="desktop_sandbox_tint_hint">Màu vòng nhấn chỉ là OpSec trực quan (Host = cam thận trọng, Net-isolated = lục lam, Vault FS = xanh lục, Standard = đỏ tươi).</string>
+    <string name="desktop_matched_packs_title">Gói biểu tượng + con trỏ khớp</string>
+    <string name="desktop_matched_packs_hint">Một cú nhấp đặt cặp GPL đã tài liệu hóa (Papirus↔BreezeX, candy-icons↔Bibata; CandyCyber vẫn là glyph chrome tích hợp). Tải xuống ở thư mục biểu tượng vault hoặc portable.</string>
+    <string name="desktop_matched_packs_apply">Khớp cặp: %1$s</string>
+    <string name="desktop_matched_packs_one_click">Khớp cặp</string>
+    <string name="desktop_matched_packs_working">Đang khớp gói…</string>
+    <string name="desktop_matched_packs_ok">Đã áp dụng gói khớp %1$s</string>
+    <string name="desktop_matched_packs_fail">Không khớp được các gói: %1$s</string>
+</resources>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_appearance_title">दिखावट</string>
+    <string name="desktop_theme_intensity">थीम तीव्रता</string>
+    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
+    <string name="desktop_theme_intensity_neon">Vault Neon</string>
+    <string name="desktop_theme_intensity_paper">Paper Ops</string>
+    <string name="desktop_wallpaper_path">वॉलपेपर (वॉल्ट पथ)</string>
+    <string name="desktop_wallpaper_path_hint">वॉल्ट माउंट बिंदु के सापेक्ष (उदा. Pictures/wall.jpg)। लॉक किए गए प्री-बूट स्क्रीन पर कभी नहीं दिखाया जाता।</string>
+    <string name="desktop_unlock_theatre_title">Telos Phantom Vault</string>
+    <string name="desktop_unlock_theatre_quiet_ops">Quiet Ops — वॉलपेपर दिखाने के लिए अनलॉक करें</string>
+    <string name="desktop_unlock_theatre_hint">लॉक बूट केवल वॉल्ट ग्लिफ़ के साथ Quiet Ops में रहता है। अनलॉक के बाद Telos आपके वॉल्ट वॉलपेपर और चुनी तीव्रता पर क्रॉसफ़ेड करता है — बिना कण प्रभाव।</string>
+    <string name="desktop_sandbox_tint_hint">एक्सेंट रिंग रंग केवल दृश्य OpSec है (Host = नारंगी सावधानी, Net-isolated = सियान, Vault FS = हरा, Standard = मैजेंटा)।</string>
+    <string name="desktop_matched_packs_title">मिलान किए गए आइकन + कर्सर पैक</string>
+    <string name="desktop_matched_packs_hint">एक क्लिक एक प्रलेखित GPL जोड़ी सेट करता है (Papirus↔BreezeX, candy-icons↔Bibata; CandyCyber अंतर्निहित chrome ग्लिफ़ रहता है)। डाउनलोड वॉल्ट या पोर्टेबल आइकन फ़ोल्डर में रहते हैं।</string>
+    <string name="desktop_matched_packs_apply">जोड़ी मिलाएँ: %1$s</string>
+    <string name="desktop_matched_packs_one_click">जोड़ी मिलाएँ</string>
+    <string name="desktop_matched_packs_working">पैक मिलाए जा रहे हैं…</string>
+    <string name="desktop_matched_packs_ok">मिलान किया पैक %1$s लागू</string>
+    <string name="desktop_matched_packs_fail">पैक मिलाए नहीं जा सके: %1$s</string>
+</resources>

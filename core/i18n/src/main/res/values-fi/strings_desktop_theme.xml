@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_appearance_title">Ulkoasu</string>
+    <string name="desktop_theme_intensity">Teeman intensiteetti</string>
+    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
+    <string name="desktop_theme_intensity_neon">Vault Neon</string>
+    <string name="desktop_theme_intensity_paper">Paper Ops</string>
+    <string name="desktop_wallpaper_path">Taustakuva (vault-polku)</string>
+    <string name="desktop_wallpaper_path_hint">Suhteessa vault-liitoskohtaan (esim. Pictures/wall.jpg). Ei koskaan näytetä lukitulla esikäynnistysnäytöllä.</string>
+    <string name="desktop_unlock_theatre_title">Telos Phantom Vault</string>
+    <string name="desktop_unlock_theatre_quiet_ops">Quiet Ops — avaa lukitus näyttääksesi taustakuvan</string>
+    <string name="desktop_unlock_theatre_hint">Lukittu käynnistys pysyy Quiet Opsissa vain vault-glyfillä. Avauksen jälkeen Telos häivyttää vault-taustakuvaan ja valittuun intensiteettiin — ilman hiukkasia.</string>
+    <string name="desktop_sandbox_tint_hint">Korostusrenkaan väri on vain visuaalista OpSeciä (Host = oranssi varoitus, Net-isolated = syaani, Vault FS = vihreä, Standard = magenta).</string>
+    <string name="desktop_matched_packs_title">Sopivat kuvake- + osoitinpaketit</string>
+    <string name="desktop_matched_packs_hint">Yksi napsautus asettaa dokumentoidun GPL-parin (Papirus↔BreezeX, candy-icons↔Bibata; CandyCyber pysyy sisäänrakennettuna chrome-glyfinä). Lataukset jäävät vault- tai portable-kuvakekansioon.</string>
+    <string name="desktop_matched_packs_apply">Sovita pari: %1$s</string>
+    <string name="desktop_matched_packs_one_click">Sovita pari</string>
+    <string name="desktop_matched_packs_working">Sovitetaan paketteja…</string>
+    <string name="desktop_matched_packs_ok">Sovitettu paketti %1$s otettu käyttöön</string>
+    <string name="desktop_matched_packs_fail">Paketteja ei voitu sovittaa: %1$s</string>
+</resources>

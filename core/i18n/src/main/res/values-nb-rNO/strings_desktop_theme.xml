@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_appearance_title">Utseende</string>
+    <string name="desktop_theme_intensity">Temaintensitet</string>
+    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
+    <string name="desktop_theme_intensity_neon">Vault Neon</string>
+    <string name="desktop_theme_intensity_paper">Paper Ops</string>
+    <string name="desktop_wallpaper_path">Bakgrunn (vault-sti)</string>
+    <string name="desktop_wallpaper_path_hint">Relativ til vault-monteringspunktet (f.eks. Pictures/wall.jpg). Vises aldri på den låste pre-boot-skjermen.</string>
+    <string name="desktop_unlock_theatre_title">Telos Phantom Vault</string>
+    <string name="desktop_unlock_theatre_quiet_ops">Quiet Ops — lås opp for å vise bakgrunnen</string>
+    <string name="desktop_unlock_theatre_hint">Låst boot forblir Quiet Ops med bare vault-glyfen. Etter opplåsing crossfader Telos til vault-bakgrunnen og valgt intensitet — uten partikler.</string>
+    <string name="desktop_sandbox_tint_hint">Aksentringfargen er bare visuell OpSec (Host = oransje forsiktighet, Net-isolated = cyan, Vault FS = grønn, Standard = magenta).</string>
+    <string name="desktop_matched_packs_title">Matchende ikon- + pekerpakker</string>
+    <string name="desktop_matched_packs_hint">Ett klikk setter et dokumentert GPL-par (Papirus↔BreezeX, candy-icons↔Bibata; CandyCyber forblir den innebygde chrome-glyfen). Nedlastinger blir i vault- eller portable-ikonmappen.</string>
+    <string name="desktop_matched_packs_apply">Match par: %1$s</string>
+    <string name="desktop_matched_packs_one_click">Match par</string>
+    <string name="desktop_matched_packs_working">Matcher pakker…</string>
+    <string name="desktop_matched_packs_ok">Brukte matchende pakke %1$s</string>
+    <string name="desktop_matched_packs_fail">Kunne ikke matche pakker: %1$s</string>
+</resources>

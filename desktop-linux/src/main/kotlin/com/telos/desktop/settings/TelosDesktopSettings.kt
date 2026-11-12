@@ -68,7 +68,16 @@ class TelosDesktopSettings(private val vaultConfigDir: File) {
     var themeAccent: String = "neon-magenta"
     /** When true, chrome uses a locally sampled wallpaper tonal seed (no network). */
     var wallpaperTonal: Boolean = false
-    /** Optional vault/portable wallpaper path; blank = search Pictures / config defaults. */
+    /**
+     * Quiet Ops / Vault Neon / Paper Ops chrome intensity (`theme.intensity`).
+     * Locked-boot always paints Quiet Ops; this value applies after unlock reveal.
+     */
+    var themeIntensity: String = "quiet"
+    /**
+     * Optional vault/portable wallpaper path.
+     * Written as both `theme.wallpaperPath` and `wallpaper.path`.
+     * Never shown on the locked pre-boot screen.
+     */
     var wallpaperPath: String = ""
 
     private val file: File get() = File(vaultConfigDir, "desktop.properties")
@@ -125,7 +134,12 @@ class TelosDesktopSettings(private val vaultConfigDir: File) {
         themeAccent = p.getProperty("theme.accent") ?: themeAccent
         wallpaperTonal = p.getProperty("theme.wallpaperTonal", "false").toBoolean() ||
             themeAccent.equals("wallpaper", ignoreCase = true)
-        wallpaperPath = p.getProperty("theme.wallpaperPath") ?: wallpaperPath
+        themeIntensity = com.telos.desktop.theme.ThemeIntensity.parse(
+            p.getProperty("theme.intensity") ?: p.getProperty("themeIntensity"),
+        ).propertyValue
+        wallpaperPath = p.getProperty("theme.wallpaperPath")
+            ?: p.getProperty("wallpaper.path")
+            ?: p.getProperty("wallpaperPath", wallpaperPath)
         outputPrefs.clear()
         p.stringPropertyNames().forEach { key ->
             if (key.startsWith("output.")) {
@@ -184,7 +198,18 @@ class TelosDesktopSettings(private val vaultConfigDir: File) {
         p[WorkspaceTintStrips.PREF_KEY] = workspaceTints.toString()
         p["theme.accent"] = themeAccent
         p["theme.wallpaperTonal"] = wallpaperTonal.toString()
-        if (wallpaperPath.isNotBlank()) p["theme.wallpaperPath"] = wallpaperPath
+        val intensity = com.telos.desktop.theme.ThemeIntensity.parse(themeIntensity).propertyValue
+        p["theme.intensity"] = intensity
+        p["themeIntensity"] = intensity
+        if (wallpaperPath.isNotBlank()) {
+            p["theme.wallpaperPath"] = wallpaperPath
+            p["wallpaper.path"] = wallpaperPath
+            p["wallpaperPath"] = wallpaperPath
+        } else {
+            p.remove("theme.wallpaperPath")
+            p.remove("wallpaper.path")
+            p.remove("wallpaperPath")
+        }
         outputPrefs.forEach { (name, spec) -> p["output.$name"] = spec }
         file.outputStream().use { p.store(it, "Telos Linux Desktop") }
     }

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_appearance_title">Aspetto</string>
+    <string name="desktop_theme_intensity">Intensità del tema</string>
+    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
+    <string name="desktop_theme_intensity_neon">Vault Neon</string>
+    <string name="desktop_theme_intensity_paper">Paper Ops</string>
+    <string name="desktop_wallpaper_path">Sfondo (percorso vault)</string>
+    <string name="desktop_wallpaper_path_hint">Relativo al mount del vault (ad es. Pictures/wall.jpg). Mai mostrato sulla schermata di pre-avvio bloccata.</string>
+    <string name="desktop_unlock_theatre_title">Telos Phantom Vault</string>
+    <string name="desktop_unlock_theatre_quiet_ops">Quiet Ops — sblocca per rivelare lo sfondo</string>
+    <string name="desktop_unlock_theatre_hint">L’avvio bloccato resta in Quiet Ops solo con il glifo del vault. Dopo lo sblocco, Telos esegue un crossfade verso lo sfondo del vault e l’intensità scelta — senza particelle.</string>
+    <string name="desktop_sandbox_tint_hint">Il colore dell’anello di accento è solo OpSec visiva (Host = arancione cautela, Net-isolated = ciano, Vault FS = verde, Standard = magenta).</string>
+    <string name="desktop_matched_packs_title">Pacchetti icona + cursore abbinati</string>
+    <string name="desktop_matched_packs_hint">Un clic imposta una coppia GPL documentata (Papirus↔BreezeX, candy-icons↔Bibata; CandyCyber resta il glifo chrome integrato). I download restano nella cartella icone del vault o portable.</string>
+    <string name="desktop_matched_packs_apply">Abbina coppia: %1$s</string>
+    <string name="desktop_matched_packs_one_click">Abbina coppia</string>
+    <string name="desktop_matched_packs_working">Abbinamento pacchetti…</string>
+    <string name="desktop_matched_packs_ok">Pacchetto abbinato %1$s applicato</string>
+    <string name="desktop_matched_packs_fail">Impossibile abbinare i pacchetti: %1$s</string>
+</resources>

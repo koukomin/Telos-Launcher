@@ -22,7 +22,8 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.telos.desktop.i18n.TelosI18n.t
-import com.telos.desktop.ui.TelosColors
+import com.telos.desktop.theme.QuietOpsTokens
+import com.telos.desktop.ui.UnlockTheatreLockedHeader
 import java.io.File
 
 @Composable
@@ -69,14 +70,15 @@ fun TelosPreBootScreen(
     val portableRoot = remember { PortableTraceGuard.dataRoot().absolutePath }
     val portableCarriers = remember { PortableStegoFs.carriersRoot().absolutePath }
 
-    Box(Modifier.fillMaxSize().background(TelosColors.background), contentAlignment = Alignment.Center) {
+    // Unlock theatre: Quiet Ops charcoal + vault glyph only — never user wallpaper.
+    Box(Modifier.fillMaxSize().background(QuietOpsTokens.background), contentAlignment = Alignment.Center) {
         Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(10.dp), modifier = Modifier.padding(24.dp)) {
-            Text("Telos Phantom Vault", color = TelosColors.secondary, fontSize = 28.sp)
-            Text(hw.label, color = TelosColors.primary, fontSize = 13.sp)
+            UnlockTheatreLockedHeader()
+            Text(hw.label, color = QuietOpsTokens.accent, fontSize = 13.sp)
             if (portableShell) {
-                Text(t("desktop_portable_data_root"), color = TelosColors.onSurface.copy(0.75f), fontSize = 11.sp)
-                Text(portableRoot, color = TelosColors.onSurface.copy(0.6f), fontSize = 10.sp)
-                Text("Stego carriers: $portableCarriers", color = TelosColors.onSurface.copy(0.55f), fontSize = 10.sp)
+                Text(t("desktop_portable_data_root"), color = QuietOpsTokens.onSurface.copy(0.75f), fontSize = 11.sp)
+                Text(portableRoot, color = QuietOpsTokens.onSurface.copy(0.6f), fontSize = 10.sp)
+                Text("Stego carriers: $portableCarriers", color = QuietOpsTokens.onSurface.copy(0.55f), fontSize = 10.sp)
             }
                         VaultProfileSwitchPanel(compact = true)
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -86,9 +88,9 @@ fun TelosPreBootScreen(
                     }
                 }
             }
-            Text(bootModeDescription(mode), color = TelosColors.onSurface)
+            Text(bootModeDescription(mode), color = QuietOpsTokens.onSurface)
             if (mode == BootMode.HostHome && portableShell) {
-                Text(t("desktop_host_home_trace_warning"), color = TelosColors.primary, fontSize = 12.sp)
+                Text(t("desktop_host_home_trace_warning"), color = QuietOpsTokens.accent, fontSize = 12.sp)
             }
             if (mode == BootMode.UnlockExisting || mode == BootMode.CreateWizard || mode == BootMode.PortableVault) {
                 Button(onClick = { picker = true }) {
@@ -122,7 +124,7 @@ fun TelosPreBootScreen(
             } else if (mode.needsVaultPassword()) {
                 OutlinedTextField(password, { password = it }, label = { Text("Vault password") }, visualTransformation = PasswordVisualTransformation(), modifier = Modifier.width(360.dp), singleLine = true)
             }
-            error?.let { Text(it, color = TelosColors.primary) }
+            error?.let { Text(it, color = QuietOpsTokens.accent) }
             Button(
                 enabled = !busy,
                 onClick = {
@@ -160,7 +162,7 @@ fun TelosPreBootScreen(
                     else error = (result as? LuksVaultManager.UnlockResult.Failed)?.message ?: "Unlock failed"
                 },
             ) { Text(if (busy) "Working…" else "Continue") }
-            Text("Ctrl+Alt+L panic unmount · USB dead-man · ulimit -c 0", color = TelosColors.onSurface.copy(0.5f), fontSize = 11.sp)
+            Text("Ctrl+Alt+L panic unmount · USB dead-man · ulimit -c 0", color = QuietOpsTokens.muted, fontSize = 11.sp)
         }
         if (picker) {
             Box(Modifier.align(Alignment.CenterEnd).padding(24.dp)) {

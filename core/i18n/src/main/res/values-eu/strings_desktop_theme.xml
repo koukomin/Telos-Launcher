@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_appearance_title">Itxura</string>
+    <string name="desktop_theme_intensity">Gaiaren intentsitatea</string>
+    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
+    <string name="desktop_theme_intensity_neon">Vault Neon</string>
+    <string name="desktop_theme_intensity_paper">Paper Ops</string>
+    <string name="desktop_wallpaper_path">Horma-paperra (vault bidea)</string>
+    <string name="desktop_wallpaper_path_hint">Vault muntatze-puntuarekiko erlatiboa (adib. Pictures/wall.jpg). Inoiz ez da erakusten blokeatutako aurre-abiarazte pantailan.</string>
+    <string name="desktop_unlock_theatre_title">Telos Phantom Vault</string>
+    <string name="desktop_unlock_theatre_quiet_ops">Quiet Ops — desblokeatu horma-papera agerian uzteko</string>
+    <string name="desktop_unlock_theatre_hint">Abio blokeatua Quiet Ops-en geratzen da vault glifoarekin bakarrik. Desblokeatu ondoren, Telosek vault horma-paperrera eta hautatutako intentsitatera egiten du crossfade — partikularik gabe.</string>
+    <string name="desktop_sandbox_tint_hint">Azentu-eraztunaren kolorea OpSec bisuala baino ez da (Host = laranja kontuz, Net-isolated = zian, Vault FS = berde, Standard = magenta).</string>
+    <string name="desktop_matched_packs_title">Bat datozen ikono + kurtsore paketeak</string>
+    <string name="desktop_matched_packs_hint">Klik bakarrak GPL bikote dokumentatu bat ezartzen du (Papirus↔BreezeX, candy-icons↔Bibata; CandyCyber chrome glifo integratua da). Deskargak vault edo portable ikono-karpetan geratzen dira.</string>
+    <string name="desktop_matched_packs_apply">Bikotea lotu: %1$s</string>
+    <string name="desktop_matched_packs_one_click">Bikotea lotu</string>
+    <string name="desktop_matched_packs_working">Paketak lotzen…</string>
+    <string name="desktop_matched_packs_ok">%1$s pakete lotua aplikatu da</string>
+    <string name="desktop_matched_packs_fail">Ezin izan dira paketak lotu: %1$s</string>
+</resources>

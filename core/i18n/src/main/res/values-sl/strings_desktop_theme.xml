@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_appearance_title">Videz</string>
+    <string name="desktop_theme_intensity">Intenziteta teme</string>
+    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
+    <string name="desktop_theme_intensity_neon">Vault Neon</string>
+    <string name="desktop_theme_intensity_paper">Paper Ops</string>
+    <string name="desktop_wallpaper_path">Ozadje (pot vault)</string>
+    <string name="desktop_wallpaper_path_hint">Relativno glede na priklop vault (npr. Pictures/wall.jpg). Nikoli ni prikazano na zaklenjenem predzagonskem zaslonu.</string>
+    <string name="desktop_unlock_theatre_title">Telos Phantom Vault</string>
+    <string name="desktop_unlock_theatre_quiet_ops">Quiet Ops — odklenite za prikaz ozadja</string>
+    <string name="desktop_unlock_theatre_hint">Zaklenjen zagon ostane v Quiet Ops samo z glifom vault. Po odklepu Telos prečisti v ozadje vault in izbrano intenziteto — brez delcev.</string>
+    <string name="desktop_sandbox_tint_hint">Barva poudarjenega obroča je le vizualni OpSec (Host = oranžna previdnost, Net-isolated = cian, Vault FS = zelena, Standard = magenta).</string>
+    <string name="desktop_matched_packs_title">Ujemajoči se paketi ikon + kazalca</string>
+    <string name="desktop_matched_packs_hint">En klik nastavi dokumentiran GPL par (Papirus↔BreezeX, candy-icons↔Bibata; CandyCyber ostane vgrajen chrome glif). Prenosi ostanejo v mapi ikon vault ali portable.</string>
+    <string name="desktop_matched_packs_apply">Ujemaj par: %1$s</string>
+    <string name="desktop_matched_packs_one_click">Ujemaj par</string>
+    <string name="desktop_matched_packs_working">Ujemanje paketov…</string>
+    <string name="desktop_matched_packs_ok">Uporabljen ujemajoči paket %1$s</string>
+    <string name="desktop_matched_packs_fail">Paketov ni bilo mogoče ujemati: %1$s</string>
+</resources>

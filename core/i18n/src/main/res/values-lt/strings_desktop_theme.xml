@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_appearance_title">Išvaizda</string>
+    <string name="desktop_theme_intensity">Temos intensyvumas</string>
+    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
+    <string name="desktop_theme_intensity_neon">Vault Neon</string>
+    <string name="desktop_theme_intensity_paper">Paper Ops</string>
+    <string name="desktop_wallpaper_path">Ekrano fonas (vault kelias)</string>
+    <string name="desktop_wallpaper_path_hint">Santykinis vault prijungimo taško atžvilgiu (pvz. Pictures/wall.jpg). Niekada nerodomas užrakintame priešįkrovos ekrane.</string>
+    <string name="desktop_unlock_theatre_title">Telos Phantom Vault</string>
+    <string name="desktop_unlock_theatre_quiet_ops">Quiet Ops — atrakinkite, kad atskleistumėte foną</string>
+    <string name="desktop_unlock_theatre_hint">Užrakintas paleidimas lieka Quiet Ops tik su vault glifu. Po atrakinimo Telos pereina į vault foną ir pasirinktą intensyvumą — be dalelių.</string>
+    <string name="desktop_sandbox_tint_hint">Akcento žiedo spalva yra tik vizualinis OpSec (Host = oranžinis atsargumas, Net-isolated = žydra, Vault FS = žalia, Standard = magenta).</string>
+    <string name="desktop_matched_packs_title">Suderinti piktogramų + žymeklio paketai</string>
+    <string name="desktop_matched_packs_hint">Vienas spustelėjimas nustato dokumentuotą GPL porą (Papirus↔BreezeX, candy-icons↔Bibata; CandyCyber lieka įdiegtas chrome glifas). Atsisiuntimai lieka vault ar portable piktogramų aplanke.</string>
+    <string name="desktop_matched_packs_apply">Suderinti porą: %1$s</string>
+    <string name="desktop_matched_packs_one_click">Suderinti porą</string>
+    <string name="desktop_matched_packs_working">Derinami paketai…</string>
+    <string name="desktop_matched_packs_ok">Pritaikytas suderintas paketas %1$s</string>
+    <string name="desktop_matched_packs_fail">Nepavyko suderinti paketų: %1$s</string>
+</resources>

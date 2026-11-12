@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_appearance_title">Cuma</string>
+    <string name="desktop_theme_intensity">Déine an téama</string>
+    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
+    <string name="desktop_theme_intensity_neon">Vault Neon</string>
+    <string name="desktop_theme_intensity_paper">Paper Ops</string>
+    <string name="desktop_wallpaper_path">Cúlbhrat (conair an vault)</string>
+    <string name="desktop_wallpaper_path_hint">Coibhneasta le pointe suiteála an vault (m.sh. Pictures/wall.jpg). Ní thaispeántar riamh ar an scáileán réamhbhútáil faoi ghlas.</string>
+    <string name="desktop_unlock_theatre_title">Telos Phantom Vault</string>
+    <string name="desktop_unlock_theatre_quiet_ops">Quiet Ops — díghlasáil chun do chúlbhrat a nochtadh</string>
+    <string name="desktop_unlock_theatre_hint">Fanann an bútáil faoi ghlas i Quiet Ops leis an glif vault amháin. Tar éis díghlasála, déanann Telos traschéimniú chuig cúlbhrat an vault agus an déine roghnaithe — gan cáithníní.</string>
+    <string name="desktop_sandbox_tint_hint">Is OpSec amhairc amháin dath an fháinne béime (Host = oráiste rabhadh, Net-isolated = cian, Vault FS = glas, Standard = mageanta).</string>
+    <string name="desktop_matched_packs_title">Pacáistí deilbhín + cúrsóra meaitseáilte</string>
+    <string name="desktop_matched_packs_hint">Socraíonn aon chliceáil amháin péire GPL doiciméadaithe (Papirus↔BreezeX, candy-icons↔Bibata; fanann CandyCyber mar ghlif chrome ionsuite). Fanann íoslódálacha i bhfillteán deilbhíní an vault nó portable.</string>
+    <string name="desktop_matched_packs_apply">Meaitseáil péire: %1$s</string>
+    <string name="desktop_matched_packs_one_click">Meaitseáil péire</string>
+    <string name="desktop_matched_packs_working">Pacáistí á meaitseáil…</string>
+    <string name="desktop_matched_packs_ok">Pacáiste meaitseáilte %1$s feidhmithe</string>
+    <string name="desktop_matched_packs_fail">Níorbh fhéidir pacáistí a mheaitseáil: %1$s</string>
+</resources>

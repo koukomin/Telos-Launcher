@@ -49,6 +49,9 @@ import com.telos.desktop.update.DesktopGitHubReleasesChannel
 import com.telos.desktop.update.DesktopSignedUpdate
 import com.telos.desktop.update.DesktopUpdateRestartHelper
 import com.telos.desktop.settings.TelosDesktopSettings
+import com.telos.desktop.theme.MatchedPackInstaller
+import com.telos.desktop.theme.MatchedThemePacks
+import com.telos.desktop.theme.ThemeIntensity
 import com.telos.desktop.vault.PhantomVault
 import com.telos.desktop.wm.WindowButtonStyle
 import de.mm20.launcher2.uikmp.TelosSurfaceTokens
@@ -90,6 +93,7 @@ fun LinuxDesktopSettingsPanel(
     val indexEntries = remember {
         helixSettingsIndexEntries(
             sessionTitle = t.t("desktop_settings_session"),
+            appearanceTitle = t.t("desktop_appearance_title"),
             displayTitle = t.t("desktop_settings_display"),
             wallpaperTonalTitle = t.t("desktop_wallpaper_tonal_title"),
             nightTitle = t.t("desktop_night_light_title"),
@@ -121,6 +125,14 @@ fun LinuxDesktopSettingsPanel(
                 "wlsunset",
             ),
             sessionKeywords = listOf("fullscreen", "theme", "idle"),
+            appearanceKeywords = listOf(
+                t.t("desktop_theme_intensity"),
+                t.t("desktop_theme_intensity_quiet"),
+                t.t("desktop_theme_intensity_neon"),
+                "wallpaper",
+                "quiet",
+                "neon",
+            ),
             desktopKeywords = listOf(
                 "icons",
                 "hidden",
@@ -208,6 +220,56 @@ fun LinuxDesktopSettingsPanel(
                     color = TelosColors.onSurface.copy(0.6f),
                 )
             }
+        }
+        if (show("appearance")) HelixSettingsCard(t.t("desktop_appearance_title")) {
+            Text(t.t("desktop_theme_intensity"), fontSize = 12.sp, color = TelosColors.onSurface)
+            Text(
+                t.t("desktop_unlock_theatre_hint"),
+                fontSize = 11.sp,
+                color = TelosColors.onSurface.copy(0.7f),
+            )
+            val current = ThemeIntensity.parse(settings.themeIntensity)
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                HelixTechPill(
+                    t.t("desktop_theme_intensity_quiet"),
+                    selected = current == ThemeIntensity.QuietOps,
+                    accent = TelosColors.secondary,
+                ) {
+                    settings.themeIntensity = ThemeIntensity.QuietOps.propertyValue
+                    settings.save()
+                }
+                HelixTechPill(
+                    t.t("desktop_theme_intensity_neon"),
+                    selected = current == ThemeIntensity.VaultNeon,
+                    accent = TelosColors.primary,
+                ) {
+                    settings.themeIntensity = ThemeIntensity.VaultNeon.propertyValue
+                    settings.save()
+                }
+                HelixTechPill(
+                    t.t("desktop_theme_intensity_paper"),
+                    selected = current == ThemeIntensity.PaperOps,
+                    accent = TelosColors.secondary.copy(alpha = 0.8f),
+                ) {
+                    settings.themeIntensity = ThemeIntensity.PaperOps.propertyValue
+                    settings.save()
+                }
+            }
+            OutlinedTextField(
+                value = settings.wallpaperPath,
+                onValueChange = {
+                    settings.wallpaperPath = it
+                    settings.save()
+                },
+                modifier = Modifier.fillMaxWidth(),
+                singleLine = true,
+                label = { Text(t.t("desktop_wallpaper_path")) },
+            )
+            Text(
+                t.t("desktop_wallpaper_path_hint"),
+                fontSize = 11.sp,
+                color = TelosColors.onSurface.copy(0.65f),
+            )
         }
         if (filter.showLabwcSession) {
             HelixSettingsCard(com.telos.desktop.i18n.TelosI18n.t("desktop_helix_window_mode")) {
@@ -502,6 +564,58 @@ fun LinuxDesktopSettingsPanel(
                 iconStatus?.let { status ->
                     Text(status, fontSize = 11.sp, color = TelosColors.onSurface.copy(0.8f))
                 }
+                Text(
+                    com.telos.desktop.i18n.TelosI18n.t("desktop_matched_packs_title"),
+                    color = TelosColors.secondary,
+                    fontSize = 13.sp,
+                    modifier = Modifier.padding(top = 8.dp),
+                )
+                Text(
+                    com.telos.desktop.i18n.TelosI18n.t("desktop_matched_packs_hint"),
+                    fontSize = 11.sp,
+                    color = TelosColors.onSurface.copy(0.7f),
+                )
+                MatchedThemePacks.all.forEach { pack ->
+                    TextButton(
+                        onClick = {
+                            if (iconBusyId != null) return@TextButton
+                            iconBusyId = "match-${pack.id}"
+                            iconStatus = com.telos.desktop.i18n.TelosI18n.t("desktop_matched_packs_working")
+                            iconScope.launch {
+                                val result = withContext(Dispatchers.IO) {
+                                    MatchedPackInstaller.apply(pack, settings, icons, downloadMissing = true)
+                                }
+                                icons.invalidate()
+                                com.telos.desktop.cursor.XCursorThemeDiscovery.invalidate()
+                                themes = icons.listInstalledThemes()
+                                cursorThemes = com.telos.desktop.cursor.XCursorThemeDiscovery.listInstalled()
+                                if (result.ok) {
+                                    reapplyCursor(settings)
+                                }
+                                iconBusyId = null
+                                iconStatus = if (result.ok) {
+                                    com.telos.desktop.i18n.TelosI18n.t(
+                                        "desktop_matched_packs_ok",
+                                        pack.displayName,
+                                    )
+                                } else {
+                                    com.telos.desktop.i18n.TelosI18n.t(
+                                        "desktop_matched_packs_fail",
+                                        result.message,
+                                    )
+                                }
+                            }
+                        },
+                        enabled = iconBusyId == null,
+                    ) {
+                        Text(
+                            com.telos.desktop.i18n.TelosI18n.t(
+                                "desktop_matched_packs_apply",
+                                pack.displayName,
+                            ),
+                        )
+                    }
+                }
             }
         }
         if (filter.showKlassyWindowManager && show("windows")) {
@@ -589,24 +703,56 @@ fun LinuxDesktopSettingsPanel(
                 if (filter.showLinuxIconThemeSelector || filter.showPortableDesktopShell) {
                     Text(com.telos.desktop.i18n.TelosI18n.t("desktop_cursor_download_section"), fontSize = 12.sp, color = TelosColors.onSurface)
                     com.telos.desktop.cursor.CursorThemeCatalog.offered().forEach { entry ->
-                        TextButton(onClick = {
-                            val result = com.telos.desktop.cursor.CursorThemeCatalog.download(entry)
-                            downloadMsg = if (result.ok) {
-                                settings.cursorTheme = result.themeFolder ?: entry.themeFolder
-                                settings.save()
-                                reapplyCursor(settings)
-                                com.telos.desktop.i18n.TelosI18n.t("desktop_cursor_download_ok", entry.displayName)
-                            } else {
-                                com.telos.desktop.i18n.TelosI18n.t("desktop_cursor_download_fail", result.message)
+                        val match = MatchedThemePacks.forCursorCatalogId(entry.id)
+                        Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                            TextButton(onClick = {
+                                val result = com.telos.desktop.cursor.CursorThemeCatalog.download(entry)
+                                downloadMsg = if (result.ok) {
+                                    settings.cursorTheme = result.themeFolder ?: entry.themeFolder
+                                    settings.save()
+                                    reapplyCursor(settings)
+                                    com.telos.desktop.i18n.TelosI18n.t("desktop_cursor_download_ok", entry.displayName)
+                                } else {
+                                    com.telos.desktop.i18n.TelosI18n.t("desktop_cursor_download_fail", result.message)
+                                }
+                            }) {
+                                Text(
+                                    com.telos.desktop.i18n.TelosI18n.t(
+                                        "desktop_cursor_download_named",
+                                        entry.displayName,
+                                        entry.license,
+                                    ),
+                                )
                             }
-                        }) {
-                            Text(
-                                com.telos.desktop.i18n.TelosI18n.t(
-                                    "desktop_cursor_download_named",
-                                    entry.displayName,
-                                    entry.license,
-                                ),
-                            )
+                            if (match != null) {
+                                TextButton(onClick = {
+                                    iconBusyId = "match-${match.id}"
+                                    iconScope.launch {
+                                        val result = withContext(Dispatchers.IO) {
+                                            MatchedPackInstaller.apply(match, settings, icons, downloadMissing = true)
+                                        }
+                                        icons.invalidate()
+                                        com.telos.desktop.cursor.XCursorThemeDiscovery.invalidate()
+                                        themes = icons.listInstalledThemes()
+                                        cursorThemes = com.telos.desktop.cursor.XCursorThemeDiscovery.listInstalled()
+                                        if (result.ok) reapplyCursor(settings)
+                                        iconBusyId = null
+                                        downloadMsg = if (result.ok) {
+                                            com.telos.desktop.i18n.TelosI18n.t(
+                                                "desktop_matched_packs_ok",
+                                                match.displayName,
+                                            )
+                                        } else {
+                                            com.telos.desktop.i18n.TelosI18n.t(
+                                                "desktop_matched_packs_fail",
+                                                result.message,
+                                            )
+                                        }
+                                    }
+                                }) {
+                                    Text(com.telos.desktop.i18n.TelosI18n.t("desktop_matched_packs_one_click"))
+                                }
+                            }
                         }
                     }
                     downloadMsg?.let {
@@ -934,6 +1080,7 @@ private fun reapplyCursor(settings: TelosDesktopSettings) {
 
 private fun helixSettingsIndexEntries(
     sessionTitle: String,
+    appearanceTitle: String,
     displayTitle: String,
     wallpaperTonalTitle: String,
     nightTitle: String,
@@ -953,18 +1100,20 @@ private fun helixSettingsIndexEntries(
     wallpaperTonalKeywords: List<String>,
     nightKeywords: List<String>,
     sessionKeywords: List<String>,
+    appearanceKeywords: List<String>,
     desktopKeywords: List<String>,
     portalKeywords: List<String>,
     opsecKeywords: List<String>,
 ): List<HelixSettingsIndexEntry> = listOf(
     HelixSettingsIndexEntry("session", sessionTitle, sessionKeywords),
+    HelixSettingsIndexEntry("appearance", appearanceTitle, appearanceKeywords),
     HelixSettingsIndexEntry("display", displayTitle, listOf("resolution", "scale", "refresh")),
     HelixSettingsIndexEntry("wallpaper_tonal", wallpaperTonalTitle, wallpaperTonalKeywords),
     HelixSettingsIndexEntry("night_light", nightTitle, nightKeywords),
     HelixSettingsIndexEntry("desktop", desktopTitle, desktopKeywords),
-    HelixSettingsIndexEntry("icons", iconsTitle, listOf("theme", "papirus", "tela", "candy")),
+    HelixSettingsIndexEntry("icons", iconsTitle, listOf("theme", "papirus", "tela", "candy", "match")),
     HelixSettingsIndexEntry("windows", windowsTitle, listOf("klassy", "buttons")),
-    HelixSettingsIndexEntry("cursor", cursorTitle, listOf("xcursor", "size", "breeze")),
+    HelixSettingsIndexEntry("cursor", cursorTitle, listOf("xcursor", "size", "breeze", "bibata", "match")),
     HelixSettingsIndexEntry("profiles", profilesTitle, listOf("vault", "profile", "portable")),
     HelixSettingsIndexEntry("portable", portableTitle, listOf("portable", "data")),
     HelixSettingsIndexEntry("windows_shell", shellTitle, listOf("explorer", "shell")),

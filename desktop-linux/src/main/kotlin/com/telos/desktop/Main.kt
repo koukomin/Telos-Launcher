@@ -83,6 +83,8 @@ fun main(args: Array<String>) {
     var unlocked by remember {
         mutableStateOf(vault.attachMounted() || TelosSessionHome.alreadyUnlocked)
     }
+    /** True when this process transitioned from the Quiet Ops pre-boot screen. */
+    var playUnlockReveal by remember { mutableStateOf(false) }
     val wm = remember { TelosWindowManager() }
     // === TELOS_PENDING_REVIEW_START: telos_kde_system_monitor ===
     val telemetry = remember { LinuxSystemTelemetryEngine() }
@@ -113,6 +115,7 @@ fun main(args: Array<String>) {
             if (!unlocked) {
                 TelosPreBootScreen(vault) {
                     com.telos.desktop.session.SessionNetGuard.apply()
+                    playUnlockReveal = true
                     unlocked = true
                 }
             } else {
@@ -227,6 +230,8 @@ fun main(args: Array<String>) {
                         exitApplication()
                     },
                     onKeyEvent = { handleDesktopKeys(it, wm, telemetry) },
+                    playUnlockReveal = playUnlockReveal,
+                    onUnlockRevealFinished = { playUnlockReveal = false },
                 )
             }
         }

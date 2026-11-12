@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_appearance_title">Tampilan</string>
+    <string name="desktop_theme_intensity">Intensitas tema</string>
+    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
+    <string name="desktop_theme_intensity_neon">Vault Neon</string>
+    <string name="desktop_theme_intensity_paper">Paper Ops</string>
+    <string name="desktop_wallpaper_path">Wallpaper (jalur vault)</string>
+    <string name="desktop_wallpaper_path_hint">Relatif terhadap titik pasang vault (mis. Pictures/wall.jpg). Tidak pernah ditampilkan di layar pra-boot terkunci.</string>
+    <string name="desktop_unlock_theatre_title">Telos Phantom Vault</string>
+    <string name="desktop_unlock_theatre_quiet_ops">Quiet Ops — buka kunci untuk menampilkan wallpaper</string>
+    <string name="desktop_unlock_theatre_hint">Boot terkunci tetap Quiet Ops hanya dengan glif vault. Setelah dibuka, Telos melakukan crossfade ke wallpaper vault dan intensitas yang dipilih — tanpa partikel.</string>
+    <string name="desktop_sandbox_tint_hint">Warna cincin aksen hanya OpSec visual (Host = oranye hati-hati, Net-isolated = sian, Vault FS = hijau, Standard = magenta).</string>
+    <string name="desktop_matched_packs_title">Paket ikon + kursor yang dicocokkan</string>
+    <string name="desktop_matched_packs_hint">Satu klik mengatur pasangan GPL terdokumentasi (Papirus↔BreezeX, candy-icons↔Bibata; CandyCyber tetap glif chrome bawaan). Unduhan tetap di folder ikon vault atau portable.</string>
+    <string name="desktop_matched_packs_apply">Cocokkan pasangan: %1$s</string>
+    <string name="desktop_matched_packs_one_click">Cocokkan pasangan</string>
+    <string name="desktop_matched_packs_working">Mencocokkan paket…</string>
+    <string name="desktop_matched_packs_ok">Paket yang dicocokkan %1$s diterapkan</string>
+    <string name="desktop_matched_packs_fail">Tidak dapat mencocokkan paket: %1$s</string>
+</resources>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_appearance_title">Aspekto</string>
+    <string name="desktop_theme_intensity">Tem-intenseco</string>
+    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
+    <string name="desktop_theme_intensity_neon">Vault Neon</string>
+    <string name="desktop_theme_intensity_paper">Paper Ops</string>
+    <string name="desktop_wallpaper_path">Ekranfono (vojo de vault)</string>
+    <string name="desktop_wallpaper_path_hint">Relative al la montrado de vault (ekz. Pictures/wall.jpg). Neniam montrata sur la ŝlosita antaŭ-starta ekrano.</string>
+    <string name="desktop_unlock_theatre_title">Telos Phantom Vault</string>
+    <string name="desktop_unlock_theatre_quiet_ops">Quiet Ops — malŝlosu por malkaŝi la ekranfonon</string>
+    <string name="desktop_unlock_theatre_hint">Ŝlosita starto restas en Quiet Ops nur kun la vault-glifo. Post malŝloso Telos kruckaos al la vault-ekranfono kaj elektita intenseco — sen partikloj.</string>
+    <string name="desktop_sandbox_tint_hint">La akcentringokoloro estas nur vida OpSec (Host = oranĝa singardo, Net-isolated = ciano, Vault FS = verda, Standard = magento).</string>
+    <string name="desktop_matched_packs_title">Kongruitaj piktogramaj + kursoraj pakoj</string>
+    <string name="desktop_matched_packs_hint">Unu klako agordas dokumentitan GPL-paron (Papirus↔BreezeX, candy-icons↔Bibata; CandyCyber restas la enkonstruita chrome-glifo). Elŝutoj restas en la vault- aŭ portebla piktograma dosierujo.</string>
+    <string name="desktop_matched_packs_apply">Kongruigi paron: %1$s</string>
+    <string name="desktop_matched_packs_one_click">Kongruigi paron</string>
+    <string name="desktop_matched_packs_working">Kongruigas pakojn…</string>
+    <string name="desktop_matched_packs_ok">Aplikis kongruitan pakon %1$s</string>
+    <string name="desktop_matched_packs_fail">Ne eblis kongruigi pakojn: %1$s</string>
+</resources>
