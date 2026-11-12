@@ -35,10 +35,10 @@ enum class ThemeIntensity(val propertyValue: String) {
  * Actual seed color is supplied via [DesktopThemeChrome.wallpaperSeedAccent].
  */
 enum class ThemeAccent(val propertyValue: String, val color: Color) {
-    NeonGreen("00E676", Color(0xFF00E676)),
-    NeonCyan("00F0FF", Color(0xFF00F0FF)),
-    NeonMagenta("FF007F", Color(0xFFFF007F)),
-    NeonOrange("FF9100", Color(0xFFFF9100)),
+    NeonGreen("neon-green", Color(0xFF00E676)),
+    NeonCyan("neon-cyan", Color(0xFF00F0FF)),
+    NeonMagenta("neon-magenta", Color(0xFFFF007F)),
+    NeonOrange("neon-orange", Color(0xFFFF9100)),
     FromWallpaper("wallpaper", Color(0xFF00F0FF)),
     ;
 

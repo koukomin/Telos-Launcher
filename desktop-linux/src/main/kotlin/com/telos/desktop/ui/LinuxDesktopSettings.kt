@@ -69,7 +69,6 @@ import de.mm20.launcher2.uikmp.TelosSurfaceTokens
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import androidx.compose.ui.graphics.Color
 import java.io.File
 
 @Composable

@@ -21,7 +21,7 @@ class ThemeStudioSettingsTest {
 
             val text = File(dir, "desktop.properties").readText()
             assertTrue(text.contains("theme.intensity=neon"))
-            assertTrue(text.contains("theme.accent=00F0FF"))
+            assertTrue(text.contains("theme.accent=neon-cyan"))
             assertTrue(text.contains("theme.density=touch"))
             assertTrue(text.contains("panelHeightDp=48"))
             assertTrue(text.contains("panelIconDp=32"))
