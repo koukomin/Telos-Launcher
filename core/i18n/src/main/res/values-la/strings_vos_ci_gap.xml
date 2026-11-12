@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dl_settings_rules">Regulae</string>
+    <string name="hf_freeze_backend_status">Status backend</string>
+    <string name="hf_freeze_search_apps">Quaere applicationes</string>
+    <string name="netfw_filter_system">Applicationes systematis</string>
+    <string name="preference_freeze_show_iconless_apps">Ostende applicationes sine icone</string>
+</resources>
