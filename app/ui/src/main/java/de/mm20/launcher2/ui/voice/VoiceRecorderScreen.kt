@@ -25,9 +25,13 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBarsPadding
@@ -73,6 +77,12 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
+import de.mm20.launcher2.ui.component.TelosDotMatrixText
+import de.mm20.launcher2.ui.component.TelosTechPill
+import de.mm20.launcher2.ui.component.telosTechCard
+import de.mm20.launcher2.ui.component.virtualAppPopup
+import de.mm20.launcher2.ui.layout.AdaptiveLayoutPolicy
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
@@ -227,6 +237,7 @@ fun VoiceRecorderScreen() {
     var renaming by remember { mutableStateOf<RecordingItem?>(null) }
     var deleting by remember { mutableStateOf<RecordingItem?>(null) }
     var selectedForShare by remember { mutableStateOf<Set<String>>(emptySet()) }
+    var showFontDialog by remember { mutableStateOf(false) }
     val shareSelecting = selectedForShare.isNotEmpty()
     BackHandler(enabled = shareSelecting) { selectedForShare = emptySet() }
 
@@ -320,90 +331,18 @@ fun VoiceRecorderScreen() {
                 },
             )
         } else {
-            androidx.compose.foundation.layout.BoxWithConstraints(Modifier.fillMaxSize()) {
-            val scrollPage = maxHeight < (600f * androidx.compose.ui.platform.LocalDensity.current.fontScale).dp
+            BoxWithConstraints(Modifier.fillMaxSize()) {
+            val density = LocalDensity.current
+            val scrollPage = maxHeight < (600f * density.fontScale).dp
+            val sideBySide = AdaptiveLayoutPolicy.sideBySide(maxWidth.value, maxHeight.value, density.fontScale)
             val listHeight = maxOf(240.dp, maxHeight / 2)
-            Column(Modifier.fillMaxSize().then(if (scrollPage) Modifier.verticalScroll(rememberScrollState()) else Modifier)) {
-                Row(Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 8.dp), verticalAlignment = Alignment.CenterVertically) {
-                    if (searching) {
-                        TelosSearchTopBar(
-                            value = query,
-                            onValueChange = { query = it },
-                            placeholder = stringResource(I18nR.string.tsp_search_recordings),
-                            modifier = Modifier.weight(1f).padding(start = 8.dp),
-                            autoFocus = true,
-                        )
-                        IconButton(onClick = { searching = false; query = "" }) {
-                            Icon(painterResource(BaseR.drawable.close_24px), contentDescription = stringResource(I18nR.string.close))
-                        }
-                    } else {
-                        var showFontDialog by remember { mutableStateOf(false) }
-                        if (showFontDialog) {
-                            de.mm20.launcher2.ui.component.PerAppFontScaleDialog(
-                                appKey = "voice",
-                                appName = stringResource(I18nR.string.voice_title),
-                                onDismiss = { showFontDialog = false }
-                            )
-                        }
-                        Spacer(Modifier.weight(1f))
-                        IconButton(onClick = { searching = true }) {
-                            Icon(painterResource(BaseR.drawable.search_24px), contentDescription = stringResource(I18nR.string.voice_search))
-                        }
-                        IconButton(onClick = { showFontDialog = true }) {
-                            Icon(painterResource(BaseR.drawable.settings_24px), contentDescription = stringResource(I18nR.string.per_app_font_size))
-                        }
-                        Box {
-                            IconButton(onClick = { menu = true }) {
-                                Icon(painterResource(BaseR.drawable.more_vert_24px), contentDescription = stringResource(I18nR.string.voice_more))
-                            }
-                            DropdownMenu(expanded = menu, onDismissRequest = { menu = false }) {
-                                DropdownMenuItem(
-                                    text = { Text(stringResource(if (speaker) I18nR.string.voice_receiver_mode else I18nR.string.voice_speaker_mode)) },
-                                    onClick = {
-                                        menu = false
-                                        speaker = !speaker
-                                        settings.speaker = speaker
-                                        player.stop()
-                                    },
-                                )
-                                DropdownMenuItem(
-                                    text = { Text(stringResource(I18nR.string.voice_settings)) },
-                                    onClick = { menu = false; backStack.add(VoiceSettingsRoute) },
-                                )
-                            }
-                        }
-                    }
-                }
-                Text(
-                    stringResource(I18nR.string.voice_title),
-                    style = MaterialTheme.typography.displaySmall,
-                    fontWeight = FontWeight.SemiBold,
-                    modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp),
-                )
-                Row(Modifier.horizontalScroll(rememberScrollState()).padding(horizontal = 16.dp, vertical = 8.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    FilterChip(
-                        selected = tab == 0,
-                        onClick = { tab = 0 },
-                        label = { Text(stringResource(I18nR.string.voice_all_recordings)) },
-                    )
-                    FilterChip(
-                        selected = tab == 1,
-                        onClick = { tab = 1 },
-                        leadingIcon = {
-                            Icon(painterResource(BaseR.drawable.ic_glyph_voice_recorder), contentDescription = null, modifier = Modifier.size(18.dp))
-                        },
-                        label = { Text(stringResource(I18nR.string.voice_voice_recordings)) },
-                    )
-                    FilterChip(
-                        selected = tab == 2,
-                        onClick = { tab = 2 },
-                        leadingIcon = {
-                            Icon(painterResource(BaseR.drawable.mic_24px), contentDescription = null, modifier = Modifier.size(18.dp))
-                        },
-                        label = { Text(stringResource(I18nR.string.voice_call_recordings)) },
-                    )
-                }
-                Box(Modifier.then(if (scrollPage) Modifier.height(listHeight) else Modifier.weight(1f)).fillMaxWidth()) {
+            val neonCyan = Color(0xFF00F0FF)
+            val neonMagenta = Color(0xFFFF007F)
+            val neonGreen = Color(0xFF00E676)
+
+            @Composable
+            fun ListPane(modifier: Modifier = Modifier) {
+                Box(modifier.then(if (scrollPage && !sideBySide) Modifier.height(listHeight) else Modifier.fillMaxSize())) {
                     de.mm20.launcher2.ui.component.AuthGate(
                         enabled = tab == 2 && lockCalls,
                         title = stringResource(I18nR.string.auth_gate_recordings),
@@ -411,40 +350,100 @@ fun VoiceRecorderScreen() {
                         onUnlocked = { de.mm20.launcher2.comms.privacy.PrivacySession.unlockRecordings() },
                         onCancelled = { tab = 0 },
                     ) {
-                    if (shown.isEmpty() && query.isNotBlank()) {
-                        SearchEmptyState(query)
-                    } else if (shown.isEmpty()) {
-                        EmptyState(callsOnly = tab == 2)
-                    } else {
-                        LazyColumn(Modifier.fillMaxSize()) {
-                            items(shown, key = { it.file.absolutePath }) { item ->
-                                RecordingRow(
-                                    item = item,
-                                    selected = player.current?.name == item.file.name,
-                                    shareSelected = item.file.absolutePath in selectedForShare,
-                                    shareSelecting = shareSelecting,
-                                    player = player,
-                                    onClick = {
-                                        if (player.current?.name == item.file.name) {
-                                            player.toggle()
-                                        } else {
-                                            val readable = if (item.isCall) RecordingCrypto.readableCopy(context, item.file) else item.file
-                                            if (readable != null) player.play(readable, speaker)
-                                        }
-                                    },
-                                    onToggleShareSelection = {
-                                        val key = item.file.absolutePath
-                                        selectedForShare = if (key in selectedForShare) selectedForShare - key else selectedForShare + key
-                                    },
-                                    onRename = { renaming = item },
-                                    onShare = { scope.launch { shareRecording(context, item) } },
-                                    onDelete = { deleting = item },
-                                )
+                        if (shown.isEmpty() && query.isNotBlank()) {
+                            SearchEmptyState(query)
+                        } else if (shown.isEmpty()) {
+                            EmptyState(callsOnly = tab == 2)
+                        } else {
+                            LazyColumn(Modifier.fillMaxSize()) {
+                                items(shown, key = { it.file.absolutePath }) { item ->
+                                    RecordingRow(
+                                        item = item,
+                                        selected = player.current?.name == item.file.name,
+                                        shareSelected = item.file.absolutePath in selectedForShare,
+                                        shareSelecting = shareSelecting,
+                                        player = player,
+                                        onClick = {
+                                            if (player.current?.name == item.file.name) {
+                                                player.toggle()
+                                            } else {
+                                                val readable = if (item.isCall) RecordingCrypto.readableCopy(context, item.file) else item.file
+                                                if (readable != null) player.play(readable, speaker)
+                                            }
+                                        },
+                                        onToggleShareSelection = {
+                                            val key = item.file.absolutePath
+                                            selectedForShare = if (key in selectedForShare) selectedForShare - key else selectedForShare + key
+                                        },
+                                        onRename = { renaming = item },
+                                        onShare = { scope.launch { shareRecording(context, item) } },
+                                        onDelete = { deleting = item },
+                                    )
+                                }
                             }
                         }
                     }
-                    }
                 }
+            }
+
+            @Composable
+            fun HeaderAndFilters(modifier: Modifier = Modifier) {
+                Column(modifier) {
+                Row(
+                    Modifier.padding(horizontal = 20.dp, vertical = 4.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    Text(
+                        stringResource(I18nR.string.voice_title),
+                        style = MaterialTheme.typography.displaySmall,
+                        fontWeight = FontWeight.SemiBold,
+                        modifier = Modifier.weight(1f, fill = false),
+                    )
+                }
+                TelosDotMatrixText(
+                    text = stringResource(
+                        when (tab) {
+                            1 -> I18nR.string.voice_voice_recordings
+                            2 -> I18nR.string.voice_call_recordings
+                            else -> I18nR.string.voice_all_recordings
+                        },
+                    ),
+                    fontSize = 10.sp,
+                    color = neonCyan,
+                    modifier = Modifier.padding(horizontal = 20.dp),
+                )
+                Row(
+                    Modifier
+                        .horizontalScroll(rememberScrollState())
+                        .padding(horizontal = 16.dp, vertical = 8.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    TelosTechPill(
+                        text = stringResource(I18nR.string.voice_all_recordings),
+                        isSelected = tab == 0,
+                        onClick = { tab = 0 },
+                        accentColor = neonGreen,
+                    )
+                    TelosTechPill(
+                        text = stringResource(I18nR.string.voice_voice_recordings),
+                        isSelected = tab == 1,
+                        onClick = { tab = 1 },
+                        accentColor = neonCyan,
+                        icon = painterResource(BaseR.drawable.ic_glyph_voice_recorder),
+                    )
+                    TelosTechPill(
+                        text = stringResource(I18nR.string.voice_call_recordings),
+                        isSelected = tab == 2,
+                        onClick = { tab = 2 },
+                        accentColor = neonMagenta,
+                        icon = painterResource(BaseR.drawable.mic_24px),
+                    )
+                }
+                }
+            }
+
+            val chrome: @Composable () -> Unit = {
                 if (shareSelecting) {
                     Row(
                         Modifier
@@ -466,8 +465,135 @@ fun VoiceRecorderScreen() {
                         }
                     }
                 }
-                Box(Modifier.fillMaxWidth().padding(vertical = 20.dp), contentAlignment = Alignment.Center) {
+                Box(
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 12.dp)
+                        .telosTechCard(borderColor = neonMagenta, alpha = 0.35f)
+                        .padding(vertical = 16.dp),
+                    contentAlignment = Alignment.Center,
+                ) {
                     RecordButton(onClick = ::startRecording)
+                }
+            }
+
+            if (sideBySide) {
+                Column(Modifier.fillMaxSize()) {
+                    if (showFontDialog) {
+                        de.mm20.launcher2.ui.component.PerAppFontScaleDialog(
+                            appKey = "voice",
+                            appName = stringResource(I18nR.string.voice_title),
+                            onDismiss = { showFontDialog = false },
+                        )
+                    }
+                    Row(Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 8.dp), verticalAlignment = Alignment.CenterVertically) {
+                        if (searching) {
+                            TelosSearchTopBar(
+                                value = query,
+                                onValueChange = { query = it },
+                                placeholder = stringResource(I18nR.string.tsp_search_recordings),
+                                modifier = Modifier.weight(1f).padding(start = 8.dp),
+                                autoFocus = true,
+                            )
+                            IconButton(onClick = { searching = false; query = "" }) {
+                                Icon(painterResource(BaseR.drawable.close_24px), contentDescription = stringResource(I18nR.string.close))
+                            }
+                        } else {
+                            Spacer(Modifier.weight(1f))
+                            IconButton(onClick = { searching = true }) {
+                                Icon(painterResource(BaseR.drawable.search_24px), contentDescription = stringResource(I18nR.string.voice_search))
+                            }
+                            IconButton(onClick = { showFontDialog = true }) {
+                                Icon(painterResource(BaseR.drawable.settings_24px), contentDescription = stringResource(I18nR.string.per_app_font_size))
+                            }
+                            Box {
+                                IconButton(onClick = { menu = true }) {
+                                    Icon(painterResource(BaseR.drawable.more_vert_24px), contentDescription = stringResource(I18nR.string.voice_more))
+                                }
+                                DropdownMenu(expanded = menu, onDismissRequest = { menu = false }, containerColor = virtualAppPopup()) {
+                                    DropdownMenuItem(
+                                        text = { Text(stringResource(if (speaker) I18nR.string.voice_receiver_mode else I18nR.string.voice_speaker_mode)) },
+                                        onClick = {
+                                            menu = false
+                                            speaker = !speaker
+                                            settings.speaker = speaker
+                                            player.stop()
+                                        },
+                                        modifier = Modifier.heightIn(min = 48.dp),
+                                    )
+                                    DropdownMenuItem(
+                                        text = { Text(stringResource(I18nR.string.voice_settings)) },
+                                        onClick = { menu = false; backStack.add(VoiceSettingsRoute) },
+                                        modifier = Modifier.heightIn(min = 48.dp),
+                                    )
+                                }
+                            }
+                        }
+                    }
+                    Row(Modifier.weight(1f).fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                        Column(Modifier.weight(0.38f).fillMaxHeight().verticalScroll(rememberScrollState())) {
+                            HeaderAndFilters()
+                            chrome()
+                        }
+                        ListPane(Modifier.weight(0.62f).fillMaxHeight())
+                    }
+                }
+            } else {
+                Column(Modifier.fillMaxSize().then(if (scrollPage) Modifier.verticalScroll(rememberScrollState()) else Modifier)) {
+                if (showFontDialog) {
+                    de.mm20.launcher2.ui.component.PerAppFontScaleDialog(
+                        appKey = "voice",
+                        appName = stringResource(I18nR.string.voice_title),
+                        onDismiss = { showFontDialog = false },
+                    )
+                }
+                Row(Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 8.dp), verticalAlignment = Alignment.CenterVertically) {
+                    if (searching) {
+                        TelosSearchTopBar(
+                            value = query,
+                            onValueChange = { query = it },
+                            placeholder = stringResource(I18nR.string.tsp_search_recordings),
+                            modifier = Modifier.weight(1f).padding(start = 8.dp),
+                            autoFocus = true,
+                        )
+                        IconButton(onClick = { searching = false; query = "" }) {
+                            Icon(painterResource(BaseR.drawable.close_24px), contentDescription = stringResource(I18nR.string.close))
+                        }
+                    } else {
+                        Spacer(Modifier.weight(1f))
+                        IconButton(onClick = { searching = true }) {
+                            Icon(painterResource(BaseR.drawable.search_24px), contentDescription = stringResource(I18nR.string.voice_search))
+                        }
+                        IconButton(onClick = { showFontDialog = true }) {
+                            Icon(painterResource(BaseR.drawable.settings_24px), contentDescription = stringResource(I18nR.string.per_app_font_size))
+                        }
+                        Box {
+                            IconButton(onClick = { menu = true }) {
+                                Icon(painterResource(BaseR.drawable.more_vert_24px), contentDescription = stringResource(I18nR.string.voice_more))
+                            }
+                            DropdownMenu(expanded = menu, onDismissRequest = { menu = false }, containerColor = virtualAppPopup()) {
+                                DropdownMenuItem(
+                                    text = { Text(stringResource(if (speaker) I18nR.string.voice_receiver_mode else I18nR.string.voice_speaker_mode)) },
+                                    onClick = {
+                                        menu = false
+                                        speaker = !speaker
+                                        settings.speaker = speaker
+                                        player.stop()
+                                    },
+                                    modifier = Modifier.heightIn(min = 48.dp),
+                                )
+                                DropdownMenuItem(
+                                    text = { Text(stringResource(I18nR.string.voice_settings)) },
+                                    onClick = { menu = false; backStack.add(VoiceSettingsRoute) },
+                                    modifier = Modifier.heightIn(min = 48.dp),
+                                )
+                            }
+                        }
+                    }
+                }
+                    HeaderAndFilters()
+                    ListPane(Modifier.then(if (scrollPage) Modifier else Modifier.weight(1f)).fillMaxWidth())
+                    chrome()
                 }
             }
             }
@@ -478,6 +604,7 @@ fun VoiceRecorderScreen() {
         var name by remember(item) { mutableStateOf(item.title) }
         AlertDialog(
             onDismissRequest = { renaming = null },
+            containerColor = virtualAppPopup(),
             title = { Text(stringResource(I18nR.string.voice_rename)) },
             text = { OutlinedTextField(value = name, onValueChange = { name = it }, singleLine = true) },
             confirmButton = {
@@ -624,8 +751,8 @@ private fun RecordingRow(
                 IconButton(onClick = { menu = true }) {
                     Icon(painterResource(BaseR.drawable.more_vert_24px), contentDescription = stringResource(I18nR.string.voice_more))
                 }
-                DropdownMenu(expanded = menu, onDismissRequest = { menu = false }) {
-                    if (!item.isCall) DropdownMenuItem(text = { Text(stringResource(I18nR.string.voice_rename)) }, onClick = { menu = false; onRename() })
+                DropdownMenu(expanded = menu, onDismissRequest = { menu = false }, containerColor = virtualAppPopup()) {
+                    if (!item.isCall) DropdownMenuItem(text = { Text(stringResource(I18nR.string.voice_rename)) }, onClick = { menu = false; onRename() }, modifier = Modifier.heightIn(min = 48.dp))
                     DropdownMenuItem(text = { Text(stringResource(I18nR.string.voice_share)) }, onClick = { menu = false; onShare() })
                     DropdownMenuItem(text = { Text(stringResource(I18nR.string.voice_delete)) }, onClick = { menu = false; onDelete() })
                 }
@@ -659,18 +786,33 @@ private suspend fun shareRecording(context: Context, item: RecordingItem) {
 @Composable
 private fun RecordingPage(state: VoiceRecorderState, onPauseResume: () -> Unit, onStop: () -> Unit, onDiscard: () -> Unit) {
     val paused = state.status == VoiceStatus.Paused
-    Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(24.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-        Spacer(Modifier.weight(1f))
+    val neonMagenta = Color(0xFFFF007F)
+    BoxWithConstraints(Modifier.fillMaxSize()) {
+        val compact = maxHeight < 420.dp
+        Column(
+            Modifier
+                .fillMaxSize()
+                .then(if (compact) Modifier.verticalScroll(rememberScrollState()) else Modifier)
+                .padding(24.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+        if (!compact) Spacer(Modifier.height(24.dp))
         Text(
             stringResource(if (paused) I18nR.string.voice_notification_paused else I18nR.string.voice_notification_recording),
             style = MaterialTheme.typography.titleMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
-        Text(formatDuration(state.elapsedMs), fontSize = 64.sp, fontWeight = FontWeight.Light, modifier = Modifier.padding(vertical = 16.dp).horizontalScroll(rememberScrollState()), maxLines = 1, softWrap = false)
-        Waveform(state.amplitudes, Modifier.fillMaxWidth().height(120.dp))
-        Spacer(Modifier.weight(1f))
-        Row(Modifier.fillMaxWidth().padding(bottom = 24.dp), horizontalArrangement = Arrangement.SpaceEvenly, verticalAlignment = Alignment.CenterVertically) {
-            IconButton(onClick = onDiscard, modifier = Modifier.size(56.dp).clip(CircleShape).background(MaterialTheme.colorScheme.surfaceContainerHigh)) {
+        TelosDotMatrixText(
+            formatDuration(state.elapsedMs),
+            fontSize = 14.sp,
+            color = neonMagenta,
+            modifier = Modifier.padding(vertical = 8.dp).horizontalScroll(rememberScrollState()),
+        )
+        Text(formatDuration(state.elapsedMs), fontSize = 64.sp, fontWeight = FontWeight.Light, modifier = Modifier.padding(vertical = 8.dp).horizontalScroll(rememberScrollState()), maxLines = 1, softWrap = false)
+        Waveform(state.amplitudes, Modifier.fillMaxWidth().heightIn(min = 72.dp, max = 120.dp))
+        Spacer(Modifier.height(if (compact) 16.dp else 32.dp))
+        Row(Modifier.fillMaxWidth().padding(bottom = 8.dp), horizontalArrangement = Arrangement.SpaceEvenly, verticalAlignment = Alignment.CenterVertically) {
+            IconButton(onClick = onDiscard, modifier = Modifier.size(56.dp).heightIn(min = 48.dp).clip(CircleShape).background(MaterialTheme.colorScheme.surfaceContainerHigh)) {
                 Icon(painterResource(BaseR.drawable.delete_24px), contentDescription = stringResource(I18nR.string.voice_discard))
             }
             Box(
@@ -680,12 +822,13 @@ private fun RecordingPage(state: VoiceRecorderState, onPauseResume: () -> Unit, 
             ) {
                 Box(Modifier.size(28.dp).clip(RoundedCornerShape(6.dp)).background(Color.White))
             }
-            IconButton(onClick = onPauseResume, modifier = Modifier.size(56.dp).clip(CircleShape).background(MaterialTheme.colorScheme.surfaceContainerHigh)) {
+            IconButton(onClick = onPauseResume, modifier = Modifier.size(56.dp).heightIn(min = 48.dp).clip(CircleShape).background(MaterialTheme.colorScheme.surfaceContainerHigh)) {
                 Icon(
                     painterResource(if (paused) BaseR.drawable.ic_voice_play else BaseR.drawable.ic_voice_pause),
                     contentDescription = stringResource(if (paused) I18nR.string.voice_resume else I18nR.string.voice_pause),
                 )
             }
+        }
         }
     }
 }

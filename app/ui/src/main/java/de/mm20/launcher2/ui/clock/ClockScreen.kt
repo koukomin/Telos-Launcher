@@ -16,6 +16,11 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import de.mm20.launcher2.ui.component.TelosDotMatrixText
+import de.mm20.launcher2.ui.component.TelosTechPill
+import de.mm20.launcher2.ui.component.telosTechCard
+import de.mm20.launcher2.ui.component.virtualAppPopup
+import de.mm20.launcher2.ui.layout.AdaptiveLayoutPolicy
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -102,17 +107,75 @@ fun ClockScreen() {
             }
         }, actions = { IconButton(onClick = { night = true }) {
             Icon(painterResource(BaseR.drawable.light_mode_24px), stringResource(I18nR.string.clock_night))
-        } }, colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent))
+        }         }, colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent))
     }) { padding ->
-        Column(Modifier.fillMaxSize().padding(padding).padding(horizontal = 16.dp)) {
-            CyberAnalogClock(now, Modifier.padding(vertical = 8.dp))
+        val neonCyan = Color(0xFF00F0FF)
+        val neonMagenta = Color(0xFFFF007F)
+        val neonGreen = Color(0xFF00E676)
+        val titles = listOf(I18nR.string.clock_world, I18nR.string.clock_alarm, I18nR.string.clock_timer, I18nR.string.clock_stopwatch)
+        val tabAccents = listOf(neonCyan, neonMagenta, neonGreen, neonGreen)
+        val timeHudFormat = remember { DateTimeFormatter.ofPattern("HH:mm:ss") }
 
-            val titles = listOf(I18nR.string.clock_world, I18nR.string.clock_alarm, I18nR.string.clock_timer, I18nR.string.clock_stopwatch)
-            Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()).padding(vertical = 8.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                titles.forEachIndexed { index, title -> FilterChip(selectedTab == index, { selectedTab = index }, { Text(stringResource(title)) }) }
+        BoxWithConstraints(Modifier.fillMaxSize().padding(padding).padding(horizontal = 16.dp)) {
+            val sideBySide = AdaptiveLayoutPolicy.sideBySide(maxWidth.value, maxHeight.value, LocalDensity.current.fontScale)
+            val shortHeight = maxHeight < 420.dp
+
+            @Composable
+            fun ClockTabs(modifier: Modifier = Modifier) {
+                Row(
+                    modifier
+                        .fillMaxWidth()
+                        .then(if (!sideBySide) Modifier.horizontalScroll(rememberScrollState()) else Modifier),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    titles.forEachIndexed { index, title ->
+                        TelosTechPill(
+                            text = stringResource(title),
+                            isSelected = selectedTab == index,
+                            onClick = { selectedTab = index },
+                            accentColor = tabAccents[index],
+                        )
+                    }
+                }
             }
-            Box(Modifier.fillMaxSize().padding(top = 8.dp)) {
-                when (selectedTab) { 0 -> WorldClockTab(); 1 -> AlarmTab(); 2 -> TimerTab(); else -> StopwatchTab() }
+
+            @Composable
+            fun TabBody(modifier: Modifier = Modifier) {
+                Box(modifier.fillMaxSize()) {
+                    when (selectedTab) {
+                        0 -> WorldClockTab()
+                        1 -> AlarmTab()
+                        2 -> TimerTab()
+                        else -> StopwatchTab()
+                    }
+                }
+            }
+
+            if (sideBySide) {
+                Row(Modifier.fillMaxSize(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                    Column(
+                        Modifier
+                            .weight(0.4f)
+                            .fillMaxHeight()
+                            .verticalScroll(rememberScrollState()),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.spacedBy(8.dp),
+                    ) {
+                        CyberAnalogClock(now, Modifier.padding(vertical = 8.dp))
+                        ClockTabs()
+                    }
+                    TabBody(Modifier.weight(0.6f).fillMaxHeight())
+                }
+            } else {
+                Column(Modifier.fillMaxSize()) {
+                    if (shortHeight) {
+                        TelosDotMatrixText(now.format(timeHudFormat), fontSize = 11.sp, color = neonCyan, modifier = Modifier.padding(vertical = 4.dp))
+                    } else {
+                        CyberAnalogClock(now, Modifier.padding(vertical = 8.dp))
+                    }
+                    ClockTabs(Modifier.padding(vertical = 8.dp))
+                    TabBody(Modifier.weight(1f).fillMaxWidth().padding(top = 8.dp))
+                }
             }
         }
     }
@@ -122,13 +185,11 @@ fun ClockScreen() {
 private fun CyberAnalogClock(now: ZonedDateTime, modifier: Modifier = Modifier) {
     val cyan = Color(0xFF00F2FE)
     val pink = Color(0xFFFF007F)
-    val darkBg = Color(0xFF0D0E15)
 
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(20.dp))
-            .background(darkBg.copy(alpha = 0.85f))
+            .telosTechCard(borderColor = cyan, alpha = 0.55f)
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -269,7 +330,7 @@ private fun WorldClockTab() {
     LazyColumn(Modifier.fillMaxSize(), verticalArrangement = Arrangement.spacedBy(12.dp)) {
         item {
             val local = ZonedDateTime.ofInstant(now, ZoneId.systemDefault())
-            Card(Modifier.fillMaxWidth()) {
+            Column(Modifier.fillMaxWidth().telosTechCard(borderColor = Color(0xFF00F0FF)).padding(4.dp)) {
                 de.mm20.launcher2.ui.kmp.SharedClockHost(
                     title = stringResource(I18nR.string.clock_local),
                     time = local.format(localTimeFormat),
@@ -286,11 +347,11 @@ private fun WorldClockTab() {
             )
         }
         items(results, key = { it.zoneId }) { city ->
-            Card(Modifier.fillMaxWidth()) { Column(Modifier.fillMaxWidth().padding(16.dp)) {
+            Column(Modifier.fillMaxWidth().telosTechCard(borderColor = Color(0xFFFF007F), alpha = 0.4f).padding(16.dp)) {
                 Text(city.city, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
                 Text(listOf(city.country, city.zoneId).filter { it.isNotBlank() }.joinToString(" · "), style = MaterialTheme.typography.bodySmall)
                 Text(ZonedDateTime.ofInstant(now, ZoneId.of(city.zoneId)).format(cityTimeFormat), style = MaterialTheme.typography.headlineSmall, color = MaterialTheme.colorScheme.primary)
-            } }
+            }
         }
     }
 }
@@ -342,9 +403,9 @@ private fun AlarmTab() {
         if (failed) item { TextButton(onClick = { refresh() }, enabled = !loading) { Text(stringResource(I18nR.string.hc_failed_try_again)) } }
         if (!exact && !loading) item { OutlinedButton(onClick = {
             if (android.os.Build.VERSION.SDK_INT >= 31) context.startActivity(Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM, Uri.parse("package:${context.packageName}")))
-        }, modifier = Modifier.fillMaxWidth()) { Text(stringResource(I18nR.string.clock_exact)) } }
+        }, modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp)) { Text(stringResource(I18nR.string.clock_exact)) } }
         items(alarms, key = { it.id }) { alarm ->
-            Card(Modifier.fillMaxWidth()) { Column(Modifier.padding(16.dp)) {
+            Column(Modifier.fillMaxWidth().telosTechCard(borderColor = Color(0xFF00E676), alpha = 0.4f).padding(16.dp)) {
                 Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                     Column(Modifier.weight(1f).clickable { editing = alarm }) {
                         Text("%02d:%02d".format(alarm.hour, alarm.minute), style = MaterialTheme.typography.headlineMedium, fontFamily = FontFamily.Monospace)
@@ -353,10 +414,10 @@ private fun AlarmTab() {
                     }
                     Switch(alarm.enabled, { enabled -> save { current -> current.map { if (it.id == alarm.id) it.copy(enabled = enabled) else it } } }, enabled = exact && !loading)
                 }
-                TextButton(onClick = { save { current -> current.filterNot { it.id == alarm.id } } }, enabled = !loading) { Text(stringResource(I18nR.string.hc_delete)) }
-            } }
+                TextButton(onClick = { save { current -> current.filterNot { it.id == alarm.id } } }, enabled = !loading, modifier = Modifier.heightIn(min = 48.dp)) { Text(stringResource(I18nR.string.hc_delete)) }
+            }
         }
-        item { Button(onClick = { editing = ClockAlarm(enabled = exact) }, Modifier.fillMaxWidth(), enabled = !loading) { Text(stringResource(I18nR.string.hc_add)) } }
+        item { Button(onClick = { editing = ClockAlarm(enabled = exact) }, Modifier.fillMaxWidth().heightIn(min = 48.dp), enabled = !loading) { Text(stringResource(I18nR.string.hc_add)) } }
     }
     editing?.let { alarm -> AlarmEditor(alarm, onDismiss = { editing = null }, onSave = { updated ->
         save { current -> current.filterNot { it.id == updated.id } + updated }; editing = null
@@ -389,7 +450,7 @@ private fun AlarmEditor(initial: ClockAlarm, onDismiss: () -> Unit, onSave: (Clo
         CompositionLocalProvider(de.mm20.launcher2.ui.component.LocalGlassSurface provides false) {
             Surface(
                 shape = RoundedCornerShape(24.dp),
-                color = MaterialTheme.colorScheme.surfaceContainerHighest.copy(alpha = 1f),
+                color = virtualAppPopup(),
                 tonalElevation = 16.dp
             ) {
             Column(Modifier.heightIn(max = (LocalConfiguration.current.screenHeightDp * .85f).dp).verticalScroll(rememberScrollState()).padding(20.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
@@ -454,11 +515,15 @@ private fun TimerTab() {
         }
     }
 
-    Column(
-        modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
+    BoxWithConstraints(Modifier.fillMaxSize()) {
+        val compact = maxHeight < 380.dp
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .then(if (compact) Modifier.verticalScroll(rememberScrollState()) else Modifier),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = if (compact) Arrangement.Top else Arrangement.Center,
+        ) {
         val totalSec = remainingMs / 1000
         val mins = totalSec / 60
         val secs = totalSec % 60
@@ -493,7 +558,8 @@ private fun TimerTab() {
                         if (remainingMs <= 0L) remainingMs = totalSeconds * 1000L
                         isRunning = true
                     }
-                }
+                },
+                modifier = Modifier.heightIn(min = 48.dp),
             ) {
                 Text(if (isRunning) stringResource(I18nR.string.au_music_pause) else stringResource(I18nR.string.clock_start))
             }
@@ -503,10 +569,12 @@ private fun TimerTab() {
                     isRunning = false
                     remainingMs = totalSeconds * 1000L
                 },
+                modifier = Modifier.heightIn(min = 48.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
             ) {
                 Text(stringResource(I18nR.string.clock_reset), color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
+        }
         }
     }
 }
@@ -525,11 +593,13 @@ private fun StopwatchTab() {
         }
     }
 
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Spacer(Modifier.height(16.dp))
+    BoxWithConstraints(Modifier.fillMaxSize()) {
+        val compact = maxHeight < 400.dp
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+        if (!compact) Spacer(Modifier.height(16.dp))
 
         val minutes = (elapsedMs / 1000) / 60
         val seconds = (elapsedMs / 1000) % 60
@@ -540,11 +610,11 @@ private fun StopwatchTab() {
         Spacer(Modifier.height(24.dp))
 
         Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-            Button(onClick = { isRunning = !isRunning }) {
+            Button(onClick = { isRunning = !isRunning }, modifier = Modifier.heightIn(min = 48.dp)) {
                 Text(if (isRunning) stringResource(I18nR.string.au_music_pause) else stringResource(I18nR.string.clock_start))
             }
 
-            Button(onClick = { if (isRunning) laps.add(0, elapsedMs) }, enabled = isRunning) {
+            Button(onClick = { if (isRunning) laps.add(0, elapsedMs) }, enabled = isRunning, modifier = Modifier.heightIn(min = 48.dp)) {
                 Text(stringResource(I18nR.string.clock_lap))
             }
 
@@ -554,6 +624,7 @@ private fun StopwatchTab() {
                     elapsedMs = 0L
                     laps.clear()
                 },
+                modifier = Modifier.heightIn(min = 48.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
             ) {
                 Text(stringResource(I18nR.string.clock_reset), color = MaterialTheme.colorScheme.onSurfaceVariant)
@@ -570,17 +641,18 @@ private fun StopwatchTab() {
                 val m = (lapMs / 1000) / 60
                 val s = (lapMs / 1000) % 60
                 val ms = (lapMs % 1000) / 10
-                Card(
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(12.dp),
-                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh.copy(alpha = 0.85f))
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .telosTechCard(borderColor = Color(0xFF00F0FF), alpha = 0.35f)
+                        .padding(12.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
                 ) {
-                    Row(modifier = Modifier.fillMaxWidth().padding(12.dp), horizontalArrangement = Arrangement.SpaceBetween) {
-                        Text(stringResource(I18nR.string.clock_lap), fontWeight = FontWeight.Bold)
-                        Text("%02d:%02d.%02d".format(m, s, ms), fontFamily = FontFamily.Monospace)
-                    }
+                    Text(stringResource(I18nR.string.clock_lap), fontWeight = FontWeight.Bold)
+                    Text("%02d:%02d.%02d".format(m, s, ms), fontFamily = FontFamily.Monospace)
                 }
             }
+        }
         }
     }
 }
