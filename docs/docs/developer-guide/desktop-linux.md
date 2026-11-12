@@ -25,6 +25,13 @@ The Phantom Vault can sit on a single image or a folder of media carriers (stego
 `dmsetup` linear span), grow online with BTRFS zstd, use AES-NI `aes-xts-plain64` plus Argon2id,
 and rclone-sync modified carriers on lock. Pre-boot offers host home, unlock, create, and tmpfs ghost modes.
 
+**VOS-1 profiles (partial):** `DesktopProfiles` keeps named folders under config `profiles/` and the
+active name in `profile.active` (vault `desktop.properties` + marker file; never passwords).
+`VaultProfileSwitchPanel` lists/creates/switches profiles and portable vault roots in pre-boot and
+Helix Settings. On Windows Portable Data, profile config stays under the portable session home so
+the host profile is not written. Selecting a portable root rejects the host home / `.config` /
+`.cache` / `.local`. Lock-gated remount across hosts is not claimed as complete.
+
 **Stego FS (Mode B, partial):** carrier pools write `telos-carriers.json` (offsets/sizes only).
 `assembleAndOpen` prefers Linux `losetup`/`dmsetup`; when that is unavailable it concatenates
 payloads into `stego_assembled.tvault`. Portable Data / Portable Vault use

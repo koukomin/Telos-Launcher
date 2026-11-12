@@ -23,4 +23,23 @@
     <string name="desktop_session_sync_imported">חבילת סנכרון ההפעלה יובאה</string>
     <string name="desktop_session_sync_key_stored">מפתח הסנכרון נשמר לייבוא בהפעלה ללא בקשה</string>
     <string name="desktop_session_sync_key_missing">הזן סיסמת סנכרון לפני הפעלת ייבוא אוטומטי</string>
+    <string name="desktop_vos_profiles_title">פרופילי כספת</string>
+    <string name="desktop_vos_profiles_summary">תיקיות פרופיל בעלות שם תחת config profiles/. רק השם הפעיל ב-desktop.properties — לעולם לא סיסמאות.</string>
+    <string name="desktop_vos_profiles_active">פרופיל פעיל: %1$s</string>
+    <string name="desktop_vos_profiles_none">(אין)</string>
+    <string name="desktop_vos_profiles_empty">עדיין אין פרופילים. צרו אחד כדי להחליף זהויות כספת.</string>
+    <string name="desktop_vos_profiles_kind_named">פרופיל כספת בעל שם</string>
+    <string name="desktop_vos_profiles_kind_portable">שורש כספת ניידת</string>
+    <string name="desktop_vos_profiles_switch">החלף</string>
+    <string name="desktop_vos_profiles_use_portable">השתמש בשורש הנייד הזה</string>
+    <string name="desktop_vos_profiles_new_name">שם פרופיל חדש</string>
+    <string name="desktop_vos_profiles_create">צור והחלף</string>
+    <string name="desktop_vos_profiles_created">נוצר והוחלף ל-%1$s</string>
+    <string name="desktop_vos_profiles_switched">הוחלף ל-%1$s</string>
+    <string name="desktop_vos_profiles_invalid_name">השתמשו באותיות, ספרות, נקודות, קווים תחתונים או מקפים (מקסימום 64).</string>
+    <string name="desktop_vos_profiles_portable_hint">שורשים ניידים שומרים config, מטמון ו-temp מחוץ לפרופיל המארח (ברירת מחדל ב-Windows: Portable Data).</string>
+    <string name="desktop_vos_profiles_portable_path">נתיב תיקיית כספת ניידת</string>
+    <string name="desktop_vos_profiles_add_portable">הוסף שורש כספת ניידת</string>
+    <string name="desktop_vos_profiles_portable_selected">שורש נייד: %1$s</string>
+    <string name="desktop_vos_profiles_portable_reject">שורש נייד אינו יכול להיות בית המארח או .config/.cache/.local שלו.</string>
 </resources>

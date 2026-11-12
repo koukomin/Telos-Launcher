@@ -23,4 +23,23 @@
     <string name="desktop_session_sync_imported">Il-pakkett sync tas-sessjoni ġie importat</string>
     <string name="desktop_session_sync_key_stored">Ċavetta sync maħżuna għall-importazzjoni meta tinbeda mingħajr prompt</string>
     <string name="desktop_session_sync_key_missing">Daħħal passphrase sync qabel ma tippermetti l-importazzjoni awtomatika</string>
+    <string name="desktop_vos_profiles_title">Profili tal-vault</string>
+    <string name="desktop_vos_profiles_summary">Folders tal-profil b’isem taħt config profiles/. Isem attiv biss f’desktop.properties — qatt passwords.</string>
+    <string name="desktop_vos_profiles_active">Profil attiv: %1$s</string>
+    <string name="desktop_vos_profiles_none">(xejn)</string>
+    <string name="desktop_vos_profiles_empty">Għad m’hemmx profili. Oħloq wieħed biex taqleb l-identitajiet tal-vault.</string>
+    <string name="desktop_vos_profiles_kind_named">Profil tal-vault b’isem</string>
+    <string name="desktop_vos_profiles_kind_portable">Għerq tal-vault portabbli</string>
+    <string name="desktop_vos_profiles_switch">Aqleb</string>
+    <string name="desktop_vos_profiles_use_portable">Uża dan l-għerq portabbli</string>
+    <string name="desktop_vos_profiles_new_name">Isem tal-profil il-ġdid</string>
+    <string name="desktop_vos_profiles_create">Oħloq u aqleb</string>
+    <string name="desktop_vos_profiles_created">Maħluq u mqaleb għal %1$s</string>
+    <string name="desktop_vos_profiles_switched">Mqaleb għal %1$s</string>
+    <string name="desktop_vos_profiles_invalid_name">Ittri, numri, punti, underscores jew hyphens (mass. 64).</string>
+    <string name="desktop_vos_profiles_portable_hint">L-għeruq portabbli jżommu config, cache u temp barra mill-profil tal-host (default Windows: Portable Data).</string>
+    <string name="desktop_vos_profiles_portable_path">Triq tal-folder tal-vault portabbli</string>
+    <string name="desktop_vos_profiles_add_portable">Żid għerq tal-vault portabbli</string>
+    <string name="desktop_vos_profiles_portable_selected">Għerq portabbli: %1$s</string>
+    <string name="desktop_vos_profiles_portable_reject">L-għerq portabbli ma jistax ikun id-dar tal-host jew .config/.cache/.local tiegħu.</string>
 </resources>

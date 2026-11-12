@@ -23,4 +23,23 @@
     <string name="desktop_session_sync_imported">Bundel sync sesi diimpor</string>
     <string name="desktop_session_sync_key_stored">Kunci sync disimpan untuk impor boot tanpa prompt</string>
     <string name="desktop_session_sync_key_missing">Masukkan frasa sandi sync sebelum mengaktifkan impor otomatis</string>
+    <string name="desktop_vos_profiles_title">Profil vault</string>
+    <string name="desktop_vos_profiles_summary">Folder profil bernama di bawah config profiles/. Hanya nama aktif di desktop.properties — tidak pernah kata sandi.</string>
+    <string name="desktop_vos_profiles_active">Profil aktif: %1$s</string>
+    <string name="desktop_vos_profiles_none">(tidak ada)</string>
+    <string name="desktop_vos_profiles_empty">Belum ada profil. Buat satu untuk mengganti identitas vault.</string>
+    <string name="desktop_vos_profiles_kind_named">Profil vault bernama</string>
+    <string name="desktop_vos_profiles_kind_portable">Akar vault portabel</string>
+    <string name="desktop_vos_profiles_switch">Ganti</string>
+    <string name="desktop_vos_profiles_use_portable">Gunakan akar portabel ini</string>
+    <string name="desktop_vos_profiles_new_name">Nama profil baru</string>
+    <string name="desktop_vos_profiles_create">Buat dan ganti</string>
+    <string name="desktop_vos_profiles_created">Dibuat dan diganti ke %1$s</string>
+    <string name="desktop_vos_profiles_switched">Diganti ke %1$s</string>
+    <string name="desktop_vos_profiles_invalid_name">Gunakan huruf, angka, titik, garis bawah, atau tanda hubung (maks. 64).</string>
+    <string name="desktop_vos_profiles_portable_hint">Akar portabel menjaga config, cache, dan temp di luar profil host (default Windows: Portable Data).</string>
+    <string name="desktop_vos_profiles_portable_path">Jalur folder vault portabel</string>
+    <string name="desktop_vos_profiles_add_portable">Tambah akar vault portabel</string>
+    <string name="desktop_vos_profiles_portable_selected">Akar portabel: %1$s</string>
+    <string name="desktop_vos_profiles_portable_reject">Akar portabel tidak boleh berupa home host atau .config/.cache/.local-nya.</string>
 </resources>

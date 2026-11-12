@@ -23,4 +23,23 @@
     <string name="desktop_session_sync_imported">Istunnon sync-paketti tuotu</string>
     <string name="desktop_session_sync_key_stored">Sync-avain tallennettu käynnistyksen tuontia varten ilman kehotetta</string>
     <string name="desktop_session_sync_key_missing">Anna sync-salasana ennen automaattisen tuonnin ottamista käyttöön</string>
+    <string name="desktop_vos_profiles_title">Holviprofiilit</string>
+    <string name="desktop_vos_profiles_summary">Nimetyt profiilikansiot polussa config profiles/. desktop.properties sisältää vain aktiivisen nimen — ei koskaan salasanoja.</string>
+    <string name="desktop_vos_profiles_active">Aktiivinen profiili: %1$s</string>
+    <string name="desktop_vos_profiles_none">(ei mitään)</string>
+    <string name="desktop_vos_profiles_empty">Ei vielä profiileja. Luo yksi vaihtaaksesi holvi-identiteettejä.</string>
+    <string name="desktop_vos_profiles_kind_named">Nimetty holviprofiili</string>
+    <string name="desktop_vos_profiles_kind_portable">Siirrettävän holvin juuri</string>
+    <string name="desktop_vos_profiles_switch">Vaihda</string>
+    <string name="desktop_vos_profiles_use_portable">Käytä tätä siirrettävää juurta</string>
+    <string name="desktop_vos_profiles_new_name">Uuden profiilin nimi</string>
+    <string name="desktop_vos_profiles_create">Luo ja vaihda</string>
+    <string name="desktop_vos_profiles_created">Luotu ja vaihdettu: %1$s</string>
+    <string name="desktop_vos_profiles_switched">Vaihdettu: %1$s</string>
+    <string name="desktop_vos_profiles_invalid_name">Kirjaimia, numeroita, pisteitä, alaviivoja tai viivoja (enintään 64).</string>
+    <string name="desktop_vos_profiles_portable_hint">Siirrettävät juuret pitävät configin, välimuistin ja tempin poissa isäntäprofiilista (Windows-oletus: Portable Data).</string>
+    <string name="desktop_vos_profiles_portable_path">Siirrettävän holvikansion polku</string>
+    <string name="desktop_vos_profiles_add_portable">Lisää siirrettävän holvin juuri</string>
+    <string name="desktop_vos_profiles_portable_selected">Siirrettävä juuri: %1$s</string>
+    <string name="desktop_vos_profiles_portable_reject">Siirrettävä juuri ei voi olla isännän koti eikä sen .config/.cache/.local.</string>
 </resources>

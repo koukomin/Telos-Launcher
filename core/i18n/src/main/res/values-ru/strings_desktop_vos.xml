@@ -23,4 +23,23 @@
     <string name="desktop_session_sync_imported">Пакет синхронизации сеанса импортирован</string>
     <string name="desktop_session_sync_key_stored">Ключ sync сохранён для импорта при загрузке без запроса</string>
     <string name="desktop_session_sync_key_missing">Введите парольную фразу sync перед включением автоимпорта</string>
+    <string name="desktop_vos_profiles_title">Профили хранилища</string>
+    <string name="desktop_vos_profiles_summary">Именованные папки профилей в config profiles/. В desktop.properties только активное имя — никогда пароли.</string>
+    <string name="desktop_vos_profiles_active">Активный профиль: %1$s</string>
+    <string name="desktop_vos_profiles_none">(нет)</string>
+    <string name="desktop_vos_profiles_empty">Профилей пока нет. Создайте один, чтобы переключать личности хранилища.</string>
+    <string name="desktop_vos_profiles_kind_named">Именованный профиль хранилища</string>
+    <string name="desktop_vos_profiles_kind_portable">Корень переносного хранилища</string>
+    <string name="desktop_vos_profiles_switch">Переключить</string>
+    <string name="desktop_vos_profiles_use_portable">Использовать этот переносной корень</string>
+    <string name="desktop_vos_profiles_new_name">Имя нового профиля</string>
+    <string name="desktop_vos_profiles_create">Создать и переключить</string>
+    <string name="desktop_vos_profiles_created">Создан и переключён на %1$s</string>
+    <string name="desktop_vos_profiles_switched">Переключён на %1$s</string>
+    <string name="desktop_vos_profiles_invalid_name">Буквы, цифры, точки, подчёркивания или дефисы (макс. 64).</string>
+    <string name="desktop_vos_profiles_portable_hint">Переносные корни держат config, cache и temp вне профиля хоста (по умолчанию в Windows: Portable Data).</string>
+    <string name="desktop_vos_profiles_portable_path">Путь к папке переносного хранилища</string>
+    <string name="desktop_vos_profiles_add_portable">Добавить корень переносного хранилища</string>
+    <string name="desktop_vos_profiles_portable_selected">Переносной корень: %1$s</string>
+    <string name="desktop_vos_profiles_portable_reject">Переносной корень не может быть домашней папкой хоста или её .config/.cache/.local.</string>
 </resources>

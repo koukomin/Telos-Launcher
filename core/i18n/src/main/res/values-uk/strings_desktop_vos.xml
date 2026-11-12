@@ -23,4 +23,23 @@
     <string name="desktop_session_sync_imported">Пакет синхронізації сеансу імпортовано</string>
     <string name="desktop_session_sync_key_stored">Ключ sync збережено для імпорту під час запуску без запиту</string>
     <string name="desktop_session_sync_key_missing">Введіть парольну фразу sync перед увімкненням автоімпорту</string>
+    <string name="desktop_vos_profiles_title">Профілі сховища</string>
+    <string name="desktop_vos_profiles_summary">Іменовані теки профілів у config profiles/. У desktop.properties лише активне ім’я — ніколи паролі.</string>
+    <string name="desktop_vos_profiles_active">Активний профіль: %1$s</string>
+    <string name="desktop_vos_profiles_none">(немає)</string>
+    <string name="desktop_vos_profiles_empty">Профілів ще немає. Створіть один, щоб перемикати особи сховища.</string>
+    <string name="desktop_vos_profiles_kind_named">Іменований профіль сховища</string>
+    <string name="desktop_vos_profiles_kind_portable">Корінь портативного сховища</string>
+    <string name="desktop_vos_profiles_switch">Перемкнути</string>
+    <string name="desktop_vos_profiles_use_portable">Використати цей портативний корінь</string>
+    <string name="desktop_vos_profiles_new_name">Назва нового профілю</string>
+    <string name="desktop_vos_profiles_create">Створити й перемкнути</string>
+    <string name="desktop_vos_profiles_created">Створено й перемкнуто на %1$s</string>
+    <string name="desktop_vos_profiles_switched">Перемкнуто на %1$s</string>
+    <string name="desktop_vos_profiles_invalid_name">Літери, цифри, крапки, підкреслення або дефіси (макс. 64).</string>
+    <string name="desktop_vos_profiles_portable_hint">Портативні корені тримають config, cache і temp поза профілем хоста (типово у Windows: Portable Data).</string>
+    <string name="desktop_vos_profiles_portable_path">Шлях до теки портативного сховища</string>
+    <string name="desktop_vos_profiles_add_portable">Додати корінь портативного сховища</string>
+    <string name="desktop_vos_profiles_portable_selected">Портативний корінь: %1$s</string>
+    <string name="desktop_vos_profiles_portable_reject">Портативний корінь не може бути домашньою текою хоста чи її .config/.cache/.local.</string>
 </resources>

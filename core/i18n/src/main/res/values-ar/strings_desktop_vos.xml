@@ -23,4 +23,23 @@
     <string name="desktop_session_sync_imported">تم استيراد حزمة مزامنة الجلسة</string>
     <string name="desktop_session_sync_key_stored">تم تخزين مفتاح المزامنة للاستيراد عند الإقلاع دون مطالبة</string>
     <string name="desktop_session_sync_key_missing">أدخل عبارة مرور المزامنة قبل تمكين الاستيراد التلقائي</string>
+    <string name="desktop_vos_profiles_title">ملفات تعريف الخزنة</string>
+    <string name="desktop_vos_profiles_summary">مجلدات ملفات تعريف مسماة ضمن config profiles/. الاسم النشط فقط في desktop.properties — لا كلمات مرور أبدًا.</string>
+    <string name="desktop_vos_profiles_active">ملف التعريف النشط: %1$s</string>
+    <string name="desktop_vos_profiles_none">(لا شيء)</string>
+    <string name="desktop_vos_profiles_empty">لا توجد ملفات تعريف بعد. أنشئ واحدًا لتبديل هويات الخزنة.</string>
+    <string name="desktop_vos_profiles_kind_named">ملف تعريف خزنة مسمى</string>
+    <string name="desktop_vos_profiles_kind_portable">جذر خزنة محمولة</string>
+    <string name="desktop_vos_profiles_switch">تبديل</string>
+    <string name="desktop_vos_profiles_use_portable">استخدم هذا الجذر المحمول</string>
+    <string name="desktop_vos_profiles_new_name">اسم ملف التعريف الجديد</string>
+    <string name="desktop_vos_profiles_create">إنشاء وتبديل</string>
+    <string name="desktop_vos_profiles_created">تم الإنشاء والتبديل إلى %1$s</string>
+    <string name="desktop_vos_profiles_switched">تم التبديل إلى %1$s</string>
+    <string name="desktop_vos_profiles_invalid_name">استخدم أحرفًا وأرقامًا ونقاطًا وشرطات سفلية أو شرطات (حد أقصى 64).</string>
+    <string name="desktop_vos_profiles_portable_hint">الجذور المحمولة تبقي الإعدادات والذاكرة المؤقتة والملفات المؤقتة خارج ملف تعريف المضيف (افتراضي Windows: Portable Data).</string>
+    <string name="desktop_vos_profiles_portable_path">مسار مجلد الخزنة المحمولة</string>
+    <string name="desktop_vos_profiles_add_portable">إضافة جذر خزنة محمولة</string>
+    <string name="desktop_vos_profiles_portable_selected">الجذر المحمول: %1$s</string>
+    <string name="desktop_vos_profiles_portable_reject">لا يمكن أن يكون الجذر المحمول مجلد منزل المضيف أو .config/.cache/.local الخاصة به.</string>
 </resources>

@@ -77,6 +77,7 @@ fun TelosPreBootScreen(
                 Text(portableRoot, color = TelosColors.onSurface.copy(0.6f), fontSize = 10.sp)
                 Text("Stego carriers: $portableCarriers", color = TelosColors.onSurface.copy(0.55f), fontSize = 10.sp)
             }
+                        VaultProfileSwitchPanel(compact = true)
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 bootModes.forEach { m ->
                     Button(onClick = { mode = m; engine.bootMode = m }) {

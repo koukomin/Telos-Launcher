@@ -23,4 +23,23 @@
     <string name="desktop_session_sync_imported">بسته همگام‌سازی نشست وارد شد</string>
     <string name="desktop_session_sync_key_stored">کلید همگام‌سازی برای ورود هنگام راه‌اندازی بدون درخواست ذخیره شد</string>
     <string name="desktop_session_sync_key_missing">قبل از فعال‌سازی ورود خودکار عبارت عبور همگام‌سازی را وارد کنید</string>
+    <string name="desktop_vos_profiles_title">نمایه‌های خزانه</string>
+    <string name="desktop_vos_profiles_summary">پوشه‌های نمایه نام‌دار در config profiles/. فقط نام فعال در desktop.properties — هرگز گذرواژه.</string>
+    <string name="desktop_vos_profiles_active">نمایه فعال: %1$s</string>
+    <string name="desktop_vos_profiles_none">(هیچ)</string>
+    <string name="desktop_vos_profiles_empty">هنوز نمایه‌ای نیست. یکی بسازید تا هویت خزانه عوض شود.</string>
+    <string name="desktop_vos_profiles_kind_named">نمایه خزانه‌ی نام‌دار</string>
+    <string name="desktop_vos_profiles_kind_portable">ریشه خزانه‌ی قابل‌حمل</string>
+    <string name="desktop_vos_profiles_switch">تعویض</string>
+    <string name="desktop_vos_profiles_use_portable">استفاده از این ریشه قابل‌حمل</string>
+    <string name="desktop_vos_profiles_new_name">نام نمایه جدید</string>
+    <string name="desktop_vos_profiles_create">ایجاد و تعویض</string>
+    <string name="desktop_vos_profiles_created">ایجاد و تعویض به %1$s</string>
+    <string name="desktop_vos_profiles_switched">تعویض به %1$s</string>
+    <string name="desktop_vos_profiles_invalid_name">حروف، ارقام، نقطه، زیرخط یا خط تیره (حداکثر ۶۴).</string>
+    <string name="desktop_vos_profiles_portable_hint">ریشه‌های قابل‌حمل پیکربندی، کش و temp را بیرون از نمایه میزبان نگه می‌دارند (پیش‌فرض ویندوز: Portable Data).</string>
+    <string name="desktop_vos_profiles_portable_path">مسیر پوشه خزانه‌ی قابل‌حمل</string>
+    <string name="desktop_vos_profiles_add_portable">افزودن ریشه خزانه‌ی قابل‌حمل</string>
+    <string name="desktop_vos_profiles_portable_selected">ریشه قابل‌حمل: %1$s</string>
+    <string name="desktop_vos_profiles_portable_reject">ریشه قابل‌حمل نباید خانه میزبان یا .config/.cache/.local آن باشد.</string>
 </resources>

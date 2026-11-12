@@ -23,4 +23,23 @@
     <string name="desktop_session_sync_imported">Munkamenet-sync csomag importálva</string>
     <string name="desktop_session_sync_key_stored">Sync kulcs tárolva a kérdés nélküli indítási importhoz</string>
     <string name="desktop_session_sync_key_missing">Adjon meg sync jelmondatot az automatikus import bekapcsolása előtt</string>
+    <string name="desktop_vos_profiles_title">Trezorprofilok</string>
+    <string name="desktop_vos_profiles_summary">Elnevezett profilmappák a config profiles/ alatt. A desktop.properties-ben csak az aktív név — soha jelszavak.</string>
+    <string name="desktop_vos_profiles_active">Aktív profil: %1$s</string>
+    <string name="desktop_vos_profiles_none">(nincs)</string>
+    <string name="desktop_vos_profiles_empty">Még nincsenek profilok. Hozzon létre egyet a trezoridentitások váltásához.</string>
+    <string name="desktop_vos_profiles_kind_named">Elnevezett trezorprofil</string>
+    <string name="desktop_vos_profiles_kind_portable">Hordozható trezorgyökér</string>
+    <string name="desktop_vos_profiles_switch">Váltás</string>
+    <string name="desktop_vos_profiles_use_portable">Ezt a hordozható gyökeret használd</string>
+    <string name="desktop_vos_profiles_new_name">Új profil neve</string>
+    <string name="desktop_vos_profiles_create">Létrehozás és váltás</string>
+    <string name="desktop_vos_profiles_created">Létrehozva és átváltva ide: %1$s</string>
+    <string name="desktop_vos_profiles_switched">Átváltva ide: %1$s</string>
+    <string name="desktop_vos_profiles_invalid_name">Betűk, számok, pontok, aláhúzások vagy kötőjelek (max. 64).</string>
+    <string name="desktop_vos_profiles_portable_hint">A hordozható gyökerek a configot, cache-t és tempet a gazdaprofilon kívül tartják (Windows alapértelmezés: Portable Data).</string>
+    <string name="desktop_vos_profiles_portable_path">Hordozható trezormappa elérési útja</string>
+    <string name="desktop_vos_profiles_add_portable">Hordozható trezorgyökér hozzáadása</string>
+    <string name="desktop_vos_profiles_portable_selected">Hordozható gyökér: %1$s</string>
+    <string name="desktop_vos_profiles_portable_reject">A hordozható gyökér nem lehet a gazda home vagy annak .config/.cache/.local mappája.</string>
 </resources>

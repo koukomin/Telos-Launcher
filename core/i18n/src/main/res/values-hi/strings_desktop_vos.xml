@@ -23,4 +23,23 @@
     <string name="desktop_session_sync_imported">सत्र सिंक बंडल आयात किया गया</string>
     <string name="desktop_session_sync_key_stored">बिना प्रॉम्प्ट बूट आयात के लिए सिंक कुंजी संग्रहीत</string>
     <string name="desktop_session_sync_key_missing">स्वतः आयात सक्षम करने से पहले सिंक पासफ़्रेज़ दर्ज करें</string>
+    <string name="desktop_vos_profiles_title">वॉल्ट प्रोफ़ाइल</string>
+    <string name="desktop_vos_profiles_summary">config profiles/ के अंतर्गत नामित प्रोफ़ाइल फ़ोल्डर। desktop.properties में केवल सक्रिय नाम — कभी पासवर्ड नहीं।</string>
+    <string name="desktop_vos_profiles_active">सक्रिय प्रोफ़ाइल: %1$s</string>
+    <string name="desktop_vos_profiles_none">(कोई नहीं)</string>
+    <string name="desktop_vos_profiles_empty">अभी कोई प्रोफ़ाइल नहीं। वॉल्ट पहचान बदलने के लिए एक बनाएँ।</string>
+    <string name="desktop_vos_profiles_kind_named">नामित वॉल्ट प्रोफ़ाइल</string>
+    <string name="desktop_vos_profiles_kind_portable">पोर्टेबल वॉल्ट रूट</string>
+    <string name="desktop_vos_profiles_switch">बदलें</string>
+    <string name="desktop_vos_profiles_use_portable">यह पोर्टेबल रूट उपयोग करें</string>
+    <string name="desktop_vos_profiles_new_name">नई प्रोफ़ाइल का नाम</string>
+    <string name="desktop_vos_profiles_create">बनाएँ और बदलें</string>
+    <string name="desktop_vos_profiles_created">%1$s बनाकर स्विच किया गया</string>
+    <string name="desktop_vos_profiles_switched">%1$s पर स्विच किया गया</string>
+    <string name="desktop_vos_profiles_invalid_name">अक्षर, संख्याएँ, बिंदु, अंडरस्कोर या हाइफ़न उपयोग करें (अधिकतम 64)।</string>
+    <string name="desktop_vos_profiles_portable_hint">पोर्टेबल रूट कॉन्फ़िग, कैश और टेम्प को होस्ट प्रोफ़ाइल से बाहर रखते हैं (Windows डिफ़ॉल्ट: Portable Data)।</string>
+    <string name="desktop_vos_profiles_portable_path">पोर्टेबल वॉल्ट फ़ोल्डर पथ</string>
+    <string name="desktop_vos_profiles_add_portable">पोर्टेबल वॉल्ट रूट जोड़ें</string>
+    <string name="desktop_vos_profiles_portable_selected">पोर्टेबल रूट: %1$s</string>
+    <string name="desktop_vos_profiles_portable_reject">पोर्टेबल रूट होस्ट होम या उसके .config/.cache/.local नहीं हो सकता।</string>
 </resources>

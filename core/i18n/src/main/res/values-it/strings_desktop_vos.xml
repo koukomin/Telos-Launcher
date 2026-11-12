@@ -23,4 +23,23 @@
     <string name="desktop_session_sync_imported">Pacchetto sync di sessione importato</string>
     <string name="desktop_session_sync_key_stored">Chiave sync memorizzata per l’import all’avvio senza richiesta</string>
     <string name="desktop_session_sync_key_missing">Inserisci una frase sync prima di abilitare l’import automatico</string>
+    <string name="desktop_vos_profiles_title">Profili vault</string>
+    <string name="desktop_vos_profiles_summary">Cartelle profilo nominate in config profiles/. Solo il nome attivo in desktop.properties — mai password.</string>
+    <string name="desktop_vos_profiles_active">Profilo attivo: %1$s</string>
+    <string name="desktop_vos_profiles_none">(nessuno)</string>
+    <string name="desktop_vos_profiles_empty">Nessun profilo ancora. Creane uno per cambiare identità del vault.</string>
+    <string name="desktop_vos_profiles_kind_named">Profilo vault con nome</string>
+    <string name="desktop_vos_profiles_kind_portable">Radice vault portatile</string>
+    <string name="desktop_vos_profiles_switch">Cambia</string>
+    <string name="desktop_vos_profiles_use_portable">Usa questa radice portatile</string>
+    <string name="desktop_vos_profiles_new_name">Nome del nuovo profilo</string>
+    <string name="desktop_vos_profiles_create">Crea e cambia</string>
+    <string name="desktop_vos_profiles_created">Creato e passato a %1$s</string>
+    <string name="desktop_vos_profiles_switched">Passato a %1$s</string>
+    <string name="desktop_vos_profiles_invalid_name">Usa lettere, numeri, punti, underscore o trattini (max 64).</string>
+    <string name="desktop_vos_profiles_portable_hint">Le radici portatili tengono config, cache e temp fuori dal profilo host (predefinito Windows: Portable Data).</string>
+    <string name="desktop_vos_profiles_portable_path">Percorso cartella vault portatile</string>
+    <string name="desktop_vos_profiles_add_portable">Aggiungi radice vault portatile</string>
+    <string name="desktop_vos_profiles_portable_selected">Radice portatile: %1$s</string>
+    <string name="desktop_vos_profiles_portable_reject">La radice portatile non può essere la home host né le sue .config/.cache/.local.</string>
 </resources>

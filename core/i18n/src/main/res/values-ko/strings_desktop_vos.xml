@@ -23,4 +23,23 @@
     <string name="desktop_session_sync_imported">세션 동기화 번들을 가져왔습니다</string>
     <string name="desktop_session_sync_key_stored">프롬프트 없는 부팅 가져오기를 위해 동기화 키를 저장했습니다</string>
     <string name="desktop_session_sync_key_missing">자동 가져오기를 켜기 전에 동기화 암호를 입력하세요</string>
+    <string name="desktop_vos_profiles_title">볼트 프로필</string>
+    <string name="desktop_vos_profiles_summary">config profiles/ 아래의 이름 있는 프로필 폴더. desktop.properties에는 활성 이름만 — 비밀번호는 절대 저장하지 않습니다.</string>
+    <string name="desktop_vos_profiles_active">활성 프로필: %1$s</string>
+    <string name="desktop_vos_profiles_none">(없음)</string>
+    <string name="desktop_vos_profiles_empty">아직 프로필이 없습니다. 볼트 신원을 전환하려면 만드세요.</string>
+    <string name="desktop_vos_profiles_kind_named">이름 있는 볼트 프로필</string>
+    <string name="desktop_vos_profiles_kind_portable">휴대용 볼트 루트</string>
+    <string name="desktop_vos_profiles_switch">전환</string>
+    <string name="desktop_vos_profiles_use_portable">이 휴대용 루트 사용</string>
+    <string name="desktop_vos_profiles_new_name">새 프로필 이름</string>
+    <string name="desktop_vos_profiles_create">만들고 전환</string>
+    <string name="desktop_vos_profiles_created">%1$s(으)로 만들고 전환함</string>
+    <string name="desktop_vos_profiles_switched">%1$s(으)로 전환함</string>
+    <string name="desktop_vos_profiles_invalid_name">문자, 숫자, 점, 밑줄 또는 하이픈을 사용하세요(최대 64).</string>
+    <string name="desktop_vos_profiles_portable_hint">휴대용 루트는 설정·캐시·임시 파일을 호스트 프로필 밖에 둡니다(Windows 기본: Portable Data).</string>
+    <string name="desktop_vos_profiles_portable_path">휴대용 볼트 폴더 경로</string>
+    <string name="desktop_vos_profiles_add_portable">휴대용 볼트 루트 추가</string>
+    <string name="desktop_vos_profiles_portable_selected">휴대용 루트: %1$s</string>
+    <string name="desktop_vos_profiles_portable_reject">휴대용 루트는 호스트 홈이나 그 .config/.cache/.local이 될 수 없습니다.</string>
 </resources>

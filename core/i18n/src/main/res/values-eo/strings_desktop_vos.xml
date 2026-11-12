@@ -23,4 +23,23 @@
     <string name="desktop_session_sync_imported">Seanca sinkroniga pako importita</string>
     <string name="desktop_session_sync_key_stored">Sinkroniga ŝlosilo konservita por importa ĉe starto sen demando</string>
     <string name="desktop_session_sync_key_missing">Enigu sinkronigan pasfrazon antaŭ ol ŝalti aŭtomatan importon</string>
+    <string name="desktop_vos_profiles_title">Profiloj de trezorejo</string>
+    <string name="desktop_vos_profiles_summary">Nomitaj profilaj dosierujoj sub config profiles/. Nur aktiva nomo en desktop.properties — neniam pasvortoj.</string>
+    <string name="desktop_vos_profiles_active">Aktiva profilo: %1$s</string>
+    <string name="desktop_vos_profiles_none">(neniu)</string>
+    <string name="desktop_vos_profiles_empty">Ankoraŭ neniuj profiloj. Kreu unu por ŝanĝi trezorejajn identecojn.</string>
+    <string name="desktop_vos_profiles_kind_named">Nomita trezoreja profilo</string>
+    <string name="desktop_vos_profiles_kind_portable">Portebla trezoreja radiko</string>
+    <string name="desktop_vos_profiles_switch">Ŝanĝi</string>
+    <string name="desktop_vos_profiles_use_portable">Uzi ĉi tiun porteblan radikon</string>
+    <string name="desktop_vos_profiles_new_name">Nomo de nova profilo</string>
+    <string name="desktop_vos_profiles_create">Krei kaj ŝanĝi</string>
+    <string name="desktop_vos_profiles_created">Kreita kaj ŝanĝita al %1$s</string>
+    <string name="desktop_vos_profiles_switched">Ŝanĝita al %1$s</string>
+    <string name="desktop_vos_profiles_invalid_name">Uzu literojn, ciferojn, punktojn, substrekojn aŭ streketojn (maks. 64).</string>
+    <string name="desktop_vos_profiles_portable_hint">Porteblaj radikoj tenas config, kaŝmemoron kaj temp for de la gastiga profilo (Windows-defaŭlto: Portable Data).</string>
+    <string name="desktop_vos_profiles_portable_path">Vojo de portebla trezoreja dosierujo</string>
+    <string name="desktop_vos_profiles_add_portable">Aldoni porteblan trezorejan radikon</string>
+    <string name="desktop_vos_profiles_portable_selected">Portebla radiko: %1$s</string>
+    <string name="desktop_vos_profiles_portable_reject">Portebla radiko ne povas esti la gastiga hejmo aŭ ĝiaj .config/.cache/.local.</string>
 </resources>

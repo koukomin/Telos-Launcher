@@ -23,4 +23,23 @@
     <string name="desktop_session_sync_imported">Iompórtáladh beart sync an tseisiúin</string>
     <string name="desktop_session_sync_key_stored">Eochair sync stóráilte le haghaidh iompórtála tosaithe gan leid</string>
     <string name="desktop_session_sync_key_missing">Cuir pasfhocal sync isteach sula gcumasaíonn tú uath-iompórtáil</string>
+    <string name="desktop_vos_profiles_title">Próifílí vault</string>
+    <string name="desktop_vos_profiles_summary">Fillteáin próifíle ainmnithe faoi config profiles/. Ainm gníomhach amháin i desktop.properties — pasfhocail riamh.</string>
+    <string name="desktop_vos_profiles_active">Próifíl ghníomhach: %1$s</string>
+    <string name="desktop_vos_profiles_none">(aon cheann)</string>
+    <string name="desktop_vos_profiles_empty">Níl aon phróifíl fós. Cruthaigh ceann chun aitheantais vault a athrú.</string>
+    <string name="desktop_vos_profiles_kind_named">Próifíl vault ainmnithe</string>
+    <string name="desktop_vos_profiles_kind_portable">Fréamh vault iniompartha</string>
+    <string name="desktop_vos_profiles_switch">Athraigh</string>
+    <string name="desktop_vos_profiles_use_portable">Úsáid an fhréamh iniompartha seo</string>
+    <string name="desktop_vos_profiles_new_name">Ainm próifíle nua</string>
+    <string name="desktop_vos_profiles_create">Cruthaigh agus athraigh</string>
+    <string name="desktop_vos_profiles_created">Cruthaithe agus aistrithe go %1$s</string>
+    <string name="desktop_vos_profiles_switched">Aistrithe go %1$s</string>
+    <string name="desktop_vos_profiles_invalid_name">Litreacha, uimhreacha, pointí, fostríocha nó fleascanna (uas. 64).</string>
+    <string name="desktop_vos_profiles_portable_hint">Coinníonn fréamhacha iniompartha config, taisce agus temp amach as próifíl an ósta (réamhshocrú Windows: Portable Data).</string>
+    <string name="desktop_vos_profiles_portable_path">Conair fillteáin vault iniompartha</string>
+    <string name="desktop_vos_profiles_add_portable">Cuir fréamh vault iniompartha leis</string>
+    <string name="desktop_vos_profiles_portable_selected">Fréamh iniompartha: %1$s</string>
+    <string name="desktop_vos_profiles_portable_reject">Ní féidir leis an bhfréamh iniompartha a bheith mar bhaile an ósta ná a .config/.cache/.local.</string>
 </resources>

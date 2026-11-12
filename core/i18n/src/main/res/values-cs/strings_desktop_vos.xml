@@ -23,4 +23,23 @@
     <string name="desktop_session_sync_imported">Balíček sync relace byl importován</string>
     <string name="desktop_session_sync_key_stored">Sync klíč uložen pro import při spuštění bez výzvy</string>
     <string name="desktop_session_sync_key_missing">Před zapnutím automatického importu zadejte sync přístupovou frázi</string>
+    <string name="desktop_vos_profiles_title">Profily trezoru</string>
+    <string name="desktop_vos_profiles_summary">Pojmenované složky profilů v config profiles/. V desktop.properties jen aktivní název — nikdy hesla.</string>
+    <string name="desktop_vos_profiles_active">Aktivní profil: %1$s</string>
+    <string name="desktop_vos_profiles_none">(žádný)</string>
+    <string name="desktop_vos_profiles_empty">Zatím žádné profily. Vytvořte jeden pro přepínání identit trezoru.</string>
+    <string name="desktop_vos_profiles_kind_named">Pojmenovaný profil trezoru</string>
+    <string name="desktop_vos_profiles_kind_portable">Kořen přenosného trezoru</string>
+    <string name="desktop_vos_profiles_switch">Přepnout</string>
+    <string name="desktop_vos_profiles_use_portable">Použít tento přenosný kořen</string>
+    <string name="desktop_vos_profiles_new_name">Název nového profilu</string>
+    <string name="desktop_vos_profiles_create">Vytvořit a přepnout</string>
+    <string name="desktop_vos_profiles_created">Vytvořeno a přepnuto na %1$s</string>
+    <string name="desktop_vos_profiles_switched">Přepnuto na %1$s</string>
+    <string name="desktop_vos_profiles_invalid_name">Písmena, číslice, tečky, podtržítka nebo pomlčky (max. 64).</string>
+    <string name="desktop_vos_profiles_portable_hint">Přenosné kořeny drží config, cache a temp mimo profil hostitele (výchozí ve Windows: Portable Data).</string>
+    <string name="desktop_vos_profiles_portable_path">Cesta ke složce přenosného trezoru</string>
+    <string name="desktop_vos_profiles_add_portable">Přidat kořen přenosného trezoru</string>
+    <string name="desktop_vos_profiles_portable_selected">Přenosný kořen: %1$s</string>
+    <string name="desktop_vos_profiles_portable_reject">Přenosný kořen nesmí být domovská složka hostitele ani její .config/.cache/.local.</string>
 </resources>

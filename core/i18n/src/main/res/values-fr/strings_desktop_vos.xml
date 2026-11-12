@@ -23,4 +23,23 @@
     <string name="desktop_session_sync_imported">Lot de sync de session importé</string>
     <string name="desktop_session_sync_key_stored">Clé de sync enregistrée pour l’import au démarrage sans invite</string>
     <string name="desktop_session_sync_key_missing">Saisissez une phrase secrète de sync avant d’activer l’import automatique</string>
+    <string name="desktop_vos_profiles_title">Profils du coffre</string>
+    <string name="desktop_vos_profiles_summary">Dossiers de profil nommés sous config profiles/. Seul le nom actif dans desktop.properties — jamais de mots de passe.</string>
+    <string name="desktop_vos_profiles_active">Profil actif : %1$s</string>
+    <string name="desktop_vos_profiles_none">(aucun)</string>
+    <string name="desktop_vos_profiles_empty">Aucun profil pour l’instant. Créez-en un pour changer d’identité de coffre.</string>
+    <string name="desktop_vos_profiles_kind_named">Profil de coffre nommé</string>
+    <string name="desktop_vos_profiles_kind_portable">Racine de coffre portable</string>
+    <string name="desktop_vos_profiles_switch">Changer</string>
+    <string name="desktop_vos_profiles_use_portable">Utiliser cette racine portable</string>
+    <string name="desktop_vos_profiles_new_name">Nom du nouveau profil</string>
+    <string name="desktop_vos_profiles_create">Créer et changer</string>
+    <string name="desktop_vos_profiles_created">Créé et basculé vers %1$s</string>
+    <string name="desktop_vos_profiles_switched">Basculé vers %1$s</string>
+    <string name="desktop_vos_profiles_invalid_name">Lettres, chiffres, points, tirets bas ou tirets (max. 64).</string>
+    <string name="desktop_vos_profiles_portable_hint">Les racines portables gardent config, cache et temp hors du profil hôte (défaut Windows : Portable Data).</string>
+    <string name="desktop_vos_profiles_portable_path">Chemin du dossier de coffre portable</string>
+    <string name="desktop_vos_profiles_add_portable">Ajouter une racine de coffre portable</string>
+    <string name="desktop_vos_profiles_portable_selected">Racine portable : %1$s</string>
+    <string name="desktop_vos_profiles_portable_reject">La racine portable ne doit pas être le home hôte ni ses .config/.cache/.local.</string>
 </resources>

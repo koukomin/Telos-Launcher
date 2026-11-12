@@ -23,4 +23,23 @@
     <string name="desktop_session_sync_imported">Sessie-syncbundel geïmporteerd</string>
     <string name="desktop_session_sync_key_stored">Sync-sleutel opgeslagen voor import bij opstarten zonder vraag</string>
     <string name="desktop_session_sync_key_missing">Voer een sync-wachtwoordzin in voordat u automatisch importeren inschakelt</string>
+    <string name="desktop_vos_profiles_title">Kluisprofielen</string>
+    <string name="desktop_vos_profiles_summary">Benoemde profielmappen onder config profiles/. Alleen actieve naam in desktop.properties — nooit wachtwoorden.</string>
+    <string name="desktop_vos_profiles_active">Actief profiel: %1$s</string>
+    <string name="desktop_vos_profiles_none">(geen)</string>
+    <string name="desktop_vos_profiles_empty">Nog geen profielen. Maak er een om kluisidentiteiten te wisselen.</string>
+    <string name="desktop_vos_profiles_kind_named">Benoemd kluisprofiel</string>
+    <string name="desktop_vos_profiles_kind_portable">Draagbare kluiswortel</string>
+    <string name="desktop_vos_profiles_switch">Wisselen</string>
+    <string name="desktop_vos_profiles_use_portable">Deze draagbare wortel gebruiken</string>
+    <string name="desktop_vos_profiles_new_name">Nieuwe profielnaam</string>
+    <string name="desktop_vos_profiles_create">Maken en wisselen</string>
+    <string name="desktop_vos_profiles_created">Gemaakt en gewisseld naar %1$s</string>
+    <string name="desktop_vos_profiles_switched">Gewisseld naar %1$s</string>
+    <string name="desktop_vos_profiles_invalid_name">Letters, cijfers, punten, underscores of koppeltekens (max. 64).</string>
+    <string name="desktop_vos_profiles_portable_hint">Draagbare wortels houden config, cache en temp buiten het hostprofiel (Windows-standaard: Portable Data).</string>
+    <string name="desktop_vos_profiles_portable_path">Pad naar draagbare kluismap</string>
+    <string name="desktop_vos_profiles_add_portable">Draagbare kluiswortel toevoegen</string>
+    <string name="desktop_vos_profiles_portable_selected">Draagbare wortel: %1$s</string>
+    <string name="desktop_vos_profiles_portable_reject">Draagbare wortel mag niet de host-home of diens .config/.cache/.local zijn.</string>
 </resources>

@@ -23,4 +23,23 @@
     <string name="desktop_session_sync_imported">Пакетът за sync на сесията е импортиран</string>
     <string name="desktop_session_sync_key_stored">Sync ключът е съхранен за импорт при старт без подкана</string>
     <string name="desktop_session_sync_key_missing">Въведете sync паролна фраза преди да включите автоматичния импорт</string>
+    <string name="desktop_vos_profiles_title">Профили на трезора</string>
+    <string name="desktop_vos_profiles_summary">Именувани папки на профили в config profiles/. В desktop.properties само активното име — никога пароли.</string>
+    <string name="desktop_vos_profiles_active">Активен профил: %1$s</string>
+    <string name="desktop_vos_profiles_none">(няма)</string>
+    <string name="desktop_vos_profiles_empty">Все още няма профили. Създайте един за превключване на самоличности на трезора.</string>
+    <string name="desktop_vos_profiles_kind_named">Именуван профил на трезора</string>
+    <string name="desktop_vos_profiles_kind_portable">Корен на преносим трезор</string>
+    <string name="desktop_vos_profiles_switch">Превключи</string>
+    <string name="desktop_vos_profiles_use_portable">Използвай този преносим корен</string>
+    <string name="desktop_vos_profiles_new_name">Име на нов профил</string>
+    <string name="desktop_vos_profiles_create">Създай и превключи</string>
+    <string name="desktop_vos_profiles_created">Създаден и превключен към %1$s</string>
+    <string name="desktop_vos_profiles_switched">Превключен към %1$s</string>
+    <string name="desktop_vos_profiles_invalid_name">Букви, цифри, точки, долни черти или тирета (макс. 64).</string>
+    <string name="desktop_vos_profiles_portable_hint">Преносимите корени държат config, cache и temp извън профила на хоста (по подразбиране в Windows: Portable Data).</string>
+    <string name="desktop_vos_profiles_portable_path">Път към папката на преносимия трезор</string>
+    <string name="desktop_vos_profiles_add_portable">Добави корен на преносим трезор</string>
+    <string name="desktop_vos_profiles_portable_selected">Преносим корен: %1$s</string>
+    <string name="desktop_vos_profiles_portable_reject">Преносимият корен не може да е home на хоста или неговите .config/.cache/.local.</string>
 </resources>
