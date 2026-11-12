@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_store_permissions">Permessi</string>
+    <string name="desktop_store_sandbox_tier">Livell tas-sandbox</string>
+    <string name="desktop_sandbox_tier_host">Host</string>
+    <string name="desktop_sandbox_tier_vault_fs">Sistema tal-fajls tal-vault</string>
+    <string name="desktop_sandbox_tier_net_isolated">Netwerk iżolat</string>
+    <string name="desktop_sandbox_tier_standard">Standard</string>
+    <string name="desktop_perm_filesystem_home">Folder tad-dar</string>
+    <string name="desktop_perm_filesystem_host">Sistema tal-fajls tal-host</string>
+    <string name="desktop_perm_network">Netwerk</string>
+    <string name="desktop_perm_gpu">GPU (DRI)</string>
+    <string name="desktop_perm_wayland">Wayland</string>
+    <string name="desktop_perm_x11">X11</string>
+    <string name="desktop_perm_pulseaudio">Awdjo</string>
+    <string name="desktop_perm_notifications">Notifiki</string>
+    <string name="desktop_perm_camera">Kamera</string>
+    <string name="desktop_perm_microphone">Mikrofonu</string>
+    <string name="desktop_flatpak_unavailable">Flatpak mhux disponibbli; overrides tal-permessi mhumiex disponibbli f’dan is-sistema.</string>
+    <string name="desktop_flatpak_override_applied">Override Flatpak applikata</string>
+    <string name="desktop_flatpak_override_failed">Ma setgħetx tiġi applikata l-override Flatpak</string>
+    <string name="desktop_flatpak_reset_overrides">Irrisettja l-overrides</string>
+    <string name="desktop_deeplink_handler_hint">telos:// jiftaħ apps Telos u t-tiftix Kickoff (jirreġistra meta jibda d-desktop).</string>
+</resources>

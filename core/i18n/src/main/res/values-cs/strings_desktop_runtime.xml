@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_store_permissions">Oprávnění</string>
+    <string name="desktop_store_sandbox_tier">Úroveň sandboxu</string>
+    <string name="desktop_sandbox_tier_host">Hostitel</string>
+    <string name="desktop_sandbox_tier_vault_fs">Souborový systém trezoru</string>
+    <string name="desktop_sandbox_tier_net_isolated">Síťově izolované</string>
+    <string name="desktop_sandbox_tier_standard">Standardní</string>
+    <string name="desktop_perm_filesystem_home">Domovská složka</string>
+    <string name="desktop_perm_filesystem_host">Souborový systém hostitele</string>
+    <string name="desktop_perm_network">Síť</string>
+    <string name="desktop_perm_gpu">GPU (DRI)</string>
+    <string name="desktop_perm_wayland">Wayland</string>
+    <string name="desktop_perm_x11">X11</string>
+    <string name="desktop_perm_pulseaudio">Zvuk</string>
+    <string name="desktop_perm_notifications">Oznámení</string>
+    <string name="desktop_perm_camera">Kamera</string>
+    <string name="desktop_perm_microphone">Mikrofon</string>
+    <string name="desktop_flatpak_unavailable">Flatpak není k dispozici; přepisy oprávnění na tomto systému nejsou dostupné.</string>
+    <string name="desktop_flatpak_override_applied">Přepis Flatpak použit</string>
+    <string name="desktop_flatpak_override_failed">Přepis Flatpak nelze použít</string>
+    <string name="desktop_flatpak_reset_overrides">Obnovit přepisy</string>
+    <string name="desktop_deeplink_handler_hint">telos:// otevírá aplikace Telos a hledání Kickoff (registruje se při spuštění plochy).</string>
+</resources>

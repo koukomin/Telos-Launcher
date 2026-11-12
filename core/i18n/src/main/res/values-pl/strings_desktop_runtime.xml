@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_store_permissions">Uprawnienia</string>
+    <string name="desktop_store_sandbox_tier">Poziom piaskownicy</string>
+    <string name="desktop_sandbox_tier_host">Host</string>
+    <string name="desktop_sandbox_tier_vault_fs">System plików sejfu</string>
+    <string name="desktop_sandbox_tier_net_isolated">Sieć odizolowana</string>
+    <string name="desktop_sandbox_tier_standard">Standardowy</string>
+    <string name="desktop_perm_filesystem_home">Folder domowy</string>
+    <string name="desktop_perm_filesystem_host">System plików hosta</string>
+    <string name="desktop_perm_network">Sieć</string>
+    <string name="desktop_perm_gpu">GPU (DRI)</string>
+    <string name="desktop_perm_wayland">Wayland</string>
+    <string name="desktop_perm_x11">X11</string>
+    <string name="desktop_perm_pulseaudio">Dźwięk</string>
+    <string name="desktop_perm_notifications">Powiadomienia</string>
+    <string name="desktop_perm_camera">Aparat</string>
+    <string name="desktop_perm_microphone">Mikrofon</string>
+    <string name="desktop_flatpak_unavailable">Flatpak jest niedostępny; nadpisania uprawnień są niedostępne w tym systemie.</string>
+    <string name="desktop_flatpak_override_applied">Zastosowano nadpisanie Flatpak</string>
+    <string name="desktop_flatpak_override_failed">Nie można zastosować nadpisania Flatpak</string>
+    <string name="desktop_flatpak_reset_overrides">Resetuj nadpisania</string>
+    <string name="desktop_deeplink_handler_hint">telos:// otwiera aplikacje Telos i wyszukiwanie Kickoff (rejestrowane przy starcie pulpitu).</string>
+</resources>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_store_permissions">権限</string>
+    <string name="desktop_store_sandbox_tier">サンドボックス層</string>
+    <string name="desktop_sandbox_tier_host">ホスト</string>
+    <string name="desktop_sandbox_tier_vault_fs">保管庫ファイルシステム</string>
+    <string name="desktop_sandbox_tier_net_isolated">ネットワーク隔離</string>
+    <string name="desktop_sandbox_tier_standard">標準</string>
+    <string name="desktop_perm_filesystem_home">ホームフォルダー</string>
+    <string name="desktop_perm_filesystem_host">ホストファイルシステム</string>
+    <string name="desktop_perm_network">ネットワーク</string>
+    <string name="desktop_perm_gpu">GPU (DRI)</string>
+    <string name="desktop_perm_wayland">Wayland</string>
+    <string name="desktop_perm_x11">X11</string>
+    <string name="desktop_perm_pulseaudio">オーディオ</string>
+    <string name="desktop_perm_notifications">通知</string>
+    <string name="desktop_perm_camera">カメラ</string>
+    <string name="desktop_perm_microphone">マイク</string>
+    <string name="desktop_flatpak_unavailable">Flatpak を利用できないため、このシステムでは権限の上書きは利用できません。</string>
+    <string name="desktop_flatpak_override_applied">Flatpak の上書きを適用しました</string>
+    <string name="desktop_flatpak_override_failed">Flatpak の上書きを適用できませんでした</string>
+    <string name="desktop_flatpak_reset_overrides">上書きをリセット</string>
+    <string name="desktop_deeplink_handler_hint">telos:// は Telos アプリと Kickoff 検索を開きます（デスクトップ起動時に登録）。</string>
+</resources>

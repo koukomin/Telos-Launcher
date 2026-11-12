@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_store_permissions">Dovoljenja</string>
+    <string name="desktop_store_sandbox_tier">Raven peskovnika</string>
+    <string name="desktop_sandbox_tier_host">Gostitelj</string>
+    <string name="desktop_sandbox_tier_vault_fs">Datotečni sistem trezorja</string>
+    <string name="desktop_sandbox_tier_net_isolated">Omrežno izolirano</string>
+    <string name="desktop_sandbox_tier_standard">Standardno</string>
+    <string name="desktop_perm_filesystem_home">Domača mapa</string>
+    <string name="desktop_perm_filesystem_host">Datotečni sistem gostitelja</string>
+    <string name="desktop_perm_network">Omrežje</string>
+    <string name="desktop_perm_gpu">GPU (DRI)</string>
+    <string name="desktop_perm_wayland">Wayland</string>
+    <string name="desktop_perm_x11">X11</string>
+    <string name="desktop_perm_pulseaudio">Zvok</string>
+    <string name="desktop_perm_notifications">Obvestila</string>
+    <string name="desktop_perm_camera">Kamera</string>
+    <string name="desktop_perm_microphone">Mikrofon</string>
+    <string name="desktop_flatpak_unavailable">Flatpak ni na voljo; preglasitve dovoljenj na tem sistemu niso na voljo.</string>
+    <string name="desktop_flatpak_override_applied">Preglasitev Flatpak uporabljena</string>
+    <string name="desktop_flatpak_override_failed">Preglasitve Flatpak ni bilo mogoče uporabiti</string>
+    <string name="desktop_flatpak_reset_overrides">Ponastavi preglasitve</string>
+    <string name="desktop_deeplink_handler_hint">telos:// odpre aplikacije Telos in iskanje Kickoff (registrira se ob zagonu namizja).</string>
+</resources>

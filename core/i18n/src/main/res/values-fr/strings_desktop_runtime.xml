@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_store_permissions">Autorisations</string>
+    <string name="desktop_store_sandbox_tier">Niveau de bac à sable</string>
+    <string name="desktop_sandbox_tier_host">Hôte</string>
+    <string name="desktop_sandbox_tier_vault_fs">Système de fichiers du coffre</string>
+    <string name="desktop_sandbox_tier_net_isolated">Réseau isolé</string>
+    <string name="desktop_sandbox_tier_standard">Standard</string>
+    <string name="desktop_perm_filesystem_home">Dossier personnel</string>
+    <string name="desktop_perm_filesystem_host">Système de fichiers hôte</string>
+    <string name="desktop_perm_network">Réseau</string>
+    <string name="desktop_perm_gpu">GPU (DRI)</string>
+    <string name="desktop_perm_wayland">Wayland</string>
+    <string name="desktop_perm_x11">X11</string>
+    <string name="desktop_perm_pulseaudio">Audio</string>
+    <string name="desktop_perm_notifications">Notifications</string>
+    <string name="desktop_perm_camera">Caméra</string>
+    <string name="desktop_perm_microphone">Microphone</string>
+    <string name="desktop_flatpak_unavailable">Flatpak n’est pas disponible ; les substitutions d’autorisations sont indisponibles sur ce système.</string>
+    <string name="desktop_flatpak_override_applied">Substitution Flatpak appliquée</string>
+    <string name="desktop_flatpak_override_failed">Impossible d’appliquer la substitution Flatpak</string>
+    <string name="desktop_flatpak_reset_overrides">Réinitialiser les substitutions</string>
+    <string name="desktop_deeplink_handler_hint">telos:// ouvre les apps Telos et la recherche Kickoff (enregistré au démarrage du bureau).</string>
+</resources>

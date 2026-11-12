@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_store_permissions">權限</string>
+    <string name="desktop_store_sandbox_tier">沙箱層級</string>
+    <string name="desktop_sandbox_tier_host">主機</string>
+    <string name="desktop_sandbox_tier_vault_fs">金庫檔案系統</string>
+    <string name="desktop_sandbox_tier_net_isolated">網路隔離</string>
+    <string name="desktop_sandbox_tier_standard">標準</string>
+    <string name="desktop_perm_filesystem_home">家用資料夾</string>
+    <string name="desktop_perm_filesystem_host">主機檔案系統</string>
+    <string name="desktop_perm_network">網路</string>
+    <string name="desktop_perm_gpu">GPU (DRI)</string>
+    <string name="desktop_perm_wayland">Wayland</string>
+    <string name="desktop_perm_x11">X11</string>
+    <string name="desktop_perm_pulseaudio">音訊</string>
+    <string name="desktop_perm_notifications">通知</string>
+    <string name="desktop_perm_camera">相機</string>
+    <string name="desktop_perm_microphone">麥克風</string>
+    <string name="desktop_flatpak_unavailable">Flatpak 無法使用；此系統無法使用權限覆寫。</string>
+    <string name="desktop_flatpak_override_applied">已套用 Flatpak 覆寫</string>
+    <string name="desktop_flatpak_override_failed">無法套用 Flatpak 覆寫</string>
+    <string name="desktop_flatpak_reset_overrides">重設覆寫</string>
+    <string name="desktop_deeplink_handler_hint">telos:// 開啟 Telos 應用程式與 Kickoff 搜尋（於桌面啟動時註冊）。</string>
+</resources>

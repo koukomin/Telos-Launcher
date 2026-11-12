@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_store_permissions">Permisos</string>
+    <string name="desktop_store_sandbox_tier">Nivel de sandbox</string>
+    <string name="desktop_sandbox_tier_host">Host</string>
+    <string name="desktop_sandbox_tier_vault_fs">Sistema de archivos del vault</string>
+    <string name="desktop_sandbox_tier_net_isolated">Red aislada</string>
+    <string name="desktop_sandbox_tier_standard">Estándar</string>
+    <string name="desktop_perm_filesystem_home">Carpeta personal</string>
+    <string name="desktop_perm_filesystem_host">Sistema de archivos del host</string>
+    <string name="desktop_perm_network">Red</string>
+    <string name="desktop_perm_gpu">GPU (DRI)</string>
+    <string name="desktop_perm_wayland">Wayland</string>
+    <string name="desktop_perm_x11">X11</string>
+    <string name="desktop_perm_pulseaudio">Audio</string>
+    <string name="desktop_perm_notifications">Notificaciones</string>
+    <string name="desktop_perm_camera">Cámara</string>
+    <string name="desktop_perm_microphone">Micrófono</string>
+    <string name="desktop_flatpak_unavailable">Flatpak no está disponible; las anulaciones de permisos no están disponibles en este sistema.</string>
+    <string name="desktop_flatpak_override_applied">Anulación de Flatpak aplicada</string>
+    <string name="desktop_flatpak_override_failed">No se pudo aplicar la anulación de Flatpak</string>
+    <string name="desktop_flatpak_reset_overrides">Restablecer anulaciones</string>
+    <string name="desktop_deeplink_handler_hint">telos:// abre aplicaciones Telos y la búsqueda Kickoff (se registra al iniciar el escritorio).</string>
+</resources>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_store_permissions">الأذونات</string>
+    <string name="desktop_store_sandbox_tier">مستوى الحماية</string>
+    <string name="desktop_sandbox_tier_host">المضيف</string>
+    <string name="desktop_sandbox_tier_vault_fs">نظام ملفات الخزنة</string>
+    <string name="desktop_sandbox_tier_net_isolated">معزول عن الشبكة</string>
+    <string name="desktop_sandbox_tier_standard">قياسي</string>
+    <string name="desktop_perm_filesystem_home">مجلد المنزل</string>
+    <string name="desktop_perm_filesystem_host">نظام ملفات المضيف</string>
+    <string name="desktop_perm_network">الشبكة</string>
+    <string name="desktop_perm_gpu">GPU (DRI)</string>
+    <string name="desktop_perm_wayland">Wayland</string>
+    <string name="desktop_perm_x11">X11</string>
+    <string name="desktop_perm_pulseaudio">الصوت</string>
+    <string name="desktop_perm_notifications">الإشعارات</string>
+    <string name="desktop_perm_camera">الكاميرا</string>
+    <string name="desktop_perm_microphone">الميكروفون</string>
+    <string name="desktop_flatpak_unavailable">Flatpak غير متوفر؛ تجاوزات الأذونات غير متاحة على هذا النظام.</string>
+    <string name="desktop_flatpak_override_applied">تم تطبيق تجاوز Flatpak</string>
+    <string name="desktop_flatpak_override_failed">تعذر تطبيق تجاوز Flatpak</string>
+    <string name="desktop_flatpak_reset_overrides">إعادة تعيين التجاوزات</string>
+    <string name="desktop_deeplink_handler_hint">يفتح telos:// تطبيقات Telos وبحث Kickoff (يُسجَّل عند بدء سطح المكتب).</string>
+</resources>

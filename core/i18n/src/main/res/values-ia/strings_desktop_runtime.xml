@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_store_permissions">Permissiones</string>
+    <string name="desktop_store_sandbox_tier">Nivello de sandbox</string>
+    <string name="desktop_sandbox_tier_host">Hospite</string>
+    <string name="desktop_sandbox_tier_vault_fs">Systema de files del coffre</string>
+    <string name="desktop_sandbox_tier_net_isolated">Rete isolate</string>
+    <string name="desktop_sandbox_tier_standard">Standard</string>
+    <string name="desktop_perm_filesystem_home">Dossier personal</string>
+    <string name="desktop_perm_filesystem_host">Systema de files del hospite</string>
+    <string name="desktop_perm_network">Rete</string>
+    <string name="desktop_perm_gpu">GPU (DRI)</string>
+    <string name="desktop_perm_wayland">Wayland</string>
+    <string name="desktop_perm_x11">X11</string>
+    <string name="desktop_perm_pulseaudio">Audio</string>
+    <string name="desktop_perm_notifications">Notificationes</string>
+    <string name="desktop_perm_camera">Camera</string>
+    <string name="desktop_perm_microphone">Microphono</string>
+    <string name="desktop_flatpak_unavailable">Flatpak non es disponibile; le substitutiones de permissiones non es disponibile sur iste systema.</string>
+    <string name="desktop_flatpak_override_applied">Substitution Flatpak applicate</string>
+    <string name="desktop_flatpak_override_failed">Non poteva applicar le substitution Flatpak</string>
+    <string name="desktop_flatpak_reset_overrides">Reinitialisar substitutiones</string>
+    <string name="desktop_deeplink_handler_hint">telos:// aperi apps Telos e le cerca Kickoff (registrate al initio del scriptorio).</string>
+</resources>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_store_permissions">Permissiones</string>
+    <string name="desktop_store_sandbox_tier">Gradus arcae harenosae</string>
+    <string name="desktop_sandbox_tier_host">Hospes</string>
+    <string name="desktop_sandbox_tier_vault_fs">Systema fasciculorum thesauri</string>
+    <string name="desktop_sandbox_tier_net_isolated">Rete segregatum</string>
+    <string name="desktop_sandbox_tier_standard">Solemne</string>
+    <string name="desktop_perm_filesystem_home">Fasciculus domesticus</string>
+    <string name="desktop_perm_filesystem_host">Systema fasciculorum hospitis</string>
+    <string name="desktop_perm_network">Rete</string>
+    <string name="desktop_perm_gpu">GPU (DRI)</string>
+    <string name="desktop_perm_wayland">Wayland</string>
+    <string name="desktop_perm_x11">X11</string>
+    <string name="desktop_perm_pulseaudio">Sonus</string>
+    <string name="desktop_perm_notifications">Nuntiationes</string>
+    <string name="desktop_perm_camera">Camera</string>
+    <string name="desktop_perm_microphone">Microphonum</string>
+    <string name="desktop_flatpak_unavailable">Flatpak non praesto est; superscriptiones permissionum in hoc systemate non praesto sunt.</string>
+    <string name="desktop_flatpak_override_applied">Superscriptio Flatpak adhibita</string>
+    <string name="desktop_flatpak_override_failed">Superscriptio Flatpak adhiberi non potuit</string>
+    <string name="desktop_flatpak_reset_overrides">Superscriptiones restituere</string>
+    <string name="desktop_deeplink_handler_hint">telos:// aperit applicationes Telos et investigationem Kickoff (inscribitur cum mensa incipit).</string>
+</resources>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_store_permissions">Ceadanna</string>
+    <string name="desktop_store_sandbox_tier">Leibhéal bosca gainimh</string>
+    <string name="desktop_sandbox_tier_host">Óstach</string>
+    <string name="desktop_sandbox_tier_vault_fs">Córas comhad an vault</string>
+    <string name="desktop_sandbox_tier_net_isolated">Líonra iargúlta</string>
+    <string name="desktop_sandbox_tier_standard">Caighdeánach</string>
+    <string name="desktop_perm_filesystem_home">Fillteán baile</string>
+    <string name="desktop_perm_filesystem_host">Córas comhad an óstaigh</string>
+    <string name="desktop_perm_network">Líonra</string>
+    <string name="desktop_perm_gpu">GPU (DRI)</string>
+    <string name="desktop_perm_wayland">Wayland</string>
+    <string name="desktop_perm_x11">X11</string>
+    <string name="desktop_perm_pulseaudio">Fuaim</string>
+    <string name="desktop_perm_notifications">Fógraí</string>
+    <string name="desktop_perm_camera">Ceamara</string>
+    <string name="desktop_perm_microphone">Micreafón</string>
+    <string name="desktop_flatpak_unavailable">Níl Flatpak ar fáil; níl forscriotaí ceadanna ar fáil ar an gcóras seo.</string>
+    <string name="desktop_flatpak_override_applied">Forscríobh Flatpak curtha i bhfeidhm</string>
+    <string name="desktop_flatpak_override_failed">Níorbh fhéidir forscríobh Flatpak a chur i bhfeidhm</string>
+    <string name="desktop_flatpak_reset_overrides">Athshocraigh forscriotaí</string>
+    <string name="desktop_deeplink_handler_hint">Osclaíonn telos:// aipeanna Telos agus cuardach Kickoff (cláraithe nuair a thosaíonn an deasc).</string>
+</resources>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_store_permissions">Dozvole</string>
+    <string name="desktop_store_sandbox_tier">Razina sandboxa</string>
+    <string name="desktop_sandbox_tier_host">Domaćin</string>
+    <string name="desktop_sandbox_tier_vault_fs">Datotečni sustav trezora</string>
+    <string name="desktop_sandbox_tier_net_isolated">Mrežno izolirano</string>
+    <string name="desktop_sandbox_tier_standard">Standardno</string>
+    <string name="desktop_perm_filesystem_home">Početna mapa</string>
+    <string name="desktop_perm_filesystem_host">Datotečni sustav domaćina</string>
+    <string name="desktop_perm_network">Mreža</string>
+    <string name="desktop_perm_gpu">GPU (DRI)</string>
+    <string name="desktop_perm_wayland">Wayland</string>
+    <string name="desktop_perm_x11">X11</string>
+    <string name="desktop_perm_pulseaudio">Zvuk</string>
+    <string name="desktop_perm_notifications">Obavijesti</string>
+    <string name="desktop_perm_camera">Kamera</string>
+    <string name="desktop_perm_microphone">Mikrofon</string>
+    <string name="desktop_flatpak_unavailable">Flatpak nije dostupan; nadjačavanja dozvola nisu dostupna na ovom sustavu.</string>
+    <string name="desktop_flatpak_override_applied">Flatpak nadjačavanje primijenjeno</string>
+    <string name="desktop_flatpak_override_failed">Nije moguće primijeniti Flatpak nadjačavanje</string>
+    <string name="desktop_flatpak_reset_overrides">Poništi nadjačavanja</string>
+    <string name="desktop_deeplink_handler_hint">telos:// otvara Telos aplikacije i Kickoff pretraživanje (registrira se pri pokretanju radne površine).</string>
+</resources>

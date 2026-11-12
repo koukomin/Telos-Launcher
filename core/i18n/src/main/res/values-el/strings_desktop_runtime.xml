@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_store_permissions">Δικαιώματα</string>
+    <string name="desktop_store_sandbox_tier">Επίπεδο sandbox</string>
+    <string name="desktop_sandbox_tier_host">Κεντρικό σύστημα</string>
+    <string name="desktop_sandbox_tier_vault_fs">Σύστημα αρχείων vault</string>
+    <string name="desktop_sandbox_tier_net_isolated">Χωρίς δίκτυο</string>
+    <string name="desktop_sandbox_tier_standard">Τυπικό</string>
+    <string name="desktop_perm_filesystem_home">Φάκελος home</string>
+    <string name="desktop_perm_filesystem_host">Σύστημα αρχείων κεντρικού</string>
+    <string name="desktop_perm_network">Δίκτυο</string>
+    <string name="desktop_perm_gpu">GPU (DRI)</string>
+    <string name="desktop_perm_wayland">Wayland</string>
+    <string name="desktop_perm_x11">X11</string>
+    <string name="desktop_perm_pulseaudio">Ήχος</string>
+    <string name="desktop_perm_notifications">Ειδοποιήσεις</string>
+    <string name="desktop_perm_camera">Κάμερα</string>
+    <string name="desktop_perm_microphone">Μικρόφωνο</string>
+    <string name="desktop_flatpak_unavailable">Το Flatpak δεν είναι διαθέσιμο· οι παρακάμψεις δικαιωμάτων δεν ισχύουν σε αυτό το σύστημα.</string>
+    <string name="desktop_flatpak_override_applied">Εφαρμόστηκε η παράκαμψη Flatpak</string>
+    <string name="desktop_flatpak_override_failed">Αδυναμία εφαρμογής παράκαμψης Flatpak</string>
+    <string name="desktop_flatpak_reset_overrides">Επαναφορά παρακάμψεων</string>
+    <string name="desktop_deeplink_handler_hint">Το telos:// ανοίγει εφαρμογές Telos και αναζήτηση Kickoff (εγγράφεται στην εκκίνηση της επιφάνειας εργασίας).</string>
+</resources>

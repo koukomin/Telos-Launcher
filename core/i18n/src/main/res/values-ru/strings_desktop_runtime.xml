@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_store_permissions">Разрешения</string>
+    <string name="desktop_store_sandbox_tier">Уровень песочницы</string>
+    <string name="desktop_sandbox_tier_host">Хост</string>
+    <string name="desktop_sandbox_tier_vault_fs">Файловая система хранилища</string>
+    <string name="desktop_sandbox_tier_net_isolated">Без сети</string>
+    <string name="desktop_sandbox_tier_standard">Стандарт</string>
+    <string name="desktop_perm_filesystem_home">Домашняя папка</string>
+    <string name="desktop_perm_filesystem_host">Файловая система хоста</string>
+    <string name="desktop_perm_network">Сеть</string>
+    <string name="desktop_perm_gpu">GPU (DRI)</string>
+    <string name="desktop_perm_wayland">Wayland</string>
+    <string name="desktop_perm_x11">X11</string>
+    <string name="desktop_perm_pulseaudio">Звук</string>
+    <string name="desktop_perm_notifications">Уведомления</string>
+    <string name="desktop_perm_camera">Камера</string>
+    <string name="desktop_perm_microphone">Микрофон</string>
+    <string name="desktop_flatpak_unavailable">Flatpak недоступен; переопределения разрешений на этой системе недоступны.</string>
+    <string name="desktop_flatpak_override_applied">Переопределение Flatpak применено</string>
+    <string name="desktop_flatpak_override_failed">Не удалось применить переопределение Flatpak</string>
+    <string name="desktop_flatpak_reset_overrides">Сбросить переопределения</string>
+    <string name="desktop_deeplink_handler_hint">telos:// открывает приложения Telos и поиск Kickoff (регистрируется при запуске рабочего стола).</string>
+</resources>

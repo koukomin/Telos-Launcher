@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_store_permissions">Berechtigungen</string>
+    <string name="desktop_store_sandbox_tier">Sandbox-Stufe</string>
+    <string name="desktop_sandbox_tier_host">Host</string>
+    <string name="desktop_sandbox_tier_vault_fs">Vault-Dateisystem</string>
+    <string name="desktop_sandbox_tier_net_isolated">Netzwerkisoliert</string>
+    <string name="desktop_sandbox_tier_standard">Standard</string>
+    <string name="desktop_perm_filesystem_home">Home-Ordner</string>
+    <string name="desktop_perm_filesystem_host">Host-Dateisystem</string>
+    <string name="desktop_perm_network">Netzwerk</string>
+    <string name="desktop_perm_gpu">GPU (DRI)</string>
+    <string name="desktop_perm_wayland">Wayland</string>
+    <string name="desktop_perm_x11">X11</string>
+    <string name="desktop_perm_pulseaudio">Audio</string>
+    <string name="desktop_perm_notifications">Benachrichtigungen</string>
+    <string name="desktop_perm_camera">Kamera</string>
+    <string name="desktop_perm_microphone">Mikrofon</string>
+    <string name="desktop_flatpak_unavailable">Flatpak ist nicht verfügbar; Berechtigungsüberschreibungen sind auf diesem System nicht verfügbar.</string>
+    <string name="desktop_flatpak_override_applied">Flatpak-Überschreibung angewendet</string>
+    <string name="desktop_flatpak_override_failed">Flatpak-Überschreibung konnte nicht angewendet werden</string>
+    <string name="desktop_flatpak_reset_overrides">Überschreibungen zurücksetzen</string>
+    <string name="desktop_deeplink_handler_hint">telos:// öffnet Telos-Apps und die Kickoff-Suche (wird beim Desktop-Start registriert).</string>
+</resources>

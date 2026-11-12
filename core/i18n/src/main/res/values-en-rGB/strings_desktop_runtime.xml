@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_store_permissions">Permissions</string>
+    <string name="desktop_store_sandbox_tier">Sandbox tier</string>
+    <string name="desktop_sandbox_tier_host">Host</string>
+    <string name="desktop_sandbox_tier_vault_fs">Vault filesystem</string>
+    <string name="desktop_sandbox_tier_net_isolated">Network isolated</string>
+    <string name="desktop_sandbox_tier_standard">Standard</string>
+    <string name="desktop_perm_filesystem_home">Home folder</string>
+    <string name="desktop_perm_filesystem_host">Host filesystem</string>
+    <string name="desktop_perm_network">Network</string>
+    <string name="desktop_perm_gpu">GPU (DRI)</string>
+    <string name="desktop_perm_wayland">Wayland</string>
+    <string name="desktop_perm_x11">X11</string>
+    <string name="desktop_perm_pulseaudio">Audio</string>
+    <string name="desktop_perm_notifications">Notifications</string>
+    <string name="desktop_perm_camera">Camera</string>
+    <string name="desktop_perm_microphone">Microphone</string>
+    <string name="desktop_flatpak_unavailable">Flatpak is not available; permission overrides are unavailable on this system.</string>
+    <string name="desktop_flatpak_override_applied">Flatpak override applied</string>
+    <string name="desktop_flatpak_override_failed">Could not apply Flatpak override</string>
+    <string name="desktop_flatpak_reset_overrides">Reset overrides</string>
+    <string name="desktop_deeplink_handler_hint">telos:// opens Telos apps and Kickoff search (registered when the desktop starts).</string>
+</resources>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_store_permissions">Разрешения</string>
+    <string name="desktop_store_sandbox_tier">Ниво на пясъчник</string>
+    <string name="desktop_sandbox_tier_host">Хост</string>
+    <string name="desktop_sandbox_tier_vault_fs">Файлова система на трезора</string>
+    <string name="desktop_sandbox_tier_net_isolated">Мрежово изолирано</string>
+    <string name="desktop_sandbox_tier_standard">Стандартно</string>
+    <string name="desktop_perm_filesystem_home">Домашна папка</string>
+    <string name="desktop_perm_filesystem_host">Файлова система на хоста</string>
+    <string name="desktop_perm_network">Мрежа</string>
+    <string name="desktop_perm_gpu">GPU (DRI)</string>
+    <string name="desktop_perm_wayland">Wayland</string>
+    <string name="desktop_perm_x11">X11</string>
+    <string name="desktop_perm_pulseaudio">Аудио</string>
+    <string name="desktop_perm_notifications">Известия</string>
+    <string name="desktop_perm_camera">Камера</string>
+    <string name="desktop_perm_microphone">Микрофон</string>
+    <string name="desktop_flatpak_unavailable">Flatpak не е наличен; презаписванията на разрешения не са налични на тази система.</string>
+    <string name="desktop_flatpak_override_applied">Презаписването на Flatpak е приложено</string>
+    <string name="desktop_flatpak_override_failed">Неуспешно прилагане на презаписване на Flatpak</string>
+    <string name="desktop_flatpak_reset_overrides">Нулиране на презаписванията</string>
+    <string name="desktop_deeplink_handler_hint">telos:// отваря приложения на Telos и Kickoff търсене (регистрира се при старт на работния плот).</string>
+</resources>

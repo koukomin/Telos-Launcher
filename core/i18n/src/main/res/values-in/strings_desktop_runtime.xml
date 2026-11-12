@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_store_permissions">Izin</string>
+    <string name="desktop_store_sandbox_tier">Tingkat sandbox</string>
+    <string name="desktop_sandbox_tier_host">Host</string>
+    <string name="desktop_sandbox_tier_vault_fs">Sistem berkas vault</string>
+    <string name="desktop_sandbox_tier_net_isolated">Jaringan terisolasi</string>
+    <string name="desktop_sandbox_tier_standard">Standar</string>
+    <string name="desktop_perm_filesystem_home">Folder rumah</string>
+    <string name="desktop_perm_filesystem_host">Sistem berkas host</string>
+    <string name="desktop_perm_network">Jaringan</string>
+    <string name="desktop_perm_gpu">GPU (DRI)</string>
+    <string name="desktop_perm_wayland">Wayland</string>
+    <string name="desktop_perm_x11">X11</string>
+    <string name="desktop_perm_pulseaudio">Audio</string>
+    <string name="desktop_perm_notifications">Notifikasi</string>
+    <string name="desktop_perm_camera">Kamera</string>
+    <string name="desktop_perm_microphone">Mikrofon</string>
+    <string name="desktop_flatpak_unavailable">Flatpak tidak tersedia; penggantian izin tidak tersedia pada sistem ini.</string>
+    <string name="desktop_flatpak_override_applied">Penggantian Flatpak diterapkan</string>
+    <string name="desktop_flatpak_override_failed">Tidak dapat menerapkan penggantian Flatpak</string>
+    <string name="desktop_flatpak_reset_overrides">Atur ulang penggantian</string>
+    <string name="desktop_deeplink_handler_hint">telos:// membuka aplikasi Telos dan pencarian Kickoff (didaftarkan saat desktop dimulai).</string>
+</resources>

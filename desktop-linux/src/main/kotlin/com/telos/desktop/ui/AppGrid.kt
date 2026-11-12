@@ -59,11 +59,19 @@ fun PlasmaAppGrid(
     onDismiss: () -> Unit,
     onOpenTelos: (TelosVirtualApp) -> Unit,
 ) {
-    var query by remember { mutableStateOf("") }
+    var query by remember { mutableStateOf(DesktopChrome.pendingSearchQuery.orEmpty()) }
     var tab by remember { mutableStateOf("Telos") }
     var cat by remember { mutableStateOf<TelosAppCategory?>(null) }
     var apps by remember { mutableStateOf<List<DesktopEntry>>(emptyList()) }
     var hits by remember { mutableStateOf<List<SearchHit>>(emptyList()) }
+    LaunchedEffect(DesktopChrome.pendingSearchQuery) {
+        val seeded = DesktopChrome.pendingSearchQuery
+        if (!seeded.isNullOrEmpty()) {
+            query = seeded
+            tab = "All"
+            DesktopChrome.pendingSearchQuery = null
+        }
+    }
     LaunchedEffect(Unit) { apps = withContext(Dispatchers.IO) { LinuxAppScanner.scan() } }
     LaunchedEffect(query, apps) {
         if (query.isBlank()) {

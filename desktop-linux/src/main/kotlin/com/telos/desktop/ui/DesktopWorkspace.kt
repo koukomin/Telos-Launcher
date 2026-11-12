@@ -181,6 +181,42 @@ fun DesktopWorkspace(
                 wm.open("Media Player", y = topBarPx + 12f)
             }
         }
+        // VOS-3: dispatch queued telos:// deep links into virtual apps / Kickoff search.
+        LaunchedEffect(wm, topBarPx) {
+            while (true) {
+                val link = com.telos.desktop.apps.TelosDeepLinkBus.take()
+                if (link != null) {
+                    when (link) {
+                        is com.telos.desktop.apps.TelosDeepLink.OpenApp -> {
+                            if (link.windowTitle == "Quake") {
+                                TelosQuake.toggle()
+                            } else {
+                                wm.open(link.windowTitle, y = topBarPx + 12f)
+                            }
+                        }
+                        is com.telos.desktop.apps.TelosDeepLink.Search -> {
+                            DesktopChrome.openAppGridWithQuery(link.query)
+                        }
+                        is com.telos.desktop.apps.TelosDeepLink.OpenFiles -> {
+                            link.path?.let { file ->
+                                TelosFilesNav.path =
+                                    if (file.isDirectory || com.telos.desktop.files.ZipArchives.isArchive(file)) {
+                                        file
+                                    } else {
+                                        file.parentFile ?: file
+                                    }
+                            }
+                            wm.open("Files", y = topBarPx + 12f)
+                        }
+                        is com.telos.desktop.apps.TelosDeepLink.OpenMedia -> {
+                            wm.open("Media Player", y = topBarPx + 12f)
+                        }
+                        com.telos.desktop.apps.TelosDeepLink.Unknown -> Unit
+                    }
+                }
+                kotlinx.coroutines.delay(400)
+            }
+        }
         // === TELOS_PENDING_REVIEW_END: telos_kde_replacement_suite ===
         Box(
             Modifier

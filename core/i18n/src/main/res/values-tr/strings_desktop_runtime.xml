@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_store_permissions">İzinler</string>
+    <string name="desktop_store_sandbox_tier">Korumalı alan düzeyi</string>
+    <string name="desktop_sandbox_tier_host">Ana bilgisayar</string>
+    <string name="desktop_sandbox_tier_vault_fs">Kasa dosya sistemi</string>
+    <string name="desktop_sandbox_tier_net_isolated">Ağ yalıtımlı</string>
+    <string name="desktop_sandbox_tier_standard">Standart</string>
+    <string name="desktop_perm_filesystem_home">Ev klasörü</string>
+    <string name="desktop_perm_filesystem_host">Ana bilgisayar dosya sistemi</string>
+    <string name="desktop_perm_network">Ağ</string>
+    <string name="desktop_perm_gpu">GPU (DRI)</string>
+    <string name="desktop_perm_wayland">Wayland</string>
+    <string name="desktop_perm_x11">X11</string>
+    <string name="desktop_perm_pulseaudio">Ses</string>
+    <string name="desktop_perm_notifications">Bildirimler</string>
+    <string name="desktop_perm_camera">Kamera</string>
+    <string name="desktop_perm_microphone">Mikrofon</string>
+    <string name="desktop_flatpak_unavailable">Flatpak kullanılamıyor; izin geçersiz kılmaları bu sistemde kullanılamaz.</string>
+    <string name="desktop_flatpak_override_applied">Flatpak geçersiz kılması uygulandı</string>
+    <string name="desktop_flatpak_override_failed">Flatpak geçersiz kılması uygulanamadı</string>
+    <string name="desktop_flatpak_reset_overrides">Geçersiz kılmaları sıfırla</string>
+    <string name="desktop_deeplink_handler_hint">telos:// Telos uygulamalarını ve Kickoff aramasını açar (masaüstü başlarken kaydedilir).</string>
+</resources>

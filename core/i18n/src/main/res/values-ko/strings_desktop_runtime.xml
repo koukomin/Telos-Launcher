@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_store_permissions">권한</string>
+    <string name="desktop_store_sandbox_tier">샌드박스 단계</string>
+    <string name="desktop_sandbox_tier_host">호스트</string>
+    <string name="desktop_sandbox_tier_vault_fs">볼트 파일 시스템</string>
+    <string name="desktop_sandbox_tier_net_isolated">네트워크 격리</string>
+    <string name="desktop_sandbox_tier_standard">표준</string>
+    <string name="desktop_perm_filesystem_home">홈 폴더</string>
+    <string name="desktop_perm_filesystem_host">호스트 파일 시스템</string>
+    <string name="desktop_perm_network">네트워크</string>
+    <string name="desktop_perm_gpu">GPU (DRI)</string>
+    <string name="desktop_perm_wayland">Wayland</string>
+    <string name="desktop_perm_x11">X11</string>
+    <string name="desktop_perm_pulseaudio">오디오</string>
+    <string name="desktop_perm_notifications">알림</string>
+    <string name="desktop_perm_camera">카메라</string>
+    <string name="desktop_perm_microphone">마이크</string>
+    <string name="desktop_flatpak_unavailable">Flatpak을 사용할 수 없어 이 시스템에서는 권한 재정의가 불가합니다.</string>
+    <string name="desktop_flatpak_override_applied">Flatpak 재정의가 적용됨</string>
+    <string name="desktop_flatpak_override_failed">Flatpak 재정의를 적용할 수 없음</string>
+    <string name="desktop_flatpak_reset_overrides">재정의 재설정</string>
+    <string name="desktop_deeplink_handler_hint">telos://는 Telos 앱과 Kickoff 검색을 엽니다(데스크톱 시작 시 등록).</string>
+</resources>

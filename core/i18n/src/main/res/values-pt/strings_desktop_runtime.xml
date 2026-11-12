@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_store_permissions">Permissões</string>
+    <string name="desktop_store_sandbox_tier">Nível de sandbox</string>
+    <string name="desktop_sandbox_tier_host">Anfitrião</string>
+    <string name="desktop_sandbox_tier_vault_fs">Sistema de ficheiros do cofre</string>
+    <string name="desktop_sandbox_tier_net_isolated">Rede isolada</string>
+    <string name="desktop_sandbox_tier_standard">Padrão</string>
+    <string name="desktop_perm_filesystem_home">Pasta pessoal</string>
+    <string name="desktop_perm_filesystem_host">Sistema de ficheiros do anfitrião</string>
+    <string name="desktop_perm_network">Rede</string>
+    <string name="desktop_perm_gpu">GPU (DRI)</string>
+    <string name="desktop_perm_wayland">Wayland</string>
+    <string name="desktop_perm_x11">X11</string>
+    <string name="desktop_perm_pulseaudio">Áudio</string>
+    <string name="desktop_perm_notifications">Notificações</string>
+    <string name="desktop_perm_camera">Câmara</string>
+    <string name="desktop_perm_microphone">Microfone</string>
+    <string name="desktop_flatpak_unavailable">O Flatpak não está disponível; as substituições de permissões não estão disponíveis neste sistema.</string>
+    <string name="desktop_flatpak_override_applied">Substituição Flatpak aplicada</string>
+    <string name="desktop_flatpak_override_failed">Não foi possível aplicar a substituição Flatpak</string>
+    <string name="desktop_flatpak_reset_overrides">Repor substituições</string>
+    <string name="desktop_deeplink_handler_hint">telos:// abre apps Telos e a pesquisa Kickoff (registado ao iniciar o ambiente de trabalho).</string>
+</resources>

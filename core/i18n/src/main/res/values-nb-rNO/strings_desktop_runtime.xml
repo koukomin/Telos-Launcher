@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_store_permissions">Tillatelser</string>
+    <string name="desktop_store_sandbox_tier">Sandkassenivå</string>
+    <string name="desktop_sandbox_tier_host">Vert</string>
+    <string name="desktop_sandbox_tier_vault_fs">Hvelvfilsystem</string>
+    <string name="desktop_sandbox_tier_net_isolated">Nettverksisolert</string>
+    <string name="desktop_sandbox_tier_standard">Standard</string>
+    <string name="desktop_perm_filesystem_home">Hjemmemappe</string>
+    <string name="desktop_perm_filesystem_host">Vertfilsystem</string>
+    <string name="desktop_perm_network">Nettverk</string>
+    <string name="desktop_perm_gpu">GPU (DRI)</string>
+    <string name="desktop_perm_wayland">Wayland</string>
+    <string name="desktop_perm_x11">X11</string>
+    <string name="desktop_perm_pulseaudio">Lyd</string>
+    <string name="desktop_perm_notifications">Varsler</string>
+    <string name="desktop_perm_camera">Kamera</string>
+    <string name="desktop_perm_microphone">Mikrofon</string>
+    <string name="desktop_flatpak_unavailable">Flatpak er ikke tilgjengelig; tillatelsesoverstyringer er ikke tilgjengelige på dette systemet.</string>
+    <string name="desktop_flatpak_override_applied">Flatpak-overstyring brukt</string>
+    <string name="desktop_flatpak_override_failed">Kunne ikke bruke Flatpak-overstyring</string>
+    <string name="desktop_flatpak_reset_overrides">Tilbakestill overstyringer</string>
+    <string name="desktop_deeplink_handler_hint">telos:// åpner Telos-apper og Kickoff-søk (registreres når skrivebordet starter).</string>
+</resources>
