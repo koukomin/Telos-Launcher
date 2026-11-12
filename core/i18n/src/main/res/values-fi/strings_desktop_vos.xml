@@ -11,7 +11,7 @@
     <string name="desktop_session_sync_title">Session sync</string>
     <string name="desktop_session_sync_export">Export encrypted bundle</string>
     <string name="desktop_session_sync_import">Import encrypted bundle</string>
-    <string name="desktop_session_sync_auto">Auto-import on boot when KeePass is unlocked</string>
+    <string name="desktop_session_sync_auto">Automaattinen tuonti käynnistyksessä, kun sync-avain on tallennettu</string>
     <string name="desktop_session_sync_pass">Sync passphrase (or KeePass entry %1$s)</string>
     <string name="desktop_session_sync_keepass">KeePass database path (.kdbx)</string>
     <string name="desktop_windows_shell_title">Windows shell replacement</string>
@@ -19,4 +19,8 @@
     <string name="desktop_windows_shell_revert">Restore explorer.exe shell</string>
     <string name="desktop_windows_shell_risk">Replaces your user shell at next sign-in. Keep a recovery path before enabling.</string>
     <string name="desktop_helix_portable_note">Helix window chrome is drawn in Compose on all platforms; native Win32 decorations may show until shell replacement.</string>
+    <string name="desktop_session_sync_pass_required">Sync-salasana vaaditaan</string>
+    <string name="desktop_session_sync_imported">Istunnon sync-paketti tuotu</string>
+    <string name="desktop_session_sync_key_stored">Sync-avain tallennettu käynnistyksen tuontia varten ilman kehotetta</string>
+    <string name="desktop_session_sync_key_missing">Anna sync-salasana ennen automaattisen tuonnin ottamista käyttöön</string>
 </resources>

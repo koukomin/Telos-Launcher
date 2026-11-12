@@ -105,6 +105,11 @@ object DesktopSessionSync {
     fun tryKeePassSyncKey(kdbx: File, masterPassword: CharArray, entryTitle: String = DEFAULT_KEEPASS_ENTRY): CharArray? =
         DesktopKeePassSyncKey.readSyncSecret(kdbx, masterPassword, entryTitle)
 
+    /**
+     * Boot / auto-import path. Prefer an already-stored sync/session key so KeePass
+     * does not need a master-password prompt. Never invents credentials: without a
+     * stored key (and without an explicit KeePass master password) this is a no-op.
+     */
     fun maybeAutoImport(
         kdbx: File?,
         masterPassword: CharArray?,
@@ -114,11 +119,35 @@ object DesktopSessionSync {
         if (!prefs.isFile || prefs.readText().trim() != "true") return false
         val bundle = File(defaultExportPath(), BUNDLE_NAME)
         if (!bundle.isFile) return false
+        val configDir = vaultSettings.configDir
         val pass = when {
-            kdbx != null && masterPassword != null -> tryKeePassSyncKey(kdbx, masterPassword) ?: return false
+            DesktopStoredSyncKey.hasStoredKey(configDir) ->
+                DesktopStoredSyncKey.load(configDir) ?: return false
+            kdbx != null && masterPassword != null -> {
+                val extracted = tryKeePassSyncKey(kdbx, masterPassword) ?: return false
+                // Once KeePass yields the sync secret, vault it for subsequent boots
+                // without another master-password prompt.
+                DesktopStoredSyncKey.store(extracted, configDir)
+                extracted
+            }
             else -> return false
         }
-        return importBundle(bundle, pass, vaultSettings).isSuccess
+        return try {
+            importBundle(bundle, pass, vaultSettings).isSuccess
+        } finally {
+            pass.fill('\u0000')
+        }
+    }
+
+    /** Persist a user-supplied sync passphrase for prompt-free boot auto-import. */
+    fun rememberSyncKey(passphrase: CharArray, vaultSettings: TelosDesktopSettings? = null): Boolean =
+        DesktopStoredSyncKey.store(passphrase, vaultSettings?.configDir)
+
+    fun hasRememberedSyncKey(vaultSettings: TelosDesktopSettings? = null): Boolean =
+        DesktopStoredSyncKey.hasStoredKey(vaultSettings?.configDir)
+
+    fun forgetSyncKey(vaultSettings: TelosDesktopSettings? = null) {
+        DesktopStoredSyncKey.clear(vaultSettings?.configDir)
     }
 
     private fun encryptedParams(): ZipParameters {
