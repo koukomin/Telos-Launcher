@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_panel_icon_contrast">Codarsnacht deilbhíní an phainéil</string>
+    <string name="desktop_panel_icon_contrast_auto">Uathoibríoch</string>
+    <string name="desktop_panel_icon_contrast_light">Deilbhíní geala</string>
+    <string name="desktop_panel_icon_contrast_dark">Deilbhíní dorcha</string>
+    <string name="desktop_panel_icon_contrast_hint">Samplaíonn Uathoibríoch stiall an pháipéir bhalla taobh thiar den phainéal uachtarach ar an ngléas seo agus roghnaíonn gliofáin gheala nó dhorcha do dheilbhíní Helix agus lipéid StatusNotifier Compose. Fanann na picteilíní áitiúil. Ní athdhathaítear pixmapanna SNI ó telos-sni. Preference: panel.iconContrast=auto|light|dark.</string>
+</resources>

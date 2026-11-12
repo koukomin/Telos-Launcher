@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_panel_icon_contrast">Contrasto del icones del pannello</string>
+    <string name="desktop_panel_icon_contrast_auto">Automatic</string>
+    <string name="desktop_panel_icon_contrast_light">Icones clar</string>
+    <string name="desktop_panel_icon_contrast_dark">Icones obscur</string>
+    <string name="desktop_panel_icon_contrast_hint">Automatic specimen le banda del fundo detra le pannello superior sur iste dispositivo e selige glyphes clar o obscur pro le icones Helix e le etiquettas StatusNotifier de Compose. Le pixeles remane local. Le pixmaps SNI de telos-sni non es recolorate. Preferentia: panel.iconContrast=auto|light|dark.</string>
+</resources>

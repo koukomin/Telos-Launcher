@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_panel_icon_contrast">패널 아이콘 대비</string>
+    <string name="desktop_panel_icon_contrast_auto">자동</string>
+    <string name="desktop_panel_icon_contrast_light">밝은 아이콘</string>
+    <string name="desktop_panel_icon_contrast_dark">어두운 아이콘</string>
+    <string name="desktop_panel_icon_contrast_hint">자동은 이 기기에서 상단 패널 뒤 배경화면 띠를 샘플링하고 Helix 패널 아이콘과 Compose StatusNotifier 라벨에 밝은/어두운 글리프를 고릅니다. 픽셀은 기기에만 남습니다. telos-sni의 SNI pixmap은 다시 칠하지 않습니다. 설정: panel.iconContrast=auto|light|dark.</string>
+</resources>

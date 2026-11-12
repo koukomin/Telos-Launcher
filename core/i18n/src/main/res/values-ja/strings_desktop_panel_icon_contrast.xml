@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_panel_icon_contrast">パネルアイコンのコントラスト</string>
+    <string name="desktop_panel_icon_contrast_auto">自動</string>
+    <string name="desktop_panel_icon_contrast_light">明るいアイコン</string>
+    <string name="desktop_panel_icon_contrast_dark">暗いアイコン</string>
+    <string name="desktop_panel_icon_contrast_hint">自動は、この端末で上部パネル背後の壁紙帯をサンプリングし、HelixパネルのアイコンとComposeのStatusNotifierラベル向けに明るい／暗いグリフを選びます。画素は端末内に留まります。telos-sniのSNI pixmapは再着色されません。設定: panel.iconContrast=auto|light|dark。</string>
+</resources>

@@ -5,18 +5,23 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithCache
+import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.CompositingStrategy
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.telos.desktop.theme.PanelIconContrast
 
 enum class CandyIcon {
     TelosLogo, AppGrid, Terminal, Monitor, Volume, Network, Battery, Power, Settings, Folder,
@@ -27,41 +32,65 @@ private val neon = Brush.linearGradient(listOf(Color(0xFFFF007F), Color(0xFF00F0
 private val core = Color(0xFF181623)
 
 @Composable
-fun CandyCyberIcon(kind: CandyIcon, size: Dp = 22.dp, modifier: Modifier = Modifier) {
+fun CandyCyberIcon(
+    kind: CandyIcon,
+    size: Dp = 22.dp,
+    modifier: Modifier = Modifier,
+    /**
+     * When set, recolors the glyph for wallpaper-aware panel contrast
+     * ([PanelIconContrast]). Host StatusNotifier pixmaps outside Compose are unchanged.
+     */
+    contrastTone: PanelIconContrast.Tone? = null,
+) {
+    val tint = contrastTone?.let { PanelIconContrast.glyphColor(it) }
     Box(
-        modifier.size(size).drawWithCache {
-            val path = Path()
-            onDrawBehind {
-                path.reset()
-                when (kind) {
-                    CandyIcon.TelosLogo -> logo()
-                    CandyIcon.AppGrid -> grid()
-                    CandyIcon.Terminal -> terminal()
-                    CandyIcon.Monitor -> monitor()
-                    CandyIcon.Volume -> volume()
-                    CandyIcon.Network -> network()
-                    CandyIcon.Battery -> battery()
-                    CandyIcon.Power -> power()
-                    CandyIcon.Settings -> settings()
-                    CandyIcon.Folder -> folder()
-                    CandyIcon.Tray -> tray()
-                    CandyIcon.Clip -> clip()
-                    CandyIcon.Bell -> bell()
-                    CandyIcon.Shot -> shot()
-                    CandyIcon.Notes -> notes()
-                    CandyIcon.Calendar -> calendar()
-                    CandyIcon.Calculator -> calculator()
-                    CandyIcon.Clock -> clock()
-                    CandyIcon.Trash -> trash()
-                    CandyIcon.Music -> music()
-                    CandyIcon.Photos -> photos()
-                    CandyIcon.Download -> download()
-                    CandyIcon.Radio -> radio()
-                    CandyIcon.Search -> search()
-                    CandyIcon.File -> file()
+        modifier
+            .size(size)
+            .then(
+                if (tint != null) {
+                    Modifier
+                        .graphicsLayer { compositingStrategy = CompositingStrategy.Offscreen }
+                        .drawWithContent {
+                            drawContent()
+                            drawRect(tint, blendMode = BlendMode.SrcIn)
+                        }
+                } else {
+                    Modifier
+                },
+            )
+            .drawWithCache {
+                val path = Path()
+                onDrawBehind {
+                    path.reset()
+                    when (kind) {
+                        CandyIcon.TelosLogo -> logo()
+                        CandyIcon.AppGrid -> grid()
+                        CandyIcon.Terminal -> terminal()
+                        CandyIcon.Monitor -> monitor()
+                        CandyIcon.Volume -> volume()
+                        CandyIcon.Network -> network()
+                        CandyIcon.Battery -> battery()
+                        CandyIcon.Power -> power()
+                        CandyIcon.Settings -> settings()
+                        CandyIcon.Folder -> folder()
+                        CandyIcon.Tray -> tray()
+                        CandyIcon.Clip -> clip()
+                        CandyIcon.Bell -> bell()
+                        CandyIcon.Shot -> shot()
+                        CandyIcon.Notes -> notes()
+                        CandyIcon.Calendar -> calendar()
+                        CandyIcon.Calculator -> calculator()
+                        CandyIcon.Clock -> clock()
+                        CandyIcon.Trash -> trash()
+                        CandyIcon.Music -> music()
+                        CandyIcon.Photos -> photos()
+                        CandyIcon.Download -> download()
+                        CandyIcon.Radio -> radio()
+                        CandyIcon.Search -> search()
+                        CandyIcon.File -> file()
+                    }
                 }
-            }
-        },
+            },
     )
 }
 

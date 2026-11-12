@@ -1,5 +1,6 @@
 package com.telos.desktop.settings
 
+import com.telos.desktop.theme.PanelIconContrast
 import com.telos.desktop.theme.WorkspaceTintStrips
 import java.io.File
 import java.util.Properties
@@ -56,6 +57,17 @@ class TelosDesktopSettings(private val vaultConfigDir: File) {
      */
     var workspaceTints: Boolean = true
     /**
+     * Panel / tray icon contrast: `auto` | `light` | `dark` ([PanelIconContrast.PREF_KEY]).
+     * Auto samples the wallpaper strip behind the top panel (local only).
+     */
+    var panelIconContrast: String = PanelIconContrast.Mode.Auto.propertyValue
+    /**
+     * Optional vault/portable wallpaper path used for panel contrast sampling.
+     * Blank = search Pictures / `.config/telos` under the session home. Defensive
+     * read of `theme.wallpaperPath` when Theme Studio / wallpaper accent owns it.
+     */
+    var wallpaperPath: String = ""
+    /**
      * Defensive reads for Theme Studio / OpSec visual mute keys. Not authored here —
      * only consumed so strips stay quiet or hidden when those prefs appear.
      */
@@ -111,6 +123,8 @@ class TelosDesktopSettings(private val vaultConfigDir: File) {
         nightLightTemperatureK = p.getProperty("nightLight.temperatureK")?.toIntOrNull()
             ?.coerceIn(1000, 6500) ?: 4500
         workspaceTints = WorkspaceTintStrips.parseWorkspaceTints(p, default = true)
+        panelIconContrast = PanelIconContrast.parseMode(p).propertyValue
+        wallpaperPath = p.getProperty("theme.wallpaperPath") ?: wallpaperPath
         themeQuietOps = WorkspaceTintStrips.parseQuietOps(p)
         themePanicMute = WorkspaceTintStrips.parsePanicMute(p)
         outputPrefs.clear()
@@ -169,6 +183,8 @@ class TelosDesktopSettings(private val vaultConfigDir: File) {
         p["nightLight.enabled"] = nightLightEnabled.toString()
         p["nightLight.temperatureK"] = nightLightTemperatureK.toString()
         p[WorkspaceTintStrips.PREF_KEY] = workspaceTints.toString()
+        p[PanelIconContrast.PREF_KEY] = PanelIconContrast.parseMode(panelIconContrast).propertyValue
+        if (wallpaperPath.isNotBlank()) p["theme.wallpaperPath"] = wallpaperPath
         outputPrefs.forEach { (name, spec) -> p["output.$name"] = spec }
         file.outputStream().use { p.store(it, "Telos Linux Desktop") }
     }

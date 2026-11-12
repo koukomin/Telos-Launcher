@@ -116,6 +116,15 @@ fun LinuxDesktopSettingsPanel(
                 t.t("desktop_theme_workspace_tints_hint"),
                 "workspace",
                 "tint",
+                t.t("desktop_panel_icon_contrast"),
+                t.t("desktop_panel_icon_contrast_auto"),
+                t.t("desktop_panel_icon_contrast_light"),
+                t.t("desktop_panel_icon_contrast_dark"),
+                t.t("desktop_panel_icon_contrast_hint"),
+                "panel",
+                "tray",
+                "contrast",
+                "wallpaper",
             ),
             portalKeywords = listOf(
                 t.t("desktop_perm_camera"),
@@ -312,6 +321,50 @@ fun LinuxDesktopSettingsPanel(
                 }
                 Text(
                     t.t("desktop_theme_workspace_tints_hint"),
+                    fontSize = 11.sp,
+                    color = TelosColors.onSurface.copy(0.7f),
+                )
+                Text(
+                    t.t("desktop_panel_icon_contrast"),
+                    fontSize = 13.sp,
+                    color = TelosColors.onSurface,
+                    modifier = Modifier.padding(top = 8.dp),
+                )
+                val contrastMode = com.telos.desktop.theme.PanelIconContrast.parseMode(settings.panelIconContrast)
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    HelixTechPill(
+                        t.t("desktop_panel_icon_contrast_auto"),
+                        selected = contrastMode == com.telos.desktop.theme.PanelIconContrast.Mode.Auto,
+                        accent = TelosColors.secondary,
+                    ) {
+                        settings.panelIconContrast =
+                            com.telos.desktop.theme.PanelIconContrast.Mode.Auto.propertyValue
+                        com.telos.desktop.theme.PanelIconContrast.clearCache()
+                        settings.save()
+                    }
+                    HelixTechPill(
+                        t.t("desktop_panel_icon_contrast_light"),
+                        selected = contrastMode == com.telos.desktop.theme.PanelIconContrast.Mode.Light,
+                        accent = TelosColors.primary,
+                    ) {
+                        settings.panelIconContrast =
+                            com.telos.desktop.theme.PanelIconContrast.Mode.Light.propertyValue
+                        com.telos.desktop.theme.PanelIconContrast.clearCache()
+                        settings.save()
+                    }
+                    HelixTechPill(
+                        t.t("desktop_panel_icon_contrast_dark"),
+                        selected = contrastMode == com.telos.desktop.theme.PanelIconContrast.Mode.Dark,
+                        accent = TelosColors.primary,
+                    ) {
+                        settings.panelIconContrast =
+                            com.telos.desktop.theme.PanelIconContrast.Mode.Dark.propertyValue
+                        com.telos.desktop.theme.PanelIconContrast.clearCache()
+                        settings.save()
+                    }
+                }
+                Text(
+                    t.t("desktop_panel_icon_contrast_hint"),
                     fontSize = 11.sp,
                     color = TelosColors.onSurface.copy(0.7f),
                 )

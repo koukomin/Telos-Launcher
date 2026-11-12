@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_panel_icon_contrast">Panel nişanı kontrastı</string>
+    <string name="desktop_panel_icon_contrast_auto">Avtomatik</string>
+    <string name="desktop_panel_icon_contrast_light">Açıq nişanlar</string>
+    <string name="desktop_panel_icon_contrast_dark">Tünd nişanlar</string>
+    <string name="desktop_panel_icon_contrast_hint">Avtomatik yuxarı panel arxasındakı divar kağızı zolağını bu cihazda nümunə götürür və Helix panel nişanları ilə Compose StatusNotifier etiketləri üçün açıq və ya tünd qliflər seçir. Piksellər yerli qalır. telos-sni SNI pixmap-ləri rənglənməz. Preference: panel.iconContrast=auto|light|dark.</string>
+</resources>

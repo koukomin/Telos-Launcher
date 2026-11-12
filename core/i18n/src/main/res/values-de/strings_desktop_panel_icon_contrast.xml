@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_panel_icon_contrast">Kontrast der Panel-Symbole</string>
+    <string name="desktop_panel_icon_contrast_auto">Auto</string>
+    <string name="desktop_panel_icon_contrast_light">Helle Symbole</string>
+    <string name="desktop_panel_icon_contrast_dark">Dunkle Symbole</string>
+    <string name="desktop_panel_icon_contrast_hint">Auto tastet den Tapetenstreifen hinter der oberen Leiste auf diesem Gerät ab und wählt helle oder dunkle Glyphen für Helix-Panel-Symbole und Compose-StatusNotifier-Beschriftungen. Pixel bleiben lokal. SNI-Pixmaps von telos-sni werden nicht umgefärbt. Einstellung: panel.iconContrast=auto|light|dark.</string>
+</resources>

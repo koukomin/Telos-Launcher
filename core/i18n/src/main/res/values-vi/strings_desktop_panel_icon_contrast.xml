@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_panel_icon_contrast">Độ tương phản biểu tượng thanh</string>
+    <string name="desktop_panel_icon_contrast_auto">Tự động</string>
+    <string name="desktop_panel_icon_contrast_light">Biểu tượng sáng</string>
+    <string name="desktop_panel_icon_contrast_dark">Biểu tượng tối</string>
+    <string name="desktop_panel_icon_contrast_hint">Tự động lấy mẫu dải hình nền phía sau thanh trên trên thiết bị này và chọn glyph sáng hoặc tối cho biểu tượng Helix và nhãn StatusNotifier Compose. Pixel ở lại cục bộ. Pixmap SNI từ telos-sni không bị tô lại. Preference: panel.iconContrast=auto|light|dark.</string>
+</resources>
