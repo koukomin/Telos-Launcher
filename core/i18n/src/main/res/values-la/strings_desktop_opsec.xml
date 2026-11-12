@@ -3,8 +3,14 @@
     <string name="desktop_opsec_title">OpSec</string>
     <string name="desktop_opsec_secure_clipboard">Tabula tuta</string>
     <string name="desktop_opsec_clipboard_title">Tabula</string>
-    <string name="desktop_opsec_clipboard_hint">Textus sensilis in hac sessione servatur et e tabula systematis deletur ne aliae applicationes eum infigere possint.</string>
+    <string name="desktop_opsec_clipboard_hint">Textus sensitivus (claves, IBAN, WireGuard) ex historia removetur, in hac sessione tantum servatur, et e tabula systematis deletur. Historia in vault manet — sine synchronisatione nubis.</string>
     <string name="desktop_opsec_clipboard_clear_now">Tabulam nunc purga</string>
+    <string name="desktop_opsec_clipboard_clear_all">Omnia dele</string>
+    <string name="desktop_opsec_clipboard_history_meta">Usque ad 20 · post 5 minuta cadit · usque ad seram figere · Super+V</string>
+    <string name="desktop_opsec_clipboard_history_empty">Nondum historia tabulae</string>
+    <string name="desktop_opsec_clipboard_pin_until_lock">Figere</string>
+    <string name="desktop_opsec_clipboard_unpin">Solvere</string>
+    <string name="desktop_opsec_clipboard_recall_vaulted">Clip sensitivum e vault revoca</string>
     <string name="desktop_opsec_clipboard_timer">Automatice purga post %1$d secundas</string>
     <string name="desktop_opsec_clipboard_timer_off">Exstinctum</string>
     <string name="desktop_opsec_attestation_run">Integritatis hospitis imaginem nota</string>

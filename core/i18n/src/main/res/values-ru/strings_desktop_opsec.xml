@@ -3,8 +3,14 @@
     <string name="desktop_opsec_title">OpSec</string>
     <string name="desktop_opsec_secure_clipboard">Защищённый буфер обмена</string>
     <string name="desktop_opsec_clipboard_title">Буфер обмена</string>
-    <string name="desktop_opsec_clipboard_hint">Чувствительный текст хранится в сеансе и очищается из системного буфера, чтобы другие приложения не могли его вставить.</string>
+    <string name="desktop_opsec_clipboard_hint">Чувствительный текст (ключи, IBAN, WireGuard) удаляется из истории, хранится только в этой сессии и очищается из системного буфера. История остаётся в vault — без облачной синхронизации.</string>
     <string name="desktop_opsec_clipboard_clear_now">Очистить буфер сейчас</string>
+    <string name="desktop_opsec_clipboard_clear_all">Очистить всё</string>
+    <string name="desktop_opsec_clipboard_history_meta">До 20 записей · истекает через 5 минут · закрепить до блокировки · Super+V</string>
+    <string name="desktop_opsec_clipboard_history_empty">История буфера пока пуста</string>
+    <string name="desktop_opsec_clipboard_pin_until_lock">Закрепить</string>
+    <string name="desktop_opsec_clipboard_unpin">Открепить</string>
+    <string name="desktop_opsec_clipboard_recall_vaulted">Восстановить чувствительный клип из vault</string>
     <string name="desktop_opsec_clipboard_timer">Автоочистка через %1$d с</string>
     <string name="desktop_opsec_clipboard_timer_off">Выкл.</string>
     <string name="desktop_opsec_attestation_run">Записать снимок целостности хоста</string>

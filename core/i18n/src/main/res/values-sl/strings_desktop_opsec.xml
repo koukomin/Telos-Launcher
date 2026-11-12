@@ -3,8 +3,14 @@
     <string name="desktop_opsec_title">OpSec</string>
     <string name="desktop_opsec_secure_clipboard">Varna odložišče</string>
     <string name="desktop_opsec_clipboard_title">Odložišče</string>
-    <string name="desktop_opsec_clipboard_hint">Občutljivo besedilo ostane v tej seji in se počisti iz sistemskega odložišča, da ga druge aplikacije ne morejo prilepiti.</string>
+    <string name="desktop_opsec_clipboard_hint">Občutljivo besedilo (ključi, IBAN, WireGuard) se odstrani iz zgodovine, shrani le v tej seji in počisti iz sistemske odložišča. Zgodovina ostane v vaultu — brez sinhronizacije v oblaku.</string>
     <string name="desktop_opsec_clipboard_clear_now">Počisti odložišče zdaj</string>
+    <string name="desktop_opsec_clipboard_clear_all">Počisti vse</string>
+    <string name="desktop_opsec_clipboard_history_meta">Do 20 elementov · poteče po 5 minutah · pripni do zaklepa · Super+V</string>
+    <string name="desktop_opsec_clipboard_history_empty">Še ni zgodovine odložišča</string>
+    <string name="desktop_opsec_clipboard_pin_until_lock">Pripni</string>
+    <string name="desktop_opsec_clipboard_unpin">Odpni</string>
+    <string name="desktop_opsec_clipboard_recall_vaulted">Priklini občutljiv posnetek iz vaulta</string>
     <string name="desktop_opsec_clipboard_timer">Samodejno počisti po %1$d s</string>
     <string name="desktop_opsec_clipboard_timer_off">Izklopljeno</string>
     <string name="desktop_opsec_attestation_run">Zabeleži posnetek celovitosti gostitelja</string>

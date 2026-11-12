@@ -3,8 +3,14 @@
     <string name="desktop_opsec_title">OpSec</string>
     <string name="desktop_opsec_secure_clipboard">安全なクリップボード</string>
     <string name="desktop_opsec_clipboard_title">クリップボード</string>
-    <string name="desktop_opsec_clipboard_hint">機密テキストはこのセッションに保管され、他のアプリが貼り付けできないようシステムクリップボードから消去されます。</string>
+    <string name="desktop_opsec_clipboard_hint">機密テキスト（鍵、IBAN、WireGuard）は履歴から除去され、このセッションのみに保管され、システムクリップボードから消去されます。履歴はボルト内のみ — クラウド同期なし。</string>
     <string name="desktop_opsec_clipboard_clear_now">今すぐクリップボードを消去</string>
+    <string name="desktop_opsec_clipboard_clear_all">すべて消去</string>
+    <string name="desktop_opsec_clipboard_history_meta">最大 20 件 · 5 分で期限切れ · ロックまで固定 · Super+V</string>
+    <string name="desktop_opsec_clipboard_history_empty">クリップボード履歴はまだありません</string>
+    <string name="desktop_opsec_clipboard_pin_until_lock">固定</string>
+    <string name="desktop_opsec_clipboard_unpin">固定解除</string>
+    <string name="desktop_opsec_clipboard_recall_vaulted">保管した機密クリップを呼び出す</string>
     <string name="desktop_opsec_clipboard_timer">%1$d 秒後に自動消去</string>
     <string name="desktop_opsec_clipboard_timer_off">オフ</string>
     <string name="desktop_opsec_attestation_run">ホスト整合性スナップショットを記録</string>

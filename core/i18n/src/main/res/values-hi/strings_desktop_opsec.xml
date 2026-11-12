@@ -3,8 +3,14 @@
     <string name="desktop_opsec_title">OpSec</string>
     <string name="desktop_opsec_secure_clipboard">सुरक्षित क्लिपबोर्ड</string>
     <string name="desktop_opsec_clipboard_title">क्लिपबोर्ड</string>
-    <string name="desktop_opsec_clipboard_hint">संवेदनशील पाठ इस सत्र में रखा जाता है और सिस्टम क्लिपबोर्ड से साफ़ किया जाता है ताकि अन्य ऐप उसे पेस्ट न कर सकें।</string>
+    <string name="desktop_opsec_clipboard_hint">संवेदनशील पाठ (कुंजियाँ, IBAN, WireGuard) इतिहास से हटा दिया जाता है, केवल इसी सत्र में रखा जाता है, और सिस्टम क्लिपबोर्ड से साफ़ किया जाता है। इतिहास वॉल्ट-स्थानीय रहता है — कोई क्लाउड सिंक नहीं।</string>
     <string name="desktop_opsec_clipboard_clear_now">अभी क्लिपबोर्ड साफ़ करें</string>
+    <string name="desktop_opsec_clipboard_clear_all">सभी साफ़ करें</string>
+    <string name="desktop_opsec_clipboard_history_meta">अधिकतम 20 आइटम · 5 मिनट बाद समाप्त · लॉक तक पिन · Super+V</string>
+    <string name="desktop_opsec_clipboard_history_empty">अभी कोई क्लिपबोर्ड इतिहास नहीं</string>
+    <string name="desktop_opsec_clipboard_pin_until_lock">पिन</string>
+    <string name="desktop_opsec_clipboard_unpin">अनपिन</string>
+    <string name="desktop_opsec_clipboard_recall_vaulted">वॉल्ट में सुरक्षित संवेदनशील क्लिप वापस लाएँ</string>
     <string name="desktop_opsec_clipboard_timer">%1$d सेकंड बाद स्वतः साफ़ करें</string>
     <string name="desktop_opsec_clipboard_timer_off">बंद</string>
     <string name="desktop_opsec_attestation_run">होस्ट अखंडता स्नैपशॉट रिकॉर्ड करें</string>

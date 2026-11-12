@@ -3,8 +3,14 @@
     <string name="desktop_opsec_title">OpSec</string>
     <string name="desktop_opsec_secure_clipboard">Biztonságos vágólap</string>
     <string name="desktop_opsec_clipboard_title">Vágólap</string>
-    <string name="desktop_opsec_clipboard_hint">Az érzékeny szöveg a munkamenetben marad, és törlődik a rendszer vágólapjáról, hogy más alkalmazások ne illeszthessék be.</string>
+    <string name="desktop_opsec_clipboard_hint">Az érzékeny szöveg (kulcsok, IBAN, WireGuard) kikerül az előzményekből, csak ebben a munkamenetben tárolódik, és törlődik a rendszer vágólapjáról. Az előzmény a vaultban marad — nincs felhőszinkron.</string>
     <string name="desktop_opsec_clipboard_clear_now">Vágólap törlése most</string>
+    <string name="desktop_opsec_clipboard_clear_all">Összes törlése</string>
+    <string name="desktop_opsec_clipboard_history_meta">Legfeljebb 20 elem · 5 perc után lejár · rögzítés zárolásig · Super+V</string>
+    <string name="desktop_opsec_clipboard_history_empty">Még nincs vágólap-előzmény</string>
+    <string name="desktop_opsec_clipboard_pin_until_lock">Rögzítés</string>
+    <string name="desktop_opsec_clipboard_unpin">Feloldás</string>
+    <string name="desktop_opsec_clipboard_recall_vaulted">Vaultolt érzékeny klip visszahívása</string>
     <string name="desktop_opsec_clipboard_timer">Automatikus törlés %1$d másodperc után</string>
     <string name="desktop_opsec_clipboard_timer_off">Ki</string>
     <string name="desktop_opsec_attestation_run">Gazdagép-integritás pillanatkép rögzítése</string>

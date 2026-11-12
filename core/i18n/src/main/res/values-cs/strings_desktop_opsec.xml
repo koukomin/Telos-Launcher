@@ -3,8 +3,14 @@
     <string name="desktop_opsec_title">OpSec</string>
     <string name="desktop_opsec_secure_clipboard">Bezpečná schránka</string>
     <string name="desktop_opsec_clipboard_title">Schránka</string>
-    <string name="desktop_opsec_clipboard_hint">Citlivý text zůstává v této relaci a je vymazán ze systémové schránky, aby jej ostatní aplikace nemohly vložit.</string>
+    <string name="desktop_opsec_clipboard_hint">Citlivý text (klíče, IBAN, WireGuard) se z historie odstraní, uloží jen v této relaci a vymaže ze systémové schránky. Historie zůstává ve vaultu — bez cloudové synchronizace.</string>
     <string name="desktop_opsec_clipboard_clear_now">Vymazat schránku nyní</string>
+    <string name="desktop_opsec_clipboard_clear_all">Vymazat vše</string>
+    <string name="desktop_opsec_clipboard_history_meta">Až 20 položek · vyprší po 5 minutách · připnout do uzamčení · Super+V</string>
+    <string name="desktop_opsec_clipboard_history_empty">Zatím žádná historie schránky</string>
+    <string name="desktop_opsec_clipboard_pin_until_lock">Připnout</string>
+    <string name="desktop_opsec_clipboard_unpin">Odepnout</string>
+    <string name="desktop_opsec_clipboard_recall_vaulted">Obnovit citlivý klip z vaultu</string>
     <string name="desktop_opsec_clipboard_timer">Automaticky vymazat po %1$d s</string>
     <string name="desktop_opsec_clipboard_timer_off">Vypnuto</string>
     <string name="desktop_opsec_attestation_run">Zaznamenat snímek integrity hostitele</string>

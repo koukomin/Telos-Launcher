@@ -3,8 +3,14 @@
     <string name="desktop_opsec_title">OpSec</string>
     <string name="desktop_opsec_secure_clipboard">Papan klip aman</string>
     <string name="desktop_opsec_clipboard_title">Papan klip</string>
-    <string name="desktop_opsec_clipboard_hint">Teks sensitif disimpan di sesi ini dan dihapus dari papan klip sistem agar aplikasi lain tidak dapat menempelkannya.</string>
+    <string name="desktop_opsec_clipboard_hint">Teks sensitif (kunci, IBAN, WireGuard) dihapus dari riwayat, disimpan hanya di sesi ini, dan dibersihkan dari papan klip sistem. Riwayat tetap lokal di vault — tanpa sinkronisasi cloud.</string>
     <string name="desktop_opsec_clipboard_clear_now">Hapus papan klip sekarang</string>
+    <string name="desktop_opsec_clipboard_clear_all">Hapus semua</string>
+    <string name="desktop_opsec_clipboard_history_meta">Hingga 20 item · kedaluwarsa setelah 5 menit · semat sampai kunci · Super+V</string>
+    <string name="desktop_opsec_clipboard_history_empty">Belum ada riwayat papan klip</string>
+    <string name="desktop_opsec_clipboard_pin_until_lock">Semat</string>
+    <string name="desktop_opsec_clipboard_unpin">Lepas</string>
+    <string name="desktop_opsec_clipboard_recall_vaulted">Ambil klip sensitif dari vault</string>
     <string name="desktop_opsec_clipboard_timer">Hapus otomatis setelah %1$d detik</string>
     <string name="desktop_opsec_clipboard_timer_off">Mati</string>
     <string name="desktop_opsec_attestation_run">Catat snapshot integritas host</string>

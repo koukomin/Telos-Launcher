@@ -3,8 +3,14 @@
     <string name="desktop_opsec_title">OpSec</string>
     <string name="desktop_opsec_secure_clipboard">Saugi iškarpinė</string>
     <string name="desktop_opsec_clipboard_title">Iškarpinė</string>
-    <string name="desktop_opsec_clipboard_hint">Jautrus tekstas saugomas šioje sesijoje ir išvalomas iš sistemos iškarpinės, kad kitos programos negalėtų jo įklijuoti.</string>
+    <string name="desktop_opsec_clipboard_hint">Jautrus tekstas (raktai, IBAN, WireGuard) pašalinamas iš istorijos, saugomas tik šioje sesijoje ir išvalomas iš sistemos iškarpinės. Istorija lieka vaulte — be debesų sinchronizavimo.</string>
     <string name="desktop_opsec_clipboard_clear_now">Išvalyti iškarpinę dabar</string>
+    <string name="desktop_opsec_clipboard_clear_all">Išvalyti viską</string>
+    <string name="desktop_opsec_clipboard_history_meta">Iki 20 elementų · baigiasi po 5 minučių · prisegti iki užrakinimo · Super+V</string>
+    <string name="desktop_opsec_clipboard_history_empty">Iškarpinės istorijos dar nėra</string>
+    <string name="desktop_opsec_clipboard_pin_until_lock">Prisegti</string>
+    <string name="desktop_opsec_clipboard_unpin">Atsegti</string>
+    <string name="desktop_opsec_clipboard_recall_vaulted">Atkurti vault'e saugomą jautrų klipą</string>
     <string name="desktop_opsec_clipboard_timer">Automatiškai išvalyti po %1$d s</string>
     <string name="desktop_opsec_clipboard_timer_off">Išjungta</string>
     <string name="desktop_opsec_attestation_run">Įrašyti pagrindinio kompiuterio vientisumo momentinę kopiją</string>

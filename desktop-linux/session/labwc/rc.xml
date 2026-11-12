@@ -54,5 +54,9 @@
     <keybind key="W-Escape">
       <action name="Exit" />
     </keybind>
+    <!-- Super+V: Win+V-style clipboard history (Compose also binds Meta+V). -->
+    <keybind key="W-v">
+      <action name="Execute" command="python3 -c &quot;import os,socket;p=os.path.join(os.environ.get('XDG_RUNTIME_DIR','/tmp'),'telos-clipboard.sock');s=socket.socket(socket.AF_UNIX);s.connect(p);s.sendall(b'toggle\n')&quot;" />
+    </keybind>
   </keyboard>
 </labwc_config>

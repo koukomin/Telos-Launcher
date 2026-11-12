@@ -126,6 +126,9 @@ fun DesktopWorkspace(
         com.telos.desktop.session.LayerShellBridge.listenLoop()
     }
     LaunchedEffect(Unit) {
+        com.telos.desktop.session.ClipboardHotkeyBridge.listenLoop()
+    }
+    LaunchedEffect(Unit) {
         com.telos.desktop.session.PortalFileChooser.pollLoop()
     }
     LaunchedEffect(Unit) {
@@ -506,8 +509,9 @@ fun handleDesktopKeys(
         wm.open("System Monitor", y = WorkArea.DEFAULT_TOP_BAR_PX + 8f, w = 960f, h = 640f)
         return true
     }
-    if (ctrl && key == Key.V && ev.isMetaPressed) {
-        TelosClipboardManager.popup = true
+    // Win+V equivalent: Super+V opens Helix clipboard history (panel clip glyph also toggles).
+    if (ev.isMetaPressed && key == Key.V && !ctrl && !alt) {
+        TelosClipboardManager.popup = !TelosClipboardManager.popup
         return true
     }
     if (alt && key == Key.Tab) {

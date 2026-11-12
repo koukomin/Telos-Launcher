@@ -3,8 +3,14 @@
     <string name="desktop_opsec_title">OpSec</string>
     <string name="desktop_opsec_secure_clipboard">Portapapeles seguro</string>
     <string name="desktop_opsec_clipboard_title">Portapapeles</string>
-    <string name="desktop_opsec_clipboard_hint">El texto sensible se guarda en esta sesión y se borra del portapapeles del sistema para que otras aplicaciones no puedan pegarlo.</string>
+    <string name="desktop_opsec_clipboard_hint">El texto sensible (claves, IBAN, WireGuard) se elimina del historial, se guarda solo en esta sesión y se borra del portapapeles del sistema. El historial es local al vault — sin sincronización en la nube.</string>
     <string name="desktop_opsec_clipboard_clear_now">Vaciar portapapeles ahora</string>
+    <string name="desktop_opsec_clipboard_clear_all">Borrar todo</string>
+    <string name="desktop_opsec_clipboard_history_meta">Hasta 20 elementos · caduca a los 5 minutos · fijar hasta bloqueo · Super+V</string>
+    <string name="desktop_opsec_clipboard_history_empty">Aún no hay historial del portapapeles</string>
+    <string name="desktop_opsec_clipboard_pin_until_lock">Fijar</string>
+    <string name="desktop_opsec_clipboard_unpin">Quitar</string>
+    <string name="desktop_opsec_clipboard_recall_vaulted">Recuperar clip sensible guardado</string>
     <string name="desktop_opsec_clipboard_timer">Borrar automáticamente tras %1$d segundos</string>
     <string name="desktop_opsec_clipboard_timer_off">Desactivado</string>
     <string name="desktop_opsec_attestation_run">Registrar instantánea de integridad del host</string>

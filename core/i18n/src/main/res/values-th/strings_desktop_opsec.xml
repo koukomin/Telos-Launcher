@@ -3,8 +3,14 @@
     <string name="desktop_opsec_title">OpSec</string>
     <string name="desktop_opsec_secure_clipboard">คลิปบอร์ดที่ปลอดภัย</string>
     <string name="desktop_opsec_clipboard_title">คลิปบอร์ด</string>
-    <string name="desktop_opsec_clipboard_hint">ข้อความที่ละเอียดอ่อนถูกเก็บในเซสชันนี้และล้างจากคลิปบอร์ดระบบ เพื่อไม่ให้แอปอื่นวางได้</string>
+    <string name="desktop_opsec_clipboard_hint">ข้อความละเอียดอ่อน (คีย์, IBAN, WireGuard) ถูกลบจากประวัติ เก็บเฉพาะในเซสชันนี้ และล้างจากคลิปบอร์ดระบบ ประวัติคงอยู่ใน vault เท่านั้น — ไม่ซิงค์คลาวด์</string>
     <string name="desktop_opsec_clipboard_clear_now">ล้างคลิปบอร์ดทันที</string>
+    <string name="desktop_opsec_clipboard_clear_all">ล้างทั้งหมด</string>
+    <string name="desktop_opsec_clipboard_history_meta">สูงสุด 20 รายการ · หมดอายุใน 5 นาที · ปักหมุดจนล็อก · Super+V</string>
+    <string name="desktop_opsec_clipboard_history_empty">ยังไม่มีประวัติคลิปบอร์ด</string>
+    <string name="desktop_opsec_clipboard_pin_until_lock">ปักหมุด</string>
+    <string name="desktop_opsec_clipboard_unpin">เลิกปักหมุด</string>
+    <string name="desktop_opsec_clipboard_recall_vaulted">เรียกคลิปละเอียดอ่อนจาก vault</string>
     <string name="desktop_opsec_clipboard_timer">ล้างอัตโนมัติหลัง %1$d วินาที</string>
     <string name="desktop_opsec_clipboard_timer_off">ปิด</string>
     <string name="desktop_opsec_attestation_run">บันทึกสแนปช็อตความสมบูรณ์ของโฮสต์</string>

@@ -3,8 +3,14 @@
     <string name="desktop_opsec_title">OpSec</string>
     <string name="desktop_opsec_secure_clipboard">Secure clipboard</string>
     <string name="desktop_opsec_clipboard_title">Clipboard</string>
-    <string name="desktop_opsec_clipboard_hint">Sensitive text is vaulted in this session and cleared from the system clipboard so other apps cannot paste it.</string>
+    <string name="desktop_opsec_clipboard_hint">Sensitive text (keys, IBAN, WireGuard) is scrubbed from history, vaulted in this session only, and cleared from the system clipboard. History is vault-local — no cloud sync.</string>
     <string name="desktop_opsec_clipboard_clear_now">Clear clipboard now</string>
+    <string name="desktop_opsec_clipboard_clear_all">Clear all</string>
+    <string name="desktop_opsec_clipboard_history_meta">Up to 20 items · auto-expire after 5 minutes · pin until lock · Super+V</string>
+    <string name="desktop_opsec_clipboard_history_empty">No clipboard history yet</string>
+    <string name="desktop_opsec_clipboard_pin_until_lock">Pin</string>
+    <string name="desktop_opsec_clipboard_unpin">Unpin</string>
+    <string name="desktop_opsec_clipboard_recall_vaulted">Recall vaulted sensitive clip</string>
     <string name="desktop_opsec_clipboard_timer">Auto-clear after %1$d seconds</string>
     <string name="desktop_opsec_clipboard_timer_off">Off</string>
     <string name="desktop_opsec_attestation_run">Record host integrity snapshot</string>

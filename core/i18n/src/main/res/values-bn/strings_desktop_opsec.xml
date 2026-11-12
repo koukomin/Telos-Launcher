@@ -3,8 +3,14 @@
     <string name="desktop_opsec_title">OpSec</string>
     <string name="desktop_opsec_secure_clipboard">নিরাপদ ক্লিপবোর্ড</string>
     <string name="desktop_opsec_clipboard_title">ক্লিপবোর্ড</string>
-    <string name="desktop_opsec_clipboard_hint">সংবেদনশীল লেখা এই সেশনে রাখা হয় এবং সিস্টেম ক্লিপবোর্ড থেকে মুছে ফেলা হয় যাতে অন্য অ্যাপ সেটি পেস্ট করতে না পারে।</string>
+    <string name="desktop_opsec_clipboard_hint">সংবেদনশীল লেখা (কী, IBAN, WireGuard) ইতিহাস থেকে সরিয়ে শুধু এই সেশনে রাখা হয় এবং সিস্টেম ক্লিপবোর্ড থেকে মুছে ফেলা হয়। ইতিহাস vault-স্থানীয় থাকে — কোনো ক্লাউড সিঙ্ক নেই।</string>
     <string name="desktop_opsec_clipboard_clear_now">এখনই ক্লিপবোর্ড পরিষ্কার করুন</string>
+    <string name="desktop_opsec_clipboard_clear_all">সব মুছুন</string>
+    <string name="desktop_opsec_clipboard_history_meta">সর্বোচ্চ ২০টি · ৫ মিনিট পর মেয়াদ শেষ · লক পর্যন্ত পিন · Super+V</string>
+    <string name="desktop_opsec_clipboard_history_empty">এখনও কোনো ক্লিপবোর্ড ইতিহাস নেই</string>
+    <string name="desktop_opsec_clipboard_pin_until_lock">পিন</string>
+    <string name="desktop_opsec_clipboard_unpin">আনপিন</string>
+    <string name="desktop_opsec_clipboard_recall_vaulted">vault-এ রাখা সংবেদনশীল ক্লিপ ফেরান</string>
     <string name="desktop_opsec_clipboard_timer">%1$d সেকেন্ড পর স্বয়ংক্রিয় পরিষ্কার</string>
     <string name="desktop_opsec_clipboard_timer_off">বন্ধ</string>
     <string name="desktop_opsec_attestation_run">হোস্ট অখণ্ডতার স্ন্যাপশট রেকর্ড করুন</string>

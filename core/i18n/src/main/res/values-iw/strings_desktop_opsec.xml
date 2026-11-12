@@ -3,8 +3,14 @@
     <string name="desktop_opsec_title">OpSec</string>
     <string name="desktop_opsec_secure_clipboard">לוח מוגן</string>
     <string name="desktop_opsec_clipboard_title">לוח</string>
-    <string name="desktop_opsec_clipboard_hint">טקסט רגיש נשמר בסשן זה ונמחק מלוח המערכת כדי שאפליקציות אחרות לא יוכלו להדביק אותו.</string>
+    <string name="desktop_opsec_clipboard_hint">טקסט רגיש (מפתחות, IBAN, WireGuard) מוסר מההיסטוריה, נשמר רק בסשן הזה ומנוקה מלוח המערכת. ההיסטוריה נשארת מקומית ב־vault — ללא סנכרון ענן.</string>
     <string name="desktop_opsec_clipboard_clear_now">נקה לוח עכשיו</string>
+    <string name="desktop_opsec_clipboard_clear_all">נקה הכול</string>
+    <string name="desktop_opsec_clipboard_history_meta">עד 20 פריטים · פג תוקף אחרי 5 דקות · נעץ עד נעילה · Super+V</string>
+    <string name="desktop_opsec_clipboard_history_empty">עדיין אין היסטוריית לוח</string>
+    <string name="desktop_opsec_clipboard_pin_until_lock">נעץ</string>
+    <string name="desktop_opsec_clipboard_unpin">בטל נעיצה</string>
+    <string name="desktop_opsec_clipboard_recall_vaulted">שחזר קליפ רגיש מה־vault</string>
     <string name="desktop_opsec_clipboard_timer">ניקוי אוטומטי אחרי %1$d שניות</string>
     <string name="desktop_opsec_clipboard_timer_off">כבוי</string>
     <string name="desktop_opsec_attestation_run">רשום תמונת מצב שלמות מארח</string>
