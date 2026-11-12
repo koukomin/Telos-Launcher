@@ -36,10 +36,12 @@ These sit **on top of** P0–W3 (still in tree). They describe the Telos Desktop
 | **VOS-3** | Planned | App runtime: Flatpak permissions, sandbox tiers, `telos://` deep links. |
 | **VOS-4** | **Partial (in tree)** | `DesktopSessionSync` encrypted zip of `desktop.properties` + `~/.config/telos` (no WG private keys in logs); optional KeePassTL entry **Telos Sync** via kotpass on desktop. LAN pairing with Android: not yet. |
 | **VOS-5** | **Partial (in tree)** | Session backup/export in Network + Settings; signed desktop updates and full vault restore remain future work. **Windows HKCU shell** (`WindowsShellIntegration`, `tools/windows/install-telos-shell.ps1`) optional. |
-| **VOS-6** | Planned | OpSec: attestation light, secure clipboard, audit log. |
+| **VOS-6** | Planned | OpSec: attestation light, secure clipboard, audit log. Stego FS Mode-B packaging (`telos-carriers.json`, assemble/open + portable `carriers/` hooks) is **partial in tree** as transport obfuscation — not VOS-6 complete. |
 
 Constraints that stay in force: no `:app:app` dependency on `:desktop-linux`; i18n keys from `:core:i18n` only; labwc is a **host package**, not bundled.
 
 ## Beyond the in-tree phases
 
 Portable multi-host packaging, hardened hybrid PQ key wrapping, steganographic carrier transport productization, and a Windows shell/companion path are **not** additional unfinished P/H/S/W phases above. They are separate productization work. Do not describe them as shipped in user-facing docs until implemented.
+
+**Stego FS (partial):** `StegoShardArrayManager.assembleAndOpen` / `assemblePrepared` write `telos-carriers.json`, attach dm-linear when available, otherwise assemble `stego_assembled.tvault`. Portable Data keeps carriers under `TelosPortableData/carriers/` (no host HOME traces). Full OpSec / deniability claims remain out of scope.
