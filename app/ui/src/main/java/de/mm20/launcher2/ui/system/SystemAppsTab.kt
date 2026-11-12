@@ -267,7 +267,7 @@ fun SystemAppsTab(onOpenDetails: (String) -> Unit) {
                                 .clickable { onOpenDetails(app.pkg) },
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
-                            AppIcon(app.pkg, app.label, 48, device = null)
+                            AppIcon(app.pkg, app.label, 48)
                             Column(Modifier.padding(start = 12.dp).weight(1f)) {
                                 Text(
                                     app.label,
