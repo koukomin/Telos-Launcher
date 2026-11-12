@@ -42,4 +42,23 @@
     <string name="desktop_vos_profiles_add_portable">Προσθήκη ρίζας φορητού vault</string>
     <string name="desktop_vos_profiles_portable_selected">Φορητή ρίζα: %1$s</string>
     <string name="desktop_vos_profiles_portable_reject">Η φορητή ρίζα δεν μπορεί να είναι το home του host ή τα .config/.cache/.local του.</string>
+    <string name="desktop_vos_profiles_lock_gate_hint">Το vault είναι ξεκλείδωτο. Ξαναδώστε τον κωδικό vault για εναλλαγή προφίλ — το Telos θα κλειδώσει πρώτα· ξεκλειδώστε ξανά μετά. Χωρίς αυτόματη επανατοποθέτηση άλλου LUKS.</string>
+    <string name="desktop_vos_profiles_reauth">Κωδικός vault (επαναπιστοποίηση για εναλλαγή)</string>
+    <string name="desktop_vos_profiles_auth_required">Επαναπιστοποιηθείτε με τον κωδικό vault πριν την εναλλαγή όσο είναι ξεκλείδωτο.</string>
+    <string name="desktop_vos_profiles_locked_need_unlock">Το vault κλειδώθηκε — ξεκλειδώστε ξανά για επανατοποθέτηση.</string>
+    <string name="desktop_vos_profiles_host_current">Αυτός ο host: %1$s</string>
+    <string name="desktop_vos_profiles_host_same">Σημειωμένο για αυτόν τον host (%1$s)</string>
+    <string name="desktop_vos_profiles_host_other">Χρησιμοποιήθηκε και σε άλλον host: %1$s</string>
+    <string name="desktop_vos_profiles_export">Κρυπτογραφημένη εξαγωγή</string>
+    <string name="desktop_vos_profiles_export_hint">Εξαγωγή AES του φακέλου προφίλ + μόνο δείκτη ονόματος (χωρίς ιδιωτικά κλειδιά WireGuard). Η εισαγωγή χρειάζεται επιβεβαίωση.</string>
+    <string name="desktop_vos_profiles_export_pass">Συνθηματικό εξαγωγής / εισαγωγής</string>
+    <string name="desktop_vos_profiles_export_pass_required">Απαιτείται συνθηματικό για κρυπτογραφημένη εξαγωγή/εισαγωγή προφίλ</string>
+    <string name="desktop_vos_profiles_exported">Εξήχθη κρυπτογραφημένο προφίλ: %1$s</string>
+    <string name="desktop_vos_profiles_import">Εισαγωγή κρυπτογραφημένου προφίλ</string>
+    <string name="desktop_vos_profiles_import_path">Διαδρομή κρυπτογραφημένου zip προφίλ</string>
+    <string name="desktop_vos_profiles_import_pass">Συνθηματικό εισαγωγής</string>
+    <string name="desktop_vos_profiles_import_confirm">Πατήστε για επιβεβαίωση εισαγωγής</string>
+    <string name="desktop_vos_profiles_import_confirmed">Η εισαγωγή επιβεβαιώθηκε</string>
+    <string name="desktop_vos_profiles_import_need_confirm">Επιβεβαιώστε την εισαγωγή πριν συνεχίσετε</string>
+    <string name="desktop_vos_profiles_imported">Εισήχθη προφίλ: %1$s</string>
 </resources>

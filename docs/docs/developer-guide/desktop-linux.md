@@ -32,10 +32,17 @@ and rclone-sync modified carriers on lock. Pre-boot offers host home, unlock, cr
 
 **VOS-1 profiles (partial):** `DesktopProfiles` keeps named folders under config `profiles/` and the
 active name in `profile.active` (vault `desktop.properties` + marker file; never passwords).
-`VaultProfileSwitchPanel` lists/creates/switches profiles and portable vault roots in pre-boot and
-Helix Settings. On Windows Portable Data, profile config stays under the portable session home so
-the host profile is not written. Selecting a portable root rejects the host home / `.config` /
-`.cache` / `.local`. Lock-gated remount across hosts is not claimed as complete.
+`profile.meta` may store an optional host-id fingerprint (SHA-256 of hostname+`os.name`, plus a
+human label) for multi-host awareness text — no secrets. `VaultProfileSwitchPanel` lists/creates/
+switches profiles and portable vault roots in pre-boot and Helix Settings. On Windows Portable
+Data, profile config stays under the portable session home so the host profile is not written.
+Selecting a portable root rejects the host home / `.config` / `.cache` / `.local`.
+**Lock-gated switch (enforced while unlocked):** re-auth via password callback →
+`PhantomVaultEngine.lock()` → switch profile name or portable root; the UI tells the user to
+unlock again. Telos does **not** automatically remount a different LUKS image without a password.
+**Encrypted portable export:** `PortableProfileExport` writes an AES-256 zip of the profile folder
+plus a name-only `desktop.properties` marker; WireGuard private keys and secret property keys are
+excluded. Import requires an explicit confirmation flag and never persists the passphrase.
 
 **Stego FS (Mode B, partial):** carrier pools write `telos-carriers.json` (offsets/sizes only).
 `assembleAndOpen` prefers Linux `losetup`/`dmsetup`; when that is unavailable it concatenates
