@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_panel_icon_contrast">面板图标对比度</string>
+    <string name="desktop_panel_icon_contrast_auto">自动</string>
+    <string name="desktop_panel_icon_contrast_light">浅色图标</string>
+    <string name="desktop_panel_icon_contrast_dark">深色图标</string>
+    <string name="desktop_panel_icon_contrast_hint">自动会在本机采样顶部面板后方的壁纸条带，并为 Helix 面板图标与 Compose StatusNotifier 标签选择浅色或深色字形。像素仅留在本地。telos-sni 的 SNI 位图不会重新着色。偏好：panel.iconContrast=auto|light|dark。</string>
+</resources>

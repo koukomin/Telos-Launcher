@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_panel_icon_contrast">Контраст значков панели</string>
+    <string name="desktop_panel_icon_contrast_auto">Авто</string>
+    <string name="desktop_panel_icon_contrast_light">Светлые значки</string>
+    <string name="desktop_panel_icon_contrast_dark">Тёмные значки</string>
+    <string name="desktop_panel_icon_contrast_hint">Авто берёт образец полосы обоев за верхней панелью на этом устройстве и выбирает светлые или тёмные глифы для значков Helix и подписей StatusNotifier в Compose. Пиксели остаются локально. SNI pixmap из telos-sni не перекрашиваются. Preference: panel.iconContrast=auto|light|dark.</string>
+</resources>

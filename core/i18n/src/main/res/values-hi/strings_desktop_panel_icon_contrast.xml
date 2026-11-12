@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_panel_icon_contrast">पैनल आइकन कंट्रास्ट</string>
+    <string name="desktop_panel_icon_contrast_auto">स्वतः</string>
+    <string name="desktop_panel_icon_contrast_light">हल्के आइकन</string>
+    <string name="desktop_panel_icon_contrast_dark">गहरे आइकन</string>
+    <string name="desktop_panel_icon_contrast_hint">स्वतः इस डिवाइस पर ऊपरी पैनल के पीछे वॉलपेपर पट्टी का नमूना लेता है और Helix पैनल आइकन तथा Compose StatusNotifier लेबल के लिए हल्के या गहरे ग्लिफ़ चुनता है। पिक्सेल स्थानीय रहते हैं। telos-sni के SNI pixmap फिर से रंगे नहीं जाते। Preference: panel.iconContrast=auto|light|dark.</string>
+</resources>

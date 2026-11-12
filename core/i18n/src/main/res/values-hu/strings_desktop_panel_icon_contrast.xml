@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_panel_icon_contrast">Panelikonok kontrasztja</string>
+    <string name="desktop_panel_icon_contrast_auto">Automatikus</string>
+    <string name="desktop_panel_icon_contrast_light">Világos ikonok</string>
+    <string name="desktop_panel_icon_contrast_dark">Sötét ikonok</string>
+    <string name="desktop_panel_icon_contrast_hint">Az Automatikus a felső panel mögötti háttérkép-sávot mintavételezi ezen az eszközön, és világos vagy sötét glifeket választ a Helix panelikonokhoz és a Compose StatusNotifier címkékhez. A képpontok helyben maradnak. A telos-sni SNI pixmapjei nem színeződnek újra. Preference: panel.iconContrast=auto|light|dark.</string>
+</resources>

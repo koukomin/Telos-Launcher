@@ -1,6 +1,7 @@
 package com.telos.desktop.settings
 
 import com.telos.desktop.theme.DesktopThemeChrome
+import com.telos.desktop.theme.PanelIconContrast
 import com.telos.desktop.theme.PanelSurfaceMode
 import com.telos.desktop.theme.ThemeAccent
 import com.telos.desktop.theme.ThemeDensity
@@ -66,6 +67,11 @@ class TelosDesktopSettings(private val vaultConfigDir: File) {
      */
     var workspaceTints: Boolean = true
     /**
+     * Panel / tray icon contrast: `auto` | `light` | `dark` ([PanelIconContrast.PREF_KEY]).
+     * Auto samples the wallpaper strip behind the top panel (local only).
+     */
+    var panelIconContrast: String = PanelIconContrast.Mode.Auto.propertyValue
+    /**
      * Defensive reads for Theme Studio / OpSec visual mute keys. Not authored here —
      * only consumed so strips stay quiet or hidden when those prefs appear.
      */
@@ -84,7 +90,10 @@ class TelosDesktopSettings(private val vaultConfigDir: File) {
     var themeSnapPillScale: Float = ThemeDensity.Comfort.snapPillScale
     /** When true, chrome uses a locally sampled wallpaper tonal seed (no network). */
     var wallpaperTonal: Boolean = false
-    /** Optional vault/portable wallpaper path; blank = search Pictures / config defaults. */
+    /**
+     * Optional vault/portable wallpaper path for Theme Studio tonal seed and panel
+     * contrast sampling. Blank = search Pictures / `.config/telos` defaults.
+     */
     var wallpaperPath: String = ""
 
     private val file: File get() = File(vaultConfigDir, "desktop.properties")
@@ -137,6 +146,7 @@ class TelosDesktopSettings(private val vaultConfigDir: File) {
         nightLightTemperatureK = p.getProperty("nightLight.temperatureK")?.toIntOrNull()
             ?.coerceIn(1000, 6500) ?: 4500
         workspaceTints = WorkspaceTintStrips.parseWorkspaceTints(p, default = true)
+        panelIconContrast = PanelIconContrast.parseMode(p).propertyValue
         themePanicMute = WorkspaceTintStrips.parsePanicMute(p)
         themeIntensity = ThemeIntensity.parse(p.getProperty("theme.intensity")).propertyValue
         themeAccent = ThemeAccent.parse(p.getProperty("theme.accent")).propertyValue
@@ -207,6 +217,7 @@ class TelosDesktopSettings(private val vaultConfigDir: File) {
         p["nightLight.enabled"] = nightLightEnabled.toString()
         p["nightLight.temperatureK"] = nightLightTemperatureK.toString()
         p[WorkspaceTintStrips.PREF_KEY] = workspaceTints.toString()
+        p[PanelIconContrast.PREF_KEY] = PanelIconContrast.parseMode(panelIconContrast).propertyValue
         p["theme.intensity"] = ThemeIntensity.parse(themeIntensity).propertyValue
         p["theme.accent"] = ThemeAccent.parse(themeAccent).propertyValue
         p["theme.density"] = ThemeDensity.parse(themeDensity).propertyValue

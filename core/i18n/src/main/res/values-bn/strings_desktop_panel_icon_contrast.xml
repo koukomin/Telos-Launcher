@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_panel_icon_contrast">প্যানেল আইকন কনট্রাস্ট</string>
+    <string name="desktop_panel_icon_contrast_auto">স্বয়ংক্রিয়</string>
+    <string name="desktop_panel_icon_contrast_light">হালকা আইকন</string>
+    <string name="desktop_panel_icon_contrast_dark">গাঢ় আইকন</string>
+    <string name="desktop_panel_icon_contrast_hint">স্বয়ংক্রিয় এই ডিভাইসে উপরের প্যানেলের পেছনের ওয়ালপেপার স্ট্রিপ নমুনা নেয় এবং Helix প্যানেল আইকন ও Compose StatusNotifier লেবেলের জন্য হালকা বা গাঢ় গ্লিফ বেছে নেয়। পিক্সেল স্থানীয় থাকে। telos-sni-এর SNI pixmap পুনরায় রঙ হয় না। Preference: panel.iconContrast=auto|light|dark.</string>
+</resources>

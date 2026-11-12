@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_panel_icon_contrast">Контраст піктограм панелі</string>
+    <string name="desktop_panel_icon_contrast_auto">Авто</string>
+    <string name="desktop_panel_icon_contrast_light">Світлі піктограми</string>
+    <string name="desktop_panel_icon_contrast_dark">Темні піктограми</string>
+    <string name="desktop_panel_icon_contrast_hint">Авто бере зразок смуги шпалер за верхньою панеллю на цьому пристрої й обирає світлі або темні гліфи для піктограм Helix і підписів StatusNotifier у Compose. Пікселі лишаються локально. SNI pixmap із telos-sni не перефарбовуються. Preference: panel.iconContrast=auto|light|dark.</string>
+</resources>

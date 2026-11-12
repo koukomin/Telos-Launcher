@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_panel_icon_contrast">Paneelpictogramcontrast</string>
+    <string name="desktop_panel_icon_contrast_auto">Auto</string>
+    <string name="desktop_panel_icon_contrast_light">Lichte pictogrammen</string>
+    <string name="desktop_panel_icon_contrast_dark">Donkere pictogrammen</string>
+    <string name="desktop_panel_icon_contrast_hint">Auto bemonstert de achtergrondstrook achter het bovenpaneel op dit apparaat en kiest lichte of donkere glyphs voor Helix-paneelpictogrammen en Compose StatusNotifier-labels. Pixels blijven lokaal. SNI-pixmaps van telos-sni worden niet herkleurd. Preference: panel.iconContrast=auto|light|dark.</string>
+</resources>

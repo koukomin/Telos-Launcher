@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_panel_icon_contrast">Panelikon-kontrast</string>
+    <string name="desktop_panel_icon_contrast_auto">Auto</string>
+    <string name="desktop_panel_icon_contrast_light">Lyse ikoner</string>
+    <string name="desktop_panel_icon_contrast_dark">Mørke ikoner</string>
+    <string name="desktop_panel_icon_contrast_hint">Auto sampler tapetstriben bag det øverste panel på denne enhed og vælger lyse eller mørke glyffer til Helix-panelikoner og Compose StatusNotifier-etiketter. Pixels forbliver lokale. SNI-pixmaps fra telos-sni omfarves ikke. Preference: panel.iconContrast=auto|light|dark.</string>
+</resources>

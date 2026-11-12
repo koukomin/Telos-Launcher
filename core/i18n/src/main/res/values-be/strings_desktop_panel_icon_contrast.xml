@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_panel_icon_contrast">Кантраст значкоў панэлі</string>
+    <string name="desktop_panel_icon_contrast_auto">Аўта</string>
+    <string name="desktop_panel_icon_contrast_light">Светлыя значкі</string>
+    <string name="desktop_panel_icon_contrast_dark">Цёмныя значкі</string>
+    <string name="desktop_panel_icon_contrast_hint">Аўта бярэ ўзор палоскі шпалер за верхняй панэллю на гэтай прыладзе і выбірае светлыя або цёмныя гліфы для значкоў Helix і падпісаў StatusNotifier у Compose. Пікселі застаюцца лакальна. SNI pixmap з telos-sni не перафарбоўваюцца. Preference: panel.iconContrast=auto|light|dark.</string>
+</resources>

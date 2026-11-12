@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_panel_icon_contrast">Kontrasto de panelaj piktogramoj</string>
+    <string name="desktop_panel_icon_contrast_auto">Aŭtomate</string>
+    <string name="desktop_panel_icon_contrast_light">Helaj piktogramoj</string>
+    <string name="desktop_panel_icon_contrast_dark">Malhelaj piktogramoj</string>
+    <string name="desktop_panel_icon_contrast_hint">Aŭtomate specimenas la tapetostriojn malantaŭ la supra panelo sur ĉi tiu aparato kaj elektas helajn aŭ malhelajn glifojn por Helix-panelaj piktogramoj kaj Compose StatusNotifier-etikedoj. Rastrumeroj restas lokaj. SNI-pixmapoj de telos-sni ne rekoloriĝas. Preferenco: panel.iconContrast=auto|light|dark.</string>
+</resources>

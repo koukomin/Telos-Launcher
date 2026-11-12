@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_panel_icon_contrast">Contrast de les icones del panell</string>
+    <string name="desktop_panel_icon_contrast_auto">Automàtic</string>
+    <string name="desktop_panel_icon_contrast_light">Icones clares</string>
+    <string name="desktop_panel_icon_contrast_dark">Icones fosques</string>
+    <string name="desktop_panel_icon_contrast_hint">Automàtic mostreja la franja del fons de pantalla darrere del panell superior en aquest dispositiu i tria glifs clars o foscos per a les icones Helix i les etiquetes StatusNotifier de Compose. Els píxels es queden locals. Els pixmap SNI de telos-sni no es recoloregen. Preferència: panel.iconContrast=auto|light|dark.</string>
+</resources>

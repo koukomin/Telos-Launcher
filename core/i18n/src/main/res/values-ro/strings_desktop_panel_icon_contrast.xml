@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_panel_icon_contrast">Contrastul pictogramelor panoului</string>
+    <string name="desktop_panel_icon_contrast_auto">Automat</string>
+    <string name="desktop_panel_icon_contrast_light">Pictograme deschise</string>
+    <string name="desktop_panel_icon_contrast_dark">Pictograme întunecate</string>
+    <string name="desktop_panel_icon_contrast_hint">Automat eșantionează banda de fundal din spatele panoului superior pe acest dispozitiv și alege glife deschise sau întunecate pentru pictogramele Helix și etichetele StatusNotifier din Compose. Pixelii rămân locali. Pixmap-urile SNI din telos-sni nu sunt recolorate. Preferință: panel.iconContrast=auto|light|dark.</string>
+</resources>
