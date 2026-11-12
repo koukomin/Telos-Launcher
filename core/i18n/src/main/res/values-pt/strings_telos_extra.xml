@@ -14,11 +14,26 @@
     
 
 
-    <string name="settings_keyboard">Keyboard</string>
+    <string name="settings_keyboard">Teclado</string>
     <string name="keepass_title">KeePassTL</string>
     <string name="aether_title">Telos Aether</string>
-    <string name="backup_group_keepass">KeePassTL Vault</string>
-    <string name="backup_group_keepass_summary">Saved passwords and credentials</string>
+    <string name="backup_group_keepass">Cofre KeePassTL</string>
+    <string name="backup_group_keepass_summary">Palavras-passe e credenciais guardadas</string>
     <string name="backup_group_aether">Telos Aether Nostr</string>
     <string name="backup_group_aether_summary">Nostr keys and relay configurations</string>
+    <string name="keepass_db_password">Palavra-passe da base de dados</string>
+    <string name="keepass_wrong_password">Palavra-passe errada ou ficheiro inválido</string>
+    <string name="keepass_open_kdbx">Abrir KDBX</string>
+    <string name="keepass_open_stego">Abrir a partir de imagem (Esteganografia)</string>
+    <string name="keepass_lock">Bloquear cofre</string>
+    <string name="keepass_encrypted_val">Encriptado</string>
+    <string name="keepass_unnamed">Sem nome</string>
+    <string name="backup_group_app_data">Dados das aplicações (Root/Shizuku)</string>
+    <string name="backup_group_app_data_summary">Dados e preferências das aplicações</string>
+    <string name="backup_group_apps">Aplicações (APK &amp; Splits)</string>
+    <string name="backup_group_apps_summary">Pacotes de instalação das aplicações selecionadas</string>
+    <string name="backup_group_system_data">Dados do sistema</string>
+    <string name="backup_group_system_data_summary">SMS, registo de chamadas, redes Wi-Fi</string>
+    <string name="backup_group_virtual_apps">Aplicações virtuais Telos</string>
+    <string name="backup_group_virtual_apps_summary">Configurações para Telos Sync, Visualizador, Calculadora, etc.</string>
 </resources>

@@ -14,11 +14,26 @@
     
 
 
-    <string name="settings_keyboard">Keyboard</string>
+    <string name="settings_keyboard">키보드</string>
     <string name="keepass_title">KeePassTL</string>
     <string name="aether_title">Telos Aether</string>
-    <string name="backup_group_keepass">KeePassTL Vault</string>
-    <string name="backup_group_keepass_summary">Saved passwords and credentials</string>
+    <string name="backup_group_keepass">KeePassTL 보관함</string>
+    <string name="backup_group_keepass_summary">저장된 비밀번호 및 자격 증명</string>
     <string name="backup_group_aether">Telos Aether Nostr</string>
     <string name="backup_group_aether_summary">Nostr keys and relay configurations</string>
+    <string name="keepass_db_password">데이터베이스 비밀번호</string>
+    <string name="keepass_wrong_password">잘못된 비밀번호이거나 유효하지 않은 파일입니다</string>
+    <string name="keepass_open_kdbx">KDBX 열기</string>
+    <string name="keepass_open_stego">이미지에서 열기 (스테가노그래피)</string>
+    <string name="keepass_lock">보관함 잠금</string>
+    <string name="keepass_encrypted_val">암호화됨</string>
+    <string name="keepass_unnamed">이름 없음</string>
+    <string name="backup_group_app_data">앱 데이터 (Root/Shizuku)</string>
+    <string name="backup_group_app_data_summary">애플리케이션 데이터 및 환경설정</string>
+    <string name="backup_group_apps">애플리케이션 (APK &amp; Splits)</string>
+    <string name="backup_group_apps_summary">선택한 앱의 설치 패키지</string>
+    <string name="backup_group_system_data">시스템 데이터</string>
+    <string name="backup_group_system_data_summary">SMS, 통화 기록, Wi-Fi 네트워크</string>
+    <string name="backup_group_virtual_apps">Telos 가상 앱</string>
+    <string name="backup_group_virtual_apps_summary">Telos Sync, 뷰어, 계산기 등의 설정</string>
 </resources>

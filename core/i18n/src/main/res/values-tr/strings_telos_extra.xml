@@ -14,11 +14,26 @@
     
 
 
-    <string name="settings_keyboard">Keyboard</string>
+    <string name="settings_keyboard">Klavye</string>
     <string name="keepass_title">KeePassTL</string>
     <string name="aether_title">Telos Aether</string>
-    <string name="backup_group_keepass">KeePassTL Vault</string>
-    <string name="backup_group_keepass_summary">Saved passwords and credentials</string>
+    <string name="backup_group_keepass">KeePassTL Kasası</string>
+    <string name="backup_group_keepass_summary">Kayıtlı şifreler ve kimlik bilgileri</string>
     <string name="backup_group_aether">Telos Aether Nostr</string>
     <string name="backup_group_aether_summary">Nostr keys and relay configurations</string>
+    <string name="keepass_db_password">Veritabanı Şifresi</string>
+    <string name="keepass_wrong_password">Hatalı şifre veya geçersiz dosya</string>
+    <string name="keepass_open_kdbx">KDBX Aç</string>
+    <string name="keepass_open_stego">Görselden Aç (Steganografi)</string>
+    <string name="keepass_lock">Kasayı Kilitle</string>
+    <string name="keepass_encrypted_val">Şifrelenmiş</string>
+    <string name="keepass_unnamed">İsimsiz</string>
+    <string name="backup_group_app_data">Uygulama Verileri (Root/Shizuku)</string>
+    <string name="backup_group_app_data_summary">Uygulama verileri ve tercihleri</string>
+    <string name="backup_group_apps">Uygulamalar (APK &amp; Bölünmüş)</string>
+    <string name="backup_group_apps_summary">Seçili uygulamalar için yükleme paketleri</string>
+    <string name="backup_group_system_data">Sistem Verileri</string>
+    <string name="backup_group_system_data_summary">SMS, arama geçmişi, Wi-Fi ağları</string>
+    <string name="backup_group_virtual_apps">Telos Sanal Uygulamaları</string>
+    <string name="backup_group_virtual_apps_summary">Telos Sync, Görüntüleyici, Hesap Makinesi vb. yapılandırmaları</string>
 </resources>

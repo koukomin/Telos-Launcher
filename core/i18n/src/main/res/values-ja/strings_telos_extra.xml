@@ -14,11 +14,26 @@
     
 
 
-    <string name="settings_keyboard">Keyboard</string>
+    <string name="settings_keyboard">キーボード</string>
     <string name="keepass_title">KeePassTL</string>
     <string name="aether_title">Telos Aether</string>
-    <string name="backup_group_keepass">KeePassTL Vault</string>
-    <string name="backup_group_keepass_summary">Saved passwords and credentials</string>
+    <string name="backup_group_keepass">KeePassTL 保管庫</string>
+    <string name="backup_group_keepass_summary">保存されたパスワードと認証情報</string>
     <string name="backup_group_aether">Telos Aether Nostr</string>
     <string name="backup_group_aether_summary">Nostr keys and relay configurations</string>
+    <string name="keepass_db_password">データベースのパスワード</string>
+    <string name="keepass_wrong_password">パスワードが間違っているか、ファイルが無効です</string>
+    <string name="keepass_open_kdbx">KDBX を開く</string>
+    <string name="keepass_open_stego">画像から開く (ステガノグラフィ)</string>
+    <string name="keepass_lock">保管庫をロック</string>
+    <string name="keepass_encrypted_val">暗号化済み</string>
+    <string name="keepass_unnamed">無題</string>
+    <string name="backup_group_app_data">アプリデータ (Root/Shizuku)</string>
+    <string name="backup_group_app_data_summary">アプリのデータと設定</string>
+    <string name="backup_group_apps">アプリ (APK &amp; 分割 APK)</string>
+    <string name="backup_group_apps_summary">選択したアプリのインストールパッケージ</string>
+    <string name="backup_group_system_data">システムデータ</string>
+    <string name="backup_group_system_data_summary">SMS、通話履歴、Wi-Fi ネットワーク</string>
+    <string name="backup_group_virtual_apps">Telos 仮想アプリ</string>
+    <string name="backup_group_virtual_apps_summary">Telos Sync、ビューア、電卓などの設定</string>
 </resources>

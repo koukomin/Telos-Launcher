@@ -1,5 +1,8 @@
 package de.mm20.launcher2.ui.keepass
 
+import de.mm20.launcher2.i18n.R as I18nR
+import androidx.compose.ui.res.stringResource
+
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
@@ -59,7 +62,7 @@ fun KeePassDashboardScreen() {
                     actions = {
                         if (isUnlocked) {
                             IconButton(onClick = { viewModel.lock() }) {
-                                Icon(painterResource(BaseR.drawable.lock_24px), contentDescription = "Lock")
+                                Icon(painterResource(BaseR.drawable.lock_24px), contentDescription = stringResource(I18nR.string.keepass_lock))
                             }
                         }
                     }
@@ -83,21 +86,21 @@ fun KeePassDashboardScreen() {
                         OutlinedTextField(
                             value = password,
                             onValueChange = { password = it },
-                            label = { Text("Database Password") },
+                            label = { Text(stringResource(I18nR.string.keepass_db_password)) },
                             visualTransformation = PasswordVisualTransformation(),
                             singleLine = true,
                             modifier = Modifier.fillMaxWidth()
                         )
                         if (unlockError) {
-                            Text("Wrong password or invalid file", color = MaterialTheme.colorScheme.error, modifier = Modifier.padding(top = 8.dp))
+                            Text(stringResource(I18nR.string.keepass_wrong_password), color = MaterialTheme.colorScheme.error, modifier = Modifier.padding(top = 8.dp))
                         }
                         Spacer(modifier = Modifier.height(16.dp))
                         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                             Button(onClick = { kdbxLauncher.launch("*/*") }, enabled = password.isNotEmpty()) {
-                                Text("Open KDBX")
+                                Text(stringResource(I18nR.string.keepass_open_kdbx))
                             }
                             FilledTonalButton(onClick = { imageLauncher.launch("image/png") }, enabled = password.isNotEmpty()) {
-                                Text("Open from Image (Steganography)")
+                                Text(stringResource(I18nR.string.keepass_open_stego))
                             }
                         }
                     }
@@ -116,8 +119,8 @@ fun KeePassDashboardScreen() {
                         currentGroup?.entries?.let { entries ->
                             items(items = entries, key = { it.uuid.toString() }) { entry ->
                                 val title = entry.fields.entries.firstOrNull { it.key == "Title" }?.value?.let {
-                                    if (it is EntryValue.Plain) it.content else "Encrypted"
-                                } ?: "Unnamed"
+                                    if (it is EntryValue.Plain) it.content else stringResource(I18nR.string.keepass_encrypted_val)
+                                } ?: stringResource(I18nR.string.keepass_unnamed)
                                 val username = entry.fields.entries.firstOrNull { it.key == "UserName" }?.value?.let {
                                     if (it is EntryValue.Plain) it.content else "***"
                                 } ?: ""

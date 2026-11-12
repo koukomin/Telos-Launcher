@@ -21,4 +21,19 @@
     <string name="backup_group_keepass_summary">Contraseñas y credenciales guardadas</string>
     <string name="backup_group_aether">Telos Aether Nostr</string>
     <string name="backup_group_aether_summary">Claves Nostr y configuraciones de retransmisión</string>
+    <string name="keepass_db_password">Contraseña de la base de datos</string>
+    <string name="keepass_wrong_password">Contraseña incorrecta o archivo no válido</string>
+    <string name="keepass_open_kdbx">Abrir KDBX</string>
+    <string name="keepass_open_stego">Abrir desde imagen (Esteganografía)</string>
+    <string name="keepass_lock">Bloquear bóveda</string>
+    <string name="keepass_encrypted_val">Cifrado</string>
+    <string name="keepass_unnamed">Sin nombre</string>
+    <string name="backup_group_app_data">Datos de aplicaciones (Root/Shizuku)</string>
+    <string name="backup_group_app_data_summary">Datos de aplicación y preferencias</string>
+    <string name="backup_group_apps">Aplicaciones (APK &amp; Splits)</string>
+    <string name="backup_group_apps_summary">Paquetes instalables para las aplicaciones seleccionadas</string>
+    <string name="backup_group_system_data">Datos del sistema</string>
+    <string name="backup_group_system_data_summary">SMS, registros de llamadas, redes Wi-Fi</string>
+    <string name="backup_group_virtual_apps">Aplicaciones virtuales Telos</string>
+    <string name="backup_group_virtual_apps_summary">Configuraciones para Telos Sync, Visor, Calculadora, etc.</string>
 </resources>

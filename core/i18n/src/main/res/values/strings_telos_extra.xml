@@ -7,4 +7,11 @@
     <string name="backup_group_keepass_summary">Saved passwords and credentials</string>
     <string name="backup_group_aether">Telos Aether Nostr</string>
     <string name="backup_group_aether_summary">Nostr keys and relay configurations</string>
+    <string name="keepass_db_password">Database Password</string>
+    <string name="keepass_wrong_password">Wrong password or invalid file</string>
+    <string name="keepass_open_kdbx">Open KDBX</string>
+    <string name="keepass_open_stego">Open from Image (Steganography)</string>
+    <string name="keepass_lock">Lock Vault</string>
+    <string name="keepass_encrypted_val">Encrypted</string>
+    <string name="keepass_unnamed">Unnamed</string>
 </resources>
