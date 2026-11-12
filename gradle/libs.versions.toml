@@ -31,7 +31,7 @@ androidx-activity = "1.13.0"
 androidx-navigation3 = "1.2.0"
 
 media3 = "1.11.1"
-nextlib = "1.11.1-0.17.0"
+nextlib = "1.11.1-0.18.0"
 
 # Careful, 2.10.0 seems to require some fixes, or jobs aren't executed
 androidx-work = "2.12.0"
@@ -78,8 +78,8 @@ sqlcipher = "4.20.0"
 taglib = "1.0.6"
 libtorrent4j = "2.1.0-39"
 youtubedl = "0.18.1"
-kotpass = "0.10.0"
-robolectric = "4.12.1"
+kotpass = "0.13.0"
+robolectric = "4.17"
 
 # Go network engine of Rethink DNS (MPL-2.0), pinned like Rethink pins it (firestackCommit)
 firestack = "c4a33649be"
