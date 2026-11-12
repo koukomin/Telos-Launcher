@@ -21,4 +21,28 @@
     <string name="desktop_flatpak_override_failed">Flatpak 재정의를 적용할 수 없음</string>
     <string name="desktop_flatpak_reset_overrides">재정의 재설정</string>
     <string name="desktop_deeplink_handler_hint">telos://는 Telos 앱과 Kickoff 검색을 엽니다(데스크톱 시작 시 등록).</string>
+    <string name="desktop_store_backends">패키지 백엔드</string>
+    <string name="desktop_store_backend_flatpak">Flatpak</string>
+    <string name="desktop_store_backend_winget">Winget</string>
+    <string name="desktop_store_backend_scoop">Scoop</string>
+    <string name="desktop_store_windows_pref_only">Winget/Scoop은 Windows 전용입니다. 이 호스트는 Windows 패키지 작업을 실행하지 않습니다.</string>
+    <string name="desktop_store_windows_unavailable">PATH에서 winget 또는 scoop을 찾을 수 없습니다.</string>
+    <string name="desktop_store_windows_installed">Windows 패키지(설치됨)</string>
+    <string name="desktop_store_windows_search">Windows 패키지(검색)</string>
+    <string name="desktop_store_install_confirm_title">설치 확인</string>
+    <string name="desktop_store_install_confirm_body">%3$s(으)로 %1$s(%2$s)을(를) 설치할까요?</string>
+    <string name="desktop_store_install_started">%1$s 설치를 시작했습니다</string>
+    <string name="desktop_store_install_failed">%1$s 설치를 시작할 수 없습니다</string>
+    <string name="desktop_portal_device_title">카메라 및 마이크(포털)</string>
+    <string name="desktop_portal_device_hint">요청을 기록하고 Device/Camera 포털이 있으면 xdg-desktop-portal에 묻습니다. 포털 도구가 없으면 환경설정만 유지됩니다.</string>
+    <string name="desktop_portal_device_requested">포털 접근 대화상자를 요청했습니다</string>
+    <string name="desktop_portal_device_pref_only">환경설정을 저장했습니다. 포털 도구가 없습니다(환경설정만).</string>
+    <string name="desktop_portal_device_unavailable">이 시스템에서는 포털 장치 접근을 사용할 수 없습니다.</string>
+    <string name="desktop_portal_device_failed">데스크톱 포털에 장치 접근을 요청할 수 없습니다</string>
+    <string name="desktop_netns_cap_unshare">앱별 netns: unshare --net 사용 가능</string>
+    <string name="desktop_netns_cap_ip">앱별 netns: ip netns 사용 가능</string>
+    <string name="desktop_netns_cap_unavailable">앱별 netns 도구 없음. 격리는 환경설정만</string>
+    <string name="desktop_netns_flatpak_owned">네트워크 격리 Flatpak은 Flatpak --unshare=network를 사용합니다(호스트 netns 아님).</string>
+    <string name="desktop_netns_flatpak_no_tools">네트워크 격리 단계 설정됨. unshare/ip netns 없음 — Flatpak이 적용할 때만 override.</string>
+    <string name="desktop_netns_not_isolated">앱이 네트워크 격리로 표시되지 않았습니다.</string>
 </resources>

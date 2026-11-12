@@ -6,7 +6,14 @@ import java.util.concurrent.TimeUnit
 object Sys {
     fun which(name: String): String? {
         val path = System.getenv("PATH") ?: return null
-        return path.split(':').map { File(it, name) }.firstOrNull { it.isFile && it.canExecute() }?.absolutePath
+        val sep = File.pathSeparatorChar
+        val candidates = path.split(sep).flatMap { dir ->
+            val base = File(dir, name)
+            // Windows package managers often ship as .exe / .cmd shims.
+            listOf(base, File(dir, "$name.exe"), File(dir, "$name.cmd"), File(dir, "$name.bat"))
+        }
+        return candidates.firstOrNull { it.isFile && (it.canExecute() || it.extension.equals("cmd", true) || it.extension.equals("bat", true) || it.extension.equals("exe", true)) }
+            ?.absolutePath
     }
 
     fun run(vararg args: String, timeoutSec: Long = 4, input: String? = null, dir: File? = null): Result {

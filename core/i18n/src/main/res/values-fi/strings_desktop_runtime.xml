@@ -21,4 +21,28 @@
     <string name="desktop_flatpak_override_failed">Flatpak-ohitusta ei voitu soveltaa</string>
     <string name="desktop_flatpak_reset_overrides">Nollaa ohitukset</string>
     <string name="desktop_deeplink_handler_hint">telos:// avaa Telos-sovellukset ja Kickoff-haun (rekisteröidään työpöydän käynnistyessä).</string>
+    <string name="desktop_store_backends">Pakketbronnen</string>
+    <string name="desktop_store_backend_flatpak">Flatpak</string>
+    <string name="desktop_store_backend_winget">Winget</string>
+    <string name="desktop_store_backend_scoop">Scoop</string>
+    <string name="desktop_store_windows_pref_only">Winget/Scoop zijn alleen voor Windows; deze host voert geen Windows-pakketacties uit.</string>
+    <string name="desktop_store_windows_unavailable">Noch winget noch scoop gevonden in PATH.</string>
+    <string name="desktop_store_windows_installed">Windows-pakketten (geïnstalleerd)</string>
+    <string name="desktop_store_windows_search">Windows-pakketten (zoeken)</string>
+    <string name="desktop_store_install_confirm_title">Installatie bevestigen</string>
+    <string name="desktop_store_install_confirm_body">%1$s (%2$s) via %3$s installeren?</string>
+    <string name="desktop_store_install_started">Installatie gestart voor %1$s</string>
+    <string name="desktop_store_install_failed">Kon installatie voor %1$s niet starten</string>
+    <string name="desktop_portal_device_title">Camera en microfoon (portal)</string>
+    <string name="desktop_portal_device_hint">Slaat je verzoek op en vraagt xdg-desktop-portal wanneer Device/Camera-portals beschikbaar zijn. Zonder portaltools blijft dit alleen een voorkeur.</string>
+    <string name="desktop_portal_device_requested">Portal-toegangsdialoog aangevraagd</string>
+    <string name="desktop_portal_device_pref_only">Voorkeur opgeslagen; portaltools ontbreken (alleen voorkeur).</string>
+    <string name="desktop_portal_device_unavailable">Portalapparaattoegang is niet beschikbaar op dit systeem.</string>
+    <string name="desktop_portal_device_failed">Kon desktopportal niet om apparaattoegang vragen</string>
+    <string name="desktop_netns_cap_unshare">Per-app-netns: unshare --net beschikbaar</string>
+    <string name="desktop_netns_cap_ip">Per-app-netns: ip netns beschikbaar</string>
+    <string name="desktop_netns_cap_unavailable">Per-app-netns-tools ontbreken; isolatie blijft alleen voorkeur</string>
+    <string name="desktop_netns_flatpak_owned">Netwerkgeïsoleerde Flatpak gebruikt Flatpak --unshare=network (geen host-netns).</string>
+    <string name="desktop_netns_flatpak_no_tools">Netwerkgeïsoleerd niveau; unshare/ip netns ontbreken — alleen Flatpak-override als Flatpak die toepast.</string>
+    <string name="desktop_netns_not_isolated">App is niet gemarkeerd als netwerkgeïsoleerd.</string>
 </resources>

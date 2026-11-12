@@ -21,4 +21,28 @@
     <string name="desktop_flatpak_override_failed">Impossible d’appliquer la substitution Flatpak</string>
     <string name="desktop_flatpak_reset_overrides">Réinitialiser les substitutions</string>
     <string name="desktop_deeplink_handler_hint">telos:// ouvre les apps Telos et la recherche Kickoff (enregistré au démarrage du bureau).</string>
+    <string name="desktop_store_backends">Sources de paquets</string>
+    <string name="desktop_store_backend_flatpak">Flatpak</string>
+    <string name="desktop_store_backend_winget">Winget</string>
+    <string name="desktop_store_backend_scoop">Scoop</string>
+    <string name="desktop_store_windows_pref_only">Winget/Scoop sont réservés à Windows ; cet hôte n’exécute pas d’actions de paquets Windows.</string>
+    <string name="desktop_store_windows_unavailable">Ni winget ni scoop n’ont été trouvés dans le PATH.</string>
+    <string name="desktop_store_windows_installed">Paquets Windows (installés)</string>
+    <string name="desktop_store_windows_search">Paquets Windows (recherche)</string>
+    <string name="desktop_store_install_confirm_title">Confirmer l’installation</string>
+    <string name="desktop_store_install_confirm_body">Installer %1$s (%2$s) via %3$s ?</string>
+    <string name="desktop_store_install_started">Installation démarrée pour %1$s</string>
+    <string name="desktop_store_install_failed">Impossible de démarrer l’installation de %1$s</string>
+    <string name="desktop_portal_device_title">Caméra et microphone (portail)</string>
+    <string name="desktop_portal_device_hint">Enregistre votre demande et interroge xdg-desktop-portal lorsque les portails Device/Camera sont disponibles. Sans outils portail, cela reste une préférence.</string>
+    <string name="desktop_portal_device_requested">Dialogue d’accès du portail demandé</string>
+    <string name="desktop_portal_device_pref_only">Préférence enregistrée ; outils portail indisponibles (préférence seule).</string>
+    <string name="desktop_portal_device_unavailable">L’accès périphérique du portail est indisponible sur ce système.</string>
+    <string name="desktop_portal_device_failed">Impossible de demander l’accès périphérique au portail de bureau</string>
+    <string name="desktop_netns_cap_unshare">netns par appli : unshare --net disponible</string>
+    <string name="desktop_netns_cap_ip">netns par appli : ip netns disponible</string>
+    <string name="desktop_netns_cap_unavailable">Outils netns par appli manquants ; l’isolation reste une préférence</string>
+    <string name="desktop_netns_flatpak_owned">Flatpak isolé réseau utilise Flatpak --unshare=network (pas de netns hôte).</string>
+    <string name="desktop_netns_flatpak_no_tools">Niveau isolé réseau ; unshare/ip netns manquants — override Flatpak seulement si Flatpak l’applique.</string>
+    <string name="desktop_netns_not_isolated">L’application n’est pas marquée comme isolée réseau.</string>
 </resources>
