@@ -750,7 +750,15 @@ private fun FlashlightAdvancedSheet(
                         ),
                         isSelected = outputMode == mode,
                         onClick = { onOutputMode(mode) },
-                        accentColor = neonCyan
+                        accentColor = neonCyan,
+                        // Distinct from MorseDecoderCard's optical "Light" button.
+                        modifier = Modifier.testTag(
+                            when (mode) {
+                                FlashlightOutputMode.LightOnly -> "morse-output-light"
+                                FlashlightOutputMode.SoundOnly -> "morse-output-sound"
+                                FlashlightOutputMode.LightAndSound -> "morse-output-light-sound"
+                            },
+                        ),
                     )
                 }
             }
@@ -770,7 +778,10 @@ private fun FlashlightAdvancedSheet(
                 Button(
                     onClick = onSos,
                     colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error),
-                    modifier = Modifier.weight(1f).heightIn(min = 48.dp)
+                    modifier = Modifier
+                        .weight(1f)
+                        .heightIn(min = 48.dp)
+                        .testTag("morse-sos"),
                 ) {
                     Text(stringResource(I18nR.string.app_polish_sos))
                 }

@@ -25,13 +25,6 @@ import org.junit.Test
 class MorseScreenTest {
     @get:Rule val compose = createAndroidComposeRule<ComponentActivity>()
 
-    private fun waitUntilText(text: String, timeoutMs: Long = 5_000) {
-        compose.waitUntil(timeoutMs) {
-            compose.onAllNodesWithText(text).fetchSemanticsNodes().isNotEmpty()
-        }
-        compose.waitForIdle()
-    }
-
     private fun waitUntilTag(tag: String, timeoutMs: Long = 5_000) {
         compose.waitUntil(timeoutMs) {
             compose.onAllNodesWithTag(tag).fetchSemanticsNodes().isNotEmpty()
@@ -39,27 +32,28 @@ class MorseScreenTest {
         compose.waitForIdle()
     }
 
-    /** Wait until the node is displayed, then click after idle — avoids flaky touch injection. */
-    private fun clickWhenReady(matcher: SemanticsMatcher, scrollInTag: String? = null) {
-        compose.waitUntil(5_000) {
-            compose.onAllNodes(matcher).fetchSemanticsNodes().isNotEmpty()
+    private fun waitUntilText(text: String, timeoutMs: Long = 5_000) {
+        compose.waitUntil(timeoutMs) {
+            compose.onAllNodesWithText(text, substring = false).fetchSemanticsNodes().isNotEmpty()
         }
         compose.waitForIdle()
+    }
+
+    /** Click a uniquely tagged node after it is displayed (avoids ambiguous 'Light' text). */
+    private fun clickTag(tag: String, scrollInTag: String? = null) {
+        waitUntilTag(tag)
         if (scrollInTag != null) {
-            compose.onNodeWithTag(scrollInTag).performScrollToNode(matcher)
+            compose.onNodeWithTag(scrollInTag).performScrollToNode(hasTestTag(tag))
             compose.waitForIdle()
         }
-        val node = compose.onNode(matcher)
+        val node = compose.onNodeWithTag(tag)
         node.assertIsDisplayed()
-        // Retry once if the first inject fails (animation / sheet settle on emulator).
         try {
             node.performClick()
         } catch (_: AssertionError) {
             compose.waitForIdle()
-            compose.waitUntil(5_000) {
-                compose.onAllNodes(matcher).fetchSemanticsNodes().isNotEmpty()
-            }
-            compose.onNode(matcher).assertIsDisplayed().performClick()
+            waitUntilTag(tag)
+            compose.onNodeWithTag(tag).assertIsDisplayed().performClick()
         }
         compose.waitForIdle()
     }
@@ -86,33 +80,51 @@ class MorseScreenTest {
         // Emulator has no physical flash. Pick screen light on the main surface first.
         val screenLight = context.getString(I18nR.string.app_polish_screen_light)
         compose.waitUntil(5_000) {
-            compose.onAllNodesWithText(screenLight).filter(hasClickAction()).fetchSemanticsNodes().isNotEmpty()
+            compose.onAllNodesWithText(screenLight, substring = false)
+                .filter(hasClickAction())
+                .fetchSemanticsNodes()
+                .isNotEmpty()
         }
         compose.waitForIdle()
-        compose.onAllNodesWithText(screenLight)
+        compose.onAllNodesWithText(screenLight, substring = false)
             .filter(hasClickAction())
-            .onFirst()
+            .filterToOne(hasClickAction())
             .assertIsDisplayed()
             .performClick()
         compose.waitForIdle()
 
         // Morse / SOS live in the Advanced ("More") sheet after Cyber-Tech chrome.
-        clickWhenReady(hasText(context.getString(I18nR.string.hc_more)))
+        compose.onAllNodesWithText(context.getString(I18nR.string.hc_more), substring = false)
+            .filter(hasClickAction())
+            .filterToOne(hasClickAction())
+            .assertIsDisplayed()
+            .performClick()
+        compose.waitForIdle()
+
         waitUntilTag("morse-input")
         compose.onNodeWithTag("morse-input").assertIsDisplayed().performTextReplacement("ΘΧΨΩ")
         waitUntilText("-.-. ---- --.- .--")
-        compose.onNodeWithText("-.-. ---- --.- .--").performSemanticsAction(SemanticsActions.GetTextLayoutResult) { readLayout ->
-            val results = mutableListOf<TextLayoutResult>()
-            readLayout(results)
-            assertEquals(TextDirection.Ltr, results.single().layoutInput.style.textDirection)
-        }
-        clickWhenReady(hasText(context.getString(I18nR.string.morse_light)))
-        clickWhenReady(
-            matcher = hasText(context.getString(I18nR.string.app_polish_sos)),
-            scrollInTag = "flashlight-advanced",
-        )
-        clickWhenReady(hasText(context.getString(I18nR.string.app_polish_exit_light)))
+        compose.onNodeWithText("-.-. ---- --.- .--", substring = false)
+            .performSemanticsAction(SemanticsActions.GetTextLayoutResult) { readLayout ->
+                val results = mutableListOf<TextLayoutResult>()
+                readLayout(results)
+                assertEquals(TextDirection.Ltr, results.single().layoutInput.style.textDirection)
+            }
+
+        // Prefer output-mode pill tag — decoder card also shows string "Light".
+        clickTag("morse-output-light", scrollInTag = "flashlight-advanced")
+        clickTag("morse-sos", scrollInTag = "flashlight-advanced")
+
+        val exitLight = context.getString(I18nR.string.app_polish_exit_light)
+        waitUntilText(exitLight)
+        compose.onAllNodesWithText(exitLight, substring = false)
+            .filter(hasClickAction())
+            .filterToOne(hasClickAction())
+            .assertIsDisplayed()
+            .performClick()
+        compose.waitForIdle()
+
         compose.onNodeWithTag("flashlight-controls").assertExists()
-        compose.onNodeWithText(context.getString(I18nR.string.app_polish_exit_light)).assertDoesNotExist()
+        compose.onNodeWithText(exitLight, substring = false).assertDoesNotExist()
     }
 }
