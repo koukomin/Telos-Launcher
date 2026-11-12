@@ -12,37 +12,38 @@ import android.media.AudioManager
 import android.media.ToneGenerator
 import android.os.Build
 import android.view.WindowManager
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.res.stringResource
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation3.runtime.NavKey
 import androidx.compose.foundation.gestures.detectVerticalDragGestures
-import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.graphics.Path
-import androidx.compose.ui.graphics.Brush
+import androidx.navigation3.runtime.NavKey
+import de.mm20.launcher2.ui.component.TelosDotMatrixText
+import de.mm20.launcher2.ui.component.TelosRadialGauge
+import de.mm20.launcher2.ui.component.TelosTechPill
+import de.mm20.launcher2.ui.component.telosTechCard
+import de.mm20.launcher2.ui.layout.AdaptiveLayoutPolicy
 import kotlin.math.roundToInt
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
@@ -82,8 +83,6 @@ fun FlashlightScreen() {
     val activity = context as? Activity
     val backStack = LocalBackStack.current
     val scope = rememberCoroutineScope()
-    val config = LocalConfiguration.current
-    val isLandscape = config.orientation == android.content.res.Configuration.ORIENTATION_LANDSCAPE
 
     val cameraManager = remember { context.getSystemService(Context.CAMERA_SERVICE) as CameraManager }
     val cameraId = remember {
@@ -292,6 +291,13 @@ fun FlashlightScreen() {
         }
     }
 
+    val neonCyan = Color(0xFF00F0FF)
+    val neonGreen = Color(0xFF00E676)
+    val neonOrange = Color(0xFFFF9100)
+    val neonMagenta = Color(0xFFFF007F)
+    var showAdvanced by rememberSaveable { mutableStateOf(false) }
+    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+
     // Fullscreen Screen Light Overlay
     if (isScreenFlashOn || (isMorsePlaying && outputMode != FlashlightOutputMode.SoundOnly && targetMode != FlashlightTarget.Flash)) {
         Box(
@@ -301,7 +307,11 @@ fun FlashlightScreen() {
                 .clickable { stopSignals() },
             contentAlignment = Alignment.Center
         ) {
-            Text(stringResource(I18nR.string.app_polish_exit_light), color = if (isScreenFlashOn && selectedScreenColor == Color.White) Color.Black else Color.White, style = MaterialTheme.typography.titleMedium)
+            Text(
+                stringResource(I18nR.string.app_polish_exit_light),
+                color = if (isScreenFlashOn && selectedScreenColor == Color.White) Color.Black else Color.White,
+                style = MaterialTheme.typography.titleMedium
+            )
         }
         return
     }
@@ -309,7 +319,18 @@ fun FlashlightScreen() {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(stringResource(I18nR.string.telos_flashlight_app_label), color = MaterialTheme.colorScheme.onSurface) },
+                title = {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Text(stringResource(I18nR.string.telos_flashlight_app_label), color = MaterialTheme.colorScheme.onSurface)
+                        Spacer(Modifier.width(8.dp))
+                        TelosDotMatrixText(
+                            if (isTorchOn || isScreenFlashOn) stringResource(I18nR.string.net_hub_state_on)
+                            else stringResource(I18nR.string.hc_off),
+                            fontSize = 9.sp,
+                            color = if (isTorchOn || isScreenFlashOn) neonGreen else neonCyan,
+                        )
+                    }
+                },
                 navigationIcon = {
                     if (backStack.size > 1) {
                         IconButton(onClick = { backStack.removeLastOrNull() }) {
@@ -343,208 +364,192 @@ fun FlashlightScreen() {
         },
         containerColor = Color.Transparent
     ) { padding ->
-        LazyColumn(
-            modifier = Modifier.testTag("flashlight-controls")
+        BoxWithConstraints(
+            modifier = Modifier
+                .testTag("flashlight-controls")
                 .fillMaxSize()
-                .padding(padding),
-            contentPadding = PaddingValues(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+                .padding(padding)
+                .padding(16.dp)
         ) {
-            // OxygenOS 16 Interactive Flashlight Beam Control
-            item {
-                val primaryColor = MaterialTheme.colorScheme.primary
-                val surfaceColor = MaterialTheme.colorScheme.surfaceContainerHighest
-                val isActive = isTorchOn || isScreenFlashOn
+            val sideBySide = AdaptiveLayoutPolicy.sideBySide(maxWidth.value, maxHeight.value, LocalDensity.current.fontScale)
+            val shortHeight = maxHeight < 420.dp
+            val primaryColor = MaterialTheme.colorScheme.primary
+            val surfaceColor = MaterialTheme.colorScheme.surfaceContainerHighest
+            val isActive = isTorchOn || isScreenFlashOn
 
+            @Composable
+            fun PowerCluster(clusterMod: Modifier = Modifier) {
                 Column(
+                    modifier = clusterMod.fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier.padding(vertical = 12.dp)
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
-                    // OxygenOS 16 Visual Light Beam Cone Canvas
                     Box(
                         modifier = Modifier
-                            .width(220.dp)
-                            .height(130.dp),
-                        contentAlignment = Alignment.BottomCenter
+                            .fillMaxWidth()
+                            .heightIn(min = if (shortHeight) 72.dp else 110.dp)
+                            .telosTechCard(borderColor = if (isActive) neonCyan else neonMagenta, alpha = if (isActive) 0.7f else 0.4f),
+                        contentAlignment = Alignment.Center
                     ) {
-                        androidx.compose.foundation.Canvas(modifier = Modifier.fillMaxSize()) {
-                            if (isActive) {
-                                val beamAlpha = torchStrength.coerceIn(0.2f, 1.0f)
-                                val beamWidth = size.width * (0.35f + (torchStrength * 0.6f))
-                                val path = Path().apply {
-                                    moveTo(size.width / 2f - 24f, size.height)
-                                    lineTo(size.width / 2f - beamWidth / 2f, 0f)
-                                    lineTo(size.width / 2f + beamWidth / 2f, 0f)
-                                    lineTo(size.width / 2f + 24f, size.height)
-                                    close()
-                                }
-                                drawPath(
-                                    path = path,
-                                    brush = Brush.verticalGradient(
-                                        colors = listOf(
-                                            primaryColor.copy(alpha = beamAlpha * 0.85f),
-                                            primaryColor.copy(alpha = 0.05f)
-                                        )
-                                    )
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceEvenly
+                        ) {
+                            TelosRadialGauge(
+                                progress = torchStrength,
+                                valueText = "${(torchStrength * 100).roundToInt()}%",
+                                labelText = stringResource(I18nR.string.hc_brightness),
+                                size = if (shortHeight) 72.dp else 96.dp,
+                                accentColor = neonCyan
+                            )
+                            IconButton(
+                                onClick = {
+                                    val on = !isTorchOn
+                                    stopSignals()
+                                    isTorchOn = on
+                                    if (targetMode == FlashlightTarget.Flash || targetMode == FlashlightTarget.Both) {
+                                        setHardwareTorch(isTorchOn, (torchStrength * maxStrength).roundToInt().coerceAtLeast(1))
+                                    }
+                                    if (targetMode == FlashlightTarget.Screen || targetMode == FlashlightTarget.Both) {
+                                        if (isTorchOn) {
+                                            applyScreenBrightness(screenBrightness)
+                                            isScreenFlashOn = true
+                                        } else {
+                                            applyScreenBrightness(WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE)
+                                            isScreenFlashOn = false
+                                        }
+                                    }
+                                },
+                                modifier = Modifier
+                                    .size(if (shortHeight) 88.dp else 112.dp)
+                                    .clip(CircleShape)
+                                    .background(if (isActive) primaryColor else surfaceColor)
+                                    .pointerInput(Unit) {
+                                        detectVerticalDragGestures { change, dragAmount ->
+                                            change.consume()
+                                            val delta = -dragAmount / 400f
+                                            torchStrength = (torchStrength + delta).coerceIn(0.1f, 1.0f)
+                                            if (isTorchOn) {
+                                                setHardwareTorch(true, (torchStrength * maxStrength).roundToInt().coerceAtLeast(1))
+                                            }
+                                        }
+                                    }
+                            ) {
+                                Icon(
+                                    painter = painterResource(BaseR.drawable.light_mode_24px),
+                                    contentDescription = stringResource(I18nR.string.telos_flashlight_app_label),
+                                    modifier = Modifier.size(if (shortHeight) 40.dp else 52.dp),
+                                    tint = if (isActive) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurface
                                 )
                             }
                         }
                     }
-
-                    // OxygenOS 16 Drag-to-Adjust Flashlight Button
-                    IconButton(
-                        onClick = {
-                            val on = !isTorchOn
-                            stopSignals()
-                            isTorchOn = on
-
-                            if (targetMode == FlashlightTarget.Flash || targetMode == FlashlightTarget.Both) {
-                                setHardwareTorch(isTorchOn, (torchStrength * maxStrength).roundToInt().coerceAtLeast(1))
-                            }
-                            if (targetMode == FlashlightTarget.Screen || targetMode == FlashlightTarget.Both) {
-                                if (isTorchOn) {
-                                    applyScreenBrightness(screenBrightness)
-                                    isScreenFlashOn = true
-                                } else {
-                                    applyScreenBrightness(WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE)
-                                    isScreenFlashOn = false
-                                }
-                            }
-                        },
-                        modifier = Modifier
-                            .size(120.dp)
-                            .clip(CircleShape)
-                            .background(if (isActive) primaryColor else surfaceColor)
-                            .pointerInput(Unit) {
-                                detectVerticalDragGestures { change, dragAmount ->
-                                    change.consume()
-                                    // Dragging UP increases strength, DOWN decreases
-                                    val delta = -dragAmount / 400f
-                                    torchStrength = (torchStrength + delta).coerceIn(0.1f, 1.0f)
-                                    if (isTorchOn) {
-                                        setHardwareTorch(true, (torchStrength * maxStrength).roundToInt().coerceAtLeast(1))
-                                    }
-                                }
-                            }
+                    FlowRow(
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        modifier = Modifier.fillMaxWidth()
                     ) {
-                        Icon(
-                            painter = painterResource(BaseR.drawable.light_mode_24px),
-                            contentDescription = stringResource(I18nR.string.telos_flashlight_app_label),
-                            modifier = Modifier.size(52.dp),
-                            tint = if (isActive) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurface
-                        )
-                    }
-
-                    Spacer(Modifier.height(10.dp))
-
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(8.dp)
-                    ) {
-                        Text(
-                            text = if (isActive) stringResource(I18nR.string.net_hub_state_on) else stringResource(I18nR.string.hc_off),
-                            style = MaterialTheme.typography.titleLarge,
-                            color = MaterialTheme.colorScheme.onSurface,
-                            fontWeight = FontWeight.Bold
-                        )
-                        Surface(
-                            shape = RoundedCornerShape(12.dp),
-                            color = MaterialTheme.colorScheme.primaryContainer
-                        ) {
-                            Text(
-                                text = "${(torchStrength * 100).roundToInt()}% Beam (Slide ↕)",
-                                style = MaterialTheme.typography.labelMedium,
-                                fontWeight = FontWeight.Bold,
-                                color = MaterialTheme.colorScheme.onPrimaryContainer,
-                                modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+                        FlashlightTarget.entries.forEach { target ->
+                            val enabled = cameraId != null || target == FlashlightTarget.Screen
+                            if (!enabled) return@forEach
+                            TelosTechPill(
+                                text = stringResource(when (target) {
+                                    FlashlightTarget.Flash -> I18nR.string.camera_native_flash
+                                    FlashlightTarget.Screen -> I18nR.string.app_polish_screen_light
+                                    FlashlightTarget.Both -> I18nR.string.preference_wallpaper_set_both
+                                }),
+                                isSelected = targetMode == target,
+                                onClick = { stopSignals(); switchLightTarget(target) },
+                                accentColor = neonGreen
                             )
                         }
                     }
-                }
-            }
-
-            // Light Target Selector with Auto-Switching
-            item {
-                Card(
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = MaterialTheme.shapes.medium,
-                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh)
-                ) {
-                    Column(modifier = Modifier.padding(16.dp)) {
-                        Text(stringResource(I18nR.string.app_polish_light_source), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurface)
-                        Spacer(Modifier.height(8.dp))
-                        FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.fillMaxWidth()) {
-                            FlashlightTarget.entries.forEach { target ->
-                                FilterChip(
-                                    selected = targetMode == target,
-                                    onClick = { stopSignals(); switchLightTarget(target) },
-                                    enabled = cameraId != null || target == FlashlightTarget.Screen,
-                                    label = { Text(stringResource(when (target) { FlashlightTarget.Flash -> I18nR.string.camera_native_flash; FlashlightTarget.Screen -> I18nR.string.app_polish_screen_light; FlashlightTarget.Both -> I18nR.string.preference_wallpaper_set_both }), fontSize = 12.sp) },
-                                )
-                            }
-                        }
-                    }
-                }
-            }
-
-            // Screen Color & Dimming Settings
-            item {
-                Card(
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = MaterialTheme.shapes.medium,
-                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh)
-                ) {
-                    Column(modifier = Modifier.padding(16.dp)) {
-                        Text(stringResource(I18nR.string.app_polish_screen_light), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurface)
-                        Spacer(Modifier.height(12.dp))
-
-                        LazyRow(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                            items(SCREEN_COLORS) { (name, color) ->
-                                Box(
-                                    modifier = Modifier
-                                        .size(44.dp)
-                                        .clip(CircleShape)
-                                        .background(color)
-                                        .clickable { selectedScreenColor = color },
-                                    contentAlignment = Alignment.Center
-                                ) {
-                                    if (selectedScreenColor == color) {
-                                        Icon(painterResource(BaseR.drawable.check_24px), contentDescription = null, tint = if (color == Color.White) Color.Black else Color.White)
+                    if (targetMode != FlashlightTarget.Flash) {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .telosTechCard(borderColor = neonOrange, alpha = 0.35f)
+                                .padding(12.dp)
+                        ) {
+                            TelosDotMatrixText(stringResource(I18nR.string.app_polish_screen_light), fontSize = 10.sp, color = neonOrange)
+                            Spacer(Modifier.height(8.dp))
+                            LazyRow(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                                items(SCREEN_COLORS) { (_, color) ->
+                                    Box(
+                                        modifier = Modifier
+                                            .size(40.dp)
+                                            .clip(CircleShape)
+                                            .background(color)
+                                            .clickable { selectedScreenColor = color },
+                                        contentAlignment = Alignment.Center
+                                    ) {
+                                        if (selectedScreenColor == color) {
+                                            Icon(painterResource(BaseR.drawable.check_24px), contentDescription = null, tint = if (color == Color.White) Color.Black else Color.White)
+                                        }
                                     }
                                 }
                             }
+                            Slider(
+                                value = screenBrightness,
+                                onValueChange = {
+                                    screenBrightness = it
+                                    applyScreenBrightness(it)
+                                }
+                            )
                         }
-
-                        Spacer(Modifier.height(12.dp))
-
-                        Text(stringResource(I18nR.string.hc_brightness), style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurface)
-                        Slider(
-                            value = screenBrightness,
-                            onValueChange = {
-                                screenBrightness = it
-                                applyScreenBrightness(it)
-                            }
-                        )
+                    }
+                    Button(
+                        onClick = { showAdvanced = true },
+                        modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp),
+                        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primaryContainer, contentColor = MaterialTheme.colorScheme.onPrimaryContainer)
+                    ) {
+                        Text(stringResource(I18nR.string.hc_more))
                     }
                 }
             }
 
-            // Police Siren & Emergency Alarm Button
-            item {
-                Card(
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = MaterialTheme.shapes.medium,
-                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.errorContainer)
+            if (sideBySide) {
+                Row(
+                    modifier = Modifier.fillMaxSize(),
+                    horizontalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
-                    Column(modifier = Modifier.padding(16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-                        Text(stringResource(I18nR.string.app_polish_siren), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onErrorContainer, fontWeight = FontWeight.Bold)
-                        Spacer(Modifier.height(8.dp))
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            Checkbox(checked = sirenAlternatingColors, onCheckedChange = { sirenAlternatingColors = it })
-                            Text(stringResource(I18nR.string.app_polish_alternating), color = MaterialTheme.colorScheme.onSurface, style = MaterialTheme.typography.bodySmall)
-                        }
-                        Spacer(Modifier.height(8.dp))
+                    PowerCluster(Modifier.weight(1f).fillMaxHeight())
+                    Column(
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxHeight()
+                            .telosTechCard(borderColor = neonMagenta, alpha = 0.35f)
+                            .padding(12.dp),
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        TelosDotMatrixText(stringResource(I18nR.string.app_polish_strobe), fontSize = 10.sp, color = neonMagenta)
+                        Slider(
+                            value = strobeFreqHz,
+                            onValueChange = { hz ->
+                                stopSignals()
+                                strobeFreqHz = hz
+                                if (hz > 0f) {
+                                    isTorchOn = false
+                                    strobeJob = scope.launch {
+                                        val intervalMs = (1000f / hz / 2f).toLong().coerceAtLeast(20L)
+                                        var state = false
+                                        while (isActive) {
+                                            state = !state
+                                            if (targetMode == FlashlightTarget.Flash || targetMode == FlashlightTarget.Both) {
+                                                setHardwareTorch(state)
+                                            }
+                                            delay(intervalMs)
+                                        }
+                                    }
+                                } else {
+                                    setHardwareTorch(false)
+                                }
+                            },
+                            valueRange = 0f..15f
+                        )
+                        Text("${strobeFreqHz.toInt()} Hz", color = MaterialTheme.colorScheme.onSurface)
                         Button(
                             onClick = {
                                 if (isSirenPlaying) {
@@ -567,140 +572,206 @@ fun FlashlightScreen() {
                                 }
                             },
                             colors = ButtonDefaults.buttonColors(containerColor = if (isSirenPlaying) MaterialTheme.colorScheme.surfaceContainerHighest else MaterialTheme.colorScheme.error),
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp)
                         ) {
                             Text(if (isSirenPlaying) stringResource(I18nR.string.hc_stop) else stringResource(I18nR.string.app_polish_siren), fontWeight = FontWeight.Bold)
                         }
                     }
                 }
+            } else {
+                PowerCluster(Modifier.fillMaxSize())
             }
 
-            // Strobe Light Slider
-            item {
-                Card(
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = MaterialTheme.shapes.medium,
-                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh)
+            if (showAdvanced) {
+                ModalBottomSheet(
+                    onDismissRequest = { showAdvanced = false },
+                    sheetState = sheetState,
+                    containerColor = MaterialTheme.colorScheme.surfaceContainer
                 ) {
-                    Column(modifier = Modifier.padding(16.dp)) {
-                        Text(stringResource(I18nR.string.app_polish_strobe), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurface)
-                        Spacer(Modifier.height(8.dp))
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            Slider(
-                                value = strobeFreqHz,
-                                onValueChange = { hz ->
-                                    stopSignals()
-                                    strobeFreqHz = hz
-                                    if (hz > 0f) {
-                                        isTorchOn = false
-                                        strobeJob = scope.launch {
-                                            val intervalMs = (1000f / hz / 2f).toLong().coerceAtLeast(20L)
-                                            var state = false
-                                            while (isActive) {
-                                                state = !state
-                                                if (targetMode == FlashlightTarget.Flash || targetMode == FlashlightTarget.Both) {
-                                                    setHardwareTorch(state)
-                                                }
-                                                delay(intervalMs)
-                                            }
+                    FlashlightAdvancedSheet(
+                        outputMode = outputMode,
+                        onOutputMode = { stopSignals(); outputMode = it },
+                        toneGeneratorReady = toneGenerator != null,
+                        morseText = morseText,
+                        onMorseText = { morseText = it.take(2000) },
+                        isMorsePlaying = isMorsePlaying,
+                        onPlayMorse = { code, repeat -> if (isMorsePlaying) stopSignals() else startMorse(code, repeat) },
+                        onSos = {
+                            morseText = "SOS"
+                            startMorse("... --- ...", true)
+                        },
+                        strobeFreqHz = strobeFreqHz,
+                        onStrobe = { hz ->
+                            stopSignals()
+                            strobeFreqHz = hz
+                            if (hz > 0f) {
+                                isTorchOn = false
+                                strobeJob = scope.launch {
+                                    val intervalMs = (1000f / hz / 2f).toLong().coerceAtLeast(20L)
+                                    var state = false
+                                    while (isActive) {
+                                        state = !state
+                                        if (targetMode == FlashlightTarget.Flash || targetMode == FlashlightTarget.Both) {
+                                            setHardwareTorch(state)
                                         }
-                                    } else {
-                                        setHardwareTorch(false)
+                                        delay(intervalMs)
                                     }
-                                },
-                                valueRange = 0f..15f,
-                                modifier = Modifier.weight(1f)
-                            )
-                            Spacer(Modifier.width(8.dp))
-                            Text("${strobeFreqHz.toInt()} Hz", color = MaterialTheme.colorScheme.onSurface)
-                        }
-                    }
+                                }
+                            } else setHardwareTorch(false)
+                        },
+                        isSirenPlaying = isSirenPlaying,
+                        sirenAlternatingColors = sirenAlternatingColors,
+                        onSirenAlternating = { sirenAlternatingColors = it },
+                        onSiren = {
+                            if (isSirenPlaying) {
+                                sirenJob?.cancel()
+                                isSirenPlaying = false
+                                setHardwareTorch(false)
+                                applyScreenBrightness(WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE)
+                            } else {
+                                stopSignals()
+                                isSirenPlaying = true
+                                sirenJob = scope.launch {
+                                    playSiren(
+                                        target = targetMode,
+                                        alternating = sirenAlternatingColors,
+                                        toneGenerator = toneGenerator,
+                                        setTorch = { setHardwareTorch(it) }
+                                    )
+                                    isSirenPlaying = false
+                                }
+                            }
+                        },
+                        stopSignals = { stopSignals() },
+                    )
                 }
-            }
-
-            // Morse Code Section
-            item {
-                Card(
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = MaterialTheme.shapes.medium,
-                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh)
-                ) {
-                    Column(modifier = Modifier.padding(16.dp)) {
-                        Text(stringResource(I18nR.string.app_polish_morse), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurface)
-                        Spacer(Modifier.height(12.dp))
-
-                        OutlinedTextField(
-                            value = morseText,
-                            onValueChange = { morseText = it.take(2000) },
-                            label = { Text(stringResource(I18nR.string.app_polish_message)) },
-                            singleLine = true,
-                            modifier = Modifier.fillMaxWidth()
-                        )
-
-                        val conversion by produceState<Pair<String, MorseCodec.Encoded>?>(null, morseText) {
-                            val input = morseText
-                            value = input to withContext(Dispatchers.IO) { MorseCodec.encode(input) }
-                        }
-                        val encoded = conversion?.takeIf { it.first == morseText }?.second
-                        val morseCode = encoded?.code.orEmpty()
-                        FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                            FlashlightOutputMode.entries.forEach { mode ->
-                                FilterChip(selected = outputMode == mode,
-                                    onClick = { stopSignals(); outputMode = mode },
-                                    enabled = toneGenerator != null || mode == FlashlightOutputMode.LightOnly,
-                                    label = { Text(stringResource(when (mode) {
-                                        FlashlightOutputMode.LightOnly -> I18nR.string.morse_light
-                                        FlashlightOutputMode.SoundOnly -> I18nR.string.morse_sound
-                                        FlashlightOutputMode.LightAndSound -> I18nR.string.morse_light_sound
-                                    })) })
-                            }
-                        }
-                        if (toneGenerator == null) Text(stringResource(I18nR.string.virtual_telemetry_unavailable), color = MaterialTheme.colorScheme.error)
-                        Text(stringResource(I18nR.string.morse_language_help), style = MaterialTheme.typography.bodySmall)
-                        if (encoded?.romanized == true) Text(encoded.readable, style = MaterialTheme.typography.bodySmall.copy(textDirection = TextDirection.Ltr))
-                        if (encoded?.unsupported == true) Text(stringResource(I18nR.string.morse_unsupported), color = MaterialTheme.colorScheme.error)
-
-                        Spacer(Modifier.height(8.dp))
-                        Text(
-                            text = morseCode,
-                            fontFamily = FontFamily.Monospace,
-                            color = MaterialTheme.colorScheme.primary,
-                            style = MaterialTheme.typography.bodyMedium.copy(textDirection = TextDirection.Ltr)
-                        )
-
-                        Spacer(Modifier.height(16.dp))
-
-                        Row(horizontalArrangement = Arrangement.spacedBy(12.dp), modifier = Modifier.fillMaxWidth()) {
-                            Button(
-                                onClick = {
-                                    if (isMorsePlaying) stopSignals() else startMorse(morseCode, false)
-                                },
-                                enabled = isMorsePlaying || morseCode.isNotBlank(),
-                                modifier = Modifier.weight(1f)
-                            ) {
-                                Text(if (isMorsePlaying) stringResource(I18nR.string.hc_stop) else stringResource(I18nR.string.hc_send))
-                            }
-
-                            Button(
-                                onClick = {
-                                    morseText = "SOS"
-                                    startMorse("... --- ...", true)
-                                },
-                                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error),
-                                modifier = Modifier.weight(1f)
-                            ) {
-                                Text(stringResource(I18nR.string.app_polish_sos))
-                            }
-                        }
-                    }
-                }
-            }
-
-            // Morse Decoder Section (Audio & Camera Light Detection)
-            item {
-                MorseDecoderCard()
             }
         }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun FlashlightAdvancedSheet(
+    outputMode: FlashlightOutputMode,
+    onOutputMode: (FlashlightOutputMode) -> Unit,
+    toneGeneratorReady: Boolean,
+    morseText: String,
+    onMorseText: (String) -> Unit,
+    isMorsePlaying: Boolean,
+    onPlayMorse: (String, Boolean) -> Unit,
+    onSos: () -> Unit,
+    strobeFreqHz: Float,
+    onStrobe: (Float) -> Unit,
+    isSirenPlaying: Boolean,
+    sirenAlternatingColors: Boolean,
+    onSirenAlternating: (Boolean) -> Unit,
+    onSiren: () -> Unit,
+    stopSignals: () -> Unit,
+) {
+    val neonCyan = Color(0xFF00F0FF)
+    val neonOrange = Color(0xFFFF9100)
+    val neonMagenta = Color(0xFFFF007F)
+    val conversion by produceState<Pair<String, MorseCodec.Encoded>?>(null, morseText) {
+        val input = morseText
+        value = input to withContext(Dispatchers.IO) { MorseCodec.encode(input) }
+    }
+    val encoded = conversion?.takeIf { it.first == morseText }?.second
+    val morseCode = encoded?.code.orEmpty()
+
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp)
+            .padding(bottom = 28.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
+        TelosDotMatrixText(stringResource(I18nR.string.hc_more), fontSize = 11.sp, color = neonCyan)
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .telosTechCard(borderColor = neonOrange, alpha = 0.4f)
+                .padding(12.dp)
+        ) {
+            Text(stringResource(I18nR.string.app_polish_strobe), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurface)
+            Slider(value = strobeFreqHz, onValueChange = onStrobe, valueRange = 0f..15f)
+            Text("${strobeFreqHz.toInt()} Hz", color = MaterialTheme.colorScheme.onSurface)
+        }
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .telosTechCard(borderColor = MaterialTheme.colorScheme.error, alpha = 0.5f)
+                .padding(12.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(stringResource(I18nR.string.app_polish_siren), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurface, fontWeight = FontWeight.Bold)
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Checkbox(checked = sirenAlternatingColors, onCheckedChange = onSirenAlternating)
+                Text(stringResource(I18nR.string.app_polish_alternating), color = MaterialTheme.colorScheme.onSurface, style = MaterialTheme.typography.bodySmall)
+            }
+            Button(
+                onClick = onSiren,
+                colors = ButtonDefaults.buttonColors(containerColor = if (isSirenPlaying) MaterialTheme.colorScheme.surfaceContainerHighest else MaterialTheme.colorScheme.error),
+                modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp)
+            ) {
+                Text(if (isSirenPlaying) stringResource(I18nR.string.hc_stop) else stringResource(I18nR.string.app_polish_siren), fontWeight = FontWeight.Bold)
+            }
+        }
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .telosTechCard(borderColor = neonMagenta, alpha = 0.4f)
+                .padding(12.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            Text(stringResource(I18nR.string.app_polish_morse), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurface)
+            OutlinedTextField(
+                value = morseText,
+                onValueChange = onMorseText,
+                label = { Text(stringResource(I18nR.string.app_polish_message)) },
+                singleLine = true,
+                modifier = Modifier.fillMaxWidth()
+            )
+            FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                FlashlightOutputMode.entries.forEach { mode ->
+                    TelosTechPill(
+                        text = stringResource(
+                            when (mode) {
+                                FlashlightOutputMode.LightOnly -> I18nR.string.morse_light
+                                FlashlightOutputMode.SoundOnly -> I18nR.string.morse_sound
+                                FlashlightOutputMode.LightAndSound -> I18nR.string.morse_light_sound
+                            }
+                        ),
+                        isSelected = outputMode == mode,
+                        onClick = { onOutputMode(mode) },
+                        accentColor = neonCyan
+                    )
+                }
+            }
+            if (!toneGeneratorReady) Text(stringResource(I18nR.string.virtual_telemetry_unavailable), color = MaterialTheme.colorScheme.error)
+            Text(stringResource(I18nR.string.morse_language_help), style = MaterialTheme.typography.bodySmall)
+            if (encoded?.romanized == true) Text(encoded.readable, style = MaterialTheme.typography.bodySmall.copy(textDirection = TextDirection.Ltr))
+            if (encoded?.unsupported == true) Text(stringResource(I18nR.string.morse_unsupported), color = MaterialTheme.colorScheme.error)
+            Text(morseCode, fontFamily = FontFamily.Monospace, color = MaterialTheme.colorScheme.primary, style = MaterialTheme.typography.bodyMedium.copy(textDirection = TextDirection.Ltr))
+            Row(horizontalArrangement = Arrangement.spacedBy(12.dp), modifier = Modifier.fillMaxWidth()) {
+                Button(
+                    onClick = { onPlayMorse(morseCode, false) },
+                    enabled = isMorsePlaying || morseCode.isNotBlank(),
+                    modifier = Modifier.weight(1f).heightIn(min = 48.dp)
+                ) {
+                    Text(if (isMorsePlaying) stringResource(I18nR.string.hc_stop) else stringResource(I18nR.string.hc_send))
+                }
+                Button(
+                    onClick = onSos,
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error),
+                    modifier = Modifier.weight(1f).heightIn(min = 48.dp)
+                ) {
+                    Text(stringResource(I18nR.string.app_polish_sos))
+                }
+            }
+        }
+        MorseDecoderCard()
+        Spacer(Modifier.height(8.dp))
     }
 }
 
@@ -916,79 +987,70 @@ private fun MorseDecoderCard() {
         }
     }
 
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        shape = MaterialTheme.shapes.medium,
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh)
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .telosTechCard(borderColor = Color(0xFF00E676), alpha = 0.4f)
+            .padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
-        Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
-            Text(
-                "Morse Code Live Decoder (Audio & Camera Light)",
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.onSurface
-            )
-
-            Text(
-                "Decode incoming Morse signals automatically via sound tones or camera light flashing in real-time.",
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-
-            Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.fillMaxWidth()) {
-                Button(
-                    onClick = { if (isAudioDecoding) stopDecoder() else startAudioDecoder() },
-                    modifier = Modifier.weight(1f),
-                    colors = ButtonDefaults.buttonColors(containerColor = if (isAudioDecoding) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary)
-                ) {
-                    Text(if (isAudioDecoding) "Stop Audio" else "Audio")
-                }
-
-                Button(
-                    onClick = { if (isOpticalDecoding) stopOpticalDecoder() else startOpticalDecoder() },
-                    modifier = Modifier.weight(1f),
-                    colors = ButtonDefaults.buttonColors(containerColor = if (isOpticalDecoding) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary)
-                ) {
-                    Text(if (isOpticalDecoding) "Stop Camera" else "Camera")
-                }
-
-                OutlinedButton(
-                    onClick = {
-                        if (decodedMorse.isNotBlank()) {
-                            decodedMorse = ""
-                            decodedText = ""
-                        }
-                    },
-                    enabled = decodedMorse.isNotBlank()
-                ) {
-                    Text("Clear")
-                }
+        TelosDotMatrixText(stringResource(I18nR.string.app_polish_morse), fontSize = 10.sp, color = Color(0xFF00E676))
+        Text(
+            stringResource(I18nR.string.morse_language_help),
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.fillMaxWidth()) {
+            Button(
+                onClick = { if (isAudioDecoding) stopDecoder() else startAudioDecoder() },
+                modifier = Modifier.weight(1f).heightIn(min = 48.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = if (isAudioDecoding) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary)
+            ) {
+                Text(if (isAudioDecoding) stringResource(I18nR.string.hc_stop) else stringResource(I18nR.string.morse_sound))
             }
-
-            if (decodedMorse.isNotBlank()) {
-                Surface(
-                    shape = RoundedCornerShape(12.dp),
-                    color = MaterialTheme.colorScheme.surfaceContainerHighest,
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                        Text("Decoded Morse:", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                        Text(
-                            decodedMorse,
-                            fontFamily = FontFamily.Monospace,
-                            fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.primary,
-                            style = MaterialTheme.typography.bodyMedium
-                        )
-                        Spacer(Modifier.height(4.dp))
-                        Text("Decoded Message:", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                        Text(
-                            decodedText.ifBlank { "—" },
-                            style = MaterialTheme.typography.titleMedium,
-                            fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.onSurface
-                        )
+            Button(
+                onClick = { if (isOpticalDecoding) stopOpticalDecoder() else startOpticalDecoder() },
+                modifier = Modifier.weight(1f).heightIn(min = 48.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = if (isOpticalDecoding) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary)
+            ) {
+                Text(if (isOpticalDecoding) stringResource(I18nR.string.hc_stop) else stringResource(I18nR.string.morse_light))
+            }
+            OutlinedButton(
+                onClick = {
+                    if (decodedMorse.isNotBlank()) {
+                        decodedMorse = ""
+                        decodedText = ""
                     }
+                },
+                enabled = decodedMorse.isNotBlank(),
+                modifier = Modifier.heightIn(min = 48.dp)
+            ) {
+                Text(stringResource(I18nR.string.hc_clear))
+            }
+        }
+        if (decodedMorse.isNotBlank()) {
+            Surface(
+                shape = RoundedCornerShape(12.dp),
+                color = MaterialTheme.colorScheme.surfaceContainerHighest,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                    Text(stringResource(I18nR.string.app_polish_morse), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text(
+                        decodedMorse,
+                        fontFamily = FontFamily.Monospace,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.primary,
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                    Spacer(Modifier.height(4.dp))
+                    Text(stringResource(I18nR.string.app_polish_message), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text(
+                        decodedText.ifBlank { "—" },
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
                 }
             }
         }
