@@ -75,6 +75,9 @@ jobs:
             exit 1
           fi
           printf '%s' "$KEYSTORE" | base64 -di > "$RUNNER_TEMP/keystore/keystore.jks"
+          echo "KEYSTORE_PASSWORD=$KEYSTORE_PASSWORD" >> "$GITHUB_ENV"
+          echo "SIGNING_KEY_ALIAS=$SIGNING_KEY_ALIAS" >> "$GITHUB_ENV"
+          echo "SIGNING_KEY_PASSWORD=$SIGNING_KEY_PASSWORD" >> "$GITHUB_ENV"
           echo "KS_PASS=$KEYSTORE_PASSWORD" >> "$GITHUB_ENV"
           echo "KS_ALIAS=$SIGNING_KEY_ALIAS" >> "$GITHUB_ENV"
           echo "KS_KEY_PASS=$SIGNING_KEY_PASSWORD" >> "$GITHUB_ENV"
