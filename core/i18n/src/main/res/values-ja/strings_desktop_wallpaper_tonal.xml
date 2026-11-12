@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_wallpaper_tonal_title">壁紙からのアクセント</string>
+    <string name="desktop_wallpaper_tonal_enable">壁紙からアクセント色</string>
+    <string name="desktop_wallpaper_tonal_hint">この端末の vault / ポータブル壁紙をサンプリングし、Material トーナルシードをローカルで生成します。画素はアップロードされません。失敗時はネオンシアンにフォールバックします。</string>
+    <string name="desktop_wallpaper_tonal_accent_wallpaper">theme.accent=wallpaper — ローカルシード有効</string>
+</resources>

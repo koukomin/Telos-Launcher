@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_wallpaper_tonal_title">Akcents no fona</string>
+    <string name="desktop_wallpaper_tonal_enable">Akcents no fona attēla</string>
+    <string name="desktop_wallpaper_tonal_hint">Parauga vault vai portable fonu šajā ierīcē un lokāli iegūst Material tonālo seed. Pikseļi nekad netiek augšupielādēti. Kļūmes gadījumā chrome izmanto neona ciānu.</string>
+    <string name="desktop_wallpaper_tonal_accent_wallpaper">theme.accent=wallpaper — lokālais seed aktīvs</string>
+</resources>

@@ -14,6 +14,12 @@ object DesktopChrome {
     var commandPaletteOpen by mutableStateOf(false)
     /** Kickoff search seed from `telos://search?q=…` (consumed by PlasmaAppGrid). */
     var pendingSearchQuery by mutableStateOf<String?>(null)
+    /** Bumped when wallpaper tonal / accent prefs change so Main re-resolves chrome accent. */
+    var accentEpoch by mutableStateOf(0)
+
+    fun bumpAccentEpoch() {
+        accentEpoch++
+    }
 
     val placement: WindowPlacement
         get() = if (fullscreen) WindowPlacement.Fullscreen else WindowPlacement.Floating

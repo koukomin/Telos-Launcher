@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_wallpaper_tonal_title">لون التمييز من الخلفية</string>
+    <string name="desktop_wallpaper_tonal_enable">لون التمييز من الخلفية</string>
+    <string name="desktop_wallpaper_tonal_hint">يأخذ عيّنة من خلفية الخزنة أو الوضع المحمول على هذا الجهاز ويشتق محليًا بذرة Material اللونية. لا تُرفع البكسلات أبدًا. عند الفشل يعود الواجهة إلى السماوي النيوني.</string>
+    <string name="desktop_wallpaper_tonal_accent_wallpaper">theme.accent=wallpaper — البذرة المحلية نشطة</string>
+</resources>

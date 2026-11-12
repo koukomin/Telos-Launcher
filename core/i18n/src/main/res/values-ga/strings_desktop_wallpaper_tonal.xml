@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_wallpaper_tonal_title">Aicsean ón gcúlra</string>
+    <string name="desktop_wallpaper_tonal_enable">Aicsean ón gcúlra</string>
+    <string name="desktop_wallpaper_tonal_hint">Samplálann sé cúlra vault nó portable ar an ngléas seo agus díorthaíonn síol tonúil Material go háitiúil. Ní uaslódáiltear picteilíní riamh. Má theipeann, úsáideann chrome ciain néoin.</string>
+    <string name="desktop_wallpaper_tonal_accent_wallpaper">theme.accent=wallpaper — síol áitiúil gníomhach</string>
+</resources>

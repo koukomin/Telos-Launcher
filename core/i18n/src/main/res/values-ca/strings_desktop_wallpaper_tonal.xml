@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_wallpaper_tonal_title">Accent des del fons</string>
+    <string name="desktop_wallpaper_tonal_enable">Accent des del fons de pantalla</string>
+    <string name="desktop_wallpaper_tonal_hint">Mostreja el fons vault o portable en aquest dispositiu i deriva localment una llavor tonal Material. Els píxels no s’envien mai. Si falla, el chrome usa cian neó.</string>
+    <string name="desktop_wallpaper_tonal_accent_wallpaper">theme.accent=wallpaper — llavor local activa</string>
+</resources>

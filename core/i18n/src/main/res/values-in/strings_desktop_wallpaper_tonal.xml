@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_wallpaper_tonal_title">Aksen dari wallpaper</string>
+    <string name="desktop_wallpaper_tonal_enable">Aksen dari wallpaper</string>
+    <string name="desktop_wallpaper_tonal_hint">Mengambil sampel wallpaper vault atau portable di perangkat ini dan menurunkan seed tonal Material secara lokal. Piksel tidak pernah diunggah. Jika gagal, chrome memakai neon cyan.</string>
+    <string name="desktop_wallpaper_tonal_accent_wallpaper">theme.accent=wallpaper — seed lokal aktif</string>
+</resources>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_wallpaper_tonal_title">Naglasak s pozadine</string>
+    <string name="desktop_wallpaper_tonal_enable">Naglasak s pozadine</string>
+    <string name="desktop_wallpaper_tonal_hint">Uzorkuje vault ili portable pozadinu na ovom uređaju i lokalno izvodi Material tonalni seed. Pikseli se nikad ne šalju. Ako uzorkovanje ne uspije, chrome koristi neon cijan.</string>
+    <string name="desktop_wallpaper_tonal_accent_wallpaper">theme.accent=wallpaper — lokalni seed aktivan</string>
+</resources>

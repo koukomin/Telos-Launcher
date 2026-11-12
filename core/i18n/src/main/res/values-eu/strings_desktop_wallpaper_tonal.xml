@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_wallpaper_tonal_title">Horma-paperaren azentua</string>
+    <string name="desktop_wallpaper_tonal_enable">Azentua horma-paperetik</string>
+    <string name="desktop_wallpaper_tonal_hint">Gailu honetako vault edo portable horma-papera lagintzen du eta Material tonu-hazia lokalean deribatzen du. Pixels ez dira inoiz igotzen. Huts eginez gero, chrome-k neon ziana erabiltzen du.</string>
+    <string name="desktop_wallpaper_tonal_accent_wallpaper">theme.accent=wallpaper — tokiko hazia aktibo</string>
+</resources>

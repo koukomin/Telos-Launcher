@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_wallpaper_tonal_title">Akzent aus Hintergrundbild</string>
+    <string name="desktop_wallpaper_tonal_enable">Akzentfarbe vom Hintergrundbild</string>
+    <string name="desktop_wallpaper_tonal_hint">Liest das Vault- oder Portable-Hintergrundbild auf diesem Gerät und leitet lokal einen Material-Farbton-Seed ab. Pixel werden nie hochgeladen. Bei Fehlern fällt Chrome auf Neon-Cyan zurück.</string>
+    <string name="desktop_wallpaper_tonal_accent_wallpaper">theme.accent=wallpaper — lokaler Seed aktiv</string>
+</resources>

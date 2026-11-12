@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_wallpaper_tonal_title">Τόνος ἐκ ταπητίου</string>
+    <string name="desktop_wallpaper_tonal_enable">Χρῶμα ἐμφάσεως ἐκ ταπητίου</string>
+    <string name="desktop_wallpaper_tonal_hint">Δειγματοληπτεῖ τὸ ταπητίον vault ἢ φορητὸν ἐν τῇδε τῇ συσκευῇ καὶ τοπικῶς παράγει Material τονικὸν σπέρμα. Τὰ εἰκονοστοιχεῖα οὐδέποτε ἀναβιβάζονται. Ἐὰν ἀποτύχῃ, τὸ chrome εἰς neon κυανοῦν ἐπανέρχεται.</string>
+    <string name="desktop_wallpaper_tonal_accent_wallpaper">theme.accent=wallpaper — τοπικὸν σπέρμα ἐνεργόν</string>
+</resources>

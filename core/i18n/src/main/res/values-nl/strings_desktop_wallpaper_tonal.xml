@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_wallpaper_tonal_title">Accent uit achtergrond</string>
+    <string name="desktop_wallpaper_tonal_enable">Accent uit behang</string>
+    <string name="desktop_wallpaper_tonal_hint">Bemonstert de vault- of portable-achtergrond op dit apparaat en leidt lokaal een Material-tonale seed af. Pixels worden nooit geüpload. Bij mislukking valt chrome terug op neon cyaan.</string>
+    <string name="desktop_wallpaper_tonal_accent_wallpaper">theme.accent=wallpaper — lokale seed actief</string>
+</resources>

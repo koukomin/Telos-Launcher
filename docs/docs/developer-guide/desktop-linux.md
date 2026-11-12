@@ -81,6 +81,16 @@ F11 and Settings toggle a normal resizable window vs undecorated fullscreen. Whe
 `followSystemTheme` is on, accent/icon/cursor names are read from Plasma `kcminputrc`,
 `~/.config/kdeglobals`, and GTK `settings.ini` (plus `XCURSOR_*` when set). The left Telos candy/cyberpunk vector logo opens a Plasma-style AppGrid.
 
+**Wallpaper → local tonal seed:** vault `desktop.properties` keys `theme.accent=wallpaper`
+or `theme.wallpaperTonal=true` make Helix chrome use a Material-style tonal seed sampled
+from the vault/portable wallpaper on `Dispatchers.IO` (`WallpaperTonalSeed`). Sampling and
+tonal derivation are **local only** — pixels are never uploaded; `:libs:material-color-utilities`
+is Android-only, so desktop uses a JVM-local quantize/chroma score inspired by the same
+Material constants. Results are cached by SHA-256 content digest and invalidated when the
+wallpaper path or bytes change. Sampling failure falls back to neon cyan (`#00F0FF`).
+Optional `theme.wallpaperPath` points at a vault/portable image; otherwise Pictures /
+`.config/telos` defaults are searched.
+
 ## Plasma replacement shell
 
 The desktop shell includes a configurable top bar (default 36 dp; 32–48 dp, tint, alpha, icon size persist in `desktop.properties`). Right-click the bar for style. Workspaces 1–4 show subtle neon tint strips under the digits (`theme.workspaceTints`, default on; suppressed when defensive panic-mute keys such as `theme.panicMute` are true; Quiet Ops keys lower strip alpha). Work-area struts keep maximized windows below the bar. Telos Quake (`F12` / Ctrl+\`) and System Monitor (`Ctrl+Escape`) read `/proc` and `/sys`. **HelixCommandPalette** (`Super+Period` / `Ctrl+Space`) is a privacy-safe global launcher: apps, windows, calculator, Files/Settings/Network, kill focused (labwc/`wlrctl` best-effort), vault clipboard paste — opaque `menu`/`surfaceContainer`, vault/portable file roots only. See [telos-helix.md](./telos-helix.md) H2b / H3.

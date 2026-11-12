@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_wallpaper_tonal_title">Accent din fundal</string>
+    <string name="desktop_wallpaper_tonal_enable">Accent din fundal</string>
+    <string name="desktop_wallpaper_tonal_hint">Eșantionează fundalul vault sau portable pe acest dispozitiv și derivează local un seed tonal Material. Pixelii nu sunt niciodată încărcați. Dacă eșuează, chrome folosește cyan neon.</string>
+    <string name="desktop_wallpaper_tonal_accent_wallpaper">theme.accent=wallpaper — seed local activ</string>
+</resources>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_wallpaper_tonal_title">تأکید از کاغذدیواری</string>
+    <string name="desktop_wallpaper_tonal_enable">تأکید از کاغذدیواری</string>
+    <string name="desktop_wallpaper_tonal_hint">از کاغذدیواری vault یا portable روی این دستگاه نمونه می‌گیرد و بذر تونال Material را به‌صورت محلی استخراج می‌کند. پیکسل‌ها هرگز آپلود نمی‌شوند. در صورت شکست، کروم از فیروزه‌ای نئون استفاده می‌کند.</string>
+    <string name="desktop_wallpaper_tonal_accent_wallpaper">theme.accent=wallpaper — بذر محلی فعال است</string>
+</resources>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_wallpaper_tonal_title">Aksentti taustakuvasta</string>
+    <string name="desktop_wallpaper_tonal_enable">Aksentti taustakuvasta</string>
+    <string name="desktop_wallpaper_tonal_hint">Ottaa näytteen vault- tai portable-taustakuvasta tällä laitteella ja johtaa paikallisesti Material-tonaaliset seed-arvot. Pikseleitä ei koskaan lähetetä. Epäonnistuessa chrome käyttää neoncyania.</string>
+    <string name="desktop_wallpaper_tonal_accent_wallpaper">theme.accent=wallpaper — paikallinen seed aktiivinen</string>
+</resources>

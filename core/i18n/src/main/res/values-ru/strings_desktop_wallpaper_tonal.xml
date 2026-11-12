@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_wallpaper_tonal_title">Акцент из обоев</string>
+    <string name="desktop_wallpaper_tonal_enable">Акцент из обоев</string>
+    <string name="desktop_wallpaper_tonal_hint">Сэмплирует обои vault или portable на этом устройстве и локально выводит Material-тональный seed. Пиксели никогда не загружаются. При сбое chrome использует неоновый циан.</string>
+    <string name="desktop_wallpaper_tonal_accent_wallpaper">theme.accent=wallpaper — локальный seed активен</string>
+</resources>
