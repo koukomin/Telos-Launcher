@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_icons_title">Ikone</string>
+    <string name="desktop_icons_theme_label">Tema ikona</string>
+    <string name="desktop_icons_download_section">Preuzmi s Telos</string>
+    <string name="desktop_icons_download">Preuzmi</string>
+    <string name="desktop_icons_installing">Instaliranje…</string>
+    <string name="desktop_icons_installed">Instalirano</string>
+    <string name="desktop_icons_apply">Primijeni</string>
+    <string name="desktop_icons_source_system">Sustav</string>
+    <string name="desktop_icons_source_telos">Telos</string>
+    <string name="desktop_icons_source_builtin">Ugrađeno</string>
+    <string name="desktop_icons_path">Mapa paketa ikona: %1$s</string>
+    <string name="desktop_icons_freedesktop_note">Teme ikona freedesktop za radnu površinu (ne Android ADW paketi).</string>
+    <string name="desktop_icons_download_failed">Preuzimanje nije uspjelo</string>
+    <string name="desktop_icons_download_ok">Tema instalirana</string>
+    <string name="desktop_icons_license">Licenca: %1$s</string>
+    <string name="desktop_icons_portable_only">U načinu Portable Data paketi ostaju u prijenosnoj mapi ikona (ne u profilu hosta).</string>
+</resources>

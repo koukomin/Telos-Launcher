@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_icons_title">Piktogramos</string>
+    <string name="desktop_icons_theme_label">Piktogramų tema</string>
+    <string name="desktop_icons_download_section">Atsisiųsti iš Telos</string>
+    <string name="desktop_icons_download">Atsisiųsti</string>
+    <string name="desktop_icons_installing">Diegiama…</string>
+    <string name="desktop_icons_installed">Įdiegta</string>
+    <string name="desktop_icons_apply">Taikyti</string>
+    <string name="desktop_icons_source_system">Sistema</string>
+    <string name="desktop_icons_source_telos">Telos</string>
+    <string name="desktop_icons_source_builtin">Įtaisytoji</string>
+    <string name="desktop_icons_path">Piktogramų paketų aplankas: %1$s</string>
+    <string name="desktop_icons_freedesktop_note">Darbalaukio freedesktop piktogramų temos (ne Android ADW paketai).</string>
+    <string name="desktop_icons_download_failed">Atsisiųsti nepavyko</string>
+    <string name="desktop_icons_download_ok">Tema įdiegta</string>
+    <string name="desktop_icons_license">Licencija: %1$s</string>
+    <string name="desktop_icons_portable_only">Portable Data režimu paketai lieka nešiojamame piktogramų aplanke (ne pagrindinio kompiuterio profilyje).</string>
+</resources>

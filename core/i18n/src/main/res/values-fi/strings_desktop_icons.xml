@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_icons_title">Kuvakkeet</string>
+    <string name="desktop_icons_theme_label">Kuvaketeema</string>
+    <string name="desktop_icons_download_section">Lataa Telosista</string>
+    <string name="desktop_icons_download">Lataa</string>
+    <string name="desktop_icons_installing">Asennetaan…</string>
+    <string name="desktop_icons_installed">Asennettu</string>
+    <string name="desktop_icons_apply">Käytä</string>
+    <string name="desktop_icons_source_system">Järjestelmä</string>
+    <string name="desktop_icons_source_telos">Telos</string>
+    <string name="desktop_icons_source_builtin">Sisäänrakennettu</string>
+    <string name="desktop_icons_path">Kuvakepakettien kansio: %1$s</string>
+    <string name="desktop_icons_freedesktop_note">Työpöydän freedesktop-kuvaketeemat (ei Android ADW -paketteja).</string>
+    <string name="desktop_icons_download_failed">Lataus epäonnistui</string>
+    <string name="desktop_icons_download_ok">Teema asennettu</string>
+    <string name="desktop_icons_license">Lisenssi: %1$s</string>
+    <string name="desktop_icons_portable_only">Portable Data -tilassa paketit pysyvät kannettavassa kuvakekansiossa (ei isäntäprofiilissa).</string>
+</resources>

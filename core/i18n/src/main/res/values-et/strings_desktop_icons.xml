@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_icons_title">Ikoonid</string>
+    <string name="desktop_icons_theme_label">Ikooniteema</string>
+    <string name="desktop_icons_download_section">Laadi alla Telosest</string>
+    <string name="desktop_icons_download">Laadi alla</string>
+    <string name="desktop_icons_installing">Installimine…</string>
+    <string name="desktop_icons_installed">Installitud</string>
+    <string name="desktop_icons_apply">Rakenda</string>
+    <string name="desktop_icons_source_system">Süsteem</string>
+    <string name="desktop_icons_source_telos">Telos</string>
+    <string name="desktop_icons_source_builtin">Sisseehitatud</string>
+    <string name="desktop_icons_path">Ikoonipakkide kaust: %1$s</string>
+    <string name="desktop_icons_freedesktop_note">Töölaua freedesktop-ikooniteemad (mitte Android ADW paketid).</string>
+    <string name="desktop_icons_download_failed">Allalaadimine ebaõnnestus</string>
+    <string name="desktop_icons_download_ok">Teema installitud</string>
+    <string name="desktop_icons_license">Litsents: %1$s</string>
+    <string name="desktop_icons_portable_only">Portable Data režiimis jäävad paketid kaasaskantavasse ikoonikausta (mitte hostiprofiili).</string>
+</resources>

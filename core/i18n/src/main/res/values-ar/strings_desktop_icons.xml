@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_icons_title">الأيقونات</string>
+    <string name="desktop_icons_theme_label">سمة الأيقونات</string>
+    <string name="desktop_icons_download_section">تنزيل من Telos</string>
+    <string name="desktop_icons_download">تنزيل</string>
+    <string name="desktop_icons_installing">جارٍ التثبيت…</string>
+    <string name="desktop_icons_installed">مثبَّت</string>
+    <string name="desktop_icons_apply">تطبيق</string>
+    <string name="desktop_icons_source_system">النظام</string>
+    <string name="desktop_icons_source_telos">Telos</string>
+    <string name="desktop_icons_source_builtin">مدمج</string>
+    <string name="desktop_icons_path">مجلد حزم الأيقونات: %1$s</string>
+    <string name="desktop_icons_freedesktop_note">سمات أيقونات freedesktop لسطح المكتب (وليست حزم ADW لأندرويد).</string>
+    <string name="desktop_icons_download_failed">فشل التنزيل</string>
+    <string name="desktop_icons_download_ok">تم تثبيت السمة</string>
+    <string name="desktop_icons_license">الترخيص: %1$s</string>
+    <string name="desktop_icons_portable_only">في وضع Portable Data تبقى الحزم في مجلد الأيقونات المحمول (وليس ملف المضيف).</string>
+</resources>

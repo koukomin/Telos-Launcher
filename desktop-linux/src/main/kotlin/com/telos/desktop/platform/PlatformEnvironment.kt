@@ -44,7 +44,12 @@ data class SettingsVisibilityFilter(
         get() = platform == TelosRuntimePlatform.LinuxDesktop ||
             platform == TelosRuntimePlatform.BsdDesktop
     val showDesktopSurfaceFilters: Boolean get() = platform != TelosRuntimePlatform.AndroidMobile
-    val showLinuxIconThemeSelector: Boolean get() = platform == TelosRuntimePlatform.LinuxDesktop
+    /** Freedesktop / Telos-downloaded icon themes (Linux system + portable Win/mac packs). Not Android ADW. */
+    val showLinuxIconThemeSelector: Boolean
+        get() = platform == TelosRuntimePlatform.LinuxDesktop ||
+            platform == TelosRuntimePlatform.WindowsDesktop ||
+            platform == TelosRuntimePlatform.MacDesktop ||
+            platform == TelosRuntimePlatform.BsdDesktop
     val showLuksVault: Boolean get() = platform == TelosRuntimePlatform.LinuxDesktop
     val showKlassyWindowManager: Boolean get() = platform == TelosRuntimePlatform.LinuxDesktop
     val showSweetCursor: Boolean get() = platform != TelosRuntimePlatform.AndroidMobile

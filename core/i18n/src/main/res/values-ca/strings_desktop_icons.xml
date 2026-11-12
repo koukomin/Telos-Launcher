@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_icons_title">Icones</string>
+    <string name="desktop_icons_theme_label">Tema d’icones</string>
+    <string name="desktop_icons_download_section">Baixa des de Telos</string>
+    <string name="desktop_icons_download">Baixa</string>
+    <string name="desktop_icons_installing">S’està instal·lant…</string>
+    <string name="desktop_icons_installed">Instal·lat</string>
+    <string name="desktop_icons_apply">Aplica</string>
+    <string name="desktop_icons_source_system">Sistema</string>
+    <string name="desktop_icons_source_telos">Telos</string>
+    <string name="desktop_icons_source_builtin">Integrat</string>
+    <string name="desktop_icons_path">Carpeta de paquets d’icones: %1$s</string>
+    <string name="desktop_icons_freedesktop_note">Temes d’icones freedesktop d’escriptori (no paquets ADW d’Android).</string>
+    <string name="desktop_icons_download_failed">Ha fallat la baixada</string>
+    <string name="desktop_icons_download_ok">Tema instal·lat</string>
+    <string name="desktop_icons_license">Llicència: %1$s</string>
+    <string name="desktop_icons_portable_only">En mode Portable Data, els paquets romanen a la carpeta portàtil d’icones (no al perfil de l’amfitrió).</string>
+</resources>

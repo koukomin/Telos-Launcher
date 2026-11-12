@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_icons_title">Ikoner</string>
+    <string name="desktop_icons_theme_label">Ikontema</string>
+    <string name="desktop_icons_download_section">Last ned fra Telos</string>
+    <string name="desktop_icons_download">Last ned</string>
+    <string name="desktop_icons_installing">Installerer…</string>
+    <string name="desktop_icons_installed">Installert</string>
+    <string name="desktop_icons_apply">Bruk</string>
+    <string name="desktop_icons_source_system">System</string>
+    <string name="desktop_icons_source_telos">Telos</string>
+    <string name="desktop_icons_source_builtin">Innebygd</string>
+    <string name="desktop_icons_path">Mappe for ikonpakker: %1$s</string>
+    <string name="desktop_icons_freedesktop_note">Skrivebordets freedesktop-ikontemaer (ikke Android ADW-pakker).</string>
+    <string name="desktop_icons_download_failed">Nedlasting mislyktes</string>
+    <string name="desktop_icons_download_ok">Tema installert</string>
+    <string name="desktop_icons_license">Lisens: %1$s</string>
+    <string name="desktop_icons_portable_only">I Portable Data-modus blir pakker i den bærbare ikonmappen (ikke vertprofilen).</string>
+</resources>

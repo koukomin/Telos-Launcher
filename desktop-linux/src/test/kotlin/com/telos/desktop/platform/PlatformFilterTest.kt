@@ -10,7 +10,7 @@ class PlatformFilterTest {
         val mac = SettingsVisibilityFilter.forOs("Mac OS X")
         assertTrue(mac.showDisplayResolution)
         assertFalse(mac.showLuksVault)
-        assertFalse(mac.showLinuxIconThemeSelector)
+        assertTrue(mac.showLinuxIconThemeSelector)
         val bsd = SettingsVisibilityFilter.forOs("FreeBSD")
         assertTrue(bsd.showXdgUserDirs)
         assertFalse(bsd.showLuksVault)
@@ -24,5 +24,6 @@ class PlatformFilterTest {
         assertFalse(win.showLabwcSession)
         assertFalse(win.showNftSessionNetGuard)
         assertTrue(win.showDisplayResolution)
+        assertTrue(win.showLinuxIconThemeSelector)
     }
 }

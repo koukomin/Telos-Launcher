@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_icons_title">Ikony</string>
+    <string name="desktop_icons_theme_label">Motív ikon</string>
+    <string name="desktop_icons_download_section">Stiahnuť z Telos</string>
+    <string name="desktop_icons_download">Stiahnuť</string>
+    <string name="desktop_icons_installing">Inštalácia…</string>
+    <string name="desktop_icons_installed">Nainštalované</string>
+    <string name="desktop_icons_apply">Použiť</string>
+    <string name="desktop_icons_source_system">Systém</string>
+    <string name="desktop_icons_source_telos">Telos</string>
+    <string name="desktop_icons_source_builtin">Vstavané</string>
+    <string name="desktop_icons_path">Priečinok balíkov ikon: %1$s</string>
+    <string name="desktop_icons_freedesktop_note">Motívy ikon freedesktop pre plochu (nie balíky Android ADW).</string>
+    <string name="desktop_icons_download_failed">Sťahovanie zlyhalo</string>
+    <string name="desktop_icons_download_ok">Motív nainštalovaný</string>
+    <string name="desktop_icons_license">Licencia: %1$s</string>
+    <string name="desktop_icons_portable_only">V režime Portable Data zostávajú balíky v prenosnom priečinku ikon (nie v profile hostiteľa).</string>
+</resources>

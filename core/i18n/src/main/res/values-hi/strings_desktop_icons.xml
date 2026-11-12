@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_icons_title">आइकन</string>
+    <string name="desktop_icons_theme_label">आइकन थीम</string>
+    <string name="desktop_icons_download_section">Telos से डाउनलोड करें</string>
+    <string name="desktop_icons_download">डाउनलोड</string>
+    <string name="desktop_icons_installing">इंस्टॉल हो रहा है…</string>
+    <string name="desktop_icons_installed">इंस्टॉल किया गया</string>
+    <string name="desktop_icons_apply">लागू करें</string>
+    <string name="desktop_icons_source_system">सिस्टम</string>
+    <string name="desktop_icons_source_telos">Telos</string>
+    <string name="desktop_icons_source_builtin">अंतर्निहित</string>
+    <string name="desktop_icons_path">आइकन पैक फ़ोल्डर: %1$s</string>
+    <string name="desktop_icons_freedesktop_note">डेस्कटॉप freedesktop आइकन थीम (Android ADW आइकन पैक नहीं)।</string>
+    <string name="desktop_icons_download_failed">डाउनलोड विफल</string>
+    <string name="desktop_icons_download_ok">थीम इंस्टॉल हो गई</string>
+    <string name="desktop_icons_license">लाइसेंस: %1$s</string>
+    <string name="desktop_icons_portable_only">Portable Data मोड में पैक पोर्टेबल आइकन फ़ोल्डर में रहते हैं (होस्ट प्रोफ़ाइल में नहीं)।</string>
+</resources>

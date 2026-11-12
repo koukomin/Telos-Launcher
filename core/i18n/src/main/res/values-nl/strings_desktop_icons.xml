@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_icons_title">Pictogrammen</string>
+    <string name="desktop_icons_theme_label">Pictogramthema</string>
+    <string name="desktop_icons_download_section">Downloaden van Telos</string>
+    <string name="desktop_icons_download">Downloaden</string>
+    <string name="desktop_icons_installing">Installeren…</string>
+    <string name="desktop_icons_installed">Geïnstalleerd</string>
+    <string name="desktop_icons_apply">Toepassen</string>
+    <string name="desktop_icons_source_system">Systeem</string>
+    <string name="desktop_icons_source_telos">Telos</string>
+    <string name="desktop_icons_source_builtin">Ingebouwd</string>
+    <string name="desktop_icons_path">Map voor pictogrampakketten: %1$s</string>
+    <string name="desktop_icons_freedesktop_note">Desktop freedesktop-pictogramthema’s (geen Android ADW-pakketten).</string>
+    <string name="desktop_icons_download_failed">Download mislukt</string>
+    <string name="desktop_icons_download_ok">Thema geïnstalleerd</string>
+    <string name="desktop_icons_license">Licentie: %1$s</string>
+    <string name="desktop_icons_portable_only">In Portable Data-modus blijven pakketten in de draagbare pictogrammap (niet in het hostprofiel).</string>
+</resources>

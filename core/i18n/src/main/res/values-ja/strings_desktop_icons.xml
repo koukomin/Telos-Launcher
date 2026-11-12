@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_icons_title">アイコン</string>
+    <string name="desktop_icons_theme_label">アイコンテーマ</string>
+    <string name="desktop_icons_download_section">Telos からダウンロード</string>
+    <string name="desktop_icons_download">ダウンロード</string>
+    <string name="desktop_icons_installing">インストール中…</string>
+    <string name="desktop_icons_installed">インストール済み</string>
+    <string name="desktop_icons_apply">適用</string>
+    <string name="desktop_icons_source_system">システム</string>
+    <string name="desktop_icons_source_telos">Telos</string>
+    <string name="desktop_icons_source_builtin">組み込み</string>
+    <string name="desktop_icons_path">アイコンパックのフォルダー: %1$s</string>
+    <string name="desktop_icons_freedesktop_note">デスクトップ向け freedesktop アイコンテーマ（Android ADW アイコンパックではありません）。</string>
+    <string name="desktop_icons_download_failed">ダウンロードに失敗しました</string>
+    <string name="desktop_icons_download_ok">テーマをインストールしました</string>
+    <string name="desktop_icons_license">ライセンス: %1$s</string>
+    <string name="desktop_icons_portable_only">Portable Data モードでは、パックはポータブルのアイコンフォルダーに保存されます（ホストプロファイルには書き込みません）。</string>
+</resources>

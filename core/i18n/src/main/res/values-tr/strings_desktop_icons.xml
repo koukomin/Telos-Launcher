@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_icons_title">Simgeler</string>
+    <string name="desktop_icons_theme_label">Simge teması</string>
+    <string name="desktop_icons_download_section">Telos’tan indir</string>
+    <string name="desktop_icons_download">İndir</string>
+    <string name="desktop_icons_installing">Yükleniyor…</string>
+    <string name="desktop_icons_installed">Yüklü</string>
+    <string name="desktop_icons_apply">Uygula</string>
+    <string name="desktop_icons_source_system">Sistem</string>
+    <string name="desktop_icons_source_telos">Telos</string>
+    <string name="desktop_icons_source_builtin">Yerleşik</string>
+    <string name="desktop_icons_path">Simge paketleri klasörü: %1$s</string>
+    <string name="desktop_icons_freedesktop_note">Masaüstü freedesktop simge temaları (Android ADW paketleri değil).</string>
+    <string name="desktop_icons_download_failed">İndirme başarısız</string>
+    <string name="desktop_icons_download_ok">Tema yüklendi</string>
+    <string name="desktop_icons_license">Lisans: %1$s</string>
+    <string name="desktop_icons_portable_only">Portable Data modunda paketler taşınabilir simge klasöründe kalır (ana bilgisayar profilinde değil).</string>
+</resources>

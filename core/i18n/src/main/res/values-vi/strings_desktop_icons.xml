@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_icons_title">Biểu tượng</string>
+    <string name="desktop_icons_theme_label">Chủ đề biểu tượng</string>
+    <string name="desktop_icons_download_section">Tải xuống từ Telos</string>
+    <string name="desktop_icons_download">Tải xuống</string>
+    <string name="desktop_icons_installing">Đang cài đặt…</string>
+    <string name="desktop_icons_installed">Đã cài</string>
+    <string name="desktop_icons_apply">Áp dụng</string>
+    <string name="desktop_icons_source_system">Hệ thống</string>
+    <string name="desktop_icons_source_telos">Telos</string>
+    <string name="desktop_icons_source_builtin">Tích hợp</string>
+    <string name="desktop_icons_path">Thư mục gói biểu tượng: %1$s</string>
+    <string name="desktop_icons_freedesktop_note">Chủ đề biểu tượng freedesktop cho máy tính (không phải gói ADW Android).</string>
+    <string name="desktop_icons_download_failed">Tải xuống thất bại</string>
+    <string name="desktop_icons_download_ok">Đã cài chủ đề</string>
+    <string name="desktop_icons_license">Giấy phép: %1$s</string>
+    <string name="desktop_icons_portable_only">Ở chế độ Portable Data, các gói nằm trong thư mục biểu tượng di động (không phải hồ sơ máy chủ).</string>
+</resources>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_icons_title">아이콘</string>
+    <string name="desktop_icons_theme_label">아이콘 테마</string>
+    <string name="desktop_icons_download_section">Telos에서 다운로드</string>
+    <string name="desktop_icons_download">다운로드</string>
+    <string name="desktop_icons_installing">설치 중…</string>
+    <string name="desktop_icons_installed">설치됨</string>
+    <string name="desktop_icons_apply">적용</string>
+    <string name="desktop_icons_source_system">시스템</string>
+    <string name="desktop_icons_source_telos">Telos</string>
+    <string name="desktop_icons_source_builtin">기본 제공</string>
+    <string name="desktop_icons_path">아이콘 팩 폴더: %1$s</string>
+    <string name="desktop_icons_freedesktop_note">데스크톱 freedesktop 아이콘 테마(Android ADW 아이콘 팩 아님).</string>
+    <string name="desktop_icons_download_failed">다운로드 실패</string>
+    <string name="desktop_icons_download_ok">테마가 설치됨</string>
+    <string name="desktop_icons_license">라이선스: %1$s</string>
+    <string name="desktop_icons_portable_only">Portable Data 모드에서는 팩이 휴대용 아이콘 폴더에 유지됩니다(호스트 프로필 아님).</string>
+</resources>

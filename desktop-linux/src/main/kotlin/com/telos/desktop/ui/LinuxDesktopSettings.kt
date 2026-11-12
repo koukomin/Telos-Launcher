@@ -29,7 +29,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.telos.desktop.cursor.CursorPreset
 import com.telos.desktop.display.LinuxDisplayManager
+import com.telos.desktop.icons.IconThemeSource
 import com.telos.desktop.icons.LinuxIconThemeResolver
+import com.telos.desktop.icons.TelosIconPackCatalog
+import com.telos.desktop.icons.TelosIconPackInstaller
+import com.telos.desktop.icons.TelosIconPackPaths
 import com.telos.desktop.platform.PlatformEnvironment
 import com.telos.desktop.platform.WindowsShellIntegration
 import com.telos.desktop.sync.DesktopSessionSync
@@ -39,6 +43,7 @@ import com.telos.desktop.settings.TelosDesktopSettings
 import com.telos.desktop.wm.WindowButtonStyle
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.File
 
 @Composable
@@ -49,8 +54,11 @@ fun LinuxDesktopSettingsPanel(
     onClose: () -> Unit,
 ) {
     val filter = PlatformEnvironment.settings
-    val themes = remember { icons.listInstalledThemes() }
+    var themes by remember { mutableStateOf(icons.listInstalledThemes()) }
     val outputs = remember { display.queryOutputs() }
+    val iconScope = rememberCoroutineScope()
+    var iconBusyId by remember { mutableStateOf<String?>(null) }
+    var iconStatus by remember { mutableStateOf<String?>(null) }
     androidx.compose.runtime.LaunchedEffect(Unit) {
         runCatching {
             val opsec = com.telos.desktop.vault.PhantomVault.engine.opsec
@@ -123,9 +131,42 @@ fun LinuxDesktopSettingsPanel(
             }
         }
         if (filter.showLinuxIconThemeSelector) {
-            HelixSettingsCard("Icons") {
+            HelixSettingsCard(com.telos.desktop.i18n.TelosI18n.t("desktop_icons_title")) {
+                Text(
+                    com.telos.desktop.i18n.TelosI18n.t("desktop_icons_freedesktop_note"),
+                    fontSize = 11.sp,
+                    color = TelosColors.onSurface.copy(0.7f),
+                )
+                Text(
+                    com.telos.desktop.i18n.TelosI18n.t(
+                        "desktop_icons_path",
+                        TelosIconPackPaths.iconsRoot().absolutePath,
+                    ),
+                    fontSize = 10.sp,
+                    color = TelosColors.onSurface.copy(0.6f),
+                )
+                if (TelosIconPackPaths.usePortableIcons()) {
+                    Text(
+                        com.telos.desktop.i18n.TelosI18n.t("desktop_icons_portable_only"),
+                        fontSize = 11.sp,
+                        color = TelosColors.secondary,
+                    )
+                }
+                Text(com.telos.desktop.i18n.TelosI18n.t("desktop_icons_theme_label"), fontSize = 12.sp)
                 var open by remember { mutableStateOf(false) }
-                TextButton(onClick = { open = true }) { Text(settings.iconTheme) }
+                val selectedLabel = themes.firstOrNull { it.name == settings.iconTheme }?.let { theme ->
+                    val src = when (theme.source) {
+                        IconThemeSource.System -> com.telos.desktop.i18n.TelosI18n.t("desktop_icons_source_system")
+                        IconThemeSource.TelosDownloaded -> com.telos.desktop.i18n.TelosI18n.t("desktop_icons_source_telos")
+                        IconThemeSource.BuiltIn -> com.telos.desktop.i18n.TelosI18n.t("desktop_icons_source_builtin")
+                    }
+                    "${theme.displayName} ($src)"
+                } ?: settings.iconTheme
+                TextButton(onClick = {
+                    icons.invalidate()
+                    themes = icons.listInstalledThemes()
+                    open = true
+                }) { Text(selectedLabel) }
                 DropdownMenu(
                     expanded = open,
                     onDismissRequest = { open = false },
@@ -133,15 +174,103 @@ fun LinuxDesktopSettingsPanel(
                 ) {
                     themes.forEach { theme ->
                         DropdownMenuItem(
-                            text = { Text(theme.name) },
+                            text = {
+                                val src = when (theme.source) {
+                                    IconThemeSource.System -> com.telos.desktop.i18n.TelosI18n.t("desktop_icons_source_system")
+                                    IconThemeSource.TelosDownloaded -> com.telos.desktop.i18n.TelosI18n.t("desktop_icons_source_telos")
+                                    IconThemeSource.BuiltIn -> com.telos.desktop.i18n.TelosI18n.t("desktop_icons_source_builtin")
+                                }
+                                Text("${theme.displayName} · $src")
+                            },
                             onClick = {
                                 settings.iconTheme = theme.name
                                 icons.preferredTheme = theme.name
+                                settings.followSystemTheme = false
                                 settings.save()
                                 open = false
                             },
                         )
                     }
+                }
+                Text(
+                    com.telos.desktop.i18n.TelosI18n.t("desktop_icons_download_section"),
+                    color = TelosColors.secondary,
+                    fontSize = 13.sp,
+                )
+                TelosIconPackCatalog.entries.forEach { pack ->
+                    val installed = TelosIconPackInstaller.isInstalled(pack, icons)
+                    Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                        Column(Modifier.weight(1f)) {
+                            Text(pack.displayName, color = TelosColors.onSurface, fontSize = 13.sp)
+                            Text(
+                                com.telos.desktop.i18n.TelosI18n.t("desktop_icons_license", pack.license),
+                                fontSize = 10.sp,
+                                color = TelosColors.onSurface.copy(0.65f),
+                            )
+                        }
+                        if (installed) {
+                            TextButton(onClick = {
+                                val name = icons.listInstalledThemes()
+                                    .firstOrNull { t ->
+                                        t.name in pack.preferredThemeDirs ||
+                                            t.name.equals(pack.displayName, true) ||
+                                            t.name.equals(pack.id, true)
+                                    }?.name ?: pack.preferredThemeDirs.firstOrNull() ?: pack.displayName
+                                settings.iconTheme = name
+                                icons.preferredTheme = name
+                                settings.followSystemTheme = false
+                                settings.save()
+                            }) {
+                                Text(com.telos.desktop.i18n.TelosI18n.t("desktop_icons_apply"))
+                            }
+                            Text(
+                                com.telos.desktop.i18n.TelosI18n.t("desktop_icons_installed"),
+                                fontSize = 11.sp,
+                                color = TelosColors.secondary,
+                            )
+                        } else {
+                            TextButton(
+                                onClick = {
+                                    if (iconBusyId != null) return@TextButton
+                                    iconBusyId = pack.id
+                                    iconStatus = com.telos.desktop.i18n.TelosI18n.t("desktop_icons_installing")
+                                    iconScope.launch {
+                                        val result = withContext(Dispatchers.IO) {
+                                            TelosIconPackInstaller.install(pack)
+                                        }
+                                        icons.invalidate()
+                                        themes = icons.listInstalledThemes()
+                                        iconBusyId = null
+                                        iconStatus = if (result.ok) {
+                                            val applyName = result.themeNames.firstOrNull()
+                                            if (applyName != null) {
+                                                settings.iconTheme = applyName
+                                                icons.preferredTheme = applyName
+                                                settings.followSystemTheme = false
+                                                settings.save()
+                                            }
+                                            com.telos.desktop.i18n.TelosI18n.t("desktop_icons_download_ok")
+                                        } else {
+                                            com.telos.desktop.i18n.TelosI18n.t("desktop_icons_download_failed") +
+                                                (result.message.takeIf { it.isNotBlank() }?.let { ": $it" } ?: "")
+                                        }
+                                    }
+                                },
+                                enabled = iconBusyId == null,
+                            ) {
+                                Text(
+                                    if (iconBusyId == pack.id) {
+                                        com.telos.desktop.i18n.TelosI18n.t("desktop_icons_installing")
+                                    } else {
+                                        com.telos.desktop.i18n.TelosI18n.t("desktop_icons_download")
+                                    },
+                                )
+                            }
+                        }
+                    }
+                }
+                iconStatus?.let { status ->
+                    Text(status, fontSize = 11.sp, color = TelosColors.onSurface.copy(0.8f))
                 }
             }
         }

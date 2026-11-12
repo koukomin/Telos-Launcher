@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_icons_title">Ikonok</string>
+    <string name="desktop_icons_theme_label">Ikontéma</string>
+    <string name="desktop_icons_download_section">Letöltés a Telostól</string>
+    <string name="desktop_icons_download">Letöltés</string>
+    <string name="desktop_icons_installing">Telepítés…</string>
+    <string name="desktop_icons_installed">Telepítve</string>
+    <string name="desktop_icons_apply">Alkalmaz</string>
+    <string name="desktop_icons_source_system">Rendszer</string>
+    <string name="desktop_icons_source_telos">Telos</string>
+    <string name="desktop_icons_source_builtin">Beépített</string>
+    <string name="desktop_icons_path">Ikoncsomagok mappája: %1$s</string>
+    <string name="desktop_icons_freedesktop_note">Asztali freedesktop ikontémák (nem Android ADW csomagok).</string>
+    <string name="desktop_icons_download_failed">A letöltés sikertelen</string>
+    <string name="desktop_icons_download_ok">Téma telepítve</string>
+    <string name="desktop_icons_license">Licenc: %1$s</string>
+    <string name="desktop_icons_portable_only">Portable Data módban a csomagok a hordozható ikonmappában maradnak (nem a gazdagép profiljában).</string>
+</resources>
