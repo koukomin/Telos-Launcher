@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_day_night_title">昼 / 夜テーマ</string>
+    <string name="desktop_day_night_hint">自動では昼に Paper Ops（ライト）、夜に Quiet Ops（ダーク）。境界は選択したタイムゾーンを使います。既定は手動タイムゾーンで、下で明示的に有効にしない限り位置のためにネットワークへ問い合わせません。</string>
+    <string name="desktop_day_night_mode">昼 / 夜モード</string>
+    <string name="desktop_day_night_off">オフ</string>
+    <string name="desktop_day_night_auto">自動</string>
+    <string name="desktop_day_night_light">ライト</string>
+    <string name="desktop_day_night_dark">ダーク</string>
+    <string name="desktop_day_night_timezone">タイムゾーン</string>
+    <string name="desktop_day_night_timezone_hint">ローカルの昼夜用 IANA タイムゾーン（選択するまで JVM）。手動選択はサーバーに連絡しません。</string>
+    <string name="desktop_day_night_timezone_search">タイムゾーンを検索</string>
+    <string name="desktop_day_night_timezone_current">現在のタイムゾーン: %1$s</string>
+    <string name="desktop_day_night_network_assist">ネットワークによる国 / タイムゾーン補助</string>
+    <string name="desktop_day_night_network_assist_warning">同意した場合のみ。有効にすると Telos はタイムゾーンと国コードのため公開 IP→地理エンドポイントへ一回だけ問い合わせます。それら（および任意の日の出/日の入り座標）だけが vault の desktop.properties に保存されます。IP は記録せず、継続追跡もなく、テーマのクラウド同期もありません。ネットワーク失敗・キルスイッチ・オフライン時は手動タイムゾーンを維持し、Preference only または Failed を正直に表示します。</string>
+    <string name="desktop_day_night_assist_pref_only">設定のみ — ネットワーク補助オフ、遮断、または未要求；手動タイムゾーンを使用</string>
+    <string name="desktop_day_night_assist_failed">失敗 — 地理エンドポイントに到達不可；手動タイムゾーンを維持</string>
+    <string name="desktop_day_night_assist_applied">適用済み — タイムゾーン %1$s、国 %2$s（ローカルのみ）</string>
+    <string name="desktop_day_night_country">国コード: %1$s</string>
+</resources>

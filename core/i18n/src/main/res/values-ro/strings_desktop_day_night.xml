@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_day_night_title">Temă zi / noapte</string>
+    <string name="desktop_day_night_hint">Paper Ops (deschis) ziua și Quiet Ops (închis) noaptea în Auto. Limitele folosesc fusul ales. Implicit fus manual — rețeaua nu e folosită pentru locație fără consimțământ mai jos.</string>
+    <string name="desktop_day_night_mode">Mod zi / noapte</string>
+    <string name="desktop_day_night_off">Oprit</string>
+    <string name="desktop_day_night_auto">Auto</string>
+    <string name="desktop_day_night_light">Deschis</string>
+    <string name="desktop_day_night_dark">Închis</string>
+    <string name="desktop_day_night_timezone">Fus orar</string>
+    <string name="desktop_day_night_timezone_hint">Fus IANA pentru zi/noapte locală (JVM până alegi). Alegerea manuală nu contactează servere.</string>
+    <string name="desktop_day_night_timezone_search">Caută fusuri</string>
+    <string name="desktop_day_night_timezone_current">Fus curent: %1$s</string>
+    <string name="desktop_day_night_network_assist">Asistență rețea țară / fus</string>
+    <string name="desktop_day_night_network_assist_warning">Doar cu consimțământ. Activ, Telos face o singură cerere către un endpoint public IP→geo pentru fus și cod de țară. Doar aceste valori (și coordonate opționale pentru răsărit/apus) sunt stocate în vault desktop.properties. IP-ul nu e jurnalizat, fără urmărire continuă, fără sync cloud al temelor. Dacă rețeaua eșuează, kill-switch e activ sau ești offline, rămâne fusul manual; Preference only sau Failed apar onest.</string>
+    <string name="desktop_day_night_assist_pref_only">Doar preferință — asistență rețea off, blocată sau necerută; fus manual</string>
+    <string name="desktop_day_night_assist_failed">Eșuat — endpoint geo inaccesibil; fus manual păstrat</string>
+    <string name="desktop_day_night_assist_applied">Aplicat — fus %1$s, țară %2$s (doar local)</string>
+    <string name="desktop_day_night_country">Cod țară: %1$s</string>
+</resources>

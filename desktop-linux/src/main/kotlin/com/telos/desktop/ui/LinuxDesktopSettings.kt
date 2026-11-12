@@ -53,7 +53,11 @@ import com.telos.desktop.update.DesktopGitHubReleasesChannel
 import com.telos.desktop.update.DesktopSignedUpdate
 import com.telos.desktop.update.DesktopUpdateRestartHelper
 import com.telos.desktop.settings.TelosDesktopSettings
+import com.telos.desktop.theme.DayNightMode
+import com.telos.desktop.theme.DayNightThemeEngine
+import com.telos.desktop.theme.DayNightThemeScheduler
 import com.telos.desktop.theme.DesktopThemeChrome
+import com.telos.desktop.theme.NetworkTimezoneAssist
 import com.telos.desktop.theme.ThemeAccent
 import com.telos.desktop.theme.ThemeDensity
 import com.telos.desktop.theme.ThemeIntensity
@@ -65,6 +69,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import androidx.compose.ui.graphics.Color
 import java.io.File
+import java.time.ZoneId
 
 @Composable
 fun LinuxDesktopSettingsPanel(
@@ -103,6 +108,7 @@ fun LinuxDesktopSettingsPanel(
             displayTitle = t.t("desktop_settings_display"),
             wallpaperTonalTitle = t.t("desktop_wallpaper_tonal_title"),
             nightTitle = t.t("desktop_night_light_title"),
+            dayNightTitle = t.t("desktop_day_night_title"),
             desktopTitle = t.t("desktop_settings_desktop"),
             iconsTitle = t.t("desktop_icons_title"),
             windowsTitle = t.t("desktop_settings_windows"),
@@ -145,6 +151,16 @@ fun LinuxDesktopSettingsPanel(
                 "gammastep",
                 "redshift",
                 "wlsunset",
+            ),
+            dayNightKeywords = listOf(
+                t.t("desktop_day_night_mode"),
+                t.t("desktop_day_night_timezone"),
+                t.t("desktop_day_night_network_assist"),
+                "timezone",
+                "Paper Ops",
+                "Quiet Ops",
+                "day",
+                "night",
             ),
             sessionKeywords = listOf("fullscreen", "theme", "idle"),
             desktopKeywords = listOf(
@@ -405,6 +421,9 @@ fun LinuxDesktopSettingsPanel(
                     color = TelosColors.secondary,
                 )
             }
+        }
+        if (show("day_night")) {
+            DayNightThemeCard(settings = settings, scope = iconScope)
         }
         if (filter.showDesktopSurfaceFilters && show("desktop")) {
             HelixSettingsCard(t.t("desktop_settings_desktop")) {
@@ -1006,6 +1025,7 @@ private fun helixSettingsIndexEntries(
     displayTitle: String,
     wallpaperTonalTitle: String,
     nightTitle: String,
+    dayNightTitle: String,
     desktopTitle: String,
     iconsTitle: String,
     windowsTitle: String,
@@ -1022,6 +1042,7 @@ private fun helixSettingsIndexEntries(
     themeStudioKeywords: List<String>,
     wallpaperTonalKeywords: List<String>,
     nightKeywords: List<String>,
+    dayNightKeywords: List<String>,
     sessionKeywords: List<String>,
     desktopKeywords: List<String>,
     portalKeywords: List<String>,
@@ -1032,6 +1053,7 @@ private fun helixSettingsIndexEntries(
     HelixSettingsIndexEntry("display", displayTitle, listOf("resolution", "scale", "refresh")),
     HelixSettingsIndexEntry("wallpaper_tonal", wallpaperTonalTitle, wallpaperTonalKeywords),
     HelixSettingsIndexEntry("night_light", nightTitle, nightKeywords),
+    HelixSettingsIndexEntry("day_night", dayNightTitle, dayNightKeywords),
     HelixSettingsIndexEntry("desktop", desktopTitle, desktopKeywords),
     HelixSettingsIndexEntry("icons", iconsTitle, listOf("theme", "papirus", "tela", "candy")),
     HelixSettingsIndexEntry("windows", windowsTitle, listOf("klassy", "buttons")),
@@ -1302,6 +1324,135 @@ private fun ThemeStudioCard(
             fontSize = 11.sp,
             color = TelosColors.secondary,
         )
+    }
+}
+
+@Composable
+private fun DayNightThemeCard(
+    settings: TelosDesktopSettings,
+    scope: kotlinx.coroutines.CoroutineScope,
+) {
+    val t = com.telos.desktop.i18n.TelosI18n
+    var mode by remember { mutableStateOf(DayNightMode.parse(settings.themeDayNight)) }
+    var tzQuery by remember { mutableStateOf("") }
+    var tzSelected by remember { mutableStateOf(settings.themeTimezone) }
+    var tzMenu by remember { mutableStateOf(false) }
+    var networkAssist by remember {
+        mutableStateOf(settings.themeAutoTimezone && settings.locationNetworkAssist)
+    }
+    var assistStatus by remember {
+        mutableStateOf(DayNightThemeScheduler.lastAssistStatus())
+    }
+    val zones = remember {
+        ZoneId.getAvailableZoneIds().toList().sorted()
+    }
+    val filteredZones = remember(tzQuery, zones) {
+        val q = tzQuery.trim().lowercase()
+        if (q.isEmpty()) zones.take(40)
+        else zones.filter { it.lowercase().contains(q) }.take(60)
+    }
+    HelixSettingsCard(t.t("desktop_day_night_title")) {
+        Text(t.t("desktop_day_night_hint"), fontSize = 11.sp, color = TelosColors.onSurface.copy(0.7f))
+        Text(t.t("desktop_day_night_mode"), fontSize = 12.sp, color = TelosColors.onSurface)
+        Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+            listOf(
+                DayNightMode.Off to t.t("desktop_day_night_off"),
+                DayNightMode.Auto to t.t("desktop_day_night_auto"),
+                DayNightMode.Light to t.t("desktop_day_night_light"),
+                DayNightMode.Dark to t.t("desktop_day_night_dark"),
+            ).forEach { (m, label) ->
+                HelixTechPill(
+                    label,
+                    selected = mode == m,
+                    accent = if (m == DayNightMode.Light) TelosColors.secondary else TelosColors.primary,
+                ) {
+                    mode = m
+                    settings.themeDayNight = m.propertyValue
+                    settings.save()
+                    scope.launch {
+                        DayNightThemeScheduler.applyNow(settings, requestNetworkAssist = false)
+                        assistStatus = DayNightThemeScheduler.lastAssistStatus()
+                    }
+                }
+            }
+        }
+        Text(t.t("desktop_day_night_timezone"), fontSize = 12.sp, color = TelosColors.onSurface)
+        Text(
+            t.t("desktop_day_night_timezone_hint"),
+            fontSize = 11.sp,
+            color = TelosColors.onSurface.copy(0.7f),
+        )
+        OutlinedTextField(
+            value = tzQuery.ifBlank { tzSelected },
+            onValueChange = {
+                tzQuery = it
+                tzMenu = true
+            },
+            modifier = Modifier.fillMaxWidth(),
+            singleLine = true,
+            label = { Text(t.t("desktop_day_night_timezone_search")) },
+        )
+        DropdownMenu(expanded = tzMenu && filteredZones.isNotEmpty(), onDismissRequest = { tzMenu = false }) {
+            filteredZones.forEach { id ->
+                DropdownMenuItem(
+                    text = { Text(id, color = TelosColors.onSurface) },
+                    onClick = {
+                        tzSelected = id
+                        tzQuery = ""
+                        tzMenu = false
+                        settings.themeTimezone = DayNightThemeEngine.parseZoneId(id).id
+                        // Manual pick disables relying on network for TZ until re-enabled.
+                        settings.save()
+                        scope.launch {
+                            DayNightThemeScheduler.applyNow(settings, requestNetworkAssist = false)
+                        }
+                    },
+                )
+            }
+        }
+        Text(
+            t.t("desktop_day_night_timezone_current", settings.themeTimezone),
+            fontSize = 11.sp,
+            color = TelosColors.secondary,
+        )
+        Toggle(t.t("desktop_day_night_network_assist"), networkAssist) { on ->
+            networkAssist = on
+            settings.themeAutoTimezone = on
+            settings.locationNetworkAssist = on
+            settings.save()
+            scope.launch {
+                DayNightThemeScheduler.applyNow(settings, requestNetworkAssist = on)
+                assistStatus = DayNightThemeScheduler.lastAssistStatus()
+            }
+        }
+        Text(
+            t.t("desktop_day_night_network_assist_warning"),
+            fontSize = 11.sp,
+            color = TelosColors.onSurface.copy(0.75f),
+        )
+        Text(
+            when (assistStatus) {
+                NetworkTimezoneAssist.AssistStatus.PreferenceOnly ->
+                    t.t("desktop_day_night_assist_pref_only")
+                NetworkTimezoneAssist.AssistStatus.Failed ->
+                    t.t("desktop_day_night_assist_failed")
+                NetworkTimezoneAssist.AssistStatus.Applied ->
+                    t.t(
+                        "desktop_day_night_assist_applied",
+                        settings.themeTimezone,
+                        settings.locationCountryCode ?: "—",
+                    )
+            },
+            fontSize = 11.sp,
+            color = TelosColors.secondary,
+        )
+        settings.locationCountryCode?.let { cc ->
+            Text(
+                t.t("desktop_day_night_country", cc),
+                fontSize = 11.sp,
+                color = TelosColors.onSurface.copy(0.7f),
+            )
+        }
     }
 }
 

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_day_night_title">Motiv den / noc</string>
+    <string name="desktop_day_night_hint">Paper Ops (světlý) ve dne a Quiet Ops (tmavý) v noci v režimu Auto. Hranice používají zvolené pásmo. Výchozí je ruční pásmo — síť se pro polohu nepoužije, dokud níže výslovně nepovolíte.</string>
+    <string name="desktop_day_night_mode">Režim den / noc</string>
+    <string name="desktop_day_night_off">Vypnuto</string>
+    <string name="desktop_day_night_auto">Auto</string>
+    <string name="desktop_day_night_light">Světlý</string>
+    <string name="desktop_day_night_dark">Tmavý</string>
+    <string name="desktop_day_night_timezone">Časové pásmo</string>
+    <string name="desktop_day_night_timezone_hint">IANA pásmo pro místní den/noc (JVM do výběru). Ruční volba nekontaktuje servery.</string>
+    <string name="desktop_day_night_timezone_search">Hledat pásma</string>
+    <string name="desktop_day_night_timezone_current">Aktuální pásmo: %1$s</string>
+    <string name="desktop_day_night_network_assist">Síťová pomoc země / pásmo</string>
+    <string name="desktop_day_night_network_assist_warning">Pouze se souhlasem. Po zapnutí Telos jednou požádá veřejný endpoint IP→geo o pásmo a kód země. Jen tyto hodnoty (a volitelné souřadnice východu/západu) se uloží do vault desktop.properties. IP se neloguje, žádné průběžné sledování, žádná cloudová synchronizace motivů. Při výpadku sítě, kill-switchi nebo offline zůstane ruční pásmo; Preference only nebo Failed se ukáže upřímně.</string>
+    <string name="desktop_day_night_assist_pref_only">Jen preference — síťová pomoc vypnuta, blokována nebo nevyžádána; ruční pásmo</string>
+    <string name="desktop_day_night_assist_failed">Selhalo — geo endpoint nedostupný; zachováno ruční pásmo</string>
+    <string name="desktop_day_night_assist_applied">Použito — pásmo %1$s, země %2$s (jen lokálně)</string>
+    <string name="desktop_day_night_country">Kód země: %1$s</string>
+</resources>

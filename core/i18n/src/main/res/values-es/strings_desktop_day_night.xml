@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_day_night_title">Tema día / noche</string>
+    <string name="desktop_day_night_hint">Paper Ops (claro) de día y Quiet Ops (oscuro) de noche en Auto. Los límites usan tu zona horaria. Por defecto la zona es manual: la red nunca se usa para ubicación salvo que lo actives abajo.</string>
+    <string name="desktop_day_night_mode">Modo día / noche</string>
+    <string name="desktop_day_night_off">Desactivado</string>
+    <string name="desktop_day_night_auto">Auto</string>
+    <string name="desktop_day_night_light">Claro</string>
+    <string name="desktop_day_night_dark">Oscuro</string>
+    <string name="desktop_day_night_timezone">Zona horaria</string>
+    <string name="desktop_day_night_timezone_hint">Zona IANA para día/noche local (JVM por defecto hasta que elijas). La selección manual no contacta servidores.</string>
+    <string name="desktop_day_night_timezone_search">Buscar zonas horarias</string>
+    <string name="desktop_day_night_timezone_current">Zona actual: %1$s</string>
+    <string name="desktop_day_night_network_assist">Asistencia de red para país / zona</string>
+    <string name="desktop_day_night_network_assist_warning">Solo con consentimiento. Si se activa, Telos hace una sola petición a un endpoint público IP→geo para zona y código de país. Solo esos valores (y coordenadas opcionales para orto/ocaso) se guardan en vault desktop.properties. No se registra la IP, no hay seguimiento continuo ni sync de temas en la nube. Si falla la red, el kill-switch está activo o estás sin conexión, se mantiene la zona manual y se muestra Preference only o Failed con honestidad.</string>
+    <string name="desktop_day_night_assist_pref_only">Solo preferencia — asistencia de red off, bloqueada o no pedida; zona manual</string>
+    <string name="desktop_day_night_assist_failed">Falló — no se pudo contactar el endpoint geo; se mantiene la zona manual</string>
+    <string name="desktop_day_night_assist_applied">Aplicado — zona %1$s, país %2$s (solo local)</string>
+    <string name="desktop_day_night_country">Código de país: %1$s</string>
+</resources>

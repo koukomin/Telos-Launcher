@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_day_night_title">晝夜主題</string>
+    <string name="desktop_day_night_hint">選擇自動時，白天使用 Paper Ops（淺色），夜間使用 Quiet Ops（深色）。邊界使用您選擇的時區。預設是手動時區——除非下方明確啟用，否則絕不會為位置存取網路。</string>
+    <string name="desktop_day_night_mode">晝夜模式</string>
+    <string name="desktop_day_night_off">關閉</string>
+    <string name="desktop_day_night_auto">自動</string>
+    <string name="desktop_day_night_light">淺色</string>
+    <string name="desktop_day_night_dark">深色</string>
+    <string name="desktop_day_night_timezone">時區</string>
+    <string name="desktop_day_night_timezone_hint">用於本地晝夜的 IANA 時區（選擇前為 JVM 預設）。手動選擇不會連網。</string>
+    <string name="desktop_day_night_timezone_search">搜尋時區</string>
+    <string name="desktop_day_night_timezone_current">目前時區：%1$s</string>
+    <string name="desktop_day_night_network_assist">網路國家 / 時區輔助</string>
+    <string name="desktop_day_night_network_assist_warning">僅在同意後啟用。啟用後，Telos 會向公用 IP→地理端點發起一次請求以取得時區與國家代碼。僅這些值（以及可選的日出/日落座標）保存在 vault 的 desktop.properties 中。不記錄 IP，無持續追蹤，主題不同步到雲端。若網路失敗、啟用了 kill-switch 或離線，則保留手動時區，並如實顯示 Preference only 或 Failed。</string>
+    <string name="desktop_day_night_assist_pref_only">僅偏好 — 網路輔助關閉、被封鎖或未請求；使用手動時區</string>
+    <string name="desktop_day_night_assist_failed">失敗 — 無法存取地理端點；保留手動時區</string>
+    <string name="desktop_day_night_assist_applied">已套用 — 時區 %1$s，國家 %2$s（僅本機儲存）</string>
+    <string name="desktop_day_night_country">國家代碼：%1$s</string>
+</resources>

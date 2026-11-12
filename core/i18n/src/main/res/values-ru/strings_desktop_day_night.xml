@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_day_night_title">Тема день / ночь</string>
+    <string name="desktop_day_night_hint">Paper Ops (светлая) днём и Quiet Ops (тёмная) ночью в режиме Auto. Границы используют ваш часовой пояс. По умолчанию пояс ручной — сеть не используется для геолокации без явного согласия ниже.</string>
+    <string name="desktop_day_night_mode">Режим день / ночь</string>
+    <string name="desktop_day_night_off">Выкл.</string>
+    <string name="desktop_day_night_auto">Авто</string>
+    <string name="desktop_day_night_light">Светлая</string>
+    <string name="desktop_day_night_dark">Тёмная</string>
+    <string name="desktop_day_night_timezone">Часовой пояс</string>
+    <string name="desktop_day_night_timezone_hint">Пояс IANA для локального дня/ночи (JVM, пока не выберете). Ручной выбор не обращается к серверам.</string>
+    <string name="desktop_day_night_timezone_search">Поиск часовых поясов</string>
+    <string name="desktop_day_night_timezone_current">Текущий пояс: %1$s</string>
+    <string name="desktop_day_night_network_assist">Сетевая помощь: страна / пояс</string>
+    <string name="desktop_day_night_network_assist_warning">Только с согласия. При включении Telos делает один запрос к публичному endpoint IP→geo за поясом и кодом страны. Только эти значения (и необязательные координаты для восхода/заката) сохраняются в vault desktop.properties. IP не логируется, нет постоянного отслеживания и нет облачной синхронизации тем. При сбое сети, kill-switch или офлайне сохраняется ручной пояс; Preference only или Failed показываются честно.</string>
+    <string name="desktop_day_night_assist_pref_only">Только настройка — сетевая помощь выкл., заблокирована или не запрошена; ручной пояс</string>
+    <string name="desktop_day_night_assist_failed">Сбой — endpoint geo недоступен; ручной пояс сохранён</string>
+    <string name="desktop_day_night_assist_applied">Применено — пояс %1$s, страна %2$s (только локально)</string>
+    <string name="desktop_day_night_country">Код страны: %1$s</string>
+</resources>

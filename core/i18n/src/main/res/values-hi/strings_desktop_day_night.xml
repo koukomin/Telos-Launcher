@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_day_night_title">दिन / रात थीम</string>
+    <string name="desktop_day_night_hint">ऑटो में दिन में Paper Ops (हल्की) और रात में Quiet Ops (गहरी)। सीमाएँ आपके चुने टाइमज़ोन का उपयोग करती हैं। डिफ़ॉल्ट मैनुअल टाइमज़ोन है — नीचे स्पष्ट अनुमति के बिना स्थान के लिए नेटवर्क से संपर्क नहीं होता।</string>
+    <string name="desktop_day_night_mode">दिन / रात मोड</string>
+    <string name="desktop_day_night_off">बंद</string>
+    <string name="desktop_day_night_auto">ऑटो</string>
+    <string name="desktop_day_night_light">हल्की</string>
+    <string name="desktop_day_night_dark">गहरी</string>
+    <string name="desktop_day_night_timezone">समय क्षेत्र</string>
+    <string name="desktop_day_night_timezone_hint">स्थानीय दिन/रात के लिए IANA ज़ोन (चयन तक JVM)। मैनुअल चयन सर्वर से संपर्क नहीं करता।</string>
+    <string name="desktop_day_night_timezone_search">समय क्षेत्र खोजें</string>
+    <string name="desktop_day_night_timezone_current">वर्तमान ज़ोन: %1$s</string>
+    <string name="desktop_day_night_network_assist">नेटवर्क देश / समय क्षेत्र सहायता</string>
+    <string name="desktop_day_night_network_assist_warning">केवल सहमति पर। चालू होने पर Telos ज़ोन और देश कोड के लिए सार्वजनिक IP→भू एंडपॉइंट पर एक बार अनुरोध करता है। केवल वे मान (और वैकल्पिक सूर्योदय/सूर्यास्त निर्देशांक) vault desktop.properties में संग्रहीत होते हैं। IP लॉग नहीं होता, निरंतर ट्रैकिंग नहीं, थीम क्लाउड सिंक नहीं। नेटवर्क विफलता, किल-स्विच या ऑफ़लाइन पर मैनुअल ज़ोन रहता है; Preference only या Failed ईमानदारी से दिखता है।</string>
+    <string name="desktop_day_night_assist_pref_only">केवल प्राथमिकता — नेटवर्क सहायता बंद, अवरुद्ध या अनुरोधित नहीं; मैनुअल ज़ोन</string>
+    <string name="desktop_day_night_assist_failed">विफल — भू एंडपॉइंट तक पहुँच नहीं; मैनुअल ज़ोन रखा गया</string>
+    <string name="desktop_day_night_assist_applied">लागू — ज़ोन %1$s, देश %2$s (केवल स्थानीय)</string>
+    <string name="desktop_day_night_country">देश कोड: %1$s</string>
+</resources>

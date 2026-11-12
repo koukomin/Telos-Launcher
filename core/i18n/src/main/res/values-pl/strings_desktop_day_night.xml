@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_day_night_title">Motyw dzień / noc</string>
+    <string name="desktop_day_night_hint">Paper Ops (jasny) w dzień i Quiet Ops (ciemny) w nocy w trybie Auto. Granice używają wybranej strefy. Domyślnie strefa ręczna — sieć nigdy nie jest używana do lokalizacji bez zgody poniżej.</string>
+    <string name="desktop_day_night_mode">Tryb dzień / noc</string>
+    <string name="desktop_day_night_off">Wyłączony</string>
+    <string name="desktop_day_night_auto">Auto</string>
+    <string name="desktop_day_night_light">Jasny</string>
+    <string name="desktop_day_night_dark">Ciemny</string>
+    <string name="desktop_day_night_timezone">Strefa czasowa</string>
+    <string name="desktop_day_night_timezone_hint">Strefa IANA dla lokalnego dnia/nocy (JVM do wyboru). Ręczny wybór nie kontaktuje serwerów.</string>
+    <string name="desktop_day_night_timezone_search">Szukaj stref czasowych</string>
+    <string name="desktop_day_night_timezone_current">Bieżąca strefa: %1$s</string>
+    <string name="desktop_day_night_network_assist">Pomoc sieciowa kraj / strefa</string>
+    <string name="desktop_day_night_network_assist_warning">Tylko za zgodą. Po włączeniu Telos robi jedno żądanie do publicznego endpointu IP→geo po strefę i kod kraju. Tylko te wartości (i opcjonalne współrzędne wschodu/zachodu) trafiają do vault desktop.properties. IP nie jest logowane, bez ciągłego śledzenia i bez sync motywów w chmurze. Przy awarii sieci, kill-switch lub offline zostaje strefa ręczna; Preference only lub Failed są pokazywane uczciwie.</string>
+    <string name="desktop_day_night_assist_pref_only">Tylko preferencja — pomoc sieciowa off, zablokowana lub nieżądana; strefa ręczna</string>
+    <string name="desktop_day_night_assist_failed">Niepowodzenie — endpoint geo niedostępny; zachowano strefę ręczną</string>
+    <string name="desktop_day_night_assist_applied">Zastosowano — strefa %1$s, kraj %2$s (tylko lokalnie)</string>
+    <string name="desktop_day_night_country">Kod kraju: %1$s</string>
+</resources>
