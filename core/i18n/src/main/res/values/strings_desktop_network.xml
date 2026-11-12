@@ -12,16 +12,21 @@
     <string name="desktop_net_kill_switch_clear_blocked">Clearing the session firewall is blocked while the kill-switch is on</string>
     <string name="desktop_net_apps_tab">Apps</string>
     <string name="desktop_net_apps_title">Per-app routing</string>
-    <string name="desktop_net_apps_hint">One desktop-id or package per line with allow, deny, or vpn. Stored under ~/.config/telos/app-routing.txt. Process-level enforcement is not applied yet; the kill-switch still drops non-allowlisted egress on Linux.</string>
+    <string name="desktop_net_apps_hint">One desktop-id or package per line with allow, deny, or vpn. Stored under ~/.config/telos/app-routing.txt. On Linux, deny blocks launch in the Telos launcher and vpn sets TELOS_APP_ROUTE=vpn (best-effort, no fake netns). Process-level nftables owner/cgroup routing is not applied, so the session kill-switch stays intact.</string>
     <string name="desktop_net_apps_file">Routing table</string>
+    <string name="desktop_net_apps_enforced">Enforced: launch-gate active (deny rules consulted by DesktopFileLauncher)</string>
+    <string name="desktop_net_apps_pref_only">Preference saved; no deny rules on Linux, or not applied on this platform</string>
     <string name="desktop_net_dns_filters_title">DNS filters</string>
-    <string name="desktop_net_dns_filters_hint">Block and allow lists are stored under vault ~/.config/telos/ (dns-block.txt, dns-allow.txt). A NextDNS configuration ID applies DoT via resolvectl on Linux when available. Local lists alone stay preference-only unless dns-stub.port is set and nftables can redirect DNS to that stub. Windows and macOS store preferences only.</string>
+    <string name="desktop_net_dns_filters_hint">Block and allow lists are stored under vault ~/.config/telos/ (dns-block.txt, dns-allow.txt). A NextDNS configuration ID applies DoT via resolvectl on Linux when available. Enable Telos DNS stub (or set dns-stub.port) to run a local 127.0.0.1 forwarder that NXDOMAINs blocked hosts and redirect DNS with nftables — then host lists become Enforced. If the stub cannot bind or nft fails, status stays Failed/PreferenceOnly. Windows and macOS store preferences only.</string>
+    <string name="desktop_net_dns_stub_enable">Enable Telos DNS stub</string>
+    <string name="desktop_net_dns_stub_disable">Disable Telos DNS stub</string>
+    <string name="desktop_net_dns_stub_hint">Telos DNS stub listens on 127.0.0.1 (default port 5353), answers NXDOMAIN for dns-block.txt (allowlist wins), and forwards other queries. nftables inet telos_dns redirects outbound port 53 when privileged apply succeeds.</string>
     <string name="desktop_net_nextdns_id">NextDNS configuration ID</string>
     <string name="desktop_net_nextdns_id_invalid">Invalid NextDNS configuration ID (use 4–12 letters or digits)</string>
     <string name="desktop_net_dns_blocklist">DNS blocklist</string>
     <string name="desktop_net_dns_allowlist">DNS allowlist</string>
     <string name="desktop_net_dns_filter_status">Filter status</string>
-    <string name="desktop_net_dns_filter_enforced">Enforced (NextDNS DoT and/or local DNS stub redirect)</string>
+    <string name="desktop_net_dns_filter_enforced">Enforced (NextDNS DoT and/or Telos DNS stub + nft redirect)</string>
     <string name="desktop_net_dns_filter_pref_only">Preference saved; filtering is not applied on this path</string>
-    <string name="desktop_net_dns_filter_failed">Configured, but resolvectl/nftables could not apply filtering</string>
+    <string name="desktop_net_dns_filter_failed">Configured, but the DNS stub could not bind or resolvectl/nftables could not apply filtering</string>
 </resources>

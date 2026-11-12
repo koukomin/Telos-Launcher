@@ -12,16 +12,21 @@
     <string name="desktop_net_kill_switch_clear_blocked">網路熔斷開啟時無法清除工作階段防火牆</string>
     <string name="desktop_net_apps_tab">應用程式</string>
     <string name="desktop_net_apps_title">依應用程式路由</string>
-    <string name="desktop_net_apps_hint">每行一個 desktop-id 或套件，取值 allow、deny 或 vpn。儲存在 ~/.config/telos/app-routing.txt。尚未依程序強制執行；Linux 上網路熔斷仍會丟棄未允許的傳出流量。</string>
+    <string name="desktop_net_apps_hint">每行一個 desktop-id 或軟體套件，後接 allow、deny 或 vpn。保存在 ~/.config/telos/app-routing.txt。在 Linux 上，deny 會阻止 Telos 啟動器啟動應用，vpn 會設定 TELOS_APP_ROUTE=vpn（盡力而為，不偽造 netns）。不套用行程級 nftables owner/cgroup 路由，以免破壞工作階段 kill-switch。</string>
     <string name="desktop_net_apps_file">路由表</string>
     <string name="desktop_net_dns_filters_title">DNS 過濾</string>
-    <string name="desktop_net_dns_filters_hint">封鎖與允許清單儲存在 vault ~/.config/telos/（dns-block.txt、dns-allow.txt）。NextDNS 設定 ID 在 Linux 上可用時會透過 resolvectl 套用 DoT。僅本機清單時仍為偏好設定，除非設定 dns-stub.port 且 nftables 可將 DNS 重新導向該 stub。Windows 與 macOS 僅儲存偏好。</string>
+    <string name="desktop_net_dns_filters_hint">攔截與允許清單保存在 vault ~/.config/telos/（dns-block.txt、dns-allow.txt）。NextDNS 設定 ID 在 Linux 可用時透過 resolvectl 套用 DoT。啟用 Telos DNS stub（或設定 dns-stub.port）可在 127.0.0.1 執行本機轉發器，對攔截主機回傳 NXDOMAIN 並用 nftables 重新導向 DNS——此時主機清單變為 Enforced。若 stub 無法繫結或 nft 失敗，狀態維持 Failed/PreferenceOnly。Windows 與 macOS 僅儲存偏好。</string>
     <string name="desktop_net_nextdns_id">NextDNS 設定 ID</string>
     <string name="desktop_net_nextdns_id_invalid">無效的 NextDNS 設定 ID（請使用 4–12 個字母或數字）</string>
     <string name="desktop_net_dns_blocklist">DNS 封鎖清單</string>
     <string name="desktop_net_dns_allowlist">DNS 允許清單</string>
     <string name="desktop_net_dns_filter_status">過濾狀態</string>
-    <string name="desktop_net_dns_filter_enforced">已強制（NextDNS DoT 及／或本機 DNS stub 重新導向）</string>
+    <string name="desktop_net_dns_filter_enforced">已生效（NextDNS DoT 和/或 Telos DNS stub + nft 重新導向）</string>
     <string name="desktop_net_dns_filter_pref_only">偏好已儲存；此路徑未套用過濾</string>
-    <string name="desktop_net_dns_filter_failed">已設定，但 resolvectl/nftables 無法套用過濾</string>
+    <string name="desktop_net_dns_filter_failed">已設定，但 DNS stub 無法繫結，或 resolvectl/nftables 未能套用過濾</string>
+    <string name="desktop_net_apps_enforced">已生效：啟動門控已啟用（DesktopFileLauncher 會檢查 deny 規則）</string>
+    <string name="desktop_net_apps_pref_only">偏好已儲存；Linux 上沒有 deny 規則，或此平台未套用</string>
+    <string name="desktop_net_dns_stub_enable">啟用 Telos DNS stub</string>
+    <string name="desktop_net_dns_stub_disable">停用 Telos DNS stub</string>
+    <string name="desktop_net_dns_stub_hint">Telos DNS stub 監聽 127.0.0.1（預設連接埠 5353），對 dns-block.txt 回傳 NXDOMAIN（允許清單優先），並轉發其他查詢。特權套用成功時，nftables inet telos_dns 會重新導向出站 53 連接埠。</string>
 </resources>

@@ -12,16 +12,21 @@
     <string name="desktop_net_kill_switch_clear_blocked">Очищення міжмережевого екрана сеансу заблоковано, поки kill-switch увімкнено</string>
     <string name="desktop_net_apps_tab">Програми</string>
     <string name="desktop_net_apps_title">Маршрутизація за програмами</string>
-    <string name="desktop_net_apps_hint">Один desktop-id або пакет у рядку з allow, deny або vpn. Зберігається в ~/.config/telos/app-routing.txt. Примусове застосування на рівні процесів ще відсутнє; kill-switch і далі відкидає недозволений вихідний трафік у Linux.</string>
+    <string name="desktop_net_apps_hint">Один desktop-id или пакет в строке с allow, deny или vpn. Хранится в ~/.config/telos/app-routing.txt. В Linux deny блокирует запуск в лаунчере Telos, а vpn задаёт TELOS_APP_ROUTE=vpn (по возможности, без фальшивого netns). Маршрутизация nftables owner/cgroup на уровне процесса не применяется, чтобы не ломать session kill-switch.</string>
     <string name="desktop_net_apps_file">Таблиця маршрутизації</string>
     <string name="desktop_net_dns_filters_title">DNS-фільтри</string>
-    <string name="desktop_net_dns_filters_hint">Списки блокування та дозволів зберігаються у vault ~/.config/telos/ (dns-block.txt, dns-allow.txt). ID конфігурації NextDNS застосовує DoT через resolvectl у Linux, коли доступний. Самі локальні списки лишаються лише налаштуванням, якщо не задано dns-stub.port і nftables не може перенаправити DNS на цей stub. Windows і macOS зберігають лише налаштування.</string>
+    <string name="desktop_net_dns_filters_hint">Списки блокировки и разрешения хранятся в vault ~/.config/telos/ (dns-block.txt, dns-allow.txt). ID конфигурации NextDNS включает DoT через resolvectl в Linux при наличии. Включите Telos DNS stub (или задайте dns-stub.port) для локального форвардера 127.0.0.1 с NXDOMAIN для блокировок и nftables-редиректом DNS — тогда списки станут Enforced. Если stub не может bind или nft падает, статус Failed/PreferenceOnly. Windows и macOS только сохраняют настройки.</string>
     <string name="desktop_net_nextdns_id">ID конфігурації NextDNS</string>
     <string name="desktop_net_nextdns_id_invalid">Недійсний ID конфігурації NextDNS (використовуйте 4–12 літер або цифр)</string>
     <string name="desktop_net_dns_blocklist">Чорний список DNS</string>
     <string name="desktop_net_dns_allowlist">Білий список DNS</string>
     <string name="desktop_net_dns_filter_status">Стан фільтра</string>
-    <string name="desktop_net_dns_filter_enforced">Застосовано (DoT NextDNS та/або перенаправлення локального DNS-stub)</string>
+    <string name="desktop_net_dns_filter_enforced">Применяется (NextDNS DoT и/или Telos DNS stub + nft-редирект)</string>
     <string name="desktop_net_dns_filter_pref_only">Налаштування збережено; фільтрація на цьому шляху не застосовується</string>
-    <string name="desktop_net_dns_filter_failed">Налаштовано, але resolvectl/nftables не зміг застосувати фільтрацію</string>
+    <string name="desktop_net_dns_filter_failed">Настроено, но DNS stub не смог выполнить bind или resolvectl/nftables не применили фильтрацию</string>
+    <string name="desktop_net_apps_enforced">Применяется: шлюз запуска активен (DesktopFileLauncher проверяет правила deny)</string>
+    <string name="desktop_net_apps_pref_only">Настройка сохранена; нет правил deny в Linux или не применяется на этой платформе</string>
+    <string name="desktop_net_dns_stub_enable">Включить Telos DNS stub</string>
+    <string name="desktop_net_dns_stub_disable">Отключить Telos DNS stub</string>
+    <string name="desktop_net_dns_stub_hint">Telos DNS stub слушает 127.0.0.1 (порт по умолчанию 5353), отвечает NXDOMAIN по dns-block.txt (allowlist важнее) и пересылает остальные запросы. nftables inet telos_dns перенаправляет исходящий порт 53 при успешной привилегированной настройке.</string>
 </resources>

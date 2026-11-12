@@ -12,16 +12,21 @@
     <string name="desktop_net_kill_switch_clear_blocked">킬 스위치가 켜져 있는 동안 세션 방화벽 해제는 차단됩니다</string>
     <string name="desktop_net_apps_tab">앱</string>
     <string name="desktop_net_apps_title">앱별 라우팅</string>
-    <string name="desktop_net_apps_hint">줄마다 desktop-id 또는 패키지와 allow, deny, vpn. ~/.config/telos/app-routing.txt에 저장됩니다. 프로세스 수준 적용은 아직 없습니다. Linux에서는 킬 스위치가 허용되지 않은 송신을 계속 삭제합니다.</string>
+    <string name="desktop_net_apps_hint">줄마다 desktop-id 또는 패키지와 allow, deny, vpn. ~/.config/telos/app-routing.txt에 저장. Linux에서 deny는 Telos 런처 실행을 막고 vpn은 TELOS_APP_ROUTE=vpn을 설정합니다(최선 노력, 가짜 netns 없음). 세션 kill-switch를 유지하려고 프로세스 수준 nftables owner/cgroup 라우팅은 적용하지 않습니다.</string>
     <string name="desktop_net_apps_file">라우팅 테이블</string>
     <string name="desktop_net_dns_filters_title">DNS 필터</string>
-    <string name="desktop_net_dns_filters_hint">차단/허용 목록은 vault ~/.config/telos/(dns-block.txt, dns-allow.txt)에 저장됩니다. NextDNS 구성 ID는 사용 가능할 때 Linux에서 resolvectl로 DoT를 적용합니다. 로컬 목록만 있으면 기본 설정이며, dns-stub.port가 설정되고 nftables가 해당 스텁으로 DNS를 리다이렉트할 수 있을 때만 강제됩니다. Windows와 macOS는 기본 설정만 저장합니다.</string>
+    <string name="desktop_net_dns_filters_hint">차단/허용 목록은 vault ~/.config/telos/(dns-block.txt, dns-allow.txt)에 저장. NextDNS 구성 ID는 Linux에서 resolvectl DoT를 적용(가능한 경우). Telos DNS stub를 켜거나 dns-stub.port를 설정하면 127.0.0.1 로컬 전달기가 차단 호스트에 NXDOMAIN을 주고 nftables로 DNS를 리다이렉트하여 목록이 Enforced가 됩니다. stub가 bind하지 못하거나 nft가 실패하면 Failed/PreferenceOnly로 남습니다. Windows/macOS는 환경설정만 저장합니다.</string>
     <string name="desktop_net_nextdns_id">NextDNS 구성 ID</string>
     <string name="desktop_net_nextdns_id_invalid">잘못된 NextDNS 구성 ID(문자 또는 숫자 4–12자)</string>
     <string name="desktop_net_dns_blocklist">DNS 차단 목록</string>
     <string name="desktop_net_dns_allowlist">DNS 허용 목록</string>
     <string name="desktop_net_dns_filter_status">필터 상태</string>
-    <string name="desktop_net_dns_filter_enforced">적용됨(NextDNS DoT 및/또는 로컬 DNS 스텁 리다이렉트)</string>
+    <string name="desktop_net_dns_filter_enforced">적용됨(NextDNS DoT 및/또는 Telos DNS stub + nft 리다이렉트)</string>
     <string name="desktop_net_dns_filter_pref_only">기본 설정이 저장됨; 이 경로에서는 필터링이 적용되지 않음</string>
-    <string name="desktop_net_dns_filter_failed">구성되었지만 resolvectl/nftables가 필터링을 적용하지 못함</string>
+    <string name="desktop_net_dns_filter_failed">구성되었지만 DNS stub가 bind하지 못했거나 resolvectl/nftables가 필터를 적용하지 못함</string>
+    <string name="desktop_net_apps_enforced">적용됨: 실행 게이트 활성(DesktopFileLauncher가 deny 규칙 확인)</string>
+    <string name="desktop_net_apps_pref_only">환경설정 저장됨; Linux에 deny 규칙이 없거나 이 플랫폼에서 미적용</string>
+    <string name="desktop_net_dns_stub_enable">Telos DNS stub 사용</string>
+    <string name="desktop_net_dns_stub_disable">Telos DNS stub 사용 안 함</string>
+    <string name="desktop_net_dns_stub_hint">Telos DNS stub는 127.0.0.1(기본 포트 5353)에서 수신하고 dns-block.txt에 NXDOMAIN으로 응답하며(허용 목록 우선) 다른 질의를 전달합니다. 권한 적용이 성공하면 nftables inet telos_dns가 아웃바운드 53 포트를 리다이렉트합니다.</string>
 </resources>

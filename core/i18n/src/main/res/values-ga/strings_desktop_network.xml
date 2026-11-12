@@ -12,16 +12,21 @@
     <string name="desktop_net_kill_switch_clear_blocked">Tá glanadh balla tine an tseisiúin blocáilte fad is atá an kill-switch ar siúl</string>
     <string name="desktop_net_apps_tab">Aipeanna</string>
     <string name="desktop_net_apps_title">Bealachú de réir aipe</string>
-    <string name="desktop_net_apps_hint">Desktop-id nó pacáiste amháin in aghaidh na líne le allow, deny nó vpn. Stóráilte faoi ~/.config/telos/app-routing.txt. Níl forfheidhmiú ag leibhéal an phróisis fós; scaoileann an kill-switch egress neamhcheadaithe fós ar Linux.</string>
+    <string name="desktop_net_apps_hint">One desktop-id or package per line with allow, deny, or vpn. Stored under ~/.config/telos/app-routing.txt. On Linux, deny blocks launch in the Telos launcher and vpn sets TELOS_APP_ROUTE=vpn (best-effort, no fake netns). Process-level nftables owner/cgroup routing is not applied, so the session kill-switch stays intact.</string>
     <string name="desktop_net_apps_file">Tábla bealachaithe</string>
     <string name="desktop_net_dns_filters_title">Scagairí DNS</string>
-    <string name="desktop_net_dns_filters_hint">Stóráiltear liostaí bac agus ceadaithe faoin vault ~/.config/telos/ (dns-block.txt, dns-allow.txt). Cuireann ID cumraíochta NextDNS DoT i bhfeidhm trí resolvectl ar Linux nuair atá sé ar fáil. Fanann liostaí áitiúla amháin mar rogha mura bhfuil dns-stub.port socraithe agus mura féidir le nftables DNS a atreorú chuig an stub sin. Ní stórálann Windows agus macOS ach roghanna.</string>
+    <string name="desktop_net_dns_filters_hint">Block and allow lists are stored under vault ~/.config/telos/ (dns-block.txt, dns-allow.txt). A NextDNS configuration ID applies DoT via resolvectl on Linux when available. Enable Telos DNS stub (or set dns-stub.port) to run a local 127.0.0.1 forwarder that NXDOMAINs blocked hosts and redirect DNS with nftables — then host lists become Enforced. If the stub cannot bind or nft fails, status stays Failed/PreferenceOnly. Windows and macOS store preferences only.</string>
     <string name="desktop_net_nextdns_id">ID cumraíochta NextDNS</string>
     <string name="desktop_net_nextdns_id_invalid">ID cumraíochta NextDNS neamhbhailí (úsáid 4–12 litir nó digit)</string>
     <string name="desktop_net_dns_blocklist">Liosta bac DNS</string>
     <string name="desktop_net_dns_allowlist">Liosta ceadaithe DNS</string>
     <string name="desktop_net_dns_filter_status">Stádas an scagaire</string>
-    <string name="desktop_net_dns_filter_enforced">Curtha i bhfeidhm (DoT NextDNS agus/nó atreorú stub DNS áitiúil)</string>
+    <string name="desktop_net_dns_filter_enforced">Enforced (NextDNS DoT and/or Telos DNS stub + nft redirect)</string>
     <string name="desktop_net_dns_filter_pref_only">Rogha sábháilte; ní chuirtear scagadh i bhfeidhm ar an gcosán seo</string>
-    <string name="desktop_net_dns_filter_failed">Cumraithe, ach níorbh fhéidir le resolvectl/nftables scagadh a chur i bhfeidhm</string>
+    <string name="desktop_net_dns_filter_failed">Configured, but the DNS stub could not bind or resolvectl/nftables could not apply filtering</string>
+    <string name="desktop_net_apps_enforced">Enforced: launch-gate active (deny rules consulted by DesktopFileLauncher)</string>
+    <string name="desktop_net_apps_pref_only">Preference saved; no deny rules on Linux, or not applied on this platform</string>
+    <string name="desktop_net_dns_stub_enable">Enable Telos DNS stub</string>
+    <string name="desktop_net_dns_stub_disable">Disable Telos DNS stub</string>
+    <string name="desktop_net_dns_stub_hint">Telos DNS stub listens on 127.0.0.1 (default port 5353), answers NXDOMAIN for dns-block.txt (allowlist wins), and forwards other queries. nftables inet telos_dns redirects outbound port 53 when privileged apply succeeds.</string>
 </resources>

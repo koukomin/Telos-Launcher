@@ -82,7 +82,32 @@ class DesktopNetworkControllerTest {
             ),
             routes,
         )
-        assertFalse(DesktopNetworkController.appRoutingEnforced())
+        assertFalse(DesktopNetworkController.appRoutingEnforced(emptyList()))
+        assertEquals(
+            DesktopNetworkController.LaunchRouteDecision.Deny,
+            DesktopNetworkController.launchRouteDecision(
+                listOf("firefox.desktop"),
+                routes,
+            ),
+        )
+    }
+
+    @Test
+    fun hostListMatchingHelpersViaStub() {
+        assertTrue(
+            TelosDnsStub.isQueryBlocked(
+                "ads.tracker.net",
+                listOf("tracker.net"),
+                emptyList(),
+            ),
+        )
+        assertFalse(
+            TelosDnsStub.isQueryBlocked(
+                "safe.tracker.net",
+                listOf("tracker.net"),
+                listOf("safe.tracker.net"),
+            ),
+        )
     }
 
     @Test

@@ -12,16 +12,21 @@
     <string name="desktop_net_kill_switch_clear_blocked">কিল-সুইচ চালু থাকলে সেশন ফায়ারওয়াল মুছে ফেলা অবরুদ্ধ</string>
     <string name="desktop_net_apps_tab">অ্যাপ</string>
     <string name="desktop_net_apps_title">অ্যাপ অনুযায়ী রাউটিং</string>
-    <string name="desktop_net_apps_hint">প্রতি লাইনে একটি desktop-id বা প্যাকেজ এবং allow, deny বা vpn। ~/.config/telos/app-routing.txt-এ সংরক্ষিত। প্রক্রিয়া-স্তরের প্রয়োগ এখনো নেই; Linux-এ কিল-সুইচ এখনো অননুমোদিত আউটবাউন্ড বাদ দেয়।</string>
+    <string name="desktop_net_apps_hint">प्रति पंक्ति एक desktop-id या पैकेज allow, deny, या vpn के साथ। ~/.config/telos/app-routing.txt में संग्रहीत। Linux पर deny Telos लॉन्चर में लॉन्च रोकता है और vpn TELOS_APP_ROUTE=vpn सेट करता है (best-effort, नकली netns नहीं)। सेशन kill-switch बनाए रखने के लिए प्रक्रिया-स्तर nftables owner/cgroup रूटिंग लागू नहीं होती।</string>
     <string name="desktop_net_apps_file">রাউটিং টেবিল</string>
     <string name="desktop_net_dns_filters_title">DNS ফিল্টার</string>
-    <string name="desktop_net_dns_filters_hint">ব্লক ও অনুমতি তালিকা vault ~/.config/telos/ এ সংরক্ষিত (dns-block.txt, dns-allow.txt)। NextDNS কনফিগারেশন ID লিনাক্সে resolvectl দিয়ে DoT প্রয়োগ করে যখন উপলব্ধ। শুধু স্থানীয় তালিকা পছন্দ হিসেবে থাকে যদি dns-stub.port সেট না থাকে এবং nftables সেই stub-এ DNS রিডাইরেক্ট করতে না পারে। Windows ও macOS শুধু পছন্দ সংরক্ষণ করে।</string>
+    <string name="desktop_net_dns_filters_hint">ब्लॉक/अनुमति सूचियाँ vault ~/.config/telos/ (dns-block.txt, dns-allow.txt) में हैं। NextDNS कॉन्फ़िग ID Linux पर उपलब्ध होने पर resolvectl DoT लागू करता है। Telos DNS stub सक्षम करें (या dns-stub.port सेट करें) ताकि 127.0.0.1 लोकल फ़ॉरवर्डर ब्लॉक होस्ट पर NXDOMAIN दे और nftables से DNS रीडायरेक्ट करे — तब सूचियाँ Enforced होंगी। यदि stub bind न कर सके या nft विफल हो तो स्थिति Failed/PreferenceOnly रहती है। Windows/macOS केवल वरीयताएँ सहेजते हैं।</string>
     <string name="desktop_net_nextdns_id">NextDNS কনফিগারেশন ID</string>
     <string name="desktop_net_nextdns_id_invalid">অবৈধ NextDNS কনফিগারেশন ID (৪–১২ অক্ষর বা সংখ্যা ব্যবহার করুন)</string>
     <string name="desktop_net_dns_blocklist">DNS ব্লকলিস্ট</string>
     <string name="desktop_net_dns_allowlist">DNS অনুমতি তালিকা</string>
     <string name="desktop_net_dns_filter_status">ফিল্টার অবস্থা</string>
-    <string name="desktop_net_dns_filter_enforced">প্রয়োগকৃত (NextDNS DoT এবং/অথবা স্থানীয় DNS stub রিডাইরেক্ট)</string>
+    <string name="desktop_net_dns_filter_enforced">लागू (NextDNS DoT और/या Telos DNS stub + nft रीडायरेक्ट)</string>
     <string name="desktop_net_dns_filter_pref_only">পছন্দ সংরক্ষিত; এই পথে ফিল্টারিং প্রয়োগ হয় না</string>
-    <string name="desktop_net_dns_filter_failed">কনফিগার করা হয়েছে, কিন্তু resolvectl/nftables ফিল্টারিং প্রয়োগ করতে পারেনি</string>
+    <string name="desktop_net_dns_filter_failed">कॉन्फ़िगर है, लेकिन DNS stub bind नहीं कर सका या resolvectl/nftables फ़िल्टर लागू नहीं कर सका</string>
+    <string name="desktop_net_apps_enforced">लागू: लॉन्च-गेट सक्रिय (DesktopFileLauncher deny नियम देखता है)</string>
+    <string name="desktop_net_apps_pref_only">वरीयता सहेजी गई; Linux पर deny नियम नहीं, या इस प्लेटफ़ॉर्म पर लागू नहीं</string>
+    <string name="desktop_net_dns_stub_enable">Telos DNS stub सक्षम करें</string>
+    <string name="desktop_net_dns_stub_disable">Telos DNS stub अक्षम करें</string>
+    <string name="desktop_net_dns_stub_hint">Telos DNS stub 127.0.0.1 पर सुनता है (डिफ़ॉल्ट पोर्ट 5353), dns-block.txt के लिए NXDOMAIN देता है (allowlist जीतती है) और अन्य क्वेरी फ़ॉरवर्ड करता है। विशेषाधिकार लागू होने पर nftables inet telos_dns आउटबाउंड पोर्ट 53 रीडायरेक्ट करता है।</string>
 </resources>

@@ -42,23 +42,4 @@
     <string name="desktop_vos_profiles_add_portable">Pievienot pārnēsājamā seifa sakni</string>
     <string name="desktop_vos_profiles_portable_selected">Pārnēsājamā sakne: %1$s</string>
     <string name="desktop_vos_profiles_portable_reject">Pārnēsājamā sakne nedrīkst būt resursdatora mājas mape vai tās .config/.cache/.local.</string>
-    <string name="desktop_vos_profiles_lock_gate_hint">Vault is unlocked. Re-enter your vault password to switch profiles — Telos will lock first; unlock again after switching. No automatic remount of another LUKS image.</string>
-    <string name="desktop_vos_profiles_reauth">Vault password (re-auth to switch)</string>
-    <string name="desktop_vos_profiles_auth_required">Re-authenticate with your vault password before switching while unlocked.</string>
-    <string name="desktop_vos_profiles_locked_need_unlock">Vault locked — unlock again to remount.</string>
-    <string name="desktop_vos_profiles_host_current">This host: %1$s</string>
-    <string name="desktop_vos_profiles_host_same">Marked for this host (%1$s)</string>
-    <string name="desktop_vos_profiles_host_other">Also used on another host: %1$s</string>
-    <string name="desktop_vos_profiles_export">Export encrypted</string>
-    <string name="desktop_vos_profiles_export_hint">AES export of the profile folder + name marker only (no WireGuard private keys). Import needs confirmation.</string>
-    <string name="desktop_vos_profiles_export_pass">Export / import passphrase</string>
-    <string name="desktop_vos_profiles_export_pass_required">Passphrase required for encrypted profile export/import</string>
-    <string name="desktop_vos_profiles_exported">Exported encrypted profile: %1$s</string>
-    <string name="desktop_vos_profiles_import">Import encrypted profile</string>
-    <string name="desktop_vos_profiles_import_path">Encrypted profile zip path</string>
-    <string name="desktop_vos_profiles_import_pass">Import passphrase</string>
-    <string name="desktop_vos_profiles_import_confirm">Tap to confirm import</string>
-    <string name="desktop_vos_profiles_import_confirmed">Import confirmed</string>
-    <string name="desktop_vos_profiles_import_need_confirm">Confirm import before continuing</string>
-    <string name="desktop_vos_profiles_imported">Imported profile: %1$s</string>
 </resources>
