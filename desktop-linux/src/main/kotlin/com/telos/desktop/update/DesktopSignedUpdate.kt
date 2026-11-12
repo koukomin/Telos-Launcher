@@ -14,14 +14,17 @@ import java.util.Base64
 import java.util.Properties
 
 /**
- * Signed desktop update check (VOS-5 foundations).
+ * Signed desktop update check (VOS-5).
  *
  * Verifies an update jar + manifest against the Telos Ed25519 public key before
  * offering install. Downloads land under portable/vault temp staging. Never
  * auto-installs — callers must obtain user confirmation, then call [installConfirmed].
  *
- * Release endpoint is optional: prefer a local `file://` or filesystem path, or
- * an HTTPS URL stored in vault `desktop.properties` (`desktop.update.manifestUrl`).
+ * Manifest URL preference order ([preferredManifestUrl]): vault
+ * `desktop.update.manifestUrl`, system property / env, then the GitHub Releases
+ * channel default (`DesktopGitHubReleasesChannel.latestDownloadUrl`). Ed25519
+ * verify is always required; staging never replaces a running process by itself
+ * (see [DesktopUpdateRestartHelper] for best-effort restart).
  */
 object DesktopSignedUpdate {
     const val PREF_MANIFEST_URL = "desktop.update.manifestUrl"
@@ -67,7 +70,8 @@ object DesktopSignedUpdate {
         if (!fromProps.isNullOrBlank()) return fromProps.trim()
         System.getProperty("telos.desktop.update.manifest")?.trim()?.takeIf { it.isNotEmpty() }?.let { return it }
         System.getenv("TELOS_DESKTOP_UPDATE_MANIFEST")?.trim()?.takeIf { it.isNotEmpty() }?.let { return it }
-        return null
+        // GitHub Releases channel fallback (HTTPS). Still Ed25519-verified on check.
+        return DesktopGitHubReleasesChannel.latestDownloadUrl()
     }
 
     fun saveManifestUrl(settings: TelosDesktopSettings, url: String) {

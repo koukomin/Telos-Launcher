@@ -8,8 +8,21 @@
     <string name="desktop_vault_restore_cancel">Batalkan pemulihan</string>
     <string name="desktop_vault_restore_done">Konfigurasi sesi vault dipulihkan</string>
     <string name="desktop_vault_restore_need_confirm">Konfirmasi pemulihan diperlukan</string>
+    <string name="desktop_luks_restore_title">Pulihkan citra vault LUKS</string>
+    <string name="desktop_luks_restore_hint">Menyalin cadangan telos_vault.img ke jalur citra portable/vault. Vault harus terkunci. Tidak pernah memasang dengan kata sandi — buka kunci secara terpisah setelah pemulihan. Memerlukan konfirmasi dan pemeriksaan SHA-256.</string>
+    <string name="desktop_luks_restore_path_label">Jalur citra cadangan (telos_vault.img)</string>
+    <string name="desktop_luks_restore_preview_btn">Pratinjau pemulihan citra LUKS</string>
+    <string name="desktop_luks_restore_preview">Siap memulihkan %1$s byte (sha256 %2$s…). Konfirmasi untuk menyalin. Vault harus tetap terkunci.</string>
+    <string name="desktop_luks_restore_confirm">Konfirmasi pemulihan citra LUKS</string>
+    <string name="desktop_luks_restore_cancel">Batalkan pemulihan LUKS</string>
+    <string name="desktop_luks_restore_done">Citra LUKS dipulihkan sebagai %1$s (masih terkunci — buka kunci secara terpisah)</string>
+    <string name="desktop_luks_restore_need_confirm">Konfirmasi diperlukan untuk memulihkan citra LUKS</string>
+    <string name="desktop_luks_restore_locked_required">Vault harus terkunci sebelum memulihkan citra LUKS</string>
     <string name="desktop_update_title">Pembaruan desktop bertanda tangan</string>
-    <string name="desktop_update_hint">Memeriksa jalur file:// lokal atau manifes HTTPS yang ditandatangani dengan kunci Ed25519 Telos. Pembaruan dipersiapkan di temp portable/vault dan tidak pernah terpasang otomatis.</string>
+    <string name="desktop_update_hint">Periksa jalur file:// lokal atau manifes HTTPS yang ditandatangani dengan kunci Ed25519 Telos. Pembaruan ditahapkan di portable/vault temp dan tidak pernah dipasang otomatis. Saluran bawaan: aset GitHub Releases telos-desktop-update.manifest.</string>
+    <string name="desktop_update_releases_hint">Bawaan GitHub Releases: %1$s</string>
+    <string name="desktop_update_use_releases">Gunakan URL GitHub Releases</string>
+    <string name="desktop_update_releases_filled">URL manifes GitHub Releases diisi</string>
     <string name="desktop_update_url_label">Manifes pembaruan (jalur, file://, atau https://)</string>
     <string name="desktop_update_save_url">Simpan URL pembaruan</string>
     <string name="desktop_update_url_saved">URL manifes pembaruan disimpan</string>
@@ -17,7 +30,11 @@
     <string name="desktop_update_ready">Pembaruan bertanda tangan %1$s terverifikasi — konfirmasi untuk menyiapkan pemasangan</string>
     <string name="desktop_update_install_confirm">Konfirmasi pemasangan tersiap</string>
     <string name="desktop_update_install_cancel">Batalkan pembaruan</string>
-    <string name="desktop_update_installed">Pembaruan disiapkan sebagai %1$s (mulai ulang secara manual)</string>
+    <string name="desktop_update_installed">Pembaruan ditahapkan sebagai %1$s — konfirmasi pembantu mulai ulang (penggantian jar yang berjalan bersifat best-effort)</string>
     <string name="desktop_update_sig_fail">Verifikasi tanda tangan pembaruan gagal</string>
     <string name="desktop_update_no_url">Tetapkan dulu URL manifes file:// atau HTTPS</string>
+    <string name="desktop_update_restart_hint">Pembantu mulai ulang menulis penanda pembaruan tertunda dan skrip pengganti opsional, lalu keluar. Mengganti jar JVM yang berjalan bersifat best-effort.</string>
+    <string name="desktop_update_restart_confirm">Konfirmasi mulai ulang setelah pembaruan</string>
+    <string name="desktop_update_restart_later">Mulai ulang nanti</string>
+    <string name="desktop_update_restart_failed">Tidak dapat menyiapkan pembantu mulai ulang pembaruan</string>
 </resources>

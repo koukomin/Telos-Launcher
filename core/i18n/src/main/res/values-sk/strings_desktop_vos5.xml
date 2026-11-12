@@ -8,8 +8,21 @@
     <string name="desktop_vault_restore_cancel">Zrušiť obnovenie</string>
     <string name="desktop_vault_restore_done">Konfigurácia relácie vaultu obnovená</string>
     <string name="desktop_vault_restore_need_confirm">Vyžaduje sa potvrdenie obnovenia</string>
+    <string name="desktop_luks_restore_title">Przywracanie obrazu LUKS vault</string>
+    <string name="desktop_luks_restore_hint">Kopiuje kopię zapasową telos_vault.img do ścieżki obrazu portable/vault. Vault musi być zablokowany. Nigdy nie montuje z hasłem — odblokuj osobno po przywróceniu. Wymaga potwierdzenia i sprawdzenia SHA-256.</string>
+    <string name="desktop_luks_restore_path_label">Ścieżka obrazu kopii (telos_vault.img)</string>
+    <string name="desktop_luks_restore_preview_btn">Podgląd przywracania obrazu LUKS</string>
+    <string name="desktop_luks_restore_preview">Gotowe do przywrócenia %1$s bajtów (sha256 %2$s…). Potwierdź, aby skopiować. Vault musi pozostać zablokowany.</string>
+    <string name="desktop_luks_restore_confirm">Potwierdź przywracanie obrazu LUKS</string>
+    <string name="desktop_luks_restore_cancel">Anuluj przywracanie LUKS</string>
+    <string name="desktop_luks_restore_done">Obraz LUKS przywrócony jako %1$s (nadal zablokowany — odblokuj osobno)</string>
+    <string name="desktop_luks_restore_need_confirm">Wymagane potwierdzenie przywracania obrazu LUKS</string>
+    <string name="desktop_luks_restore_locked_required">Vault musi być zablokowany przed przywróceniem obrazu LUKS</string>
     <string name="desktop_update_title">Podpísaná aktualizácia desktopu</string>
-    <string name="desktop_update_hint">Skontroluje miestnu cestu file:// alebo HTTPS manifest podpísaný kľúčom Telos Ed25519. Aktualizácie sa pripravia v dočasnom portable/vault a nikdy sa neinštalujú automaticky.</string>
+    <string name="desktop_update_hint">Sprawdź lokalną ścieżkę file:// lub manifest HTTPS podpisany kluczem Ed25519 Telos. Aktualizacje są przygotowywane w portable/vault temp i nigdy nie instalują się automatycznie. Domyślny kanał: zasób GitHub Releases telos-desktop-update.manifest.</string>
+    <string name="desktop_update_releases_hint">Domyślne GitHub Releases: %1$s</string>
+    <string name="desktop_update_use_releases">Użyj URL GitHub Releases</string>
+    <string name="desktop_update_releases_filled">Wypełniono URL manifestu GitHub Releases</string>
     <string name="desktop_update_url_label">Manifest aktualizácie (cesta, file:// alebo https://)</string>
     <string name="desktop_update_save_url">Uložiť URL aktualizácie</string>
     <string name="desktop_update_url_saved">URL manifestu aktualizácie uložená</string>
@@ -17,7 +30,11 @@
     <string name="desktop_update_ready">Podpísaná aktualizácia %1$s overená — potvrďte prípravu inštalácie</string>
     <string name="desktop_update_install_confirm">Potvrdiť pripravenú inštaláciu</string>
     <string name="desktop_update_install_cancel">Zrušiť aktualizáciu</string>
-    <string name="desktop_update_installed">Aktualizácia pripravená ako %1$s (reštartujte ručne)</string>
+    <string name="desktop_update_installed">Aktualizacja przygotowana jako %1$s — potwierdź pomocnika restartu (zamiana działającego jar to best-effort)</string>
     <string name="desktop_update_sig_fail">Overenie podpisu aktualizácie zlyhalo</string>
     <string name="desktop_update_no_url">Najprv nastavte URL manifestu file:// alebo HTTPS</string>
+    <string name="desktop_update_restart_hint">Pomocnik restartu zapisuje znacznik oczekującej aktualizacji i opcjonalny skrypt zamiany, potem kończy działanie. Zamiana działającego jar JVM to best-effort.</string>
+    <string name="desktop_update_restart_confirm">Potwierdź restart po aktualizacji</string>
+    <string name="desktop_update_restart_later">Uruchom ponownie później</string>
+    <string name="desktop_update_restart_failed">Nie można przygotować pomocnika restartu aktualizacji</string>
 </resources>

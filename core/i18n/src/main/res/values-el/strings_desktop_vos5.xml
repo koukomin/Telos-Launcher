@@ -8,8 +8,21 @@
     <string name="desktop_vault_restore_cancel">Ακύρωση επαναφοράς</string>
     <string name="desktop_vault_restore_done">Οι ρυθμίσεις συνεδρίας vault επαναφέρθηκαν</string>
     <string name="desktop_vault_restore_need_confirm">Απαιτείται επιβεβαίωση επαναφοράς</string>
+    <string name="desktop_luks_restore_title">Επαναφορά εικόνας LUKS vault</string>
+    <string name="desktop_luks_restore_hint">Αντιγραφή αντιγράφου ασφαλείας telos_vault.img στη διαδρομή εικόνας portable/vault. Το vault πρέπει να είναι κλειδωμένο. Δεν προσαρτάται ποτέ με κωδικό — ξεκλειδώστε ξεχωριστά μετά την επαναφορά. Απαιτεί επιβεβαίωση και έλεγχο SHA-256.</string>
+    <string name="desktop_luks_restore_path_label">Διαδρομή αντιγράφου εικόνας (telos_vault.img)</string>
+    <string name="desktop_luks_restore_preview_btn">Προεπισκόπηση επαναφοράς εικόνας LUKS</string>
+    <string name="desktop_luks_restore_preview">Έτοιμο για επαναφορά %1$s bytes (sha256 %2$s…). Επιβεβαιώστε για αντιγραφή. Το vault πρέπει να παραμείνει κλειδωμένο.</string>
+    <string name="desktop_luks_restore_confirm">Επιβεβαίωση επαναφοράς εικόνας LUKS</string>
+    <string name="desktop_luks_restore_cancel">Ακύρωση επαναφοράς LUKS</string>
+    <string name="desktop_luks_restore_done">Η εικόνα LUKS επαναφέρθηκε ως %1$s (ακόμα κλειδωμένη — ξεκλειδώστε ξεχωριστά)</string>
+    <string name="desktop_luks_restore_need_confirm">Απαιτείται επιβεβαίωση επαναφοράς εικόνας LUKS</string>
+    <string name="desktop_luks_restore_locked_required">Το vault πρέπει να είναι κλειδωμένο πριν από την επαναφορά της εικόνας LUKS</string>
     <string name="desktop_update_title">Υπογεγραμμένη ενημέρωση desktop</string>
-    <string name="desktop_update_hint">Έλεγχος τοπικής διαδρομής file:// ή HTTPS manifest υπογεγραμμένου με το κλειδί Ed25519 του Telos. Οι ενημερώσεις σταθμεύουν στο portable/vault temp και δεν εγκαθίστανται αυτόματα.</string>
+    <string name="desktop_update_hint">Έλεγχος τοπικής διαδρομής file:// ή HTTPS manifest υπογεγραμμένου με το κλειδί Ed25519 του Telos. Οι ενημερώσεις σταθμεύουν στο portable/vault temp και δεν εγκαθίστανται αυτόματα. Προεπιλεγμένο κανάλι: στοιχείο GitHub Releases telos-desktop-update.manifest.</string>
+    <string name="desktop_update_releases_hint">Προεπιλογή GitHub Releases: %1$s</string>
+    <string name="desktop_update_use_releases">Χρήση URL GitHub Releases</string>
+    <string name="desktop_update_releases_filled">Το URL του manifest GitHub Releases συμπληρώθηκε</string>
     <string name="desktop_update_url_label">Manifest ενημέρωσης (διαδρομή, file:// ή https://)</string>
     <string name="desktop_update_save_url">Αποθήκευση URL ενημέρωσης</string>
     <string name="desktop_update_url_saved">Το URL του manifest ενημέρωσης αποθηκεύτηκε</string>
@@ -17,7 +30,11 @@
     <string name="desktop_update_ready">Η υπογεγραμμένη ενημέρωση %1$s επαληθεύτηκε — επιβεβαιώστε για σταδιακή εγκατάσταση</string>
     <string name="desktop_update_install_confirm">Επιβεβαίωση σταδιακής εγκατάστασης</string>
     <string name="desktop_update_install_cancel">Ακύρωση ενημέρωσης</string>
-    <string name="desktop_update_installed">Η ενημέρωση σταθμεύτηκε ως %1$s (επανεκκινήστε χειροκίνητα για χρήση)</string>
+    <string name="desktop_update_installed">Η ενημέρωση σταθμεύτηκε ως %1$s — επιβεβαιώστε βοηθό επανεκκίνησης (η αντικατάσταση τρέχοντος jar είναι βέλτιστη προσπάθεια)</string>
     <string name="desktop_update_sig_fail">Η επαλήθευση υπογραφής ενημέρωσης απέτυχε</string>
     <string name="desktop_update_no_url">Ορίστε πρώτα URL manifest ενημέρωσης file:// ή HTTPS</string>
+    <string name="desktop_update_restart_hint">Ο βοηθός επανεκκίνησης γράφει δείκτη εκκρεμούς ενημέρωσης και προαιρετικό σκριπτ αντικατάστασης, μετά τερματίζει. Η αντικατάσταση τρέχοντος JVM jar είναι βέλτιστη προσπάθεια.</string>
+    <string name="desktop_update_restart_confirm">Επιβεβαίωση επανεκκίνησης μετά την ενημέρωση</string>
+    <string name="desktop_update_restart_later">Επανεκκίνηση αργότερα</string>
+    <string name="desktop_update_restart_failed">Αδυναμία προετοιμασίας βοηθού επανεκκίνησης ενημέρωσης</string>
 </resources>

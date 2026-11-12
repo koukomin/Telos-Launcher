@@ -8,8 +8,21 @@
     <string name="desktop_vault_restore_cancel">Geri yüklemeyi iptal et</string>
     <string name="desktop_vault_restore_done">Vault oturum yapılandırması geri yüklendi</string>
     <string name="desktop_vault_restore_need_confirm">Geri yükleme onayı gerekli</string>
+    <string name="desktop_luks_restore_title">LUKS vault görüntüsünü geri yükle</string>
+    <string name="desktop_luks_restore_hint">telos_vault.img yedeğini portable/vault görüntü yoluna kopyalar. Vault kilitli olmalıdır. Parola ile asla bağlanmaz — geri yüklemeden sonra ayrı açın. Onay ve SHA-256 denetimi gerekir.</string>
+    <string name="desktop_luks_restore_path_label">Yedek görüntü yolu (telos_vault.img)</string>
+    <string name="desktop_luks_restore_preview_btn">LUKS görüntü geri yükleme önizlemesi</string>
+    <string name="desktop_luks_restore_preview">%1$s bayt geri yüklemeye hazır (sha256 %2$s…). Kopyalamak için onaylayın. Vault kilitli kalmalıdır.</string>
+    <string name="desktop_luks_restore_confirm">LUKS görüntü geri yüklemeyi onayla</string>
+    <string name="desktop_luks_restore_cancel">LUKS geri yüklemeyi iptal et</string>
+    <string name="desktop_luks_restore_done">LUKS görüntüsü %1$s olarak geri yüklendi (hâlâ kilitli — ayrıca açın)</string>
+    <string name="desktop_luks_restore_need_confirm">LUKS görüntü geri yükleme onayı gerekli</string>
+    <string name="desktop_luks_restore_locked_required">LUKS görüntüsünü geri yüklemeden önce vault kilitli olmalıdır</string>
     <string name="desktop_update_title">İmzalı masaüstü güncellemesi</string>
-    <string name="desktop_update_hint">Telos Ed25519 anahtarıyla imzalanmış yerel file:// yolu veya HTTPS bildirimi denetler. Güncellemeler portable/vault temp altında hazırlanır ve asla otomatik kurulmaz.</string>
+    <string name="desktop_update_hint">Telos Ed25519 anahtarıyla imzalanmış yerel file:// yolu veya HTTPS bildirimi kontrol edin. Güncellemeler portable/vault temp altına hazırlanır ve asla otomatik kurulmaz. Varsayılan kanal: GitHub Releases varlığı telos-desktop-update.manifest.</string>
+    <string name="desktop_update_releases_hint">GitHub Releases varsayılanı: %1$s</string>
+    <string name="desktop_update_use_releases">GitHub Releases URL’sini kullan</string>
+    <string name="desktop_update_releases_filled">GitHub Releases bildirim URL’si dolduruldu</string>
     <string name="desktop_update_url_label">Güncelleme bildirimi (yol, file:// veya https://)</string>
     <string name="desktop_update_save_url">Güncelleme URL’sini kaydet</string>
     <string name="desktop_update_url_saved">Güncelleme bildirimi URL’si kaydedildi</string>
@@ -17,7 +30,11 @@
     <string name="desktop_update_ready">İmzalı güncelleme %1$s doğrulandı — kurulumu hazırlamak için onaylayın</string>
     <string name="desktop_update_install_confirm">Hazırlanan kurulumu onayla</string>
     <string name="desktop_update_install_cancel">Güncellemeyi iptal et</string>
-    <string name="desktop_update_installed">Güncelleme %1$s olarak hazırlandı (elle yeniden başlatın)</string>
+    <string name="desktop_update_installed">Güncelleme %1$s olarak hazırlandı — yeniden başlatma yardımcısını onaylayın (çalışan jar değişimi best-effort)</string>
     <string name="desktop_update_sig_fail">Güncelleme imza doğrulaması başarısız</string>
     <string name="desktop_update_no_url">Önce bir file:// veya HTTPS bildirim URL’si ayarlayın</string>
+    <string name="desktop_update_restart_hint">Yeniden başlatma yardımcısı bekleyen güncelleme işaretçisi ve isteğe bağlı değiştirme betiği yazar, sonra çıkar. Çalışan bir JVM jar’ını değiştirmek best-effort’tur.</string>
+    <string name="desktop_update_restart_confirm">Güncellemeden sonra yeniden başlatmayı onayla</string>
+    <string name="desktop_update_restart_later">Sonra yeniden başlat</string>
+    <string name="desktop_update_restart_failed">Güncelleme yeniden başlatma yardımcısı hazırlanamadı</string>
 </resources>

@@ -8,8 +8,21 @@
     <string name="desktop_vault_restore_cancel">Batalkan pemulihan</string>
     <string name="desktop_vault_restore_done">Konfigurasi sesi vault dipulihkan</string>
     <string name="desktop_vault_restore_need_confirm">Konfirmasi pemulihan diperlukan</string>
+    <string name="desktop_luks_restore_title">Pulihkan imej vault LUKS</string>
+    <string name="desktop_luks_restore_hint">Menyalin sandaran telos_vault.img ke laluan imej portable/vault. Vault mesti dikunci. Tidak pernah lekap dengan kata laluan — buka kunci secara berasingan selepas pemulihan. Memerlukan pengesahan dan semakan SHA-256.</string>
+    <string name="desktop_luks_restore_path_label">Laluan imej sandaran (telos_vault.img)</string>
+    <string name="desktop_luks_restore_preview_btn">Pratonton pemulihan imej LUKS</string>
+    <string name="desktop_luks_restore_preview">Sedia memulihkan %1$s bait (sha256 %2$s…). Sahkan untuk menyalin. Vault mesti kekal dikunci.</string>
+    <string name="desktop_luks_restore_confirm">Sahkan pemulihan imej LUKS</string>
+    <string name="desktop_luks_restore_cancel">Batalkan pemulihan LUKS</string>
+    <string name="desktop_luks_restore_done">Imej LUKS dipulihkan sebagai %1$s (masih dikunci — buka kunci secara berasingan)</string>
+    <string name="desktop_luks_restore_need_confirm">Pengesahan diperlukan untuk memulihkan imej LUKS</string>
+    <string name="desktop_luks_restore_locked_required">Vault mesti dikunci sebelum memulihkan imej LUKS</string>
     <string name="desktop_update_title">Pembaruan desktop bertanda tangan</string>
-    <string name="desktop_update_hint">Memeriksa jalur file:// lokal atau manifes HTTPS yang ditandatangani dengan kunci Ed25519 Telos. Pembaruan dipersiapkan di temp portable/vault dan tidak pernah terpasang otomatis.</string>
+    <string name="desktop_update_hint">Semak laluan file:// tempatan atau manifes HTTPS yang ditandatangani dengan kunci Ed25519 Telos. Kemas kini diperingkatkan di bawah portable/vault temp dan tidak pernah dipasang secara automatik. Saluran lalai: aset GitHub Releases telos-desktop-update.manifest.</string>
+    <string name="desktop_update_releases_hint">Lalai GitHub Releases: %1$s</string>
+    <string name="desktop_update_use_releases">Gunakan URL GitHub Releases</string>
+    <string name="desktop_update_releases_filled">URL manifes GitHub Releases diisi</string>
     <string name="desktop_update_url_label">Manifes pembaruan (jalur, file://, atau https://)</string>
     <string name="desktop_update_save_url">Simpan URL pembaruan</string>
     <string name="desktop_update_url_saved">URL manifes pembaruan disimpan</string>
@@ -17,7 +30,11 @@
     <string name="desktop_update_ready">Pembaruan bertanda tangan %1$s terverifikasi — konfirmasi untuk menyiapkan pemasangan</string>
     <string name="desktop_update_install_confirm">Konfirmasi pemasangan tersiap</string>
     <string name="desktop_update_install_cancel">Batalkan pembaruan</string>
-    <string name="desktop_update_installed">Pembaruan disiapkan sebagai %1$s (mulai ulang secara manual)</string>
+    <string name="desktop_update_installed">Kemas kini diperingkatkan sebagai %1$s — sahkan pembantu mulakan semula (penggantian jar yang berjalan ialah best-effort)</string>
     <string name="desktop_update_sig_fail">Verifikasi tanda tangan pembaruan gagal</string>
     <string name="desktop_update_no_url">Tetapkan dulu URL manifes file:// atau HTTPS</string>
+    <string name="desktop_update_restart_hint">Pembantu mulakan semula menulis penanda kemas kini tertunda dan skrip ganti pilihan, kemudian keluar. Menggantikan jar JVM yang berjalan ialah best-effort.</string>
+    <string name="desktop_update_restart_confirm">Sahkan mulakan semula selepas kemas kini</string>
+    <string name="desktop_update_restart_later">Mulakan semula kemudian</string>
+    <string name="desktop_update_restart_failed">Tidak dapat menyediakan pembantu mulakan semula kemas kini</string>
 </resources>

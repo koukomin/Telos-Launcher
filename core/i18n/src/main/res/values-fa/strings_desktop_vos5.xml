@@ -8,8 +8,21 @@
     <string name="desktop_vault_restore_cancel">لغو بازیابی</string>
     <string name="desktop_vault_restore_done">پیکربندی نشست خزانه بازیابی شد</string>
     <string name="desktop_vault_restore_need_confirm">تأیید بازیابی لازم است</string>
+    <string name="desktop_luks_restore_title">استعادة صورة مخزن LUKS</string>
+    <string name="desktop_luks_restore_hint">ينسخ نسخة احتياطية telos_vault.img إلى مسار صورة portable/vault. يجب أن يكون المخزن مقفلاً. لا يركّب أبدًا بكلمة مرور — افتح القفل بشكل منفصل بعد الاستعادة. يتطلب تأكيدًا وفحص SHA-256.</string>
+    <string name="desktop_luks_restore_path_label">مسار صورة النسخة الاحتياطية (telos_vault.img)</string>
+    <string name="desktop_luks_restore_preview_btn">معاينة استعادة صورة LUKS</string>
+    <string name="desktop_luks_restore_preview">جاهز لاستعادة %1$s بايت (sha256 %2$s…). أكّد للنسخ. يجب أن يبقى المخزن مقفلاً.</string>
+    <string name="desktop_luks_restore_confirm">تأكيد استعادة صورة LUKS</string>
+    <string name="desktop_luks_restore_cancel">إلغاء استعادة LUKS</string>
+    <string name="desktop_luks_restore_done">تمت استعادة صورة LUKS باسم %1$s (ما زالت مقفلة — افتح القفل بشكل منفصل)</string>
+    <string name="desktop_luks_restore_need_confirm">مطلوب تأكيد استعادة صورة LUKS</string>
+    <string name="desktop_luks_restore_locked_required">يجب قفل المخزن قبل استعادة صورة LUKS</string>
     <string name="desktop_update_title">به‌روزرسانی رومیزی امضاشده</string>
-    <string name="desktop_update_hint">مسیر محلی file:// یا مانیفست HTTPS امضاشده با کلید Ed25519 تلوس را بررسی می‌کند. به‌روزرسانی‌ها در temp قابل‌حمل/خزانه آماده‌سازی می‌شوند و هرگز به‌صورت خودکار نصب نمی‌شوند.</string>
+    <string name="desktop_update_hint">تحقق من مسار file:// محلي أو بيان HTTPS موقّع بمفتاح Telos Ed25519. تُجهَّز التحديثات تحت portable/vault temp ولا تُثبَّت تلقائيًا أبدًا. القناة الافتراضية: مورد GitHub Releases telos-desktop-update.manifest.</string>
+    <string name="desktop_update_releases_hint">افتراضي GitHub Releases: %1$s</string>
+    <string name="desktop_update_use_releases">استخدم عنوان GitHub Releases</string>
+    <string name="desktop_update_releases_filled">تم ملء عنوان بيان GitHub Releases</string>
     <string name="desktop_update_url_label">مانیفست به‌روزرسانی (مسیر، file:// یا https://)</string>
     <string name="desktop_update_save_url">ذخیره URL به‌روزرسانی</string>
     <string name="desktop_update_url_saved">URL مانیفست به‌روزرسانی ذخیره شد</string>
@@ -17,7 +30,11 @@
     <string name="desktop_update_ready">به‌روزرسانی امضاشده %1$s تأیید شد — برای آماده‌سازی نصب تأیید کنید</string>
     <string name="desktop_update_install_confirm">تأیید نصب آماده‌شده</string>
     <string name="desktop_update_install_cancel">لغو به‌روزرسانی</string>
-    <string name="desktop_update_installed">به‌روزرسانی به‌عنوان %1$s آماده شد (دستی راه‌اندازی مجدد کنید)</string>
+    <string name="desktop_update_installed">جهّز التحديث باسم %1$s — أكّد مساعد إعادة التشغيل (استبدال jar قيد التشغيل بأفضل جهد)</string>
     <string name="desktop_update_sig_fail">تأیید امضای به‌روزرسانی ناموفق بود</string>
     <string name="desktop_update_no_url">ابتدا URL مانیفست file:// یا HTTPS را تنظیم کنید</string>
+    <string name="desktop_update_restart_hint">مساعد إعادة التشغيل يكتب علامة تحديث معلّق وسكربت استبدال اختياري ثم يخرج. استبدال jar JVM قيد التشغيل بأفضل جهد.</string>
+    <string name="desktop_update_restart_confirm">تأكيد إعادة التشغيل بعد التحديث</string>
+    <string name="desktop_update_restart_later">أعد التشغيل لاحقًا</string>
+    <string name="desktop_update_restart_failed">تعذّر تجهيز مساعد إعادة تشغيل التحديث</string>
 </resources>

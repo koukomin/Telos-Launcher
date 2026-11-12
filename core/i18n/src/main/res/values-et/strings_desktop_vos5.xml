@@ -8,8 +8,21 @@
     <string name="desktop_vault_restore_cancel">Tühista taastamine</string>
     <string name="desktop_vault_restore_done">Vaulti seansi konfiguratsioon taastatud</string>
     <string name="desktop_vault_restore_need_confirm">Taastamise kinnitus on nõutav</string>
+    <string name="desktop_luks_restore_title">LUKS-vault-image herstellen</string>
+    <string name="desktop_luks_restore_hint">Kopieert een telos_vault.img-back-up naar het portable/vault-imagepad. Vault moet vergrendeld zijn. Mount nooit met wachtwoord — ontgrendel apart na herstel. Bevestiging en SHA-256-controle vereist.</string>
+    <string name="desktop_luks_restore_path_label">Pad van back-upimage (telos_vault.img)</string>
+    <string name="desktop_luks_restore_preview_btn">Voorbeeld LUKS-imageherstel</string>
+    <string name="desktop_luks_restore_preview">Klaar om %1$s bytes te herstellen (sha256 %2$s…). Bevestig om te kopiëren. Vault moet vergrendeld blijven.</string>
+    <string name="desktop_luks_restore_confirm">LUKS-imageherstel bevestigen</string>
+    <string name="desktop_luks_restore_cancel">LUKS-herstel annuleren</string>
+    <string name="desktop_luks_restore_done">LUKS-image hersteld als %1$s (nog vergrendeld — apart ontgrendelen)</string>
+    <string name="desktop_luks_restore_need_confirm">Bevestiging voor LUKS-imageherstel vereist</string>
+    <string name="desktop_luks_restore_locked_required">Vault moet vergrendeld zijn vóór herstel van het LUKS-image</string>
     <string name="desktop_update_title">Allkirjastatud töölaua uuendus</string>
-    <string name="desktop_update_hint">Kontrollib kohalikku file:// teed või Telos Ed25519 võtmega allkirjastatud HTTPS-manifesti. Uuendused valmistatakse portable/vault temp alla ega paigaldu kunagi automaatselt.</string>
+    <string name="desktop_update_hint">Controleer een lokaal file://-pad of HTTPS-manifest ondertekend met de Telos Ed25519-sleutel. Updates worden onder portable/vault temp geplaatst en nooit automatisch geïnstalleerd. Standaardkanaal: GitHub Releases-asset telos-desktop-update.manifest.</string>
+    <string name="desktop_update_releases_hint">GitHub Releases-standaard: %1$s</string>
+    <string name="desktop_update_use_releases">GitHub Releases-URL gebruiken</string>
+    <string name="desktop_update_releases_filled">GitHub Releases-manifest-URL ingevuld</string>
     <string name="desktop_update_url_label">Uuenduse manifest (tee, file:// või https://)</string>
     <string name="desktop_update_save_url">Salvesta uuenduse URL</string>
     <string name="desktop_update_url_saved">Uuenduse manifesti URL salvestatud</string>
@@ -17,7 +30,11 @@
     <string name="desktop_update_ready">Allkirjastatud uuendus %1$s kinnitatud — kinnitage paigalduse ettevalmistus</string>
     <string name="desktop_update_install_confirm">Kinnita ettevalmistatud paigaldus</string>
     <string name="desktop_update_install_cancel">Tühista uuendus</string>
-    <string name="desktop_update_installed">Uuendus ette valmistatud kui %1$s (taaskäivitage käsitsi)</string>
+    <string name="desktop_update_installed">Update geplaatst als %1$s — bevestig herstarthelper (in-place jar-vervanging is best-effort)</string>
     <string name="desktop_update_sig_fail">Uuenduse allkirja kontroll ebaõnnestus</string>
     <string name="desktop_update_no_url">Määrake esmalt file:// või HTTPS manifesti URL</string>
+    <string name="desktop_update_restart_hint">De herstarthelper schrijft een pending-update-marker en optioneel vervangscript en stopt daarna. Een draaiende JVM-jar vervangen is best-effort.</string>
+    <string name="desktop_update_restart_confirm">Herstart na update bevestigen</string>
+    <string name="desktop_update_restart_later">Later herstarten</string>
+    <string name="desktop_update_restart_failed">Kon herstarthelper voor update niet voorbereiden</string>
 </resources>
