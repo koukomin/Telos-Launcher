@@ -385,12 +385,16 @@ private fun NetworkStatusPane(
                         scope.launch(Dispatchers.IO) {
                             val pass = syncPass.toCharArray()
                             if (pass.isEmpty()) {
-                                syncMsg = "passphrase required"
+                                syncMsg = t("desktop_session_sync_pass_required")
                                 return@launch
                             }
                             val dest = File(DesktopSessionSync.defaultExportPath(), DesktopSessionSync.BUNDLE_NAME)
                             val settings = TelosDesktopSettings(PhantomVault.engine.configDir).also { it.load() }
                             val r = DesktopSessionSync.exportBundle(dest, pass, settings)
+                            if (r.isSuccess && autoImport) {
+                                DesktopSessionSync.rememberSyncKey(pass, settings)
+                            }
+                            pass.fill('\u0000')
                             syncMsg = if (r.isSuccess) dest.name else r.exceptionOrNull()?.message
                         }
                     })
@@ -399,20 +403,55 @@ private fun NetworkStatusPane(
                         onClick = {
                             scope.launch(Dispatchers.IO) {
                                 val pass = syncPass.toCharArray()
+                                if (pass.isEmpty()) {
+                                    syncMsg = t("desktop_session_sync_pass_required")
+                                    return@launch
+                                }
                                 val bundle = File(DesktopSessionSync.defaultExportPath(), DesktopSessionSync.BUNDLE_NAME)
                                 val settings = TelosDesktopSettings(PhantomVault.engine.configDir).also { it.load() }
                                 val r = DesktopSessionSync.importBundle(bundle, pass, settings)
-                                syncMsg = if (r.isSuccess) "imported" else r.exceptionOrNull()?.message
+                                if (r.isSuccess && autoImport) {
+                                    DesktopSessionSync.rememberSyncKey(pass, settings)
+                                }
+                                pass.fill('\u0000')
+                                syncMsg = if (r.isSuccess) t("desktop_session_sync_imported") else r.exceptionOrNull()?.message
                             }
                         },
                         filled = false,
                     )
                 }
                 TextButton(onClick = {
-                    val flag = File(DesktopNetworkController.configHome(), DesktopSessionSync.AUTO_IMPORT_FLAG)
-                    flag.parentFile.mkdirs()
-                    autoImport = !autoImport
-                    flag.writeText(autoImport.toString())
+                    scope.launch(Dispatchers.IO) {
+                        val flag = File(DesktopNetworkController.configHome(), DesktopSessionSync.AUTO_IMPORT_FLAG)
+                        flag.parentFile.mkdirs()
+                        val enabling = !autoImport
+                        val settings = TelosDesktopSettings(PhantomVault.engine.configDir).also { it.load() }
+                        if (enabling) {
+                            val pass = syncPass.toCharArray()
+                            when {
+                                pass.isNotEmpty() -> {
+                                    DesktopSessionSync.rememberSyncKey(pass, settings)
+                                    pass.fill('\u0000')
+                                    flag.writeText("true")
+                                    autoImport = true
+                                    syncMsg = t("desktop_session_sync_key_stored")
+                                }
+                                DesktopSessionSync.hasRememberedSyncKey(settings) -> {
+                                    flag.writeText("true")
+                                    autoImport = true
+                                    syncMsg = t("desktop_session_sync_key_stored")
+                                }
+                                else -> {
+                                    // Never invent credentials / never enable prompt-free boot
+                                    // without a stored sync key.
+                                    syncMsg = t("desktop_session_sync_key_missing")
+                                }
+                            }
+                        } else {
+                            flag.writeText("false")
+                            autoImport = false
+                        }
+                    }
                 }) {
                     Text(
                         t("desktop_session_sync_auto") + ": " + if (autoImport) t("net_hub_state_on") else t("net_hub_state_off"),

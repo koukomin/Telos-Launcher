@@ -111,11 +111,17 @@ fun main(args: Array<String>) {
                 }
                 LaunchedEffect(Unit) {
                     kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+                        // Prefer vaulted sync/session key — no KeePass master-password prompt.
+                        // When none is stored, maybeAutoImport is a no-op (never invents credentials).
                         val kdbx = java.io.File(
                             com.telos.desktop.network.DesktopNetworkController.configHome(),
                             "sync/keepass.kdbx",
                         ).takeIf { it.isFile }
-                        com.telos.desktop.sync.DesktopSessionSync.maybeAutoImport(kdbx, null, settings)
+                        com.telos.desktop.sync.DesktopSessionSync.maybeAutoImport(
+                            kdbx = kdbx,
+                            masterPassword = null,
+                            vaultSettings = settings,
+                        )
                     }
                 }
                 LaunchedEffect(settings.startFullscreen) {

@@ -11,7 +11,7 @@
     <string name="desktop_session_sync_title">Session sync</string>
     <string name="desktop_session_sync_export">Export encrypted bundle</string>
     <string name="desktop_session_sync_import">Import encrypted bundle</string>
-    <string name="desktop_session_sync_auto">Auto-import on boot when KeePass is unlocked</string>
+    <string name="desktop_session_sync_auto">同期キーが保存されている場合、起動時に自動インポート</string>
     <string name="desktop_session_sync_pass">Sync passphrase (or KeePass entry %1$s)</string>
     <string name="desktop_session_sync_keepass">KeePass database path (.kdbx)</string>
     <string name="desktop_windows_shell_title">Windows shell replacement</string>
@@ -19,4 +19,8 @@
     <string name="desktop_windows_shell_revert">Restore explorer.exe shell</string>
     <string name="desktop_windows_shell_risk">Replaces your user shell at next sign-in. Keep a recovery path before enabling.</string>
     <string name="desktop_helix_portable_note">Helix window chrome is drawn in Compose on all platforms; native Win32 decorations may show until shell replacement.</string>
+    <string name="desktop_session_sync_pass_required">同期パスフレーズが必要です</string>
+    <string name="desktop_session_sync_imported">セッション同期バンドルをインポートしました</string>
+    <string name="desktop_session_sync_key_stored">起動時の無プロンプトインポート用に同期キーを保存しました</string>
+    <string name="desktop_session_sync_key_missing">自動インポートを有効にする前に同期パスフレーズを入力してください</string>
 </resources>

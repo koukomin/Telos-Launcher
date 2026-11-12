@@ -11,7 +11,7 @@
     <string name="desktop_session_sync_title">Session sync</string>
     <string name="desktop_session_sync_export">Export encrypted bundle</string>
     <string name="desktop_session_sync_import">Import encrypted bundle</string>
-    <string name="desktop_session_sync_auto">Auto-import on boot when KeePass is unlocked</string>
+    <string name="desktop_session_sync_auto">Автоматичен импорт при старт, когато е съхранен sync ключ</string>
     <string name="desktop_session_sync_pass">Sync passphrase (or KeePass entry %1$s)</string>
     <string name="desktop_session_sync_keepass">KeePass database path (.kdbx)</string>
     <string name="desktop_windows_shell_title">Windows shell replacement</string>
@@ -19,4 +19,8 @@
     <string name="desktop_windows_shell_revert">Restore explorer.exe shell</string>
     <string name="desktop_windows_shell_risk">Replaces your user shell at next sign-in. Keep a recovery path before enabling.</string>
     <string name="desktop_helix_portable_note">Helix window chrome is drawn in Compose on all platforms; native Win32 decorations may show until shell replacement.</string>
+    <string name="desktop_session_sync_pass_required">Изисква се sync паролна фраза</string>
+    <string name="desktop_session_sync_imported">Пакетът за sync на сесията е импортиран</string>
+    <string name="desktop_session_sync_key_stored">Sync ключът е съхранен за импорт при старт без подкана</string>
+    <string name="desktop_session_sync_key_missing">Въведете sync паролна фраза преди да включите автоматичния импорт</string>
 </resources>

@@ -11,7 +11,7 @@
     <string name="desktop_session_sync_title">Session sync</string>
     <string name="desktop_session_sync_export">Export encrypted bundle</string>
     <string name="desktop_session_sync_import">Import encrypted bundle</string>
-    <string name="desktop_session_sync_auto">Auto-import on boot when KeePass is unlocked</string>
+    <string name="desktop_session_sync_auto">Impor otomatis saat boot jika kunci sync tersimpan</string>
     <string name="desktop_session_sync_pass">Sync passphrase (or KeePass entry %1$s)</string>
     <string name="desktop_session_sync_keepass">KeePass database path (.kdbx)</string>
     <string name="desktop_windows_shell_title">Windows shell replacement</string>
@@ -19,4 +19,8 @@
     <string name="desktop_windows_shell_revert">Restore explorer.exe shell</string>
     <string name="desktop_windows_shell_risk">Replaces your user shell at next sign-in. Keep a recovery path before enabling.</string>
     <string name="desktop_helix_portable_note">Helix window chrome is drawn in Compose on all platforms; native Win32 decorations may show until shell replacement.</string>
+    <string name="desktop_session_sync_pass_required">Frasa sandi sync diperlukan</string>
+    <string name="desktop_session_sync_imported">Bundel sync sesi diimpor</string>
+    <string name="desktop_session_sync_key_stored">Kunci sync disimpan untuk impor boot tanpa prompt</string>
+    <string name="desktop_session_sync_key_missing">Masukkan frasa sandi sync sebelum mengaktifkan impor otomatis</string>
 </resources>

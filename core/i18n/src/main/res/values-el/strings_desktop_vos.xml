@@ -11,7 +11,7 @@
     <string name="desktop_session_sync_title">Συγχρονισμός συνεδρίας</string>
     <string name="desktop_session_sync_export">Εξαγωγή κρυπτογραφημένου πακέτου</string>
     <string name="desktop_session_sync_import">Εισαγωγή κρυπτογραφημένου πακέτου</string>
-    <string name="desktop_session_sync_auto">Αυτόματη εισαγωγή στην εκκίνηση όταν το KeePass είναι ξεκλείδωτο</string>
+    <string name="desktop_session_sync_auto">Αυτόματη εισαγωγή στην εκκίνηση όταν υπάρχει αποθηκευμένο κλειδί sync</string>
     <string name="desktop_session_sync_pass">Συνθηματικό sync (ή καταχώρηση KeePass %1$s)</string>
     <string name="desktop_session_sync_keepass">Διαδρομή βάσης KeePass (.kdbx)</string>
     <string name="desktop_windows_shell_title">Αντικατάσταση Windows shell</string>
@@ -19,4 +19,8 @@
     <string name="desktop_windows_shell_revert">Επαναφορά shell explorer.exe</string>
     <string name="desktop_windows_shell_risk">Αντικαθιστά το shell χρήστη στην επόμενη σύνδεση. Κρατήστε δρόμο ανάκτησης πριν την ενεργοποίηση.</string>
     <string name="desktop_helix_portable_note">Το chrome παραθύρων Helix σχεδιάζεται στο Compose σε όλες τις πλατφόρμες· οι εγγενείς διακοσμήσεις Win32 μπορεί να φαίνονται μέχρι αντικατάστασης shell.</string>
+    <string name="desktop_session_sync_pass_required">Απαιτείται συνθηματικό sync</string>
+    <string name="desktop_session_sync_imported">Το πακέτο συγχρονισμού συνεδρίας εισήχθη</string>
+    <string name="desktop_session_sync_key_stored">Το κλειδί sync αποθηκεύτηκε για εισαγωγή χωρίς προτροπή στην εκκίνηση</string>
+    <string name="desktop_session_sync_key_missing">Εισαγάγετε συνθηματικό sync πριν ενεργοποιήσετε την αυτόματη εισαγωγή</string>
 </resources>
