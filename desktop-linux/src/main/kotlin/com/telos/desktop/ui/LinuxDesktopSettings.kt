@@ -51,6 +51,7 @@ import com.telos.desktop.update.DesktopUpdateRestartHelper
 import com.telos.desktop.settings.TelosDesktopSettings
 import com.telos.desktop.vault.PhantomVault
 import com.telos.desktop.wm.WindowButtonStyle
+import de.mm20.launcher2.uikmp.TelosSurfaceTokens
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -359,7 +360,7 @@ fun LinuxDesktopSettingsPanel(
                 DropdownMenu(
                     expanded = open,
                     onDismissRequest = { open = false },
-                    modifier = Modifier.background(TelosColors.menu),
+                    modifier = Modifier.background(TelosSurfaceTokens.popupOpaque),
                 ) {
                     themes.forEach { theme ->
                         DropdownMenuItem(
@@ -490,7 +491,7 @@ fun LinuxDesktopSettingsPanel(
                 DropdownMenu(
                     expanded = themeOpen,
                     onDismissRequest = { themeOpen = false },
-                    modifier = Modifier.background(TelosColors.menu),
+                    modifier = Modifier.background(TelosSurfaceTokens.popupOpaque),
                 ) {
                     DropdownMenuItem(
                         text = { Text(com.telos.desktop.i18n.TelosI18n.t("desktop_cursor_system_default")) },
@@ -1244,7 +1245,7 @@ private fun HelixSettingsCard(title: String, body: @Composable ColumnScope.() ->
         Modifier
             .fillMaxWidth()
             .clip(shape)
-            .background(TelosColors.surfaceContainer)
+            .background(TelosSurfaceTokens.cardOpaque)
             .border(1.dp, TelosColors.outline, shape)
             .padding(12.dp),
         verticalArrangement = Arrangement.spacedBy(4.dp),

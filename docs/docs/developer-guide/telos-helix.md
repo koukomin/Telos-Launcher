@@ -48,16 +48,17 @@ Wallpaper is the stage. Menus stay opaque. Motion is 120–160 ms, no bounce.
 
 ## Files
 
-- Tokens: `ui-kmp/.../TelosSharedTheme.kt`
-- Panel: `desktop-linux/.../panel/TelosTopPanel.kt`
+- Tokens: `ui-kmp/.../TelosSharedTheme.kt`, `ui-kmp/.../TelosSurfaceTokens.kt` (`panelGlass`, `cardOpaque`, `popupOpaque`, `hudLabel`, `techPill`)
+- Android mirror: `app/ui/.../component/TelosSurfaceTokens.kt` (same role names; `popupOpaque` → `virtualAppPopup()`)
+- Panel: `desktop-linux/.../panel/TelosTopPanel.kt` (`panelGlass` bar, `popupOpaque` panel menus)
 - Workspace tint strips: `desktop-linux/.../theme/WorkspaceTintStrips.kt` (`theme.workspaceTints`)
 - Kickoff: `desktop-linux/.../ui/AppGrid.kt`
 - Command palette: `desktop-linux/.../ui/HelixCommandPalette.kt`, `…/search/HelixPaletteActions.kt`
 - Icons: `desktop-linux/.../icons/CandyCyberIcons.kt`
 - Status comment: `desktop-linux/.../ui/Helix.kt`
-- Settings: `desktop-linux/.../ui/LinuxDesktopSettings.kt`
-- Surface: `HelixMotion.kt`, `HelixToast.kt`, `HelixControlCenter.kt`, `HelixOverview.kt`
-- Snap: `SnapLayoutGeometry.kt`, `HostWmBridge.kt`, `WindowMode.kt`, `HelixTechPill.kt`
+- Settings: `desktop-linux/.../ui/LinuxDesktopSettings.kt` (`HelixSettingsCard` → `cardOpaque`)
+- Surface: `HelixMotion.kt`, `HelixToast.kt`, `HelixControlCenter.kt` (`popupOpaque`), `HelixOverview.kt`
+- Snap: `SnapLayoutGeometry.kt`, `HostWmBridge.kt`, `WindowMode.kt`, `HelixTechPill.kt` (`techPill`)
 
 ## Portable Windows / macOS chrome
 

@@ -49,7 +49,7 @@ fun TelosTechPill(
     icon: Painter? = null,
     accentColor: Color = Color(0xFF00E676)
 ) {
-    val bg = if (isSelected) accentColor.copy(alpha = 0.22f) else MaterialTheme.colorScheme.surfaceContainerLow
+    val bg = if (isSelected) accentColor.copy(alpha = 0.22f) else TelosSurfaceTokens.techPill()
     val borderCol = if (isSelected) accentColor else MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.35f)
     val textCol = if (isSelected) accentColor else MaterialTheme.colorScheme.onSurfaceVariant
 
@@ -99,7 +99,7 @@ fun TelosTelemetryCard(
             .telosTechCard(
                 borderColor = accentColor,
                 shape = RoundedCornerShape(16.dp),
-                backgroundColor = MaterialTheme.colorScheme.surfaceContainerLow,
+                backgroundColor = TelosSurfaceTokens.cardOpaque(),
             )
             .padding(12.dp),
         verticalArrangement = Arrangement.SpaceBetween

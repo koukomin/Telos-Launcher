@@ -12,8 +12,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import de.mm20.launcher2.uikmp.TelosSurfaceTokens
 
-/** Desktop Cyber-Tech pill (opaque surface; neon accent when selected). */
+/** Desktop Cyber-Tech pill (opaque [TelosSurfaceTokens.techPill]; neon accent when selected). */
 @Composable
 fun HelixTechPill(
     text: String,
@@ -23,7 +24,7 @@ fun HelixTechPill(
     onClick: () -> Unit,
 ) {
     val shape = RoundedCornerShape(999.dp)
-    val bg = if (selected) accent.copy(alpha = 0.22f) else TelosColors.surfaceContainer
+    val bg = if (selected) accent.copy(alpha = 0.22f) else TelosSurfaceTokens.techPill
     val border = if (selected) accent else TelosColors.outline
     val fg = if (selected) accent else TelosColors.onSurface
     Text(

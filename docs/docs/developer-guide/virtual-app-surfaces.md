@@ -58,6 +58,25 @@ full-bleed camera/video viewfinders, Ermis mail bodies, or dense Files list rows
 in neon cards; keep chrome on toolbars/tabs and leave content planes readable.
 Popups over glass still use `virtualAppPopup()`.
 
+## TelosSurfaceTokens (shared Helix / Android chrome kit)
+
+Formal role names live in `:ui-kmp` (`TelosSurfaceTokens`) and are mirrored on
+Android in `app/ui/.../component/TelosSurfaceTokens.kt` (MaterialTheme accessors).
+`:app:app` must not depend on `:desktop-linux`; both Helix and virtual apps import
+`:ui-kmp` (or the Android Material bindings) only.
+
+| Token | Role | Contract |
+| --- | --- | --- |
+| `panelGlass` | Root / top-panel glass | **Only** role that may carry alpha (wallpaper translucency). |
+| `cardOpaque` | Cards under neon borders | Opaque `surfaceContainerLow` / shared card fill (`alpha = 1`). |
+| `popupOpaque` | Menus, dialogs, Control Center | Opaque `surfaceContainer` / `virtualAppPopup()` (`alpha = 1`). |
+| `hudLabel` | Dot-matrix / telemetry labels | Accent (desktop secondary / Android neon cyan). |
+| `techPill` | Unselected tech pills | Opaque container fill under neon selection. |
+
+Helix Settings cards, Control Center, top panel, Overview snap bars and panel
+popups consume these tokens. Android `telosTechSurface` / `TelosTechPill` use
+`cardOpaque` / `techPill`; dialogs keep `popupOpaque` → `virtualAppPopup()`.
+
 ## Readable overlays, controls and search
 
 Keep `surface`/`background` clear for root scaffolds, but preserve opaque
