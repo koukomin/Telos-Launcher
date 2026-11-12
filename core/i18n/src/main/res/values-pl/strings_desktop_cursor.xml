@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_cursor_title">Kursor</string>
+    <string name="desktop_cursor_theme">Motyw kursora</string>
+    <string name="desktop_cursor_size">Rozmiar kursora</string>
+    <string name="desktop_cursor_system_default">Domyślny systemowy</string>
+    <string name="desktop_cursor_preset_style">Styl nakładki Compose (gdy XCursor jest niedostępny)</string>
+    <string name="desktop_cursor_download_section">Pobierz motywy kursora (do icons portable/skarbca)</string>
+    <string name="desktop_cursor_download_named">Pobierz %1$s (%2$s)</string>
+    <string name="desktop_cursor_download_ok">Zainstalowano %1$s</string>
+    <string name="desktop_cursor_download_fail">Nie udało się pobrać motywu kursora: %1$s</string>
+    <string name="desktop_cursor_limit_linux">Linux: procesy potomne otrzymują XCURSOR_THEME i XCURSOR_SIZE. Telos ładuje klatki XCursor do kursora AWT, gdy to możliwe; w przeciwnym razie rysuje nakładkę Compose Sweet/Breeze. Animowane sekwencje XCursor nie są odtwarzane.</string>
+    <string name="desktop_cursor_limit_windows">Windows: mapuje na systemowe kursory AWT. Motywy XCursor/Plasma nie są stosowane do wskaźnika Win32.</string>
+    <string name="desktop_cursor_limit_macos">macOS: mapuje na systemowe kursory AWT. Motywy XCursor/Plasma nie są stosowane do wskaźnika Cocoa.</string>
+</resources>

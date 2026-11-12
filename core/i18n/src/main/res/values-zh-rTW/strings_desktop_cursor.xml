@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_cursor_title">游標</string>
+    <string name="desktop_cursor_theme">游標主題</string>
+    <string name="desktop_cursor_size">游標大小</string>
+    <string name="desktop_cursor_system_default">系統預設</string>
+    <string name="desktop_cursor_preset_style">Compose 疊加樣式（無法使用 XCursor 時）</string>
+    <string name="desktop_cursor_download_section">下載游標主題（至可攜/金庫 icons）</string>
+    <string name="desktop_cursor_download_named">下載 %1$s（%2$s）</string>
+    <string name="desktop_cursor_download_ok">已安裝 %1$s</string>
+    <string name="desktop_cursor_download_fail">無法下載游標主題：%1$s</string>
+    <string name="desktop_cursor_limit_linux">Linux：子行程會取得 XCURSOR_THEME 與 XCURSOR_SIZE。Telos 會在可能時將 XCursor 影格載入為 AWT 游標；否則繪製 Compose Sweet/Breeze 疊加。不播放動畫 XCursor 序列。</string>
+    <string name="desktop_cursor_limit_windows">Windows：對應為 AWT 系統游標。XCursor/Plasma 主題不會套用到 Win32 指標。</string>
+    <string name="desktop_cursor_limit_macos">macOS：對應為 AWT 系統游標。XCursor/Plasma 主題不會套用到 Cocoa 指標。</string>
+</resources>

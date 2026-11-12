@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_cursor_title">कर्सर</string>
+    <string name="desktop_cursor_theme">कर्सर थीम</string>
+    <string name="desktop_cursor_size">कर्सर आकार</string>
+    <string name="desktop_cursor_system_default">सिस्टम डिफ़ॉल्ट</string>
+    <string name="desktop_cursor_preset_style">Compose ओवरले शैली (जब XCursor उपलब्ध न हो)</string>
+    <string name="desktop_cursor_download_section">कर्सर थीम डाउनलोड करें (पोर्टेबल/वॉल्ट icons में)</string>
+    <string name="desktop_cursor_download_named">%1$s डाउनलोड करें (%2$s)</string>
+    <string name="desktop_cursor_download_ok">%1$s इंस्टॉल हो गया</string>
+    <string name="desktop_cursor_download_fail">कर्सर थीम डाउनलोड नहीं हो सकी: %1$s</string>
+    <string name="desktop_cursor_limit_linux">Linux: चाइल्ड ऐप्स को XCURSOR_THEME और XCURSOR_SIZE मिलते हैं। संभव होने पर Telos XCursor फ्रेम को AWT कर्सर में लोड करता है; अन्यथा Compose Sweet/Breeze ओवरले खींचा जाता है। एनिमेटेड XCursor अनुक्रम नहीं चलाए जाते।</string>
+    <string name="desktop_cursor_limit_windows">Windows: स्टॉक AWT सिस्टम कर्सर पर मैप करता है। XCursor/Plasma थीम Win32 पॉइंटर पर लागू नहीं होतीं।</string>
+    <string name="desktop_cursor_limit_macos">macOS: स्टॉक AWT सिस्टम कर्सर पर मैप करता है। XCursor/Plasma थीम Cocoa पॉइंटर पर लागू नहीं होतीं।</string>
+</resources>

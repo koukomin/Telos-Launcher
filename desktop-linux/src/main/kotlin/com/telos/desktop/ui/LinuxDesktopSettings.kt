@@ -150,10 +150,105 @@ fun LinuxDesktopSettingsPanel(
             }
         }
         if (filter.showSweetCursor) {
-            HelixSettingsCard("Cursor") {
+            HelixSettingsCard(com.telos.desktop.i18n.TelosI18n.t("desktop_cursor_title")) {
+                val cursorThemes = remember {
+                    com.telos.desktop.cursor.XCursorThemeDiscovery.listInstalled()
+                }
+                var themeOpen by remember { mutableStateOf(false) }
+                var downloadMsg by remember { mutableStateOf<String?>(null) }
+                Text(com.telos.desktop.i18n.TelosI18n.t("desktop_cursor_theme"), fontSize = 12.sp, color = TelosColors.onSurface)
+                TextButton(onClick = { themeOpen = true }) {
+                    Text(
+                        settings.cursorTheme.ifBlank {
+                            com.telos.desktop.i18n.TelosI18n.t("desktop_cursor_system_default")
+                        },
+                    )
+                }
+                DropdownMenu(
+                    expanded = themeOpen,
+                    onDismissRequest = { themeOpen = false },
+                    modifier = Modifier.background(TelosColors.menu),
+                ) {
+                    DropdownMenuItem(
+                        text = { Text(com.telos.desktop.i18n.TelosI18n.t("desktop_cursor_system_default")) },
+                        onClick = {
+                            settings.cursorTheme = ""
+                            settings.save()
+                            reapplyCursor(settings)
+                            themeOpen = false
+                        },
+                    )
+                    cursorThemes.forEach { theme ->
+                        DropdownMenuItem(
+                            text = { Text(theme.displayName) },
+                            onClick = {
+                                settings.cursorTheme = theme.name
+                                settings.save()
+                                reapplyCursor(settings)
+                                themeOpen = false
+                            },
+                        )
+                    }
+                }
+                Text(com.telos.desktop.i18n.TelosI18n.t("desktop_cursor_size"), fontSize = 12.sp, color = TelosColors.onSurface)
+                Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                    com.telos.desktop.cursor.KdeCursorConfig.KDE_SIZES.forEach { sz ->
+                        TextButton(onClick = {
+                            settings.cursorSize = sz
+                            settings.save()
+                            reapplyCursor(settings)
+                        }) {
+                            Text("${sz}" + if (settings.cursorSize == sz) " ✓" else "")
+                        }
+                    }
+                }
+                Text(
+                    com.telos.desktop.i18n.TelosI18n.t("desktop_cursor_preset_style"),
+                    fontSize = 12.sp,
+                    color = TelosColors.onSurface,
+                )
                 CursorPreset.entries.forEach { preset ->
                     TextButton(onClick = { settings.cursorPreset = preset.name; settings.save() }) {
                         Text(preset.name + if (settings.cursorPreset == preset.name) " ✓" else "")
+                    }
+                }
+                Text(
+                    when {
+                        PlatformEnvironment.current == com.telos.desktop.platform.TelosRuntimePlatform.WindowsDesktop ->
+                            com.telos.desktop.i18n.TelosI18n.t("desktop_cursor_limit_windows")
+                        PlatformEnvironment.current == com.telos.desktop.platform.TelosRuntimePlatform.MacDesktop ->
+                            com.telos.desktop.i18n.TelosI18n.t("desktop_cursor_limit_macos")
+                        else ->
+                            com.telos.desktop.i18n.TelosI18n.t("desktop_cursor_limit_linux")
+                    },
+                    fontSize = 11.sp,
+                    color = TelosColors.onSurface.copy(0.65f),
+                )
+                if (filter.showLinuxIconThemeSelector || filter.showPortableDesktopShell) {
+                    Text(com.telos.desktop.i18n.TelosI18n.t("desktop_cursor_download_section"), fontSize = 12.sp, color = TelosColors.onSurface)
+                    com.telos.desktop.cursor.CursorThemeCatalog.offered().forEach { entry ->
+                        TextButton(onClick = {
+                            val result = com.telos.desktop.cursor.CursorThemeCatalog.download(entry)
+                            downloadMsg = if (result.ok) {
+                                settings.cursorTheme = result.themeFolder ?: entry.themeFolder
+                                settings.save()
+                                reapplyCursor(settings)
+                                com.telos.desktop.i18n.TelosI18n.t("desktop_cursor_download_ok", entry.displayName)
+                            } else {
+                                com.telos.desktop.i18n.TelosI18n.t("desktop_cursor_download_fail", result.message)
+                            }
+                        }) {
+                            Text(
+                                com.telos.desktop.i18n.TelosI18n.t(
+                                    "desktop_cursor_download_named",
+                                    entry.displayName,
+                                    entry.license,
+                                ),
+                            )
+                        }
+                    }
+                    downloadMsg?.let {
+                        Text(it, fontSize = 11.sp, color = TelosColors.secondary)
                     }
                 }
             }
@@ -281,6 +376,19 @@ fun LinuxDesktopSettingsPanel(
 
         TextButton(onClick = onClose) { Text(com.telos.desktop.i18n.TelosI18n.t("close")) }
     }
+}
+
+private fun reapplyCursor(settings: TelosDesktopSettings) {
+    com.telos.desktop.cursor.CursorThemeApplier.apply(
+        themeName = settings.cursorTheme.ifBlank { null },
+        size = settings.cursorSize,
+        followSystemTheme = settings.followSystemTheme,
+        hostTheme = if (settings.followSystemTheme) {
+            com.telos.desktop.theme.SystemThemeBridge.load().cursorTheme
+        } else {
+            null
+        },
+    )
 }
 
 @Composable

@@ -86,6 +86,7 @@ object PortableEnvironmentIsolator {
         env["XDG_MUSIC_DIR"] = File(home, "Music").absolutePath
         env["XDG_PICTURES_DIR"] = File(home, "Pictures").absolutePath
         env["XDG_VIDEOS_DIR"] = File(home, "Videos").absolutePath
+        com.telos.desktop.cursor.CursorThemeApplier.inject(pb)
         pb.directory(home)
     }
 

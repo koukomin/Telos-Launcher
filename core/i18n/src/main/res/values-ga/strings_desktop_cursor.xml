@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_cursor_title">Cúrsóir</string>
+    <string name="desktop_cursor_theme">Téama cúrsóra</string>
+    <string name="desktop_cursor_size">Méid an chúrsóra</string>
+    <string name="desktop_cursor_system_default">Réamhshocrú an chórais</string>
+    <string name="desktop_cursor_preset_style">Stíl forleagan Compose (nuair nach bhfuil XCursor ar fáil)</string>
+    <string name="desktop_cursor_download_section">Íoslódáil téamaí cúrsóra (isteach i icons iniompartha/cruinneachán)</string>
+    <string name="desktop_cursor_download_named">Íoslódáil %1$s (%2$s)</string>
+    <string name="desktop_cursor_download_ok">Suiteáladh %1$s</string>
+    <string name="desktop_cursor_download_fail">Níorbh fhéidir téama cúrsóra a íoslódáil: %1$s</string>
+    <string name="desktop_cursor_limit_linux">Linux: faigheann aipeanna linbh XCURSOR_THEME agus XCURSOR_SIZE. Luchtaíonn Telos frámaí XCursor isteach i gcúrsóir AWT nuair is féidir; murach sin tarraingítear forleagan Compose Sweet/Breeze. Ní sheinntear seichimh XCursor beoite.</string>
+    <string name="desktop_cursor_limit_windows">Windows: mapálann chuig cúrsóirí córais AWT. Ní chuirtear téamaí XCursor/Plasma i bhfeidhm ar phointeoir Win32.</string>
+    <string name="desktop_cursor_limit_macos">macOS: mapálann chuig cúrsóirí córais AWT. Ní chuirtear téamaí XCursor/Plasma i bhfeidhm ar phointeoir Cocoa.</string>
+</resources>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_cursor_title">Cursor</string>
+    <string name="desktop_cursor_theme">Thema del cursor</string>
+    <string name="desktop_cursor_size">Dimension del cursor</string>
+    <string name="desktop_cursor_system_default">Predefinite del systema</string>
+    <string name="desktop_cursor_preset_style">Stilo de superposition Compose (quando XCursor non es disponibile)</string>
+    <string name="desktop_cursor_download_section">Discargar themas de cursor (in icons portabile/coffro)</string>
+    <string name="desktop_cursor_download_named">Discargar %1$s (%2$s)</string>
+    <string name="desktop_cursor_download_ok">Installate %1$s</string>
+    <string name="desktop_cursor_download_fail">Non poteva discargar le thema de cursor: %1$s</string>
+    <string name="desktop_cursor_limit_linux">Linux: le apps filia recipe XCURSOR_THEME e XCURSOR_SIZE. Telos carga quadros XCursor in un cursor AWT quando possibile; alteremente le superposition Compose Sweet/Breeze es designate. Sequentiales XCursor animate non es reproducite.</string>
+    <string name="desktop_cursor_limit_windows">Windows: mappa a cursores de systema AWT. Themas XCursor/Plasma non es applicate al punctator Win32.</string>
+    <string name="desktop_cursor_limit_macos">macOS: mappa a cursores de systema AWT. Themas XCursor/Plasma non es applicate al punctator Cocoa.</string>
+</resources>

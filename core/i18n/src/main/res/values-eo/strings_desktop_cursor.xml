@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_cursor_title">Kursoro</string>
+    <string name="desktop_cursor_theme">Kursora etoso</string>
+    <string name="desktop_cursor_size">Kursora grandeco</string>
+    <string name="desktop_cursor_system_default">Sistema defaŭlto</string>
+    <string name="desktop_cursor_preset_style">Compose-kovra stilo (kiam XCursor ne haveblas)</string>
+    <string name="desktop_cursor_download_section">Elŝuti kursorajn etosojn (en porteblaj/volbaj icons)</string>
+    <string name="desktop_cursor_download_named">Elŝuti %1$s (%2$s)</string>
+    <string name="desktop_cursor_download_ok">Instalita %1$s</string>
+    <string name="desktop_cursor_download_fail">Ne eblis elŝuti kursoran etoson: %1$s</string>
+    <string name="desktop_cursor_limit_linux">Linux: idaj programoj ricevas XCURSOR_THEME kaj XCURSOR_SIZE. Telos ŝargas XCursor-kadron en AWT-kursoron kiam eblas; alie desegnas Compose Sweet/Breeze-kovraĵon. Animaciaj XCursor-sekvencoj ne ludas.</string>
+    <string name="desktop_cursor_limit_windows">Windows: mapas al AWT-sistemaj kursoroj. XCursor/Plasma-etosoj ne aplikiĝas al Win32-montrilo.</string>
+    <string name="desktop_cursor_limit_macos">macOS: mapas al AWT-sistemaj kursoroj. XCursor/Plasma-etosoj ne aplikiĝas al Cocoa-montrilo.</string>
+</resources>

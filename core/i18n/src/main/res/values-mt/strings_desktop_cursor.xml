@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_cursor_title">Cursur</string>
+    <string name="desktop_cursor_theme">Tema tal-cursur</string>
+    <string name="desktop_cursor_size">Daqs tal-cursur</string>
+    <string name="desktop_cursor_system_default">Default tas-sistema</string>
+    <string name="desktop_cursor_preset_style">Stil ta’ overlay Compose (meta XCursor ma jkunx disponibbli)</string>
+    <string name="desktop_cursor_download_section">Niżżel temi tal-cursur (f’icons portable/vault)</string>
+    <string name="desktop_cursor_download_named">Niżżel %1$s (%2$s)</string>
+    <string name="desktop_cursor_download_ok">Installat %1$s</string>
+    <string name="desktop_cursor_download_fail">Ma setgħax jitniżżel it-tema tal-cursur: %1$s</string>
+    <string name="desktop_cursor_limit_linux">Linux: apps tfal jirċievu XCURSOR_THEME u XCURSOR_SIZE. Telos jgħabbi frejms XCursor f’cursur AWT meta jista’; inkella jiġbed l-overlay Compose Sweet/Breeze. Sequenzi XCursor animati ma jintlagħbux.</string>
+    <string name="desktop_cursor_limit_windows">Windows: jimmapa għal cursuri tas-sistema AWT. Temi XCursor/Plasma ma jiġux applikati għall-pointer Win32.</string>
+    <string name="desktop_cursor_limit_macos">macOS: jimmapa għal cursuri tas-sistema AWT. Temi XCursor/Plasma ma jiġux applikati għall-pointer Cocoa.</string>
+</resources>

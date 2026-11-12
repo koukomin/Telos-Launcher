@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_cursor_title">Kursor</string>
+    <string name="desktop_cursor_theme">Kursor teması</string>
+    <string name="desktop_cursor_size">Kursor ölçüsü</string>
+    <string name="desktop_cursor_system_default">Sistem standartı</string>
+    <string name="desktop_cursor_preset_style">Compose örtük üslubu (XCursor əlçatan deyilsə)</string>
+    <string name="desktop_cursor_download_section">Kursor temalarını yüklə (portativ/seyf icons)</string>
+    <string name="desktop_cursor_download_named">%1$s yüklə (%2$s)</string>
+    <string name="desktop_cursor_download_ok">%1$s quraşdırıldı</string>
+    <string name="desktop_cursor_download_fail">Kursor teması yüklənmədi: %1$s</string>
+    <string name="desktop_cursor_limit_linux">Linux: alt tətbiqlər XCURSOR_THEME və XCURSOR_SIZE alır. Telos mümkün olduqda XCursor kadrlarını AWT kursoruna yükləyir; əks halda Compose Sweet/Breeze örtüyü çəkilir. Animasiyalı XCursor ardıcıllıqları oxudulmur.</string>
+    <string name="desktop_cursor_limit_windows">Windows: AWT sistem kursorlarına uyğunlaşdırır. XCursor/Plasma temaları Win32 göstəricisinə tətbiq olunmur.</string>
+    <string name="desktop_cursor_limit_macos">macOS: AWT sistem kursorlarına uyğunlaşdırır. XCursor/Plasma temaları Cocoa göstəricisinə tətbiq olunmur.</string>
+</resources>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_cursor_title">المؤشر</string>
+    <string name="desktop_cursor_theme">سمة المؤشر</string>
+    <string name="desktop_cursor_size">حجم المؤشر</string>
+    <string name="desktop_cursor_system_default">افتراضي النظام</string>
+    <string name="desktop_cursor_preset_style">نمط طبقة Compose (عند عدم توفر XCursor)</string>
+    <string name="desktop_cursor_download_section">تنزيل سمات المؤشر (إلى icons المحمول/الخزنة)</string>
+    <string name="desktop_cursor_download_named">تنزيل %1$s (%2$s)</string>
+    <string name="desktop_cursor_download_ok">تم تثبيت %1$s</string>
+    <string name="desktop_cursor_download_fail">تعذر تنزيل سمة المؤشر: %1$s</string>
+    <string name="desktop_cursor_limit_linux">Linux: تحصل التطبيقات الفرعية على XCURSOR_THEME وXCURSOR_SIZE. يحمّل Telos إطارات XCursor في مؤشر AWT عند الإمكان؛ وإلا يرسم طبقة Compose Sweet/Breeze. لا تُشغَّل تسلسلات XCursor المتحركة.</string>
+    <string name="desktop_cursor_limit_windows">Windows: يُطابق مؤشرات نظام AWT. لا تُطبَّق سمات XCursor/Plasma على مؤشر Win32.</string>
+    <string name="desktop_cursor_limit_macos">macOS: يُطابق مؤشرات نظام AWT. لا تُطبَّق سمات XCursor/Plasma على مؤشر Cocoa.</string>
+</resources>

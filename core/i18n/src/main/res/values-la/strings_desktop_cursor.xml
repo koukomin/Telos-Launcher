@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_cursor_title">Cursor</string>
+    <string name="desktop_cursor_theme">Thema cursoris</string>
+    <string name="desktop_cursor_size">Magnitude cursoris</string>
+    <string name="desktop_cursor_system_default">Praedefinitum systematis</string>
+    <string name="desktop_cursor_preset_style">Stylus superpositionis Compose (cum XCursor non adsit)</string>
+    <string name="desktop_cursor_download_section">Deprime themata cursoris (in icons portabile/aerarium)</string>
+    <string name="desktop_cursor_download_named">Deprime %1$s (%2$s)</string>
+    <string name="desktop_cursor_download_ok">%1$s institutum</string>
+    <string name="desktop_cursor_download_fail">Thema cursoris deprimi non potuit: %1$s</string>
+    <string name="desktop_cursor_limit_linux">Linux: applicationes filiae XCURSOR_THEME et XCURSOR_SIZE accipiunt. Telos imagines XCursor in cursorem AWT onerat cum potest; aliter superpositionem Compose Sweet/Breeze delineat. Sequentiae XCursor animatae non luduntur.</string>
+    <string name="desktop_cursor_limit_windows">Windows: ad cursores systematis AWT adaptat. Themato XCursor/Plasma ad indicem Win32 non applicantur.</string>
+    <string name="desktop_cursor_limit_macos">macOS: ad cursores systematis AWT adaptat. Themato XCursor/Plasma ad indicem Cocoa non applicantur.</string>
+</resources>

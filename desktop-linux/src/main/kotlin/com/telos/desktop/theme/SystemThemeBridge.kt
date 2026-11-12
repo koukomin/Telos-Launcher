@@ -1,12 +1,14 @@
 package com.telos.desktop.theme
 
 import androidx.compose.ui.graphics.Color
+import com.telos.desktop.cursor.KdeCursorConfig
 import java.io.File
 
 data class HostDesktopTheme(
     val accent: Color,
     val iconTheme: String?,
     val cursorTheme: String?,
+    val cursorSize: Int?,
     val source: String,
 )
 
@@ -18,27 +20,29 @@ object SystemThemeBridge {
         val gtk4 = File(home, ".config/gtk-4.0/settings.ini")
         var accent = Color(0xFFFF007F)
         var icons: String? = null
-        var cursor: String? = null
         var source = "telos"
         if (kde.isFile) {
             val map = ini(kde)
             parseRgb(map["AccentColor"] ?: map["DecorationFocus"])?.let { accent = it }
             icons = map["Theme"] ?: map["theme"]
-            cursor = map["cursorTheme"]
             source = "kdeglobals"
         }
         val gtk = listOf(gtk3, gtk4).firstOrNull { it.isFile }
         if (gtk != null) {
             val map = ini(gtk)
             icons = icons ?: map["gtk-icon-theme-name"]
-            cursor = cursor ?: map["gtk-cursor-theme-name"]
             parseGtkColor(map["gtk-theme-name"])
             if (source == "telos") source = "gtk"
         }
-        File(home, ".icons/default/index.theme").takeIf { it.isFile }?.let { idx ->
-            cursor = cursor ?: ini(idx)["Inherits"]
-        }
-        return HostDesktopTheme(accent, icons, cursor, source)
+        val cursorSel = KdeCursorConfig.load()
+        if (source == "telos" && cursorSel.source != "none") source = cursorSel.source
+        return HostDesktopTheme(
+            accent = accent,
+            iconTheme = icons,
+            cursorTheme = cursorSel.theme,
+            cursorSize = cursorSel.size,
+            source = source,
+        )
     }
 
     private fun ini(file: File): Map<String, String> {

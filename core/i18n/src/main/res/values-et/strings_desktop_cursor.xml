@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_cursor_title">Kursor</string>
+    <string name="desktop_cursor_theme">Kursori teema</string>
+    <string name="desktop_cursor_size">Kursori suurus</string>
+    <string name="desktop_cursor_system_default">Süsteemi vaikimisi</string>
+    <string name="desktop_cursor_preset_style">Compose katte stiil (kui XCursor pole saadaval)</string>
+    <string name="desktop_cursor_download_section">Laadi kursoriteemad alla (portable/vault icons)</string>
+    <string name="desktop_cursor_download_named">Laadi alla %1$s (%2$s)</string>
+    <string name="desktop_cursor_download_ok">%1$s on installitud</string>
+    <string name="desktop_cursor_download_fail">Kursoriteemat ei saanud alla laadida: %1$s</string>
+    <string name="desktop_cursor_limit_linux">Linux: alamrakendused saavad XCURSOR_THEME ja XCURSOR_SIZE. Telos laadib võimalusel XCursor kaadrid AWT kursorisse; muidu joonistatakse Compose Sweet/Breeze kate. Animeeritud XCursor jadasid ei esita.</string>
+    <string name="desktop_cursor_limit_windows">Windows: vastendab AWT süsteemikursoritele. XCursor/Plasma teemasid Win32 osutile ei rakendata.</string>
+    <string name="desktop_cursor_limit_macos">macOS: vastendab AWT süsteemikursoritele. XCursor/Plasma teemasid Cocoa osutile ei rakendata.</string>
+</resources>

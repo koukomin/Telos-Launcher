@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_cursor_title">Con trỏ</string>
+    <string name="desktop_cursor_theme">Chủ đề con trỏ</string>
+    <string name="desktop_cursor_size">Kích thước con trỏ</string>
+    <string name="desktop_cursor_system_default">Mặc định hệ thống</string>
+    <string name="desktop_cursor_preset_style">Kiểu lớp phủ Compose (khi không có XCursor)</string>
+    <string name="desktop_cursor_download_section">Tải chủ đề con trỏ (vào icons portable/kho)</string>
+    <string name="desktop_cursor_download_named">Tải %1$s (%2$s)</string>
+    <string name="desktop_cursor_download_ok">Đã cài %1$s</string>
+    <string name="desktop_cursor_download_fail">Không thể tải chủ đề con trỏ: %1$s</string>
+    <string name="desktop_cursor_limit_linux">Linux: ứng dụng con nhận XCURSOR_THEME và XCURSOR_SIZE. Telos nạp khung XCursor vào con trỏ AWT khi có thể; nếu không sẽ vẽ lớp phủ Compose Sweet/Breeze. Không phát chuỗi XCursor động.</string>
+    <string name="desktop_cursor_limit_windows">Windows: ánh xạ sang con trỏ hệ thống AWT. Chủ đề XCursor/Plasma không áp dụng cho con trỏ Win32.</string>
+    <string name="desktop_cursor_limit_macos">macOS: ánh xạ sang con trỏ hệ thống AWT. Chủ đề XCursor/Plasma không áp dụng cho con trỏ Cocoa.</string>
+</resources>

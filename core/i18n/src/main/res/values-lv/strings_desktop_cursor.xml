@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_cursor_title">Kursors</string>
+    <string name="desktop_cursor_theme">Kursora tēma</string>
+    <string name="desktop_cursor_size">Kursora izmērs</string>
+    <string name="desktop_cursor_system_default">Sistēmas noklusējums</string>
+    <string name="desktop_cursor_preset_style">Compose pārklājuma stils (ja XCursor nav pieejams)</string>
+    <string name="desktop_cursor_download_section">Lejupielādēt kursora tēmas (portable/vault icons)</string>
+    <string name="desktop_cursor_download_named">Lejupielādēt %1$s (%2$s)</string>
+    <string name="desktop_cursor_download_ok">Instalēts %1$s</string>
+    <string name="desktop_cursor_download_fail">Neizdevās lejupielādēt kursora tēmu: %1$s</string>
+    <string name="desktop_cursor_limit_linux">Linux: apakšprocesi saņem XCURSOR_THEME un XCURSOR_SIZE. Telos, ja iespējams, ielādē XCursor kadrus AWT kursorā; citādi zīmē Compose Sweet/Breeze pārklājumu. Animētas XCursor secības netiek atskaņotas.</string>
+    <string name="desktop_cursor_limit_windows">Windows: piesaista AWT sistēmas kursoriem. XCursor/Plasma tēmas netiek lietotas Win32 rādītājam.</string>
+    <string name="desktop_cursor_limit_macos">macOS: piesaista AWT sistēmas kursoriem. XCursor/Plasma tēmas netiek lietotas Cocoa rādītājam.</string>
+</resources>

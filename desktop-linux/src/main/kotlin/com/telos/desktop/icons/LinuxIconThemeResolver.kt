@@ -22,14 +22,7 @@ class LinuxIconThemeResolver(
     var fallbackChain: List<String> = DEFAULT_FALLBACK_CHAIN,
 ) {
     private val themeRoots: List<File>
-        get() {
-            val home = System.getProperty("user.home")
-            return listOf(
-                File("/usr/share/icons"),
-                File("$home/.local/share/icons"),
-                File("$home/.icons"),
-            )
-        }
+        get() = FreedesktopThemeRoots.searchRoots(includeHostSystem = true)
 
     private val pixmapDir = File("/usr/share/pixmaps")
 

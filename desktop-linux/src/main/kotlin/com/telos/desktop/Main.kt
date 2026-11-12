@@ -149,6 +149,22 @@ fun main(args: Array<String>) {
                     val themeName = if (settings.followSystemTheme) hostTheme.iconTheme ?: settings.iconTheme else settings.iconTheme
                     LinuxIconThemeResolver(preferredTheme = themeName)
                 }
+                LaunchedEffect(settings.cursorTheme, settings.cursorSize, settings.followSystemTheme) {
+                    kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+                        val hostCursor = if (settings.followSystemTheme) hostTheme.cursorTheme else null
+                        val size = if (settings.cursorSize > 0) {
+                            settings.cursorSize
+                        } else {
+                            hostTheme.cursorSize ?: 24
+                        }
+                        com.telos.desktop.cursor.CursorThemeApplier.apply(
+                            themeName = settings.cursorTheme.ifBlank { null },
+                            size = size,
+                            followSystemTheme = settings.followSystemTheme,
+                            hostTheme = hostCursor,
+                        )
+                    }
+                }
                 val display = remember { LinuxDisplayManager(settings) }
                 DesktopWorkspace(
                     settings = settings,
