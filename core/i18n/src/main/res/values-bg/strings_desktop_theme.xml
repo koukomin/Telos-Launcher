@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_appearance_title">Външен вид</string>
+    <string name="desktop_theme_intensity">Интензитет на темата</string>
+    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
+    <string name="desktop_theme_intensity_neon">Vault Neon</string>
+    <string name="desktop_theme_intensity_paper">Paper Ops</string>
+    <string name="desktop_wallpaper_path">Тапет (път във vault)</string>
+    <string name="desktop_wallpaper_path_hint">Относително към точката на монтиране на vault (напр. Pictures/wall.jpg). Никога не се показва на заключен pre-boot екран.</string>
+    <string name="desktop_unlock_theatre_title">Telos Phantom Vault</string>
+    <string name="desktop_unlock_theatre_quiet_ops">Quiet Ops — отключете, за да се покаже тапетът</string>
+    <string name="desktop_unlock_theatre_hint">Заключеният boot остава в Quiet Ops само с глифа на vault. След отключване Telos прави преход към тапета на vault и избрания интензитет — без частици.</string>
+    <string name="desktop_sandbox_tint_hint">Цветът на акцентния пръстен е само визуален OpSec (Host = оранжево внимание, Net-isolated = циан, Vault FS = зелено, Standard = магента).</string>
+    <string name="desktop_matched_packs_title">Съчетани пакети икони + курсор</string>
+    <string name="desktop_matched_packs_hint">Едно щракване задава документирана GPL двойка (Papirus↔BreezeX, candy-icons↔Bibata; CandyCyber остава вградения chrome глиф). Изтеглянията остават в папката с икони на vault или portable.</string>
+    <string name="desktop_matched_packs_apply">Съчетай двойка: %1$s</string>
+    <string name="desktop_matched_packs_one_click">Съчетай двойка</string>
+    <string name="desktop_matched_packs_working">Съчетаване на пакети…</string>
+    <string name="desktop_matched_packs_ok">Приложен съчетан пакет %1$s</string>
+    <string name="desktop_matched_packs_fail">Неуспешно съчетаване на пакети: %1$s</string>
+</resources>

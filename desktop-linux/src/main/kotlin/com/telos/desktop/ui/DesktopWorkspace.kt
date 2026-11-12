@@ -33,6 +33,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.KeyEvent
 import androidx.compose.ui.input.key.KeyEventType
@@ -100,6 +101,8 @@ fun DesktopWorkspace(
     telemetry: LinuxSystemTelemetryEngine,
     onLogout: () -> Unit,
     onKeyEvent: (KeyEvent) -> Boolean,
+    playUnlockReveal: Boolean = false,
+    onUnlockRevealFinished: () -> Unit = {},
 ) {
     val dirs = remember { XdgUserDirsManager.resolve() }
     var showSettings by remember { mutableStateOf(false) }
@@ -174,7 +177,34 @@ fun DesktopWorkspace(
     }
     LaunchedEffect(Unit) { display.applyPersistedOnStartup() }
 
-    BoxWithConstraints(Modifier.fillMaxSize().background(TelosColors.background)) {
+    val intensity = remember(settings.themeIntensity) {
+        com.telos.desktop.theme.ThemeIntensity.parse(settings.themeIntensity)
+    }
+    val hasWallpaper = remember(settings.wallpaperPath, vault.mountPoint) {
+        com.telos.desktop.theme.UnlockTheatre.resolveWallpaperFile(
+            unlocked = true,
+            vaultRoot = vault.mountPoint,
+            wallpaperPath = settings.wallpaperPath,
+        ) != null
+    }
+    BoxWithConstraints(
+        Modifier
+            .fillMaxSize()
+            .background(if (hasWallpaper) Color.Transparent else TelosColors.background),
+    ) {
+        UnlockTheatreRevealLayer(
+            unlocked = true,
+            vaultRoot = vault.mountPoint,
+            wallpaperPath = settings.wallpaperPath,
+            intensity = intensity,
+            playReveal = playUnlockReveal,
+            onRevealFinished = onUnlockRevealFinished,
+            modifier = Modifier.fillMaxSize(),
+        )
+        // Soft plate over wallpaper so desktop icons stay readable; solid when no wallpaper.
+        if (hasWallpaper) {
+            Box(Modifier.fillMaxSize().background(TelosColors.background.copy(alpha = 0.38f)))
+        }
         val wpx = with(density) { maxWidth.toPx() }
         val hpx = with(density) { maxHeight.toPx() }
         // === TELOS_PENDING_REVIEW_START: telos_kde_replacement_suite ===

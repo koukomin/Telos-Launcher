@@ -104,8 +104,11 @@ class TelosDesktopSettings(private val vaultConfigDir: File) {
     /** When true, chrome uses a locally sampled wallpaper tonal seed (no network). */
     var wallpaperTonal: Boolean = false
     /**
-     * Optional vault/portable wallpaper path for Theme Studio tonal seed and panel
-     * contrast sampling. Blank = search Pictures / `.config/telos` defaults.
+     * Optional vault/portable wallpaper path for Theme Studio tonal seed, panel
+     * contrast sampling, and unlock theatre reveal. Written as both
+     * `theme.wallpaperPath` and `wallpaper.path`. Blank = search Pictures /
+     * `.config/telos` defaults. Never shown on the locked pre-boot screen
+     * (locked-boot always paints Quiet Ops).
      */
     var wallpaperPath: String = ""
 
@@ -213,7 +216,9 @@ class TelosDesktopSettings(private val vaultConfigDir: File) {
             WorkspaceTintStrips.parsePanicMute(p)
         wallpaperTonal = p.getProperty("theme.wallpaperTonal", "false").toBoolean() ||
             themeAccent.equals("wallpaper", ignoreCase = true)
-        wallpaperPath = p.getProperty("theme.wallpaperPath") ?: wallpaperPath
+        wallpaperPath = p.getProperty("theme.wallpaperPath")
+            ?: p.getProperty("wallpaper.path")
+            ?: p.getProperty("wallpaperPath", wallpaperPath)
         themeQuietOps = WorkspaceTintStrips.parseQuietOps(p) ||
             ThemeIntensity.parse(themeIntensity) == ThemeIntensity.QuietOps
         outputPrefs.clear()
@@ -280,7 +285,18 @@ class TelosDesktopSettings(private val vaultConfigDir: File) {
         p["theme.density"] = ThemeDensity.parse(themeDensity).propertyValue
         p["theme.snapPillScale"] = themeSnapPillScale.coerceIn(0.7f, 1.4f).toString()
         p["theme.wallpaperTonal"] = wallpaperTonal.toString()
-        if (wallpaperPath.isNotBlank()) p["theme.wallpaperPath"] = wallpaperPath
+        val intensity = com.telos.desktop.theme.ThemeIntensity.parse(themeIntensity).propertyValue
+        p["theme.intensity"] = intensity
+        p["themeIntensity"] = intensity
+        if (wallpaperPath.isNotBlank()) {
+            p["theme.wallpaperPath"] = wallpaperPath
+            p["wallpaper.path"] = wallpaperPath
+            p["wallpaperPath"] = wallpaperPath
+        } else {
+            p.remove("theme.wallpaperPath")
+            p.remove("wallpaper.path")
+            p.remove("wallpaperPath")
+        }
         outputPrefs.forEach { (name, spec) -> p["output.$name"] = spec }
         file.outputStream().use { p.store(it, "Telos Linux Desktop") }
         // When a VOS-1 profile is active, also mirror appearance keys into the

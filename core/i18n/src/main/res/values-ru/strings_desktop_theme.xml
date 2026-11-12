@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_appearance_title">Внешний вид</string>
+    <string name="desktop_theme_intensity">Интенсивность темы</string>
+    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
+    <string name="desktop_theme_intensity_neon">Vault Neon</string>
+    <string name="desktop_theme_intensity_paper">Paper Ops</string>
+    <string name="desktop_wallpaper_path">Обои (путь в хранилище)</string>
+    <string name="desktop_wallpaper_path_hint">Относительно точки монтирования хранилища (например Pictures/wall.jpg). Никогда не показывается на заблокированном экране до загрузки.</string>
+    <string name="desktop_unlock_theatre_title">Telos Phantom Vault</string>
+    <string name="desktop_unlock_theatre_quiet_ops">Quiet Ops — разблокируйте, чтобы показать обои</string>
+    <string name="desktop_unlock_theatre_hint">Заблокированная загрузка остаётся в Quiet Ops только с глифом хранилища. После разблокировки Telos делает плавный переход к обоям хранилища и выбранной интенсивности — без частиц.</string>
+    <string name="desktop_sandbox_tint_hint">Цвет акцентного кольца — только визуальный OpSec (Host = оранжевый caution, Net-isolated = голубой, Vault FS = зелёный, Standard = пурпурный).</string>
+    <string name="desktop_matched_packs_title">Согласованные наборы значков и курсора</string>
+    <string name="desktop_matched_packs_hint">Один щелчок задаёт документированную GPL-пару (Papirus↔BreezeX, candy-icons↔Bibata; CandyCyber остаётся встроенным глифом chrome). Загрузки остаются в папке значков vault или portable.</string>
+    <string name="desktop_matched_packs_apply">Сопоставить пару: %1$s</string>
+    <string name="desktop_matched_packs_one_click">Сопоставить пару</string>
+    <string name="desktop_matched_packs_working">Сопоставление наборов…</string>
+    <string name="desktop_matched_packs_ok">Применён согласованный набор %1$s</string>
+    <string name="desktop_matched_packs_fail">Не удалось сопоставить наборы: %1$s</string>
+</resources>

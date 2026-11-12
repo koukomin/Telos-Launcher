@@ -12,10 +12,19 @@ enum class ThemeIntensity(val propertyValue: String) {
     PaperOps("paper"),
     ;
 
+    /** Border glow alpha for telosTechCard / sandbox rings / Theme Studio chrome. */
+    val techBorderAlpha: Float
+        get() = when (this) {
+            QuietOps -> 0.38f
+            VaultNeon -> 0.85f
+            PaperOps -> 0.45f
+        }
+
     companion object {
         fun parse(raw: String?): ThemeIntensity = when (raw?.trim()?.lowercase()) {
-            "neon", "vault_neon", "vault-neon" -> VaultNeon
-            "paper", "paper_ops", "paper-ops", "light" -> PaperOps
+            "neon", "vault", "vault_neon", "vault-neon", "vaultneon" -> VaultNeon
+            "paper", "paper_ops", "paper-ops", "paperops", "light" -> PaperOps
+            "quiet", "quiet_ops", "quietops", "ops" -> QuietOps
             else -> QuietOps
         }
     }

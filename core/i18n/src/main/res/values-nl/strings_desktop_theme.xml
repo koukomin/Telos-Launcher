@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_appearance_title">Uiterlijk</string>
+    <string name="desktop_theme_intensity">Thema-intensiteit</string>
+    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
+    <string name="desktop_theme_intensity_neon">Vault Neon</string>
+    <string name="desktop_theme_intensity_paper">Paper Ops</string>
+    <string name="desktop_wallpaper_path">Achtergrond (vault-pad)</string>
+    <string name="desktop_wallpaper_path_hint">Relatief ten opzichte van het vault-aankoppelpunt (bijv. Pictures/wall.jpg). Nooit getoond op het vergrendelde pre-bootscherm.</string>
+    <string name="desktop_unlock_theatre_title">Telos Phantom Vault</string>
+    <string name="desktop_unlock_theatre_quiet_ops">Quiet Ops — ontgrendel om je achtergrond te tonen</string>
+    <string name="desktop_unlock_theatre_hint">Vergrendelde boot blijft Quiet Ops met alleen de vault-glyphe. Na ontgrendelen crossfadet Telos naar je vault-achtergrond en gekozen intensiteit — zonder deeltjes.</string>
+    <string name="desktop_sandbox_tint_hint">De accentringkleur is alleen visuele OpSec (Host = oranje waarschuwing, Net-isolated = cyaan, Vault FS = groen, Standard = magenta).</string>
+    <string name="desktop_matched_packs_title">Bijpassende pictogram- en cursorpakketten</string>
+    <string name="desktop_matched_packs_hint">Eén klik stelt een gedocumenteerd GPL-paar in (Papirus↔BreezeX, candy-icons↔Bibata; CandyCyber blijft de ingebouwde chrome-glyphe). Downloads blijven in de vault- of portable-pictogrammap.</string>
+    <string name="desktop_matched_packs_apply">Koppel paar: %1$s</string>
+    <string name="desktop_matched_packs_one_click">Koppel paar</string>
+    <string name="desktop_matched_packs_working">Pakketten koppelen…</string>
+    <string name="desktop_matched_packs_ok">Gekoppeld pakket %1$s toegepast</string>
+    <string name="desktop_matched_packs_fail">Kon pakketten niet koppelen: %1$s</string>
+</resources>

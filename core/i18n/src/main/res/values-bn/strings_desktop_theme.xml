@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_appearance_title">চেহারা</string>
+    <string name="desktop_theme_intensity">থিম তীব্রতা</string>
+    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
+    <string name="desktop_theme_intensity_neon">Vault Neon</string>
+    <string name="desktop_theme_intensity_paper">Paper Ops</string>
+    <string name="desktop_wallpaper_path">ওয়ালপেপার (ভল্ট পথ)</string>
+    <string name="desktop_wallpaper_path_hint">ভল্ট মাউন্ট পয়েন্টের আপেক্ষিক (যেমন Pictures/wall.jpg)। লক করা প্রি-বুট স্ক্রিনে কখনো দেখানো হয় না।</string>
+    <string name="desktop_unlock_theatre_title">Telos Phantom Vault</string>
+    <string name="desktop_unlock_theatre_quiet_ops">Quiet Ops — ওয়ালপেপার দেখাতে আনলক করুন</string>
+    <string name="desktop_unlock_theatre_hint">লক বুট শুধু ভল্ট গ্লিফসহ Quiet Ops-এ থাকে। আনলকের পর Telos ভল্ট ওয়ালপেপার ও নির্বাচিত তীব্রতায় ক্রসফেড করে — কণা ছাড়া।</string>
+    <string name="desktop_sandbox_tint_hint">অ্যাকসেন্ট রিং রঙ শুধু দৃশ্যমান OpSec (Host = কমলা সতর্কতা, Net-isolated = সায়ান, Vault FS = সবুজ, Standard = ম্যাজেন্টা)।</string>
+    <string name="desktop_matched_packs_title">মিলানো আইকন + কার্সর প্যাক</string>
+    <string name="desktop_matched_packs_hint">এক ক্লিকে নথিভুক্ত GPL জোড়া সেট হয় (Papirus↔BreezeX, candy-icons↔Bibata; CandyCyber অন্তর্নির্মিত chrome গ্লিফ থাকে)। ডাউনলোড ভল্ট বা পোর্টেবল আইকন ফোল্ডারে থাকে।</string>
+    <string name="desktop_matched_packs_apply">জোড়া মিলান: %1$s</string>
+    <string name="desktop_matched_packs_one_click">জোড়া মিলান</string>
+    <string name="desktop_matched_packs_working">প্যাক মিলানো হচ্ছে…</string>
+    <string name="desktop_matched_packs_ok">মিলানো প্যাক %1$s প্রয়োগ হয়েছে</string>
+    <string name="desktop_matched_packs_fail">প্যাক মিলানো যায়নি: %1$s</string>
+</resources>

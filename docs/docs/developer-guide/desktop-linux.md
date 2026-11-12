@@ -72,6 +72,9 @@ profile home. This is optional transport obfuscation, not forensic steganography
 - Wayland/X11 display modes (`wlr-randr`, `kscreen-doctor`, `xrandr`)
 - Klassy / SierraBreeze-inspired Compose window chrome and Sweet cursor presets
 - KDE-compatible XCursor / Plasma cursor themes: discovery under Freedesktop icon roots (`…/icons/<Theme>/cursors` + `index.theme` `[Cursor Theme]`), host `kcminputrc` / `kdeglobals` / GTK cursor name, vault `desktop.properties` keys `cursor.theme` / `cursor.size` (16/24/32/48). Linux exports `XCURSOR_THEME` / `XCURSOR_SIZE` to child processes and best-effort loads an XCursor frame into an AWT cursor; Compose Sweet/Breeze overlay remains the fallback. Windows/macOS map to stock AWT cursors only. Optional GPL downloads (BreezeX, Bibata) install into the portable/vault icons root — same layout as icon packs, separate from any icon-pack downloader.
+- Unlock theatre: the locked pre-boot screen uses Quiet Ops charcoal + the vault glyph only (never a user wallpaper that could leak identity). After a successful unlock, the shell crossfades to the vault wallpaper path (`wallpaper.path`) and chosen intensity (`theme.intensity` = Quiet Ops / Vault Neon / Paper Ops) — no particle effects.
+- Store / Flatpak permission chrome: thin `telosTechCard` accent ring by sandbox tier (Host = neon orange caution, Net-isolated = cyan, Vault FS = green, Standard = magenta or muted in Quiet Ops). Visual OpSec only; it does not change Flatpak policy by itself.
+- Matched icon+cursor packs: Settings offers one-click GPL pairs (Papirus↔BreezeX, candy-icons↔Bibata; CandyCyber remains the built-in Compose chrome glyph). Downloads stay under vault / portable `icons/`.
 
 ## Adaptive shell (proposal, implemented on Linux)
 

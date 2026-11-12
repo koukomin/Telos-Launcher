@@ -43,7 +43,10 @@ import com.telos.desktop.i18n.TelosI18n.t
 import com.telos.desktop.network.DesktopNetworkController
 import com.telos.desktop.panel.ConnectivityManager
 import com.telos.desktop.panel.ConnectivityState
+import com.telos.desktop.theme.SandboxChromeTint
+import com.telos.desktop.theme.ThemeIntensity
 import com.telos.desktop.ui.TelosColors
+import com.telos.desktop.ui.sandboxTierCard
 import com.telos.desktop.sync.DesktopSessionSync
 import com.telos.desktop.sync.DesktopVaultRestore
 import com.telos.desktop.sync.pairing.LanPairProtocol
@@ -1424,6 +1427,16 @@ private fun FlatpakPermissionsPane(
     }
     val scope = rememberCoroutineScope()
     val sandboxReady = FlatpakSandbox.available()
+    val intensity = remember {
+        runCatching {
+            ThemeIntensity.parse(
+                TelosDesktopSettings(PhantomVault.engine.configDir).also { it.load() }.themeIntensity,
+            )
+        }.getOrDefault(ThemeIntensity.QuietOps)
+    }
+    val tierAccent = remember(state.tier, intensity) {
+        SandboxChromeTint.forTier(state.tier, intensity)
+    }
     LaunchedEffect(app.id) {
         state = withContext(Dispatchers.IO) { FlatpakSandbox.read(app.id) }
     }
@@ -1457,7 +1470,20 @@ private fun FlatpakPermissionsPane(
         if (!sandboxReady) {
             Text(t("desktop_flatpak_unavailable"), color = TelosColors.secondary)
         } else {
-            Text(t("desktop_store_sandbox_tier"), color = TelosColors.onSurface, fontSize = 13.sp, modifier = Modifier.padding(top = 8.dp))
+            Column(
+                Modifier
+                    .fillMaxWidth()
+                    .padding(top = 8.dp)
+                    .sandboxTierCard(tierAccent, intensity)
+                    .padding(10.dp),
+            ) {
+            Text(t("desktop_store_sandbox_tier"), color = TelosColors.onSurface, fontSize = 13.sp)
+            Text(
+                t("desktop_sandbox_tint_hint"),
+                color = TelosColors.onSurface.copy(alpha = 0.65f),
+                fontSize = 11.sp,
+                modifier = Modifier.padding(top = 2.dp, bottom = 6.dp),
+            )
             Row(
                 Modifier.fillMaxWidth().padding(vertical = 4.dp),
                 horizontalArrangement = Arrangement.spacedBy(6.dp),
@@ -1469,6 +1495,7 @@ private fun FlatpakPermissionsPane(
                         FlatpakSandboxTier.NetIsolated -> t("desktop_sandbox_tier_net_isolated")
                         FlatpakSandboxTier.Standard -> t("desktop_sandbox_tier_standard")
                     }
+                    val accent = SandboxChromeTint.forTier(tier, intensity)
                     FilterChip(
                         selected = state.tier == tier,
                         onClick = {
@@ -1482,11 +1509,19 @@ private fun FlatpakPermissionsPane(
                         },
                         label = { Text(label, fontSize = 11.sp) },
                         colors = FilterChipDefaults.filterChipColors(
-                            selectedContainerColor = TelosColors.surfaceHigh,
-                            selectedLabelColor = TelosColors.onSurface,
+                            selectedContainerColor = accent.copy(alpha = 0.22f),
+                            selectedLabelColor = accent,
+                            containerColor = TelosColors.surfaceContainer,
+                            labelColor = TelosColors.onSurface,
+                        ),
+                        border = FilterChipDefaults.filterChipBorder(
+                            enabled = true,
+                            selected = state.tier == tier,
+                            borderColor = accent.copy(alpha = if (state.tier == tier) 0.9f else 0.45f),
                         ),
                     )
                 }
+            }
             }
             FlatpakPermission.entries.forEach { perm ->
                 val enabled = state.permissions[perm] == true

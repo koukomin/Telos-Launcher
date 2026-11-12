@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_appearance_title">Megjelenés</string>
+    <string name="desktop_theme_intensity">Téma intenzitása</string>
+    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
+    <string name="desktop_theme_intensity_neon">Vault Neon</string>
+    <string name="desktop_theme_intensity_paper">Paper Ops</string>
+    <string name="desktop_wallpaper_path">Háttérkép (vault útvonal)</string>
+    <string name="desktop_wallpaper_path_hint">A vault csatolási pontjához képest relatív (pl. Pictures/wall.jpg). Soha nem jelenik meg a zárolt előindító képernyőn.</string>
+    <string name="desktop_unlock_theatre_title">Telos Phantom Vault</string>
+    <string name="desktop_unlock_theatre_quiet_ops">Quiet Ops — oldja fel a háttérkép megjelenítéséhez</string>
+    <string name="desktop_unlock_theatre_hint">A zárolt indítás Quiet Ops-ban marad, csak a vault glifával. Feloldás után a Telos átúszik a vault háttérképére és a választott intenzitásra — részecskék nélkül.</string>
+    <string name="desktop_sandbox_tint_hint">A kiemelési gyűrű színe csak vizuális OpSec (Host = narancs óvatosság, Net-isolated = cián, Vault FS = zöld, Standard = magenta).</string>
+    <string name="desktop_matched_packs_title">Párosított ikon + kurzor csomagok</string>
+    <string name="desktop_matched_packs_hint">Egy kattintás beállít egy dokumentált GPL párt (Papirus↔BreezeX, candy-icons↔Bibata; a CandyCyber a beépített chrome glifa marad). A letöltések a vault vagy portable ikonmappában maradnak.</string>
+    <string name="desktop_matched_packs_apply">Pár párosítása: %1$s</string>
+    <string name="desktop_matched_packs_one_click">Pár párosítása</string>
+    <string name="desktop_matched_packs_working">Csomagok párosítása…</string>
+    <string name="desktop_matched_packs_ok">%1$s párosított csomag alkalmazva</string>
+    <string name="desktop_matched_packs_fail">Nem sikerült párosítani a csomagokat: %1$s</string>
+</resources>

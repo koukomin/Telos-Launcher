@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_appearance_title">מראה</string>
+    <string name="desktop_theme_intensity">עוצמת ערכת נושא</string>
+    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
+    <string name="desktop_theme_intensity_neon">Vault Neon</string>
+    <string name="desktop_theme_intensity_paper">Paper Ops</string>
+    <string name="desktop_wallpaper_path">טפט (נתיב הכספת)</string>
+    <string name="desktop_wallpaper_path_hint">יחסי לנקודת העגינה של הכספת (למשל Pictures/wall.jpg). לעולם לא מוצג במסך הטרום-אתחול הנעול.</string>
+    <string name="desktop_unlock_theatre_title">Telos Phantom Vault</string>
+    <string name="desktop_unlock_theatre_quiet_ops">Quiet Ops — בטלו נעילה כדי לחשוף את הטפט</string>
+    <string name="desktop_unlock_theatre_hint">אתחול נעול נשאר ב-Quiet Ops עם גליף הכספת בלבד. לאחר ביטול הנעילה Telos מבצע מעבר צולב לטפט הכספת ולעוצמה שנבחרה — בלי חלקיקים.</string>
+    <string name="desktop_sandbox_tint_hint">צבע טבעת ההדגשה הוא OpSec חזותי בלבד (Host = כתום זהירות, Net-isolated = ציאן, Vault FS = ירוק, Standard = מג\'נטה).</string>
+    <string name="desktop_matched_packs_title">חבילות סמלים + סמן מותאמות</string>
+    <string name="desktop_matched_packs_hint">לחיצה אחת מגדירה זוג GPL מתועד (Papirus↔BreezeX, candy-icons↔Bibata; CandyCyber נשאר גליף chrome מובנה). ההורדות נשארות בתיקיית הסמלים של הכספת או הנייד.</string>
+    <string name="desktop_matched_packs_apply">התאם זוג: %1$s</string>
+    <string name="desktop_matched_packs_one_click">התאם זוג</string>
+    <string name="desktop_matched_packs_working">מתאים חבילות…</string>
+    <string name="desktop_matched_packs_ok">חבילה מותאמת %1$s הוחלה</string>
+    <string name="desktop_matched_packs_fail">לא ניתן להתאים חבילות: %1$s</string>
+</resources>
