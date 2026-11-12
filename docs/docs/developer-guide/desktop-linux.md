@@ -49,6 +49,7 @@ profile home. This is optional transport obfuscation, not forensic steganography
 - XDG user dirs and a live `WatchService` desktop icon grid
 - Wayland/X11 display modes (`wlr-randr`, `kscreen-doctor`, `xrandr`)
 - Klassy / SierraBreeze-inspired Compose window chrome and Sweet cursor presets
+- KDE-compatible XCursor / Plasma cursor themes: discovery under Freedesktop icon roots (`…/icons/<Theme>/cursors` + `index.theme` `[Cursor Theme]`), host `kcminputrc` / `kdeglobals` / GTK cursor name, vault `desktop.properties` keys `cursor.theme` / `cursor.size` (16/24/32/48). Linux exports `XCURSOR_THEME` / `XCURSOR_SIZE` to child processes and best-effort loads an XCursor frame into an AWT cursor; Compose Sweet/Breeze overlay remains the fallback. Windows/macOS map to stock AWT cursors only. Optional GPL downloads (BreezeX, Bibata) install into the portable/vault icons root — same layout as icon packs, separate from any icon-pack downloader.
 
 ## Adaptive shell (proposal, implemented on Linux)
 
@@ -63,8 +64,8 @@ Shared preferences (theme, icon pack, grid size, vault, display) live in the vau
 ## Windowed vs fullscreen
 
 F11 and Settings toggle a normal resizable window vs undecorated fullscreen. When
-`followSystemTheme` is on, accent/icon/cursor names are read from `~/.config/kdeglobals`
-and GTK `settings.ini`. The left Telos candy/cyberpunk vector logo opens a Plasma-style AppGrid.
+`followSystemTheme` is on, accent/icon/cursor names are read from Plasma `kcminputrc`,
+`~/.config/kdeglobals`, and GTK `settings.ini` (plus `XCURSOR_*` when set). The left Telos candy/cyberpunk vector logo opens a Plasma-style AppGrid.
 
 ## Plasma replacement shell
 

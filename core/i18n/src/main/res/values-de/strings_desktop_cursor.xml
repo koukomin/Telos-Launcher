@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_cursor_title">Zeiger</string>
+    <string name="desktop_cursor_theme">Zeigerthema</string>
+    <string name="desktop_cursor_size">Zeigergröße</string>
+    <string name="desktop_cursor_system_default">Systemstandard</string>
+    <string name="desktop_cursor_preset_style">Compose-Overlay-Stil (wenn XCursor nicht verfügbar ist)</string>
+    <string name="desktop_cursor_download_section">Zeigerthemen herunterladen (in portable/Vault-Icons)</string>
+    <string name="desktop_cursor_download_named">%1$s herunterladen (%2$s)</string>
+    <string name="desktop_cursor_download_ok">%1$s installiert</string>
+    <string name="desktop_cursor_download_fail">Zeigerthema konnte nicht geladen werden: %1$s</string>
+    <string name="desktop_cursor_limit_linux">Linux: Kindprozesse erhalten XCURSOR_THEME und XCURSOR_SIZE. Telos lädt XCursor-Frames nach Möglichkeit in einen AWT-Zeiger; sonst wird das Compose-Sweet/Breeze-Overlay gezeichnet. Animierte XCursor-Sequenzen werden nicht abgespielt.</string>
+    <string name="desktop_cursor_limit_windows">Windows: Abbildung auf AWT-Systemzeiger. XCursor/Plasma-Themen werden nicht auf den Win32-Zeiger angewendet.</string>
+    <string name="desktop_cursor_limit_macos">macOS: Abbildung auf AWT-Systemzeiger. XCursor/Plasma-Themen werden nicht auf den Cocoa-Zeiger angewendet.</string>
+</resources>

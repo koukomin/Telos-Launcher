@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_cursor_title">Markør</string>
+    <string name="desktop_cursor_theme">Markørtema</string>
+    <string name="desktop_cursor_size">Markørstørrelse</string>
+    <string name="desktop_cursor_system_default">Systemstandard</string>
+    <string name="desktop_cursor_preset_style">Compose-overlaystil (når XCursor ikke er tilgængelig)</string>
+    <string name="desktop_cursor_download_section">Download markørtemaer (til portable/boks-icons)</string>
+    <string name="desktop_cursor_download_named">Download %1$s (%2$s)</string>
+    <string name="desktop_cursor_download_ok">%1$s installeret</string>
+    <string name="desktop_cursor_download_fail">Kunne ikke downloade markørtema: %1$s</string>
+    <string name="desktop_cursor_limit_linux">Linux: underordnede apps får XCURSOR_THEME og XCURSOR_SIZE. Telos indlæser XCursor-rammer i en AWT-markør når muligt; ellers tegnes Compose Sweet/Breeze-overlay. Animerede XCursor-sekvenser afspilles ikke.</string>
+    <string name="desktop_cursor_limit_windows">Windows: knytter til AWT-systemmarkører. XCursor/Plasma-temaer anvendes ikke på Win32-markøren.</string>
+    <string name="desktop_cursor_limit_macos">macOS: knytter til AWT-systemmarkører. XCursor/Plasma-temaer anvendes ikke på Cocoa-markøren.</string>
+</resources>

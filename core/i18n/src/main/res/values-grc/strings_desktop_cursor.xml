@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_cursor_title">Δρομέας</string>
+    <string name="desktop_cursor_theme">Θέμα δρομέα</string>
+    <string name="desktop_cursor_size">Μέγεθος δρομέα</string>
+    <string name="desktop_cursor_system_default">Προεπιλογή συστήματος</string>
+    <string name="desktop_cursor_preset_style">Στυλ επικάλυψης Compose (όταν το XCursor δεν είναι διαθέσιμο)</string>
+    <string name="desktop_cursor_download_section">Λήψη θεμάτων δρομέα (στο portable/vault icons)</string>
+    <string name="desktop_cursor_download_named">Λήψη %1$s (%2$s)</string>
+    <string name="desktop_cursor_download_ok">Εγκαταστάθηκε το %1$s</string>
+    <string name="desktop_cursor_download_fail">Αποτυχία λήψης θέματος δρομέα: %1$s</string>
+    <string name="desktop_cursor_limit_linux">Linux: οι θυγατρικές εφαρμογές λαμβάνουν XCURSOR_THEME και XCURSOR_SIZE. Το Telos φορτώνει καρέ XCursor σε δρομέα AWT όταν είναι δυνατό· αλλιώς σχεδιάζεται η επικάλυψη Compose Sweet/Breeze. Τα κινούμενα XCursor δεν αναπαράγονται.</string>
+    <string name="desktop_cursor_limit_windows">Windows: αντιστοιχίζει σε τυπικούς δρομείς AWT. Θέματα XCursor/Plasma δεν εφαρμόζονται στον δείκτη Win32.</string>
+    <string name="desktop_cursor_limit_macos">macOS: αντιστοιχίζει σε τυπικούς δρομείς AWT. Θέματα XCursor/Plasma δεν εφαρμόζονται στον δείκτη Cocoa.</string>
+</resources>

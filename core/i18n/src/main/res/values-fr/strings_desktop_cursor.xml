@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_cursor_title">Curseur</string>
+    <string name="desktop_cursor_theme">Thème de curseur</string>
+    <string name="desktop_cursor_size">Taille du curseur</string>
+    <string name="desktop_cursor_system_default">Défaut système</string>
+    <string name="desktop_cursor_preset_style">Style de calque Compose (lorsque XCursor est indisponible)</string>
+    <string name="desktop_cursor_download_section">Télécharger des thèmes de curseur (dans icons portable/coffre)</string>
+    <string name="desktop_cursor_download_named">Télécharger %1$s (%2$s)</string>
+    <string name="desktop_cursor_download_ok">%1$s installé</string>
+    <string name="desktop_cursor_download_fail">Impossible de télécharger le thème de curseur : %1$s</string>
+    <string name="desktop_cursor_limit_linux">Linux : les processus enfants reçoivent XCURSOR_THEME et XCURSOR_SIZE. Telos charge des images XCursor dans un curseur AWT si possible ; sinon le calque Compose Sweet/Breeze est dessiné. Les séquences XCursor animées ne sont pas lues.</string>
+    <string name="desktop_cursor_limit_windows">Windows : correspondance aux curseurs système AWT. Les thèmes XCursor/Plasma ne sont pas appliqués au pointeur Win32.</string>
+    <string name="desktop_cursor_limit_macos">macOS : correspondance aux curseurs système AWT. Les thèmes XCursor/Plasma ne sont pas appliqués au pointeur Cocoa.</string>
+</resources>

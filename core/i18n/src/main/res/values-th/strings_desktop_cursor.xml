@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_cursor_title">เคอร์เซอร์</string>
+    <string name="desktop_cursor_theme">ชุดตกแต่งเคอร์เซอร์</string>
+    <string name="desktop_cursor_size">ขนาดเคอร์เซอร์</string>
+    <string name="desktop_cursor_system_default">ค่าเริ่มต้นของระบบ</string>
+    <string name="desktop_cursor_preset_style">สไตล์โอเวอร์เลย์ Compose (เมื่อไม่มี XCursor)</string>
+    <string name="desktop_cursor_download_section">ดาวน์โหลดชุดเคอร์เซอร์ (ไปยัง icons พกพา/ตู้เซฟ)</string>
+    <string name="desktop_cursor_download_named">ดาวน์โหลด %1$s (%2$s)</string>
+    <string name="desktop_cursor_download_ok">ติดตั้ง %1$s แล้ว</string>
+    <string name="desktop_cursor_download_fail">ดาวน์โหลดชุดเคอร์เซอร์ไม่ได้: %1$s</string>
+    <string name="desktop_cursor_limit_linux">Linux: แอปลูกได้รับ XCURSOR_THEME และ XCURSOR_SIZE Telos โหลดเฟรม XCursor เป็นเคอร์เซอร์ AWT เมื่อทำได้ ไม่เช่นนั้นจะวาดโอเวอร์เลย์ Compose Sweet/Breeze ไม่เล่นลำดับ XCursor แบบเคลื่อนไหว</string>
+    <string name="desktop_cursor_limit_windows">Windows: แมปเป็นเคอร์เซอร์ระบบ AWT ไม่นำชุด XCursor/Plasma ไปใช้กับตัวชี้ Win32</string>
+    <string name="desktop_cursor_limit_macos">macOS: แมปเป็นเคอร์เซอร์ระบบ AWT ไม่นำชุด XCursor/Plasma ไปใช้กับตัวชี้ Cocoa</string>
+</resources>

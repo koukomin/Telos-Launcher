@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_cursor_title">Kazalec</string>
+    <string name="desktop_cursor_theme">Tema kazalca</string>
+    <string name="desktop_cursor_size">Velikost kazalca</string>
+    <string name="desktop_cursor_system_default">Sistemsko privzeto</string>
+    <string name="desktop_cursor_preset_style">Slog prekrivanja Compose (ko XCursor ni na voljo)</string>
+    <string name="desktop_cursor_download_section">Prenesi teme kazalca (v portable/trezor icons)</string>
+    <string name="desktop_cursor_download_named">Prenesi %1$s (%2$s)</string>
+    <string name="desktop_cursor_download_ok">Nameščeno %1$s</string>
+    <string name="desktop_cursor_download_fail">Teme kazalca ni bilo mogoče prenesti: %1$s</string>
+    <string name="desktop_cursor_limit_linux">Linux: podrejeni programi prejmejo XCURSOR_THEME in XCURSOR_SIZE. Telos naloži sličice XCursor v kazalec AWT, ko je mogoče; sicer nariše prekrivanje Compose Sweet/Breeze. Animirana zaporedja XCursor se ne predvajajo.</string>
+    <string name="desktop_cursor_limit_windows">Windows: preslika v sistemske kazalce AWT. Tem XCursor/Plasma se ne uporabi za kazalec Win32.</string>
+    <string name="desktop_cursor_limit_macos">macOS: preslika v sistemske kazalce AWT. Tem XCursor/Plasma se ne uporabi za kazalec Cocoa.</string>
+</resources>

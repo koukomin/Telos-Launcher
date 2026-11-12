@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_cursor_title">Курсор</string>
+    <string name="desktop_cursor_theme">Тема курсора</string>
+    <string name="desktop_cursor_size">Размер курсора</string>
+    <string name="desktop_cursor_system_default">Системный по умолчанию</string>
+    <string name="desktop_cursor_preset_style">Стиль оверлея Compose (если XCursor недоступен)</string>
+    <string name="desktop_cursor_download_section">Скачать темы курсора (в icons portable/хранилища)</string>
+    <string name="desktop_cursor_download_named">Скачать %1$s (%2$s)</string>
+    <string name="desktop_cursor_download_ok">Установлено: %1$s</string>
+    <string name="desktop_cursor_download_fail">Не удалось скачать тему курсора: %1$s</string>
+    <string name="desktop_cursor_limit_linux">Linux: дочерние приложения получают XCURSOR_THEME и XCURSOR_SIZE. Telos загружает кадры XCursor в курсор AWT, когда возможно; иначе рисуется оверлей Compose Sweet/Breeze. Анимированные последовательности XCursor не воспроизводятся.</string>
+    <string name="desktop_cursor_limit_windows">Windows: сопоставление со стандартными курсорами AWT. Темы XCursor/Plasma не применяются к указателю Win32.</string>
+    <string name="desktop_cursor_limit_macos">macOS: сопоставление со стандартными курсорами AWT. Темы XCursor/Plasma не применяются к указателю Cocoa.</string>
+</resources>

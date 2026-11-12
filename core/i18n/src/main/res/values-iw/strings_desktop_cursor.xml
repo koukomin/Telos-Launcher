@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_cursor_title">סמן</string>
+    <string name="desktop_cursor_theme">ערכת נושא של סמן</string>
+    <string name="desktop_cursor_size">גודל סמן</string>
+    <string name="desktop_cursor_system_default">ברירת מחדל של המערכת</string>
+    <string name="desktop_cursor_preset_style">סגנון שכבת Compose (כשאין XCursor)</string>
+    <string name="desktop_cursor_download_section">הורדת ערכות סמן (אל icons נייד/כספת)</string>
+    <string name="desktop_cursor_download_named">הורדת %1$s (%2$s)</string>
+    <string name="desktop_cursor_download_ok">%1$s הותקן</string>
+    <string name="desktop_cursor_download_fail">לא ניתן להוריד ערכת סמן: %1$s</string>
+    <string name="desktop_cursor_limit_linux">Linux: יישומי צאצא מקבלים XCURSOR_THEME ו-XCURSOR_SIZE. Telos טוען פריימים של XCursor לסמן AWT כשאפשר; אחרת מצייר שכבת Compose Sweet/Breeze. רצפי XCursor מונפשים אינם מופעלים.</string>
+    <string name="desktop_cursor_limit_windows">Windows: ממפה לסמני מערכת AWT. ערכות XCursor/Plasma אינן חלות על מצביע Win32.</string>
+    <string name="desktop_cursor_limit_macos">macOS: ממפה לסמני מערכת AWT. ערכות XCursor/Plasma אינן חלות על מצביע Cocoa.</string>
+</resources>

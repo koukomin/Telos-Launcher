@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_cursor_title">Peker</string>
+    <string name="desktop_cursor_theme">Pekertema</string>
+    <string name="desktop_cursor_size">Pekerstørrelse</string>
+    <string name="desktop_cursor_system_default">Systemstandard</string>
+    <string name="desktop_cursor_preset_style">Compose-overleggsstil (når XCursor ikke er tilgjengelig)</string>
+    <string name="desktop_cursor_download_section">Last ned pekertemaer (til portable/hvelv-icons)</string>
+    <string name="desktop_cursor_download_named">Last ned %1$s (%2$s)</string>
+    <string name="desktop_cursor_download_ok">%1$s installert</string>
+    <string name="desktop_cursor_download_fail">Kunne ikke laste ned pekertema: %1$s</string>
+    <string name="desktop_cursor_limit_linux">Linux: underordnade apper får XCURSOR_THEME og XCURSOR_SIZE. Telos laster XCursor-rammer inn i en AWT-peker når det er mulig; ellers tegnes Compose Sweet/Breeze-overlegget. Animerte XCursor-sekvenser spilles ikke av.</string>
+    <string name="desktop_cursor_limit_windows">Windows: kobler til AWT-systempekere. XCursor/Plasma-temaer brukes ikke på Win32-pekeren.</string>
+    <string name="desktop_cursor_limit_macos">macOS: kobler til AWT-systempekere. XCursor/Plasma-temaer brukes ikke på Cocoa-pekeren.</string>
+</resources>

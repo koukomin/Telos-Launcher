@@ -14,6 +14,10 @@ class TelosDesktopSettings(private val vaultConfigDir: File) {
     var windowButtonStyle: String = "KLASSY_ACCENT_FILLED"
     var buttonsOnLeft: Boolean = false
     var cursorPreset: String = "SWEET_DARK_NEON"
+    /** Freedesktop / Plasma XCursor theme name; blank = Compose preset or follow host. */
+    var cursorTheme: String = ""
+    /** KDE-style cursor size: 16 / 24 / 32 / 48. */
+    var cursorSize: Int = 24
     var preferredOutput: String? = null
     var preferredResolution: String? = null
     var preferredRefresh: Double? = null
@@ -51,6 +55,12 @@ class TelosDesktopSettings(private val vaultConfigDir: File) {
         windowButtonStyle = p.getProperty("windowButtonStyle", windowButtonStyle)
         buttonsOnLeft = p.getProperty("buttonsOnLeft", "false").toBoolean()
         cursorPreset = p.getProperty("cursorPreset", cursorPreset)
+        cursorTheme = p.getProperty("cursor.theme")
+            ?: p.getProperty("cursorTheme", cursorTheme)
+        cursorSize = (p.getProperty("cursor.size") ?: p.getProperty("cursorSize"))
+            ?.toIntOrNull()
+            ?.let { com.telos.desktop.cursor.KdeCursorConfig.nearestKdeSize(it) }
+            ?: cursorSize
         preferredOutput = p.getProperty("preferredOutput")
         preferredResolution = p.getProperty("preferredResolution")
         preferredRefresh = p.getProperty("preferredRefresh")?.toDoubleOrNull()
@@ -92,6 +102,10 @@ class TelosDesktopSettings(private val vaultConfigDir: File) {
         p["windowButtonStyle"] = windowButtonStyle
         p["buttonsOnLeft"] = buttonsOnLeft.toString()
         p["cursorPreset"] = cursorPreset
+        p["cursor.theme"] = cursorTheme
+        p["cursorTheme"] = cursorTheme
+        p["cursor.size"] = cursorSize.toString()
+        p["cursorSize"] = cursorSize.toString()
         preferredOutput?.let { p["preferredOutput"] = it }
         preferredResolution?.let { p["preferredResolution"] = it }
         preferredRefresh?.let { p["preferredRefresh"] = it.toString() }

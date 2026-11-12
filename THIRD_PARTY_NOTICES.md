@@ -377,6 +377,19 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 [AppOpsNext](https://github.com/1zumiii/AppOpsNext), by 1zumiii, GPL-3.0. The complete upstream application source, tests and native daemon are adapted under `libs/appops-next`; the exact source commit and version are recorded in its `UPSTREAM.md`, with the full GPL license retained. The source is embedded in Telos rather than depending on an installed companion. Its Phosphor icon license is retained in `src/main/assets/licenses/phosphor-icons.txt`. Telos-specific changes include host-owned lifecycle/storage, internal per-package navigation, shared Shizuku UserService process transport and inherited Telos typography. The native ARM64 daemon is built from source; other ABIs retain the UserService backend. Integration validation and additional locale coverage are in progress; this notice is not a device-validation claim.
 
+## Desktop cursor themes (optional downloads)
+
+Telos Desktop can optionally download GPL-compatible XCursor packs into the
+portable/vault Freedesktop icons directory (`…/icons/<Theme>/cursors`). Nothing
+from these projects is bundled in the repository or APK; archives are fetched
+only when the user taps Download in Settings → Cursor.
+
+| Project | License | Notes |
+| --- | --- | --- |
+| [BreezeX_Cursor](https://github.com/ful1e5/BreezeX_Cursor) (ful1e5) | GPL-3.0-or-later | Breeze-inspired XCursor themes offered as optional downloads |
+| [Bibata_Cursor](https://github.com/ful1e5/Bibata_Cursor) (ful1e5) | GPL-3.0-or-later | Bibata Modern/Original Classic XCursor themes offered as optional downloads |
+| [KDE Breeze cursors](https://invent.kde.org/plasma/breeze) | LGPL-2.1-or-later (upstream Plasma) | Discovered from distro `/usr/share/icons` when installed; not redistributed by Telos |
+
 ## Camera recognition and searchable PDF
 
 - [Tesseract4Android 4.9.0](https://github.com/adaptech-cz/Tesseract4Android/tree/4.9.0), Copyright Adaptech s.r.o., Robert Pösel, Google Inc., Robert Theis and contributors, Apache-2.0. Used as a pinned Android dependency for local OCR and searchable PDF rendering. The Apache-2.0, Leptonica, libpng and Independent JPEG Group license texts are retained explicitly in `app/app/src/main/assets/licenses/tesseract4android-4.9.0-NOTICES.txt`, independently of META-INF packaging exclusions.

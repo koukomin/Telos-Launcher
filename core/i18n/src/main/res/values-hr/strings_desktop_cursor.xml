@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_cursor_title">Pokazivač</string>
+    <string name="desktop_cursor_theme">Tema pokazivača</string>
+    <string name="desktop_cursor_size">Veličina pokazivača</string>
+    <string name="desktop_cursor_system_default">Zadano sustavom</string>
+    <string name="desktop_cursor_preset_style">Stil Compose prekrivanja (kad XCursor nije dostupan)</string>
+    <string name="desktop_cursor_download_section">Preuzmi teme pokazivača (u portable/trezor icons)</string>
+    <string name="desktop_cursor_download_named">Preuzmi %1$s (%2$s)</string>
+    <string name="desktop_cursor_download_ok">Instalirano %1$s</string>
+    <string name="desktop_cursor_download_fail">Nije moguće preuzeti temu pokazivača: %1$s</string>
+    <string name="desktop_cursor_limit_linux">Linux: podređene aplikacije dobivaju XCURSOR_THEME i XCURSOR_SIZE. Telos učitava XCursor okvire u AWT pokazivač kad je moguće; inače crta Compose Sweet/Breeze prekrivanje. Animirani XCursor nizovi se ne reproduciraju.</string>
+    <string name="desktop_cursor_limit_windows">Windows: mapira na AWT sustavne pokazivače. XCursor/Plasma teme ne primjenjuju se na Win32 pokazivač.</string>
+    <string name="desktop_cursor_limit_macos">macOS: mapira na AWT sustavne pokazivače. XCursor/Plasma teme ne primjenjuju se na Cocoa pokazivač.</string>
+</resources>

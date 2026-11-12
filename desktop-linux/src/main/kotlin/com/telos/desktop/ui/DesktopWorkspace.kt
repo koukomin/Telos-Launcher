@@ -58,6 +58,7 @@ import com.telos.desktop.apps.TelosFilesWorkspace
 import com.telos.desktop.apps.TelosMediaPlayer
 import com.telos.desktop.cursor.CursorPreset
 import com.telos.desktop.cursor.CursorState
+import com.telos.desktop.cursor.CursorThemeApplier
 import com.telos.desktop.cursor.TelosCursorEngine
 import com.telos.desktop.display.LinuxDisplayManager
 import com.telos.desktop.icons.LinuxIconThemeResolver
@@ -111,6 +112,15 @@ fun DesktopWorkspace(
     var altTab by remember { mutableStateOf(false) }
     val preset = runCatching { CursorPreset.valueOf(settings.cursorPreset) }.getOrDefault(CursorPreset.SWEET_DARK_NEON)
     val density = LocalDensity.current
+    val cursorRev = com.telos.desktop.cursor.CursorUiState.revision
+    val drawComposeCursor = remember(cursorRev) { CursorThemeApplier.usesComposeOverlay() }
+
+    LaunchedEffect(cursorState, cursorRev) {
+        runCatching {
+            val awt = CursorThemeApplier.cursorForState(cursorState)
+            java.awt.Window.getWindows().forEach { it.cursor = awt }
+        }
+    }
 
     LaunchedEffect(Unit) {
         com.telos.desktop.session.LayerShellBridge.listenLoop()
@@ -413,8 +423,10 @@ fun DesktopWorkspace(
             LaunchedEffect(toast) {
                 toast?.let { HelixToast.show("Desktop", it) }
             }
-            Canvas(Modifier.fillMaxSize()) {
-                with(TelosCursorEngine) { drawCursor(cursorState, preset, pointer) }
+            if (drawComposeCursor) {
+                Canvas(Modifier.fillMaxSize()) {
+                    with(TelosCursorEngine) { drawCursor(cursorState, preset, pointer) }
+                }
             }
             if (SessionPower.locked.value) {
                 Box(Modifier.fillMaxSize().background(TelosColors.background.copy(alpha = 0.96f)), contentAlignment = Alignment.Center) {

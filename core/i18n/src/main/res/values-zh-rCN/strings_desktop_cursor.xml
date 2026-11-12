@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_cursor_title">光标</string>
+    <string name="desktop_cursor_theme">光标主题</string>
+    <string name="desktop_cursor_size">光标大小</string>
+    <string name="desktop_cursor_system_default">系统默认</string>
+    <string name="desktop_cursor_preset_style">Compose 叠加样式（在无法使用 XCursor 时）</string>
+    <string name="desktop_cursor_download_section">下载光标主题（到便携/保险库 icons）</string>
+    <string name="desktop_cursor_download_named">下载 %1$s（%2$s）</string>
+    <string name="desktop_cursor_download_ok">已安装 %1$s</string>
+    <string name="desktop_cursor_download_fail">无法下载光标主题：%1$s</string>
+    <string name="desktop_cursor_limit_linux">Linux：子进程会获得 XCURSOR_THEME 和 XCURSOR_SIZE。Telos 会在可能时将 XCursor 帧加载为 AWT 光标；否则绘制 Compose Sweet/Breeze 叠加。不播放动画 XCursor 序列。</string>
+    <string name="desktop_cursor_limit_windows">Windows：映射为 AWT 系统光标。XCursor/Plasma 主题不会应用到 Win32 指针。</string>
+    <string name="desktop_cursor_limit_macos">macOS：映射为 AWT 系统光标。XCursor/Plasma 主题不会应用到 Cocoa 指针。</string>
+</resources>

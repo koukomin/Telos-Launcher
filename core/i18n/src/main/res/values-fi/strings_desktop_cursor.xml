@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_cursor_title">Osoitin</string>
+    <string name="desktop_cursor_theme">Osoitinteema</string>
+    <string name="desktop_cursor_size">Osoittimen koko</string>
+    <string name="desktop_cursor_system_default">Järjestelmän oletus</string>
+    <string name="desktop_cursor_preset_style">Compose-peittotyyli (kun XCursor ei ole saatavilla)</string>
+    <string name="desktop_cursor_download_section">Lataa osoitinteemoja (portable/holvi-icons)</string>
+    <string name="desktop_cursor_download_named">Lataa %1$s (%2$s)</string>
+    <string name="desktop_cursor_download_ok">%1$s asennettu</string>
+    <string name="desktop_cursor_download_fail">Osoitinteemaa ei voitu ladata: %1$s</string>
+    <string name="desktop_cursor_limit_linux">Linux: lapsisovellukset saavat XCURSOR_THEME- ja XCURSOR_SIZE-arvot. Telos lataa XCursor-kehyksiä AWT-osoittimeen kun mahdollista; muuten piirretään Compose Sweet/Breeze -peitto. Animoituja XCursor-jaksoja ei toisteta.</string>
+    <string name="desktop_cursor_limit_windows">Windows: vastaa AWT-järjestelmäosoittimia. XCursor/Plasma-teemoja ei sovelleta Win32-osoittimeen.</string>
+    <string name="desktop_cursor_limit_macos">macOS: vastaa AWT-järjestelmäosoittimia. XCursor/Plasma-teemoja ei sovelleta Cocoa-osoittimeen.</string>
+</resources>
