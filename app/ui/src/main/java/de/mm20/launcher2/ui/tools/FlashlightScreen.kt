@@ -17,8 +17,10 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -682,8 +684,10 @@ private fun FlashlightAdvancedSheet(
     Column(
         modifier = Modifier
             .fillMaxWidth()
+            .verticalScroll(rememberScrollState())
             .padding(horizontal = 16.dp)
-            .padding(bottom = 28.dp),
+            .padding(bottom = 28.dp)
+            .testTag("flashlight-advanced"),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         TelosDotMatrixText(stringResource(I18nR.string.hc_more), fontSize = 11.sp, color = neonCyan)
@@ -730,7 +734,9 @@ private fun FlashlightAdvancedSheet(
                 onValueChange = onMorseText,
                 label = { Text(stringResource(I18nR.string.app_polish_message)) },
                 singleLine = true,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .testTag("morse-input")
             )
             FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 FlashlightOutputMode.entries.forEach { mode ->

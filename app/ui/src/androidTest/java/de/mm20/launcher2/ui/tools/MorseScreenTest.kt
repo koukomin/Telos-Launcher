@@ -43,19 +43,26 @@ class MorseScreenTest {
                 MaterialTheme(colorScheme = darkColorScheme()) { FlashlightScreen() }
             }
         }
-        compose.onNodeWithTag("flashlight-controls").performScrollToNode(hasSetTextAction())
-        compose.onNode(hasSetTextAction()).performTextReplacement("ΘΧΨΩ")
+        // Emulator has no physical flash. Pick screen light on the main surface first.
+        compose.onAllNodesWithText(context.getString(I18nR.string.app_polish_screen_light))
+            .filter(hasClickAction())
+            .onFirst()
+            .performClick()
+        // Morse / SOS live in the Advanced ("More") sheet after Cyber-Tech chrome.
+        compose.onNodeWithText(context.getString(I18nR.string.hc_more)).performClick()
+        compose.waitUntil(5_000) {
+            compose.onAllNodesWithTag("morse-input").fetchSemanticsNodes().isNotEmpty()
+        }
+        compose.onNodeWithTag("morse-input").performTextReplacement("ΘΧΨΩ")
         compose.waitUntil(5_000) { compose.onAllNodesWithText("-.-. ---- --.- .--").fetchSemanticsNodes().isNotEmpty() }
         compose.onNodeWithText("-.-. ---- --.- .--").performSemanticsAction(SemanticsActions.GetTextLayoutResult) { readLayout ->
             val results = mutableListOf<TextLayoutResult>()
             readLayout(results)
             assertEquals(TextDirection.Ltr, results.single().layoutInput.style.textDirection)
         }
-        compose.onNodeWithText(context.getString(I18nR.string.morse_light)).performScrollTo().performClick()
-        // Emulator has no physical flash. Explicitly select screen even if a virtual camera advertises one.
-        compose.onNodeWithTag("flashlight-controls").performScrollToNode(hasText(context.getString(I18nR.string.app_polish_screen_light)))
-        compose.onAllNodesWithText(context.getString(I18nR.string.app_polish_screen_light)).filter(hasClickAction()).onFirst().performClick()
-        compose.onNodeWithTag("flashlight-controls").performScrollToNode(hasText(context.getString(I18nR.string.app_polish_sos)))
+        compose.onNodeWithText(context.getString(I18nR.string.morse_light)).performClick()
+        compose.onNodeWithTag("flashlight-advanced")
+            .performScrollToNode(hasText(context.getString(I18nR.string.app_polish_sos)))
         compose.onNodeWithText(context.getString(I18nR.string.app_polish_sos)).performClick()
         compose.onNodeWithText(context.getString(I18nR.string.app_polish_exit_light)).assertIsDisplayed().performClick()
         compose.onNodeWithTag("flashlight-controls").assertExists()
