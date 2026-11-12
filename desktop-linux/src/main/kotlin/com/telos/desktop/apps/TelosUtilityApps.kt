@@ -107,17 +107,19 @@ fun TelosClockApp() {
     )
 }
 
-private enum class NetworkTab { Status, Dns, Firewall, WireGuard, Tor }
+private enum class NetworkTab { Status, Dns, Firewall, Apps, WireGuard, Tor }
 
 @Composable
 fun TelosNetworkApp() {
     var tab by remember { mutableIntStateOf(NetworkTab.Status.ordinal) }
     var net by remember { mutableStateOf(ConnectivityState(false, null, null, emptyList(), false, emptyList())) }
     var fwActive by remember { mutableStateOf(false) }
+    var killStatus by remember { mutableStateOf(DesktopNetworkController.KillSwitchStatus.Disabled) }
     var wgStatus by remember { mutableStateOf(DesktopNetworkController.wireGuardStatus()) }
     var torStatus by remember { mutableStateOf(DesktopNetworkController.torStatus()) }
     var dnsText by remember { mutableStateOf(DesktopNetworkController.readDnsPreference()) }
     var allowText by remember { mutableStateOf(DesktopNetworkController.readAllowlistText()) }
+    var appRoutingText by remember { mutableStateOf(DesktopNetworkController.readAppRoutingText()) }
     var wgConfDraft by remember {
         mutableStateOf(
             DesktopNetworkController.wireguardConfFile().takeIf { it.isFile }?.readText().orEmpty(),
@@ -131,6 +133,7 @@ fun TelosNetworkApp() {
     val neon = TelosColors.secondary
     val refresh: suspend () -> Unit = {
         withContext(Dispatchers.IO) {
+            killStatus = DesktopNetworkController.ensureKillSwitch()
             net = DesktopNetworkController.snapshotConnectivity()
             fwActive = DesktopNetworkController.sessionFirewallActive()
             wgStatus = DesktopNetworkController.wireGuardStatus()
@@ -178,6 +181,7 @@ fun TelosNetworkApp() {
             NetworkTab.Status -> NetworkStatusPane(
                 net = net,
                 fwActive = fwActive,
+                killStatus = killStatus,
                 wgStatus = wgStatus,
                 torStatus = torStatus,
                 profiles = profiles,
@@ -186,18 +190,28 @@ fun TelosNetworkApp() {
                 neon = neon,
                 onRefreshFw = {
                     scope.launch(Dispatchers.IO) {
+                        killStatus = DesktopNetworkController.ensureKillSwitch()
                         fwActive = DesktopNetworkController.sessionFirewallActive()
                     }
                 },
                 onApplyFw = {
                     scope.launch(Dispatchers.IO) {
                         DesktopNetworkController.applySessionFirewall()
+                        killStatus = DesktopNetworkController.killSwitchStatus()
                         fwActive = DesktopNetworkController.sessionFirewallActive()
                     }
                 },
                 onClearFw = {
                     scope.launch(Dispatchers.IO) {
                         DesktopNetworkController.clearSessionFirewall()
+                        killStatus = DesktopNetworkController.killSwitchStatus()
+                        fwActive = DesktopNetworkController.sessionFirewallActive()
+                    }
+                },
+                onToggleKillSwitch = {
+                    scope.launch(Dispatchers.IO) {
+                        val next = !DesktopNetworkController.readKillSwitchEnabled()
+                        killStatus = DesktopNetworkController.setKillSwitchEnabled(next)
                         fwActive = DesktopNetworkController.sessionFirewallActive()
                     }
                 },
@@ -219,25 +233,41 @@ fun TelosNetworkApp() {
                 allowText = allowText,
                 onAllowText = { allowText = it },
                 fwActive = fwActive,
+                killStatus = killStatus,
                 cardShape = cardShape,
                 neon = neon,
                 onSave = {
                     scope.launch(Dispatchers.IO) {
                         DesktopNetworkController.writeAllowlistText(allowText)
                         DesktopNetworkController.applySessionFirewall()
+                        killStatus = DesktopNetworkController.ensureKillSwitch()
                         fwActive = DesktopNetworkController.sessionFirewallActive()
                     }
                 },
                 onApply = {
                     scope.launch(Dispatchers.IO) {
                         DesktopNetworkController.applySessionFirewall()
+                        killStatus = DesktopNetworkController.killSwitchStatus()
                         fwActive = DesktopNetworkController.sessionFirewallActive()
                     }
                 },
                 onClear = {
                     scope.launch(Dispatchers.IO) {
                         DesktopNetworkController.clearSessionFirewall()
+                        killStatus = DesktopNetworkController.killSwitchStatus()
                         fwActive = DesktopNetworkController.sessionFirewallActive()
+                    }
+                },
+            )
+            NetworkTab.Apps -> NetworkAppsPane(
+                routingText = appRoutingText,
+                onRoutingText = { appRoutingText = it },
+                cardShape = cardShape,
+                neon = neon,
+                onSave = {
+                    scope.launch(Dispatchers.IO) {
+                        DesktopNetworkController.writeAppRoutingText(appRoutingText)
+                        appRoutingText = DesktopNetworkController.readAppRoutingText()
                     }
                 },
             )
@@ -292,6 +322,7 @@ private fun networkTabLabel(tab: NetworkTab): String = when (tab) {
     NetworkTab.Status -> t("net_hub_status")
     NetworkTab.Dns -> t("net_hub_dns")
     NetworkTab.Firewall -> t("netfw_title")
+    NetworkTab.Apps -> t("desktop_net_apps_tab")
     NetworkTab.WireGuard -> t("net_hub_wireguard")
     NetworkTab.Tor -> t("nt_title")
 }
@@ -300,6 +331,7 @@ private fun networkTabLabel(tab: NetworkTab): String = when (tab) {
 private fun NetworkStatusPane(
     net: ConnectivityState,
     fwActive: Boolean,
+    killStatus: DesktopNetworkController.KillSwitchStatus,
     wgStatus: DesktopNetworkController.WireGuardStatus,
     torStatus: DesktopNetworkController.TorStatus,
     profiles: List<DesktopProfiles.ProfileFolder>,
@@ -309,6 +341,7 @@ private fun NetworkStatusPane(
     onApplyFw: () -> Unit,
     onClearFw: () -> Unit,
     onRefreshFw: () -> Unit,
+    onToggleKillSwitch: () -> Unit,
 ) {
     var syncPass by remember { mutableStateOf("") }
     var kdbxPath by remember {
@@ -342,6 +375,21 @@ private fun NetworkStatusPane(
                     neon,
                     t("netfw_title"),
                     if (fwActive) t("net_hub_state_on") else t("net_hub_state_off"),
+                )
+                statusCard(
+                    cardShape,
+                    neon,
+                    t("desktop_net_kill_switch"),
+                    killSwitchLabel(killStatus),
+                )
+                neonButton(
+                    if (killStatus == DesktopNetworkController.KillSwitchStatus.Disabled) {
+                        t("desktop_net_kill_switch_enable")
+                    } else {
+                        t("desktop_net_kill_switch_disable")
+                    },
+                    onToggleKillSwitch,
+                    filled = killStatus == DesktopNetworkController.KillSwitchStatus.Disabled,
                 )
                 statusCard(
                     cardShape,
@@ -563,6 +611,7 @@ private fun NetworkFirewallPane(
     allowText: String,
     onAllowText: (String) -> Unit,
     fwActive: Boolean,
+    killStatus: DesktopNetworkController.KillSwitchStatus,
     cardShape: RoundedCornerShape,
     neon: androidx.compose.ui.graphics.Color,
     onSave: () -> Unit,
@@ -575,6 +624,18 @@ private fun NetworkFirewallPane(
             color = neon,
             fontSize = 18.sp,
         )
+        Text(
+            "${t("desktop_net_kill_switch")}: ${killSwitchLabel(killStatus)}",
+            color = TelosColors.onSurface.copy(alpha = 0.85f),
+            fontSize = 12.sp,
+        )
+        if (killStatus != DesktopNetworkController.KillSwitchStatus.Disabled) {
+            Text(
+                t("desktop_net_kill_switch_clear_blocked"),
+                color = TelosColors.onSurface.copy(alpha = 0.75f),
+                fontSize = 11.sp,
+            )
+        }
         OutlinedTextField(
             allowText,
             onAllowText,
@@ -587,6 +648,32 @@ private fun NetworkFirewallPane(
             neonButton(t("net_hub_start"), onApply, filled = false)
             neonButton(t("net_hub_stop"), onClear, filled = false)
         }
+    }
+}
+
+@Composable
+private fun NetworkAppsPane(
+    routingText: String,
+    onRoutingText: (String) -> Unit,
+    cardShape: RoundedCornerShape,
+    neon: androidx.compose.ui.graphics.Color,
+    onSave: () -> Unit,
+) {
+    Column(Modifier.fillMaxSize()) {
+        Text(t("desktop_net_apps_title"), color = neon, fontSize = 18.sp)
+        Text(
+            t("desktop_net_apps_hint"),
+            color = TelosColors.onSurface.copy(alpha = 0.85f),
+            fontSize = 12.sp,
+        )
+        OutlinedTextField(
+            routingText,
+            onRoutingText,
+            modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
+            label = { Text(t("desktop_net_apps_file")) },
+            minLines = 10,
+        )
+        neonButton(t("nwg_save"), onSave)
     }
 }
 
@@ -690,6 +777,13 @@ private fun dnsApplyLabel(result: DesktopNetworkController.DnsApplyResult): Stri
     DesktopNetworkController.DnsApplyResult.PreferenceOnly -> TelosI18n.t("desktop_net_dns_pref_hint")
     DesktopNetworkController.DnsApplyResult.Failed -> TelosI18n.t("net_hub_state_error")
     DesktopNetworkController.DnsApplyResult.Invalid -> TelosI18n.t("nwg_err_syntax")
+}
+
+private fun killSwitchLabel(status: DesktopNetworkController.KillSwitchStatus): String = when (status) {
+    DesktopNetworkController.KillSwitchStatus.Disabled -> TelosI18n.t("net_hub_state_off")
+    DesktopNetworkController.KillSwitchStatus.PreferenceOnly -> TelosI18n.t("desktop_net_kill_switch_pref_only")
+    DesktopNetworkController.KillSwitchStatus.Enforced -> TelosI18n.t("desktop_net_kill_switch_enforced")
+    DesktopNetworkController.KillSwitchStatus.Failed -> TelosI18n.t("desktop_net_kill_switch_failed")
 }
 
 @Composable

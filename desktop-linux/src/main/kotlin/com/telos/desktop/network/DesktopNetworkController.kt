@@ -30,6 +30,10 @@ object DesktopNetworkController {
 
     fun dnsPreferenceFile(): File = File(configHome(), "dns.txt")
 
+    fun killSwitchPreferenceFile(): File = File(configHome(), "kill-switch.txt")
+
+    fun appRoutingFile(): File = File(configHome(), "app-routing.txt")
+
     fun torDataDir(): File = File(configHome(), "tor/data").apply { mkdirs() }
 
     fun torConfigFile(): File = File(configHome(), "tor/torrc").apply { parentFile?.mkdirs() }
@@ -48,6 +52,25 @@ object DesktopNetworkController {
         val socksListening: Boolean,
         val running: Boolean,
     )
+
+    /**
+     * Honest kill-switch status for the Network UI.
+     * Linux can enforce via nftables `inet telos_session`; Windows/macOS stay preference-only.
+     */
+    enum class KillSwitchStatus {
+        Disabled,
+        PreferenceOnly,
+        Enforced,
+        Failed,
+    }
+
+    enum class AppRouteMode {
+        Allow,
+        Deny,
+        Vpn,
+    }
+
+    data class AppRoute(val id: String, val mode: AppRouteMode)
 
     enum class DnsApplyResult {
         Applied,
@@ -87,9 +110,18 @@ object DesktopNetworkController {
         return ok
     }
 
-    fun clearSessionFirewall() {
+    /**
+     * Clears the session nftables table unless the kill-switch preference is on.
+     * Returns true when the table was cleared; false when refused or not Linux.
+     */
+    fun clearSessionFirewall(): Boolean {
+        if (readKillSwitchEnabled()) {
+            ensureKillSwitch()
+            return false
+        }
         SessionNetGuard.clear()
         TelosSessionAuditLog.append("network_policy", "firewall_cleared")
+        return true
     }
 
     fun sessionFirewallActive(): Boolean {
@@ -97,6 +129,120 @@ object DesktopNetworkController {
         val r = Sys.run("nft", "list", "table", "inet", "telos_session", timeoutSec = 6)
         return r.ok && r.stdout.contains("telos_session")
     }
+
+    fun readKillSwitchEnabled(): Boolean {
+        val file = killSwitchPreferenceFile()
+        if (!file.isFile) return false
+        val line = file.readLines().map { it.trim() }.firstOrNull {
+            it.isNotEmpty() && !it.startsWith("#")
+        } ?: return false
+        return line.equals("true", ignoreCase = true) ||
+            line.equals("on", ignoreCase = true) ||
+            line == "1"
+    }
+
+    fun writeKillSwitchEnabled(enabled: Boolean) {
+        killSwitchPreferenceFile().apply { parentFile?.mkdirs() }.writeText(
+            buildString {
+                appendLine("# Telos session kill-switch: true|false")
+                appendLine("# When true, Linux keeps nftables inet telos_session default-drop")
+                appendLine("# even if WireGuard/Tor stop; clear is refused until turned off.")
+                appendLine("# Windows/macOS store the preference only (not applied).")
+                appendLine(if (enabled) "true" else "false")
+            },
+        )
+    }
+
+    /**
+     * If the kill-switch preference is on, (re)apply session nftables on Linux.
+     * Portable platforms never claim enforcement.
+     */
+    fun ensureKillSwitch(): KillSwitchStatus {
+        if (!readKillSwitchEnabled()) return KillSwitchStatus.Disabled
+        if (!isLinux || !PlatformEnvironment.settings.showNftSessionNetGuard) {
+            return KillSwitchStatus.PreferenceOnly
+        }
+        if (sessionFirewallActive()) return KillSwitchStatus.Enforced
+        return if (applySessionFirewall() && sessionFirewallActive()) {
+            KillSwitchStatus.Enforced
+        } else {
+            KillSwitchStatus.Failed
+        }
+    }
+
+    fun killSwitchStatus(): KillSwitchStatus {
+        if (!readKillSwitchEnabled()) return KillSwitchStatus.Disabled
+        if (!isLinux || !PlatformEnvironment.settings.showNftSessionNetGuard) {
+            return KillSwitchStatus.PreferenceOnly
+        }
+        return if (sessionFirewallActive()) KillSwitchStatus.Enforced else KillSwitchStatus.Failed
+    }
+
+    fun setKillSwitchEnabled(enabled: Boolean): KillSwitchStatus {
+        writeKillSwitchEnabled(enabled)
+        return if (enabled) {
+            ensureKillSwitch()
+        } else {
+            KillSwitchStatus.Disabled
+        }
+    }
+
+    fun readAppRoutingText(): String {
+        val file = appRoutingFile()
+        if (!file.exists()) {
+            file.parentFile?.mkdirs()
+            file.writeText(defaultAppRoutingTemplate())
+        }
+        return file.readText()
+    }
+
+    fun writeAppRoutingText(text: String) {
+        appRoutingFile().apply { parentFile?.mkdirs() }.writeText(text)
+    }
+
+    fun readAppRoutes(): List<AppRoute> = parseAppRoutingLines(readAppRoutingText().lines())
+
+    fun writeAppRoutes(routes: List<AppRoute>) {
+        writeAppRoutingText(serializeAppRoutes(routes))
+    }
+
+    fun parseAppRoutingLines(lines: List<String>): List<AppRoute> =
+        lines.map { it.trim() }
+            .filter { it.isNotEmpty() && !it.startsWith("#") }
+            .mapNotNull { line ->
+                val parts = line.split(Regex("\\s+"))
+                if (parts.size < 2) return@mapNotNull null
+                val id = parts[0].trim()
+                if (id.isEmpty() || id.contains('/')) return@mapNotNull null
+                val mode = when (parts[1].trim().lowercase()) {
+                    "allow" -> AppRouteMode.Allow
+                    "deny", "block" -> AppRouteMode.Deny
+                    "vpn", "wireguard", "wg" -> AppRouteMode.Vpn
+                    else -> return@mapNotNull null
+                }
+                AppRoute(id, mode)
+            }
+
+    fun serializeAppRoutes(routes: List<AppRoute>): String =
+        buildString {
+            append(defaultAppRoutingTemplate().trimEnd())
+            appendLine()
+            routes.forEach { route ->
+                appendLine("${route.id} ${route.mode.name.lowercase()}")
+            }
+        }
+
+    fun defaultAppRoutingTemplate(): String =
+        """
+            # Telos per-app routing (desktop-id or package → allow|deny|vpn)
+            # Persisted under the vault ~/.config/telos/app-routing.txt
+            # Linux MVP: table is stored; process-level nftables owner/cgroup
+            # enforcement is not applied yet. Kill-switch still drops non-allowlisted egress.
+            # Windows/macOS: preference only.
+        """.trimIndent() + "\n"
+
+    /** Preference-only for now; returns whether process-level rules are enforced. */
+    fun appRoutingEnforced(): Boolean = false
 
     enum class WireGuardBackend { WgQuick, Wg }
 
@@ -147,7 +293,7 @@ object DesktopNetworkController {
         if (!isLinux) return false
         val conf = wireguardConfFile()
         val backend = detectWireGuardBackend() ?: return false
-        return when (backend) {
+        val stopped = when (backend) {
             WireGuardBackend.WgQuick -> {
                 val quick = Sys.which("wg-quick") ?: return false
                 if (conf.isFile) {
@@ -162,6 +308,9 @@ object DesktopNetworkController {
                     Sys.run("ip", "link", "set", "down", "dev", iface, timeoutSec = 8).ok
             }
         }
+        // Tunnel down must not open the net while kill-switch is preferred.
+        if (readKillSwitchEnabled()) ensureKillSwitch()
+        return stopped
     }
 
     fun wireGuardStatus(): WireGuardStatus {
@@ -207,12 +356,14 @@ object DesktopNetworkController {
             Sys.run("kill", pid.toString(), timeoutSec = 4)
             torPidFile().delete()
             TelosSessionAuditLog.append("network_policy", "tor_stop")
+            if (readKillSwitchEnabled()) ensureKillSwitch()
             return true
         }
         val marker = torConfigFile().absolutePath
         Sys.run("pkill", "-f", marker, timeoutSec = 4)
         torPidFile().delete()
         TelosSessionAuditLog.append("network_policy", "tor_stop")
+        if (readKillSwitchEnabled()) ensureKillSwitch()
         return true
     }
 
