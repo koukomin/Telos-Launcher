@@ -182,21 +182,57 @@ jobs:
           mkdir -p linux-out
           mapfile -t JARS < <(find desktop-linux/build/compose/jars -maxdepth 1 -name '*.jar')
           test "${#JARS[@]}" -eq 1
-          cp "${JARS[0]}" linux-out/telos-linux-desktop.jar
           VERSION_NAME=$(sed -n 's/^versionName=//p' version.properties)
+          cp "${JARS[0]}" linux-out/telos-linux-desktop.jar
+          cp "${JARS[0]}" "linux-out/telos-desktop-linux-x64-${VERSION_NAME}.jar"
           unzip -p linux-out/telos-linux-desktop.jar META-INF/MANIFEST.MF | grep -F "Implementation-Version: $VERSION_NAME"
           cp tools/start-telos-desktop.sh linux-out/
           tar -czf linux-out/telos-linux-session.tar.gz -C desktop-linux session
+          tar -czf linux-out/telos-desktop-linux-session-x64.tar.gz -C desktop-linux session
       - uses: actions/upload-artifact@v7
         with:
           name: telos-linux
           path: linux-out/*
           if-no-files-found: error
 
+  windows:
+    needs: version
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v6
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+      - uses: gradle/actions/setup-gradle@v6
+        with:
+          cache-provider: basic
+      - name: Test and build Windows UberJar
+        shell: bash
+        run: ./gradlew :ui-kmp:test :desktop-linux:test :desktop-linux:packageUberJarForCurrentOS --stacktrace
+      - name: Package Windows artifacts
+        shell: bash
+        run: |
+          mkdir -p win-out
+          VERSION_NAME=$(sed -n 's/^versionName=//p' version.properties)
+          mapfile -t JARS < <(find desktop-linux/build/compose/jars -maxdepth 1 -name '*.jar')
+          test "${#JARS[@]}" -eq 1
+          cp "${JARS[0]}" "win-out/telos-desktop-windows-x64-${VERSION_NAME}.jar"
+          cat > win-out/README-WINDOWS.txt <<'EOF'
+          Telos Desktop (Windows) — requires JDK 21+.
+          java -jar telos-desktop-windows-x64-*.jar
+          Defaults to Host Home (no LUKS). macOS builds deferred.
+          EOF
+      - uses: actions/upload-artifact@v7
+        with:
+          name: telos-windows
+          path: win-out/*
+          if-no-files-found: error
+
   release:
     permissions:
       contents: write
-    needs: [version, build, linux]
+    needs: [version, build, linux, windows]
     if: needs.version.outputs.publish == 'true'
     runs-on: ubuntu-latest
     env:
@@ -213,17 +249,16 @@ jobs:
           merge-multiple: true
       - name: Publish complete release
         run: |
-          # Only publish after both signed Android ABIs and Linux have succeeded.
+          # Android ABIs + Linux + Windows desktop jars required.
           for FILE in telos-arm64-v8a.apk telos-armeabi-v7a.apk telos-linux-desktop.jar start-telos-desktop.sh telos-linux-session.tar.gz; do
             test -s "release-assets/$FILE"
           done
+          test -n "$(ls release-assets/telos-desktop-windows-x64-*.jar 2>/dev/null | head -1)"
           bash tools/release-notes.sh "$TAG" "$RUNNER_TEMP/notes.md"
-          # A GitHub Release may already exist (created with the tag). Attach APKs
-          # even when it is not a draft.
           if ! gh release view "$TAG" >/dev/null 2>&1; then
             gh release create "$TAG" --draft --target "$GITHUB_SHA" \
-              --title "Telos $TAG (Android & Linux DE)" --notes-file "$RUNNER_TEMP/notes.md"
+              --title "Telos $TAG (Android & Desktop)" --notes-file "$RUNNER_TEMP/notes.md"
           fi
           gh release upload "$TAG" release-assets/* --clobber
           gh release edit "$TAG" --draft=false --latest \
-            --title "Telos $TAG (Android & Linux DE)" --notes-file "$RUNNER_TEMP/notes.md"
+            --title "Telos $TAG (Android & Desktop)" --notes-file "$RUNNER_TEMP/notes.md"

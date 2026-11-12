@@ -141,16 +141,27 @@ compose.desktop {
     application {
         mainClass = "com.telos.desktop.MainKt"
         nativeDistributions {
-            targetFormats(TargetFormat.AppImage, TargetFormat.Deb, TargetFormat.Rpm)
+            // Linux: AppImage/Deb/Rpm + UberJar. Windows: Exe + UberJar (built on windows-latest).
+            // macOS Dmg/Pkg intentionally deferred until Linux + Windows binaries play correctly.
+            targetFormats(
+                TargetFormat.AppImage,
+                TargetFormat.Deb,
+                TargetFormat.Rpm,
+                TargetFormat.Exe,
+            )
             packageName = "telos-desktop"
             packageVersion = releaseVersion.getProperty("versionName")
-            description = "Telos Linux Desktop Environment"
+            description = "Telos Desktop"
             vendor = "Telos"
             linux {
                 debMaintainer = "telos@localhost"
                 menuGroup = "System"
                 appRelease = "1"
                 appCategory = "Utility"
+            }
+            windows {
+                menuGroup = "Telos"
+                upgradeUuid = "a7c2e9f1-4b5d-4e8a-9c1f-2d3e4f5a6b7c"
             }
         }
     }

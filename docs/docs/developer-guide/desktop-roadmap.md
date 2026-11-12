@@ -2,9 +2,11 @@
 sidebar_position: 9
 ---
 
-# Telos Linux Desktop roadmap (remember this)
+# Telos Desktop roadmap (remember this)
 
-When a later session asks **what is still pending** for the Linux desktop, the answer is **none of P0–P4, Helix, Surface, or Wayland W0–W3**. Spec: [telos-wayland-shell.md](./telos-wayland-shell.md). `:app:app` still must not depend on `:desktop-linux`. `:app:ui` hosts `:ui-kmp` screens. Spec: [Telos Helix](./telos-helix.md).
+When a later session asks **what is still pending** for the **Linux session stack**, the answer is **none of P0–P4, Helix, Surface, or Wayland W0–W3**. Spec: [telos-wayland-shell.md](./telos-wayland-shell.md). `:app:app` still must not depend on `:desktop-linux`. `:app:ui` hosts `:ui-kmp` screens. Spec: [Telos Helix](./telos-helix.md).
+
+**Cross-platform binaries (GitHub):** Linux + Windows UberJars are the current ship targets (see `build-desktop-binaries.yml`). macOS Intel/ARM ships only after those play correctly. Branding is **Telos Desktop** (module path remains `:desktop-linux`).
 
 | Phase | Status | Scope |
 | --- | --- | --- |

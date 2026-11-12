@@ -29,7 +29,12 @@ fun TelosPreBootScreen(
     engine: PhantomVaultEngine,
     onUnlocked: () -> Unit,
 ) {
-    var mode by remember { mutableStateOf(BootMode.UnlockExisting) }
+    val portableShell = remember {
+        com.telos.desktop.platform.PlatformEnvironment.settings.showPortableDesktopShell
+    }
+    var mode by remember {
+        mutableStateOf(if (portableShell) BootMode.HostHome else BootMode.UnlockExisting)
+    }
     var password by remember { mutableStateOf("") }
     var outer by remember { mutableStateOf("") }
     var inner by remember { mutableStateOf("") }

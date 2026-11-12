@@ -16,5 +16,13 @@ class PlatformFilterTest {
         assertFalse(bsd.showLuksVault)
         val linux = SettingsVisibilityFilter.forOs("Linux")
         assertTrue(linux.showLuksVault)
+        assertTrue(linux.showLabwcSession)
+        assertTrue(linux.showNftSessionNetGuard)
+        val win = SettingsVisibilityFilter.forOs("Windows 11")
+        assertTrue(win.showPortableDesktopShell)
+        assertFalse(win.showLuksVault)
+        assertFalse(win.showLabwcSession)
+        assertFalse(win.showNftSessionNetGuard)
+        assertTrue(win.showDisplayResolution)
     }
 }

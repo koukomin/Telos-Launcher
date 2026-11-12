@@ -13,6 +13,9 @@ object SessionNetGuard {
     }
 
     fun apply(): Boolean {
+        if (!com.telos.desktop.platform.PlatformEnvironment.settings.showNftSessionNetGuard) {
+            return false
+        }
         val allow = allowlistFile()
         if (!allow.exists()) {
             allow.writeText("# one IPv4/IPv6 CIDR per line; empty = loopback + DNS only\n")

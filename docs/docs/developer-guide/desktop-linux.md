@@ -2,9 +2,9 @@
 sidebar_position: 8
 ---
 
-# Telos Linux Desktop (`:desktop-linux`)
+# Telos Desktop (`:desktop-linux`)
 
-`:desktop-linux` is a **standalone Compose for Desktop / JVM** module. It is registered in `settings.gradle.kts` and is **not** a dependency of `:app:app`. The Android APK does not ship Compose Desktop, cryptsetup helpers, or Linux icon scanners.
+`:desktop-linux` is a **standalone Compose for Desktop / JVM** module for **Telos Desktop**. It is registered in `settings.gradle.kts` and is **not** a dependency of `:app:app`. The Android APK does not ship Compose Desktop, cryptsetup helpers, or Linux icon scanners. CI publishes Linux and Windows UberJars to GitHub; macOS is deferred until those run cleanly.
 
 ## Build
 

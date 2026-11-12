@@ -1,12 +1,10 @@
-# Pending Telos Linux Desktop work
+# Pending Telos Desktop work
 
-P0 and P1 are implemented (labwc, vault as full session HOME, Linux only).
+Canonical answer lives in [`AGENTS.md`](../AGENTS.md) and
+[`docs/docs/developer-guide/desktop-roadmap.md`](../docs/docs/developer-guide/desktop-roadmap.md).
 
-When asked in a later session what is still pending, answer:
+**Linux session stack (P0–P4, Helix, Surface, Wayland W0–W3):** in tree — nothing pending from those phases.
 
-- **P2** — JVM search, Files/Media/Store parity
-- **P3** — macOS/BSD, niri, two-arch CI
-- **P4** — `:ui-kmp` shared UI (Android only if the user asks)
+**Cross-platform binaries:** Linux + Windows UberJars first (GitHub Actions). macOS Intel/ARM only after those play correctly.
 
-Canonical doc: `docs/docs/developer-guide/desktop-roadmap.md`
-Also mirrored in `AGENTS.md` and `CLAUDE.md`.
+Do not keep a second copy of agent rules here. All AI agents read `AGENTS.md` only.

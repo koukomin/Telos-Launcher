@@ -2,9 +2,33 @@
 sidebar_position: 40
 ---
 
-# Telos Linux Desktop
+# Telos Desktop
 
-Telos Linux Desktop is a **separate JVM program** (`:desktop-linux`). It is not inside the Android APK. Unlock the Phantom Vault, then you get **Helix** chrome: a KDE-style top bar with glyphs, Kickoff, icon dock, Overview (Meta+Tab), Control Center, toasts, Klassy window buttons, floating Telos apps, and a host `.desktop` launcher. The display manager offers **Telos** (labwc) and **Telos (niri)**. Host windows keep a 36 px top and 56 px bottom reserved band. With host `gtk-layer-shell`, the panel and dock are real Wayland layer surfaces (`telos-layer`); otherwise Telos draws them in Compose. Session notifications use `org.freedesktop.Notifications`. File pickers use the Telos portal (Telos Files picker) when `telos-portal` is running, then gtk. Screencast uses wlr. StatusNotifier tray icons show in the panel tray. Idle locks the session (swayidle, default 5 minutes; media playback inhibits idle). Nested sessions can use the GTK vault greeter; a TTY session still uses the console password. Per-output scale is saved. IME (fcitx5/ibus) and AT-SPI start when installed. Lock uses `loginctl` and PAM, then the vault password. Scale 100–200% is in Settings. Screenshots save as owner-only PNGs (set `TELOS_SHOT_CLIPBOARD=1` to also copy).
+**Telos Desktop** is a **separate JVM program** (Gradle module `:desktop-linux`). It is not inside the Android APK. On Linux you can unlock the Phantom Vault and run a full **Helix** session (labwc/niri). On Windows (and later macOS) the same binary family opens as a **windowed portable shell** — Host Home by default, no LUKS / labwc.
+
+Linux session chrome: KDE-style top bar with glyphs, Kickoff, icon dock, Overview (Meta+Tab), Control Center, toasts, Klassy window buttons, floating Telos apps, and a host `.desktop` launcher. The display manager offers **Telos** (labwc) and **Telos (niri)**. Host windows keep a 36 px top and 56 px bottom reserved band. With host `gtk-layer-shell`, the panel and dock are real Wayland layer surfaces (`telos-layer`); otherwise Telos draws them in Compose. Session notifications use `org.freedesktop.Notifications`. File pickers use the Telos portal (Telos Files picker) when `telos-portal` is running, then gtk. Screencast uses wlr. StatusNotifier tray icons show in the panel tray. Idle locks the session (swayidle, default 5 minutes; media playback inhibits idle). Nested sessions can use the GTK vault greeter; a TTY session still uses the console password. Per-output scale is saved. IME (fcitx5/ibus) and AT-SPI start when installed. Lock uses `loginctl` and PAM, then the vault password. Scale 100–200% is in Settings. Screenshots save as owner-only PNGs (set `TELOS_SHOT_CLIPBOARD=1` to also copy).
+
+## Download binaries (GitHub)
+
+GitHub Actions builds **ready UberJars** for:
+
+| Platform | Artifact | Status |
+| --- | --- | --- |
+| Linux x64 / arm64 | `telos-desktop-linux-*.jar` (+ session tarball) | Shipped on tag / workflow_dispatch / PR desktop paths |
+| Windows x64 | `telos-desktop-windows-x64-*.jar` (Exe best-effort) | Shipped with release; play-test Host Home first |
+| macOS Intel / ARM | — | **Deferred** until Linux + Windows play correctly |
+
+Workflow: `.github/workflows/build-desktop-binaries.yml`. Releases also attach jars via `build-release.yml`.
+
+```bash
+# Linux
+java -jar telos-desktop-linux-x64-*.jar
+# or full session after install
+./desktop-linux/session/telos-session
+
+# Windows (JDK 21+ on PATH)
+java -jar telos-desktop-windows-x64-*.jar
+```
 
 ## What it does
 

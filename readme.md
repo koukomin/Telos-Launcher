@@ -1246,10 +1246,10 @@ See [dependency security checks](docs/docs/developer-guide/dependabot.md) and
 ./gradlew installDefaultDebug       # install to a connected device or emulator
 ./gradlew test                      # run all unit tests
 ./gradlew :core:base:test           # run the tests of a single module
-./gradlew :desktop-linux:packageUberJarForCurrentOS  # Linux desktop shell (not in the APK)
+./gradlew :desktop-linux:packageUberJarForCurrentOS  # Telos Desktop UberJar for the current OS (not in the APK)
 ```
 
-`:desktop-linux` is a Compose for Desktop JVM module. It is not a dependency of `:app:app`. Linux builds need a host JDK 17+ and, at runtime, `cryptsetup` or `udisksctl` for the LUKS vault and `labwc` for a full session. `desktop-linux/session/telos-session` unlocks the vault as `$HOME` (keeping `TELOS_HOST_HOME` for the image path) and starts labwc. AppGrid search covers Telos apps, `.desktop` and files; Store talks to Flatpak. See [Telos Linux Desktop](docs/docs/developer-guide/desktop-linux.md), the [roadmap](docs/docs/developer-guide/desktop-roadmap.md) (P0–P4, Helix H0–H6, Surface S0–S4, Wayland W0–W3 in tree; `:app:ui` hosts `:ui-kmp` screens; `:app:app` does not depend on `:desktop-linux`), [Helix](docs/docs/developer-guide/telos-helix.md), and the [user guide](docs/docs/user-guide/telos/linux-desktop.md).
+`:desktop-linux` is the Compose for Desktop JVM module for **Telos Desktop**. It is not a dependency of `:app:app`. GitHub Actions publish **Linux and Windows UberJars** (`.github/workflows/build-desktop-binaries.yml`); **macOS Intel/ARM is deferred** until those play correctly. Linux full session needs JDK 21+, `cryptsetup`/`udisksctl` for the LUKS vault, and `labwc`. Windows runs as a windowed Host Home shell (`java -jar telos-desktop-windows-x64-*.jar`). See [Telos Desktop](docs/docs/developer-guide/desktop-linux.md), the [roadmap](docs/docs/developer-guide/desktop-roadmap.md), [Helix](docs/docs/developer-guide/telos-helix.md), and the [user guide](docs/docs/user-guide/telos/linux-desktop.md).
 
 Developer documentation (module structure, plugin contracts) lives in `docs/docs/developer-guide/`.
 

@@ -34,11 +34,11 @@ export const DeveloperGuideSidebar: DefaultTheme.SidebarItem[] = [
     link: '/docs/developer-guide/setup',
   },
   {
-    text: 'Linux Desktop module',
+    text: 'Telos Desktop module',
     link: '/docs/developer-guide/desktop-linux',
   },
   {
-    text: 'Linux Desktop roadmap',
+    text: 'Telos Desktop roadmap',
     link: '/docs/developer-guide/desktop-roadmap',
   },
   {
