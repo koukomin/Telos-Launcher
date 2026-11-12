@@ -22,6 +22,7 @@ import com.telos.desktop.settings.TelosDesktopSettings
 import com.telos.desktop.wm.SnapLayout
 import com.telos.desktop.wm.TelosWindowManager
 import com.telos.desktop.wm.WindowMode
+import de.mm20.launcher2.uikmp.TelosSurfaceTokens
 
 @Composable
 fun HelixOverview(
@@ -59,12 +60,12 @@ internal fun HelixSnapZonesBar(wm: TelosWindowManager) {
         Modifier
             .fillMaxWidth()
             .clip(shape)
-            .background(TelosColors.menu)
+            .background(TelosSurfaceTokens.popupOpaque)
             .border(1.dp, TelosColors.outline, shape)
             .padding(12.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        Text(t("desktop_helix_snap_title"), color = TelosColors.secondary, fontSize = 14.sp)
+        Text(t("desktop_helix_snap_title"), color = TelosSurfaceTokens.hudLabel, fontSize = 14.sp)
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             HelixTechPill(t("desktop_helix_snap_50_50"), selected = false, accent = TelosColors.secondary) {
                 wm.snapFocused(SnapLayout.HalfLeft)
@@ -98,12 +99,12 @@ internal fun HelixWindowModeBar(settings: TelosDesktopSettings) {
         Modifier
             .fillMaxWidth()
             .clip(shape)
-            .background(TelosColors.menu)
+            .background(TelosSurfaceTokens.popupOpaque)
             .border(1.dp, TelosColors.outline, shape)
             .padding(12.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        Text(t("desktop_helix_window_mode"), color = TelosColors.secondary, fontSize = 14.sp)
+        Text(t("desktop_helix_window_mode"), color = TelosSurfaceTokens.hudLabel, fontSize = 14.sp)
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             HelixTechPill(
                 t("desktop_helix_tiling"),
@@ -137,8 +138,8 @@ private fun WorkspaceTile(wm: TelosWindowManager, i: Int, onDismiss: () -> Unit,
         modifier
             .fillMaxSize()
             .clip(shape)
-            .background(if (active) TelosColors.surfaceHigh else TelosColors.surfaceContainer)
-            .border(1.dp, if (active) TelosColors.secondary else TelosColors.outline, shape)
+            .background(if (active) TelosColors.surfaceHigh else TelosSurfaceTokens.cardOpaque)
+            .border(1.dp, if (active) TelosSurfaceTokens.hudLabel else TelosColors.outline, shape)
             .clickable {
                 wm.switchWorkspace(i)
                 onDismiss()
@@ -146,7 +147,7 @@ private fun WorkspaceTile(wm: TelosWindowManager, i: Int, onDismiss: () -> Unit,
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        Text("Desktop ${i + 1}", color = TelosColors.secondary, fontSize = 16.sp)
+        Text("Desktop ${i + 1}", color = TelosSurfaceTokens.hudLabel, fontSize = 16.sp)
         if (wins.isEmpty()) {
             Text("Empty", color = TelosColors.onSurface.copy(0.6f), fontSize = 13.sp)
         } else {

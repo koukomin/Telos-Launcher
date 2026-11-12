@@ -43,6 +43,7 @@ import com.telos.desktop.ui.TelosColors
 import com.telos.desktop.apps.TelosVirtualApps
 import com.telos.desktop.theme.WorkspaceTintStrips
 import com.telos.desktop.wm.TelosWindowManager
+import de.mm20.launcher2.uikmp.TelosSurfaceTokens
 import kotlinx.coroutines.delay
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -80,7 +81,10 @@ fun TelosTopPanel(
         }
     }
     val barH = (settings?.panelHeightDp ?: 36f).dp
-    val barColor = Color((settings?.panelArgb ?: 0xF2241E36).toInt()).copy(alpha = settings?.panelAlpha ?: 0.94f)
+    val barColor = TelosSurfaceTokens.panelGlass(
+        base = Color((settings?.panelArgb ?: 0xF2241E36L).toInt()),
+        alpha = settings?.panelAlpha ?: TelosSurfaceTokens.DEFAULT_PANEL_GLASS_ALPHA,
+    )
     val iconDp = (settings?.panelIconDp ?: 22f).dp
     Box(
         modifier.fillMaxWidth().height(barH)
@@ -190,7 +194,7 @@ fun TelosTopPanel(
         }
         if (popup != PanelPopup.None) {
             Box(Modifier.fillMaxWidth().padding(top = 36.dp), contentAlignment = Alignment.TopEnd) {
-                Column(Modifier.width(320.dp).background(TelosColors.menu).border(1.dp, TelosColors.outline).padding(12.dp)) {
+                Column(Modifier.width(320.dp).background(TelosSurfaceTokens.popupOpaque).border(1.dp, TelosColors.outline).padding(12.dp)) {
                     when (popup) {
                         PanelPopup.Clock -> {
                             val s = engine.overviewHistory.lastOrNull()

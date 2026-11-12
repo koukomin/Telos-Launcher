@@ -31,6 +31,7 @@ import com.telos.desktop.settings.TelosDesktopSettings
 import com.telos.desktop.wm.SnapLayout
 import com.telos.desktop.wm.TelosWindowManager
 import com.telos.desktop.wm.WindowMode
+import de.mm20.launcher2.uikmp.TelosSurfaceTokens
 import java.io.File
 
 @Composable
@@ -64,12 +65,12 @@ fun HelixControlCenter(
         Modifier
             .width(360.dp)
             .clip(shape)
-            .background(TelosColors.menu)
+            .background(TelosSurfaceTokens.popupOpaque)
             .border(1.dp, TelosColors.outline, shape)
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(10.dp),
     ) {
-        Text("Control Center", color = TelosColors.secondary, fontSize = 16.sp)
+        Text("Control Center", color = TelosSurfaceTokens.hudLabel, fontSize = 16.sp)
         Text(audio.track.ifBlank { "No media" }, color = TelosColors.onSurface, fontSize = 12.sp)
         Slider(audio.volume.toFloat() / 100f, { AudioControlManager.setVolume(it * 100.0) })
         Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {

@@ -11,6 +11,10 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
+/**
+ * Helix palette primitives. Prefer [TelosSurfaceTokens] role accessors
+ * (`panelGlass`, `cardOpaque`, `popupOpaque`, `hudLabel`, `techPill`) for chrome.
+ */
 object TelosSharedColors {
     val background = Color(0xFF0E0B16)
     val surface = Color(0xFF1A1528)

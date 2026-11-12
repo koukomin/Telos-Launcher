@@ -12,9 +12,11 @@ kotlin {
         jvmTarget.set(JvmTarget.JVM_21)
     }
     sourceSets.getByName("main").kotlin.srcDir("src/commonMain/kotlin")
+    sourceSets.getByName("test").kotlin.srcDir("src/commonTest/kotlin")
 }
 
 dependencies {
     implementation(compose.desktop.currentOs)
     implementation(compose.material3)
+    testImplementation(kotlin("test"))
 }

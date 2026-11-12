@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.sp
 /**
  * Shared Cyber-Tech accent palette for Telos virtual apps.
  * Neon borders + opaque Material containers (never transparent surface as icon/text).
+ * Surface role names live in [TelosSurfaceTokens] (mirrors ui-kmp Helix kit).
  */
 object TelosCyber {
     val NeonGreen = Color(0xFF00E676)
@@ -48,7 +49,7 @@ object TelosCyber {
 }
 
 /**
- * Opaque tonal tech card: neon border over [surfaceContainerLow] (glass-safe).
+ * Opaque tonal tech card: neon border over [TelosSurfaceTokens.cardOpaque] (glass-safe).
  */
 @Composable
 fun Modifier.telosTechSurface(
@@ -60,7 +61,7 @@ fun Modifier.telosTechSurface(
     shape = shape,
     borderWidth = borderWidth,
     alpha = 0.92f,
-    backgroundColor = MaterialTheme.colorScheme.surfaceContainerLow,
+    backgroundColor = TelosSurfaceTokens.cardOpaque(),
 )
 
 @Composable
