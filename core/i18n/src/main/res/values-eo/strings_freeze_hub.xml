@@ -31,4 +31,8 @@
     
     
 
+    <string name="freeze_desk_title">Freeze Desk</string>
+    <string name="freeze_desk_filter_bloat">Bloat</string>
+    <string name="freeze_desk_open_summary">Malfermu Sistemo → Aplikoj por frostigi, serĉi kaj filtri instalitajn pakaĵojn.</string>
+    <string name="freeze_desk_rules_help">Aŭtomataj frostrreguloj kaj backends restas ĉi tie. Aplikaĵa frosto kaj AppOps estas en Freeze Desk.</string>
 </resources>

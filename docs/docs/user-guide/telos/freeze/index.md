@@ -16,6 +16,8 @@ is launched again (and unfrozen) the next time you open it from the launcher.
 Smart Freeze is a feature of the launcher settings, not a separate Telos app, so it does not appear in
 [Telos Store](../store/). Open **Settings > Freeze Manager**. The legacy dashboard and manager routes both resolve to this same screen.
 
+Per-app freeze now lives on **Telos System → Apps (Freeze Desk)**: search, tech-pill filters (All / Frozen / Running / System / Bloat), a frozen badge, and one-tap freeze/unfreeze through the existing Freeze backend, with deep links to AppOps Next and the package firewall. Freeze Manager’s first tab is a **Rules** alias that opens Freeze Desk and keeps backend status plus list visibility switches; Auto-freeze and Settings tabs are unchanged.
+
 | Tab | Purpose |
 | --- | --- |
 | Apps | Search name/package, show system/iconless entries, filter frozen/auto-freeze, select all shown, clear selection, explicit Freeze / Unfreeze / Auto-freeze actions |

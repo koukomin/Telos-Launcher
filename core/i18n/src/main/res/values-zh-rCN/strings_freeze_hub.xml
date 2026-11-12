@@ -31,4 +31,8 @@
     
     
 
+    <string name="freeze_desk_title">Freeze Desk</string>
+    <string name="freeze_desk_filter_bloat">臃肿</string>
+    <string name="freeze_desk_open_summary">打开系统 → 应用以冻结、搜索和筛选已安装的软件包。</string>
+    <string name="freeze_desk_rules_help">自动冻结规则和后端保留在此。按应用冻结与 AppOps 在 Freeze Desk。</string>
 </resources>

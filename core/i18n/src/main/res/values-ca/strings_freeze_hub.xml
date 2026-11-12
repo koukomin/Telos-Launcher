@@ -31,4 +31,8 @@
     
     
 
+    <string name="freeze_desk_title">Freeze Desk</string>
+    <string name="freeze_desk_filter_bloat">Bloat</string>
+    <string name="freeze_desk_open_summary">Obriu Sistema → Aplicacions per congelar, cercar i filtrar paquets instal·lats.</string>
+    <string name="freeze_desk_rules_help">Les regles de congelació automàtica i els backends es queden aquí. La congelació per app i AppOps són a Freeze Desk.</string>
 </resources>

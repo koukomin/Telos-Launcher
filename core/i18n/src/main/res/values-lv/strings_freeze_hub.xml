@@ -31,4 +31,8 @@
     
     
 
+    <string name="freeze_desk_title">Freeze Desk</string>
+    <string name="freeze_desk_filter_bloat">Bloat</string>
+    <string name="freeze_desk_open_summary">Atveriet Sistēma → Lietotnes, lai iesaldētu, meklētu un filtrētu instalētās pakotnes.</string>
+    <string name="freeze_desk_rules_help">Automātiskās iesaldēšanas noteikumi un backends paliek šeit. Lietotņu iesaldēšana un AppOps ir Freeze Desk.</string>
 </resources>

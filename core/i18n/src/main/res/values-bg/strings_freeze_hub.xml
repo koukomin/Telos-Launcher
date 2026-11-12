@@ -31,4 +31,8 @@
     
     
 
+    <string name="freeze_desk_title">Freeze Desk</string>
+    <string name="freeze_desk_filter_bloat">Bloat</string>
+    <string name="freeze_desk_open_summary">Отворете Система → Приложения за замразяване, търсене и филтриране на инсталирани пакети.</string>
+    <string name="freeze_desk_rules_help">Правилата за автоматично замразяване и backends остават тук. Замразяването на приложения и AppOps са в Freeze Desk.</string>
 </resources>

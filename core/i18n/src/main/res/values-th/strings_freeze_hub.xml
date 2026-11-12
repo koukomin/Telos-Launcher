@@ -31,4 +31,8 @@
     
     
 
+    <string name="freeze_desk_title">Freeze Desk</string>
+    <string name="freeze_desk_filter_bloat">Bloat</string>
+    <string name="freeze_desk_open_summary">เปิด ระบบ → แอป เพื่อแช่แข็ง ค้นหา และกรองแพ็กเกจที่ติดตั้ง</string>
+    <string name="freeze_desk_rules_help">กฎการแช่แข็งอัตโนมัติและ backends อยู่ที่นี่ การแช่แข็งต่อแอปและ AppOps อยู่ใน Freeze Desk</string>
 </resources>

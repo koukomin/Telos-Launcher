@@ -69,7 +69,7 @@ Privacy Shield (clients, freeze external Shizuku, banking cloak, clipboard) stay
 | Tab | What it does |
 | --- | --- |
 | Dashboard | CPU, RAM, uptime, graphics API, battery, **text size** for Telos System (this tab only). Link to Network for saved Wi-Fi |
-| Apps | Installed packages, AppOps Next (native daemon, Shizuku UserService, or privileged `cmd appops` shell). Planned Freeze Desk unifies freeze + ops here |
+| Apps | **Freeze Desk**: search and filter installed packages (All / Frozen / Running / System / Bloat), frozen badge, one-tap freeze/unfreeze via the existing Freeze backend, AppOps Next deep link, and per-package Network firewall. Detail sheet (embedded AppOps + multi-select) is not in this phase |
 | Tweaks | System tweaks |
 | Privacy Shield | Shizuku clients, banking cloak (Developer Options snapshot restore), clipboard |
 | Shizuku | Built-in server, pairing, ADB command, labs |

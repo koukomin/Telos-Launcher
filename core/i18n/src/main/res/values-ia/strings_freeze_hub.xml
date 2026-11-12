@@ -31,4 +31,8 @@
     
     
 
+    <string name="freeze_desk_title">Freeze Desk</string>
+    <string name="freeze_desk_filter_bloat">Bloat</string>
+    <string name="freeze_desk_open_summary">Aperi Systema → Apps pro gelar, cercar e filtrar pacchettos installate.</string>
+    <string name="freeze_desk_rules_help">Le regulas de auto-gelation e backends resta hic. Le gelation per app e AppOps es in Freeze Desk.</string>
 </resources>

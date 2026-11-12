@@ -31,4 +31,8 @@
     
     
 
+    <string name="freeze_desk_title">Freeze Desk</string>
+    <string name="freeze_desk_filter_bloat">Bloat</string>
+    <string name="freeze_desk_open_summary">برای انجماد، جستجو و پالایش بسته‌های نصب‌شده، سیستم ← برنامه‌ها را باز کنید.</string>
+    <string name="freeze_desk_rules_help">قوانین انجماد خودکار و بک‌اندها اینجا می‌مانند. انجماد برنامه و AppOps در Freeze Desk است.</string>
 </resources>

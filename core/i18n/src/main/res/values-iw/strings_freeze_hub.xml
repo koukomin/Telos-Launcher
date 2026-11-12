@@ -31,4 +31,8 @@
     
     
 
+    <string name="freeze_desk_title">Freeze Desk</string>
+    <string name="freeze_desk_filter_bloat">Bloat</string>
+    <string name="freeze_desk_open_summary">פתחו מערכת ← אפליקציות כדי להקפיא, לחפש ולסנן חבילות מותקנות.</string>
+    <string name="freeze_desk_rules_help">כללי הקפאה אוטומטית ו־backends נשארים כאן. הקפאה לפי אפליקציה ו־AppOps נמצאים ב־Freeze Desk.</string>
 </resources>

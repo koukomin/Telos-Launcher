@@ -31,4 +31,8 @@
     
     
 
+    <string name="freeze_desk_title">Freeze Desk</string>
+    <string name="freeze_desk_filter_bloat">Bloat</string>
+    <string name="freeze_desk_open_summary">इंस्टॉल पैकेज फ्रीज़, खोज और फ़िल्टर करने के लिए सिस्टम → ऐप्स खोलें।</string>
+    <string name="freeze_desk_rules_help">ऑटो-फ़्रीज़ नियम और बैकएंड यहाँ रहते हैं। प्रति-ऐप फ़्रीज़ और AppOps Freeze Desk पर हैं।</string>
 </resources>

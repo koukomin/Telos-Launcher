@@ -31,4 +31,8 @@
     
     
 
+    <string name="freeze_desk_title">Freeze Desk</string>
+    <string name="freeze_desk_filter_bloat">Bloat</string>
+    <string name="freeze_desk_open_summary">Åbn System → Apps for at fryse, søge og filtrere installerede pakker.</string>
+    <string name="freeze_desk_rules_help">Auto-freeze-regler og backends forbliver her. App-freeze og AppOps ligger i Freeze Desk.</string>
 </resources>

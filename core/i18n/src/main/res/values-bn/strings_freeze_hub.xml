@@ -31,4 +31,8 @@
     
     
 
+    <string name="freeze_desk_title">Freeze Desk</string>
+    <string name="freeze_desk_filter_bloat">Bloat</string>
+    <string name="freeze_desk_open_summary">ইনস্টল করা প্যাকেজ ফ্রিজ, খোঁজা ও ফিল্টার করতে সিস্টেম → অ্যাপস খুলুন।</string>
+    <string name="freeze_desk_rules_help">অটো-ফ্রিজ নিয়ম ও ব্যাকএন্ড এখানেই থাকে। অ্যাপ ফ্রিজ ও AppOps আছে Freeze Desk-এ।</string>
 </resources>
