@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_vault_restore_title">पूर्ण vault पुनर्स्थापना</string>
+    <string name="desktop_vault_restore_hint">AES सत्र बैकअप से desktop.properties और ~/.config/telos पुनर्स्थापित करता है। WireGuard निजी कुंजियाँ लॉग में कभी नहीं लिखी जातीं। पुष्टि आवश्यक है।</string>
+    <string name="desktop_vault_restore_preview_btn">पुनर्स्थापना पूर्वावलोकन</string>
+    <string name="desktop_vault_restore_preview">%1$s Telos कॉन्फ़िग फ़ाइलें पुनर्स्थापित करने के लिए तैयार (desktop.properties: %2$s)। लागू करने के लिए पुष्टि करें।</string>
+    <string name="desktop_vault_restore_confirm">पुनर्स्थापना की पुष्टि करें</string>
+    <string name="desktop_vault_restore_cancel">पुनर्स्थापना रद्द करें</string>
+    <string name="desktop_vault_restore_done">Vault सत्र कॉन्फ़िग पुनर्स्थापित</string>
+    <string name="desktop_vault_restore_need_confirm">पुनर्स्थापना पुष्टि आवश्यक</string>
+    <string name="desktop_update_title">हस्ताक्षरित डेस्कटॉप अपडेट</string>
+    <string name="desktop_update_hint">Telos Ed25519 कुंजी से हस्ताक्षरित स्थानीय file:// पथ या HTTPS मैनिफ़ेस्ट जाँचता है। अपडेट portable/vault अस्थायी में स्टेज होते हैं और कभी स्वतः इंस्टॉल नहीं होते।</string>
+    <string name="desktop_update_url_label">अपडेट मैनिफ़ेस्ट (पथ, file://, या https://)</string>
+    <string name="desktop_update_save_url">अपडेट URL सहेजें</string>
+    <string name="desktop_update_url_saved">अपडेट मैनिफ़ेस्ट URL सहेजा गया</string>
+    <string name="desktop_update_check">हस्ताक्षरित अपडेट जाँचें</string>
+    <string name="desktop_update_ready">हस्ताक्षरित अपडेट %1$s सत्यापित — स्टेज इंस्टॉल की पुष्टि करें</string>
+    <string name="desktop_update_install_confirm">स्टेज इंस्टॉल की पुष्टि करें</string>
+    <string name="desktop_update_install_cancel">अपडेट रद्द करें</string>
+    <string name="desktop_update_installed">अपडेट %1$s के रूप में स्टेज हुआ (मैन्युअल रूप से पुनः आरंभ करें)</string>
+    <string name="desktop_update_sig_fail">अपडेट हस्ताक्षर सत्यापन विफल</string>
+    <string name="desktop_update_no_url">पहले file:// या HTTPS अपडेट मैनिफ़ेस्ट URL सेट करें</string>
+</resources>

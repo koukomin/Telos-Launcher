@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_vault_restore_title">Täielik vaulti taastamine</string>
+    <string name="desktop_vault_restore_hint">Taastab desktop.properties ja ~/.config/telos AES-seansi varukoopiast. WireGuardi privaatvõtmeid ei kirjutata kunagi logidesse. Nõuab kinnitust.</string>
+    <string name="desktop_vault_restore_preview_btn">Taastamise eelvaade</string>
+    <string name="desktop_vault_restore_preview">Valmis taastama %1$s Telose konfiguratsioonifaili (desktop.properties: %2$s). Kinnitage rakendamiseks.</string>
+    <string name="desktop_vault_restore_confirm">Kinnita taastamine</string>
+    <string name="desktop_vault_restore_cancel">Tühista taastamine</string>
+    <string name="desktop_vault_restore_done">Vaulti seansi konfiguratsioon taastatud</string>
+    <string name="desktop_vault_restore_need_confirm">Taastamise kinnitus on nõutav</string>
+    <string name="desktop_update_title">Allkirjastatud töölaua uuendus</string>
+    <string name="desktop_update_hint">Kontrollib kohalikku file:// teed või Telos Ed25519 võtmega allkirjastatud HTTPS-manifesti. Uuendused valmistatakse portable/vault temp alla ega paigaldu kunagi automaatselt.</string>
+    <string name="desktop_update_url_label">Uuenduse manifest (tee, file:// või https://)</string>
+    <string name="desktop_update_save_url">Salvesta uuenduse URL</string>
+    <string name="desktop_update_url_saved">Uuenduse manifesti URL salvestatud</string>
+    <string name="desktop_update_check">Kontrolli allkirjastatud uuendust</string>
+    <string name="desktop_update_ready">Allkirjastatud uuendus %1$s kinnitatud — kinnitage paigalduse ettevalmistus</string>
+    <string name="desktop_update_install_confirm">Kinnita ettevalmistatud paigaldus</string>
+    <string name="desktop_update_install_cancel">Tühista uuendus</string>
+    <string name="desktop_update_installed">Uuendus ette valmistatud kui %1$s (taaskäivitage käsitsi)</string>
+    <string name="desktop_update_sig_fail">Uuenduse allkirja kontroll ebaõnnestus</string>
+    <string name="desktop_update_no_url">Määrake esmalt file:// või HTTPS manifesti URL</string>
+</resources>

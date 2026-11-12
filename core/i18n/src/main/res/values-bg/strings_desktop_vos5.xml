@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_vault_restore_title">Пълно възстановяване на vault</string>
+    <string name="desktop_vault_restore_hint">Възстановява desktop.properties и ~/.config/telos от AES резервно копие на сесията. Частните ключове на WireGuard никога не се записват в журнали. Изисква потвърждение.</string>
+    <string name="desktop_vault_restore_preview_btn">Преглед на възстановяването</string>
+    <string name="desktop_vault_restore_preview">Готово за възстановяване на %1$s конфигурационни файла Telos (desktop.properties: %2$s). Потвърдете за прилагане.</string>
+    <string name="desktop_vault_restore_confirm">Потвърдете възстановяването</string>
+    <string name="desktop_vault_restore_cancel">Отмяна на възстановяването</string>
+    <string name="desktop_vault_restore_done">Конфигурацията на vault сесията е възстановена</string>
+    <string name="desktop_vault_restore_need_confirm">Изисква се потвърждение на възстановяването</string>
+    <string name="desktop_update_title">Подписана актуализация на работния плот</string>
+    <string name="desktop_update_hint">Проверява локален file:// път или HTTPS манифест, подписан с ключа Ed25519 на Telos. Актуализациите се подготвят в portable/vault temp и никога не се инсталират автоматично.</string>
+    <string name="desktop_update_url_label">Манифест за актуализация (път, file:// или https://)</string>
+    <string name="desktop_update_save_url">Запазване на URL за актуализация</string>
+    <string name="desktop_update_url_saved">URL на манифеста за актуализация е запазен</string>
+    <string name="desktop_update_check">Проверка за подписана актуализация</string>
+    <string name="desktop_update_ready">Подписаната актуализация %1$s е проверена — потвърдете подготовката за инсталация</string>
+    <string name="desktop_update_install_confirm">Потвърдете подготвената инсталация</string>
+    <string name="desktop_update_install_cancel">Отмяна на актуализацията</string>
+    <string name="desktop_update_installed">Актуализацията е подготвена като %1$s (рестартирайте ръчно)</string>
+    <string name="desktop_update_sig_fail">Проверката на подписа на актуализацията не успя</string>
+    <string name="desktop_update_no_url">Първо задайте URL на манифест file:// или HTTPS</string>
+</resources>

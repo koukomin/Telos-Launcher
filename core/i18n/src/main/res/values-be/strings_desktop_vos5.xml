@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_vault_restore_title">Поўнае аднаўленне vault</string>
+    <string name="desktop_vault_restore_hint">Аднаўляе desktop.properties і ~/.config/telos з AES-рэзервовай копіі сеанса. Закрытыя ключы WireGuard ніколі не запісваюцца ў журналы. Патрабуецца пацверджанне.</string>
+    <string name="desktop_vault_restore_preview_btn">Папярэдні прагляд аднаўлення</string>
+    <string name="desktop_vault_restore_preview">Гатова аднавіць %1$s файлаў канфігурацыі Telos (desktop.properties: %2$s). Пацвердзіце для прымянення.</string>
+    <string name="desktop_vault_restore_confirm">Пацвердзіць аднаўленне</string>
+    <string name="desktop_vault_restore_cancel">Скасаваць аднаўленне</string>
+    <string name="desktop_vault_restore_done">Канфігурацыя сеанса vault адноўлена</string>
+    <string name="desktop_vault_restore_need_confirm">Патрабуецца пацверджанне аднаўлення</string>
+    <string name="desktop_update_title">Падпісанае абнаўленне desktop</string>
+    <string name="desktop_update_hint">Правярае лакальны шлях file:// або HTTPS-маніфест, падпісаны ключом Ed25519 Telos. Абнаўленні трапляюць у temp portable/vault і ніколі не ўсталёўваюцца аўтаматычна.</string>
+    <string name="desktop_update_url_label">Маніфест абнаўлення (шлях, file:// або https://)</string>
+    <string name="desktop_update_save_url">Захаваць URL абнаўлення</string>
+    <string name="desktop_update_url_saved">URL маніфеста абнаўлення захаваны</string>
+    <string name="desktop_update_check">Праверыць падпісанае абнаўленне</string>
+    <string name="desktop_update_ready">Падпісанае абнаўленне %1$s праверана — пацвердзіце падрыхтоўку ўсталявання</string>
+    <string name="desktop_update_install_confirm">Пацвердзіць падрыхтаванае ўсталяванне</string>
+    <string name="desktop_update_install_cancel">Скасаваць абнаўленне</string>
+    <string name="desktop_update_installed">Абнаўленне падрыхтавана як %1$s (перазапусціце ўручную)</string>
+    <string name="desktop_update_sig_fail">Праверка подпісу абнаўлення не ўдалася</string>
+    <string name="desktop_update_no_url">Спачатку ўкажыце URL маніфеста file:// або HTTPS</string>
+</resources>

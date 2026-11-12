@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_vault_restore_title">Restauração completa do vault</string>
+    <string name="desktop_vault_restore_hint">Restaura desktop.properties e ~/.config/telos a partir de um backup de sessão AES. Chaves privadas WireGuard nunca são escritas em registros. Requer confirmação.</string>
+    <string name="desktop_vault_restore_preview_btn">Pré-visualizar restauração</string>
+    <string name="desktop_vault_restore_preview">Pronto para restaurar %1$s arquivos de configuração Telos (desktop.properties: %2$s). Confirme para aplicar.</string>
+    <string name="desktop_vault_restore_confirm">Confirmar restauração</string>
+    <string name="desktop_vault_restore_cancel">Cancelar restauração</string>
+    <string name="desktop_vault_restore_done">Configuração de sessão do vault restaurada</string>
+    <string name="desktop_vault_restore_need_confirm">Confirmação de restauração necessária</string>
+    <string name="desktop_update_title">Atualização de desktop assinada</string>
+    <string name="desktop_update_hint">Verifica um caminho file:// local ou um manifesto HTTPS assinado com a chave Ed25519 Telos. As atualizações ficam em staging no temp portable/vault e nunca se instalam automaticamente.</string>
+    <string name="desktop_update_url_label">Manifesto de atualização (caminho, file:// ou https://)</string>
+    <string name="desktop_update_save_url">Salvar URL de atualização</string>
+    <string name="desktop_update_url_saved">URL do manifesto de atualização salva</string>
+    <string name="desktop_update_check">Procurar atualização assinada</string>
+    <string name="desktop_update_ready">Atualização assinada %1$s verificada — confirme para preparar a instalação</string>
+    <string name="desktop_update_install_confirm">Confirmar instalação preparada</string>
+    <string name="desktop_update_install_cancel">Cancelar atualização</string>
+    <string name="desktop_update_installed">Atualização preparada como %1$s (reinicie manualmente)</string>
+    <string name="desktop_update_sig_fail">Falha na verificação da assinatura da atualização</string>
+    <string name="desktop_update_no_url">Defina primeiro um URL de manifesto file:// ou HTTPS</string>
+</resources>

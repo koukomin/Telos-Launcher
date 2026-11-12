@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_vault_restore_title">Teljes vault-visszaállítás</string>
+    <string name="desktop_vault_restore_hint">Visszaállítja a desktop.properties és ~/.config/telos fájlokat AES munkamenet-biztonsági mentésből. A WireGuard privát kulcsok soha nem kerülnek naplóba. Megerősítés szükséges.</string>
+    <string name="desktop_vault_restore_preview_btn">Visszaállítás előnézete</string>
+    <string name="desktop_vault_restore_preview">%1$s Telos konfigurációs fájl visszaállítására kész (desktop.properties: %2$s). Erősítse meg az alkalmazáshoz.</string>
+    <string name="desktop_vault_restore_confirm">Visszaállítás megerősítése</string>
+    <string name="desktop_vault_restore_cancel">Visszaállítás megszakítása</string>
+    <string name="desktop_vault_restore_done">Vault munkamenet-konfiguráció visszaállítva</string>
+    <string name="desktop_vault_restore_need_confirm">Visszaállítás megerősítése szükséges</string>
+    <string name="desktop_update_title">Aláírt asztali frissítés</string>
+    <string name="desktop_update_hint">Helyi file:// útvonalat vagy Telos Ed25519 kulccsal aláírt HTTPS manifesztet ellenőriz. A frissítések a portable/vault temp alá kerülnek, és soha nem települnek automatikusan.</string>
+    <string name="desktop_update_url_label">Frissítési manifeszt (útvonal, file:// vagy https://)</string>
+    <string name="desktop_update_save_url">Frissítési URL mentése</string>
+    <string name="desktop_update_url_saved">Frissítési manifeszt URL elmentve</string>
+    <string name="desktop_update_check">Aláírt frissítés keresése</string>
+    <string name="desktop_update_ready">Az aláírt %1$s frissítés ellenőrizve — erősítse meg az telepítés előkészítését</string>
+    <string name="desktop_update_install_confirm">Előkészített telepítés megerősítése</string>
+    <string name="desktop_update_install_cancel">Frissítés megszakítása</string>
+    <string name="desktop_update_installed">Frissítés előkészítve: %1$s (indítsa újra kézzel)</string>
+    <string name="desktop_update_sig_fail">A frissítés aláírás-ellenőrzése sikertelen</string>
+    <string name="desktop_update_no_url">Először állítson be file:// vagy HTTPS manifeszt URL-t</string>
+</resources>

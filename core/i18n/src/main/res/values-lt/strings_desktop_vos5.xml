@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_vault_restore_title">Visiškas vault atkūrimas</string>
+    <string name="desktop_vault_restore_hint">Atkuria desktop.properties ir ~/.config/telos iš AES seanso atsarginės kopijos. WireGuard privatūs raktai niekada nerašomi į žurnalus. Reikia patvirtinimo.</string>
+    <string name="desktop_vault_restore_preview_btn">Atkūrimo peržiūra</string>
+    <string name="desktop_vault_restore_preview">Paruošta atkurti %1$s Telos konfigūracijos failų (desktop.properties: %2$s). Patvirtinkite, kad pritaikytumėte.</string>
+    <string name="desktop_vault_restore_confirm">Patvirtinti atkūrimą</string>
+    <string name="desktop_vault_restore_cancel">Atšaukti atkūrimą</string>
+    <string name="desktop_vault_restore_done">Vault seanso konfigūracija atkurta</string>
+    <string name="desktop_vault_restore_need_confirm">Reikia atkūrimo patvirtinimo</string>
+    <string name="desktop_update_title">Pasirašytas darbalaukio naujinimas</string>
+    <string name="desktop_update_hint">Tikrina vietinį file:// kelią arba HTTPS manifestą, pasirašytą Telos Ed25519 raktu. Naujinimai paruošiami portable/vault temp ir niekada neįdiegiami automatiškai.</string>
+    <string name="desktop_update_url_label">Naujinimo manifestas (kelias, file:// arba https://)</string>
+    <string name="desktop_update_save_url">Išsaugoti naujinimo URL</string>
+    <string name="desktop_update_url_saved">Naujinimo manifesto URL išsaugotas</string>
+    <string name="desktop_update_check">Tikrinti pasirašytą naujinimą</string>
+    <string name="desktop_update_ready">Pasirašytas naujinimas %1$s patikrintas — patvirtinkite diegimo paruošimą</string>
+    <string name="desktop_update_install_confirm">Patvirtinti paruoštą diegimą</string>
+    <string name="desktop_update_install_cancel">Atšaukti naujinimą</string>
+    <string name="desktop_update_installed">Naujinimas paruoštas kaip %1$s (paleiskite iš naujo rankiniu būdu)</string>
+    <string name="desktop_update_sig_fail">Naujinimo parašo patikra nepavyko</string>
+    <string name="desktop_update_no_url">Pirmiausia nustatykite file:// arba HTTPS manifesto URL</string>
+</resources>

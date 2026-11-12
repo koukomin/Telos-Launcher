@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_vault_restore_title">استعادة كاملة للخزنة</string>
+    <string name="desktop_vault_restore_hint">يستعيد desktop.properties و~/.config/telos من نسخة احتياطية لجلسة AES. لا تُكتب مفاتيح WireGuard الخاصة في السجلات أبدًا. يتطلب تأكيدًا.</string>
+    <string name="desktop_vault_restore_preview_btn">معاينة الاستعادة</string>
+    <string name="desktop_vault_restore_preview">جاهز لاستعادة %1$s من ملفات إعداد Telos (desktop.properties: %2$s). أكّد للتطبيق.</string>
+    <string name="desktop_vault_restore_confirm">تأكيد الاستعادة</string>
+    <string name="desktop_vault_restore_cancel">إلغاء الاستعادة</string>
+    <string name="desktop_vault_restore_done">تمت استعادة إعدادات جلسة الخزنة</string>
+    <string name="desktop_vault_restore_need_confirm">مطلوب تأكيد الاستعادة</string>
+    <string name="desktop_update_title">تحديث سطح مكتب موقَّع</string>
+    <string name="desktop_update_hint">يتحقق من مسار file:// محلي أو بيان HTTPS موقَّع بمفتاح Telos Ed25519. تُجهَّز التحديثات تحت مؤقت portable/vault ولا تُثبَّت تلقائيًا.</string>
+    <string name="desktop_update_url_label">بيان التحديث (مسار أو file:// أو https://)</string>
+    <string name="desktop_update_save_url">حفظ عنوان التحديث</string>
+    <string name="desktop_update_url_saved">تم حفظ عنوان بيان التحديث</string>
+    <string name="desktop_update_check">التحقق من تحديث موقَّع</string>
+    <string name="desktop_update_ready">تم التحقق من التحديث الموقَّع %1$s — أكّد لتجهيز التثبيت</string>
+    <string name="desktop_update_install_confirm">تأكيد تجهيز التثبيت</string>
+    <string name="desktop_update_install_cancel">إلغاء التحديث</string>
+    <string name="desktop_update_installed">تم تجهيز التحديث باسم %1$s (أعد التشغيل يدويًا)</string>
+    <string name="desktop_update_sig_fail">فشل التحقق من توقيع التحديث</string>
+    <string name="desktop_update_no_url">عيّن أولاً عنوان بيان تحديث file:// أو HTTPS</string>
+</resources>

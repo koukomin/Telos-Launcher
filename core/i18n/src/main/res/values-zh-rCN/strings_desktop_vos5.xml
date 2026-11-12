@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_vault_restore_title">完整 vault 恢复</string>
+    <string name="desktop_vault_restore_hint">从 AES 会话备份恢复 desktop.properties 与 ~/.config/telos。WireGuard 私钥绝不会写入日志。需要确认。</string>
+    <string name="desktop_vault_restore_preview_btn">预览恢复</string>
+    <string name="desktop_vault_restore_preview">准备恢复 %1$s 个 Telos 配置文件（desktop.properties：%2$s）。确认以应用。</string>
+    <string name="desktop_vault_restore_confirm">确认恢复</string>
+    <string name="desktop_vault_restore_cancel">取消恢复</string>
+    <string name="desktop_vault_restore_done">已恢复 vault 会话配置</string>
+    <string name="desktop_vault_restore_need_confirm">需要确认恢复</string>
+    <string name="desktop_update_title">已签名的桌面更新</string>
+    <string name="desktop_update_hint">检查由 Telos Ed25519 密钥签名的本地 file:// 路径或 HTTPS 清单。更新暂存到 portable/vault 临时目录，绝不会自动安装。</string>
+    <string name="desktop_update_url_label">更新清单（路径、file:// 或 https://）</string>
+    <string name="desktop_update_save_url">保存更新 URL</string>
+    <string name="desktop_update_url_saved">已保存更新清单 URL</string>
+    <string name="desktop_update_check">检查已签名更新</string>
+    <string name="desktop_update_ready">已验证签名更新 %1$s — 确认以暂存安装</string>
+    <string name="desktop_update_install_confirm">确认暂存安装</string>
+    <string name="desktop_update_install_cancel">取消更新</string>
+    <string name="desktop_update_installed">更新已暂存为 %1$s（请手动重启后使用）</string>
+    <string name="desktop_update_sig_fail">更新签名验证失败</string>
+    <string name="desktop_update_no_url">请先设置 file:// 或 HTTPS 更新清单 URL</string>
+</resources>

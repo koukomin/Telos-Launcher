@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_vault_restore_title">Ripristino completo del vault</string>
+    <string name="desktop_vault_restore_hint">Ripristina desktop.properties e ~/.config/telos da un backup di sessione AES. Le chiavi private WireGuard non vengono mai scritte nei log. Richiede conferma.</string>
+    <string name="desktop_vault_restore_preview_btn">Anteprima ripristino</string>
+    <string name="desktop_vault_restore_preview">Pronto a ripristinare %1$s file di configurazione Telos (desktop.properties: %2$s). Conferma per applicare.</string>
+    <string name="desktop_vault_restore_confirm">Conferma ripristino</string>
+    <string name="desktop_vault_restore_cancel">Annulla ripristino</string>
+    <string name="desktop_vault_restore_done">Configurazione di sessione del vault ripristinata</string>
+    <string name="desktop_vault_restore_need_confirm">Conferma di ripristino richiesta</string>
+    <string name="desktop_update_title">Aggiornamento desktop firmato</string>
+    <string name="desktop_update_hint">Controlla un percorso file:// locale o un manifest HTTPS firmato con la chiave Ed25519 Telos. Gli aggiornamenti vanno in staging sotto temp portable/vault e non si installano automaticamente.</string>
+    <string name="desktop_update_url_label">Manifest di aggiornamento (percorso, file:// o https://)</string>
+    <string name="desktop_update_save_url">Salva URL aggiornamento</string>
+    <string name="desktop_update_url_saved">URL del manifest di aggiornamento salvato</string>
+    <string name="desktop_update_check">Cerca aggiornamento firmato</string>
+    <string name="desktop_update_ready">Aggiornamento firmato %1$s verificato — conferma per preparare l’installazione</string>
+    <string name="desktop_update_install_confirm">Conferma installazione preparata</string>
+    <string name="desktop_update_install_cancel">Annulla aggiornamento</string>
+    <string name="desktop_update_installed">Aggiornamento preparato come %1$s (riavvia manualmente)</string>
+    <string name="desktop_update_sig_fail">Verifica firma aggiornamento non riuscita</string>
+    <string name="desktop_update_no_url">Imposta prima un URL manifest file:// o HTTPS</string>
+</resources>

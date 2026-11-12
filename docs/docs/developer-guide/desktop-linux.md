@@ -19,6 +19,8 @@ Main class: `com.telos.desktop.MainKt`. The window is undecorated fullscreen.
 
 ## Vault
 
+VOS-5 (partial): `DesktopVaultRestore` confirms AES session-bundle restore into vault `desktop.properties` + `~/.config/telos`; `DesktopSignedUpdate` verifies Ed25519-signed manifests (`file://` or HTTPS preference) and stages jars under portable/vault temp without auto-install.
+
 VOS-6 OpSec (partial): `TelosOpSecGuard` secure clipboard + `TelosSessionAuditLog` (append-only under vault `~/.config/telos/opsec/audit.log`, mode 0600). Attestation light writes os-release / compositor / portable mode into the audit log on unlock.
 
 The Phantom Vault can sit on a single image or a folder of media carriers (stego shards +

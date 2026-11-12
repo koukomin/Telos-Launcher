@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_vault_restore_title">Fuld vault-gendannelse</string>
+    <string name="desktop_vault_restore_hint">Gendanner desktop.properties og ~/.config/telos fra en AES-sessionsbackup. WireGuard-private nøgler skrives aldrig til logfiler. Kræver bekræftelse.</string>
+    <string name="desktop_vault_restore_preview_btn">Forhåndsvis gendannelse</string>
+    <string name="desktop_vault_restore_preview">Klar til at gendanne %1$s Telos-konfigurationsfiler (desktop.properties: %2$s). Bekræft for at anvende.</string>
+    <string name="desktop_vault_restore_confirm">Bekræft gendannelse</string>
+    <string name="desktop_vault_restore_cancel">Annuller gendannelse</string>
+    <string name="desktop_vault_restore_done">Vault-sessionskonfiguration gendannet</string>
+    <string name="desktop_vault_restore_need_confirm">Bekræftelse af gendannelse påkrævet</string>
+    <string name="desktop_update_title">Signeret desktopopdatering</string>
+    <string name="desktop_update_hint">Tjekker en lokal file://-sti eller HTTPS-manifest signeret med Telos Ed25519-nøglen. Opdateringer stages under portable/vault-temp og installeres aldrig automatisk.</string>
+    <string name="desktop_update_url_label">Opdateringsmanifest (sti, file:// eller https://)</string>
+    <string name="desktop_update_save_url">Gem opdaterings-URL</string>
+    <string name="desktop_update_url_saved">Opdateringsmanifest-URL gemt</string>
+    <string name="desktop_update_check">Søg efter signeret opdatering</string>
+    <string name="desktop_update_ready">Signeret opdatering %1$s bekræftet — bekræft for at forberede installation</string>
+    <string name="desktop_update_install_confirm">Bekræft forberedt installation</string>
+    <string name="desktop_update_install_cancel">Annuller opdatering</string>
+    <string name="desktop_update_installed">Opdatering forberedt som %1$s (genstart manuelt)</string>
+    <string name="desktop_update_sig_fail">Bekræftelse af opdateringssignatur mislykkedes</string>
+    <string name="desktop_update_no_url">Angiv først en file://- eller HTTPS-manifest-URL</string>
+</resources>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_vault_restore_title">Restauration complete del vault</string>
+    <string name="desktop_vault_restore_hint">Restaura desktop.properties e ~/.config/telos ab un copia de reserva de session AES. Claves private WireGuard nunquam es scribite in registros. Require confirmation.</string>
+    <string name="desktop_vault_restore_preview_btn">Previsualisation del restauration</string>
+    <string name="desktop_vault_restore_preview">Preste a restaurar %1$s files de configuration Telos (desktop.properties: %2$s). Confirma pro applicar.</string>
+    <string name="desktop_vault_restore_confirm">Confirmar restauration</string>
+    <string name="desktop_vault_restore_cancel">Cancellar restauration</string>
+    <string name="desktop_vault_restore_done">Configuration de session del vault restaurate</string>
+    <string name="desktop_vault_restore_need_confirm">Confirmation de restauration requirite</string>
+    <string name="desktop_update_title">Actualisation de scriptorio signate</string>
+    <string name="desktop_update_hint">Verifica un cammino file:// local o un manifesto HTTPS signate con le clave Ed25519 de Telos. Actualisationes se prepara sub temp portable/vault e nunquam se installa automaticamente.</string>
+    <string name="desktop_update_url_label">Manifesto de actualisation (cammino, file:// o https://)</string>
+    <string name="desktop_update_save_url">Salveguardar URL de actualisation</string>
+    <string name="desktop_update_url_saved">URL del manifesto de actualisation salveguardate</string>
+    <string name="desktop_update_check">Cercar actualisation signate</string>
+    <string name="desktop_update_ready">Actualisation signate %1$s verificate — confirma pro preparar le installation</string>
+    <string name="desktop_update_install_confirm">Confirmar installation preparate</string>
+    <string name="desktop_update_install_cancel">Cancellar actualisation</string>
+    <string name="desktop_update_installed">Actualisation preparate como %1$s (reinitia manualmente)</string>
+    <string name="desktop_update_sig_fail">Verification del signatura de actualisation fallite</string>
+    <string name="desktop_update_no_url">Defini primo un URL de manifesto file:// o HTTPS</string>
+</resources>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_vault_restore_title">Popolna obnovitev trezorja</string>
+    <string name="desktop_vault_restore_hint">Obnovi desktop.properties in ~/.config/telos iz AES varnostne kopije seje. Zasebni ključi WireGuard se nikoli ne zapisujejo v dnevnike. Zahteva potrditev.</string>
+    <string name="desktop_vault_restore_preview_btn">Predogled obnovitve</string>
+    <string name="desktop_vault_restore_preview">Pripravljeno za obnovitev %1$s konfiguracijskih datotek Telos (desktop.properties: %2$s). Potrdite za uporabo.</string>
+    <string name="desktop_vault_restore_confirm">Potrdi obnovitev</string>
+    <string name="desktop_vault_restore_cancel">Prekliči obnovitev</string>
+    <string name="desktop_vault_restore_done">Konfiguracija seje trezorja obnovljena</string>
+    <string name="desktop_vault_restore_need_confirm">Zahtevana je potrditev obnovitve</string>
+    <string name="desktop_update_title">Podpisana namizna posodobitev</string>
+    <string name="desktop_update_hint">Preveri lokalno pot file:// ali HTTPS manifest, podpisan s ključem Telos Ed25519. Posodobitve se pripravijo v portable/vault temp in se nikoli ne namestijo samodejno.</string>
+    <string name="desktop_update_url_label">Manifest posodobitve (pot, file:// ali https://)</string>
+    <string name="desktop_update_save_url">Shrani URL posodobitve</string>
+    <string name="desktop_update_url_saved">URL manifesta posodobitve shranjen</string>
+    <string name="desktop_update_check">Preveri podpisano posodobitev</string>
+    <string name="desktop_update_ready">Podpisana posodobitev %1$s preverjena — potrdite pripravo namestitve</string>
+    <string name="desktop_update_install_confirm">Potrdi pripravljeno namestitev</string>
+    <string name="desktop_update_install_cancel">Prekliči posodobitev</string>
+    <string name="desktop_update_installed">Posodobitev pripravljena kot %1$s (ročno znova zaženite)</string>
+    <string name="desktop_update_sig_fail">Preverjanje podpisa posodobitve ni uspelo</string>
+    <string name="desktop_update_no_url">Najprej nastavite URL manifesta file:// ali HTTPS</string>
+</resources>

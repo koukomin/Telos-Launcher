@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_vault_restore_title">Athchóiriú vault iomlán</string>
+    <string name="desktop_vault_restore_hint">Athchóiríonn desktop.properties agus ~/.config/telos ó chúltaca seisiúin AES. Ní scríobhtar eochracha príobháideacha WireGuard chuig logaí riamh. Deimhniú ag teastáil.</string>
+    <string name="desktop_vault_restore_preview_btn">Réamhamharc athchóirithe</string>
+    <string name="desktop_vault_restore_preview">Réidh chun %1$s comhad cumraíochta Telos a athchóiriú (desktop.properties: %2$s). Deimhnigh chun cur i bhfeidhm.</string>
+    <string name="desktop_vault_restore_confirm">Deimhnigh athchóiriú</string>
+    <string name="desktop_vault_restore_cancel">Cealaigh athchóiriú</string>
+    <string name="desktop_vault_restore_done">Cumraíocht seisiúin vault athchóirithe</string>
+    <string name="desktop_vault_restore_need_confirm">Deimhniú athchóirithe ag teastáil</string>
+    <string name="desktop_update_title">Nuashonrú deisce sínithe</string>
+    <string name="desktop_update_hint">Seiceálann cosán file:// áitiúil nó manifest HTTPS sínithe le heochair Ed25519 Telos. Téann nuashonruithe faoi staging faoi temp portable/vault agus ní shuiteáiltear go huathoibríoch iad.</string>
+    <string name="desktop_update_url_label">Manifest nuashonraithe (cosán, file://, nó https://)</string>
+    <string name="desktop_update_save_url">Sábháil URL nuashonraithe</string>
+    <string name="desktop_update_url_saved">URL manifest nuashonraithe sábháilte</string>
+    <string name="desktop_update_check">Seiceáil nuashonrú sínithe</string>
+    <string name="desktop_update_ready">Nuashonrú sínithe %1$s fíoraithe — deimhnigh chun suiteáil a ullmhú</string>
+    <string name="desktop_update_install_confirm">Deimhnigh suiteáil ullmhaithe</string>
+    <string name="desktop_update_install_cancel">Cealaigh nuashonrú</string>
+    <string name="desktop_update_installed">Nuashonrú ullmhaithe mar %1$s (atosú de láimh)</string>
+    <string name="desktop_update_sig_fail">Theip ar fhíorú síniú nuashonraithe</string>
+    <string name="desktop_update_no_url">Socraigh URL manifest file:// nó HTTPS ar dtús</string>
+</resources>

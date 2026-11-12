@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_vault_restore_title">Khôi phục vault đầy đủ</string>
+    <string name="desktop_vault_restore_hint">Khôi phục desktop.properties và ~/.config/telos từ bản sao lưu phiên AES. Khóa riêng WireGuard không bao giờ được ghi vào nhật ký. Cần xác nhận.</string>
+    <string name="desktop_vault_restore_preview_btn">Xem trước khôi phục</string>
+    <string name="desktop_vault_restore_preview">Sẵn sàng khôi phục %1$s tệp cấu hình Telos (desktop.properties: %2$s). Xác nhận để áp dụng.</string>
+    <string name="desktop_vault_restore_confirm">Xác nhận khôi phục</string>
+    <string name="desktop_vault_restore_cancel">Hủy khôi phục</string>
+    <string name="desktop_vault_restore_done">Đã khôi phục cấu hình phiên vault</string>
+    <string name="desktop_vault_restore_need_confirm">Cần xác nhận khôi phục</string>
+    <string name="desktop_update_title">Cập nhật desktop đã ký</string>
+    <string name="desktop_update_hint">Kiểm tra đường dẫn file:// cục bộ hoặc manifest HTTPS được ký bằng khóa Ed25519 của Telos. Bản cập nhật được chuẩn bị trong temp portable/vault và không bao giờ tự cài.</string>
+    <string name="desktop_update_url_label">Manifest cập nhật (đường dẫn, file:// hoặc https://)</string>
+    <string name="desktop_update_save_url">Lưu URL cập nhật</string>
+    <string name="desktop_update_url_saved">Đã lưu URL manifest cập nhật</string>
+    <string name="desktop_update_check">Kiểm tra cập nhật đã ký</string>
+    <string name="desktop_update_ready">Cập nhật đã ký %1$s đã xác minh — xác nhận để chuẩn bị cài đặt</string>
+    <string name="desktop_update_install_confirm">Xác nhận cài đặt đã chuẩn bị</string>
+    <string name="desktop_update_install_cancel">Hủy cập nhật</string>
+    <string name="desktop_update_installed">Cập nhật được chuẩn bị thành %1$s (khởi động lại thủ công)</string>
+    <string name="desktop_update_sig_fail">Xác minh chữ ký cập nhật thất bại</string>
+    <string name="desktop_update_no_url">Hãy đặt URL manifest file:// hoặc HTTPS trước</string>
+</resources>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_vault_restore_title">Restauración completa del vault</string>
+    <string name="desktop_vault_restore_hint">Restaura desktop.properties y ~/.config/telos desde una copia AES de sesión. Las claves privadas de WireGuard nunca se escriben en registros. Requiere confirmación.</string>
+    <string name="desktop_vault_restore_preview_btn">Vista previa de restauración</string>
+    <string name="desktop_vault_restore_preview">Listo para restaurar %1$s archivos de configuración Telos (desktop.properties: %2$s). Confirme para aplicar.</string>
+    <string name="desktop_vault_restore_confirm">Confirmar restauración</string>
+    <string name="desktop_vault_restore_cancel">Cancelar restauración</string>
+    <string name="desktop_vault_restore_done">Configuración de sesión del vault restaurada</string>
+    <string name="desktop_vault_restore_need_confirm">Se requiere confirmación de restauración</string>
+    <string name="desktop_update_title">Actualización de escritorio firmada</string>
+    <string name="desktop_update_hint">Comprueba una ruta file:// local o un manifiesto HTTPS firmado con la clave Ed25519 de Telos. Las actualizaciones se preparan en temp portable/vault y nunca se instalan solas.</string>
+    <string name="desktop_update_url_label">Manifiesto de actualización (ruta, file:// o https://)</string>
+    <string name="desktop_update_save_url">Guardar URL de actualización</string>
+    <string name="desktop_update_url_saved">URL del manifiesto de actualización guardada</string>
+    <string name="desktop_update_check">Buscar actualización firmada</string>
+    <string name="desktop_update_ready">Actualización firmada %1$s verificada — confirme para preparar la instalación</string>
+    <string name="desktop_update_install_confirm">Confirmar instalación preparada</string>
+    <string name="desktop_update_install_cancel">Cancelar actualización</string>
+    <string name="desktop_update_installed">Actualización preparada como %1$s (reinicie manualmente)</string>
+    <string name="desktop_update_sig_fail">Falló la verificación de la firma de actualización</string>
+    <string name="desktop_update_no_url">Configure primero una URL de manifiesto file:// o HTTPS</string>
+</resources>

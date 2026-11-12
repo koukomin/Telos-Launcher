@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_vault_restore_title">Pełne przywracanie vault</string>
+    <string name="desktop_vault_restore_hint">Przywraca desktop.properties i ~/.config/telos z kopii zapasowej sesji AES. Klucze prywatne WireGuard nigdy nie trafiają do dzienników. Wymaga potwierdzenia.</string>
+    <string name="desktop_vault_restore_preview_btn">Podgląd przywracania</string>
+    <string name="desktop_vault_restore_preview">Gotowe do przywrócenia %1$s plików konfiguracji Telos (desktop.properties: %2$s). Potwierdź, aby zastosować.</string>
+    <string name="desktop_vault_restore_confirm">Potwierdź przywracanie</string>
+    <string name="desktop_vault_restore_cancel">Anuluj przywracanie</string>
+    <string name="desktop_vault_restore_done">Przywrócono konfigurację sesji vault</string>
+    <string name="desktop_vault_restore_need_confirm">Wymagane potwierdzenie przywracania</string>
+    <string name="desktop_update_title">Podpisana aktualizacja pulpitu</string>
+    <string name="desktop_update_hint">Sprawdza lokalną ścieżkę file:// lub manifest HTTPS podpisany kluczem Ed25519 Telos. Aktualizacje trafiają do temp portable/vault i nigdy nie instalują się automatycznie.</string>
+    <string name="desktop_update_url_label">Manifest aktualizacji (ścieżka, file:// lub https://)</string>
+    <string name="desktop_update_save_url">Zapisz URL aktualizacji</string>
+    <string name="desktop_update_url_saved">Zapisano URL manifestu aktualizacji</string>
+    <string name="desktop_update_check">Sprawdź podpisaną aktualizację</string>
+    <string name="desktop_update_ready">Podpisana aktualizacja %1$s zweryfikowana — potwierdź przygotowanie instalacji</string>
+    <string name="desktop_update_install_confirm">Potwierdź przygotowaną instalację</string>
+    <string name="desktop_update_install_cancel">Anuluj aktualizację</string>
+    <string name="desktop_update_installed">Aktualizacja przygotowana jako %1$s (uruchom ponownie ręcznie)</string>
+    <string name="desktop_update_sig_fail">Weryfikacja podpisu aktualizacji nie powiodła się</string>
+    <string name="desktop_update_no_url">Najpierw ustaw URL manifestu file:// lub HTTPS</string>
+</resources>

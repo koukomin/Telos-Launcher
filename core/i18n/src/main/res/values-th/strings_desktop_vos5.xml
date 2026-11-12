@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_vault_restore_title">คืนค่า vault แบบเต็ม</string>
+    <string name="desktop_vault_restore_hint">คืนค่า desktop.properties และ ~/.config/telos จากข้อมูลสำรองเซสชัน AES ไม่เคยบันทึกคีย์ส่วนตัว WireGuard ลงในบันทึก ต้องยืนยัน</string>
+    <string name="desktop_vault_restore_preview_btn">ดูตัวอย่างการคืนค่า</string>
+    <string name="desktop_vault_restore_preview">พร้อมคืนค่าไฟล์คอนฟิก Telos %1$s ไฟล์ (desktop.properties: %2$s) ยืนยันเพื่อใช้</string>
+    <string name="desktop_vault_restore_confirm">ยืนยันการคืนค่า</string>
+    <string name="desktop_vault_restore_cancel">ยกเลิกการคืนค่า</string>
+    <string name="desktop_vault_restore_done">คืนค่าคอนฟิกเซสชัน vault แล้ว</string>
+    <string name="desktop_vault_restore_need_confirm">ต้องยืนยันการคืนค่า</string>
+    <string name="desktop_update_title">การอัปเดตเดสก์ท็อปที่ลงนาม</string>
+    <string name="desktop_update_hint">ตรวจพาธ file:// ในเครื่องหรือแมนิเฟสต์ HTTPS ที่ลงนามด้วยคีย์ Ed25519 ของ Telos การอัปเดตถูกจัดเตรียมใต้ temp ของ portable/vault และไม่ติดตั้งอัตโนมัติ</string>
+    <string name="desktop_update_url_label">แมนิเฟสต์อัปเดต (พาธ, file:// หรือ https://)</string>
+    <string name="desktop_update_save_url">บันทึก URL อัปเดต</string>
+    <string name="desktop_update_url_saved">บันทึก URL แมนิเฟสต์อัปเดตแล้ว</string>
+    <string name="desktop_update_check">ตรวจหาอัปเดตที่ลงนาม</string>
+    <string name="desktop_update_ready">อัปเดตที่ลงนาม %1$s ผ่านการตรวจแล้ว — ยืนยันเพื่อจัดเตรียมการติดตั้ง</string>
+    <string name="desktop_update_install_confirm">ยืนยันการติดตั้งที่จัดเตรียม</string>
+    <string name="desktop_update_install_cancel">ยกเลิกการอัปเดต</string>
+    <string name="desktop_update_installed">จัดเตรียมอัปเดตเป็น %1$s แล้ว (รีสตาร์ทด้วยตนเอง)</string>
+    <string name="desktop_update_sig_fail">การตรวจลายเซ็นอัปเดตล้มเหลว</string>
+    <string name="desktop_update_no_url">ตั้ง URL แมนิเฟสต์ file:// หรือ HTTPS ก่อน</string>
+</resources>

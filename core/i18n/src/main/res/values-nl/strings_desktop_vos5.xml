@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_vault_restore_title">Volledige vault-herstel</string>
+    <string name="desktop_vault_restore_hint">Herstelt desktop.properties en ~/.config/telos vanuit een AES-sessieback-up. WireGuard-privésleutels worden nooit naar logs geschreven. Bevestiging vereist.</string>
+    <string name="desktop_vault_restore_preview_btn">Herstelvoorbeeld</string>
+    <string name="desktop_vault_restore_preview">Klaar om %1$s Telos-configuratiebestanden te herstellen (desktop.properties: %2$s). Bevestig om toe te passen.</string>
+    <string name="desktop_vault_restore_confirm">Herstel bevestigen</string>
+    <string name="desktop_vault_restore_cancel">Herstel annuleren</string>
+    <string name="desktop_vault_restore_done">Vault-sessieconfiguratie hersteld</string>
+    <string name="desktop_vault_restore_need_confirm">Bevestiging van herstel vereist</string>
+    <string name="desktop_update_title">Ondertekende desktopupdate</string>
+    <string name="desktop_update_hint">Controleert een lokaal file://-pad of HTTPS-manifest ondertekend met de Telos Ed25519-sleutel. Updates gaan naar portable/vault-temp en installeren nooit automatisch.</string>
+    <string name="desktop_update_url_label">Updatemanifest (pad, file:// of https://)</string>
+    <string name="desktop_update_save_url">Update-URL opslaan</string>
+    <string name="desktop_update_url_saved">URL van updatemanifest opgeslagen</string>
+    <string name="desktop_update_check">Controleren op ondertekende update</string>
+    <string name="desktop_update_ready">Ondertekende update %1$s geverifieerd — bevestig om installatie voor te bereiden</string>
+    <string name="desktop_update_install_confirm">Voorbereide installatie bevestigen</string>
+    <string name="desktop_update_install_cancel">Update annuleren</string>
+    <string name="desktop_update_installed">Update voorbereid als %1$s (handmatig herstarten)</string>
+    <string name="desktop_update_sig_fail">Verificatie van updatesignatuur mislukt</string>
+    <string name="desktop_update_no_url">Stel eerst een file://- of HTTPS-manifest-URL in</string>
+</resources>
