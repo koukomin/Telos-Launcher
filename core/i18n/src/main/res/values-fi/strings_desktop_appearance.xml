@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_appearance_title">Ulkoasu</string>
+    <string name="desktop_appearance_hint">Quiet Ops- tai Vault Neon -voimakkuus, neonkorostus ja paniikkivaimennus. Profiilikerrokset voivat ohittaa nämä kirjoittamatta isännän HOME-kansioon Portable Datassa.</string>
+    <string name="desktop_theme_intensity_label">Teeman voimakkuus</string>
+    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
+    <string name="desktop_theme_intensity_neon">Vault Neon</string>
+    <string name="desktop_theme_accent_label">Korostus</string>
+    <string name="desktop_panic_mute_toggle">Paniikkivaimennus</string>
+    <string name="desktop_panic_mute_on">Paniikkivaimennus: Päällä</string>
+    <string name="desktop_panic_mute_off">Paniikkivaimennus: Pois</string>
+    <string name="desktop_panic_mute_hint">Pakottaa Quiet Ops -tilan ja piilottaa neonreunat sekä mittarit. Vain visuaalinen — ei muuta palomuuria tai kill-switchiä. Pikanäppäin: Super+Shift+P.</string>
+    <string name="desktop_vos_profiles_appearance_hint">Jokainen nimetty profiili voi säilyttää oman desktop.properties-kerroksen voimakkuudelle, korostukselle, kuvakkeille ja osoittimelle. Vaihto lataa ulkoasun profiilikerroksesta ja sitten holvin yleisistä ominaisuuksista.</string>
+</resources>

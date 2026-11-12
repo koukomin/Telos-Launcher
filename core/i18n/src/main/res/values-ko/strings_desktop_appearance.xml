@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_appearance_title">모양</string>
+    <string name="desktop_appearance_hint">Quiet Ops 또는 Vault Neon 강도, 네온 강조색, 패닉 뮤트. 프로필 오버레이로 덮어쓸 수 있으며 Portable Data에서는 호스트 HOME에 쓰지 않습니다.</string>
+    <string name="desktop_theme_intensity_label">테마 강도</string>
+    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
+    <string name="desktop_theme_intensity_neon">Vault Neon</string>
+    <string name="desktop_theme_accent_label">강조색</string>
+    <string name="desktop_panic_mute_toggle">패닉 뮤트</string>
+    <string name="desktop_panic_mute_on">패닉 뮤트: 켜짐</string>
+    <string name="desktop_panic_mute_off">패닉 뮤트: 꺼짐</string>
+    <string name="desktop_panic_mute_hint">Quiet Ops를 강제하고 네온 테두리와 게이지를 숨깁니다. 시각만 — 방화벽이나 킬 스위치는 바꾸지 않습니다. 단축키: Super+Shift+P.</string>
+    <string name="desktop_vos_profiles_appearance_hint">이름 있는 각 프로필은 강도·강조색·아이콘·커서용 desktop.properties 오버레이를 둘 수 있습니다. 전환 시 프로필 오버레이에서, 이어서 전역 보관소 속성에서 모양을 다시 불러옵니다.</string>
+</resources>

@@ -40,12 +40,20 @@ enum class ThemeAccent(val propertyValue: String, val color: Color) {
             val v = raw?.trim()?.removePrefix("#")?.lowercase().orEmpty()
             return when (v) {
                 "wallpaper", "from_wallpaper", "from-wallpaper", "tonal" -> FromWallpaper
-                "00e676", "e676", "green", "neon_green" -> NeonGreen
-                "00f0ff", "f0ff", "cyan", "neon_cyan" -> NeonCyan
-                "ff007f", "007f", "magenta", "neon_magenta", "pink" -> NeonMagenta
-                "ff9100", "9100", "orange", "neon_orange" -> NeonOrange
+                "00e676", "e676", "green", "neon_green", "neon-green" -> NeonGreen
+                "00f0ff", "f0ff", "cyan", "neon_cyan", "neon-cyan" -> NeonCyan
+                "ff007f", "007f", "magenta", "neon_magenta", "neon-magenta", "pink" -> NeonMagenta
+                "ff9100", "9100", "orange", "neon_orange", "neon-orange" -> NeonOrange
                 else -> NeonMagenta
             }
+        }
+
+        /** Preserve `wallpaper` and unknown custom values when writing props. */
+        fun canonicalizeForStorage(raw: String): String {
+            val v = raw.trim()
+            if (v.equals("wallpaper", ignoreCase = true)) return "wallpaper"
+            if (v.isEmpty()) return NeonMagenta.propertyValue
+            return parse(v).propertyValue
         }
     }
 }

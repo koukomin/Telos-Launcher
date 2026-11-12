@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_appearance_title">Udseende</string>
+    <string name="desktop_appearance_hint">Quiet Ops- eller Vault Neon-intensitet, neonaccent og panikdæmpning. Profiloverlays kan tilsidesætte dem uden at skrive til værts-HOME i Portable Data.</string>
+    <string name="desktop_theme_intensity_label">Temaintensitet</string>
+    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
+    <string name="desktop_theme_intensity_neon">Vault Neon</string>
+    <string name="desktop_theme_accent_label">Accent</string>
+    <string name="desktop_panic_mute_toggle">Panikdæmpning</string>
+    <string name="desktop_panic_mute_on">Panikdæmpning: Til</string>
+    <string name="desktop_panic_mute_off">Panikdæmpning: Fra</string>
+    <string name="desktop_panic_mute_hint">Tvinger Quiet Ops og skjuler neonkanter og målere. Kun visuelt — ændrer ikke firewall eller kill-switch. Genvej: Super+Shift+P.</string>
+    <string name="desktop_vos_profiles_appearance_hint">Hver navngivet profil kan have sit eget desktop.properties-overlay for intensitet, accent, ikoner og markør. Skift genindlæser udseendet fra profiloverlayet og derefter globale vault-egenskaber.</string>
+</resources>

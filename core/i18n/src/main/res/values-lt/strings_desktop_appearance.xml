@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_appearance_title">Išvaizda</string>
+    <string name="desktop_appearance_hint">Quiet Ops arba Vault Neon intensyvumas, neono akcentas ir panikos nutildymas. Profilio sluoksniai gali juos perrašyti nerašydami į pagrindinio kompiuterio HOME Portable Data režimu.</string>
+    <string name="desktop_theme_intensity_label">Temos intensyvumas</string>
+    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
+    <string name="desktop_theme_intensity_neon">Vault Neon</string>
+    <string name="desktop_theme_accent_label">Akcentas</string>
+    <string name="desktop_panic_mute_toggle">Panikos nutildymas</string>
+    <string name="desktop_panic_mute_on">Panikos nutildymas: Įjungta</string>
+    <string name="desktop_panic_mute_off">Panikos nutildymas: Išjungta</string>
+    <string name="desktop_panic_mute_hint">Priverčia Quiet Ops ir slepia neono rėmus bei matuoklius. Tik vizualu — nekeičia ugniasienės ar kill-switch. Spartusis klavišas: Super+Shift+P.</string>
+    <string name="desktop_vos_profiles_appearance_hint">Kiekvienas įvardytas profilis gali turėti savo desktop.properties sluoksnį intensyvumui, akcentui, piktogramoms ir žymekliui. Perjungimas iš naujo įkelia išvaizdą iš profilio sluoksnio, tada iš visuotinų seifo savybių.</string>
+</resources>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_appearance_title">Välimus</string>
+    <string name="desktop_appearance_hint">Quiet Ops või Vault Neon intensiivsus, neoonrõhk ja paanikavaigistus. Profiilikatted võivad need üle kirjutada ilma Portable Data režiimis hosti HOME-i kirjutamata.</string>
+    <string name="desktop_theme_intensity_label">Teema intensiivsus</string>
+    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
+    <string name="desktop_theme_intensity_neon">Vault Neon</string>
+    <string name="desktop_theme_accent_label">Rõhk</string>
+    <string name="desktop_panic_mute_toggle">Paanikavaigistus</string>
+    <string name="desktop_panic_mute_on">Paanikavaigistus: Sees</string>
+    <string name="desktop_panic_mute_off">Paanikavaigistus: Väljas</string>
+    <string name="desktop_panic_mute_hint">Sunnib Quiet Ops’i ja peidab neoonäärised ning mõõdikud. Ainult visuaalne — ei muuda tulemüüri ega kill-switch’i. Kiirklahv: Super+Shift+P.</string>
+    <string name="desktop_vos_profiles_appearance_hint">Iga nimega profiil võib hoida oma desktop.properties katet intensiivsusele, rõhule, ikoonidele ja kursorile. Vahetamine laadib välimuse profiilikattest ja seejärel holvi üldistest omadustest.</string>
+</resources>

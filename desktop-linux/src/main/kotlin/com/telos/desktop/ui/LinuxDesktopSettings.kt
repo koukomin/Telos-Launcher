@@ -107,6 +107,7 @@ fun LinuxDesktopSettingsPanel(
         helixSettingsIndexEntries(
             themeStudioTitle = t.t("desktop_theme_studio_title"),
             sessionTitle = t.t("desktop_settings_session"),
+            appearanceTitle = t.t("desktop_appearance_title"),
             displayTitle = t.t("desktop_settings_display"),
             wallpaperTonalTitle = t.t("desktop_wallpaper_tonal_title"),
             nightTitle = t.t("desktop_night_light_title"),
@@ -142,6 +143,7 @@ fun LinuxDesktopSettingsPanel(
                 t.t("desktop_panel_icon_contrast_auto"),
                 t.t("desktop_panel_icon_contrast_light"),
                 t.t("desktop_panel_icon_contrast_dark"),
+                t.t("desktop_panic_mute_toggle"),
                 t.t("desktop_night_light_title"),
                 "appearance",
                 "neon",
@@ -150,6 +152,8 @@ fun LinuxDesktopSettingsPanel(
                 "blur",
                 "transparent",
                 "contrast",
+                "panic",
+                "mute",
             ),
             wallpaperTonalKeywords = listOf(
                 t.t("desktop_wallpaper_tonal_enable"),
@@ -846,9 +850,18 @@ fun LinuxDesktopSettingsPanel(
         }
         if (show("profiles")) {
             HelixSettingsCard(t.t("desktop_vos_profiles_title")) {
+                Text(
+                    t.t("desktop_vos_profiles_appearance_hint"),
+                    fontSize = 11.sp,
+                    color = TelosColors.onSurface.copy(0.7f),
+                )
                 com.telos.desktop.vault.VaultProfileSwitchPanel(
                     vaultConfigDir = runCatching { com.telos.desktop.vault.PhantomVault.engine.configDir }.getOrNull(),
                     compact = true,
+                    onChanged = {
+                        // Lock-gated or plain switch: reload appearance from profile overlay then global.
+                        settings.reloadAppearanceFromProfile()
+                    },
                 )
             }
         }
@@ -1164,6 +1177,7 @@ private fun reapplyCursor(settings: TelosDesktopSettings) {
 private fun helixSettingsIndexEntries(
     themeStudioTitle: String,
     sessionTitle: String,
+    appearanceTitle: String,
     displayTitle: String,
     wallpaperTonalTitle: String,
     nightTitle: String,
@@ -1200,7 +1214,7 @@ private fun helixSettingsIndexEntries(
     HelixSettingsIndexEntry("icons", iconsTitle, listOf("theme", "papirus", "tela", "candy")),
     HelixSettingsIndexEntry("windows", windowsTitle, listOf("klassy", "buttons")),
     HelixSettingsIndexEntry("cursor", cursorTitle, listOf("xcursor", "size", "breeze")),
-    HelixSettingsIndexEntry("profiles", profilesTitle, listOf("vault", "profile", "portable")),
+    HelixSettingsIndexEntry("profiles", profilesTitle, listOf("vault", "profile", "portable", "appearance")),
     HelixSettingsIndexEntry("portable", portableTitle, listOf("portable", "data")),
     HelixSettingsIndexEntry("windows_shell", shellTitle, listOf("explorer", "shell")),
     HelixSettingsIndexEntry("session_sync", syncTitle, listOf("sync", "keepass")),
@@ -1246,6 +1260,18 @@ private fun ThemeStudioCard(
 
     HelixSettingsCard(t.t("desktop_theme_studio_title")) {
         Text(t.t("desktop_theme_studio_hint"), fontSize = 11.sp, color = TelosColors.onSurface.copy(0.7f))
+
+        Toggle(
+            t.t("desktop_panic_mute_toggle"),
+            settings.panicMute || com.telos.desktop.theme.PanicMuteController.sessionMuted,
+        ) {
+            com.telos.desktop.theme.PanicMuteController.setMuted(it, settings, persist = true)
+        }
+        Text(
+            t.t("desktop_panic_mute_hint"),
+            fontSize = 10.sp,
+            color = TelosColors.onSurface.copy(0.6f),
+        )
 
         Text(t.t("desktop_theme_intensity"), fontSize = 12.sp, color = TelosColors.onSurface)
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {

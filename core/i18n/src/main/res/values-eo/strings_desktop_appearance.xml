@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_appearance_title">Aspekto</string>
+    <string name="desktop_appearance_hint">Intenseco Quiet Ops aŭ Vault Neon, neon-akcento kaj panika silentigo. Profilaj tavoloj povas anstataŭigi ilin sen skribi al gastiga HOME en Portable Data.</string>
+    <string name="desktop_theme_intensity_label">Tema intenseco</string>
+    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
+    <string name="desktop_theme_intensity_neon">Vault Neon</string>
+    <string name="desktop_theme_accent_label">Akcento</string>
+    <string name="desktop_panic_mute_toggle">Panika silentigo</string>
+    <string name="desktop_panic_mute_on">Panika silentigo: Ŝaltita</string>
+    <string name="desktop_panic_mute_off">Panika silentigo: Malŝaltita</string>
+    <string name="desktop_panic_mute_hint">Devigas Quiet Ops kaj kaŝas neonajn limojn kaj mezurilojn. Nur vida — ne ŝanĝas fajromuron aŭ kill-switch. Ŝparvojo: Super+Shift+P.</string>
+    <string name="desktop_vos_profiles_appearance_hint">Ĉiu nomita profilo povas teni propran desktop.properties-tavolon por intenseco, akcento, piktogramoj kaj kursoro. Ŝanĝo reŝargas la aspekton el la profila tavolo, poste el globaj trezorejaj ecoj.</string>
+</resources>

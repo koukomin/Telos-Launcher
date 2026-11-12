@@ -15,7 +15,9 @@ import com.telos.desktop.icons.LinuxIconThemeResolver
 import com.telos.desktop.monitor.LinuxSystemTelemetryEngine
 import com.telos.desktop.settings.TelosDesktopSettings
 import androidx.compose.runtime.rememberCoroutineScope
+import com.telos.desktop.theme.PanicMuteController
 import com.telos.desktop.theme.SystemThemeBridge
+import com.telos.desktop.theme.ThemeAccent
 import com.telos.desktop.ui.DesktopChrome
 import com.telos.desktop.ui.DesktopWorkspace
 import com.telos.desktop.ui.TelosDesktopTheme
@@ -91,6 +93,7 @@ fun main(args: Array<String>) {
     val windowState = rememberWindowState(width = 1440.dp, height = 900.dp, placement = WindowPlacement.Floating)
     val hostTheme = remember { SystemThemeBridge.load() }
     var chromeAccent by remember { mutableStateOf(hostTheme.accent) }
+    var liveSettings by remember { mutableStateOf<TelosDesktopSettings?>(null) }
     LaunchedEffect(DesktopChrome.fullscreen) {
         windowState.placement = DesktopChrome.placement
     }
@@ -106,7 +109,7 @@ fun main(args: Array<String>) {
         title = "Telos Desktop",
         state = windowState,
         onPreviewKeyEvent = { ev ->
-            handleDesktopKeys(ev, wm, telemetry)
+            handleDesktopKeys(ev, wm, telemetry, liveSettings)
         },
     ) {
         // Theme Studio + local wallpaper tonal seed drive Helix chrome.
@@ -125,33 +128,38 @@ fun main(args: Array<String>) {
                         it.syncThemeChrome()
                     }
                 }
+                LaunchedEffect(settings) { liveSettings = settings }
                 LaunchedEffect(
                     DesktopChrome.accentEpoch,
+                    PanicMuteController.appearanceGeneration,
                     settings.themeAccent,
                     settings.themeIntensity,
                     settings.wallpaperTonal,
                     settings.wallpaperPath,
                     settings.followSystemTheme,
                 ) {
-                    chromeAccent = if (
+                    chromeAccent = when {
+                        PanicMuteController.isMuted(settings) ->
+                            ThemeAccent.NeonCyan.color.copy(alpha = 0.85f)
                         com.telos.desktop.theme.WallpaperTonalSeed.usesWallpaperAccent(
                             settings.themeAccent,
                             settings.wallpaperTonal,
-                        )
-                    ) {
-                        val seeded = com.telos.desktop.theme.WallpaperTonalSeed.resolveAccent(
-                            themeAccent = settings.themeAccent,
-                            wallpaperTonal = settings.wallpaperTonal,
-                            wallpaperPath = settings.wallpaperPath.ifBlank { null },
-                            hostFallback = androidx.compose.ui.graphics.Color(
-                                com.telos.desktop.theme.WallpaperTonalSeed.FALLBACK_SEED_ARGB,
-                            ),
-                        )
-                        com.telos.desktop.theme.DesktopThemeChrome.wallpaperSeedAccent = seeded
-                        seeded
-                    } else {
-                        com.telos.desktop.theme.DesktopThemeChrome.wallpaperSeedAccent = null
-                        com.telos.desktop.theme.DesktopThemeChrome.resolvedAccent
+                        ) -> {
+                            val seeded = com.telos.desktop.theme.WallpaperTonalSeed.resolveAccent(
+                                themeAccent = settings.themeAccent,
+                                wallpaperTonal = settings.wallpaperTonal,
+                                wallpaperPath = settings.wallpaperPath.ifBlank { null },
+                                hostFallback = androidx.compose.ui.graphics.Color(
+                                    com.telos.desktop.theme.WallpaperTonalSeed.FALLBACK_SEED_ARGB,
+                                ),
+                            )
+                            com.telos.desktop.theme.DesktopThemeChrome.wallpaperSeedAccent = seeded
+                            seeded
+                        }
+                        else -> {
+                            com.telos.desktop.theme.DesktopThemeChrome.wallpaperSeedAccent = null
+                            com.telos.desktop.theme.DesktopThemeChrome.resolvedAccent
+                        }
                     }
                 }
                 androidx.compose.runtime.LaunchedEffect(settings) {
@@ -235,7 +243,7 @@ fun main(args: Array<String>) {
                         vault.lock(syncCloud = true)
                         exitApplication()
                     },
-                    onKeyEvent = { handleDesktopKeys(it, wm, telemetry) },
+                    onKeyEvent = { handleDesktopKeys(it, wm, telemetry, settings) },
                 )
             }
         }

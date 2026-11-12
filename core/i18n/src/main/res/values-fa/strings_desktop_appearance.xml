@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_appearance_title">ظاهر</string>
+    <string name="desktop_appearance_hint">شدت Quiet Ops یا Vault Neon، تأکید نئون و بی‌صدای وحشت. پوشش‌های نمایه می‌توانند بدون نوشتن در HOME میزبان در Portable Data آن‌ها را جایگزین کنند.</string>
+    <string name="desktop_theme_intensity_label">شدت پوسته</string>
+    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
+    <string name="desktop_theme_intensity_neon">Vault Neon</string>
+    <string name="desktop_theme_accent_label">تأکید</string>
+    <string name="desktop_panic_mute_toggle">بی‌صدای وحشت</string>
+    <string name="desktop_panic_mute_on">بی‌صدای وحشت: روشن</string>
+    <string name="desktop_panic_mute_off">بی‌صدای وحشت: خاموش</string>
+    <string name="desktop_panic_mute_hint">Quiet Ops را اجباری می‌کند و حاشیه و نشانگرهای نئون را پنهان می‌کند. فقط ظاهری — دیواره آتش یا kill-switch را تغییر نمی‌دهد. میانبر: Super+Shift+P.</string>
+    <string name="desktop_vos_profiles_appearance_hint">هر نمایه نام‌دار می‌تواند پوشش desktop.properties خودش را برای شدت، تأکید، آیکون و نشانگر نگه دارد. جابه‌جایی ظاهر را از پوشش نمایه و سپس ویژگی‌های سراسری خزانه دوباره بارگذاری می‌کند.</string>
+</resources>

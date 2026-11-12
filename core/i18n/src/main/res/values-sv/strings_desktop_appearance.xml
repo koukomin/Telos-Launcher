@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_appearance_title">Utseende</string>
+    <string name="desktop_appearance_hint">Quiet Ops- eller Vault Neon-intensitet, neonaccent och panikdämpning. Profilöverlägg kan åsidosätta dem utan att skriva till värd-HOME i Portable Data.</string>
+    <string name="desktop_theme_intensity_label">Temaintensitet</string>
+    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
+    <string name="desktop_theme_intensity_neon">Vault Neon</string>
+    <string name="desktop_theme_accent_label">Accent</string>
+    <string name="desktop_panic_mute_toggle">Panikdämpning</string>
+    <string name="desktop_panic_mute_on">Panikdämpning: På</string>
+    <string name="desktop_panic_mute_off">Panikdämpning: Av</string>
+    <string name="desktop_panic_mute_hint">Tvingar Quiet Ops och döljer neonkanter och mätare. Endast visuellt — ändrar inte brandvägg eller kill-switch. Genväg: Super+Shift+P.</string>
+    <string name="desktop_vos_profiles_appearance_hint">Varje namngiven profil kan ha eget desktop.properties-överlägg för intensitet, accent, ikoner och markör. Byte läser om utseendet från profilöverlägget och sedan globala valvegenskaper.</string>
+</resources>

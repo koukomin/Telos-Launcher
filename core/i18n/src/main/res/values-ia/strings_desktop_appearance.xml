@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_appearance_title">Apparentia</string>
+    <string name="desktop_appearance_hint">Intensitate Quiet Ops o Vault Neon, accento neon e silentio de panico. Le superimpositiones de profilo pote superscriber los sin scriber al HOME del host in Portable Data.</string>
+    <string name="desktop_theme_intensity_label">Intensitate del thema</string>
+    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
+    <string name="desktop_theme_intensity_neon">Vault Neon</string>
+    <string name="desktop_theme_accent_label">Accento</string>
+    <string name="desktop_panic_mute_toggle">Silentio de panico</string>
+    <string name="desktop_panic_mute_on">Silentio de panico: Active</string>
+    <string name="desktop_panic_mute_off">Silentio de panico: Inactive</string>
+    <string name="desktop_panic_mute_hint">Fortia Quiet Ops e cela bordos e indicatores neon. Solo visual — non cambia le paravento o le kill-switch. Accesso directe: Super+Shift+P.</string>
+    <string name="desktop_vos_profiles_appearance_hint">Cata profilo con nomine pote conservar su proprie superposition desktop.properties pro intensitate, accento, icones e cursor. Le cambio recarga le apparentia ab le superposition del profilo, postea ab le proprietates global del camera forte.</string>
+</resources>

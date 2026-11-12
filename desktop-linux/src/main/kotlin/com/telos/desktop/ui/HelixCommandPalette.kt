@@ -59,6 +59,7 @@ import com.telos.desktop.search.HelixPaletteActions
 import com.telos.desktop.search.HelixPaletteItem
 import com.telos.desktop.search.HelixPaletteKind
 import com.telos.desktop.search.HelixPaletteWindow
+import com.telos.desktop.theme.PanicMuteController
 import com.telos.desktop.vault.PhantomVault
 import com.telos.desktop.wm.TelosWindowManager
 import java.io.File
@@ -84,8 +85,14 @@ fun HelixCommandPalette(
     var apps by remember { mutableStateOf<List<DesktopEntry>>(emptyList()) }
     var results by remember { mutableStateOf<List<HelixPaletteItem>>(emptyList()) }
     val focusRequester = remember { FocusRequester() }
+    val techBorders = PanicMuteController.showTechBorders()
     val neon = com.telos.desktop.theme.DesktopThemeChrome.resolvedAccent
-    val neonBorder = neon.copy(alpha = com.telos.desktop.theme.DesktopThemeChrome.techBorderAlpha)
+    val neonBorder = if (techBorders) {
+        neon.copy(alpha = com.telos.desktop.theme.DesktopThemeChrome.techBorderAlpha)
+    } else {
+        TelosColors.outline.copy(alpha = 0.45f)
+    }
+    val borderAccent = neonBorder
     val shape = RoundedCornerShape(14.dp)
 
     val labels = remember {
@@ -191,7 +198,7 @@ fun HelixCommandPalette(
                     .clip(shape)
                     // virtualAppPopup / opaque surfaceContainer — no transparent surface
                     .background(TelosColors.menu)
-                    .border(1.5.dp, neonBorder, shape)
+                    .border(if (techBorders) 1.5.dp else 1.dp, borderAccent, shape)
                     .clickable(
                         indication = null,
                         interactionSource = remember { MutableInteractionSource() },

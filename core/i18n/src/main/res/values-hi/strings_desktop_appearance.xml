@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_appearance_title">दिखावट</string>
+    <string name="desktop_appearance_hint">Quiet Ops या Vault Neon तीव्रता, नियॉन उच्चारण और पैनिक म्यूट। प्रोफ़ाइल ओवरले इन्हें Portable Data में होस्ट HOME पर लिखे बिना ओवरराइड कर सकते हैं।</string>
+    <string name="desktop_theme_intensity_label">थीम तीव्रता</string>
+    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
+    <string name="desktop_theme_intensity_neon">Vault Neon</string>
+    <string name="desktop_theme_accent_label">उच्चारण</string>
+    <string name="desktop_panic_mute_toggle">पैनिक म्यूट</string>
+    <string name="desktop_panic_mute_on">पैनिक म्यूट: चालू</string>
+    <string name="desktop_panic_mute_off">पैनिक म्यूट: बंद</string>
+    <string name="desktop_panic_mute_hint">Quiet Ops बाध्य करता है और नियॉन बॉर्डर व गेज छुपाता है। केवल दृश्य — फ़ायरवॉल या kill-switch नहीं बदलता। शॉर्टकट: Super+Shift+P।</string>
+    <string name="desktop_vos_profiles_appearance_hint">प्रत्येक नामित प्रोफ़ाइल तीव्रता, उच्चारण, आइकन और कर्सर के लिए अपना desktop.properties ओवरले रख सकती है। स्विच करने पर दिखावट प्रोफ़ाइल ओवरले से, फिर वैश्विक वॉल्ट गुणों से फिर लोड होती है।</string>
+</resources>

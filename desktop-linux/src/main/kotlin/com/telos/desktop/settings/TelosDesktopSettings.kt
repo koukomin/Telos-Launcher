@@ -1,12 +1,16 @@
 package com.telos.desktop.settings
 
+import com.telos.desktop.theme.AppearanceKeys
 import com.telos.desktop.theme.DesktopThemeChrome
+import com.telos.desktop.theme.PanicMuteController
 import com.telos.desktop.theme.PanelIconContrast
 import com.telos.desktop.theme.PanelSurfaceMode
+import com.telos.desktop.theme.ProfileAppearanceOverlay
 import com.telos.desktop.theme.ThemeAccent
 import com.telos.desktop.theme.ThemeDensity
 import com.telos.desktop.theme.ThemeIntensity
 import com.telos.desktop.theme.WorkspaceTintStrips
+import com.telos.desktop.vault.DesktopProfiles
 import java.io.File
 import java.util.Properties
 
@@ -72,11 +76,20 @@ class TelosDesktopSettings(private val vaultConfigDir: File) {
      */
     var panelIconContrast: String = PanelIconContrast.Mode.Auto.propertyValue
     /**
-     * Defensive reads for Theme Studio / OpSec visual mute keys. Not authored here —
-     * only consumed so strips stay quiet or hidden when those prefs appear.
+     * Persisted panic-mute preference (`theme.panicMute`). Session mute may also
+     * be toggled without writing disk via [PanicMuteController].
+     */
+    var panicMute: Boolean = false
+    /**
+     * Derived Quiet Ops flag for workspace tint / Theme Studio consumers.
      */
     var themeQuietOps: Boolean = false
-    var themePanicMute: Boolean = false
+    /** Alias of [panicMute] for Theme Studio / panel consumers. */
+    var themePanicMute: Boolean
+        get() = panicMute
+        set(value) {
+            panicMute = value
+        }
     /** Theme Studio: Quiet Ops (default) / Vault Neon / Paper Ops. Stored as `theme.intensity`. */
     var themeIntensity: String = ThemeIntensity.QuietOps.propertyValue
     /**
@@ -99,9 +112,47 @@ class TelosDesktopSettings(private val vaultConfigDir: File) {
     private val file: File get() = File(vaultConfigDir, "desktop.properties")
 
     fun load() {
-        if (!file.isFile) return
-        val p = Properties()
-        file.inputStream().use { p.load(it) }
+        val hasGlobal = file.isFile
+        val hasProfiles = DesktopProfiles.listProfileFolders().isNotEmpty()
+        if (!hasGlobal && !hasProfiles) return
+        val p = ProfileAppearanceOverlay.loadMerged(vaultConfigDir)
+        applyLoadedProperties(p)
+        PanicMuteController.syncFromSettings(this)
+        syncThemeChrome()
+    }
+
+    /**
+     * Reload appearance from the active profile overlay, then global vault props.
+     * Call after a (lock-gated) profile switch. Does not touch nftables.
+     */
+    fun reloadAppearanceFromProfile() {
+        val merged = ProfileAppearanceOverlay.loadMerged(vaultConfigDir)
+        ProfileAppearanceOverlay.applyAppearanceFields(
+            props = merged,
+            setIntensity = { themeIntensity = it },
+            setAccent = { themeAccent = it },
+            setIconTheme = { iconTheme = it },
+            setCursorTheme = { cursorTheme = it },
+        )
+        themeQuietOps = ThemeIntensity.parse(themeIntensity) == ThemeIntensity.QuietOps ||
+            WorkspaceTintStrips.parseQuietOps(merged)
+        // panicMute stays global (not profile-scoped).
+        panicMute = merged.getProperty(AppearanceKeys.PANIC_MUTE, "false").toBoolean() ||
+            WorkspaceTintStrips.parsePanicMute(merged)
+        wallpaperTonal = merged.getProperty("theme.wallpaperTonal", "false").toBoolean() ||
+            themeAccent.equals("wallpaper", ignoreCase = true)
+        wallpaperPath = merged.getProperty("theme.wallpaperPath") ?: wallpaperPath
+        themeDensity = ThemeDensity.parse(merged.getProperty("theme.density") ?: themeDensity).propertyValue
+        themeSnapPillScale = merged.getProperty("theme.snapPillScale")?.toFloatOrNull()
+            ?.coerceIn(0.7f, 1.4f)
+            ?: ThemeDensity.parse(themeDensity).snapPillScale
+        panelSurfaceMode = PanelSurfaceMode.parse(merged).propertyValue
+        panelIconContrast = PanelIconContrast.parseMode(merged).propertyValue
+        PanicMuteController.syncFromSettings(this)
+        syncThemeChrome()
+    }
+
+    private fun applyLoadedProperties(p: Properties) {
         showDesktopIcons = p.getProperty("showDesktopIcons", "true").toBoolean()
         showHiddenFiles = (p.getProperty("hiddenItems.showHiddenFiles")
             ?: p.getProperty("showHiddenFiles", "false")).toBoolean()
@@ -147,13 +198,19 @@ class TelosDesktopSettings(private val vaultConfigDir: File) {
             ?.coerceIn(1000, 6500) ?: 4500
         workspaceTints = WorkspaceTintStrips.parseWorkspaceTints(p, default = true)
         panelIconContrast = PanelIconContrast.parseMode(p).propertyValue
-        themePanicMute = WorkspaceTintStrips.parsePanicMute(p)
-        themeIntensity = ThemeIntensity.parse(p.getProperty("theme.intensity")).propertyValue
-        themeAccent = ThemeAccent.parse(p.getProperty("theme.accent")).propertyValue
+        themeIntensity = ThemeIntensity.parse(p.getProperty(AppearanceKeys.INTENSITY)).propertyValue
+        val rawAccent = p.getProperty(AppearanceKeys.ACCENT) ?: themeAccent
+        themeAccent = if (rawAccent.equals("wallpaper", ignoreCase = true)) {
+            "wallpaper"
+        } else {
+            ThemeAccent.canonicalizeForStorage(rawAccent)
+        }
         themeDensity = ThemeDensity.parse(p.getProperty("theme.density")).propertyValue
         themeSnapPillScale = p.getProperty("theme.snapPillScale")?.toFloatOrNull()
             ?.coerceIn(0.7f, 1.4f)
             ?: ThemeDensity.parse(themeDensity).snapPillScale
+        panicMute = p.getProperty(AppearanceKeys.PANIC_MUTE, "false").toBoolean() ||
+            WorkspaceTintStrips.parsePanicMute(p)
         wallpaperTonal = p.getProperty("theme.wallpaperTonal", "false").toBoolean() ||
             themeAccent.equals("wallpaper", ignoreCase = true)
         wallpaperPath = p.getProperty("theme.wallpaperPath") ?: wallpaperPath
@@ -165,13 +222,12 @@ class TelosDesktopSettings(private val vaultConfigDir: File) {
                 outputPrefs[key.removePrefix("output.")] = p.getProperty(key).orEmpty()
             }
         }
-        syncThemeChrome()
     }
 
     fun save() {
         vaultConfigDir.mkdirs()
         val p = Properties()
-        // Preserve unknown / Theme Studio keys (panic mute, quiet ops, intensity, …).
+        // Preserve unknown / Theme Studio keys (forward-compat).
         if (file.isFile) {
             runCatching { file.inputStream().use { p.load(it) } }
         }
@@ -218,15 +274,54 @@ class TelosDesktopSettings(private val vaultConfigDir: File) {
         p["nightLight.temperatureK"] = nightLightTemperatureK.toString()
         p[WorkspaceTintStrips.PREF_KEY] = workspaceTints.toString()
         p[PanelIconContrast.PREF_KEY] = PanelIconContrast.parseMode(panelIconContrast).propertyValue
-        p["theme.intensity"] = ThemeIntensity.parse(themeIntensity).propertyValue
-        p["theme.accent"] = ThemeAccent.parse(themeAccent).propertyValue
+        p[AppearanceKeys.INTENSITY] = ThemeIntensity.parse(themeIntensity).propertyValue
+        p[AppearanceKeys.ACCENT] = ThemeAccent.canonicalizeForStorage(themeAccent)
+        p[AppearanceKeys.PANIC_MUTE] = panicMute.toString()
         p["theme.density"] = ThemeDensity.parse(themeDensity).propertyValue
         p["theme.snapPillScale"] = themeSnapPillScale.coerceIn(0.7f, 1.4f).toString()
         p["theme.wallpaperTonal"] = wallpaperTonal.toString()
         if (wallpaperPath.isNotBlank()) p["theme.wallpaperPath"] = wallpaperPath
         outputPrefs.forEach { (name, spec) -> p["output.$name"] = spec }
         file.outputStream().use { p.store(it, "Telos Linux Desktop") }
+        // When a VOS-1 profile is active, also mirror appearance keys into the
+        // profile overlay so Work vs Ghost keep distinct looks (portable-safe).
+        persistActiveProfileAppearanceOverlay()
+        PanicMuteController.notifyAppearanceChanged()
         syncThemeChrome()
+        DesktopChromeBump()
+    }
+
+    /**
+     * Persist only `theme.panicMute` into vault global props (merge).
+     * Used by [PanicMuteController] so mute toggles do not rewrite every key.
+     */
+    fun savePanicMuteOnly() {
+        vaultConfigDir.mkdirs()
+        val p = Properties()
+        if (file.isFile) {
+            file.inputStream().use { p.load(it) }
+        }
+        p.setProperty(AppearanceKeys.PANIC_MUTE, panicMute.toString())
+        file.outputStream().use { p.store(it, "Telos Linux Desktop") }
+        DesktopChromeBump()
+    }
+
+    /**
+     * Write appearance overlay keys for the active profile when profile folders exist.
+     * Paths use [DesktopProfiles.profilesRoot] (no host HOME in Portable Data).
+     */
+    fun persistActiveProfileAppearanceOverlay(): Boolean {
+        val active = DesktopProfiles.activeProfile(vaultConfigDir) ?: return false
+        if (DesktopProfiles.listProfileFolders().isEmpty()) return false
+        return ProfileAppearanceOverlay.writeOverlayKeys(
+            profileName = active,
+            keys = mapOf(
+                AppearanceKeys.INTENSITY to ThemeIntensity.parse(themeIntensity).propertyValue,
+                AppearanceKeys.ACCENT to ThemeAccent.canonicalizeForStorage(themeAccent),
+                AppearanceKeys.ICONS_THEME to iconTheme,
+                AppearanceKeys.CURSOR_THEME to cursorTheme,
+            ),
+        )
     }
 
     /** Apply a named density preset to panel metrics + snap/overview pill scale. */
@@ -265,5 +360,9 @@ class TelosDesktopSettings(private val vaultConfigDir: File) {
         preferredResolution = resolution
         preferredRefresh = refresh
         preferredScale = scale
+    }
+
+    private fun DesktopChromeBump() {
+        runCatching { com.telos.desktop.ui.DesktopChrome.bumpAccentEpoch() }
     }
 }

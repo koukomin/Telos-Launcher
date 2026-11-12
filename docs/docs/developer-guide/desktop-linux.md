@@ -39,6 +39,14 @@ human label) for multi-host awareness text — no secrets. `VaultProfileSwitchPa
 switches profiles and portable vault roots in pre-boot and Helix Settings. On Windows Portable
 Data, profile config stays under the portable session home so the host profile is not written.
 Selecting a portable root rejects the host home / `.config` / `.cache` / `.local`.
+**Profile-scoped appearance:** when profile folders exist, `profiles/<name>/desktop.properties`
+may override `theme.intensity`, `theme.accent`, `icons.theme`, and `cursor.theme` via
+`ProfileAppearanceOverlay` (overlay wins; missing keys fall back to global vault props). Paths use
+`DesktopProfiles.profilesRoot()` so Portable Data never writes host HOME. After a profile switch,
+`TelosDesktopSettings.reloadAppearanceFromProfile()` reloads overlay then global.
+**Panic mute:** session flag + optional persist `theme.panicMute` (`PanicMuteController`);
+Super+Shift+P or Control Center / Settings Appearance forces Quiet Ops and hides neon tech borders
+and gauges. Visual only — does not touch nftables or the kill-switch.
 **Lock-gated switch (enforced while unlocked):** re-auth via password callback →
 `PhantomVaultEngine.lock()` → switch profile name or portable root; the UI tells the user to
 unlock again. Telos does **not** automatically remount a different LUKS image without a password.
@@ -75,7 +83,7 @@ One Telos product, three chrome modes from the same settings store:
 
 Shared preferences (theme, icon pack, grid size, vault, display) live in the vault `desktop.properties` on Linux and Datastore on Android. They are not compiled together; names stay aligned so a future sync can copy keys.
 
-**Theme Studio** (Helix Settings): `theme.intensity` (`quiet` / `neon` / `paper`), `theme.accent` (neon hex or `wallpaper`), and `theme.density` (`compact` / `comfort` / `touch`) co-locate intensity, accent, density presets (panel height/icon + snap/overview pill scale), panel opacity, Night Light, and quick icon/cursor picks. Quiet Ops keeps low Cyber-Tech border glow; Vault Neon raises border alpha and shows HUD gauges; popups stay opaque `surfaceContainer` with no second blur. Wallpaper accent is preference-only until local tonal seeding lands.
+**Theme Studio** (Helix Settings): `theme.intensity` (`quiet` / `neon` / `paper`), `theme.accent` (neon hex or `wallpaper`), `theme.density` (`compact` / `comfort` / `touch`), `panel.surfaceMode`, `panel.iconContrast`, and `theme.panicMute` co-locate intensity, accent, density presets (panel height/icon + snap/overview pill scale), panel surface / icon contrast, panic mute, panel opacity, Night Light, and quick icon/cursor picks. Quiet Ops keeps low Cyber-Tech border glow; Vault Neon raises border alpha and shows HUD gauges; panic mute forces Quiet Ops and hides neon chrome without touching nftables; popups stay opaque `surfaceContainer` with no second blur. Wallpaper accent samples a local vault/portable image for a Material tonal seed (digest-cached; neon cyan fallback).
 
 ## Windowed vs fullscreen
 
