@@ -6,6 +6,7 @@ import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -18,11 +19,16 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import de.mm20.launcher2.ui.component.TelosDotMatrixText
+import de.mm20.launcher2.ui.component.TelosTechPill
+import de.mm20.launcher2.ui.component.telosTechCard
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavKey
@@ -101,73 +107,63 @@ fun SyncScreen() {
                 }
             }
         ) { paddingValues ->
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues)
-            ) {
-                // Syncthing Service Power Banner
-                Surface(
-                    color = if (serviceRunning) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.errorContainer,
-                    shape = RoundedCornerShape(16.dp),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp, vertical = 8.dp)
-                ) {
-                    Row(
-                        modifier = Modifier.padding(16.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Column(Modifier.weight(1f)) {
-                            Text(
-                                text = stringResource(I18nR.string.sync_preview_title),
-                                style = MaterialTheme.typography.titleMedium,
-                                fontWeight = FontWeight.Bold
+            val neonCyan = Color(0xFF00F0FF)
+            val neonMagenta = Color(0xFFFF007F)
+            val neonGreen = Color(0xFF00E676)
+            BoxWithConstraints(Modifier.fillMaxSize().padding(paddingValues)) {
+                val shortHeight = maxHeight < 480.dp
+                Column(Modifier.fillMaxSize()) {
+                    Column(
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp, vertical = 8.dp)
+                            .telosTechCard(
+                                borderColor = if (serviceRunning) neonGreen else neonMagenta,
+                                alpha = 0.45f,
                             )
-                            Text(
-                                text = stringResource(I18nR.string.sync_preview_summary),
-                                style = MaterialTheme.typography.bodySmall
+                            .padding(16.dp),
+                    ) {
+                        TelosDotMatrixText(stringResource(I18nR.string.sync_preview_title), fontSize = 10.sp, color = neonCyan)
+                        Row(
+                            Modifier.fillMaxWidth().padding(top = 8.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                        ) {
+                            Column(Modifier.weight(1f)) {
+                                Text(stringResource(I18nR.string.sync_preview_title), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+                                Text(stringResource(I18nR.string.sync_preview_summary), style = MaterialTheme.typography.bodySmall)
+                            }
+                            Switch(checked = false, onCheckedChange = {}, enabled = false)
+                        }
+                    }
+                    Row(
+                        Modifier
+                            .fillMaxWidth()
+                            .horizontalScroll(rememberScrollState())
+                            .padding(horizontal = 16.dp, vertical = 8.dp),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    ) {
+                        TelosTechPill(stringResource(I18nR.string.telos_sync_folders, folders.size), selectedTab == 0, { selectedTab = 0 }, accentColor = neonGreen)
+                        TelosTechPill(stringResource(I18nR.string.telos_sync_devices, devices.size), selectedTab == 1, { selectedTab = 1 }, accentColor = neonCyan)
+                        TelosTechPill(stringResource(I18nR.string.hc_settings), selectedTab == 2, { selectedTab = 2 }, accentColor = neonMagenta)
+                    }
+                    Box(
+                        Modifier
+                            .weight(1f)
+                            .fillMaxWidth()
+                            .then(if (shortHeight && selectedTab == 2) Modifier.verticalScroll(rememberScrollState()) else Modifier),
+                    ) {
+                        when (selectedTab) {
+                            0 -> FoldersTab(folders, onTogglePause = { viewModel.toggleFolderPause(it) })
+                            1 -> DevicesTab(devices, onTogglePause = { viewModel.toggleDevicePause(it) })
+                            2 -> SettingsTab(
+                                viewModel = viewModel,
+                                wifiOnly = wifiOnly,
+                                chargingOnly = chargingOnly,
+                                onWifiChange = { viewModel.setWifiOnly(it) },
+                                onChargingChange = { viewModel.setChargingOnly(it) },
                             )
                         }
-                        Switch(
-                            checked = false,
-                            onCheckedChange = { },
-                            enabled = false,
-                        )
-                    }
-                }
-
-                // Tabs
-                TabRow(selectedTabIndex = selectedTab) {
-                    Tab(
-                        selected = selectedTab == 0,
-                        onClick = { selectedTab = 0 },
-                        text = { Text(stringResource(I18nR.string.telos_sync_folders, folders.size)) }
-                    )
-                    Tab(
-                        selected = selectedTab == 1,
-                        onClick = { selectedTab = 1 },
-                        text = { Text(stringResource(I18nR.string.telos_sync_devices, devices.size)) }
-                    )
-                    Tab(
-                        selected = selectedTab == 2,
-                        onClick = { selectedTab = 2 },
-                        text = { Text(stringResource(I18nR.string.hc_settings)) }
-                    )
-                }
-
-                Box(Modifier.weight(1f).fillMaxWidth()) {
-                    when (selectedTab) {
-                        0 -> FoldersTab(folders, onTogglePause = { viewModel.toggleFolderPause(it) })
-                        1 -> DevicesTab(devices, onTogglePause = { viewModel.toggleDevicePause(it) })
-                        2 -> SettingsTab(
-                            viewModel = viewModel,
-                            wifiOnly = wifiOnly,
-                            chargingOnly = chargingOnly,
-                            onWifiChange = { viewModel.setWifiOnly(it) },
-                            onChargingChange = { viewModel.setChargingOnly(it) }
-                        )
                     }
                 }
             }
@@ -272,15 +268,13 @@ private fun FoldersTab(folders: List<SyncthingFolder>, onTogglePause: (String) -
         modifier = Modifier.fillMaxSize()
     ) {
         items(folders, key = { it.id }) { folder ->
-            Surface(
-                shape = RoundedCornerShape(16.dp),
-                color = MaterialTheme.colorScheme.surfaceContainerHigh,
-                modifier = Modifier.fillMaxWidth()
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .telosTechCard(borderColor = Color(0xFF00E676), alpha = 0.4f)
+                    .padding(16.dp),
+                verticalAlignment = Alignment.CenterVertically,
             ) {
-                Row(
-                    modifier = Modifier.padding(16.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
                     Icon(
                         painter = painterResource(BaseR.drawable.folder_24px),
                         contentDescription = null,
@@ -297,14 +291,13 @@ private fun FoldersTab(folders: List<SyncthingFolder>, onTogglePause: (String) -
                             Badge(containerColor = MaterialTheme.colorScheme.tertiaryContainer) { Text(folder.sizeFormatted) }
                         }
                     }
-                    IconButton(onClick = { onTogglePause(folder.id) }) {
+                    IconButton(onClick = { onTogglePause(folder.id) }, modifier = Modifier.heightIn(min = 48.dp)) {
                         Icon(
                             painter = painterResource(if (folder.isPaused) BaseR.drawable.play_arrow_24px else BaseR.drawable.pause_24px),
                             contentDescription = "Toggle Pause"
                         )
                     }
                 }
-            }
         }
     }
 }
@@ -317,15 +310,13 @@ private fun DevicesTab(devices: List<SyncthingDevice>, onTogglePause: (String) -
         modifier = Modifier.fillMaxSize()
     ) {
         items(devices, key = { it.id }) { device ->
-            Surface(
-                shape = RoundedCornerShape(16.dp),
-                color = MaterialTheme.colorScheme.surfaceContainerHigh,
-                modifier = Modifier.fillMaxWidth()
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .telosTechCard(borderColor = Color(0xFF00F0FF), alpha = 0.4f)
+                    .padding(16.dp),
+                verticalAlignment = Alignment.CenterVertically,
             ) {
-                Row(
-                    modifier = Modifier.padding(16.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
                     Icon(
                         painter = painterResource(BaseR.drawable.hard_disk_24px),
                         contentDescription = null,
@@ -339,19 +330,18 @@ private fun DevicesTab(devices: List<SyncthingDevice>, onTogglePause: (String) -
                         Spacer(Modifier.height(4.dp))
                         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                             Badge(containerColor = if (device.isConnected) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.errorContainer) {
-                                Text(if (device.isConnected) "Connected" else "Disconnected")
+                                Text(stringResource(if (device.isConnected) I18nR.string.au_music_connected else I18nR.string.au_music_not_connected))
                             }
                             Text("▲ ${device.downloadSpeed} · ▼ ${device.uploadSpeed}", style = MaterialTheme.typography.labelSmall)
                         }
                     }
-                    IconButton(onClick = { onTogglePause(device.id) }) {
+                    IconButton(onClick = { onTogglePause(device.id) }, modifier = Modifier.heightIn(min = 48.dp)) {
                         Icon(
                             painter = painterResource(if (device.isPaused) BaseR.drawable.play_arrow_24px else BaseR.drawable.pause_24px),
                             contentDescription = "Toggle Pause"
                         )
                     }
                 }
-            }
         }
     }
 }
@@ -378,12 +368,13 @@ private fun SettingsTab(
             .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        Surface(
-            shape = RoundedCornerShape(16.dp),
-            color = MaterialTheme.colorScheme.surfaceContainerHigh,
-            modifier = Modifier.fillMaxWidth()
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .telosTechCard(borderColor = Color(0xFFFF007F), alpha = 0.35f)
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
@@ -409,17 +400,17 @@ private fun SettingsTab(
                     }
                     Switch(checked = chargingOnly, onCheckedChange = onChargingChange)
                 }
-            }
         }
         
         Text(stringResource(I18nR.string.telos_sync_sleep_title), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(top = 8.dp, start = 8.dp))
         
-        Surface(
-            shape = RoundedCornerShape(16.dp),
-            color = MaterialTheme.colorScheme.surfaceContainerHigh,
-            modifier = Modifier.fillMaxWidth()
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .telosTechCard(borderColor = Color(0xFF00F0FF), alpha = 0.35f)
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
@@ -484,7 +475,6 @@ private fun SettingsTab(
                         Switch(checked = syncOnScreenOff, onCheckedChange = { viewModel.setSyncOnScreenOff(it) })
                     }
                 }
-            }
         }
     }
     
