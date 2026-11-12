@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="desktop_appearance_title">Выгляд</string>
-    <string name="desktop_appearance_hint">Інтэнсіўнасць Quiet Ops або Vault Neon, неонавы акцэнт і панічнае адключэнне. Накладанні профілю могуць перавызначыць гэта без запісу ў HOME хоста ў Portable Data.</string>
+<string name="desktop_appearance_hint">Інтэнсіўнасць Quiet Ops або Vault Neon, неонавы акцэнт і панічнае адключэнне. Накладанні профілю могуць перавызначыць гэта без запісу ў HOME хоста ў Portable Data.</string>
     <string name="desktop_theme_intensity_label">Інтэнсіўнасць тэмы</string>
-    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
-    <string name="desktop_theme_intensity_neon">Vault Neon</string>
     <string name="desktop_theme_accent_label">Акцэнт</string>
     <string name="desktop_panic_mute_toggle">Панічнае адключэнне</string>
     <string name="desktop_panic_mute_on">Панічнае адключэнне: Укл.</string>

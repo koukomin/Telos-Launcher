@@ -15,5 +15,4 @@
     <string name="desktop_theme_density_touch">Mess</string>
     <string name="desktop_theme_panel_height">Għoli tal-pannell: %1$d dp</string>
     <string name="desktop_theme_panel_icon">Ikony tal-pannell: %1$d dp</string>
-    <string name="desktop_theme_panel_opacity">Opacità tal-pannell: %1$d%%</string>
-</resources>
+    </resources>

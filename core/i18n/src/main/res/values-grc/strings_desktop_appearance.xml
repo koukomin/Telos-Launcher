@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="desktop_appearance_title">Εμφάνιση</string>
-    <string name="desktop_appearance_hint">Ένταση Quiet Ops ή Vault Neon, neon τονισμός και πανικός σίγασης. Τα overlays προφίλ μπορούν να τα αντικαταστήσουν χωρίς εγγραφή στο HOME του υπολογιστή σε Portable Data.</string>
+<string name="desktop_appearance_hint">Ένταση Quiet Ops ή Vault Neon, neon τονισμός και πανικός σίγασης. Τα overlays προφίλ μπορούν να τα αντικαταστήσουν χωρίς εγγραφή στο HOME του υπολογιστή σε Portable Data.</string>
     <string name="desktop_theme_intensity_label">Ένταση θέματος</string>
-    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
-    <string name="desktop_theme_intensity_neon">Vault Neon</string>
     <string name="desktop_theme_accent_label">Τονισμός</string>
     <string name="desktop_panic_mute_toggle">Σίγαση πανικού</string>
     <string name="desktop_panic_mute_on">Σίγαση πανικού: Ενεργή</string>

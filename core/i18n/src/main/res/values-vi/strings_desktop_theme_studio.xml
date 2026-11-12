@@ -15,5 +15,4 @@
     <string name="desktop_theme_density_touch">Chạm</string>
     <string name="desktop_theme_panel_height">Chiều cao bảng: %1$d dp</string>
     <string name="desktop_theme_panel_icon">Biểu tượng bảng: %1$d dp</string>
-    <string name="desktop_theme_panel_opacity">Độ đục bảng: %1$d%%</string>
-</resources>
+    </resources>

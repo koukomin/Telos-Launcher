@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="desktop_appearance_title">外観</string>
-    <string name="desktop_appearance_hint">Quiet Ops / Vault Neon の強さ、ネオンアクセント、パニックミュート。プロファイルのオーバーレイで上書きでき、Portable Data ではホスト HOME に書き込みません。</string>
+<string name="desktop_appearance_hint">Quiet Ops / Vault Neon の強さ、ネオンアクセント、パニックミュート。プロファイルのオーバーレイで上書きでき、Portable Data ではホスト HOME に書き込みません。</string>
     <string name="desktop_theme_intensity_label">テーマの強さ</string>
-    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
-    <string name="desktop_theme_intensity_neon">Vault Neon</string>
     <string name="desktop_theme_accent_label">アクセント</string>
     <string name="desktop_panic_mute_toggle">パニックミュート</string>
     <string name="desktop_panic_mute_on">パニックミュート: オン</string>

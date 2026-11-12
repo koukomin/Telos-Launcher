@@ -15,5 +15,4 @@
     <string name="desktop_theme_density_touch">Tactus</string>
     <string name="desktop_theme_panel_height">Altitudo tabulae: %1$d dp</string>
     <string name="desktop_theme_panel_icon">Icones tabulae: %1$d dp</string>
-    <string name="desktop_theme_panel_opacity">Opacitas tabulae: %1$d%%</string>
-</resources>
+    </resources>

@@ -15,5 +15,4 @@
     <string name="desktop_theme_density_touch">Pek</string>
     <string name="desktop_theme_panel_height">Panelhöjd: %1$d dp</string>
     <string name="desktop_theme_panel_icon">Panelikoner: %1$d dp</string>
-    <string name="desktop_theme_panel_opacity">Panelopacitet: %1$d%%</string>
-</resources>
+    </resources>

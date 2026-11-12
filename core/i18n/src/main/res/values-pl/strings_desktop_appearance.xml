@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="desktop_appearance_title">Wygląd</string>
-    <string name="desktop_appearance_hint">Intensywność Quiet Ops lub Vault Neon, neonowy akcent i wyciszenie paniczne. Nakładki profilu mogą je nadpisać bez zapisu do HOME hosta w Portable Data.</string>
+<string name="desktop_appearance_hint">Intensywność Quiet Ops lub Vault Neon, neonowy akcent i wyciszenie paniczne. Nakładki profilu mogą je nadpisać bez zapisu do HOME hosta w Portable Data.</string>
     <string name="desktop_theme_intensity_label">Intensywność motywu</string>
-    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
-    <string name="desktop_theme_intensity_neon">Vault Neon</string>
     <string name="desktop_theme_accent_label">Akcent</string>
     <string name="desktop_panic_mute_toggle">Wyciszenie paniczne</string>
     <string name="desktop_panic_mute_on">Wyciszenie paniczne: Włączone</string>

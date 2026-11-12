@@ -15,5 +15,4 @@
     <string name="desktop_theme_density_touch">Dotyk</string>
     <string name="desktop_theme_panel_height">Výška panela: %1$d dp</string>
     <string name="desktop_theme_panel_icon">Ikony panela: %1$d dp</string>
-    <string name="desktop_theme_panel_opacity">Nepriehľadnosť panela: %1$d%%</string>
-</resources>
+    </resources>

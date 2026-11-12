@@ -15,5 +15,4 @@
     <string name="desktop_theme_density_touch">Érintés</string>
     <string name="desktop_theme_panel_height">Panel magassága: %1$d dp</string>
     <string name="desktop_theme_panel_icon">Panel ikonok: %1$d dp</string>
-    <string name="desktop_theme_panel_opacity">Panel átlátszatlansága: %1$d%%</string>
-</resources>
+    </resources>

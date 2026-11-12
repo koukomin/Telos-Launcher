@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="desktop_appearance_title">Görünüm</string>
-    <string name="desktop_appearance_hint">Quiet Ops veya Vault Neon yoğunluğu, neon vurgu ve panik sessizliği. Profil katmanları Portable Data’da ana bilgisayar HOME’una yazmadan bunları geçersiz kılabilir.</string>
+<string name="desktop_appearance_hint">Quiet Ops veya Vault Neon yoğunluğu, neon vurgu ve panik sessizliği. Profil katmanları Portable Data’da ana bilgisayar HOME’una yazmadan bunları geçersiz kılabilir.</string>
     <string name="desktop_theme_intensity_label">Tema yoğunluğu</string>
-    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
-    <string name="desktop_theme_intensity_neon">Vault Neon</string>
     <string name="desktop_theme_accent_label">Vurgu</string>
     <string name="desktop_panic_mute_toggle">Panik sessizliği</string>
     <string name="desktop_panic_mute_on">Panik sessizliği: Açık</string>

@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="desktop_appearance_title">Cuma</string>
-    <string name="desktop_appearance_hint">Déine Quiet Ops nó Vault Neon, béim neon agus balbhú scaoll. Is féidir le forleagan próifíle iad a shárú gan scríobh chuig HOME an óstaigh i Portable Data.</string>
+<string name="desktop_appearance_hint">Déine Quiet Ops nó Vault Neon, béim neon agus balbhú scaoll. Is féidir le forleagan próifíle iad a shárú gan scríobh chuig HOME an óstaigh i Portable Data.</string>
     <string name="desktop_theme_intensity_label">Déine an téama</string>
-    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
-    <string name="desktop_theme_intensity_neon">Vault Neon</string>
     <string name="desktop_theme_accent_label">Béim</string>
     <string name="desktop_panic_mute_toggle">Balbhú scaoll</string>
     <string name="desktop_panic_mute_on">Balbhú scaoll: Ar</string>

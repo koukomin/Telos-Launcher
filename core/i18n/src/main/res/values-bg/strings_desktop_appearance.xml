@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="desktop_appearance_title">Външен вид</string>
-    <string name="desktop_appearance_hint">Интензитет Quiet Ops или Vault Neon, неонов акцент и паническо заглушаване. Профилните наслагвания могат да ги презапишат без запис в HOME на хоста при Portable Data.</string>
+<string name="desktop_appearance_hint">Интензитет Quiet Ops или Vault Neon, неонов акцент и паническо заглушаване. Профилните наслагвания могат да ги презапишат без запис в HOME на хоста при Portable Data.</string>
     <string name="desktop_theme_intensity_label">Интензитет на темата</string>
-    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
-    <string name="desktop_theme_intensity_neon">Vault Neon</string>
     <string name="desktop_theme_accent_label">Акцент</string>
     <string name="desktop_panic_mute_toggle">Паническо заглушаване</string>
     <string name="desktop_panic_mute_on">Паническо заглушаване: Вкл.</string>

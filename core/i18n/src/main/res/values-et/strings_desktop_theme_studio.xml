@@ -15,5 +15,4 @@
     <string name="desktop_theme_density_touch">Puute</string>
     <string name="desktop_theme_panel_height">Paneeli kõrgus: %1$d dp</string>
     <string name="desktop_theme_panel_icon">Paneeli ikoonid: %1$d dp</string>
-    <string name="desktop_theme_panel_opacity">Paneeli läbipaistmatus: %1$d%%</string>
-</resources>
+    </resources>

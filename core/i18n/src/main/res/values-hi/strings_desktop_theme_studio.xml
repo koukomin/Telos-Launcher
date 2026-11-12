@@ -15,5 +15,4 @@
     <string name="desktop_theme_density_touch">टच</string>
     <string name="desktop_theme_panel_height">पैनल ऊँचाई: %1$d dp</string>
     <string name="desktop_theme_panel_icon">पैनल आइकन: %1$d dp</string>
-    <string name="desktop_theme_panel_opacity">पैनल अपारदर्शिता: %1$d%%</string>
-</resources>
+    </resources>

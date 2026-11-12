@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="desktop_appearance_title">Dehra</string>
-    <string name="desktop_appearance_hint">Intensità Quiet Ops jew Vault Neon, aċċent neon u silenzju tal-paniku. Overlays tal-profil jistgħu jissostitwixxuhom mingħajr ma jiktbu fil-HOME tal-host f’Portable Data.</string>
+<string name="desktop_appearance_hint">Intensità Quiet Ops jew Vault Neon, aċċent neon u silenzju tal-paniku. Overlays tal-profil jistgħu jissostitwixxuhom mingħajr ma jiktbu fil-HOME tal-host f’Portable Data.</string>
     <string name="desktop_theme_intensity_label">Intensità tat-tema</string>
-    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
-    <string name="desktop_theme_intensity_neon">Vault Neon</string>
     <string name="desktop_theme_accent_label">Aċċent</string>
     <string name="desktop_panic_mute_toggle">Silenzju tal-paniku</string>
     <string name="desktop_panic_mute_on">Silenzju tal-paniku: Mixgħul</string>

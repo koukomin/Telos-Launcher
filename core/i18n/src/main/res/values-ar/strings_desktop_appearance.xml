@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="desktop_appearance_title">المظهر</string>
-    <string name="desktop_appearance_hint">شدة Quiet Ops أو Vault Neon، وتمييز نيون، وكتم الذعر. يمكن لتراكبات الملف الشخصي تجاوزها دون الكتابة إلى HOME للمضيف في Portable Data.</string>
+<string name="desktop_appearance_hint">شدة Quiet Ops أو Vault Neon، وتمييز نيون، وكتم الذعر. يمكن لتراكبات الملف الشخصي تجاوزها دون الكتابة إلى HOME للمضيف في Portable Data.</string>
     <string name="desktop_theme_intensity_label">شدة السمة</string>
-    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
-    <string name="desktop_theme_intensity_neon">Vault Neon</string>
     <string name="desktop_theme_accent_label">التمييز</string>
     <string name="desktop_panic_mute_toggle">كتم الذعر</string>
     <string name="desktop_panic_mute_on">كتم الذعر: تشغيل</string>

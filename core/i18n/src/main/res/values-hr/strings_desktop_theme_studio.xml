@@ -15,5 +15,4 @@
     <string name="desktop_theme_density_touch">Dodir</string>
     <string name="desktop_theme_panel_height">Visina ploče: %1$d dp</string>
     <string name="desktop_theme_panel_icon">Ikone ploče: %1$d dp</string>
-    <string name="desktop_theme_panel_opacity">Neprozirnost ploče: %1$d%%</string>
-</resources>
+    </resources>

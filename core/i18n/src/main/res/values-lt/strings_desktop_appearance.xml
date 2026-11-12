@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="desktop_appearance_title">Išvaizda</string>
-    <string name="desktop_appearance_hint">Quiet Ops arba Vault Neon intensyvumas, neono akcentas ir panikos nutildymas. Profilio sluoksniai gali juos perrašyti nerašydami į pagrindinio kompiuterio HOME Portable Data režimu.</string>
+<string name="desktop_appearance_hint">Quiet Ops arba Vault Neon intensyvumas, neono akcentas ir panikos nutildymas. Profilio sluoksniai gali juos perrašyti nerašydami į pagrindinio kompiuterio HOME Portable Data režimu.</string>
     <string name="desktop_theme_intensity_label">Temos intensyvumas</string>
-    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
-    <string name="desktop_theme_intensity_neon">Vault Neon</string>
     <string name="desktop_theme_accent_label">Akcentas</string>
     <string name="desktop_panic_mute_toggle">Panikos nutildymas</string>
     <string name="desktop_panic_mute_on">Panikos nutildymas: Įjungta</string>

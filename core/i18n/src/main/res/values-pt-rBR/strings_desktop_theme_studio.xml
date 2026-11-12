@@ -15,5 +15,4 @@
     <string name="desktop_theme_density_touch">Toque</string>
     <string name="desktop_theme_panel_height">Altura do painel: %1$d dp</string>
     <string name="desktop_theme_panel_icon">Ícones do painel: %1$d dp</string>
-    <string name="desktop_theme_panel_opacity">Opacidade do painel: %1$d%%</string>
-</resources>
+    </resources>

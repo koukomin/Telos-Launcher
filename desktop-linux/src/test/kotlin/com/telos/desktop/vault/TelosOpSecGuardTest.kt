@@ -75,8 +75,11 @@ class TelosOpSecGuardTest {
         PortableEnvironmentIsolator.apply(home, fullSessionHome = false)
         try {
             File(DesktopProfiles.profilesRoot(), "work").mkdirs()
-            DesktopProfiles.setActiveProfile("work")
-            assertEquals("work", DesktopProfiles.activeProfile())
+            // Pass an explicit vault config dir so leftover PhantomVault state from other
+            // tests cannot shadow the marker written under the portable isolator.
+            val configDir = File(home, ".config/telos").apply { mkdirs() }
+            assertTrue(DesktopProfiles.setActiveProfile("work", vaultConfigDir = configDir))
+            assertEquals("work", DesktopProfiles.activeProfile(vaultConfigDir = configDir))
             assertTrue(TelosSessionAuditLog.readTail(5).any { it.contains("profile_switch") && it.contains("work") })
         } finally {
             PortableEnvironmentIsolator.clear()

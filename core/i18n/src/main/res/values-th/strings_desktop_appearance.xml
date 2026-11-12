@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="desktop_appearance_title">รูปลักษณ์</string>
-    <string name="desktop_appearance_hint">ความเข้ม Quiet Ops หรือ Vault Neon สีเน้นนีออน และการปิดเสียงฉุกเฉิน เลเยอร์โปรไฟล์สามารถแทนที่ได้โดยไม่เขียนไปที่ HOME ของโฮสต์ใน Portable Data</string>
+<string name="desktop_appearance_hint">ความเข้ม Quiet Ops หรือ Vault Neon สีเน้นนีออน และการปิดเสียงฉุกเฉิน เลเยอร์โปรไฟล์สามารถแทนที่ได้โดยไม่เขียนไปที่ HOME ของโฮสต์ใน Portable Data</string>
     <string name="desktop_theme_intensity_label">ความเข้มของธีม</string>
-    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
-    <string name="desktop_theme_intensity_neon">Vault Neon</string>
     <string name="desktop_theme_accent_label">สีเน้น</string>
     <string name="desktop_panic_mute_toggle">ปิดเสียงฉุกเฉิน</string>
     <string name="desktop_panic_mute_on">ปิดเสียงฉุกเฉิน: เปิด</string>

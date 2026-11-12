@@ -15,5 +15,4 @@
     <string name="desktop_theme_density_touch">Tuŝo</string>
     <string name="desktop_theme_panel_height">Panela alteco: %1$d dp</string>
     <string name="desktop_theme_panel_icon">Panelaj piktogramoj: %1$d dp</string>
-    <string name="desktop_theme_panel_opacity">Panela maldiafaneco: %1$d%%</string>
-</resources>
+    </resources>

@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="desktop_appearance_title">Оформление</string>
-    <string name="desktop_appearance_hint">Интенсивность Quiet Ops или Vault Neon, неоновый акцент и паническое отключение подсветки. Оверлеи профиля могут переопределять это без записи в HOME хоста в Portable Data.</string>
+<string name="desktop_appearance_hint">Интенсивность Quiet Ops или Vault Neon, неоновый акцент и паническое отключение подсветки. Оверлеи профиля могут переопределять это без записи в HOME хоста в Portable Data.</string>
     <string name="desktop_theme_intensity_label">Интенсивность темы</string>
-    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
-    <string name="desktop_theme_intensity_neon">Vault Neon</string>
     <string name="desktop_theme_accent_label">Акцент</string>
     <string name="desktop_panic_mute_toggle">Паническое отключение</string>
     <string name="desktop_panic_mute_on">Паническое отключение: Вкл.</string>

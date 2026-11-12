@@ -15,5 +15,4 @@
     <string name="desktop_theme_density_touch">لمسی</string>
     <string name="desktop_theme_panel_height">ارتفاع پنل: %1$d dp</string>
     <string name="desktop_theme_panel_icon">آیکون‌های پنل: %1$d dp</string>
-    <string name="desktop_theme_panel_opacity">کدری پنل: %1$d%%</string>
-</resources>
+    </resources>

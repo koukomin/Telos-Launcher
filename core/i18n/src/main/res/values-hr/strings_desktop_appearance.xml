@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="desktop_appearance_title">Izgled</string>
-    <string name="desktop_appearance_hint">Intenzitet Quiet Ops ili Vault Neon, neonski naglasak i panično utišavanje. Profilni overlayi mogu to nadjačati bez pisanja u host HOME u Portable Data.</string>
+<string name="desktop_appearance_hint">Intenzitet Quiet Ops ili Vault Neon, neonski naglasak i panično utišavanje. Profilni overlayi mogu to nadjačati bez pisanja u host HOME u Portable Data.</string>
     <string name="desktop_theme_intensity_label">Intenzitet teme</string>
-    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
-    <string name="desktop_theme_intensity_neon">Vault Neon</string>
     <string name="desktop_theme_accent_label">Naglasak</string>
     <string name="desktop_panic_mute_toggle">Panično utišavanje</string>
     <string name="desktop_panic_mute_on">Panično utišavanje: Uključeno</string>

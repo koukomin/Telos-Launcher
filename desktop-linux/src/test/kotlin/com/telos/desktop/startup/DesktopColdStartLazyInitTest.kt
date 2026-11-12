@@ -95,8 +95,15 @@ class DesktopColdStartLazyInitTest {
             size = 24,
             followSystemTheme = false,
         )
-        assertTrue(CursorThemeApplier.isDecodePending())
         assertNotNull(result.theme)
+        // Windows/macOS use stock AWT cursors and never defer XCursor decode.
+        if (com.telos.desktop.platform.PlatformEnvironment.current !=
+            com.telos.desktop.platform.TelosRuntimePlatform.LinuxDesktop
+        ) {
+            assertFalse(CursorThemeApplier.isDecodePending())
+            return
+        }
+        assertTrue(CursorThemeApplier.isDecodePending())
         // Env published without walking icon roots for decode.
         assertFalse(XCursorThemeDiscovery.isCached())
         CursorThemeApplier.ensureDecoded()
@@ -149,6 +156,12 @@ class DesktopColdStartLazyInitTest {
         // ensure still available for unlock/create paths
         val ensured = PortableStegoFs.ensureCarriersRoot()
         assertTrue(ensured.isDirectory)
-        assertTrue(ensured.absolutePath.startsWith(root.canonicalFile.absolutePath))
+        // Compare canonical Files — Windows may surface 8.3 short paths via absolutePath.
+        val ensuredCanon = ensured.canonicalFile
+        val rootCanon = root.canonicalFile
+        assertTrue(
+            ensuredCanon == rootCanon ||
+                ensuredCanon.toPath().startsWith(rootCanon.toPath()),
+        )
     }
 }

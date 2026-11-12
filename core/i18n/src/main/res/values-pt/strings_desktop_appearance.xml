@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="desktop_appearance_title">Aparência</string>
-    <string name="desktop_appearance_hint">Intensidade Quiet Ops ou Vault Neon, acento néon e silêncio de pânico. Overlays de perfil podem substituí-los sem escrever no HOME do anfitrião em Portable Data.</string>
+<string name="desktop_appearance_hint">Intensidade Quiet Ops ou Vault Neon, acento néon e silêncio de pânico. Overlays de perfil podem substituí-los sem escrever no HOME do anfitrião em Portable Data.</string>
     <string name="desktop_theme_intensity_label">Intensidade do tema</string>
-    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
-    <string name="desktop_theme_intensity_neon">Vault Neon</string>
     <string name="desktop_theme_accent_label">Acento</string>
     <string name="desktop_panic_mute_toggle">Silêncio de pânico</string>
     <string name="desktop_panic_mute_on">Silêncio de pânico: Ligado</string>

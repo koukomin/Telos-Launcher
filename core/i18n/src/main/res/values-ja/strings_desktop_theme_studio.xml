@@ -15,5 +15,4 @@
     <string name="desktop_theme_density_touch">タッチ</string>
     <string name="desktop_theme_panel_height">パネルの高さ: %1$d dp</string>
     <string name="desktop_theme_panel_icon">パネルアイコン: %1$d dp</string>
-    <string name="desktop_theme_panel_opacity">パネルの不透明度: %1$d%%</string>
-</resources>
+    </resources>

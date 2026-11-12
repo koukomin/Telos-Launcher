@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="desktop_appearance_title">Izskats</string>
-    <string name="desktop_appearance_hint">Quiet Ops vai Vault Neon intensitāte, neona akcents un panikas apklusināšana. Profilu pārklājumi var tos pārrakstīt, nerakstot hosta HOME Portable Data režīmā.</string>
+<string name="desktop_appearance_hint">Quiet Ops vai Vault Neon intensitāte, neona akcents un panikas apklusināšana. Profilu pārklājumi var tos pārrakstīt, nerakstot hosta HOME Portable Data režīmā.</string>
     <string name="desktop_theme_intensity_label">Tēmas intensitāte</string>
-    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
-    <string name="desktop_theme_intensity_neon">Vault Neon</string>
     <string name="desktop_theme_accent_label">Akcents</string>
     <string name="desktop_panic_mute_toggle">Panikas apklusināšana</string>
     <string name="desktop_panic_mute_on">Panikas apklusināšana: Ieslēgta</string>

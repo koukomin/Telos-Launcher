@@ -15,5 +15,4 @@
     <string name="desktop_theme_density_touch">สัมผัส</string>
     <string name="desktop_theme_panel_height">ความสูงแผง: %1$d dp</string>
     <string name="desktop_theme_panel_icon">ไอคอนแผง: %1$d dp</string>
-    <string name="desktop_theme_panel_opacity">ความทึบแผง: %1$d%%</string>
-</resources>
+    </resources>

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="desktop_appearance_title">外觀</string>
-    <string name="desktop_theme_intensity">主題強度</string>
     <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
     <string name="desktop_theme_intensity_neon">Vault Neon</string>
     <string name="desktop_theme_intensity_paper">Paper Ops</string>

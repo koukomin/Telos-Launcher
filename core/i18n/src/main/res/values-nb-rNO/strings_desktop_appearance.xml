@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="desktop_appearance_title">Utseende</string>
-    <string name="desktop_appearance_hint">Quiet Ops- eller Vault Neon-intensitet, neonaksent og panikkdemping. Profiloverlegg kan overstyre dem uten å skrive til vertens HOME i Portable Data.</string>
+<string name="desktop_appearance_hint">Quiet Ops- eller Vault Neon-intensitet, neonaksent og panikkdemping. Profiloverlegg kan overstyre dem uten å skrive til vertens HOME i Portable Data.</string>
     <string name="desktop_theme_intensity_label">Temaintensitet</string>
-    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
-    <string name="desktop_theme_intensity_neon">Vault Neon</string>
     <string name="desktop_theme_accent_label">Aksent</string>
     <string name="desktop_panic_mute_toggle">Panikkdemping</string>
     <string name="desktop_panic_mute_on">Panikkdemping: På</string>

@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="desktop_appearance_title">外觀</string>
-    <string name="desktop_appearance_hint">Quiet Ops 或 Vault Neon 強度、霓虹強調色與緊急靜音。設定檔疊加可覆寫這些項目，且在可攜資料模式下不會寫入主機 HOME。</string>
+<string name="desktop_appearance_hint">Quiet Ops 或 Vault Neon 強度、霓虹強調色與緊急靜音。設定檔疊加可覆寫這些項目，且在可攜資料模式下不會寫入主機 HOME。</string>
     <string name="desktop_theme_intensity_label">主題強度</string>
-    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
-    <string name="desktop_theme_intensity_neon">Vault Neon</string>
     <string name="desktop_theme_accent_label">強調色</string>
     <string name="desktop_panic_mute_toggle">緊急靜音</string>
     <string name="desktop_panic_mute_on">緊急靜音：開</string>

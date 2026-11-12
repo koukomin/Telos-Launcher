@@ -15,5 +15,4 @@
     <string name="desktop_theme_density_touch">터치</string>
     <string name="desktop_theme_panel_height">패널 높이: %1$d dp</string>
     <string name="desktop_theme_panel_icon">패널 아이콘: %1$d dp</string>
-    <string name="desktop_theme_panel_opacity">패널 불투명도: %1$d%%</string>
-</resources>
+    </resources>

@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="desktop_appearance_title">מראה</string>
-    <string name="desktop_appearance_hint">עוצמת Quiet Ops או Vault Neon, הדגשת ניאון והשתקת חירום. שכבות פרופיל יכולות לדרוס אותן בלי לכתוב ל-HOME של המארח ב-Portable Data.</string>
+<string name="desktop_appearance_hint">עוצמת Quiet Ops או Vault Neon, הדגשת ניאון והשתקת חירום. שכבות פרופיל יכולות לדרוס אותן בלי לכתוב ל-HOME של המארח ב-Portable Data.</string>
     <string name="desktop_theme_intensity_label">עוצמת ערכת נושא</string>
-    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
-    <string name="desktop_theme_intensity_neon">Vault Neon</string>
     <string name="desktop_theme_accent_label">הדגשה</string>
     <string name="desktop_panic_mute_toggle">השתקת חירום</string>
     <string name="desktop_panic_mute_on">השתקת חירום: פועל</string>

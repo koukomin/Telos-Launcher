@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="desktop_appearance_title">모양</string>
-    <string name="desktop_appearance_hint">Quiet Ops 또는 Vault Neon 강도, 네온 강조색, 패닉 뮤트. 프로필 오버레이로 덮어쓸 수 있으며 Portable Data에서는 호스트 HOME에 쓰지 않습니다.</string>
+<string name="desktop_appearance_hint">Quiet Ops 또는 Vault Neon 강도, 네온 강조색, 패닉 뮤트. 프로필 오버레이로 덮어쓸 수 있으며 Portable Data에서는 호스트 HOME에 쓰지 않습니다.</string>
     <string name="desktop_theme_intensity_label">테마 강도</string>
-    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
-    <string name="desktop_theme_intensity_neon">Vault Neon</string>
     <string name="desktop_theme_accent_label">강조색</string>
     <string name="desktop_panic_mute_toggle">패닉 뮤트</string>
     <string name="desktop_panic_mute_on">패닉 뮤트: 켜짐</string>

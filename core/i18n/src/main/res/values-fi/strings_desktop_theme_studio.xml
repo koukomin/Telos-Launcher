@@ -15,5 +15,4 @@
     <string name="desktop_theme_density_touch">Kosketus</string>
     <string name="desktop_theme_panel_height">Paneelin korkeus: %1$d dp</string>
     <string name="desktop_theme_panel_icon">Paneelin kuvakkeet: %1$d dp</string>
-    <string name="desktop_theme_panel_opacity">Paneelin peittävyys: %1$d%%</string>
-</resources>
+    </resources>

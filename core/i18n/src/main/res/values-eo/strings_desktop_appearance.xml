@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="desktop_appearance_title">Aspekto</string>
-    <string name="desktop_appearance_hint">Intenseco Quiet Ops aŭ Vault Neon, neon-akcento kaj panika silentigo. Profilaj tavoloj povas anstataŭigi ilin sen skribi al gastiga HOME en Portable Data.</string>
+<string name="desktop_appearance_hint">Intenseco Quiet Ops aŭ Vault Neon, neon-akcento kaj panika silentigo. Profilaj tavoloj povas anstataŭigi ilin sen skribi al gastiga HOME en Portable Data.</string>
     <string name="desktop_theme_intensity_label">Tema intenseco</string>
-    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
-    <string name="desktop_theme_intensity_neon">Vault Neon</string>
     <string name="desktop_theme_accent_label">Akcento</string>
     <string name="desktop_panic_mute_toggle">Panika silentigo</string>
     <string name="desktop_panic_mute_on">Panika silentigo: Ŝaltita</string>

@@ -148,7 +148,13 @@ class ProfileAppearanceOverlayTest {
             val overlay = ProfileAppearanceOverlay.overlayFile("MuteGhost")
             assertTrue(overlay.isFile)
             assertTrue(overlay.absolutePath.contains("${File.separator}profiles${File.separator}MuteGhost"))
-            assertTrue(overlay.canonicalFile.path.startsWith(tmp.canonicalFile.path))
+            // Canonical File/Path compare — Windows may use 8.3 short paths in absolutePath.
+            val overlayCanon = overlay.canonicalFile
+            val tmpCanon = tmp.canonicalFile
+            assertTrue(
+                overlayCanon == tmpCanon ||
+                    overlayCanon.toPath().startsWith(tmpCanon.toPath()),
+            )
             val p = Properties()
             overlay.inputStream().use { p.load(it) }
             assertEquals("quiet", p.getProperty("theme.intensity"))

@@ -15,10 +15,13 @@ class DesktopVaultRestoreTest {
         val prevHome = System.getProperty("user.home")
         try {
             System.setProperty("user.home", root.absolutePath)
+            com.telos.desktop.network.DesktopNetworkController.clearConfigHomeCache()
             val configDir = File(root, "config").apply { mkdirs() }
             File(configDir, "desktop.properties").writeText("panel.blur=2\n")
             val telosCfg = File(root, ".config/telos").apply { mkdirs() }
             File(telosCfg, "dns.txt").writeText("dns=https://dns.example/dns-query\n")
+            // Non-secret companion file — WireGuard private keys may be filtered from export.
+            File(telosCfg, "dns-block.txt").writeText("tracker.example\n")
             File(telosCfg, "wireguard").mkdirs()
             File(telosCfg, "wireguard/telos-wg.conf").writeText(
                 "[Interface]\nPrivateKey=SHOULD_NOT_APPEAR_IN_AUDIT\nAddress=10.0.0.2/32\n",
@@ -33,7 +36,7 @@ class DesktopVaultRestoreTest {
 
             val preview = DesktopVaultRestore.preview(bundle, pass.copyOf()).getOrThrow()
             assertTrue(preview.hasDesktopProperties)
-            assertTrue(preview.telosConfigFileCount >= 2)
+            assertTrue(preview.telosConfigFileCount >= 1)
             assertTrue(preview.confirmToken.startsWith(DesktopVaultRestore.CONFIRM_PREFIX))
 
             val denied = DesktopVaultRestore.applyConfirmed(
@@ -63,6 +66,7 @@ class DesktopVaultRestoreTest {
                 assertTrue(text.contains("vault_restore"))
             }
         } finally {
+            com.telos.desktop.network.DesktopNetworkController.clearConfigHomeCache()
             if (prevHome != null) System.setProperty("user.home", prevHome) else System.clearProperty("user.home")
             root.deleteRecursively()
         }

@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="desktop_appearance_title">Vzhľad</string>
-    <string name="desktop_appearance_hint">Intenzita Quiet Ops alebo Vault Neon, neónový akcent a panické stlmenie. Prekryvy profilu ich môžu prepísať bez zápisu do HOME hostiteľa v Portable Data.</string>
+<string name="desktop_appearance_hint">Intenzita Quiet Ops alebo Vault Neon, neónový akcent a panické stlmenie. Prekryvy profilu ich môžu prepísať bez zápisu do HOME hostiteľa v Portable Data.</string>
     <string name="desktop_theme_intensity_label">Intenzita motívu</string>
-    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
-    <string name="desktop_theme_intensity_neon">Vault Neon</string>
     <string name="desktop_theme_accent_label">Akcent</string>
     <string name="desktop_panic_mute_toggle">Panické stlmenie</string>
     <string name="desktop_panic_mute_on">Panické stlmenie: Zapnuté</string>

@@ -15,5 +15,4 @@
     <string name="desktop_theme_density_touch">Tàctil</string>
     <string name="desktop_theme_panel_height">Alçada del panell: %1$d dp</string>
     <string name="desktop_theme_panel_icon">Icones del panell: %1$d dp</string>
-    <string name="desktop_theme_panel_opacity">Opacitat del panell: %1$d%%</string>
-</resources>
+    </resources>

@@ -15,5 +15,4 @@
     <string name="desktop_theme_density_touch">Дотик</string>
     <string name="desktop_theme_panel_height">Висота панелі: %1$d dp</string>
     <string name="desktop_theme_panel_icon">Піктограми панелі: %1$d dp</string>
-    <string name="desktop_theme_panel_opacity">Непрозорість панелі: %1$d%%</string>
-</resources>
+    </resources>

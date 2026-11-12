@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="desktop_appearance_title">Megjelenés</string>
-    <string name="desktop_appearance_hint">Quiet Ops vagy Vault Neon intenzitás, neon kiemelés és pániknémítás. A profilátfedések felülírhatják ezeket anélkül, hogy Portable Data esetén a gazda HOME-jába írnának.</string>
+<string name="desktop_appearance_hint">Quiet Ops vagy Vault Neon intenzitás, neon kiemelés és pániknémítás. A profilátfedések felülírhatják ezeket anélkül, hogy Portable Data esetén a gazda HOME-jába írnának.</string>
     <string name="desktop_theme_intensity_label">Téma intenzitása</string>
-    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
-    <string name="desktop_theme_intensity_neon">Vault Neon</string>
     <string name="desktop_theme_accent_label">Kiemelés</string>
     <string name="desktop_panic_mute_toggle">Pániknémítás</string>
     <string name="desktop_panic_mute_on">Pániknémítás: Be</string>

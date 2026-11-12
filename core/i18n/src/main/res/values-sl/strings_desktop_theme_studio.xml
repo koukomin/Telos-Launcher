@@ -15,5 +15,4 @@
     <string name="desktop_theme_density_touch">Dotik</string>
     <string name="desktop_theme_panel_height">Višina plošče: %1$d dp</string>
     <string name="desktop_theme_panel_icon">Ikone plošče: %1$d dp</string>
-    <string name="desktop_theme_panel_opacity">Motnost plošče: %1$d%%</string>
-</resources>
+    </resources>

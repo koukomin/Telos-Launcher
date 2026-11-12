@@ -15,5 +15,4 @@
     <string name="desktop_theme_density_touch">Αφή</string>
     <string name="desktop_theme_panel_height">Ύψος πίνακα: %1$d dp</string>
     <string name="desktop_theme_panel_icon">Εικονίδια πίνακα: %1$d dp</string>
-    <string name="desktop_theme_panel_opacity">Αδιαφάνεια πίνακα: %1$d%%</string>
-</resources>
+    </resources>

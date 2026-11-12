@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="desktop_appearance_title">Aparença</string>
-    <string name="desktop_appearance_hint">Intensitat Quiet Ops o Vault Neon, accent de neó i silenci de pànic. Els overlays de perfil poden substituir-los sense escriure a l’HOME de l’amfitrió en Portable Data.</string>
+<string name="desktop_appearance_hint">Intensitat Quiet Ops o Vault Neon, accent de neó i silenci de pànic. Els overlays de perfil poden substituir-los sense escriure a l’HOME de l’amfitrió en Portable Data.</string>
     <string name="desktop_theme_intensity_label">Intensitat del tema</string>
-    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
-    <string name="desktop_theme_intensity_neon">Vault Neon</string>
     <string name="desktop_theme_accent_label">Accent</string>
     <string name="desktop_panic_mute_toggle">Silenci de pànic</string>
     <string name="desktop_panic_mute_on">Silenci de pànic: Activat</string>

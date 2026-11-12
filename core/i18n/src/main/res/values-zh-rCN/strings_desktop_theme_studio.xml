@@ -15,5 +15,4 @@
     <string name="desktop_theme_density_touch">触控</string>
     <string name="desktop_theme_panel_height">面板高度：%1$d dp</string>
     <string name="desktop_theme_panel_icon">面板图标：%1$d dp</string>
-    <string name="desktop_theme_panel_opacity">面板不透明度：%1$d%%</string>
-</resources>
+    </resources>
