@@ -7,7 +7,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.net.URL
 import java.net.URLEncoder
-import java.nio.charset.StandardCharsets
 
 @Serializable
 data class FoodProduct(
@@ -40,7 +39,7 @@ object OpenFoodFactsApi {
     suspend fun search(query: String): List<FoodProduct> = withContext(Dispatchers.IO) {
         try {
             if (query.isBlank()) return@withContext emptyList()
-            val encoded = URLEncoder.encode(query.trim(), StandardCharsets.UTF_8)
+            val encoded = URLEncoder.encode(query.trim(), "UTF-8")
             val url = URL(
                 "https://world.openfoodfacts.org/cgi/search.pl?search_terms=$encoded&search_simple=1&action=process&json=1",
             )
