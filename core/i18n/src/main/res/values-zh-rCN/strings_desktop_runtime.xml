@@ -21,4 +21,28 @@
     <string name="desktop_flatpak_override_failed">无法应用 Flatpak 覆盖</string>
     <string name="desktop_flatpak_reset_overrides">重置覆盖</string>
     <string name="desktop_deeplink_handler_hint">telos:// 打开 Telos 应用和 Kickoff 搜索（在桌面启动时注册）。</string>
+    <string name="desktop_store_backends">软件包来源</string>
+    <string name="desktop_store_backend_flatpak">Flatpak</string>
+    <string name="desktop_store_backend_winget">Winget</string>
+    <string name="desktop_store_backend_scoop">Scoop</string>
+    <string name="desktop_store_windows_pref_only">Winget/Scoop 仅适用于 Windows；本主机不执行 Windows 软件包操作。</string>
+    <string name="desktop_store_windows_unavailable">PATH 中未找到 winget 或 scoop。</string>
+    <string name="desktop_store_windows_installed">Windows 软件包（已安装）</string>
+    <string name="desktop_store_windows_search">Windows 软件包（搜索）</string>
+    <string name="desktop_store_install_confirm_title">确认安装</string>
+    <string name="desktop_store_install_confirm_body">要通过 %3$s 安装 %1$s（%2$s）吗？</string>
+    <string name="desktop_store_install_started">已开始安装 %1$s</string>
+    <string name="desktop_store_install_failed">无法开始安装 %1$s</string>
+    <string name="desktop_portal_device_title">相机与麦克风（门户）</string>
+    <string name="desktop_portal_device_hint">记录你的请求，并在 Device/Camera 门户可用时询问 xdg-desktop-portal。没有门户工具时仅保存偏好。</string>
+    <string name="desktop_portal_device_requested">已请求门户访问对话框</string>
+    <string name="desktop_portal_device_pref_only">已保存偏好；门户工具不可用（仅偏好）。</string>
+    <string name="desktop_portal_device_unavailable">此系统上门户设备访问不可用。</string>
+    <string name="desktop_portal_device_failed">无法向桌面门户请求设备访问</string>
+    <string name="desktop_netns_cap_unshare">按应用 netns：可用 unshare --net</string>
+    <string name="desktop_netns_cap_ip">按应用 netns：可用 ip netns</string>
+    <string name="desktop_netns_cap_unavailable">缺少按应用 netns 工具；隔离仅保留为偏好</string>
+    <string name="desktop_netns_flatpak_owned">网络隔离的 Flatpak 使用 Flatpak --unshare=network（不声称主机 netns）。</string>
+    <string name="desktop_netns_flatpak_no_tools">已设网络隔离层级；缺少 unshare/ip netns — 仅在 Flatpak 应用时使用 override。</string>
+    <string name="desktop_netns_not_isolated">应用未标记为网络隔离。</string>
 </resources>

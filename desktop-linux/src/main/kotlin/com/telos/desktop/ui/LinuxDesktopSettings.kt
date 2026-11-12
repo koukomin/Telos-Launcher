@@ -443,6 +443,75 @@ fun LinuxDesktopSettingsPanel(
             }
         }
 
+        HelixSettingsCard(com.telos.desktop.i18n.TelosI18n.t("desktop_portal_device_title")) {
+            val scope = rememberCoroutineScope()
+            var camera by remember {
+                mutableStateOf(
+                    com.telos.desktop.session.PortalDeviceAccess.readRequested(
+                        com.telos.desktop.session.PortalDeviceKind.Camera,
+                    ),
+                )
+            }
+            var mic by remember {
+                mutableStateOf(
+                    com.telos.desktop.session.PortalDeviceAccess.readRequested(
+                        com.telos.desktop.session.PortalDeviceKind.Microphone,
+                    ),
+                )
+            }
+            var portalStatus by remember { mutableStateOf<String?>(null) }
+            Text(
+                com.telos.desktop.i18n.TelosI18n.t("desktop_portal_device_hint"),
+                fontSize = 12.sp,
+                color = TelosColors.onSurface.copy(0.75f),
+            )
+            if (!com.telos.desktop.session.PortalDeviceAccess.available()) {
+                Text(
+                    com.telos.desktop.i18n.TelosI18n.t("desktop_portal_device_pref_only"),
+                    fontSize = 12.sp,
+                    color = TelosColors.secondary,
+                )
+            }
+            fun portalLabel(result: com.telos.desktop.session.PortalDeviceAskResult): String = when (result) {
+                com.telos.desktop.session.PortalDeviceAskResult.Requested ->
+                    com.telos.desktop.i18n.TelosI18n.t("desktop_portal_device_requested")
+                com.telos.desktop.session.PortalDeviceAskResult.PreferenceOnly ->
+                    com.telos.desktop.i18n.TelosI18n.t("desktop_portal_device_pref_only")
+                com.telos.desktop.session.PortalDeviceAskResult.Unavailable ->
+                    com.telos.desktop.i18n.TelosI18n.t("desktop_portal_device_unavailable")
+                com.telos.desktop.session.PortalDeviceAskResult.Failed,
+                com.telos.desktop.session.PortalDeviceAskResult.Invalid,
+                -> com.telos.desktop.i18n.TelosI18n.t("desktop_portal_device_failed")
+            }
+            Toggle(com.telos.desktop.i18n.TelosI18n.t("desktop_perm_camera"), camera) {
+                camera = it
+                scope.launch {
+                    val result = withContext(Dispatchers.IO) {
+                        com.telos.desktop.session.PortalDeviceAccess.setRequested(
+                            com.telos.desktop.session.PortalDeviceKind.Camera,
+                            it,
+                        )
+                    }
+                    portalStatus = portalLabel(result)
+                }
+            }
+            Toggle(com.telos.desktop.i18n.TelosI18n.t("desktop_perm_microphone"), mic) {
+                mic = it
+                scope.launch {
+                    val result = withContext(Dispatchers.IO) {
+                        com.telos.desktop.session.PortalDeviceAccess.setRequested(
+                            com.telos.desktop.session.PortalDeviceKind.Microphone,
+                            it,
+                        )
+                    }
+                    portalStatus = portalLabel(result)
+                }
+            }
+            portalStatus?.let {
+                Text(it, fontSize = 11.sp, color = TelosColors.secondary)
+            }
+        }
+
         HelixSettingsCard(com.telos.desktop.i18n.TelosI18n.t("desktop_opsec_title")) {
             val opsec = runCatching { com.telos.desktop.vault.PhantomVault.engine.opsec }.getOrNull()
             var secure by remember {

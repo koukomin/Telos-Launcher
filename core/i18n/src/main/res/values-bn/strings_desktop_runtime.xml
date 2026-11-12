@@ -21,4 +21,28 @@
     <string name="desktop_flatpak_override_failed">Flatpak ওভাররাইড প্রয়োগ করা যায়নি</string>
     <string name="desktop_flatpak_reset_overrides">ওভাররাইড রিসেট</string>
     <string name="desktop_deeplink_handler_hint">telos:// Telos অ্যাপ ও Kickoff অনুসন্ধান খোলে (ডেস্কটপ চালু হলে নিবন্ধিত)।</string>
+    <string name="desktop_store_backends">पैकेज स्रोत</string>
+    <string name="desktop_store_backend_flatpak">Flatpak</string>
+    <string name="desktop_store_backend_winget">Winget</string>
+    <string name="desktop_store_backend_scoop">Scoop</string>
+    <string name="desktop_store_windows_pref_only">Winget/Scoop केवल Windows के लिए हैं; यह होस्ट Windows पैकेज क्रियाएँ नहीं चलाता।</string>
+    <string name="desktop_store_windows_unavailable">PATH पर winget या scoop नहीं मिला।</string>
+    <string name="desktop_store_windows_installed">Windows पैकेज (इंस्टॉल)</string>
+    <string name="desktop_store_windows_search">Windows पैकेज (खोज)</string>
+    <string name="desktop_store_install_confirm_title">इंस्टॉल की पुष्टि</string>
+    <string name="desktop_store_install_confirm_body">%3$s से %1$s (%2$s) इंस्टॉल करें?</string>
+    <string name="desktop_store_install_started">%1$s का इंस्टॉल शुरू हुआ</string>
+    <string name="desktop_store_install_failed">%1$s का इंस्टॉल शुरू नहीं हो सका</string>
+    <string name="desktop_portal_device_title">कैमरा और माइक्रोफ़ोन (पोर्टल)</string>
+    <string name="desktop_portal_device_hint">आपका अनुरोध सहेजता है और Device/Camera पोर्टल उपलब्ध होने पर xdg-desktop-portal से पूछता है। पोर्टल टूल न हों तो केवल प्राथमिकता रहती है।</string>
+    <string name="desktop_portal_device_requested">पोर्टल पहुँच संवाद का अनुरोध किया गया</string>
+    <string name="desktop_portal_device_pref_only">प्राथमिकता सहेजी गई; पोर्टल टूल उपलब्ध नहीं (केवल प्राथमिकता)।</string>
+    <string name="desktop_portal_device_unavailable">इस सिस्टम पर पोर्टल डिवाइस पहुँच उपलब्ध नहीं है।</string>
+    <string name="desktop_portal_device_failed">डेस्कटॉप पोर्टल से डिवाइस पहुँच नहीं माँग सके</string>
+    <string name="desktop_netns_cap_unshare">प्रति-ऐप netns: unshare --net उपलब्ध</string>
+    <string name="desktop_netns_cap_ip">प्रति-ऐप netns: ip netns उपलब्ध</string>
+    <string name="desktop_netns_cap_unavailable">प्रति-ऐप netns टूल नहीं; अलगाव केवल प्राथमिकता</string>
+    <string name="desktop_netns_flatpak_owned">नेट-आइसोलेटेड Flatpak, Flatpak --unshare=network उपयोग करता है (होस्ट netns नहीं)।</string>
+    <string name="desktop_netns_flatpak_no_tools">नेट-आइसोलेटेड स्तर सेट; unshare/ip netns नहीं — केवल जब Flatpak लागू करे।</string>
+    <string name="desktop_netns_not_isolated">ऐप नेट-आइसोलेटेड चिह्नित नहीं है।</string>
 </resources>

@@ -975,16 +975,38 @@ fun TelosStoreApp() {
     var remote by remember { mutableStateOf<List<FlatpakRef>>(emptyList()) }
     var q by remember { mutableStateOf("") }
     var permissionsFor by remember { mutableStateOf<FlatpakRef?>(null) }
+    var showPortalPerms by remember { mutableStateOf(false) }
+    var winBackend by remember {
+        mutableStateOf(WindowsPackageStore.availableBackends().firstOrNull())
+    }
+    var winInstalled by remember { mutableStateOf<List<WindowsPackageRef>>(emptyList()) }
+    var winRemote by remember { mutableStateOf<List<WindowsPackageRef>>(emptyList()) }
+    var pendingInstall by remember { mutableStateOf<WindowsPackageRef?>(null) }
+    var storeStatus by remember { mutableStateOf<String?>(null) }
     val scope = rememberCoroutineScope()
+    val winStatus = remember { WindowsPackageStore.status() }
+    val winBackends = remember { WindowsPackageStore.availableBackends() }
+    val netnsCap = remember { AppNetnsLauncher.detectCapability() }
     LaunchedEffect(Unit) {
         installed = withContext(Dispatchers.IO) { FlatpakStore.listInstalled() }
     }
-    LaunchedEffect(q) {
+    LaunchedEffect(winBackend) {
+        val backend = winBackend ?: return@LaunchedEffect
+        winInstalled = withContext(Dispatchers.IO) { WindowsPackageStore.listInstalled(backend) }
+    }
+    LaunchedEffect(q, winBackend) {
         remote = if (q.length < 2) emptyList()
         else withContext(Dispatchers.IO) { FlatpakStore.search(q) }
+        val backend = winBackend
+        winRemote = if (backend == null || q.length < 2) emptyList()
+        else withContext(Dispatchers.IO) { WindowsPackageStore.search(q, backend) }
     }
     val shown = remember(installed, q) {
         installed.filter { q.isBlank() || it.name.contains(q, true) || it.id.contains(q, true) }
+    }
+    if (showPortalPerms) {
+        PortalDevicePermissionsPane(onBack = { showPortalPerms = false })
+        return
     }
     val selected = permissionsFor
     if (selected != null) {
@@ -994,14 +1016,103 @@ fun TelosStoreApp() {
         )
         return
     }
+    pendingInstall?.let { pkg ->
+        Column(
+            Modifier.fillMaxSize().background(TelosColors.surface).padding(12.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            Text(t("desktop_store_install_confirm_title"), color = TelosColors.secondary, fontSize = 18.sp)
+            Text(
+                t("desktop_store_install_confirm_body", pkg.name, pkg.id, pkg.source.name),
+                color = TelosColors.onSurface,
+            )
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                Button(onClick = {
+                    scope.launch(Dispatchers.IO) {
+                        val ok = WindowsPackageStore.install(pkg.id, pkg.source)
+                        storeStatus = if (ok) {
+                            t("desktop_store_install_started", pkg.id)
+                        } else {
+                            t("desktop_store_install_failed", pkg.id)
+                        }
+                    }
+                    pendingInstall = null
+                }) { Text(t("action_install")) }
+                TextButton(onClick = { pendingInstall = null }) { Text(t("close")) }
+            }
+        }
+        return
+    }
     Column(Modifier.fillMaxSize().background(TelosColors.surface).padding(12.dp)) {
         Text(t("hf_store_title"), color = TelosColors.secondary, fontSize = 20.sp)
+        Text(t("desktop_store_backends"), color = TelosColors.secondary, fontSize = 13.sp, modifier = Modifier.padding(top = 4.dp))
+        Text(
+            buildString {
+                append(t("desktop_store_backend_flatpak"))
+                append(": ")
+                append(if (FlatpakStore.available()) t("net_hub_state_on") else t("net_hub_state_off"))
+                append(" · ")
+                append(t("desktop_store_backend_winget"))
+                append(": ")
+                append(if (WindowsPackageStore.wingetAvailable()) t("net_hub_state_on") else t("net_hub_state_off"))
+                append(" · ")
+                append(t("desktop_store_backend_scoop"))
+                append(": ")
+                append(if (WindowsPackageStore.scoopAvailable()) t("net_hub_state_on") else t("net_hub_state_off"))
+            },
+            color = TelosColors.onSurface.copy(alpha = 0.75f),
+            fontSize = 12.sp,
+        )
+        when (winStatus) {
+            WindowsPackageStatus.PreferenceOnly ->
+                Text(t("desktop_store_windows_pref_only"), color = TelosColors.secondary, fontSize = 12.sp)
+            WindowsPackageStatus.Unavailable ->
+                Text(t("desktop_store_windows_unavailable"), color = TelosColors.secondary, fontSize = 12.sp)
+            WindowsPackageStatus.Available -> Unit
+        }
         if (!FlatpakStore.available()) {
-            Text(t("desktop_flatpak_unavailable"), color = TelosColors.secondary)
+            Text(t("desktop_flatpak_unavailable"), color = TelosColors.secondary, fontSize = 12.sp)
+        }
+        Text(
+            when (netnsCap) {
+                AppNetnsCapability.UnshareNet -> t("desktop_netns_cap_unshare")
+                AppNetnsCapability.IpNetns -> t("desktop_netns_cap_ip")
+                AppNetnsCapability.Unavailable -> t("desktop_netns_cap_unavailable")
+            },
+            color = TelosColors.onSurface.copy(alpha = 0.7f),
+            fontSize = 11.sp,
+            modifier = Modifier.padding(top = 2.dp),
+        )
+        Row(Modifier.padding(top = 6.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            TextButton(onClick = { showPortalPerms = true }) {
+                Text(t("desktop_portal_device_title"))
+            }
         }
         OutlinedTextField(q, { q = it }, Modifier.fillMaxWidth(), label = { Text(t("hc_filter")) }, singleLine = true)
+        if (winBackends.isNotEmpty()) {
+            Row(Modifier.padding(top = 8.dp), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                winBackends.forEach { backend ->
+                    val label = when (backend) {
+                        WindowsPackageBackend.Winget -> t("desktop_store_backend_winget")
+                        WindowsPackageBackend.Scoop -> t("desktop_store_backend_scoop")
+                    }
+                    FilterChip(
+                        selected = winBackend == backend,
+                        onClick = { winBackend = backend },
+                        label = { Text(label, fontSize = 11.sp) },
+                        colors = FilterChipDefaults.filterChipColors(
+                            selectedContainerColor = TelosColors.surfaceHigh,
+                            selectedLabelColor = TelosColors.onSurface,
+                        ),
+                    )
+                }
+            }
+        }
         Row(Modifier.padding(top = 8.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             Button(onClick = { FlatpakStore.updateAll() }) { Text(t("hc_check_for_updates")) }
+        }
+        storeStatus?.let {
+            Text(it, color = TelosColors.secondary, fontSize = 12.sp, modifier = Modifier.padding(top = 4.dp))
         }
         LazyColumn(Modifier.fillMaxSize().padding(top = 8.dp)) {
             item {
@@ -1013,6 +1124,7 @@ fun TelosStoreApp() {
                         e.name + "  " + e.id,
                         color = TelosColors.onSurface,
                         modifier = Modifier.weight(1f).clickable {
+                            // Flatpak owns --unshare=network; do not claim host netns here.
                             com.telos.desktop.linux.Sys.runBg("flatpak", "run", e.id)
                         },
                     )
@@ -1031,6 +1143,18 @@ fun TelosStoreApp() {
                     )
                 }
             }
+            if (winInstalled.isNotEmpty()) {
+                item {
+                    Text(t("desktop_store_windows_installed"), color = TelosColors.secondary, fontSize = 12.sp)
+                }
+                items(winInstalled.take(80), key = { "wi-${it.source}-${it.id}" }) { e ->
+                    Text(
+                        e.name + "  " + e.id + if (e.version.isNotBlank()) "  ${e.version}" else "",
+                        color = TelosColors.onSurface,
+                        modifier = Modifier.padding(vertical = 4.dp),
+                    )
+                }
+            }
             if (remote.isNotEmpty()) {
                 item { Text(t("action_install"), color = TelosColors.secondary, fontSize = 12.sp) }
                 items(remote.take(40), key = { "r-" + it.id }) { e ->
@@ -1041,6 +1165,109 @@ fun TelosStoreApp() {
                     )
                 }
             }
+            if (winRemote.isNotEmpty()) {
+                item {
+                    Text(t("desktop_store_windows_search"), color = TelosColors.secondary, fontSize = 12.sp)
+                }
+                items(winRemote.take(40), key = { "wr-${it.source}-${it.id}" }) { e ->
+                    Text(
+                        e.name + "  " + e.id,
+                        color = TelosColors.onSurface,
+                        modifier = Modifier.clickable { pendingInstall = e }.padding(8.dp),
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun PortalDevicePermissionsPane(onBack: () -> Unit) {
+    var camera by remember {
+        mutableStateOf(com.telos.desktop.session.PortalDeviceAccess.readRequested(
+            com.telos.desktop.session.PortalDeviceKind.Camera,
+        ))
+    }
+    var mic by remember {
+        mutableStateOf(com.telos.desktop.session.PortalDeviceAccess.readRequested(
+            com.telos.desktop.session.PortalDeviceKind.Microphone,
+        ))
+    }
+    var status by remember { mutableStateOf<String?>(null) }
+    val scope = rememberCoroutineScope()
+    val portalReady = com.telos.desktop.session.PortalDeviceAccess.available()
+    fun labelFor(result: com.telos.desktop.session.PortalDeviceAskResult): String = when (result) {
+        com.telos.desktop.session.PortalDeviceAskResult.Requested -> t("desktop_portal_device_requested")
+        com.telos.desktop.session.PortalDeviceAskResult.PreferenceOnly -> t("desktop_portal_device_pref_only")
+        com.telos.desktop.session.PortalDeviceAskResult.Unavailable -> t("desktop_portal_device_unavailable")
+        com.telos.desktop.session.PortalDeviceAskResult.Failed -> t("desktop_portal_device_failed")
+        com.telos.desktop.session.PortalDeviceAskResult.Invalid -> t("desktop_portal_device_failed")
+    }
+    Column(
+        Modifier
+            .fillMaxSize()
+            .background(TelosColors.surface)
+            .verticalScroll(rememberScrollState())
+            .padding(12.dp),
+    ) {
+        TextButton(onClick = onBack) { Text(t("close")) }
+        Text(t("desktop_portal_device_title"), color = TelosColors.secondary, fontSize = 20.sp)
+        Text(t("desktop_portal_device_hint"), color = TelosColors.onSurface.copy(alpha = 0.75f), fontSize = 12.sp)
+        if (!portalReady) {
+            Text(t("desktop_portal_device_pref_only"), color = TelosColors.secondary, fontSize = 12.sp)
+        }
+        Row(
+            Modifier
+                .fillMaxWidth()
+                .clickable {
+                    scope.launch {
+                        val next = !camera
+                        val result = withContext(Dispatchers.IO) {
+                            com.telos.desktop.session.PortalDeviceAccess.setRequested(
+                                com.telos.desktop.session.PortalDeviceKind.Camera,
+                                next,
+                            )
+                        }
+                        camera = next
+                        status = labelFor(result)
+                    }
+                }
+                .padding(vertical = 8.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+        ) {
+            Text(t("desktop_perm_camera"), color = TelosColors.onSurface, modifier = Modifier.weight(1f))
+            Text(
+                if (camera) t("net_hub_state_on") else t("net_hub_state_off"),
+                color = if (camera) TelosColors.primary else TelosColors.secondary,
+            )
+        }
+        Row(
+            Modifier
+                .fillMaxWidth()
+                .clickable {
+                    scope.launch {
+                        val next = !mic
+                        val result = withContext(Dispatchers.IO) {
+                            com.telos.desktop.session.PortalDeviceAccess.setRequested(
+                                com.telos.desktop.session.PortalDeviceKind.Microphone,
+                                next,
+                            )
+                        }
+                        mic = next
+                        status = labelFor(result)
+                    }
+                }
+                .padding(vertical = 8.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+        ) {
+            Text(t("desktop_perm_microphone"), color = TelosColors.onSurface, modifier = Modifier.weight(1f))
+            Text(
+                if (mic) t("net_hub_state_on") else t("net_hub_state_off"),
+                color = if (mic) TelosColors.primary else TelosColors.secondary,
+            )
+        }
+        status?.let {
+            Text(it, color = TelosColors.secondary, fontSize = 12.sp, modifier = Modifier.padding(top = 8.dp))
         }
     }
 }
@@ -1052,6 +1279,20 @@ private fun FlatpakPermissionsPane(
 ) {
     var state by remember { mutableStateOf(FlatpakPermissionState.empty(app.id)) }
     var status by remember { mutableStateOf<String?>(null) }
+    var camera by remember {
+        mutableStateOf(
+            com.telos.desktop.session.PortalDeviceAccess.readRequested(
+                com.telos.desktop.session.PortalDeviceKind.Camera,
+            ),
+        )
+    }
+    var mic by remember {
+        mutableStateOf(
+            com.telos.desktop.session.PortalDeviceAccess.readRequested(
+                com.telos.desktop.session.PortalDeviceKind.Microphone,
+            ),
+        )
+    }
     val scope = rememberCoroutineScope()
     val sandboxReady = FlatpakSandbox.available()
     LaunchedEffect(app.id) {
@@ -1064,6 +1305,14 @@ private fun FlatpakPermissionsPane(
             FlatpakOverrideResult.Failed -> t("desktop_flatpak_override_failed")
             FlatpakOverrideResult.Invalid -> t("desktop_flatpak_override_failed")
         }
+    }
+    fun portalLabel(result: com.telos.desktop.session.PortalDeviceAskResult): String = when (result) {
+        com.telos.desktop.session.PortalDeviceAskResult.Requested -> t("desktop_portal_device_requested")
+        com.telos.desktop.session.PortalDeviceAskResult.PreferenceOnly -> t("desktop_portal_device_pref_only")
+        com.telos.desktop.session.PortalDeviceAskResult.Unavailable -> t("desktop_portal_device_unavailable")
+        com.telos.desktop.session.PortalDeviceAskResult.Failed,
+        com.telos.desktop.session.PortalDeviceAskResult.Invalid,
+        -> t("desktop_portal_device_failed")
     }
     Column(
         Modifier
@@ -1159,6 +1408,74 @@ private fun FlatpakPermissionsPane(
                     }
                 },
             ) { Text(t("desktop_flatpak_reset_overrides")) }
+            val netIsolate = state.tier == FlatpakSandboxTier.NetIsolated
+            Text(
+                if (netIsolate) {
+                    when (AppNetnsLauncher.detectCapability()) {
+                        AppNetnsCapability.UnshareNet,
+                        AppNetnsCapability.IpNetns,
+                        -> t("desktop_netns_flatpak_owned")
+                        AppNetnsCapability.Unavailable -> t("desktop_netns_flatpak_no_tools")
+                    }
+                } else {
+                    t("desktop_netns_not_isolated")
+                },
+                color = TelosColors.onSurface.copy(alpha = 0.7f),
+                fontSize = 11.sp,
+                modifier = Modifier.padding(top = 8.dp),
+            )
+        }
+        Text(t("desktop_portal_device_title"), color = TelosColors.secondary, fontSize = 16.sp, modifier = Modifier.padding(top = 16.dp))
+        Text(t("desktop_portal_device_hint"), color = TelosColors.onSurface.copy(alpha = 0.75f), fontSize = 12.sp)
+        Row(
+            Modifier
+                .fillMaxWidth()
+                .clickable {
+                    scope.launch {
+                        val next = !camera
+                        val result = withContext(Dispatchers.IO) {
+                            com.telos.desktop.session.PortalDeviceAccess.setRequested(
+                                com.telos.desktop.session.PortalDeviceKind.Camera,
+                                next,
+                            )
+                        }
+                        camera = next
+                        status = portalLabel(result)
+                    }
+                }
+                .padding(vertical = 6.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+        ) {
+            Text(t("desktop_perm_camera"), color = TelosColors.onSurface, modifier = Modifier.weight(1f))
+            Text(
+                if (camera) t("net_hub_state_on") else t("net_hub_state_off"),
+                color = if (camera) TelosColors.primary else TelosColors.secondary,
+            )
+        }
+        Row(
+            Modifier
+                .fillMaxWidth()
+                .clickable {
+                    scope.launch {
+                        val next = !mic
+                        val result = withContext(Dispatchers.IO) {
+                            com.telos.desktop.session.PortalDeviceAccess.setRequested(
+                                com.telos.desktop.session.PortalDeviceKind.Microphone,
+                                next,
+                            )
+                        }
+                        mic = next
+                        status = portalLabel(result)
+                    }
+                }
+                .padding(vertical = 6.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+        ) {
+            Text(t("desktop_perm_microphone"), color = TelosColors.onSurface, modifier = Modifier.weight(1f))
+            Text(
+                if (mic) t("net_hub_state_on") else t("net_hub_state_off"),
+                color = if (mic) TelosColors.primary else TelosColors.secondary,
+            )
         }
         status?.let { Text(it, color = TelosColors.secondary, fontSize = 12.sp, modifier = Modifier.padding(top = 8.dp)) }
     }

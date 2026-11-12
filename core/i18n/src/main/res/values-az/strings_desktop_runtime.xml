@@ -21,4 +21,28 @@
     <string name="desktop_flatpak_override_failed">Flatpak əvəzetməsi tətbiq edilə bilmədi</string>
     <string name="desktop_flatpak_reset_overrides">Əvəzetmələri sıfırla</string>
     <string name="desktop_deeplink_handler_hint">telos:// Telos tətbiqlərini və Kickoff axtarışını açır (masaüstü başladıqda qeydiyyata alınır).</string>
+    <string name="desktop_store_backends">Paket kaynakları</string>
+    <string name="desktop_store_backend_flatpak">Flatpak</string>
+    <string name="desktop_store_backend_winget">Winget</string>
+    <string name="desktop_store_backend_scoop">Scoop</string>
+    <string name="desktop_store_windows_pref_only">Winget/Scoop yalnızca Windows içindir; bu makine Windows paket işlemleri çalıştırmaz.</string>
+    <string name="desktop_store_windows_unavailable">PATH üzerinde winget veya scoop bulunamadı.</string>
+    <string name="desktop_store_windows_installed">Windows paketleri (kurulu)</string>
+    <string name="desktop_store_windows_search">Windows paketleri (arama)</string>
+    <string name="desktop_store_install_confirm_title">Kurulumu onayla</string>
+    <string name="desktop_store_install_confirm_body">%1$s (%2$s) %3$s ile kurulsun mu?</string>
+    <string name="desktop_store_install_started">%1$s için kurulum başladı</string>
+    <string name="desktop_store_install_failed">%1$s kurulumu başlatılamadı</string>
+    <string name="desktop_portal_device_title">Kamera ve mikrofon (portal)</string>
+    <string name="desktop_portal_device_hint">İsteğinizi kaydeder ve Device/Camera portalları varsa xdg-desktop-portal’a sorar. Portal araçları yoksa yalnızca tercih olarak kalır.</string>
+    <string name="desktop_portal_device_requested">Portal erişim penceresi istendi</string>
+    <string name="desktop_portal_device_pref_only">Tercih kaydedildi; portal araçları yok (yalnızca tercih).</string>
+    <string name="desktop_portal_device_unavailable">Portal aygıt erişimi bu sistemde yok.</string>
+    <string name="desktop_portal_device_failed">Masaüstü portalından aygıt erişimi istenemedi</string>
+    <string name="desktop_netns_cap_unshare">Uygulama netns: unshare --net kullanılabilir</string>
+    <string name="desktop_netns_cap_ip">Uygulama netns: ip netns kullanılabilir</string>
+    <string name="desktop_netns_cap_unavailable">Uygulama netns araçları yok; yalıtım yalnızca tercih</string>
+    <string name="desktop_netns_flatpak_owned">Ağdan yalıtılmış Flatpak, Flatpak --unshare=network kullanır (host netns iddiası yok).</string>
+    <string name="desktop_netns_flatpak_no_tools">Ağdan yalıtık seviye; unshare/ip netns yok — yalnızca Flatpak uyguladığında override.</string>
+    <string name="desktop_netns_not_isolated">Uygulama ağdan yalıtık olarak işaretli değil.</string>
 </resources>

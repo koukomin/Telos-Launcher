@@ -21,4 +21,28 @@
     <string name="desktop_flatpak_override_failed">اعمال بازنویسی Flatpak ممکن نشد</string>
     <string name="desktop_flatpak_reset_overrides">بازنشانی بازنویسی‌ها</string>
     <string name="desktop_deeplink_handler_hint">telos:// برنامه‌های Telos و جستجوی Kickoff را باز می‌کند (هنگام شروع رومیزی ثبت می‌شود).</string>
+    <string name="desktop_store_backends">مصادر الحزم</string>
+    <string name="desktop_store_backend_flatpak">Flatpak</string>
+    <string name="desktop_store_backend_winget">Winget</string>
+    <string name="desktop_store_backend_scoop">Scoop</string>
+    <string name="desktop_store_windows_pref_only">Winget/Scoop لنظام Windows فقط؛ هذا المضيف لا ينفّذ إجراءات حزم Windows.</string>
+    <string name="desktop_store_windows_unavailable">لم يُعثر على winget أو scoop في PATH.</string>
+    <string name="desktop_store_windows_installed">حزم Windows (مثبّتة)</string>
+    <string name="desktop_store_windows_search">حزم Windows (بحث)</string>
+    <string name="desktop_store_install_confirm_title">تأكيد التثبيت</string>
+    <string name="desktop_store_install_confirm_body">تثبيت %1$s (%2$s) عبر %3$s؟</string>
+    <string name="desktop_store_install_started">بدأ تثبيت %1$s</string>
+    <string name="desktop_store_install_failed">تعذّر بدء تثبيت %1$s</string>
+    <string name="desktop_portal_device_title">الكاميرا والميكروفون (بوابة)</string>
+    <string name="desktop_portal_device_hint">يسجّل طلبك ويسأل xdg-desktop-portal عند توفر بوابات Device/Camera. بدون أدوات البوابة يبقى تفضيلاً فقط.</string>
+    <string name="desktop_portal_device_requested">طُلب حوار وصول البوابة</string>
+    <string name="desktop_portal_device_pref_only">حُفظ التفضيل؛ أدوات البوابة غير متوفرة (تفضيل فقط).</string>
+    <string name="desktop_portal_device_unavailable">وصول أجهزة البوابة غير متاح على هذا النظام.</string>
+    <string name="desktop_portal_device_failed">تعذّر طلب وصول الجهاز من بوابة سطح المكتب</string>
+    <string name="desktop_netns_cap_unshare">netns لكل تطبيق: unshare --net متاح</string>
+    <string name="desktop_netns_cap_ip">netns لكل تطبيق: ip netns متاح</string>
+    <string name="desktop_netns_cap_unavailable">أدوات netns ناقصة؛ العزل يبقى تفضيلاً فقط</string>
+    <string name="desktop_netns_flatpak_owned">Flatpak المعزول شبكياً يستخدم Flatpak --unshare=network (دون netns المضيف).</string>
+    <string name="desktop_netns_flatpak_no_tools">مستوى عزل الشبكة مضبوط؛ ينقص unshare/ip netns — تجاوز Flatpak فقط عند تطبيقه.</string>
+    <string name="desktop_netns_not_isolated">التطبيق غير مُعلَّم كمعزول شبكياً.</string>
 </resources>

@@ -21,4 +21,28 @@
     <string name="desktop_flatpak_override_failed">Tidak dapat menerapkan penggantian Flatpak</string>
     <string name="desktop_flatpak_reset_overrides">Atur ulang penggantian</string>
     <string name="desktop_deeplink_handler_hint">telos:// membuka aplikasi Telos dan pencarian Kickoff (didaftarkan saat desktop dimulai).</string>
+    <string name="desktop_store_backends">Package backends</string>
+    <string name="desktop_store_backend_flatpak">Flatpak</string>
+    <string name="desktop_store_backend_winget">Winget</string>
+    <string name="desktop_store_backend_scoop">Scoop</string>
+    <string name="desktop_store_windows_pref_only">Winget/Scoop are Windows-only; this host stores no Windows package actions.</string>
+    <string name="desktop_store_windows_unavailable">Neither winget nor scoop was found on PATH.</string>
+    <string name="desktop_store_windows_installed">Windows packages (installed)</string>
+    <string name="desktop_store_windows_search">Windows packages (search)</string>
+    <string name="desktop_store_install_confirm_title">Confirm install</string>
+    <string name="desktop_store_install_confirm_body">Install %1$s (%2$s) via %3$s?</string>
+    <string name="desktop_store_install_started">Install started for %1$s</string>
+    <string name="desktop_store_install_failed">Could not start install for %1$s</string>
+    <string name="desktop_portal_device_title">Camera &amp; microphone (portal)</string>
+    <string name="desktop_portal_device_hint">Records your request and asks xdg-desktop-portal when Device/Camera portals are available. Without portal tools this stays preference-only.</string>
+    <string name="desktop_portal_device_requested">Portal access dialog requested</string>
+    <string name="desktop_portal_device_pref_only">Preference saved; portal tools are not available (preference-only).</string>
+    <string name="desktop_portal_device_unavailable">Portal device access is unavailable on this system.</string>
+    <string name="desktop_portal_device_failed">Could not ask the desktop portal for device access</string>
+    <string name="desktop_netns_cap_unshare">Per-app netns: unshare --net available</string>
+    <string name="desktop_netns_cap_ip">Per-app netns: ip netns available</string>
+    <string name="desktop_netns_cap_unavailable">Per-app netns tools missing; isolation stays preference-only</string>
+    <string name="desktop_netns_flatpak_owned">Net-isolated Flatpak uses Flatpak --unshare=network (not a host netns claim).</string>
+    <string name="desktop_netns_flatpak_no_tools">Net-isolated tier set; host unshare/ip netns tools missing — Flatpak override only when Flatpak applies it.</string>
+    <string name="desktop_netns_not_isolated">App is not marked network-isolated.</string>
 </resources>

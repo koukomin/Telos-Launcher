@@ -21,4 +21,28 @@
     <string name="desktop_flatpak_override_failed">Не вдалося застосувати перевизначення Flatpak</string>
     <string name="desktop_flatpak_reset_overrides">Скинути перевизначення</string>
     <string name="desktop_deeplink_handler_hint">telos:// відкриває програми Telos і пошук Kickoff (реєструється під час запуску стільниці).</string>
+    <string name="desktop_store_backends">Источники пакетов</string>
+    <string name="desktop_store_backend_flatpak">Flatpak</string>
+    <string name="desktop_store_backend_winget">Winget</string>
+    <string name="desktop_store_backend_scoop">Scoop</string>
+    <string name="desktop_store_windows_pref_only">Winget/Scoop только для Windows; на этом узле действия с пакетами Windows не выполняются.</string>
+    <string name="desktop_store_windows_unavailable">Ни winget, ни scoop не найдены в PATH.</string>
+    <string name="desktop_store_windows_installed">Пакеты Windows (установленные)</string>
+    <string name="desktop_store_windows_search">Пакеты Windows (поиск)</string>
+    <string name="desktop_store_install_confirm_title">Подтвердить установку</string>
+    <string name="desktop_store_install_confirm_body">Установить %1$s (%2$s) через %3$s?</string>
+    <string name="desktop_store_install_started">Установка %1$s запущена</string>
+    <string name="desktop_store_install_failed">Не удалось начать установку %1$s</string>
+    <string name="desktop_portal_device_title">Камера и микрофон (портал)</string>
+    <string name="desktop_portal_device_hint">Сохраняет запрос и обращается к xdg-desktop-portal, если доступны порталы Device/Camera. Без инструментов портала остаётся только настройкой.</string>
+    <string name="desktop_portal_device_requested">Запрошен диалог доступа портала</string>
+    <string name="desktop_portal_device_pref_only">Настройка сохранена; инструменты портала недоступны (только настройка).</string>
+    <string name="desktop_portal_device_unavailable">Доступ к устройствам через портал недоступен на этой системе.</string>
+    <string name="desktop_portal_device_failed">Не удалось запросить доступ к устройству у портала рабочего стола</string>
+    <string name="desktop_netns_cap_unshare">netns для приложений: доступен unshare --net</string>
+    <string name="desktop_netns_cap_ip">netns для приложений: доступен ip netns</string>
+    <string name="desktop_netns_cap_unavailable">Нет инструментов netns; изоляция остаётся только настройкой</string>
+    <string name="desktop_netns_flatpak_owned">Сетевая изоляция Flatpak использует Flatpak --unshare=network (не netns узла).</string>
+    <string name="desktop_netns_flatpak_no_tools">Уровень без сети; нет unshare/ip netns — только override Flatpak, если Flatpak применяет его.</string>
+    <string name="desktop_netns_not_isolated">Приложение не отмечено как сетево-изолированное.</string>
 </resources>

@@ -22,7 +22,11 @@ object DesktopFileLauncher {
         if (command.isBlank()) return false
         val argv = tokenize(command)
         if (argv.isEmpty()) return false
-        val finalArgv = if (entry.terminal) wrapTerminal(argv) else argv
+        val baseArgv = if (entry.terminal) wrapTerminal(argv) else argv
+        // VOS-3: optional unshare/--net / ip netns when app-routing deny or NetIsolated.
+        val appId = entry.file.name
+        val wrap = AppNetnsLauncher.maybeWrap(baseArgv, appId)
+        val finalArgv = wrap.argv
         return try {
             val pb = ProcessBuilder(finalArgv)
             entry.path?.let { dir ->

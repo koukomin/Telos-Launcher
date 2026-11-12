@@ -21,4 +21,28 @@
     <string name="desktop_flatpak_override_failed">Não foi possível aplicar a substituição Flatpak</string>
     <string name="desktop_flatpak_reset_overrides">Redefinir substituições</string>
     <string name="desktop_deeplink_handler_hint">telos:// abre apps Telos e a pesquisa Kickoff (registrado ao iniciar a área de trabalho).</string>
+    <string name="desktop_store_backends">Origens de pacotes</string>
+    <string name="desktop_store_backend_flatpak">Flatpak</string>
+    <string name="desktop_store_backend_winget">Winget</string>
+    <string name="desktop_store_backend_scoop">Scoop</string>
+    <string name="desktop_store_windows_pref_only">Winget/Scoop são só para Windows; este host não executa ações de pacotes Windows.</string>
+    <string name="desktop_store_windows_unavailable">Nem winget nem scoop foram encontrados no PATH.</string>
+    <string name="desktop_store_windows_installed">Pacotes Windows (instalados)</string>
+    <string name="desktop_store_windows_search">Pacotes Windows (pesquisa)</string>
+    <string name="desktop_store_install_confirm_title">Confirmar instalação</string>
+    <string name="desktop_store_install_confirm_body">Instalar %1$s (%2$s) via %3$s?</string>
+    <string name="desktop_store_install_started">Instalação iniciada para %1$s</string>
+    <string name="desktop_store_install_failed">Não foi possível iniciar a instalação de %1$s</string>
+    <string name="desktop_portal_device_title">Câmera e microfone (portal)</string>
+    <string name="desktop_portal_device_hint">Registra seu pedido e consulta o xdg-desktop-portal quando os portais Device/Camera estão disponíveis. Sem ferramentas de portal fica só preferência.</string>
+    <string name="desktop_portal_device_requested">Diálogo de acesso do portal solicitado</string>
+    <string name="desktop_portal_device_pref_only">Preferência salva; ferramentas de portal indisponíveis (só preferência).</string>
+    <string name="desktop_portal_device_unavailable">Acesso a dispositivos do portal indisponível neste sistema.</string>
+    <string name="desktop_portal_device_failed">Não foi possível pedir acesso ao dispositivo ao portal da área de trabalho</string>
+    <string name="desktop_netns_cap_unshare">netns por app: unshare --net disponível</string>
+    <string name="desktop_netns_cap_ip">netns por app: ip netns disponível</string>
+    <string name="desktop_netns_cap_unavailable">Ferramentas netns por app ausentes; isolamento fica só preferência</string>
+    <string name="desktop_netns_flatpak_owned">Flatpak isolado de rede usa Flatpak --unshare=network (sem netns do host).</string>
+    <string name="desktop_netns_flatpak_no_tools">Nível isolado de rede; faltam unshare/ip netns — só override Flatpak quando o Flatpak aplica.</string>
+    <string name="desktop_netns_not_isolated">O app não está marcado como isolado de rede.</string>
 </resources>
