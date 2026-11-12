@@ -41,4 +41,24 @@
     <string name="keyboard_enable_action">Giriş ayarlarını aç</string>
     <string name="keyboard_settings_category">Klavye ayarları</string>
     <string name="keyboard_incognito_title">Gizli mod</string>
+    <string name="keepass_entry_username">Kullanıcı adı</string>
+    <string name="keepass_entry_password">Parola</string>
+    <string name="keepass_entry_url">URL</string>
+    <string name="keepass_entry_notes">Notlar</string>
+    <string name="keepass_entry_reveal">Parolayı göster</string>
+    <string name="keepass_entry_hide">Parolayı gizle</string>
+    <string name="fit_status_synced">Health Connect ile senkronize</string>
+    <string name="fit_status_partial">Health Connect kullanılabilir — yerel demo veriler</string>
+    <string name="fit_status_local_demo">Yerel demo veriler</string>
+    <string name="fit_food_search_title">Yiyecek ara</string>
+    <string name="fit_food_search_hint">Yiyecek, marka veya barkod</string>
+    <string name="sync_preview_title">Sync önizlemesi</string>
+    <string name="sync_preview_summary">Klasör ve cihaz listeleri örnek veridir. Eşleme ve canlı senkronizasyon henüz yok.</string>
+    <string name="aether_compose_title">Not yaz</string>
+    <string name="aether_compose_hint">Yerel bir not yazın. Relay\'ler henüz bağlı değil.</string>
+    <string name="aether_preview_summary">Aether yerel bir önizlemedir. Nostr relay yayınları henüz yok.</string>
+    <string name="aether_broadcast_unavailable">Yayın kullanılamıyor</string>
+    <string name="aether_attached_media">Ekli medya: %1$s</string>
+    <string name="aether_dm_unavailable_title">Doğrudan mesajlar kullanılamıyor</string>
+    <string name="aether_dm_unavailable_summary">Şifreli DM\'ler canlı bir Nostr oturumu ister. Bu sürüm sohbetleri yalnızca yerelde tutar.</string>
 </resources>

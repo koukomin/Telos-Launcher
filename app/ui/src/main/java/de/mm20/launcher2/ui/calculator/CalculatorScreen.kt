@@ -58,6 +58,7 @@ import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberModalBottomSheetState
+import de.mm20.launcher2.ui.component.virtualAppPopup
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -264,7 +265,7 @@ private fun CalculatorPage(vm: CalculatorViewModel, onUnits: () -> Unit, onVat: 
                     IconButton(onClick = { menu = true }) {
                         Icon(painterResource(BaseR.drawable.more_vert_24px), contentDescription = stringResource(I18nR.string.calculator_more))
                     }
-                    DropdownMenu(expanded = menu, onDismissRequest = { menu = false }) {
+                    DropdownMenu(expanded = menu, onDismissRequest = { menu = false }, containerColor = virtualAppPopup()) {
                         DropdownMenuItem(text = { Text(stringResource(I18nR.string.calculator_history)) }, onClick = { menu = false; showHistory = true })
                         DropdownMenuItem(
                             text = { Text(stringResource(I18nR.string.calculator_copy_result)) },
@@ -299,7 +300,7 @@ private fun CalculatorPage(vm: CalculatorViewModel, onUnits: () -> Unit, onVat: 
         }
 
         if (showHistory) {
-            ModalBottomSheet(onDismissRequest = { showHistory = false }, sheetState = rememberModalBottomSheetState()) {
+            ModalBottomSheet(onDismissRequest = { showHistory = false }, sheetState = rememberModalBottomSheetState(), containerColor = MaterialTheme.colorScheme.surfaceContainer.copy(alpha = 1f)) {
                 HistorySheet(vm, onPick = { vm.replaceExpression(it); showHistory = false })
             }
         }
@@ -603,7 +604,7 @@ private fun UnitPicker(labels: List<String>, selected: Int, onSelect: (Int) -> U
         OutlinedButton(onClick = { open = true }, modifier = Modifier.fillMaxWidth()) {
             Text(labels.getOrNull(selected).orEmpty(), maxLines = 1, overflow = TextOverflow.Ellipsis)
         }
-        DropdownMenu(expanded = open, onDismissRequest = { open = false }) {
+        DropdownMenu(expanded = open, onDismissRequest = { open = false }, containerColor = virtualAppPopup()) {
             labels.forEachIndexed { i, label ->
                 DropdownMenuItem(text = { Text(label) }, onClick = { onSelect(i); open = false })
             }

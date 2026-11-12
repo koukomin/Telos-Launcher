@@ -54,4 +54,24 @@
     <string name="keepass_lock">Κλείδωμα θησαυροφυλακίου</string>
     <string name="keepass_encrypted_val">Κρυπτογραφημένο</string>
     <string name="keepass_unnamed">Χωρίς όνομα</string>
+    <string name="keepass_entry_username">Όνομα χρήστη</string>
+    <string name="keepass_entry_password">Κωδικός πρόσβασης</string>
+    <string name="keepass_entry_url">URL</string>
+    <string name="keepass_entry_notes">Σημειώσεις</string>
+    <string name="keepass_entry_reveal">Εμφάνιση κωδικού</string>
+    <string name="keepass_entry_hide">Απόκρυψη κωδικού</string>
+    <string name="fit_status_synced">Συγχρονίστηκε με Health Connect</string>
+    <string name="fit_status_partial">Διαθέσιμο Health Connect — τοπικά δεδομένα επίδειξης</string>
+    <string name="fit_status_local_demo">Τοπικά δεδομένα επίδειξης</string>
+    <string name="fit_food_search_title">Αναζήτηση τροφής</string>
+    <string name="fit_food_search_hint">Τροφή, μάρκα ή barcode</string>
+    <string name="sync_preview_title">Προεπισκόπηση Sync</string>
+    <string name="sync_preview_summary">Οι λίστες φακέλων και συσκευών είναι δείγματα. Η σύζευξη και ο ζωντανός συγχρονισμός δεν είναι ακόμα διαθέσιμα.</string>
+    <string name="aether_compose_title">Σύνταξη σημείωσης</string>
+    <string name="aether_compose_hint">Γράψτε μια τοπική σημείωση. Τα relays δεν είναι ακόμα συνδεδεμένα.</string>
+    <string name="aether_preview_summary">Το Aether είναι τοπική προεπισκόπηση. Η μετάδοση σε Nostr relays δεν είναι ακόμα διαθέσιμη.</string>
+    <string name="aether_broadcast_unavailable">Η μετάδοση δεν είναι διαθέσιμη</string>
+    <string name="aether_attached_media">Συνημμένο πολυμέσο: %1$s</string>
+    <string name="aether_dm_unavailable_title">Τα άμεσα μηνύματα δεν είναι διαθέσιμα</string>
+    <string name="aether_dm_unavailable_summary">Τα κρυπτογραφημένα DM χρειάζονται ζωντανή συνεδρία Nostr. Αυτή η έκδοση κρατά τις συνομιλίες μόνο τοπικά.</string>
 </resources>

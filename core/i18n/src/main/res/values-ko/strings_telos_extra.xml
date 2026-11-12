@@ -41,4 +41,24 @@
     <string name="keyboard_enable_action">입력 설정 열기</string>
     <string name="keyboard_settings_category">키보드 설정</string>
     <string name="keyboard_incognito_title">시크릿 모드</string>
+    <string name="keepass_entry_username">사용자 이름</string>
+    <string name="keepass_entry_password">비밀번호</string>
+    <string name="keepass_entry_url">URL</string>
+    <string name="keepass_entry_notes">메모</string>
+    <string name="keepass_entry_reveal">비밀번호 표시</string>
+    <string name="keepass_entry_hide">비밀번호 숨기기</string>
+    <string name="fit_status_synced">Health Connect와 동기화됨</string>
+    <string name="fit_status_partial">Health Connect 사용 가능 — 로컬 데모 데이터</string>
+    <string name="fit_status_local_demo">로컬 데모 데이터</string>
+    <string name="fit_food_search_title">음식 검색</string>
+    <string name="fit_food_search_hint">음식, 브랜드 또는 바코드</string>
+    <string name="sync_preview_title">Sync 미리보기</string>
+    <string name="sync_preview_summary">폴더 및 기기 목록은 샘플입니다. 페어링과 실시간 동기화는 아직 사용할 수 없습니다.</string>
+    <string name="aether_compose_title">메모 작성</string>
+    <string name="aether_compose_hint">로컬 메모를 작성하세요. 릴레이가 아직 연결되지 않았습니다.</string>
+    <string name="aether_preview_summary">Aether는 로컬 미리보기입니다. Nostr 릴레이 방송은 아직 사용할 수 없습니다.</string>
+    <string name="aether_broadcast_unavailable">방송 불가</string>
+    <string name="aether_attached_media">첨부 미디어: %1$s</string>
+    <string name="aether_dm_unavailable_title">쪽지를 사용할 수 없음</string>
+    <string name="aether_dm_unavailable_summary">암호화된 DM에는 활성 Nostr 세션이 필요합니다. 이 빌드는 대화를 로컬에만 유지합니다.</string>
 </resources>

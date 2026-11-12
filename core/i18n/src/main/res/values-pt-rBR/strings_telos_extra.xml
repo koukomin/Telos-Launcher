@@ -41,4 +41,24 @@
     <string name="keyboard_enable_action">Abrir configurações de entrada</string>
     <string name="keyboard_settings_category">Configurações do teclado</string>
     <string name="keyboard_incognito_title">Modo anônimo</string>
+    <string name="keepass_entry_username">Nome de usuário</string>
+    <string name="keepass_entry_password">Senha</string>
+    <string name="keepass_entry_url">URL</string>
+    <string name="keepass_entry_notes">Notas</string>
+    <string name="keepass_entry_reveal">Mostrar senha</string>
+    <string name="keepass_entry_hide">Ocultar senha</string>
+    <string name="fit_status_synced">Sincronizado com o Health Connect</string>
+    <string name="fit_status_partial">Health Connect disponível — dados de demonstração locais</string>
+    <string name="fit_status_local_demo">Dados de demonstração locais</string>
+    <string name="fit_food_search_title">Pesquisar alimento</string>
+    <string name="fit_food_search_hint">Alimento, marca ou código de barras</string>
+    <string name="sync_preview_title">Prévia do Sync</string>
+    <string name="sync_preview_summary">As listas de pastas e dispositivos são dados de exemplo. Emparelhamento e sincronização ao vivo ainda não estão disponíveis.</string>
+    <string name="aether_compose_title">Compor nota</string>
+    <string name="aether_compose_hint">Escreva uma nota local. Os relays ainda não estão conectados.</string>
+    <string name="aether_preview_summary">O Aether é uma prévia local. A transmissão para relays Nostr ainda não está disponível.</string>
+    <string name="aether_broadcast_unavailable">Transmissão indisponível</string>
+    <string name="aether_attached_media">Mídia anexada: %1$s</string>
+    <string name="aether_dm_unavailable_title">Mensagens diretas indisponíveis</string>
+    <string name="aether_dm_unavailable_summary">As MD criptografadas precisam de uma sessão Nostr ativa. Esta versão mantém as conversas apenas no dispositivo.</string>
 </resources>

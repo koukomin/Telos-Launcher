@@ -19,4 +19,24 @@
     <string name="keepass_lock">Lock Vault</string>
     <string name="keepass_encrypted_val">Encrypted</string>
     <string name="keepass_unnamed">Unnamed</string>
+    <string name="keepass_entry_username">Username</string>
+    <string name="keepass_entry_password">Password</string>
+    <string name="keepass_entry_url">URL</string>
+    <string name="keepass_entry_notes">Notes</string>
+    <string name="keepass_entry_reveal">Show password</string>
+    <string name="keepass_entry_hide">Hide password</string>
+    <string name="fit_status_synced">Health Connect synced</string>
+    <string name="fit_status_partial">Health Connect available — local demo data</string>
+    <string name="fit_status_local_demo">Local demo data</string>
+    <string name="fit_food_search_title">Search food</string>
+    <string name="fit_food_search_hint">Food, brand, or barcode</string>
+    <string name="sync_preview_title">Sync preview</string>
+    <string name="sync_preview_summary">Folder and device lists are sample data. Pairing and live sync are not available yet.</string>
+    <string name="aether_compose_title">Compose note</string>
+    <string name="aether_compose_hint">Write a local note. Relays are not connected yet.</string>
+    <string name="aether_preview_summary">Aether is a local preview. Broadcasting to Nostr relays is not available yet.</string>
+    <string name="aether_broadcast_unavailable">Broadcast unavailable</string>
+    <string name="aether_attached_media">Attached media: %1$s</string>
+    <string name="aether_dm_unavailable_title">Direct messages unavailable</string>
+    <string name="aether_dm_unavailable_summary">Encrypted DMs need a live Nostr session. This build keeps conversations local-only.</string>
 </resources>

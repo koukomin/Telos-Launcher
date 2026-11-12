@@ -121,18 +121,19 @@ fun SyncScreen() {
                     ) {
                         Column(Modifier.weight(1f)) {
                             Text(
-                                text = if (serviceRunning) "Syncthing Service Active" else "Syncthing Service Stopped",
+                                text = stringResource(I18nR.string.sync_preview_title),
                                 style = MaterialTheme.typography.titleMedium,
                                 fontWeight = FontWeight.Bold
                             )
                             Text(
-                                text = if (serviceRunning) "Synchronizing files in real-time" else "Tap to start background sync",
+                                text = stringResource(I18nR.string.sync_preview_summary),
                                 style = MaterialTheme.typography.bodySmall
                             )
                         }
                         Switch(
-                            checked = serviceRunning,
-                            onCheckedChange = { viewModel.toggleService() }
+                            checked = false,
+                            onCheckedChange = { },
+                            enabled = false,
                         )
                     }
                 }
@@ -180,6 +181,7 @@ fun SyncScreen() {
 
         AlertDialog(
             onDismissRequest = { showAddFolderDialog = false },
+            containerColor = de.mm20.launcher2.ui.component.virtualAppPopup(),
             title = { Text(stringResource(I18nR.string.telos_sync_add_folder)) },
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -219,6 +221,7 @@ fun SyncScreen() {
 
         AlertDialog(
             onDismissRequest = { showAddDeviceDialog = false },
+            containerColor = de.mm20.launcher2.ui.component.virtualAppPopup(),
             title = { Text(stringResource(I18nR.string.telos_sync_add_device)) },
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -488,6 +491,7 @@ private fun SettingsTab(
     if (showModeDialog) {
         AlertDialog(
             onDismissRequest = { showModeDialog = false },
+            containerColor = de.mm20.launcher2.ui.component.virtualAppPopup(),
             title = { Text(stringResource(I18nR.string.telos_sync_network_mode)) },
             text = {
                 Column {

@@ -8,6 +8,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
@@ -32,8 +34,6 @@ import de.mm20.launcher2.preferences.GestureAction
 import de.mm20.launcher2.preferences.ui.GestureSettings
 import de.mm20.launcher2.ui.launcher.scaffold.LauncherScaffoldState
 import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.runBlocking
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -42,6 +42,7 @@ internal object RecentsComponent : ScaffoldComponent(), KoinComponent {
     private val permissionsManager: PermissionsManager by inject()
     private val globalActionService: GlobalActionsService by inject()
     private val gestureSettings: GestureSettings by inject()
+    private val useTelosRecents = mutableStateOf(false)
 
     override val showSearchBar: Boolean = false
 
@@ -56,6 +57,8 @@ internal object RecentsComponent : ScaffoldComponent(), KoinComponent {
         insets: PaddingValues,
         state: LauncherScaffoldState
     ) {
+        val telosRecents by gestureSettings.telosRecents.collectAsState(initial = useTelosRecents.value)
+        LaunchedEffect(telosRecents) { useTelosRecents.value = telosRecents }
         if (isActive) {
             val bottomSheetManager = LocalBottomSheetManager.current
             LaunchedEffect(Unit) {
@@ -72,8 +75,7 @@ internal object RecentsComponent : ScaffoldComponent(), KoinComponent {
 
     override fun onPreActivate(state: LauncherScaffoldState) {
         super.onPreActivate(state)
-        val useTelos = kotlinx.coroutines.runBlocking { gestureSettings.telosRecents.first() }
-        if (useTelos) {
+        if (useTelosRecents.value) {
             globalActionService.openTelosRecents()
             return
         }

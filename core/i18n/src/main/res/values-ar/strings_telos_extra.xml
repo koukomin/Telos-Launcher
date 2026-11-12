@@ -41,4 +41,24 @@
     <string name="keyboard_enable_action">فتح إعدادات الإدخال</string>
     <string name="keyboard_settings_category">إعدادات لوحة المفاتيح</string>
     <string name="keyboard_incognito_title">وضع التصفح المتخفي</string>
+    <string name="keepass_entry_username">اسم المستخدم</string>
+    <string name="keepass_entry_password">كلمة المرور</string>
+    <string name="keepass_entry_url">عنوان URL</string>
+    <string name="keepass_entry_notes">ملاحظات</string>
+    <string name="keepass_entry_reveal">إظهار كلمة المرور</string>
+    <string name="keepass_entry_hide">إخفاء كلمة المرور</string>
+    <string name="fit_status_synced">تمت المزامنة مع Health Connect</string>
+    <string name="fit_status_partial">Health Connect متاح — بيانات تجريبية محلية</string>
+    <string name="fit_status_local_demo">بيانات تجريبية محلية</string>
+    <string name="fit_food_search_title">البحث عن طعام</string>
+    <string name="fit_food_search_hint">طعام أو علامة أو باركود</string>
+    <string name="sync_preview_title">معاينة Sync</string>
+    <string name="sync_preview_summary">قوائم المجلدات والأجهزة بيانات نموذجية. الاقتران والمزامنة المباشرة غير متاحين بعد.</string>
+    <string name="aether_compose_title">إنشاء ملاحظة</string>
+    <string name="aether_compose_hint">اكتب ملاحظة محلية. المرحلات غير متصلة بعد.</string>
+    <string name="aether_preview_summary">Aether معاينة محلية. البث إلى مرحلات Nostr غير متاح بعد.</string>
+    <string name="aether_broadcast_unavailable">البث غير متاح</string>
+    <string name="aether_attached_media">وسائط مرفقة: %1$s</string>
+    <string name="aether_dm_unavailable_title">الرسائل المباشرة غير متاحة</string>
+    <string name="aether_dm_unavailable_summary">الرسائل المشفرة تحتاج جلسة Nostr نشطة. هذا الإصدار يبقي المحادثات محلية فقط.</string>
 </resources>

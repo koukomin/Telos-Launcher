@@ -53,7 +53,9 @@ fun UriDeleteDialog(uris: List<Uri>, onDeleted: () -> Unit, onDismiss: () -> Uni
         resolved = true
     }
     if (resolved && !confirming && busy && !nativePending) androidx.compose.material3.AlertDialog(
-        onDismissRequest = {}, title = { androidx.compose.material3.Text(androidx.compose.ui.res.stringResource(I18nR.string.telos_trash_working)) },
+        onDismissRequest = {},
+        containerColor = de.mm20.launcher2.ui.component.virtualAppPopup(),
+        title = { androidx.compose.material3.Text(androidx.compose.ui.res.stringResource(I18nR.string.telos_trash_working)) },
         text = { androidx.compose.material3.LinearProgressIndicator() }, confirmButton = {})
     fun failed() { Toast.makeText(context, I18nR.string.telos_trash_move_failed, Toast.LENGTH_LONG).show(); onDismiss() }
     if (resolved && confirming) TrashDeleteDialog(uris.size, localTrash || systemTrash,

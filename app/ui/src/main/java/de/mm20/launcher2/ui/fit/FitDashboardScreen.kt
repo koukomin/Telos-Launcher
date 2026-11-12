@@ -15,6 +15,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -28,12 +29,14 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.base.R as BaseR
+import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.ui.component.TelosDotMatrixText
 import de.mm20.launcher2.ui.component.TelosRadialGauge
 import de.mm20.launcher2.ui.component.TelosTechPill
 import de.mm20.launcher2.ui.component.telosTechCard
 import de.mm20.launcher2.ui.component.VirtualAppWindow
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -87,6 +90,9 @@ class FitViewModel : ViewModel() {
     private val _isHealthConnectAvailable = MutableStateFlow(false)
     val isHealthConnectAvailable: StateFlow<Boolean> = _isHealthConnectAvailable.asStateFlow()
 
+    private val _healthConnectSynced = MutableStateFlow(false)
+    val healthConnectSynced: StateFlow<Boolean> = _healthConnectSynced.asStateFlow()
+
     fun addWater() {
         _waterIntake.value += 250
     }
@@ -110,12 +116,26 @@ class FitViewModel : ViewModel() {
                             timeRangeFilter = TimeRangeFilter.between(startTime, endTime)
                         )
                     )
-                    val totalSteps = stepsResponse[StepsRecord.COUNT_TOTAL] ?: _steps.value
+                    val totalSteps = stepsResponse[StepsRecord.COUNT_TOTAL]
                     withContext(Dispatchers.Main) {
-                        _steps.value = totalSteps.toInt()
+                        if (totalSteps != null) {
+                            _steps.value = totalSteps.toInt()
+                            _healthConnectSynced.value = true
+                        } else {
+                            _healthConnectSynced.value = false
+                        }
+                    }
+                } else {
+                    withContext(Dispatchers.Main) {
+                        _isHealthConnectAvailable.value = false
+                        _healthConnectSynced.value = false
                     }
                 }
-            } catch (_: Exception) {}
+            } catch (_: Exception) {
+                withContext(Dispatchers.Main) {
+                    _healthConnectSynced.value = false
+                }
+            }
         }
     }
 }
@@ -138,6 +158,7 @@ fun FitDashboardScreen() {
     val weight by viewModel.weight.collectAsStateWithLifecycle()
     val meals by viewModel.loggedMeals.collectAsStateWithLifecycle()
     val isHealthConnectAvailable by viewModel.isHealthConnectAvailable.collectAsStateWithLifecycle()
+    val healthConnectSynced by viewModel.healthConnectSynced.collectAsStateWithLifecycle()
 
     var showFoodSearch by remember { mutableStateOf(false) }
 
@@ -155,9 +176,17 @@ fun FitDashboardScreen() {
                             Text("Telos Fit", fontWeight = FontWeight.Bold)
                             Spacer(modifier = Modifier.width(8.dp))
                             TelosDotMatrixText(
-                                if (isHealthConnectAvailable) "HEALTH CONNECT // SYNCED" else "LOCAL HUD",
+                                when {
+                                    healthConnectSynced -> stringResource(I18nR.string.fit_status_synced)
+                                    isHealthConnectAvailable -> stringResource(I18nR.string.fit_status_partial)
+                                    else -> stringResource(I18nR.string.fit_status_local_demo)
+                                },
                                 fontSize = 9.sp,
-                                color = if (isHealthConnectAvailable) neonCyan else neonGreen
+                                color = when {
+                                    healthConnectSynced -> neonCyan
+                                    isHealthConnectAvailable -> neonOrange
+                                    else -> neonGreen
+                                },
                             )
                         }
                     },
@@ -455,25 +484,30 @@ private fun FoodSearchDialog(
     var query by remember { mutableStateOf("") }
     var results by remember { mutableStateOf<List<FoodProduct>>(emptyList()) }
     var isLoading by remember { mutableStateOf(false) }
-    val scope = rememberCoroutineScope()
+
+    LaunchedEffect(query) {
+        val trimmed = query.trim()
+        if (trimmed.isEmpty()) {
+            results = emptyList()
+            isLoading = false
+            return@LaunchedEffect
+        }
+        isLoading = true
+        delay(350)
+        results = OpenFoodFactsApi.search(trimmed)
+        isLoading = false
+    }
 
     AlertDialog(
         onDismissRequest = onDismiss,
         containerColor = de.mm20.launcher2.ui.component.virtualAppPopup(),
-        title = { Text("Search Open Food Facts") },
+        title = { Text(stringResource(I18nR.string.fit_food_search_title)) },
         text = {
             Column(modifier = Modifier.fillMaxWidth()) {
                 OutlinedTextField(
                     value = query,
-                    onValueChange = {
-                        query = it
-                        scope.launch {
-                            isLoading = true
-                            results = OpenFoodFactsApi.search(it)
-                            isLoading = false
-                        }
-                    },
-                    label = { Text("Search food, protein, supplement...") },
+                    onValueChange = { query = it },
+                    label = { Text(stringResource(I18nR.string.fit_food_search_hint)) },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth()
                 )

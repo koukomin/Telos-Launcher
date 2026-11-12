@@ -41,4 +41,24 @@
     <string name="keyboard_enable_action">Otevřít nastavení vstupu</string>
     <string name="keyboard_settings_category">Nastavení klávesnice</string>
     <string name="keyboard_incognito_title">Anonymní režim</string>
+    <string name="keepass_entry_username">Uživatelské jméno</string>
+    <string name="keepass_entry_password">Heslo</string>
+    <string name="keepass_entry_url">URL</string>
+    <string name="keepass_entry_notes">Poznámky</string>
+    <string name="keepass_entry_reveal">Zobrazit heslo</string>
+    <string name="keepass_entry_hide">Skrýt heslo</string>
+    <string name="fit_status_synced">Synchronizováno s Health Connect</string>
+    <string name="fit_status_partial">Health Connect k dispozici — místní demo data</string>
+    <string name="fit_status_local_demo">Místní demo data</string>
+    <string name="fit_food_search_title">Hledat jídlo</string>
+    <string name="fit_food_search_hint">Jídlo, značka nebo čárový kód</string>
+    <string name="sync_preview_title">Náhled Sync</string>
+    <string name="sync_preview_summary">Seznamy složek a zařízení jsou ukázková data. Párování a živá synchronizace zatím nejsou k dispozici.</string>
+    <string name="aether_compose_title">Napsat poznámku</string>
+    <string name="aether_compose_hint">Napište místní poznámku. Relaye zatím nejsou připojené.</string>
+    <string name="aether_preview_summary">Aether je místní náhled. Vysílání na Nostr relaye zatím není k dispozici.</string>
+    <string name="aether_broadcast_unavailable">Vysílání není k dispozici</string>
+    <string name="aether_attached_media">Připojené médium: %1$s</string>
+    <string name="aether_dm_unavailable_title">Přímé zprávy nejsou k dispozici</string>
+    <string name="aether_dm_unavailable_summary">Šifrované DM vyžadují aktivní relaci Nostr. Tato verze drží konverzace jen lokálně.</string>
 </resources>

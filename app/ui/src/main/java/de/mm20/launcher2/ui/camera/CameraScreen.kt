@@ -21,6 +21,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
+import de.mm20.launcher2.ui.component.virtualAppPopup
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -198,7 +199,9 @@ fun CameraScreen() {
                 it.scheme?.lowercase(java.util.Locale.ROOT) in setOf("https", "http") && !it.host.isNullOrBlank()
             }
         }
-        AlertDialog(onDismissRequest = { detectedCode = null },
+        AlertDialog(
+            onDismissRequest = { detectedCode = null },
+            containerColor = de.mm20.launcher2.ui.component.virtualAppPopup(),
             title = { Text(stringResource(I18nR.string.camera_scan_code)) },
             text = { androidx.compose.foundation.text.selection.SelectionContainer {
                 Text(code.text, Modifier.heightIn(max = 280.dp).verticalScroll(rememberScrollState()))

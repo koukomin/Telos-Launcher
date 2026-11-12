@@ -41,4 +41,24 @@
     <string name="keyboard_enable_action">入力設定を開く</string>
     <string name="keyboard_settings_category">キーボード設定</string>
     <string name="keyboard_incognito_title">シークレットモード</string>
+    <string name="keepass_entry_username">ユーザー名</string>
+    <string name="keepass_entry_password">パスワード</string>
+    <string name="keepass_entry_url">URL</string>
+    <string name="keepass_entry_notes">メモ</string>
+    <string name="keepass_entry_reveal">パスワードを表示</string>
+    <string name="keepass_entry_hide">パスワードを隠す</string>
+    <string name="fit_status_synced">Health Connect と同期済み</string>
+    <string name="fit_status_partial">Health Connect 利用可能 — ローカルのデモデータ</string>
+    <string name="fit_status_local_demo">ローカルのデモデータ</string>
+    <string name="fit_food_search_title">食品を検索</string>
+    <string name="fit_food_search_hint">食品、ブランド、またはバーコード</string>
+    <string name="sync_preview_title">Sync プレビュー</string>
+    <string name="sync_preview_summary">フォルダーと端末の一覧はサンプルです。ペアリングとライブ同期はまだ利用できません。</string>
+    <string name="aether_compose_title">メモを作成</string>
+    <string name="aether_compose_hint">ローカルメモを書いてください。リレーはまだ接続されていません。</string>
+    <string name="aether_preview_summary">Aether はローカルプレビューです。Nostr リレーへの配信はまだ利用できません。</string>
+    <string name="aether_broadcast_unavailable">配信できません</string>
+    <string name="aether_attached_media">添付メディア: %1$s</string>
+    <string name="aether_dm_unavailable_title">ダイレクトメッセージは利用できません</string>
+    <string name="aether_dm_unavailable_summary">暗号化 DM には有効な Nostr セッションが必要です。このビルドは会話をローカルのみに保ちます。</string>
 </resources>

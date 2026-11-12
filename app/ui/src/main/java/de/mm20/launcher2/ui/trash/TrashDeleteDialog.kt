@@ -4,6 +4,7 @@ import de.mm20.launcher2.i18n.R as I18nR
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
+import de.mm20.launcher2.ui.component.virtualAppPopup
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,7 +20,9 @@ fun TrashDeleteDialog(count: Int, canTrash: Boolean, onTrash: () -> Unit, onPerm
     var permanent by remember { mutableStateOf(!canTrash) }
     var days by remember { mutableStateOf((fixedRetentionDays ?: trash.retentionDays).toString()) }
     val validDays = days.toIntOrNull()?.takeIf { it in 1..365 }
-    AlertDialog(onDismissRequest = onDismiss,
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        containerColor = virtualAppPopup(),
         title = { Text(stringResource(I18nR.string.telos_trash_delete_title, count)) },
         text = { Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
             if (canTrash) {

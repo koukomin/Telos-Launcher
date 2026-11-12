@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+    <string name="keepass_entry_username">Ὄνομα χρήστου</string>
+    <string name="keepass_entry_password">Σύνθημα</string>
+    <string name="keepass_entry_url">URL</string>
+    <string name="keepass_entry_notes">Ὑπομνήματα</string>
+    <string name="keepass_entry_reveal">Δεῖξον τὸ σύνθημα</string>
+    <string name="keepass_entry_hide">Κρύψον τὸ σύνθημα</string>
+    <string name="fit_status_synced">Συγχρονισθὲν μετὰ Health Connect</string>
+    <string name="fit_status_partial">Health Connect διαθέσιμον — τοπικὰ δεδομένα δείγματος</string>
+    <string name="fit_status_local_demo">Τοπικὰ δεδομένα δείγματος</string>
+    <string name="fit_food_search_title">Ζήτησις τροφῆς</string>
+    <string name="fit_food_search_hint">Τροφή, ἐπωνυμία ἢ barcode</string>
+    <string name="sync_preview_title">Προεπίσκεψις Sync</string>
+    <string name="sync_preview_summary">Οἱ κατάλογοι φακέλων καὶ συσκευῶν εἰσὶ δείγματα. Σύζευξις καὶ ζῶν συγχρονισμὸς οὔπω εἰσὶ διαθέσιμα.</string>
+    <string name="aether_compose_title">Σύνθεσις ὑπομνήματος</string>
+    <string name="aether_compose_hint">Γράψον τοπικὸν ὑπόμνημα. Τὰ relays οὔπω συνδεδεμένα.</string>
+    <string name="aether_preview_summary">Τὸ Aether ἐστὶ τοπικὴ προεπίσκεψις. Μετάδοσις εἰς Nostr relays οὔπω διαθέσιμος.</string>
+    <string name="aether_broadcast_unavailable">Μετάδοσις οὐκ ἔστι διαθέσιμος</string>
+    <string name="aether_attached_media">Συνημμένον μέσον: %1$s</string>
+    <string name="aether_dm_unavailable_title">Ἄμεσα μηνύματα οὐκ ἔστι διαθέσιμα</string>
+    <string name="aether_dm_unavailable_summary">Τὰ κεκρυπτογραφημένα DM δεῖται ζώσης συνεδρίας Nostr. Αὕτη ἡ ἔκδοσις φυλάττει τὰς συνομιλίας μόνον τοπικῶς.</string>
+    <string name="keepass_db_password">Σύνθημα βάσεως δεδομένων</string>
+    <string name="keepass_lock">Κλεῖσον τὸ θησαυροφυλάκιον</string>
+    <string name="keepass_open_kdbx">Ἄνοιξον KDBX</string>
+    <string name="keepass_open_stego">Ἄνοιξον ἐξ εἰκόνος (στεγανογραφία)</string>
+    <string name="keepass_unnamed">Ἀνώνυμον</string>
+    <string name="keepass_wrong_password">Ἐσφαλμένον σύνθημα ἢ ἄκυρον ἀρχεῖον</string>
+    <string name="keepass_title">KeePassTL</string>
+    <string name="telos_trash_working">Ἐν ἐργασίᾳ…</string>
+    <string name="keepass_encrypted_val">Κεκρυπτογραφημένον</string>
+</resources>

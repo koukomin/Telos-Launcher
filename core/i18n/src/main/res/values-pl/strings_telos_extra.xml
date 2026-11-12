@@ -41,4 +41,24 @@
     <string name="keyboard_enable_action">Otwórz ustawienia wprowadzania</string>
     <string name="keyboard_settings_category">Ustawienia klawiatury</string>
     <string name="keyboard_incognito_title">Tryb incognito</string>
+    <string name="keepass_entry_username">Nazwa użytkownika</string>
+    <string name="keepass_entry_password">Hasło</string>
+    <string name="keepass_entry_url">URL</string>
+    <string name="keepass_entry_notes">Notatki</string>
+    <string name="keepass_entry_reveal">Pokaż hasło</string>
+    <string name="keepass_entry_hide">Ukryj hasło</string>
+    <string name="fit_status_synced">Zsynchronizowano z Health Connect</string>
+    <string name="fit_status_partial">Health Connect dostępny — lokalne dane demonstracyjne</string>
+    <string name="fit_status_local_demo">Lokalne dane demonstracyjne</string>
+    <string name="fit_food_search_title">Szukaj jedzenia</string>
+    <string name="fit_food_search_hint">Jedzenie, marka lub kod kreskowy</string>
+    <string name="sync_preview_title">Podgląd Sync</string>
+    <string name="sync_preview_summary">Listy folderów i urządzeń to dane przykładowe. Parowanie i synchronizacja na żywo nie są jeszcze dostępne.</string>
+    <string name="aether_compose_title">Napisz notatkę</string>
+    <string name="aether_compose_hint">Napisz lokalną notatkę. Relaye nie są jeszcze połączone.</string>
+    <string name="aether_preview_summary">Aether to lokalny podgląd. Nadawanie do relayów Nostr nie jest jeszcze dostępne.</string>
+    <string name="aether_broadcast_unavailable">Nadawanie niedostępne</string>
+    <string name="aether_attached_media">Załączone media: %1$s</string>
+    <string name="aether_dm_unavailable_title">Wiadomości bezpośrednie niedostępne</string>
+    <string name="aether_dm_unavailable_summary">Szyfrowane DM wymagają aktywnej sesji Nostr. Ta wersja trzyma rozmowy tylko lokalnie.</string>
 </resources>

@@ -41,4 +41,24 @@
     <string name="keyboard_enable_action">Apri impostazioni di input</string>
     <string name="keyboard_settings_category">Impostazioni tastiera</string>
     <string name="keyboard_incognito_title">Modalità in incognito</string>
+    <string name="keepass_entry_username">Nome utente</string>
+    <string name="keepass_entry_password">Password</string>
+    <string name="keepass_entry_url">URL</string>
+    <string name="keepass_entry_notes">Note</string>
+    <string name="keepass_entry_reveal">Mostra password</string>
+    <string name="keepass_entry_hide">Nascondi password</string>
+    <string name="fit_status_synced">Sincronizzato con Health Connect</string>
+    <string name="fit_status_partial">Health Connect disponibile — dati demo locali</string>
+    <string name="fit_status_local_demo">Dati demo locali</string>
+    <string name="fit_food_search_title">Cerca cibo</string>
+    <string name="fit_food_search_hint">Cibo, marca o codice a barre</string>
+    <string name="sync_preview_title">Anteprima Sync</string>
+    <string name="sync_preview_summary">Le liste di cartelle e dispositivi sono dati di esempio. L\'abbinamento e la sincronizzazione live non sono ancora disponibili.</string>
+    <string name="aether_compose_title">Componi nota</string>
+    <string name="aether_compose_hint">Scrivi una nota locale. I relay non sono ancora collegati.</string>
+    <string name="aether_preview_summary">Aether è un\'anteprima locale. La trasmissione ai relay Nostr non è ancora disponibile.</string>
+    <string name="aether_broadcast_unavailable">Trasmissione non disponibile</string>
+    <string name="aether_attached_media">Media allegato: %1$s</string>
+    <string name="aether_dm_unavailable_title">Messaggi diretti non disponibili</string>
+    <string name="aether_dm_unavailable_summary">I DM crittografati richiedono una sessione Nostr attiva. Questa build mantiene le conversazioni solo in locale.</string>
 </resources>

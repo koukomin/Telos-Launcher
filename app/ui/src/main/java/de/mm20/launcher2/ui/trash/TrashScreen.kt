@@ -33,6 +33,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
+import de.mm20.launcher2.ui.component.virtualAppPopup
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -314,6 +315,7 @@ fun TrashScreen() {
     if (warnPriv) {
         AlertDialog(
             onDismissRequest = { warnPriv = false },
+            containerColor = virtualAppPopup(),
             title = { Text(stringResource(I18nR.string.trash_clean_priv_warn_title)) },
             text = { Text(stringResource(I18nR.string.trash_clean_priv_warn_text)) },
             confirmButton = {

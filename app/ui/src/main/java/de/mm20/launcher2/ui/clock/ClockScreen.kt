@@ -84,11 +84,13 @@ fun ClockScreen() {
                 activity?.window?.attributes = activity?.window?.attributes?.apply { screenBrightness = previous ?: WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE }
             }
         }
+        val nightTimeFormat = remember { DateTimeFormatter.ofPattern("HH:mm:ss") }
+        val nightDateFormat = remember { DateTimeFormatter.ofPattern("EEEE, d MMMM yyyy") }
         Column(Modifier.fillMaxSize().background(Color.Black).clickable { night = false }
             .verticalScroll(rememberScrollState()).padding(24.dp), horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center) {
-            ClockDigits(now.format(DateTimeFormatter.ofPattern("HH:mm:ss")), Color.Red)
-            Text(now.format(DateTimeFormatter.ofPattern("EEEE, d MMMM yyyy")), color = Color.Gray)
+            ClockDigits(now.format(nightTimeFormat), Color.Red)
+            Text(now.format(nightDateFormat), color = Color.Gray)
             Text(stringResource(I18nR.string.clock_night_exit), color = Color.Gray)
         }
         return
@@ -210,8 +212,10 @@ private fun CyberAnalogClock(now: ZonedDateTime, modifier: Modifier = Modifier) 
 
         Spacer(Modifier.height(8.dp))
 
+        val analogTimeFormat = remember { DateTimeFormatter.ofPattern("HH:mm:ss") }
+        val analogDateFormat = remember { DateTimeFormatter.ofPattern("EEEE, d MMMM yyyy") }
         Text(
-            text = now.format(DateTimeFormatter.ofPattern("HH:mm:ss")),
+            text = now.format(analogTimeFormat),
             style = MaterialTheme.typography.titleLarge,
             fontWeight = FontWeight.Black,
             fontFamily = FontFamily.Monospace,
@@ -219,7 +223,7 @@ private fun CyberAnalogClock(now: ZonedDateTime, modifier: Modifier = Modifier) 
             letterSpacing = 2.sp
         )
         Text(
-            text = now.format(DateTimeFormatter.ofPattern("EEEE, d MMMM yyyy")),
+            text = now.format(analogDateFormat),
             style = MaterialTheme.typography.bodyMedium,
             color = cyan,
             fontFamily = FontFamily.Monospace
@@ -258,6 +262,9 @@ private fun WorldClockTab() {
                 .mapNotNull { zone -> cities.firstOrNull { it.zoneId == zone } }
         } else emptyList()
     }
+    val localTimeFormat = remember { DateTimeFormatter.ofPattern("HH:mm:ss") }
+    val localDateFormat = remember { DateTimeFormatter.ofPattern("EEEE d MMMM yyyy") }
+    val cityTimeFormat = remember(locale) { DateTimeFormatter.ofPattern("HH:mm · EEE, d MMM", locale) }
     LaunchedEffect(Unit) { while (isActive) { now = Instant.now(); delay(1000) } }
     LazyColumn(Modifier.fillMaxSize(), verticalArrangement = Arrangement.spacedBy(12.dp)) {
         item {
@@ -265,8 +272,8 @@ private fun WorldClockTab() {
             Card(Modifier.fillMaxWidth()) {
                 de.mm20.launcher2.ui.kmp.SharedClockHost(
                     title = stringResource(I18nR.string.clock_local),
-                    time = local.format(DateTimeFormatter.ofPattern("HH:mm:ss")),
-                    date = local.format(DateTimeFormatter.ofPattern("EEEE d MMMM yyyy")),
+                    time = local.format(localTimeFormat),
+                    date = local.format(localDateFormat),
                     modifier = Modifier.fillMaxWidth(),
                 )
             }
@@ -282,7 +289,7 @@ private fun WorldClockTab() {
             Card(Modifier.fillMaxWidth()) { Column(Modifier.fillMaxWidth().padding(16.dp)) {
                 Text(city.city, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
                 Text(listOf(city.country, city.zoneId).filter { it.isNotBlank() }.joinToString(" · "), style = MaterialTheme.typography.bodySmall)
-                Text(ZonedDateTime.ofInstant(now, ZoneId.of(city.zoneId)).format(DateTimeFormatter.ofPattern("HH:mm · EEE, d MMM", locale)), style = MaterialTheme.typography.headlineSmall, color = MaterialTheme.colorScheme.primary)
+                Text(ZonedDateTime.ofInstant(now, ZoneId.of(city.zoneId)).format(cityTimeFormat), style = MaterialTheme.typography.headlineSmall, color = MaterialTheme.colorScheme.primary)
             } }
         }
     }
@@ -397,7 +404,22 @@ private fun AlarmEditor(initial: ClockAlarm, onDismiss: () -> Unit, onSave: (Clo
                 OutlinedButton(onClick = { filePicker.launch(arrayOf("audio/*")) }, Modifier.fillMaxWidth()) { Text(stringResource(I18nR.string.clock_audio_file)) }
                 OutlinedButton(onClick = { radio = !radio }, Modifier.fillMaxWidth()) { Text(stringResource(I18nR.string.hc_radio)) }
                 if (radio) {
-                    stations.forEach { station -> TextButton(onClick = { alarm = alarm.copy(soundUri = station.streamUrl, soundName = station.name); radio = false }, Modifier.fillMaxWidth()) { Text(station.name) } }
+                    LazyColumn(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .heightIn(max = 180.dp),
+                        verticalArrangement = Arrangement.spacedBy(4.dp),
+                    ) {
+                        items(stations, key = { it.streamUrl + it.name }) { station ->
+                            TextButton(
+                                onClick = {
+                                    alarm = alarm.copy(soundUri = station.streamUrl, soundName = station.name)
+                                    radio = false
+                                },
+                                modifier = Modifier.fillMaxWidth(),
+                            ) { Text(station.name) }
+                        }
+                    }
                     OutlinedTextField(stream, { stream = it }, Modifier.fillMaxWidth(), label = { Text(stringResource(I18nR.string.clock_stream_url)) }, singleLine = true, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Uri))
                     TextButton(onClick = { alarm = alarm.copy(soundUri = stream.trim(), soundName = context.getString(I18nR.string.hc_radio)); radio = false }, enabled = Uri.parse(stream).scheme in listOf("http", "https")) { Text(stringResource(I18nR.string.hc_save)) }
                 }
@@ -416,13 +438,19 @@ private fun TimerTab() {
     var remainingMs by remember { mutableLongStateOf(300000L) }
     var isRunning by remember { mutableStateOf(false) }
 
-    LaunchedEffect(isRunning, remainingMs) {
-        if (isRunning && remainingMs > 0L) {
+    LaunchedEffect(isRunning) {
+        while (isRunning) {
+            if (remainingMs <= 0L) {
+                isRunning = false
+                remainingMs = 0L
+                break
+            }
             delay(100L)
-            remainingMs -= 100L
-        } else if (isRunning && remainingMs <= 0L) {
-            isRunning = false
-            remainingMs = 0L
+            remainingMs = (remainingMs - 100L).coerceAtLeast(0L)
+            if (remainingMs == 0L) {
+                isRunning = false
+                break
+            }
         }
     }
 

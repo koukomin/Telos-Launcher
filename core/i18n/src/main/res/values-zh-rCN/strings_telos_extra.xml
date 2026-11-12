@@ -41,4 +41,24 @@
     <string name="keyboard_enable_action">打开输入设置</string>
     <string name="keyboard_settings_category">键盘设置</string>
     <string name="keyboard_incognito_title">无痕模式</string>
+    <string name="keepass_entry_username">用户名</string>
+    <string name="keepass_entry_password">密码</string>
+    <string name="keepass_entry_url">网址</string>
+    <string name="keepass_entry_notes">备注</string>
+    <string name="keepass_entry_reveal">显示密码</string>
+    <string name="keepass_entry_hide">隐藏密码</string>
+    <string name="fit_status_synced">已与 Health Connect 同步</string>
+    <string name="fit_status_partial">Health Connect 可用 — 本地演示数据</string>
+    <string name="fit_status_local_demo">本地演示数据</string>
+    <string name="fit_food_search_title">搜索食物</string>
+    <string name="fit_food_search_hint">食物、品牌或条码</string>
+    <string name="sync_preview_title">同步预览</string>
+    <string name="sync_preview_summary">文件夹和设备列表为示例数据。配对和实时同步尚不可用。</string>
+    <string name="aether_compose_title">撰写笔记</string>
+    <string name="aether_compose_hint">编写本地笔记。中继尚未连接。</string>
+    <string name="aether_preview_summary">Aether 为本地预览。向 Nostr 中继广播尚不可用。</string>
+    <string name="aether_broadcast_unavailable">无法广播</string>
+    <string name="aether_attached_media">附加媒体：%1$s</string>
+    <string name="aether_dm_unavailable_title">私信不可用</string>
+    <string name="aether_dm_unavailable_summary">加密私信需要有效的 Nostr 会话。此版本仅在本地保留对话。</string>
 </resources>

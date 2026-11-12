@@ -41,4 +41,24 @@
     <string name="keyboard_enable_action">Ouvrir les paramètres de saisie</string>
     <string name="keyboard_settings_category">Paramètres du clavier</string>
     <string name="keyboard_incognito_title">Mode navigation privée</string>
+    <string name="keepass_entry_username">Nom d\'utilisateur</string>
+    <string name="keepass_entry_password">Mot de passe</string>
+    <string name="keepass_entry_url">URL</string>
+    <string name="keepass_entry_notes">Notes</string>
+    <string name="keepass_entry_reveal">Afficher le mot de passe</string>
+    <string name="keepass_entry_hide">Masquer le mot de passe</string>
+    <string name="fit_status_synced">Synchronisé avec Health Connect</string>
+    <string name="fit_status_partial">Health Connect disponible — données de démo locales</string>
+    <string name="fit_status_local_demo">Données de démo locales</string>
+    <string name="fit_food_search_title">Rechercher un aliment</string>
+    <string name="fit_food_search_hint">Aliment, marque ou code-barres</string>
+    <string name="sync_preview_title">Aperçu Sync</string>
+    <string name="sync_preview_summary">Les listes de dossiers et d\'appareils sont des exemples. L\'appairage et la synchronisation en direct ne sont pas encore disponibles.</string>
+    <string name="aether_compose_title">Rédiger une note</string>
+    <string name="aether_compose_hint">Écrivez une note locale. Les relays ne sont pas encore connectés.</string>
+    <string name="aether_preview_summary">Aether est un aperçu local. La diffusion vers les relays Nostr n\'est pas encore disponible.</string>
+    <string name="aether_broadcast_unavailable">Diffusion indisponible</string>
+    <string name="aether_attached_media">Média joint : %1$s</string>
+    <string name="aether_dm_unavailable_title">Messages directs indisponibles</string>
+    <string name="aether_dm_unavailable_summary">Les MD chiffrés nécessitent une session Nostr active. Cette version garde les conversations en local uniquement.</string>
 </resources>

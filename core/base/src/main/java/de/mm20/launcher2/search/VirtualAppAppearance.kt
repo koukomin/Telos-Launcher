@@ -55,6 +55,7 @@ object VirtualAppAppearance {
         "telos_keepass_app" -> R.drawable.ic_app_keepass_fg
         "telos_aether_app" -> R.drawable.ic_app_aether_fg
         "telos_fit_app" -> R.drawable.ic_app_fit_fg
+        "telos_stremio_app" -> R.drawable.ic_app_stremio_fg
         else -> TelosAppIcons.forDomain(domain)
     }
 

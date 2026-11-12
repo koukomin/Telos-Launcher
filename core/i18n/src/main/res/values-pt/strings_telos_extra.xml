@@ -41,4 +41,24 @@
     <string name="keyboard_enable_action">Abrir definições de entrada</string>
     <string name="keyboard_settings_category">Definições do teclado</string>
     <string name="keyboard_incognito_title">Modo de incógnito</string>
+    <string name="keepass_entry_username">Nome de utilizador</string>
+    <string name="keepass_entry_password">Palavra-passe</string>
+    <string name="keepass_entry_url">URL</string>
+    <string name="keepass_entry_notes">Notas</string>
+    <string name="keepass_entry_reveal">Mostrar palavra-passe</string>
+    <string name="keepass_entry_hide">Ocultar palavra-passe</string>
+    <string name="fit_status_synced">Sincronizado com o Health Connect</string>
+    <string name="fit_status_partial">Health Connect disponível — dados de demonstração locais</string>
+    <string name="fit_status_local_demo">Dados de demonstração locais</string>
+    <string name="fit_food_search_title">Pesquisar alimento</string>
+    <string name="fit_food_search_hint">Alimento, marca ou código de barras</string>
+    <string name="sync_preview_title">Pré-visualização Sync</string>
+    <string name="sync_preview_summary">As listas de pastas e dispositivos são dados de exemplo. A emparelhamento e a sincronização em direto ainda não estão disponíveis.</string>
+    <string name="aether_compose_title">Compor nota</string>
+    <string name="aether_compose_hint">Escreva uma nota local. Os relays ainda não estão ligados.</string>
+    <string name="aether_preview_summary">O Aether é uma pré-visualização local. A emissão para relays Nostr ainda não está disponível.</string>
+    <string name="aether_broadcast_unavailable">Emissão indisponível</string>
+    <string name="aether_attached_media">Multimédia anexado: %1$s</string>
+    <string name="aether_dm_unavailable_title">Mensagens diretas indisponíveis</string>
+    <string name="aether_dm_unavailable_summary">As MD encriptadas precisam de uma sessão Nostr ativa. Esta versão mantém as conversas apenas localmente.</string>
 </resources>

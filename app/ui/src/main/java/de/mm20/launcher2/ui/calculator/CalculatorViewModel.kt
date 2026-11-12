@@ -33,9 +33,11 @@ class ConverterCategory(val converter: Converter, val units: List<MeasureUnit>)
  * in the [typed] expression. Null (leave the VAT page as it is) when neither is a usable non-zero number.
  * The value is rounded to 2 decimals and returned as a plain string with '.' as decimal separator.
  */
+private val VatAmountNumber = Regex("[0-9]+(?:[.,][0-9]+)?|[.,][0-9]+")
+
 fun pickVatAmount(result: Double?, typed: String): String? {
     val value = result?.takeIf { it.isFinite() && it != 0.0 }
-        ?: Regex("[0-9]+(?:[.,][0-9]+)?|[.,][0-9]+").findAll(typed).lastOrNull()?.value
+        ?: VatAmountNumber.findAll(typed).lastOrNull()?.value
             ?.replace(',', '.')?.toDoubleOrNull()?.takeIf { it.isFinite() && it != 0.0 }
         ?: return null
     return BigDecimal(value).setScale(2, RoundingMode.HALF_UP).stripTrailingZeros().toPlainString()

@@ -41,4 +41,24 @@
     <string name="keyboard_enable_action">Відкрити налаштування введення</string>
     <string name="keyboard_settings_category">Налаштування клавіатури</string>
     <string name="keyboard_incognito_title">Режим інкогніто</string>
+    <string name="keepass_entry_username">Імʼя користувача</string>
+    <string name="keepass_entry_password">Пароль</string>
+    <string name="keepass_entry_url">URL</string>
+    <string name="keepass_entry_notes">Нотатки</string>
+    <string name="keepass_entry_reveal">Показати пароль</string>
+    <string name="keepass_entry_hide">Сховати пароль</string>
+    <string name="fit_status_synced">Синхронізовано з Health Connect</string>
+    <string name="fit_status_partial">Health Connect доступний — локальні демо-дані</string>
+    <string name="fit_status_local_demo">Локальні демо-дані</string>
+    <string name="fit_food_search_title">Пошук їжі</string>
+    <string name="fit_food_search_hint">Їжа, бренд або штрихкод</string>
+    <string name="sync_preview_title">Попередній перегляд Sync</string>
+    <string name="sync_preview_summary">Списки тек і пристроїв — зразки. Спарювання та жива синхронізація ще недоступні.</string>
+    <string name="aether_compose_title">Створити нотатку</string>
+    <string name="aether_compose_hint">Напишіть локальну нотатку. Relays ще не підключені.</string>
+    <string name="aether_preview_summary">Aether — локальний попередній перегляд. Трансляція на Nostr relays ще недоступна.</string>
+    <string name="aether_broadcast_unavailable">Трансляція недоступна</string>
+    <string name="aether_attached_media">Прикріплене медіа: %1$s</string>
+    <string name="aether_dm_unavailable_title">Прямі повідомлення недоступні</string>
+    <string name="aether_dm_unavailable_summary">Зашифровані DM потребують активної сесії Nostr. Ця збірка зберігає розмови лише локально.</string>
 </resources>
