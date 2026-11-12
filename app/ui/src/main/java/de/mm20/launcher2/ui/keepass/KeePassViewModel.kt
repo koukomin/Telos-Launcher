@@ -7,8 +7,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.keemobile.kotpass.database.KeePassDatabase
 import app.keemobile.kotpass.models.Group
-import de.mm20.launcher2.virtualapps.keepass.KeePassDatabaseManager
-import de.mm20.launcher2.virtualapps.keepass.SteganographyEngine
+import de.mm20.launcher2.keepasstl.KeePassDatabaseManager
+import de.mm20.launcher2.keepasstl.SteganographyEngine
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
