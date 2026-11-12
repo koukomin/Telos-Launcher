@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_workspace_tints">פסים צבעוניים לסביבות עבודה</string>
+    <string name="desktop_theme_workspace_tints_hint">מבטאים ניאון עדינים מתחת לספרות 1–4 בפאנל. מוסתרים ב־panic mute. כיבוי: theme.workspaceTints=false.</string>
+</resources>

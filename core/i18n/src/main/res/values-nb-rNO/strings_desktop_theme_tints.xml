@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_workspace_tints">Fargestiper for arbeidsområder</string>
+    <string name="desktop_theme_workspace_tints_hint">Subtile neon-aksenter under panelsifrene 1–4. Skjult under panic mute. Av: theme.workspaceTints=false.</string>
+</resources>

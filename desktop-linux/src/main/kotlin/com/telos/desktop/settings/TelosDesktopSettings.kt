@@ -1,5 +1,6 @@
 package com.telos.desktop.settings
 
+import com.telos.desktop.theme.WorkspaceTintStrips
 import java.io.File
 import java.util.Properties
 
@@ -49,6 +50,17 @@ class TelosDesktopSettings(private val vaultConfigDir: File) {
     /** Warm display temperature (Night Light); applied via host gammastep/redshift/wlsunset when present. */
     var nightLightEnabled: Boolean = false
     var nightLightTemperatureK: Int = 4500
+    /**
+     * Subtle neon accent strips under Helix panel workspace digits 1–4.
+     * Stored as `theme.workspaceTints` (default on).
+     */
+    var workspaceTints: Boolean = true
+    /**
+     * Defensive reads for Theme Studio / OpSec visual mute keys. Not authored here —
+     * only consumed so strips stay quiet or hidden when those prefs appear.
+     */
+    var themeQuietOps: Boolean = false
+    var themePanicMute: Boolean = false
 
     private val file: File get() = File(vaultConfigDir, "desktop.properties")
 
@@ -98,6 +110,9 @@ class TelosDesktopSettings(private val vaultConfigDir: File) {
         nightLightEnabled = p.getProperty("nightLight.enabled", "false").toBoolean()
         nightLightTemperatureK = p.getProperty("nightLight.temperatureK")?.toIntOrNull()
             ?.coerceIn(1000, 6500) ?: 4500
+        workspaceTints = WorkspaceTintStrips.parseWorkspaceTints(p, default = true)
+        themeQuietOps = WorkspaceTintStrips.parseQuietOps(p)
+        themePanicMute = WorkspaceTintStrips.parsePanicMute(p)
         outputPrefs.clear()
         p.stringPropertyNames().forEach { key ->
             if (key.startsWith("output.")) {
@@ -109,6 +124,10 @@ class TelosDesktopSettings(private val vaultConfigDir: File) {
     fun save() {
         vaultConfigDir.mkdirs()
         val p = Properties()
+        // Preserve unknown / Theme Studio keys (panic mute, quiet ops, intensity, …).
+        if (file.isFile) {
+            runCatching { file.inputStream().use { p.load(it) } }
+        }
         p["showDesktopIcons"] = showDesktopIcons.toString()
         p["showHiddenFiles"] = showHiddenFiles.toString()
         p["hiddenItems.showHiddenFiles"] = showHiddenFiles.toString()
@@ -149,6 +168,7 @@ class TelosDesktopSettings(private val vaultConfigDir: File) {
         p["windowMode"] = mode
         p["nightLight.enabled"] = nightLightEnabled.toString()
         p["nightLight.temperatureK"] = nightLightTemperatureK.toString()
+        p[WorkspaceTintStrips.PREF_KEY] = workspaceTints.toString()
         outputPrefs.forEach { (name, spec) -> p["output.$name"] = spec }
         file.outputStream().use { p.store(it, "Telos Linux Desktop") }
     }

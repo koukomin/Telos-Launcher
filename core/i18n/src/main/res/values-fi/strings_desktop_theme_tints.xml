@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_workspace_tints">Työtilojen värikaistat</string>
+    <string name="desktop_theme_workspace_tints_hint">Hillityt neonkorostukset paneelin numeroissa 1–4. Piilotetaan panic mute -tilassa. Pois: theme.workspaceTints=false.</string>
+</resources>

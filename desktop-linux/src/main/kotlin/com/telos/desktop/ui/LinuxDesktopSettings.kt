@@ -112,6 +112,10 @@ fun LinuxDesktopSettingsPanel(
                 ".lnk",
                 ".desktop",
                 "folders",
+                t.t("desktop_theme_workspace_tints"),
+                t.t("desktop_theme_workspace_tints_hint"),
+                "workspace",
+                "tint",
             ),
             portalKeywords = listOf(
                 t.t("desktop_perm_camera"),
@@ -302,6 +306,15 @@ fun LinuxDesktopSettingsPanel(
                 Toggle("Show .lnk files", settings.showLnkFiles) { settings.showLnkFiles = it; settings.save() }
                 Toggle("Show .desktop shortcuts", settings.showDesktopFiles) { settings.showDesktopFiles = it; settings.save() }
                 Toggle("Show standard folders", settings.showStandardFolders) { settings.showStandardFolders = it; settings.save() }
+                Toggle(t.t("desktop_theme_workspace_tints"), settings.workspaceTints) {
+                    settings.workspaceTints = it
+                    settings.save()
+                }
+                Text(
+                    t.t("desktop_theme_workspace_tints_hint"),
+                    fontSize = 11.sp,
+                    color = TelosColors.onSurface.copy(0.7f),
+                )
             }
         }
         if (filter.showLinuxIconThemeSelector && show("icons")) {

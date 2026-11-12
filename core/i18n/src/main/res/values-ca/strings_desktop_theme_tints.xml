@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_workspace_tints">Franges de tint dels espais</string>
+    <string name="desktop_theme_workspace_tints_hint">Accents neó subtils sota els dígits 1–4 del panell. Amagades en panic mute. Desactivar: theme.workspaceTints=false.</string>
+</resources>

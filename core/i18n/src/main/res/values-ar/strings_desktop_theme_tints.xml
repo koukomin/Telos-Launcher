@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_workspace_tints">شرائط تلوين مساحات العمل</string>
+    <string name="desktop_theme_workspace_tints_hint">لمسات نيون خفيفة تحت أرقام اللوحة 1–4. تُخفى أثناء كتم الذعر. إيقاف: theme.workspaceTints=false.</string>
+</resources>

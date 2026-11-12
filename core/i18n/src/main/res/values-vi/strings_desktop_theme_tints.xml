@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_workspace_tints">Dải màu không gian làm việc</string>
+    <string name="desktop_theme_workspace_tints_hint">Điểm nhấn neon nhẹ dưới số 1–4 trên thanh. Ẩn khi panic mute. Tắt: theme.workspaceTints=false.</string>
+</resources>

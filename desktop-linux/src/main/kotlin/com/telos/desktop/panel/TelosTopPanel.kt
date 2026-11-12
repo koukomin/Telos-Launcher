@@ -41,6 +41,7 @@ import com.telos.desktop.icons.CandyIcon
 import com.telos.desktop.ui.DesktopChrome
 import com.telos.desktop.ui.TelosColors
 import com.telos.desktop.apps.TelosVirtualApps
+import com.telos.desktop.theme.WorkspaceTintStrips
 import com.telos.desktop.wm.TelosWindowManager
 import kotlinx.coroutines.delay
 import java.time.LocalDateTime
@@ -99,15 +100,42 @@ fun TelosTopPanel(
                     CandyCyberIcon(CandyIcon.TelosLogo, iconDp)
                 }
                 // === TELOS_PENDING_REVIEW_END: telos_de_final_polish ===
+                val showWorkspaceTints = WorkspaceTintStrips.shouldShow(
+                    settings?.workspaceTints ?: true,
+                    settings?.themePanicMute ?: false,
+                )
+                val quietOps = settings?.themeQuietOps ?: false
                 (0 until wm.workspaceCount).forEach { i ->
                     val active = wm.currentWorkspace == i
                     val dots = wm.windows.count { it.workspace == i }
-                    Text(
-                        "${i + 1}${if (dots > 0) "·$dots" else ""}",
-                        color = if (active) TelosColors.primary else TelosColors.onSurface,
-                        fontSize = 12.sp,
+                    val oneBased = i + 1
+                    val tintArgb = if (showWorkspaceTints) {
+                        WorkspaceTintStrips.argbForWorkspace(
+                            oneBased,
+                            WorkspaceTintStrips.stripAlpha(quietOps, active),
+                        )
+                    } else {
+                        null
+                    }
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
                         modifier = Modifier.clickable { wm.switchWorkspace(i) },
-                    )
+                    ) {
+                        Text(
+                            "$oneBased${if (dots > 0) "·$dots" else ""}",
+                            color = if (active) TelosColors.primary else TelosColors.onSurface,
+                            fontSize = 12.sp,
+                        )
+                        if (tintArgb != null) {
+                            Box(
+                                Modifier
+                                    .padding(top = 1.dp)
+                                    .width(14.dp)
+                                    .height(2.dp)
+                                    .background(Color(tintArgb.toInt())),
+                            )
+                        }
+                    }
                 }
                 Text(wm.windows.find { it.id == wm.focusedId }?.title ?: "Desktop", color = TelosColors.onSurface, fontSize = 12.sp)
                 // === TELOS_PENDING_REVIEW_START: telos_launcher_desktop_ui_parity ===
@@ -245,6 +273,15 @@ fun TelosTopPanel(
                                     s.panelArgb = (s.panelArgb and 0xFFFFFF00L) or (nb * 255).toLong()
                                     s.save()
                                 })
+                                Text(
+                                    com.telos.desktop.i18n.TelosI18n.t("desktop_theme_workspace_tints"),
+                                    fontSize = 11.sp,
+                                    color = if (s.workspaceTints) TelosColors.secondary else TelosColors.onSurface,
+                                    modifier = Modifier.clickable {
+                                        s.workspaceTints = !s.workspaceTints
+                                        s.save()
+                                    }.padding(top = 4.dp),
+                                )
                             }
                         }
                         else -> {}
