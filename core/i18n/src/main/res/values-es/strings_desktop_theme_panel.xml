@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_panel_surface">Superficie del panel</string>
+    <string name="desktop_theme_panel_surface_hint">Transparente o difuminado solo afecta a la raíz del panel; los menús siguen opacos. Difuminado guarda panelBlur para el efecto frost; el desenfoque del fondo del host es best-effort si no está disponible.</string>
+    <string name="desktop_theme_panel_transparent">Transparente</string>
+    <string name="desktop_theme_panel_blurred">Difuminado</string>
+    <string name="desktop_theme_panel_solid">Sólido</string>
+    <string name="desktop_theme_panel_opacity">Opacidad del panel: %1$d%%</string>
+    <string name="desktop_theme_panel_blur">Desenfoque de cristal: %1$d</string>
+    <string name="desktop_theme_panel_blur_unavailable">El desenfoque del fondo del host no está disponible; Telos usa una placa frost translúcida y conserva tu preferencia de desenfoque.</string>
+</resources>

@@ -1,6 +1,7 @@
 package com.telos.desktop.settings
 
 import com.telos.desktop.theme.DesktopThemeChrome
+import com.telos.desktop.theme.PanelSurfaceMode
 import com.telos.desktop.theme.ThemeAccent
 import com.telos.desktop.theme.ThemeDensity
 import com.telos.desktop.theme.ThemeIntensity
@@ -36,6 +37,11 @@ class TelosDesktopSettings(private val vaultConfigDir: File) {
     var panelArgb: Long = 0xF2241E36
     var panelAlpha: Float = 0.94f
     var panelBlur: Float = 12f
+    /**
+     * Helix panel root appearance: transparent | blurred | solid.
+     * Stored as `panel.surfaceMode` (default blurred to match prior alpha+blur prefs).
+     */
+    var panelSurfaceMode: String = PanelSurfaceMode.Blurred.propertyValue
     var panelIconDp: Float = 22f
     var panelHeightDp: Float = 36f
     // === TELOS_PENDING_REVIEW_END: telos_desktop_kwin_parity_upgrade ===
@@ -116,6 +122,7 @@ class TelosDesktopSettings(private val vaultConfigDir: File) {
         panelArgb = p.getProperty("panelArgb")?.toLongOrNull() ?: panelArgb
         panelAlpha = p.getProperty("panelAlpha")?.toFloatOrNull() ?: panelAlpha
         panelBlur = p.getProperty("panelBlur")?.toFloatOrNull() ?: panelBlur
+        panelSurfaceMode = PanelSurfaceMode.parse(p).propertyValue
         panelIconDp = p.getProperty("panelIconDp")?.toFloatOrNull() ?: panelIconDp
         panelHeightDp = p.getProperty("panelHeightDp")?.toFloatOrNull() ?: panelHeightDp
         // === TELOS_PENDING_REVIEW_END: telos_desktop_kwin_parity_upgrade ===
@@ -186,6 +193,7 @@ class TelosDesktopSettings(private val vaultConfigDir: File) {
         p["panelArgb"] = panelArgb.toString()
         p["panelAlpha"] = panelAlpha.toString()
         p["panelBlur"] = panelBlur.toString()
+        p[PanelSurfaceMode.PREF_KEY] = PanelSurfaceMode.parse(panelSurfaceMode).propertyValue
         p["panelIconDp"] = panelIconDp.toString()
         p["panelHeightDp"] = panelHeightDp.toString()
         // === TELOS_PENDING_REVIEW_END: telos_desktop_kwin_parity_upgrade ===

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_panel_surface">سطح پنل</string>
+    <string name="desktop_theme_panel_surface_hint">شفاف یا تار فقط ریشه پنل را تغییر می‌دهد؛ منوها مات می‌مانند. تار مقدار panelBlur را برای frost نگه می‌دارد؛ تارسازی پس‌زمینه میزبان در صورت نبودن best-effort است.</string>
+    <string name="desktop_theme_panel_transparent">شفاف</string>
+    <string name="desktop_theme_panel_blurred">تار</string>
+    <string name="desktop_theme_panel_solid">مات</string>
+    <string name="desktop_theme_panel_opacity">کدری پنل: %1$d%%</string>
+    <string name="desktop_theme_panel_blur">تاری شیشه: %1$d</string>
+    <string name="desktop_theme_panel_blur_unavailable">تاری پس‌زمینه میزبان در دسترس نیست؛ Telos از صفحه frost نیمه‌شفاف استفاده می‌کند و ترجیح تاری را نگه می‌دارد.</string>
+</resources>

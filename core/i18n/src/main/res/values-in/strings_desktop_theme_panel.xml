@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_panel_surface">Permukaan panel</string>
+    <string name="desktop_theme_panel_surface_hint">Transparan atau buram hanya memengaruhi akar panel; menu tetap buram. Mode buram menyimpan panelBlur untuk frost; blur wallpaper host bersifat best-effort jika tidak tersedia.</string>
+    <string name="desktop_theme_panel_transparent">Transparan</string>
+    <string name="desktop_theme_panel_blurred">Buram</string>
+    <string name="desktop_theme_panel_solid">Padat</string>
+    <string name="desktop_theme_panel_opacity">Opasitas panel: %1$d%%</string>
+    <string name="desktop_theme_panel_blur">Blur kaca: %1$d</string>
+    <string name="desktop_theme_panel_blur_unavailable">Blur wallpaper host tidak tersedia; Telos memakai pelat frost tembus cahaya dan menyimpan preferensi blur Anda.</string>
+</resources>

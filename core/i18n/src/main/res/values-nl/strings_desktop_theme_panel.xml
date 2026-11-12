@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_panel_surface">Paneeloppervlak</string>
+    <string name="desktop_theme_panel_surface_hint">Transparant of wazig geldt alleen voor de paneelwortel; menu’s blijven ondoorzichtig. Wazig bewaart panelBlur voor frost; host-achtergrondblur is best-effort als die ontbreekt.</string>
+    <string name="desktop_theme_panel_transparent">Transparant</string>
+    <string name="desktop_theme_panel_blurred">Wazig</string>
+    <string name="desktop_theme_panel_solid">Dekkend</string>
+    <string name="desktop_theme_panel_opacity">Paneeldekking: %1$d%%</string>
+    <string name="desktop_theme_panel_blur">Glasvervaging: %1$d</string>
+    <string name="desktop_theme_panel_blur_unavailable">Host-achtergrondblur is niet beschikbaar; Telos gebruikt een doorschijnende frostplaat en bewaart je blurvoorkeur.</string>
+</resources>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_panel_surface">Suprafața panoului</string>
+    <string name="desktop_theme_panel_surface_hint">Transparent sau neclar afectează doar rădăcina panoului; meniurile rămân opace. Neclar salvează panelBlur pentru frost; estomparea fundalului gazdei este best-effort dacă lipsește.</string>
+    <string name="desktop_theme_panel_transparent">Transparent</string>
+    <string name="desktop_theme_panel_blurred">Neclar</string>
+    <string name="desktop_theme_panel_solid">Solid</string>
+    <string name="desktop_theme_panel_opacity">Opacitatea panoului: %1$d%%</string>
+    <string name="desktop_theme_panel_blur">Estompare sticlă: %1$d</string>
+    <string name="desktop_theme_panel_blur_unavailable">Estomparea fundalului gazdei nu este disponibilă; Telos folosește o placă frost translucidă și păstrează preferința de estompare.</string>
+</resources>

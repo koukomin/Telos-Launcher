@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_panel_surface">Panelaren azala</string>
+    <string name="desktop_theme_panel_surface_hint">Gardena edo lausoa panelaren erroari soilik eragiten dio; menuak opakua izaten jarraitzen dute. Lausoak panelBlur gordetzen du frosterako; ostalariaren atzeko planoaren lausotzea best-effort da eskuragarri ez dagoenean.</string>
+    <string name="desktop_theme_panel_transparent">Gardena</string>
+    <string name="desktop_theme_panel_blurred">Lausoa</string>
+    <string name="desktop_theme_panel_solid">Solidoa</string>
+    <string name="desktop_theme_panel_opacity">Panelaren opakutasuna: %1$d%%</string>
+    <string name="desktop_theme_panel_blur">Beirazko lausotzea: %1$d</string>
+    <string name="desktop_theme_panel_blur_unavailable">Ostalariaren atzeko planoaren lausotzea ez dago erabilgarri; Telosek frost plaka gardena erabiltzen du eta lausotze hobespena gordetzen du.</string>
+</resources>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_panel_surface">Panelyta</string>
+    <string name="desktop_theme_panel_surface_hint">Genomskinlig eller suddig påverkar bara panelroten; menyer förblir ogenomskinliga. Suddig sparar panelBlur för frost; värdbakgrundsoskärpa är best-effort om den saknas.</string>
+    <string name="desktop_theme_panel_transparent">Genomskinlig</string>
+    <string name="desktop_theme_panel_blurred">Suddig</string>
+    <string name="desktop_theme_panel_solid">Solid</string>
+    <string name="desktop_theme_panel_opacity">Panelopacitet: %1$d%%</string>
+    <string name="desktop_theme_panel_blur">Glasoskärpa: %1$d</string>
+    <string name="desktop_theme_panel_blur_unavailable">Värdbakgrundsoskärpa saknas; Telos använder en genomskinlig frostplatta och behåller din oskärpepreferens.</string>
+</resources>

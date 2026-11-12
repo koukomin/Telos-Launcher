@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_panel_surface">Wiċċ tal-pannell</string>
+    <string name="desktop_theme_panel_surface_hint">Trasparenti jew imċajpar jaffettwa biss l-għerq tal-pannell; il-menus jibqgħu opaki. Imċajpar jaħżen panelBlur għall-frost; iċ-ċajpir tal-isfond tal-host huwa best-effort jekk ma jkunx disponibbli.</string>
+    <string name="desktop_theme_panel_transparent">Trasparenti</string>
+    <string name="desktop_theme_panel_blurred">Imċajpar</string>
+    <string name="desktop_theme_panel_solid">Solidu</string>
+    <string name="desktop_theme_panel_opacity">Opacità tal-pannell: %1$d%%</string>
+    <string name="desktop_theme_panel_blur">Ċajpir tal-ħġieġ: %1$d</string>
+    <string name="desktop_theme_panel_blur_unavailable">Iċ-ċajpir tal-isfond tal-host mhuwiex disponibbli; Telos juża pjanċa frost trasluċenti u jżomm il-preferenza taċ-ċajpir.</string>
+</resources>

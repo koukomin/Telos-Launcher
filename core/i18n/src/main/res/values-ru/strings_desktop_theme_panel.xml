@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_panel_surface">Поверхность панели</string>
+    <string name="desktop_theme_panel_surface_hint">Прозрачный или размытый режим затрагивает только корень панели; меню остаются непрозрачными. Размытие сохраняет panelBlur для frost; размытие обоев хоста — best-effort, если недоступно.</string>
+    <string name="desktop_theme_panel_transparent">Прозрачная</string>
+    <string name="desktop_theme_panel_blurred">Размытая</string>
+    <string name="desktop_theme_panel_solid">Сплошная</string>
+    <string name="desktop_theme_panel_opacity">Непрозрачность панели: %1$d%%</string>
+    <string name="desktop_theme_panel_blur">Размытие стекла: %1$d</string>
+    <string name="desktop_theme_panel_blur_unavailable">Размытие обоев хоста недоступно; Telos использует полупрозрачную frost-пластину и сохраняет настройку размытия.</string>
+</resources>

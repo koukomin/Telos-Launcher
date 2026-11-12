@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_panel_surface">Paneloberfläche</string>
+    <string name="desktop_theme_panel_surface_hint">Transparent oder unscharf betrifft nur die Panelwurzel; Menüs bleiben undurchsichtig. Unscharf speichert panelBlur für Frost; Host-Wallpaper-Hintergrundblur ist best-effort, falls nicht verfügbar.</string>
+    <string name="desktop_theme_panel_transparent">Transparent</string>
+    <string name="desktop_theme_panel_blurred">Unscharf</string>
+    <string name="desktop_theme_panel_solid">Deckend</string>
+    <string name="desktop_theme_panel_opacity">Paneldeckkraft: %1$d%%</string>
+    <string name="desktop_theme_panel_blur">Glasunschärfe: %1$d</string>
+    <string name="desktop_theme_panel_blur_unavailable">Host-Wallpaper-Blur ist nicht verfügbar; Telos nutzt eine durchscheinende Frostplatte und behält Ihre Blur-Einstellung.</string>
+</resources>

@@ -41,7 +41,10 @@ import com.telos.desktop.icons.CandyIcon
 import com.telos.desktop.ui.DesktopChrome
 import com.telos.desktop.ui.TelosColors
 import com.telos.desktop.apps.TelosVirtualApps
+import com.telos.desktop.theme.PanelSurfaceMapping
+import com.telos.desktop.theme.PanelSurfaceMode
 import com.telos.desktop.theme.WorkspaceTintStrips
+import com.telos.desktop.ui.HelixTechPill
 import com.telos.desktop.wm.TelosWindowManager
 import de.mm20.launcher2.uikmp.TelosSurfaceTokens
 import kotlinx.coroutines.delay
@@ -81,14 +84,31 @@ fun TelosTopPanel(
         }
     }
     val barH = (settings?.panelHeightDp ?: 36f).dp
-    val barColor = TelosSurfaceTokens.panelGlass(
-        base = Color((settings?.panelArgb ?: 0xF2241E36L).toInt()),
-        alpha = settings?.panelAlpha ?: TelosSurfaceTokens.DEFAULT_PANEL_GLASS_ALPHA,
+    val surface = PanelSurfaceMapping.resolve(
+        mode = PanelSurfaceMode.parse(settings?.panelSurfaceMode),
+        panelAlpha = settings?.panelAlpha ?: TelosSurfaceTokens.DEFAULT_PANEL_GLASS_ALPHA,
+        panelBlur = settings?.panelBlur ?: 12f,
     )
+    val tintRgb = Color((settings?.panelArgb ?: 0xF2241E36L).toInt())
+    // Panel root only may clear; solid uses opaque surfaceContainer / tech-pill tone.
+    val barColor = if (surface.solidSurfaceContainer) {
+        TelosSurfaceTokens.techPill
+    } else {
+        TelosSurfaceTokens.panelGlass(base = tintRgb, alpha = surface.alpha)
+    }
+    // Best-effort frost plate when blurred mode stores blur but host backdrop blur is unavailable.
+    val frostOverlay = if (surface.frostPlateFallback) {
+        TelosColors.surfaceHigh.copy(alpha = (0.08f + (surface.blurRadius / 32f) * 0.18f).coerceIn(0.08f, 0.26f))
+    } else {
+        null
+    }
     val iconDp = (settings?.panelIconDp ?: 22f).dp
     Box(
         modifier.fillMaxWidth().height(barH)
             .background(barColor)
+            .then(
+                if (frostOverlay != null) Modifier.background(frostOverlay) else Modifier,
+            )
             .border(1.dp, TelosColors.outline)
             .combinedClickable(onClick = {}, onLongClick = { popup = PanelPopup.Style })
             .onPointerEvent(PointerEventType.Press) { ev ->
@@ -240,7 +260,50 @@ fun TelosTopPanel(
                             if (s == null) {
                                 Text("Panel settings unavailable", color = TelosColors.onSurface)
                             } else {
-                                Text(com.telos.desktop.i18n.TelosI18n.t("menu_customize"), color = TelosColors.secondary)
+                                val t = com.telos.desktop.i18n.TelosI18n
+                                val mode = PanelSurfaceMode.parse(s.panelSurfaceMode)
+                                Text(t.t("menu_customize"), color = TelosColors.secondary)
+                                Text(t.t("desktop_theme_panel_surface"), fontSize = 11.sp, color = TelosColors.onSurface)
+                                Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                                    HelixTechPill(
+                                        t.t("desktop_theme_panel_transparent"),
+                                        selected = mode == PanelSurfaceMode.Transparent,
+                                        accent = TelosColors.secondary,
+                                    ) {
+                                        s.panelSurfaceMode = PanelSurfaceMode.Transparent.propertyValue
+                                        s.save()
+                                    }
+                                    HelixTechPill(
+                                        t.t("desktop_theme_panel_blurred"),
+                                        selected = mode == PanelSurfaceMode.Blurred,
+                                        accent = Color(0xFF00E676),
+                                    ) {
+                                        s.panelSurfaceMode = PanelSurfaceMode.Blurred.propertyValue
+                                        s.save()
+                                    }
+                                    HelixTechPill(
+                                        t.t("desktop_theme_panel_solid"),
+                                        selected = mode == PanelSurfaceMode.Solid,
+                                        accent = TelosColors.primary,
+                                    ) {
+                                        s.panelSurfaceMode = PanelSurfaceMode.Solid.propertyValue
+                                        s.save()
+                                    }
+                                }
+                                Text(
+                                    t.t("desktop_theme_panel_surface_hint"),
+                                    fontSize = 10.sp,
+                                    color = TelosColors.onSurface.copy(0.65f),
+                                )
+                                if (mode != PanelSurfaceMode.Solid &&
+                                    PanelSurfaceMapping.resolve(mode, s.panelAlpha, s.panelBlur).frostPlateFallback
+                                ) {
+                                    Text(
+                                        t.t("desktop_theme_panel_blur_unavailable"),
+                                        fontSize = 10.sp,
+                                        color = TelosColors.secondary.copy(0.85f),
+                                    )
+                                }
                                 Text("Height ${s.panelHeightDp.toInt()} dp", fontSize = 11.sp, color = TelosColors.onSurface)
                                 Slider((s.panelHeightDp - 32f) / 16f, {
                                     s.panelHeightDp = (32f + it * 16f).coerceIn(32f, 48f)
@@ -251,16 +314,28 @@ fun TelosTopPanel(
                                     s.panelIconDp = (20f + it * 16f).coerceIn(20f, 36f)
                                     s.save()
                                 })
-                                Text("Transparency ${(s.panelAlpha * 100).toInt()}%", fontSize = 11.sp, color = TelosColors.onSurface)
-                                Slider(s.panelAlpha, {
-                                    s.panelAlpha = it.coerceIn(0.2f, 1f)
-                                    s.save()
-                                })
-                                Text("Glass blur ${s.panelBlur.toInt()}", fontSize = 11.sp, color = TelosColors.onSurface)
-                                Slider((s.panelBlur / 32f).coerceIn(0f, 1f), {
-                                    s.panelBlur = (it * 32f).coerceIn(0f, 32f)
-                                    s.save()
-                                })
+                                if (mode != PanelSurfaceMode.Solid) {
+                                    Text(
+                                        t.t("desktop_theme_panel_opacity", (s.panelAlpha * 100).toInt()),
+                                        fontSize = 11.sp,
+                                        color = TelosColors.onSurface,
+                                    )
+                                    Slider(s.panelAlpha.coerceIn(0.2f, 1f), {
+                                        s.panelAlpha = it.coerceIn(0.2f, 1f)
+                                        s.save()
+                                    })
+                                }
+                                if (mode == PanelSurfaceMode.Blurred) {
+                                    Text(
+                                        t.t("desktop_theme_panel_blur", s.panelBlur.toInt()),
+                                        fontSize = 11.sp,
+                                        color = TelosColors.onSurface,
+                                    )
+                                    Slider((s.panelBlur / 32f).coerceIn(0f, 1f), {
+                                        s.panelBlur = (it * 32f).coerceIn(0f, 32f)
+                                        s.save()
+                                    })
+                                }
                                 Text("Tint (ARGB hex ${s.panelArgb.toString(16)})", fontSize = 11.sp, color = TelosColors.onSurface)
                                 val r = ((s.panelArgb shr 16) and 0xFF) / 255f
                                 val g = ((s.panelArgb shr 8) and 0xFF) / 255f
@@ -278,7 +353,7 @@ fun TelosTopPanel(
                                     s.save()
                                 })
                                 Text(
-                                    com.telos.desktop.i18n.TelosI18n.t("desktop_theme_workspace_tints"),
+                                    t.t("desktop_theme_workspace_tints"),
                                     fontSize = 11.sp,
                                     color = if (s.workspaceTints) TelosColors.secondary else TelosColors.onSurface,
                                     modifier = Modifier.clickable {

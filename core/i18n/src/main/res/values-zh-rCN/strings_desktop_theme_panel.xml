@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_panel_surface">面板表面</string>
+    <string name="desktop_theme_panel_surface_hint">透明或模糊仅作用于面板根层；菜单保持不透明。模糊会保存 panelBlur 以供磨砂效果；主机壁纸背景模糊在不可用时为尽力而为。</string>
+    <string name="desktop_theme_panel_transparent">透明</string>
+    <string name="desktop_theme_panel_blurred">模糊</string>
+    <string name="desktop_theme_panel_solid">实色</string>
+    <string name="desktop_theme_panel_opacity">面板不透明度：%1$d%%</string>
+    <string name="desktop_theme_panel_blur">玻璃模糊：%1$d</string>
+    <string name="desktop_theme_panel_blur_unavailable">主机壁纸模糊不可用；Telos 使用半透明磨砂层并保留你的模糊偏好。</string>
+</resources>

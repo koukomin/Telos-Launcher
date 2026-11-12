@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_panel_surface">Paneelin pinta</string>
+    <string name="desktop_theme_panel_surface_hint">Läpinäkyvä tai sumennettu koskee vain paneelin juurta; valikot pysyvät peittävinä. Sumennettu tallentaa panelBlur-arvon frostia varten; isännän taustasumennus on best-effort, jos sitä ei ole.</string>
+    <string name="desktop_theme_panel_transparent">Läpinäkyvä</string>
+    <string name="desktop_theme_panel_blurred">Sumennettu</string>
+    <string name="desktop_theme_panel_solid">Peittävä</string>
+    <string name="desktop_theme_panel_opacity">Paneelin peittävyys: %1$d%%</string>
+    <string name="desktop_theme_panel_blur">Lasin sumennus: %1$d</string>
+    <string name="desktop_theme_panel_blur_unavailable">Isännän taustasumennus ei ole käytettävissä; Telos käyttää läpikuultavaa frost-levyä ja säilyttää sumennusasetuksen.</string>
+</resources>

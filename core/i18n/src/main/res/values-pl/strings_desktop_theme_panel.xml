@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_panel_surface">Powierzchnia panelu</string>
+    <string name="desktop_theme_panel_surface_hint">Przezroczysty lub rozmyty dotyczy tylko korzenia panelu; menu pozostają nieprzezroczyste. Rozmyty zapisuje panelBlur dla frost; rozmycie tapety hosta jest best-effort, gdy niedostępne.</string>
+    <string name="desktop_theme_panel_transparent">Przezroczysty</string>
+    <string name="desktop_theme_panel_blurred">Rozmyty</string>
+    <string name="desktop_theme_panel_solid">Jednolity</string>
+    <string name="desktop_theme_panel_opacity">Nieprzezroczystość panelu: %1$d%%</string>
+    <string name="desktop_theme_panel_blur">Rozmycie szkła: %1$d</string>
+    <string name="desktop_theme_panel_blur_unavailable">Rozmycie tapety hosta jest niedostępne; Telos używa półprzezroczystej płyty frost i zachowuje preferencję rozmycia.</string>
+</resources>

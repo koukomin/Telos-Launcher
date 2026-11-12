@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_panel_surface">Površina plošče</string>
+    <string name="desktop_theme_panel_surface_hint">Prosojna ali zamegljena vpliva le na koren plošče; meniji ostanejo neprosojni. Zamegljena shrani panelBlur za frost; zameglitev ozadja gostitelja je best-effort, če ni na voljo.</string>
+    <string name="desktop_theme_panel_transparent">Prosojna</string>
+    <string name="desktop_theme_panel_blurred">Zamegljena</string>
+    <string name="desktop_theme_panel_solid">Polna</string>
+    <string name="desktop_theme_panel_opacity">Neprosojnost plošče: %1$d%%</string>
+    <string name="desktop_theme_panel_blur">Zameglitev stekla: %1$d</string>
+    <string name="desktop_theme_panel_blur_unavailable">Zameglitev ozadja gostitelja ni na voljo; Telos uporabi prosojno frost ploščo in ohrani vašo nastavitev zameglitve.</string>
+</resources>
