@@ -1,6 +1,6 @@
 # Telos System
 
-Telos System is a virtual app: CPU, RAM, network addresses, processes, saved Wi-Fi, AppOps, tweaks, Privacy Shield, and the **built-in Shizuku server**. Open it from the app grid or search for System.
+Telos System is a virtual app: CPU, RAM, network addresses, processes, AppOps, tweaks, Privacy Shield, and the **built-in Shizuku server**. Saved Wi-Fi passwords live under **Telos Network → Settings**. Open System from the app grid or search for System.
 
 ## Built-in Shizuku
 
@@ -68,10 +68,10 @@ Privacy Shield (clients, freeze external Shizuku, banking cloak, clipboard) stay
 
 | Tab | What it does |
 | --- | --- |
-| Dashboard | CPU, RAM, uptime, graphics API, battery, **text size** for Telos System (this tab only) |
-| Apps | Installed packages, AppOps Next (native daemon, Shizuku UserService, or privileged `cmd appops` shell) |
+| Dashboard | CPU, RAM, uptime, graphics API, battery, **text size** for Telos System (this tab only). Link to Network for saved Wi-Fi |
+| Apps | Installed packages, AppOps Next (native daemon, Shizuku UserService, or privileged `cmd appops` shell). Planned Freeze Desk unifies freeze + ops here |
 | Tweaks | System tweaks |
-| Privacy Shield | Shizuku clients, cloak, clipboard |
+| Privacy Shield | Shizuku clients, banking cloak (Developer Options snapshot restore), clipboard |
 | Shizuku | Built-in server, pairing, ADB command, labs |
 
 ## Wireless Shizuku setup

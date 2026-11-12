@@ -352,13 +352,13 @@ per app process; restart affected apps to use the new selection. Restarting only
 System UI or recreating a page does not switch all running apps. The explanatory
 notice is enabled by default and can be disabled in Advanced → Graphics API.
 
-Advanced settings and Telos System offer a saved Wi-Fi manager (passwords, QR,
+**Telos Network → Settings** hosts the saved Wi-Fi manager (passwords, QR,
 notes, search, sort, connect/disconnect/forget, JSON/GZip/encrypted backup, and
-keeping temporary networks, including a Quick Settings tile). Telos detects root
-and Shizuku automatically and offers to open or authorize Shizuku when neither
-is ready. Device authentication is required before passwords are shown. Some OEMs
-still refuse the Wi-Fi store even with Shizuku; that is reported instead of
-invented data. Revealed passwords are cleared when the screen goes to the
-background. The current-network reveal button in System appears only for a
-connected network with a supported password security type; it never substitutes
-another saved network's password.
+keeping temporary networks, including a Quick Settings tile). Telos System links
+there instead of embedding reveal inline. Telos detects root and Shizuku
+automatically (preferring the built-in Telos Shizuku binder) and offers to open
+or authorize Shizuku when neither is ready. Device authentication is required
+before passwords are shown. Some OEMs still refuse the Wi-Fi store even with
+Shizuku; that is reported instead of invented data. Revealed passwords are
+cleared when the screen goes to the background. Reveal never substitutes
+another saved network's password for an unknown current SSID.

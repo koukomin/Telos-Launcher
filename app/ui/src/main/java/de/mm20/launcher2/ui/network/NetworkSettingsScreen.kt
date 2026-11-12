@@ -85,6 +85,11 @@ fun NetworkSettingsScreen() {
             }
         }
         item {
+            PreferenceCategory(title = stringResource(I18nR.string.telos_system_saved_wifi)) {
+                de.mm20.launcher2.ui.system.SavedWifiPasswordsPreference()
+            }
+        }
+        item {
             PreferenceCategory(title = stringResource(I18nR.string.net_settings_cat_network)) {
                 Preference(title = "Tor", summary = stringResource(I18nR.string.nt_onion),
                     icon = IconsNetworkSettingsScreen.visibility_off_24px,
