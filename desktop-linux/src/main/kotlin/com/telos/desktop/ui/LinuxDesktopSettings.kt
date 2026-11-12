@@ -112,6 +112,34 @@ fun LinuxDesktopSettingsPanel(
                 )
             }
         }
+        if (filter.showLabwcSession) {
+            HelixSettingsCard(com.telos.desktop.i18n.TelosI18n.t("desktop_helix_window_mode")) {
+                val mode = com.telos.desktop.wm.WindowMode.parse(settings.windowMode)
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    HelixTechPill(
+                        com.telos.desktop.i18n.TelosI18n.t("desktop_helix_tiling"),
+                        selected = mode == com.telos.desktop.wm.WindowMode.Tiling,
+                        accent = TelosColors.secondary,
+                    ) {
+                        settings.windowMode = com.telos.desktop.wm.WindowMode.Tiling.propertyValue
+                        settings.save()
+                    }
+                    HelixTechPill(
+                        com.telos.desktop.i18n.TelosI18n.t("desktop_helix_stacking"),
+                        selected = mode == com.telos.desktop.wm.WindowMode.Stacking,
+                        accent = TelosColors.primary,
+                    ) {
+                        settings.windowMode = com.telos.desktop.wm.WindowMode.Stacking.propertyValue
+                        settings.save()
+                    }
+                }
+                Text(
+                    com.telos.desktop.i18n.TelosI18n.t("desktop_helix_window_mode_hint"),
+                    fontSize = 12.sp,
+                    color = TelosColors.onSurface.copy(0.7f),
+                )
+            }
+        }
         if (filter.showDisplayResolution) {
             HelixSettingsCard("Display") {
                 outputs.forEach { out ->

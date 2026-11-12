@@ -76,7 +76,7 @@ F11 and Settings toggle a normal resizable window vs undecorated fullscreen. Whe
 
 The desktop shell includes a configurable top bar (default 36 dp; 32–48 dp, tint, alpha, icon size persist in `desktop.properties`). Right-click the bar for style. Work-area struts keep maximized windows below the bar. Telos Quake (`F12` / Ctrl+\`) and System Monitor (`Ctrl+Escape`) read `/proc` and `/sys`.
 
-Window chrome: titlebar-only `awaitEachGesture` drag, 8-edge resize, minimize / maximize / close, double-click shade, edge snap (halves, corners, maximize). Geometry is Compose snapshot state so frames follow the pointer.
+Window chrome: titlebar-only `awaitEachGesture` drag, 8-edge resize, minimize / maximize / close, double-click shade, edge snap (halves, corners, maximize). Geometry is Compose snapshot state so frames follow the pointer. Helix snap layouts (`SnapLayoutGeometry`: 50/50, 2/3–1/3, 2×2) apply via Super+Arrow and Overview/Control Center pills; `HostWmBridge` best-effort talks to `niri msg` / `wmctrl` (output geometry via `wlr-randr`). `desktop.windowMode=tiling|stacking` selects niri vs labwc on the next session when `TELOS_COMPOSITOR` is unset.
 
 ## File routing
 

@@ -13,19 +13,28 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.telos.desktop.i18n.TelosI18n.t
 import com.telos.desktop.overlay.TelosNotificationCenter
 import com.telos.desktop.panel.AudioControlManager
 import com.telos.desktop.panel.ConnectivityManager
 import com.telos.desktop.panel.LaptopPowerManager
+import com.telos.desktop.settings.TelosDesktopSettings
+import com.telos.desktop.wm.SnapLayout
 import com.telos.desktop.wm.TelosWindowManager
+import com.telos.desktop.wm.WindowMode
 
 @Composable
 fun HelixControlCenter(
     wm: TelosWindowManager,
+    settings: TelosDesktopSettings? = null,
     onOpenSettings: () -> Unit,
     onDismiss: () -> Unit,
 ) {
@@ -33,6 +42,9 @@ fun HelixControlCenter(
     val net = ConnectivityManager.snapshot()
     val power = LaptopPowerManager.snapshot()
     val shape = RoundedCornerShape(16.dp)
+    var windowMode by remember(settings?.windowMode) {
+        mutableStateOf(WindowMode.parse(settings?.windowMode).propertyValue)
+    }
     Column(
         Modifier
             .width(360.dp)
@@ -69,8 +81,47 @@ fun HelixControlCenter(
             color = TelosColors.secondary,
             modifier = Modifier.clickable { runCatching { com.telos.desktop.vault.PhantomVault.engine.expandManual() } },
         )
+
+        Text(t("desktop_helix_snap_title"), color = TelosColors.secondary, fontSize = 13.sp)
+        Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+            HelixTechPill(t("desktop_helix_snap_50_50"), selected = false, accent = TelosColors.secondary) {
+                wm.snapFocused(SnapLayout.HalfLeft)
+            }
+            HelixTechPill(t("desktop_helix_snap_two_thirds"), selected = false, accent = TelosColors.primary) {
+                wm.snapFocused(SnapLayout.TwoThirdsLeft)
+            }
+            HelixTechPill(t("desktop_helix_snap_grid"), selected = false, accent = androidx.compose.ui.graphics.Color(0xFF00E676)) {
+                wm.snapFocused(SnapLayout.GridTopLeft)
+            }
+        }
+
+        if (settings != null) {
+            Text(t("desktop_helix_window_mode"), color = TelosColors.secondary, fontSize = 13.sp)
+            Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                HelixTechPill(
+                    t("desktop_helix_tiling"),
+                    selected = windowMode == WindowMode.Tiling.propertyValue,
+                    accent = TelosColors.secondary,
+                ) {
+                    windowMode = WindowMode.Tiling.propertyValue
+                    settings.windowMode = windowMode
+                    settings.save()
+                }
+                HelixTechPill(
+                    t("desktop_helix_stacking"),
+                    selected = windowMode == WindowMode.Stacking.propertyValue,
+                    accent = TelosColors.primary,
+                ) {
+                    windowMode = WindowMode.Stacking.propertyValue
+                    settings.windowMode = windowMode
+                    settings.save()
+                }
+            }
+            Text(t("desktop_helix_window_mode_hint"), color = TelosColors.onSurface.copy(0.7f), fontSize = 11.sp)
+        }
+
         Text(
-            com.telos.desktop.i18n.TelosI18n.t("settings"),
+            t("settings"),
             color = TelosColors.primary,
             modifier = Modifier.fillMaxWidth().clickable {
                 onOpenSettings()

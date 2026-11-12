@@ -40,6 +40,12 @@ class TelosDesktopSettings(private val vaultConfigDir: File) {
     var clipboardClearSeconds: Int = 45
     /** Opt-in vault-local file name index (disabled by default; privacy-first). */
     var fileNameIndexEnabled: Boolean = false
+    /**
+     * Helix windowing preference: `stacking` (labwc) or `tiling` (niri).
+     * Stored as `desktop.windowMode`; applied on next telos-session when
+     * `TELOS_COMPOSITOR` is unset.
+     */
+    var windowMode: String = "stacking"
 
     private val file: File get() = File(vaultConfigDir, "desktop.properties")
 
@@ -83,6 +89,9 @@ class TelosDesktopSettings(private val vaultConfigDir: File) {
         secureClipboard = p.getProperty("opsec.secureClipboard", "true").toBoolean()
         clipboardClearSeconds = p.getProperty("opsec.clipboardClearSeconds")?.toIntOrNull()?.coerceIn(0, 600) ?: 45
         fileNameIndexEnabled = p.getProperty("privacy.fileNameIndex", "false").toBoolean()
+        windowMode = com.telos.desktop.wm.WindowMode.parse(
+            p.getProperty("desktop.windowMode") ?: p.getProperty("windowMode"),
+        ).propertyValue
         outputPrefs.clear()
         p.stringPropertyNames().forEach { key ->
             if (key.startsWith("output.")) {
@@ -129,6 +138,9 @@ class TelosDesktopSettings(private val vaultConfigDir: File) {
         p["opsec.secureClipboard"] = secureClipboard.toString()
         p["opsec.clipboardClearSeconds"] = clipboardClearSeconds.toString()
         p["privacy.fileNameIndex"] = fileNameIndexEnabled.toString()
+        val mode = com.telos.desktop.wm.WindowMode.parse(windowMode).propertyValue
+        p["desktop.windowMode"] = mode
+        p["windowMode"] = mode
         outputPrefs.forEach { (name, spec) -> p["output.$name"] = spec }
         file.outputStream().use { p.store(it, "Telos Linux Desktop") }
     }
