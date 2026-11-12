@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_store_permissions">Дазволы</string>
+    <string name="desktop_store_sandbox_tier">Узровень пясочніцы</string>
+    <string name="desktop_sandbox_tier_host">Хост</string>
+    <string name="desktop_sandbox_tier_vault_fs">Файлавая сістэма сховішча</string>
+    <string name="desktop_sandbox_tier_net_isolated">Сеткава ізалявана</string>
+    <string name="desktop_sandbox_tier_standard">Стандартны</string>
+    <string name="desktop_perm_filesystem_home">Хатняя папка</string>
+    <string name="desktop_perm_filesystem_host">Файлавая сістэма хоста</string>
+    <string name="desktop_perm_network">Сетка</string>
+    <string name="desktop_perm_gpu">GPU (DRI)</string>
+    <string name="desktop_perm_wayland">Wayland</string>
+    <string name="desktop_perm_x11">X11</string>
+    <string name="desktop_perm_pulseaudio">Аўдыя</string>
+    <string name="desktop_perm_notifications">Апавяшчэнні</string>
+    <string name="desktop_perm_camera">Камера</string>
+    <string name="desktop_perm_microphone">Мікрафон</string>
+    <string name="desktop_flatpak_unavailable">Flatpak недаступны; перавызначэнні дазволаў недаступныя ў гэтай сістэме.</string>
+    <string name="desktop_flatpak_override_applied">Перавызначэнне Flatpak ужыта</string>
+    <string name="desktop_flatpak_override_failed">Не ўдалося ўжыць перавызначэнне Flatpak</string>
+    <string name="desktop_flatpak_reset_overrides">Скінуць перавызначэнні</string>
+    <string name="desktop_deeplink_handler_hint">telos:// адкрывае праграмы Telos і пошук Kickoff (рэгіструецца пры запуску працоўнага стала).</string>
+</resources>

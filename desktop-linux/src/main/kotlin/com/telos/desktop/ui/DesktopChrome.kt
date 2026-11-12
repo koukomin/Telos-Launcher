@@ -10,12 +10,21 @@ object DesktopChrome {
     var appGridOpen by mutableStateOf(false)
     var overviewOpen by mutableStateOf(false)
     var controlCenterOpen by mutableStateOf(false)
+    /** Kickoff search seed from `telos://search?q=…` (consumed by PlasmaAppGrid). */
+    var pendingSearchQuery by mutableStateOf<String?>(null)
 
     val placement: WindowPlacement
         get() = if (fullscreen) WindowPlacement.Fullscreen else WindowPlacement.Floating
 
     fun toggleFullscreen() {
         fullscreen = !fullscreen
+    }
+
+    fun openAppGridWithQuery(query: String) {
+        pendingSearchQuery = query
+        appGridOpen = true
+        overviewOpen = false
+        controlCenterOpen = false
     }
 
     fun toggleAppGrid() {

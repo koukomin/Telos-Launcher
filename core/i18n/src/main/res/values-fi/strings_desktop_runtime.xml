@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_store_permissions">Käyttöoikeudet</string>
+    <string name="desktop_store_sandbox_tier">Hiekkalaatikkotaso</string>
+    <string name="desktop_sandbox_tier_host">Isäntä</string>
+    <string name="desktop_sandbox_tier_vault_fs">Holvin tiedostojärjestelmä</string>
+    <string name="desktop_sandbox_tier_net_isolated">Verkkoeristetty</string>
+    <string name="desktop_sandbox_tier_standard">Vakio</string>
+    <string name="desktop_perm_filesystem_home">Kotikansio</string>
+    <string name="desktop_perm_filesystem_host">Isännän tiedostojärjestelmä</string>
+    <string name="desktop_perm_network">Verkko</string>
+    <string name="desktop_perm_gpu">GPU (DRI)</string>
+    <string name="desktop_perm_wayland">Wayland</string>
+    <string name="desktop_perm_x11">X11</string>
+    <string name="desktop_perm_pulseaudio">Ääni</string>
+    <string name="desktop_perm_notifications">Ilmoitukset</string>
+    <string name="desktop_perm_camera">Kamera</string>
+    <string name="desktop_perm_microphone">Mikrofoni</string>
+    <string name="desktop_flatpak_unavailable">Flatpak ei ole käytettävissä; käyttöoikeuksien ohitukset eivät ole käytettävissä tällä järjestelmällä.</string>
+    <string name="desktop_flatpak_override_applied">Flatpak-ohitus sovellettu</string>
+    <string name="desktop_flatpak_override_failed">Flatpak-ohitusta ei voitu soveltaa</string>
+    <string name="desktop_flatpak_reset_overrides">Nollaa ohitukset</string>
+    <string name="desktop_deeplink_handler_hint">telos:// avaa Telos-sovellukset ja Kickoff-haun (rekisteröidään työpöydän käynnistyessä).</string>
+</resources>

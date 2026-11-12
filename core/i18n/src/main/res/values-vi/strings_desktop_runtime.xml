@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_store_permissions">Quyền</string>
+    <string name="desktop_store_sandbox_tier">Mức sandbox</string>
+    <string name="desktop_sandbox_tier_host">Máy chủ</string>
+    <string name="desktop_sandbox_tier_vault_fs">Hệ thống tập tin vault</string>
+    <string name="desktop_sandbox_tier_net_isolated">Cách ly mạng</string>
+    <string name="desktop_sandbox_tier_standard">Tiêu chuẩn</string>
+    <string name="desktop_perm_filesystem_home">Thư mục nhà</string>
+    <string name="desktop_perm_filesystem_host">Hệ thống tập tin máy chủ</string>
+    <string name="desktop_perm_network">Mạng</string>
+    <string name="desktop_perm_gpu">GPU (DRI)</string>
+    <string name="desktop_perm_wayland">Wayland</string>
+    <string name="desktop_perm_x11">X11</string>
+    <string name="desktop_perm_pulseaudio">Âm thanh</string>
+    <string name="desktop_perm_notifications">Thông báo</string>
+    <string name="desktop_perm_camera">Máy ảnh</string>
+    <string name="desktop_perm_microphone">Micrô</string>
+    <string name="desktop_flatpak_unavailable">Flatpak không khả dụng; ghi đè quyền không khả dụng trên hệ thống này.</string>
+    <string name="desktop_flatpak_override_applied">Đã áp dụng ghi đè Flatpak</string>
+    <string name="desktop_flatpak_override_failed">Không thể áp dụng ghi đè Flatpak</string>
+    <string name="desktop_flatpak_reset_overrides">Đặt lại ghi đè</string>
+    <string name="desktop_deeplink_handler_hint">telos:// mở ứng dụng Telos và tìm kiếm Kickoff (đăng ký khi khởi động máy tính để bàn).</string>
+</resources>

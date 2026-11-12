@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=Telos Desktop
+Name[el]=Telos Desktop
+Comment=Open telos:// links in Telos Desktop
+Comment[el]=Άνοιγμα συνδέσμων telos:// στο Telos Desktop
+Exec=java -jar /opt/telos-desktop/telos-desktop.jar --open %u
+TryExec=/opt/telos-desktop/telos-desktop.jar
+Terminal=false
+Type=Application
+Categories=Utility;
+MimeType=x-scheme-handler/telos;
+NoDisplay=true

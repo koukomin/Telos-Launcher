@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_store_permissions">Tilladelser</string>
+    <string name="desktop_store_sandbox_tier">Sandbox-niveau</string>
+    <string name="desktop_sandbox_tier_host">Vært</string>
+    <string name="desktop_sandbox_tier_vault_fs">Vault-filsystem</string>
+    <string name="desktop_sandbox_tier_net_isolated">Netværksisoleret</string>
+    <string name="desktop_sandbox_tier_standard">Standard</string>
+    <string name="desktop_perm_filesystem_home">Hjemmemappe</string>
+    <string name="desktop_perm_filesystem_host">Værtsfilsystem</string>
+    <string name="desktop_perm_network">Netværk</string>
+    <string name="desktop_perm_gpu">GPU (DRI)</string>
+    <string name="desktop_perm_wayland">Wayland</string>
+    <string name="desktop_perm_x11">X11</string>
+    <string name="desktop_perm_pulseaudio">Lyd</string>
+    <string name="desktop_perm_notifications">Notifikationer</string>
+    <string name="desktop_perm_camera">Kamera</string>
+    <string name="desktop_perm_microphone">Mikrofon</string>
+    <string name="desktop_flatpak_unavailable">Flatpak er ikke tilgængelig; tilladelsesoverrides er ikke tilgængelige på dette system.</string>
+    <string name="desktop_flatpak_override_applied">Flatpak-override anvendt</string>
+    <string name="desktop_flatpak_override_failed">Kunne ikke anvende Flatpak-override</string>
+    <string name="desktop_flatpak_reset_overrides">Nulstil overrides</string>
+    <string name="desktop_deeplink_handler_hint">telos:// åbner Telos-apps og Kickoff-søgning (registreres ved desktopstart).</string>
+</resources>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_store_permissions">Autorizzazioni</string>
+    <string name="desktop_store_sandbox_tier">Livello sandbox</string>
+    <string name="desktop_sandbox_tier_host">Host</string>
+    <string name="desktop_sandbox_tier_vault_fs">Filesystem del vault</string>
+    <string name="desktop_sandbox_tier_net_isolated">Rete isolata</string>
+    <string name="desktop_sandbox_tier_standard">Standard</string>
+    <string name="desktop_perm_filesystem_home">Cartella home</string>
+    <string name="desktop_perm_filesystem_host">Filesystem host</string>
+    <string name="desktop_perm_network">Rete</string>
+    <string name="desktop_perm_gpu">GPU (DRI)</string>
+    <string name="desktop_perm_wayland">Wayland</string>
+    <string name="desktop_perm_x11">X11</string>
+    <string name="desktop_perm_pulseaudio">Audio</string>
+    <string name="desktop_perm_notifications">Notifiche</string>
+    <string name="desktop_perm_camera">Fotocamera</string>
+    <string name="desktop_perm_microphone">Microfono</string>
+    <string name="desktop_flatpak_unavailable">Flatpak non è disponibile; le sovrascritture dei permessi non sono disponibili su questo sistema.</string>
+    <string name="desktop_flatpak_override_applied">Sovrascrittura Flatpak applicata</string>
+    <string name="desktop_flatpak_override_failed">Impossibile applicare la sovrascrittura Flatpak</string>
+    <string name="desktop_flatpak_reset_overrides">Reimposta sovrascritture</string>
+    <string name="desktop_deeplink_handler_hint">telos:// apre le app Telos e la ricerca Kickoff (registrato all’avvio del desktop).</string>
+</resources>

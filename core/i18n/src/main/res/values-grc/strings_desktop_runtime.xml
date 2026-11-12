@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_store_permissions">Ἐξουσίαι</string>
+    <string name="desktop_store_sandbox_tier">Βαθμὶς κιβωτίου ἄμμου</string>
+    <string name="desktop_sandbox_tier_host">Ξενιστής</string>
+    <string name="desktop_sandbox_tier_vault_fs">Σύστημα ἀρχείων θησαυροφυλακίου</string>
+    <string name="desktop_sandbox_tier_net_isolated">Δίκτυον ἀποκεχωρισμένον</string>
+    <string name="desktop_sandbox_tier_standard">Κανονικόν</string>
+    <string name="desktop_perm_filesystem_home">Φάκελος οἴκου</string>
+    <string name="desktop_perm_filesystem_host">Σύστημα ἀρχείων ξενιστοῦ</string>
+    <string name="desktop_perm_network">Δίκτυον</string>
+    <string name="desktop_perm_gpu">GPU (DRI)</string>
+    <string name="desktop_perm_wayland">Wayland</string>
+    <string name="desktop_perm_x11">X11</string>
+    <string name="desktop_perm_pulseaudio">Ἦχος</string>
+    <string name="desktop_perm_notifications">Εἰδοποιήσεις</string>
+    <string name="desktop_perm_camera">Κάμερα</string>
+    <string name="desktop_perm_microphone">Μικρόφωνον</string>
+    <string name="desktop_flatpak_unavailable">Τὸ Flatpak οὐ πάρεστι· αἱ ὑπερβάσεις ἐξουσιῶν ἐν τῷδε τῷ συστήματι οὐ πάρεστι.</string>
+    <string name="desktop_flatpak_override_applied">Ὑπέρβασις Flatpak ἐφηρμόσθη</string>
+    <string name="desktop_flatpak_override_failed">Οὐκ ἐδυνήθη ἐφαρμοσθῆναι ἡ ὑπέρβασις Flatpak</string>
+    <string name="desktop_flatpak_reset_overrides">Ἐπαναφορὰ ὑπερβάσεων</string>
+    <string name="desktop_deeplink_handler_hint">τὸ telos:// ἀνοίγει ἐφαρμογὰς Telos καὶ ἀναζήτησιν Kickoff (ἐγγράφεται ἐν τῇ ἐκκινήσει τῆς ἐπιφανείας).</string>
+</resources>

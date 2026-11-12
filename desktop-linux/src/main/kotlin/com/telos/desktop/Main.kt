@@ -48,6 +48,17 @@ fun main(args: Array<String>) {
         System.setProperty("telos.session", "1")
         DesktopChrome.fullscreen = true
     }
+    // VOS-3: queue telos:// / --open URI before the Compose shell starts.
+    com.telos.desktop.apps.TelosDeepLinkParser.parseArgs(args)?.let {
+        com.telos.desktop.apps.TelosDeepLinkBus.offer(it)
+    }
+    if (args.contains("--register-telos-protocol")) {
+        val ok = com.telos.desktop.apps.TelosDeepLinkRegistrar.ensureRegistered()
+        System.err.println(if (ok) "telos:// handler registered" else "telos:// handler registration failed")
+        if (args.none { it.startsWith("telos:", ignoreCase = true) || it == "--open" || it.startsWith("--open=") }) {
+            return
+        }
+    }
     if (TelosSessionHome.alreadyUnlocked) {
         val probe = PhantomVaultEngine()
         if (!probe.attachMounted()) {
@@ -126,6 +137,7 @@ fun main(args: Array<String>) {
                             masterPassword = null,
                             vaultSettings = settings,
                         )
+                        runCatching { com.telos.desktop.apps.TelosDeepLinkRegistrar.ensureRegistered() }
                     }
                 }
                 LaunchedEffect(settings.startFullscreen) {

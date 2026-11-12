@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_store_permissions">İcazələr</string>
+    <string name="desktop_store_sandbox_tier">Sandbox səviyyəsi</string>
+    <string name="desktop_sandbox_tier_host">Host</string>
+    <string name="desktop_sandbox_tier_vault_fs">Seyf fayl sistemi</string>
+    <string name="desktop_sandbox_tier_net_isolated">Şəbəkədən təcrid</string>
+    <string name="desktop_sandbox_tier_standard">Standart</string>
+    <string name="desktop_perm_filesystem_home">Ev qovluğu</string>
+    <string name="desktop_perm_filesystem_host">Host fayl sistemi</string>
+    <string name="desktop_perm_network">Şəbəkə</string>
+    <string name="desktop_perm_gpu">GPU (DRI)</string>
+    <string name="desktop_perm_wayland">Wayland</string>
+    <string name="desktop_perm_x11">X11</string>
+    <string name="desktop_perm_pulseaudio">Audio</string>
+    <string name="desktop_perm_notifications">Bildirişlər</string>
+    <string name="desktop_perm_camera">Kamera</string>
+    <string name="desktop_perm_microphone">Mikrofon</string>
+    <string name="desktop_flatpak_unavailable">Flatpak əlçatan deyil; icazə əvəzetmələri bu sistemdə əlçatan deyil.</string>
+    <string name="desktop_flatpak_override_applied">Flatpak əvəzetməsi tətbiq olundu</string>
+    <string name="desktop_flatpak_override_failed">Flatpak əvəzetməsi tətbiq edilə bilmədi</string>
+    <string name="desktop_flatpak_reset_overrides">Əvəzetmələri sıfırla</string>
+    <string name="desktop_deeplink_handler_hint">telos:// Telos tətbiqlərini və Kickoff axtarışını açır (masaüstü başladıqda qeydiyyata alınır).</string>
+</resources>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_store_permissions">अनुमतियाँ</string>
+    <string name="desktop_store_sandbox_tier">सैंडबॉक्स स्तर</string>
+    <string name="desktop_sandbox_tier_host">होस्ट</string>
+    <string name="desktop_sandbox_tier_vault_fs">वॉल्ट फ़ाइल सिस्टम</string>
+    <string name="desktop_sandbox_tier_net_isolated">नेटवर्क पृथक</string>
+    <string name="desktop_sandbox_tier_standard">मानक</string>
+    <string name="desktop_perm_filesystem_home">होम फ़ोल्डर</string>
+    <string name="desktop_perm_filesystem_host">होस्ट फ़ाइल सिस्टम</string>
+    <string name="desktop_perm_network">नेटवर्क</string>
+    <string name="desktop_perm_gpu">GPU (DRI)</string>
+    <string name="desktop_perm_wayland">Wayland</string>
+    <string name="desktop_perm_x11">X11</string>
+    <string name="desktop_perm_pulseaudio">ऑडियो</string>
+    <string name="desktop_perm_notifications">सूचनाएँ</string>
+    <string name="desktop_perm_camera">कैमरा</string>
+    <string name="desktop_perm_microphone">माइक्रोफ़ोन</string>
+    <string name="desktop_flatpak_unavailable">Flatpak उपलब्ध नहीं है; इस सिस्टम पर अनुमति ओवरराइड उपलब्ध नहीं हैं।</string>
+    <string name="desktop_flatpak_override_applied">Flatpak ओवरराइड लागू किया गया</string>
+    <string name="desktop_flatpak_override_failed">Flatpak ओवरराइड लागू नहीं हो सका</string>
+    <string name="desktop_flatpak_reset_overrides">ओवरराइड रीसेट करें</string>
+    <string name="desktop_deeplink_handler_hint">telos:// Telos ऐप और Kickoff खोज खोलता है (डेस्कटॉप प्रारंभ पर पंजीकृत)।</string>
+</resources>

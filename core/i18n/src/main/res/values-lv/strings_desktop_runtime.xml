@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_store_permissions">Atļaujas</string>
+    <string name="desktop_store_sandbox_tier">Smilškastes līmenis</string>
+    <string name="desktop_sandbox_tier_host">Saimnieks</string>
+    <string name="desktop_sandbox_tier_vault_fs">Vault failu sistēma</string>
+    <string name="desktop_sandbox_tier_net_isolated">Tīklā izolēts</string>
+    <string name="desktop_sandbox_tier_standard">Standarta</string>
+    <string name="desktop_perm_filesystem_home">Mājas mape</string>
+    <string name="desktop_perm_filesystem_host">Saimnieka failu sistēma</string>
+    <string name="desktop_perm_network">Tīkls</string>
+    <string name="desktop_perm_gpu">GPU (DRI)</string>
+    <string name="desktop_perm_wayland">Wayland</string>
+    <string name="desktop_perm_x11">X11</string>
+    <string name="desktop_perm_pulseaudio">Audio</string>
+    <string name="desktop_perm_notifications">Paziņojumi</string>
+    <string name="desktop_perm_camera">Kamera</string>
+    <string name="desktop_perm_microphone">Mikrofons</string>
+    <string name="desktop_flatpak_unavailable">Flatpak nav pieejams; atļauju pārrakstīšana šajā sistēmā nav pieejama.</string>
+    <string name="desktop_flatpak_override_applied">Flatpak pārrakstīšana lietota</string>
+    <string name="desktop_flatpak_override_failed">Neizdevās lietot Flatpak pārrakstīšanu</string>
+    <string name="desktop_flatpak_reset_overrides">Atiestatīt pārrakstījumus</string>
+    <string name="desktop_deeplink_handler_hint">telos:// atver Telos lietotnes un Kickoff meklēšanu (reģistrējas, startējot darbvirsmu).</string>
+</resources>

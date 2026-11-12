@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_store_permissions">Machtigingen</string>
+    <string name="desktop_store_sandbox_tier">Sandboxniveau</string>
+    <string name="desktop_sandbox_tier_host">Host</string>
+    <string name="desktop_sandbox_tier_vault_fs">Vault-bestandssysteem</string>
+    <string name="desktop_sandbox_tier_net_isolated">Netwerk geïsoleerd</string>
+    <string name="desktop_sandbox_tier_standard">Standaard</string>
+    <string name="desktop_perm_filesystem_home">Persoonlijke map</string>
+    <string name="desktop_perm_filesystem_host">Hostbestandssysteem</string>
+    <string name="desktop_perm_network">Netwerk</string>
+    <string name="desktop_perm_gpu">GPU (DRI)</string>
+    <string name="desktop_perm_wayland">Wayland</string>
+    <string name="desktop_perm_x11">X11</string>
+    <string name="desktop_perm_pulseaudio">Audio</string>
+    <string name="desktop_perm_notifications">Meldingen</string>
+    <string name="desktop_perm_camera">Camera</string>
+    <string name="desktop_perm_microphone">Microfoon</string>
+    <string name="desktop_flatpak_unavailable">Flatpak is niet beschikbaar; machtigingsoverschrijvingen zijn op dit systeem niet beschikbaar.</string>
+    <string name="desktop_flatpak_override_applied">Flatpak-overschrijving toegepast</string>
+    <string name="desktop_flatpak_override_failed">Kon Flatpak-overschrijving niet toepassen</string>
+    <string name="desktop_flatpak_reset_overrides">Overschrijvingen resetten</string>
+    <string name="desktop_deeplink_handler_hint">telos:// opent Telos-apps en Kickoff-zoeken (geregistreerd bij starten van de desktop).</string>
+</resources>

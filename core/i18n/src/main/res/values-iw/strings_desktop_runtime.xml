@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_store_permissions">הרשאות</string>
+    <string name="desktop_store_sandbox_tier">רמת ארגז חול</string>
+    <string name="desktop_sandbox_tier_host">מארח</string>
+    <string name="desktop_sandbox_tier_vault_fs">מערכת קבצים של הכספת</string>
+    <string name="desktop_sandbox_tier_net_isolated">מבודד רשת</string>
+    <string name="desktop_sandbox_tier_standard">רגיל</string>
+    <string name="desktop_perm_filesystem_home">תיקיית בית</string>
+    <string name="desktop_perm_filesystem_host">מערכת קבצים של המארח</string>
+    <string name="desktop_perm_network">רשת</string>
+    <string name="desktop_perm_gpu">GPU (DRI)</string>
+    <string name="desktop_perm_wayland">Wayland</string>
+    <string name="desktop_perm_x11">X11</string>
+    <string name="desktop_perm_pulseaudio">שמע</string>
+    <string name="desktop_perm_notifications">התראות</string>
+    <string name="desktop_perm_camera">מצלמה</string>
+    <string name="desktop_perm_microphone">מיקרופון</string>
+    <string name="desktop_flatpak_unavailable">Flatpak אינו זמין; דריסות הרשאות אינן זמינות במערכת זו.</string>
+    <string name="desktop_flatpak_override_applied">דריסת Flatpak הוחלה</string>
+    <string name="desktop_flatpak_override_failed">לא ניתן להחיל דריסת Flatpak</string>
+    <string name="desktop_flatpak_reset_overrides">איפוס דריסות</string>
+    <string name="desktop_deeplink_handler_hint">telos:// פותח אפליקציות Telos וחיפוש Kickoff (נרשם בהפעלת שולחן העבודה).</string>
+</resources>

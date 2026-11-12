@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_store_permissions">Permisos</string>
+    <string name="desktop_store_sandbox_tier">Nivell de sandbox</string>
+    <string name="desktop_sandbox_tier_host">Amfitrió</string>
+    <string name="desktop_sandbox_tier_vault_fs">Sistema de fitxers del cofre</string>
+    <string name="desktop_sandbox_tier_net_isolated">Xarxa aïllada</string>
+    <string name="desktop_sandbox_tier_standard">Estàndard</string>
+    <string name="desktop_perm_filesystem_home">Carpeta personal</string>
+    <string name="desktop_perm_filesystem_host">Sistema de fitxers de l’amfitrió</string>
+    <string name="desktop_perm_network">Xarxa</string>
+    <string name="desktop_perm_gpu">GPU (DRI)</string>
+    <string name="desktop_perm_wayland">Wayland</string>
+    <string name="desktop_perm_x11">X11</string>
+    <string name="desktop_perm_pulseaudio">Àudio</string>
+    <string name="desktop_perm_notifications">Notificacions</string>
+    <string name="desktop_perm_camera">Càmera</string>
+    <string name="desktop_perm_microphone">Micròfon</string>
+    <string name="desktop_flatpak_unavailable">Flatpak no està disponible; les substitucions de permisos no estan disponibles en aquest sistema.</string>
+    <string name="desktop_flatpak_override_applied">Substitució Flatpak aplicada</string>
+    <string name="desktop_flatpak_override_failed">No s’ha pogut aplicar la substitució Flatpak</string>
+    <string name="desktop_flatpak_reset_overrides">Restableix les substitucions</string>
+    <string name="desktop_deeplink_handler_hint">telos:// obre aplicacions Telos i la cerca Kickoff (es registra en iniciar l’escriptori).</string>
+</resources>

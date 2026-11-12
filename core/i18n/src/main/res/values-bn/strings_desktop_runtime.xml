@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_store_permissions">অনুমতি</string>
+    <string name="desktop_store_sandbox_tier">স্যান্ডবক্স স্তর</string>
+    <string name="desktop_sandbox_tier_host">হোস্ট</string>
+    <string name="desktop_sandbox_tier_vault_fs">ভল্ট ফাইল সিস্টেম</string>
+    <string name="desktop_sandbox_tier_net_isolated">নেটওয়ার্ক বিচ্ছিন্ন</string>
+    <string name="desktop_sandbox_tier_standard">মানক</string>
+    <string name="desktop_perm_filesystem_home">হোম ফোল্ডার</string>
+    <string name="desktop_perm_filesystem_host">হোস্ট ফাইল সিস্টেম</string>
+    <string name="desktop_perm_network">নেটওয়ার্ক</string>
+    <string name="desktop_perm_gpu">GPU (DRI)</string>
+    <string name="desktop_perm_wayland">Wayland</string>
+    <string name="desktop_perm_x11">X11</string>
+    <string name="desktop_perm_pulseaudio">অডিও</string>
+    <string name="desktop_perm_notifications">বিজ্ঞপ্তি</string>
+    <string name="desktop_perm_camera">ক্যামেরা</string>
+    <string name="desktop_perm_microphone">মাইক্রোফোন</string>
+    <string name="desktop_flatpak_unavailable">Flatpak উপলব্ধ নয়; এই সিস্টেমে অনুমতি ওভাররাইড উপলব্ধ নয়।</string>
+    <string name="desktop_flatpak_override_applied">Flatpak ওভাররাইড প্রয়োগ হয়েছে</string>
+    <string name="desktop_flatpak_override_failed">Flatpak ওভাররাইড প্রয়োগ করা যায়নি</string>
+    <string name="desktop_flatpak_reset_overrides">ওভাররাইড রিসেট</string>
+    <string name="desktop_deeplink_handler_hint">telos:// Telos অ্যাপ ও Kickoff অনুসন্ধান খোলে (ডেস্কটপ চালু হলে নিবন্ধিত)।</string>
+</resources>

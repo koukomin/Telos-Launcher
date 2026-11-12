@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_store_permissions">Permesoj</string>
+    <string name="desktop_store_sandbox_tier">Sandbox-nivelo</string>
+    <string name="desktop_sandbox_tier_host">Gastiganto</string>
+    <string name="desktop_sandbox_tier_vault_fs">Trezora dosiersistemo</string>
+    <string name="desktop_sandbox_tier_net_isolated">Rete izolite</string>
+    <string name="desktop_sandbox_tier_standard">Norma</string>
+    <string name="desktop_perm_filesystem_home">Hejma dosierujo</string>
+    <string name="desktop_perm_filesystem_host">Gastiganta dosiersistemo</string>
+    <string name="desktop_perm_network">Reto</string>
+    <string name="desktop_perm_gpu">GPU (DRI)</string>
+    <string name="desktop_perm_wayland">Wayland</string>
+    <string name="desktop_perm_x11">X11</string>
+    <string name="desktop_perm_pulseaudio">Sono</string>
+    <string name="desktop_perm_notifications">Sciigoj</string>
+    <string name="desktop_perm_camera">Kamerao</string>
+    <string name="desktop_perm_microphone">Mikrofono</string>
+    <string name="desktop_flatpak_unavailable">Flatpak ne haveblas; permesaj superskriboj ne haveblas en ĉi tiu sistemo.</string>
+    <string name="desktop_flatpak_override_applied">Flatpak-superskribo aplikita</string>
+    <string name="desktop_flatpak_override_failed">Ne eblis apliki Flatpak-superskribon</string>
+    <string name="desktop_flatpak_reset_overrides">Restarigi superskribojn</string>
+    <string name="desktop_deeplink_handler_hint">telos:// malfermas Telos-aplikaĵojn kaj Kickoff-serĉon (registrita je labortabla starto).</string>
+</resources>

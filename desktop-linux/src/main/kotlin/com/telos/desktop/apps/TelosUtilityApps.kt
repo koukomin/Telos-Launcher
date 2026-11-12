@@ -697,6 +697,8 @@ fun TelosStoreApp() {
     var installed by remember { mutableStateOf<List<FlatpakRef>>(emptyList()) }
     var remote by remember { mutableStateOf<List<FlatpakRef>>(emptyList()) }
     var q by remember { mutableStateOf("") }
+    var permissionsFor by remember { mutableStateOf<FlatpakRef?>(null) }
+    val scope = rememberCoroutineScope()
     LaunchedEffect(Unit) {
         installed = withContext(Dispatchers.IO) { FlatpakStore.listInstalled() }
     }
@@ -707,12 +709,20 @@ fun TelosStoreApp() {
     val shown = remember(installed, q) {
         installed.filter { q.isBlank() || it.name.contains(q, true) || it.id.contains(q, true) }
     }
+    val selected = permissionsFor
+    if (selected != null) {
+        FlatpakPermissionsPane(
+            app = selected,
+            onBack = { permissionsFor = null },
+        )
+        return
+    }
     Column(Modifier.fillMaxSize().background(TelosColors.surface).padding(12.dp)) {
         Text(t("hf_store_title"), color = TelosColors.secondary, fontSize = 20.sp)
         if (!FlatpakStore.available()) {
-            Text(t("hc_add_an_app"), color = TelosColors.secondary)
+            Text(t("desktop_flatpak_unavailable"), color = TelosColors.secondary)
         }
-        OutlinedTextField(q, { q = it }, modifier = Modifier.fillMaxWidth(), label = { Text(t("hc_filter")) }, singleLine = true)
+        OutlinedTextField(q, { q = it }, Modifier.fillMaxWidth(), label = { Text(t("hc_filter")) }, singleLine = true)
         Row(Modifier.padding(top = 8.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             Button(onClick = { FlatpakStore.updateAll() }) { Text(t("hc_check_for_updates")) }
         }
@@ -730,10 +740,15 @@ fun TelosStoreApp() {
                         },
                     )
                     Text(
+                        t("desktop_store_permissions"),
+                        color = TelosColors.secondary,
+                        modifier = Modifier.clickable { permissionsFor = e }.padding(horizontal = 8.dp),
+                    )
+                    Text(
                         t("hc_delete"),
                         color = TelosColors.primary,
                         modifier = Modifier.clickable {
-                            FlatpakStore.uninstall(e.id)
+                            scope.launch(Dispatchers.IO) { FlatpakStore.uninstall(e.id) }
                             installed = installed.filter { it.id != e.id }
                         }.padding(start = 8.dp),
                     )
@@ -752,4 +767,124 @@ fun TelosStoreApp() {
         }
     }
 }
+
+@Composable
+private fun FlatpakPermissionsPane(
+    app: FlatpakRef,
+    onBack: () -> Unit,
+) {
+    var state by remember { mutableStateOf(FlatpakPermissionState.empty(app.id)) }
+    var status by remember { mutableStateOf<String?>(null) }
+    val scope = rememberCoroutineScope()
+    val sandboxReady = FlatpakSandbox.available()
+    LaunchedEffect(app.id) {
+        state = withContext(Dispatchers.IO) { FlatpakSandbox.read(app.id) }
+    }
+    fun applyResult(result: FlatpakOverrideResult) {
+        status = when (result) {
+            FlatpakOverrideResult.Applied -> t("desktop_flatpak_override_applied")
+            FlatpakOverrideResult.Unavailable -> t("desktop_flatpak_unavailable")
+            FlatpakOverrideResult.Failed -> t("desktop_flatpak_override_failed")
+            FlatpakOverrideResult.Invalid -> t("desktop_flatpak_override_failed")
+        }
+    }
+    Column(
+        Modifier
+            .fillMaxSize()
+            .background(TelosColors.surface)
+            .verticalScroll(rememberScrollState())
+            .padding(12.dp),
+    ) {
+        TextButton(onClick = onBack) { Text(t("close")) }
+        Text(app.name, color = TelosColors.secondary, fontSize = 20.sp)
+        Text(app.id, color = TelosColors.onSurface.copy(alpha = 0.7f), fontSize = 12.sp)
+        Text(t("desktop_store_permissions"), color = TelosColors.secondary, fontSize = 16.sp, modifier = Modifier.padding(top = 12.dp))
+        if (!sandboxReady) {
+            Text(t("desktop_flatpak_unavailable"), color = TelosColors.secondary)
+        } else {
+            Text(t("desktop_store_sandbox_tier"), color = TelosColors.onSurface, fontSize = 13.sp, modifier = Modifier.padding(top = 8.dp))
+            Row(
+                Modifier.fillMaxWidth().padding(vertical = 4.dp),
+                horizontalArrangement = Arrangement.spacedBy(6.dp),
+            ) {
+                FlatpakSandboxTier.entries.forEach { tier ->
+                    val label = when (tier) {
+                        FlatpakSandboxTier.Host -> t("desktop_sandbox_tier_host")
+                        FlatpakSandboxTier.VaultFs -> t("desktop_sandbox_tier_vault_fs")
+                        FlatpakSandboxTier.NetIsolated -> t("desktop_sandbox_tier_net_isolated")
+                        FlatpakSandboxTier.Standard -> t("desktop_sandbox_tier_standard")
+                    }
+                    FilterChip(
+                        selected = state.tier == tier,
+                        onClick = {
+                            scope.launch {
+                                val result = withContext(Dispatchers.IO) { FlatpakSandbox.applyTier(app.id, tier) }
+                                applyResult(result)
+                                if (result == FlatpakOverrideResult.Applied) {
+                                    state = withContext(Dispatchers.IO) { FlatpakSandbox.read(app.id) }
+                                }
+                            }
+                        },
+                        label = { Text(label, fontSize = 11.sp) },
+                        colors = FilterChipDefaults.filterChipColors(
+                            selectedContainerColor = TelosColors.surfaceHigh,
+                            selectedLabelColor = TelosColors.onSurface,
+                        ),
+                    )
+                }
+            }
+            FlatpakPermission.entries.forEach { perm ->
+                val enabled = state.permissions[perm] == true
+                val label = when (perm) {
+                    FlatpakPermission.FilesystemHome -> t("desktop_perm_filesystem_home")
+                    FlatpakPermission.FilesystemHost -> t("desktop_perm_filesystem_host")
+                    FlatpakPermission.Network -> t("desktop_perm_network")
+                    FlatpakPermission.Gpu -> t("desktop_perm_gpu")
+                    FlatpakPermission.Wayland -> t("desktop_perm_wayland")
+                    FlatpakPermission.X11 -> t("desktop_perm_x11")
+                    FlatpakPermission.PulseAudio -> t("desktop_perm_pulseaudio")
+                    FlatpakPermission.Notifications -> t("desktop_perm_notifications")
+                    FlatpakPermission.Camera -> t("desktop_perm_camera")
+                    FlatpakPermission.Microphone -> t("desktop_perm_microphone")
+                }
+                Row(
+                    Modifier
+                        .fillMaxWidth()
+                        .clickable {
+                            scope.launch {
+                                val result = withContext(Dispatchers.IO) {
+                                    FlatpakSandbox.applyPermission(app.id, perm, !enabled)
+                                }
+                                applyResult(result)
+                                if (result == FlatpakOverrideResult.Applied) {
+                                    state = withContext(Dispatchers.IO) { FlatpakSandbox.read(app.id) }
+                                }
+                            }
+                        }
+                        .padding(vertical = 6.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                ) {
+                    Text(label, color = TelosColors.onSurface, modifier = Modifier.weight(1f))
+                    Text(
+                        if (enabled) t("net_hub_state_on") else t("net_hub_state_off"),
+                        color = if (enabled) TelosColors.primary else TelosColors.secondary,
+                    )
+                }
+            }
+            TextButton(
+                onClick = {
+                    scope.launch {
+                        val result = withContext(Dispatchers.IO) { FlatpakSandbox.reset(app.id) }
+                        applyResult(result)
+                        if (result == FlatpakOverrideResult.Applied) {
+                            state = withContext(Dispatchers.IO) { FlatpakSandbox.read(app.id) }
+                        }
+                    }
+                },
+            ) { Text(t("desktop_flatpak_reset_overrides")) }
+        }
+        status?.let { Text(it, color = TelosColors.secondary, fontSize = 12.sp, modifier = Modifier.padding(top = 8.dp)) }
+    }
+}
+
 // === TELOS_PENDING_REVIEW_END: telos_window_drag_and_ui_fix ===

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_store_permissions">权限</string>
+    <string name="desktop_store_sandbox_tier">沙箱层级</string>
+    <string name="desktop_sandbox_tier_host">主机</string>
+    <string name="desktop_sandbox_tier_vault_fs">保险库文件系统</string>
+    <string name="desktop_sandbox_tier_net_isolated">网络隔离</string>
+    <string name="desktop_sandbox_tier_standard">标准</string>
+    <string name="desktop_perm_filesystem_home">主文件夹</string>
+    <string name="desktop_perm_filesystem_host">主机文件系统</string>
+    <string name="desktop_perm_network">网络</string>
+    <string name="desktop_perm_gpu">GPU (DRI)</string>
+    <string name="desktop_perm_wayland">Wayland</string>
+    <string name="desktop_perm_x11">X11</string>
+    <string name="desktop_perm_pulseaudio">音频</string>
+    <string name="desktop_perm_notifications">通知</string>
+    <string name="desktop_perm_camera">相机</string>
+    <string name="desktop_perm_microphone">麦克风</string>
+    <string name="desktop_flatpak_unavailable">Flatpak 不可用；此系统无法使用权限覆盖。</string>
+    <string name="desktop_flatpak_override_applied">已应用 Flatpak 覆盖</string>
+    <string name="desktop_flatpak_override_failed">无法应用 Flatpak 覆盖</string>
+    <string name="desktop_flatpak_reset_overrides">重置覆盖</string>
+    <string name="desktop_deeplink_handler_hint">telos:// 打开 Telos 应用和 Kickoff 搜索（在桌面启动时注册）。</string>
+</resources>

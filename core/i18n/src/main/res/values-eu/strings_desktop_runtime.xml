@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_store_permissions">Baimenak</string>
+    <string name="desktop_store_sandbox_tier">Sandbox maila</string>
+    <string name="desktop_sandbox_tier_host">Ostalaria</string>
+    <string name="desktop_sandbox_tier_vault_fs">Kutxaren fitxategi-sistema</string>
+    <string name="desktop_sandbox_tier_net_isolated">Sare isolatua</string>
+    <string name="desktop_sandbox_tier_standard">Estandarra</string>
+    <string name="desktop_perm_filesystem_home">Etxeko karpeta</string>
+    <string name="desktop_perm_filesystem_host">Ostalariaren fitxategi-sistema</string>
+    <string name="desktop_perm_network">Sarea</string>
+    <string name="desktop_perm_gpu">GPU (DRI)</string>
+    <string name="desktop_perm_wayland">Wayland</string>
+    <string name="desktop_perm_x11">X11</string>
+    <string name="desktop_perm_pulseaudio">Audioa</string>
+    <string name="desktop_perm_notifications">Jakinarazpenak</string>
+    <string name="desktop_perm_camera">Kamera</string>
+    <string name="desktop_perm_microphone">Mikrofonoa</string>
+    <string name="desktop_flatpak_unavailable">Flatpak ez dago erabilgarri; baimen-gainidazketak ez daude erabilgarri sistema honetan.</string>
+    <string name="desktop_flatpak_override_applied">Flatpak gainidazketa aplikatu da</string>
+    <string name="desktop_flatpak_override_failed">Ezin izan da Flatpak gainidazketa aplikatu</string>
+    <string name="desktop_flatpak_reset_overrides">Berrezarri gainidazketak</string>
+    <string name="desktop_deeplink_handler_hint">telos://-k Telos aplikazioak eta Kickoff bilaketa irekitzen ditu (mahaigaina abiaraztean erregistratzen da).</string>
+</resources>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_store_permissions">Leidimai</string>
+    <string name="desktop_store_sandbox_tier">Smėlio dėžės lygis</string>
+    <string name="desktop_sandbox_tier_host">Pagrindinis kompiuteris</string>
+    <string name="desktop_sandbox_tier_vault_fs">Saugyklos failų sistema</string>
+    <string name="desktop_sandbox_tier_net_isolated">Tinklo izoliacija</string>
+    <string name="desktop_sandbox_tier_standard">Standartinis</string>
+    <string name="desktop_perm_filesystem_home">Namų aplankas</string>
+    <string name="desktop_perm_filesystem_host">Pagrindinio kompiuterio failų sistema</string>
+    <string name="desktop_perm_network">Tinklas</string>
+    <string name="desktop_perm_gpu">GPU (DRI)</string>
+    <string name="desktop_perm_wayland">Wayland</string>
+    <string name="desktop_perm_x11">X11</string>
+    <string name="desktop_perm_pulseaudio">Garsas</string>
+    <string name="desktop_perm_notifications">Pranešimai</string>
+    <string name="desktop_perm_camera">Kamera</string>
+    <string name="desktop_perm_microphone">Mikrofonas</string>
+    <string name="desktop_flatpak_unavailable">Flatpak nepasiekiamas; leidimų perrašymai šioje sistemoje nepasiekiami.</string>
+    <string name="desktop_flatpak_override_applied">Flatpak perrašymas pritaikytas</string>
+    <string name="desktop_flatpak_override_failed">Nepavyko pritaikyti Flatpak perrašymo</string>
+    <string name="desktop_flatpak_reset_overrides">Atstatyti perrašymus</string>
+    <string name="desktop_deeplink_handler_hint">telos:// atidaro Telos programas ir Kickoff paiešką (registruojama paleidžiant darbalaukį).</string>
+</resources>

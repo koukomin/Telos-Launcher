@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_store_permissions">مجوزها</string>
+    <string name="desktop_store_sandbox_tier">سطح سندباکس</string>
+    <string name="desktop_sandbox_tier_host">میزبان</string>
+    <string name="desktop_sandbox_tier_vault_fs">سامانه پرونده خزانه</string>
+    <string name="desktop_sandbox_tier_net_isolated">جدا از شبکه</string>
+    <string name="desktop_sandbox_tier_standard">استاندارد</string>
+    <string name="desktop_perm_filesystem_home">پوشه خانه</string>
+    <string name="desktop_perm_filesystem_host">سامانه پرونده میزبان</string>
+    <string name="desktop_perm_network">شبکه</string>
+    <string name="desktop_perm_gpu">GPU (DRI)</string>
+    <string name="desktop_perm_wayland">Wayland</string>
+    <string name="desktop_perm_x11">X11</string>
+    <string name="desktop_perm_pulseaudio">صدا</string>
+    <string name="desktop_perm_notifications">اعلان‌ها</string>
+    <string name="desktop_perm_camera">دوربین</string>
+    <string name="desktop_perm_microphone">میکروفون</string>
+    <string name="desktop_flatpak_unavailable">Flatpak در دسترس نیست؛ بازنویسی مجوزها در این سامانه در دسترس نیست.</string>
+    <string name="desktop_flatpak_override_applied">بازنویسی Flatpak اعمال شد</string>
+    <string name="desktop_flatpak_override_failed">اعمال بازنویسی Flatpak ممکن نشد</string>
+    <string name="desktop_flatpak_reset_overrides">بازنشانی بازنویسی‌ها</string>
+    <string name="desktop_deeplink_handler_hint">telos:// برنامه‌های Telos و جستجوی Kickoff را باز می‌کند (هنگام شروع رومیزی ثبت می‌شود).</string>
+</resources>

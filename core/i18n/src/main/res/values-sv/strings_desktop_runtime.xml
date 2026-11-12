@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_store_permissions">Behörigheter</string>
+    <string name="desktop_store_sandbox_tier">Sandlådenivå</string>
+    <string name="desktop_sandbox_tier_host">Värd</string>
+    <string name="desktop_sandbox_tier_vault_fs">Valvfilsystem</string>
+    <string name="desktop_sandbox_tier_net_isolated">Nätverksisolerad</string>
+    <string name="desktop_sandbox_tier_standard">Standard</string>
+    <string name="desktop_perm_filesystem_home">Hemkatalog</string>
+    <string name="desktop_perm_filesystem_host">Värdfilsystem</string>
+    <string name="desktop_perm_network">Nätverk</string>
+    <string name="desktop_perm_gpu">GPU (DRI)</string>
+    <string name="desktop_perm_wayland">Wayland</string>
+    <string name="desktop_perm_x11">X11</string>
+    <string name="desktop_perm_pulseaudio">Ljud</string>
+    <string name="desktop_perm_notifications">Aviseringar</string>
+    <string name="desktop_perm_camera">Kamera</string>
+    <string name="desktop_perm_microphone">Mikrofon</string>
+    <string name="desktop_flatpak_unavailable">Flatpak är inte tillgängligt; behörighetsåsidosättningar är inte tillgängliga på det här systemet.</string>
+    <string name="desktop_flatpak_override_applied">Flatpak-åsidosättning tillämpad</string>
+    <string name="desktop_flatpak_override_failed">Kunde inte tillämpa Flatpak-åsidosättning</string>
+    <string name="desktop_flatpak_reset_overrides">Återställ åsidosättningar</string>
+    <string name="desktop_deeplink_handler_hint">telos:// öppnar Telos-appar och Kickoff-sökning (registreras när skrivbordet startar).</string>
+</resources>

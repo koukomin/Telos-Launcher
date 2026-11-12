@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_store_permissions">Õigused</string>
+    <string name="desktop_store_sandbox_tier">Liivakasti tase</string>
+    <string name="desktop_sandbox_tier_host">Host</string>
+    <string name="desktop_sandbox_tier_vault_fs">Vaulti failisüsteem</string>
+    <string name="desktop_sandbox_tier_net_isolated">Võrgust isoleeritud</string>
+    <string name="desktop_sandbox_tier_standard">Standardne</string>
+    <string name="desktop_perm_filesystem_home">Kodukaust</string>
+    <string name="desktop_perm_filesystem_host">Hosti failisüsteem</string>
+    <string name="desktop_perm_network">Võrk</string>
+    <string name="desktop_perm_gpu">GPU (DRI)</string>
+    <string name="desktop_perm_wayland">Wayland</string>
+    <string name="desktop_perm_x11">X11</string>
+    <string name="desktop_perm_pulseaudio">Heli</string>
+    <string name="desktop_perm_notifications">Teavitused</string>
+    <string name="desktop_perm_camera">Kaamera</string>
+    <string name="desktop_perm_microphone">Mikrofon</string>
+    <string name="desktop_flatpak_unavailable">Flatpak pole saadaval; õiguste ülekirjutused pole selles süsteemis saadaval.</string>
+    <string name="desktop_flatpak_override_applied">Flatpaki ülekirjutus rakendatud</string>
+    <string name="desktop_flatpak_override_failed">Flatpaki ülekirjutust ei saanud rakendada</string>
+    <string name="desktop_flatpak_reset_overrides">Lähtesta ülekirjutused</string>
+    <string name="desktop_deeplink_handler_hint">telos:// avab Telose rakendused ja Kickoffi otsingu (registreeritakse töölaua käivitamisel).</string>
+</resources>

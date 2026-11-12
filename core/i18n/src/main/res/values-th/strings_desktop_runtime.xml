@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_store_permissions">สิทธิ์</string>
+    <string name="desktop_store_sandbox_tier">ระดับแซนด์บ็อกซ์</string>
+    <string name="desktop_sandbox_tier_host">โฮสต์</string>
+    <string name="desktop_sandbox_tier_vault_fs">ระบบไฟล์ของวอลต์</string>
+    <string name="desktop_sandbox_tier_net_isolated">แยกระบบเครือข่าย</string>
+    <string name="desktop_sandbox_tier_standard">มาตรฐาน</string>
+    <string name="desktop_perm_filesystem_home">โฟลเดอร์บ้าน</string>
+    <string name="desktop_perm_filesystem_host">ระบบไฟล์ของโฮสต์</string>
+    <string name="desktop_perm_network">เครือข่าย</string>
+    <string name="desktop_perm_gpu">GPU (DRI)</string>
+    <string name="desktop_perm_wayland">Wayland</string>
+    <string name="desktop_perm_x11">X11</string>
+    <string name="desktop_perm_pulseaudio">เสียง</string>
+    <string name="desktop_perm_notifications">การแจ้งเตือน</string>
+    <string name="desktop_perm_camera">กล้อง</string>
+    <string name="desktop_perm_microphone">ไมโครโฟน</string>
+    <string name="desktop_flatpak_unavailable">Flatpak ไม่พร้อมใช้งาน ไม่สามารถใช้การแทนที่สิทธิ์บนระบบนี้ได้</string>
+    <string name="desktop_flatpak_override_applied">ใช้การแทนที่ Flatpak แล้ว</string>
+    <string name="desktop_flatpak_override_failed">ไม่สามารถใช้การแทนที่ Flatpak ได้</string>
+    <string name="desktop_flatpak_reset_overrides">รีเซ็ตการแทนที่</string>
+    <string name="desktop_deeplink_handler_hint">telos:// เปิดแอป Telos และการค้นหา Kickoff (ลงทะเบียนเมื่อเริ่มเดสก์ท็อป)</string>
+</resources>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_store_permissions">Engedélyek</string>
+    <string name="desktop_store_sandbox_tier">Homokozó szint</string>
+    <string name="desktop_sandbox_tier_host">Kiszolgáló</string>
+    <string name="desktop_sandbox_tier_vault_fs">Vault fájlrendszer</string>
+    <string name="desktop_sandbox_tier_net_isolated">Hálózatilag elkülönített</string>
+    <string name="desktop_sandbox_tier_standard">Szabványos</string>
+    <string name="desktop_perm_filesystem_home">Saját mappa</string>
+    <string name="desktop_perm_filesystem_host">Kiszolgáló fájlrendszer</string>
+    <string name="desktop_perm_network">Hálózat</string>
+    <string name="desktop_perm_gpu">GPU (DRI)</string>
+    <string name="desktop_perm_wayland">Wayland</string>
+    <string name="desktop_perm_x11">X11</string>
+    <string name="desktop_perm_pulseaudio">Hang</string>
+    <string name="desktop_perm_notifications">Értesítések</string>
+    <string name="desktop_perm_camera">Kamera</string>
+    <string name="desktop_perm_microphone">Mikrofon</string>
+    <string name="desktop_flatpak_unavailable">A Flatpak nem érhető el; az engedélyfelülbírálások nem érhetők el ezen a rendszeren.</string>
+    <string name="desktop_flatpak_override_applied">Flatpak felülbírálás alkalmazva</string>
+    <string name="desktop_flatpak_override_failed">Nem sikerült alkalmazni a Flatpak felülbírálást</string>
+    <string name="desktop_flatpak_reset_overrides">Felülbírálások visszaállítása</string>
+    <string name="desktop_deeplink_handler_hint">A telos:// megnyitja a Telos alkalmazásokat és a Kickoff keresést (az asztal indításakor regisztrálódik).</string>
+</resources>

@@ -151,6 +151,17 @@ sudo sed -i 's|^TryExec=.*|TryExec=/usr/local/bin/telos-session|' /usr/share/way
 sudo sed -i 's|^Exec=.*|Exec=env TELOS_COMPOSITOR=niri /usr/local/bin/telos-session|' /usr/share/wayland-sessions/telos-niri.desktop
 sudo sed -i 's|^TryExec=.*|TryExec=/usr/local/bin/telos-session|' /usr/share/wayland-sessions/telos-niri.desktop
 
+echo "[+] Registering telos:// URL handler (VOS-3)..."
+sudo mkdir -p /usr/share/applications /usr/local/share/applications
+sudo cp -f "$PROJECT_DIR/desktop-linux/session/telos-url-handler.desktop" /usr/share/applications/telos-url-handler.desktop
+sudo cp -f "$PROJECT_DIR/desktop-linux/session/telos-url-handler.desktop" /usr/local/share/applications/telos-url-handler.desktop
+if command -v update-desktop-database >/dev/null 2>&1; then
+    sudo update-desktop-database /usr/share/applications >/dev/null 2>&1 || true
+fi
+if command -v xdg-mime >/dev/null 2>&1; then
+    xdg-mime default telos-url-handler.desktop x-scheme-handler/telos >/dev/null 2>&1 || true
+fi
+
 echo "=========================================================="
 echo " [✓] Installed Telos Desktop session (vault HOME, nft default-drop)"
 echo " • SDDM / GDM / LightDM: pick \"Telos Desktop\" or \"Telos Desktop (niri)\" at login"
