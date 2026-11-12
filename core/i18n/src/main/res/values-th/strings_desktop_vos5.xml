@@ -8,8 +8,21 @@
     <string name="desktop_vault_restore_cancel">ยกเลิกการคืนค่า</string>
     <string name="desktop_vault_restore_done">คืนค่าคอนฟิกเซสชัน vault แล้ว</string>
     <string name="desktop_vault_restore_need_confirm">ต้องยืนยันการคืนค่า</string>
+    <string name="desktop_luks_restore_title">คืนค่ารูปภาพ LUKS ของ vault</string>
+    <string name="desktop_luks_restore_hint">คัดลอกข้อมูลสำรอง telos_vault.img ไปยังพาธรูปภาพ portable/vault ต้องล็อก vault ไว้ ไม่เคยเมานต์ด้วยรหัสผ่าน — ปลดล็อกแยกหลังคืนค่า ต้องยืนยันและตรวจ SHA-256</string>
+    <string name="desktop_luks_restore_path_label">พาธรูปภาพสำรอง (telos_vault.img)</string>
+    <string name="desktop_luks_restore_preview_btn">ดูตัวอย่างการคืนค่ารูปภาพ LUKS</string>
+    <string name="desktop_luks_restore_preview">พร้อมคืนค่า %1$s ไบต์ (sha256 %2$s…) ยืนยันเพื่อคัดลอก vault ต้องล็อกอยู่</string>
+    <string name="desktop_luks_restore_confirm">ยืนยันการคืนค่ารูปภาพ LUKS</string>
+    <string name="desktop_luks_restore_cancel">ยกเลิกการคืนค่า LUKS</string>
+    <string name="desktop_luks_restore_done">คืนค่ารูปภาพ LUKS เป็น %1$s แล้ว (ยังล็อกอยู่ — ปลดล็อกแยก)</string>
+    <string name="desktop_luks_restore_need_confirm">ต้องยืนยันเพื่อคืนค่ารูปภาพ LUKS</string>
+    <string name="desktop_luks_restore_locked_required">ต้องล็อก vault ก่อนคืนค่ารูปภาพ LUKS</string>
     <string name="desktop_update_title">การอัปเดตเดสก์ท็อปที่ลงนาม</string>
-    <string name="desktop_update_hint">ตรวจพาธ file:// ในเครื่องหรือแมนิเฟสต์ HTTPS ที่ลงนามด้วยคีย์ Ed25519 ของ Telos การอัปเดตถูกจัดเตรียมใต้ temp ของ portable/vault และไม่ติดตั้งอัตโนมัติ</string>
+    <string name="desktop_update_hint">ตรวจพาธ file:// ในเครื่องหรือแมนิเฟสต์ HTTPS ที่ลงนามด้วยคีย์ Ed25519 ของ Telos การอัปเดตจะจัดเตรียมใต้ portable/vault temp และไม่ติดตั้งอัตโนมัติ ช่องทางเริ่มต้น: แอสเซ็ต GitHub Releases telos-desktop-update.manifest</string>
+    <string name="desktop_update_releases_hint">ค่าเริ่มต้น GitHub Releases: %1$s</string>
+    <string name="desktop_update_use_releases">ใช้ URL ของ GitHub Releases</string>
+    <string name="desktop_update_releases_filled">กรอก URL แมนิเฟสต์ GitHub Releases แล้ว</string>
     <string name="desktop_update_url_label">แมนิเฟสต์อัปเดต (พาธ, file:// หรือ https://)</string>
     <string name="desktop_update_save_url">บันทึก URL อัปเดต</string>
     <string name="desktop_update_url_saved">บันทึก URL แมนิเฟสต์อัปเดตแล้ว</string>
@@ -17,7 +30,11 @@
     <string name="desktop_update_ready">อัปเดตที่ลงนาม %1$s ผ่านการตรวจแล้ว — ยืนยันเพื่อจัดเตรียมการติดตั้ง</string>
     <string name="desktop_update_install_confirm">ยืนยันการติดตั้งที่จัดเตรียม</string>
     <string name="desktop_update_install_cancel">ยกเลิกการอัปเดต</string>
-    <string name="desktop_update_installed">จัดเตรียมอัปเดตเป็น %1$s แล้ว (รีสตาร์ทด้วยตนเอง)</string>
+    <string name="desktop_update_installed">จัดเตรียมการอัปเดตเป็น %1$s แล้ว — ยืนยันตัวช่วยรีสตาร์ท (การสลับ jar ที่กำลังรันเป็นแบบ best-effort)</string>
     <string name="desktop_update_sig_fail">การตรวจลายเซ็นอัปเดตล้มเหลว</string>
     <string name="desktop_update_no_url">ตั้ง URL แมนิเฟสต์ file:// หรือ HTTPS ก่อน</string>
+    <string name="desktop_update_restart_hint">ตัวช่วยรีสตาร์ทเขียนเครื่องหมายอัปเดตรอคอยและสคริปต์แทนที่ทางเลือก แล้วออก การสลับ jar ของ JVM ที่กำลังรันเป็นแบบ best-effort</string>
+    <string name="desktop_update_restart_confirm">ยืนยันรีสตาร์ทหลังอัปเดต</string>
+    <string name="desktop_update_restart_later">รีสตาร์ททีหลัง</string>
+    <string name="desktop_update_restart_failed">เตรียมตัวช่วยรีสตาร์ทการอัปเดตไม่ได้</string>
 </resources>

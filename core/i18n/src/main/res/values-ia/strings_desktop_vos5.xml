@@ -8,8 +8,21 @@
     <string name="desktop_vault_restore_cancel">Cancellar restauration</string>
     <string name="desktop_vault_restore_done">Configuration de session del vault restaurate</string>
     <string name="desktop_vault_restore_need_confirm">Confirmation de restauration requirite</string>
+    <string name="desktop_luks_restore_title">Restaurar imagen LUKS del vault</string>
+    <string name="desktop_luks_restore_hint">Copia una copia de seguridad telos_vault.img a la ruta de imagen portable/vault. El vault debe estar bloqueado. Nunca monta con contraseña: desbloquee por separado tras restaurar. Requiere confirmación y comprobación SHA-256.</string>
+    <string name="desktop_luks_restore_path_label">Ruta de imagen de copia (telos_vault.img)</string>
+    <string name="desktop_luks_restore_preview_btn">Vista previa de restauración LUKS</string>
+    <string name="desktop_luks_restore_preview">Listo para restaurar %1$s bytes (sha256 %2$s…). Confirme para copiar. El vault debe seguir bloqueado.</string>
+    <string name="desktop_luks_restore_confirm">Confirmar restauración de imagen LUKS</string>
+    <string name="desktop_luks_restore_cancel">Cancelar restauración LUKS</string>
+    <string name="desktop_luks_restore_done">Imagen LUKS restaurada como %1$s (sigue bloqueada — desbloquee por separado)</string>
+    <string name="desktop_luks_restore_need_confirm">Se requiere confirmación para restaurar la imagen LUKS</string>
+    <string name="desktop_luks_restore_locked_required">El vault debe estar bloqueado antes de restaurar la imagen LUKS</string>
     <string name="desktop_update_title">Actualisation de scriptorio signate</string>
-    <string name="desktop_update_hint">Verifica un cammino file:// local o un manifesto HTTPS signate con le clave Ed25519 de Telos. Actualisationes se prepara sub temp portable/vault e nunquam se installa automaticamente.</string>
+    <string name="desktop_update_hint">Compruebe una ruta file:// local o un manifiesto HTTPS firmado con la clave Ed25519 de Telos. Las actualizaciones se preparan en portable/vault temp y nunca se instalan automáticamente. Canal predeterminado: recurso de GitHub Releases telos-desktop-update.manifest.</string>
+    <string name="desktop_update_releases_hint">Predeterminado de GitHub Releases: %1$s</string>
+    <string name="desktop_update_use_releases">Usar URL de GitHub Releases</string>
+    <string name="desktop_update_releases_filled">URL del manifiesto de GitHub Releases rellenada</string>
     <string name="desktop_update_url_label">Manifesto de actualisation (cammino, file:// o https://)</string>
     <string name="desktop_update_save_url">Salveguardar URL de actualisation</string>
     <string name="desktop_update_url_saved">URL del manifesto de actualisation salveguardate</string>
@@ -17,7 +30,11 @@
     <string name="desktop_update_ready">Actualisation signate %1$s verificate — confirma pro preparar le installation</string>
     <string name="desktop_update_install_confirm">Confirmar installation preparate</string>
     <string name="desktop_update_install_cancel">Cancellar actualisation</string>
-    <string name="desktop_update_installed">Actualisation preparate como %1$s (reinitia manualmente)</string>
+    <string name="desktop_update_installed">Actualización preparada como %1$s — confirme el ayudante de reinicio (sustituir el jar en ejecución es de mejor esfuerzo)</string>
     <string name="desktop_update_sig_fail">Verification del signatura de actualisation fallite</string>
     <string name="desktop_update_no_url">Defini primo un URL de manifesto file:// o HTTPS</string>
+    <string name="desktop_update_restart_hint">El ayudante de reinicio escribe un marcador de actualización pendiente y un script opcional de reemplazo, luego sale. Sustituir un jar JVM en ejecución es de mejor esfuerzo.</string>
+    <string name="desktop_update_restart_confirm">Confirmar reinicio tras la actualización</string>
+    <string name="desktop_update_restart_later">Reiniciar más tarde</string>
+    <string name="desktop_update_restart_failed">No se pudo preparar el ayudante de reinicio de actualización</string>
 </resources>

@@ -8,8 +8,21 @@
     <string name="desktop_vault_restore_cancel">取消還原</string>
     <string name="desktop_vault_restore_done">已還原 vault 工作階段設定</string>
     <string name="desktop_vault_restore_need_confirm">需要確認還原</string>
+    <string name="desktop_luks_restore_title">還原 LUKS vault 映像</string>
+    <string name="desktop_luks_restore_hint">將 telos_vault.img 備份複製到 portable/vault 映像路徑。Vault 必須處於鎖定狀態。絕不會用密碼掛載——還原後請另行解鎖。需要確認和 SHA-256 檢查。</string>
+    <string name="desktop_luks_restore_path_label">備份映像路徑 (telos_vault.img)</string>
+    <string name="desktop_luks_restore_preview_btn">預覽 LUKS 映像還原</string>
+    <string name="desktop_luks_restore_preview">準備還原 %1$s 位元組（sha256 %2$s…）。確認以複製。Vault 須保持鎖定。</string>
+    <string name="desktop_luks_restore_confirm">確認 LUKS 映像還原</string>
+    <string name="desktop_luks_restore_cancel">取消 LUKS 還原</string>
+    <string name="desktop_luks_restore_done">LUKS 映像已還原為 %1$s（仍鎖定——請另行解鎖）</string>
+    <string name="desktop_luks_restore_need_confirm">需要確認才能還原 LUKS 映像</string>
+    <string name="desktop_luks_restore_locked_required">還原 LUKS 映像前必須鎖定 vault</string>
     <string name="desktop_update_title">已簽章的桌面更新</string>
-    <string name="desktop_update_hint">檢查以 Telos Ed25519 金鑰簽章的本機 file:// 路徑或 HTTPS 清單。更新暫存至 portable/vault 暫存目錄，絕不會自動安裝。</string>
+    <string name="desktop_update_hint">檢查由 Telos Ed25519 金鑰簽署的本機 file:// 路徑或 HTTPS 清單。更新暫存到 portable/vault 暫存目錄，永不自動安裝。預設通道：GitHub Releases 資源 telos-desktop-update.manifest。</string>
+    <string name="desktop_update_releases_hint">GitHub Releases 預設：%1$s</string>
+    <string name="desktop_update_use_releases">使用 GitHub Releases URL</string>
+    <string name="desktop_update_releases_filled">已填入 GitHub Releases 清單 URL</string>
     <string name="desktop_update_url_label">更新清單（路徑、file:// 或 https://）</string>
     <string name="desktop_update_save_url">儲存更新 URL</string>
     <string name="desktop_update_url_saved">已儲存更新清單 URL</string>
@@ -17,7 +30,11 @@
     <string name="desktop_update_ready">已驗證簽章更新 %1$s — 確認以暫存安裝</string>
     <string name="desktop_update_install_confirm">確認暫存安裝</string>
     <string name="desktop_update_install_cancel">取消更新</string>
-    <string name="desktop_update_installed">更新已暫存為 %1$s（請手動重新啟動後使用）</string>
+    <string name="desktop_update_installed">更新已暫存為 %1$s — 請確認重新啟動助手（替換執行中的 jar 為盡力而為）</string>
     <string name="desktop_update_sig_fail">更新簽章驗證失敗</string>
     <string name="desktop_update_no_url">請先設定 file:// 或 HTTPS 更新清單 URL</string>
+    <string name="desktop_update_restart_hint">重新啟動助手寫入待更新標記與選擇性替換指令碼，然後結束。替換執行中的 JVM jar 是盡力而為。</string>
+    <string name="desktop_update_restart_confirm">確認更新後重新啟動</string>
+    <string name="desktop_update_restart_later">稍後重新啟動</string>
+    <string name="desktop_update_restart_failed">無法準備更新重新啟動助手</string>
 </resources>

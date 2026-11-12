@@ -8,8 +8,21 @@
     <string name="desktop_vault_restore_cancel">Cancelar restauro</string>
     <string name="desktop_vault_restore_done">Configuração de sessão do vault restaurada</string>
     <string name="desktop_vault_restore_need_confirm">Confirmação de restauro necessária</string>
+    <string name="desktop_luks_restore_title">Restaurar imagem LUKS do vault</string>
+    <string name="desktop_luks_restore_hint">Copia uma cópia de segurança telos_vault.img para o caminho da imagem portable/vault. O vault deve estar bloqueado. Nunca monta com palavra-passe — desbloqueie separadamente após restaurar. Requer confirmação e verificação SHA-256.</string>
+    <string name="desktop_luks_restore_path_label">Caminho da imagem de cópia (telos_vault.img)</string>
+    <string name="desktop_luks_restore_preview_btn">Pré-visualizar restauro da imagem LUKS</string>
+    <string name="desktop_luks_restore_preview">Pronto para restaurar %1$s bytes (sha256 %2$s…). Confirme para copiar. O vault deve permanecer bloqueado.</string>
+    <string name="desktop_luks_restore_confirm">Confirmar restauro da imagem LUKS</string>
+    <string name="desktop_luks_restore_cancel">Cancelar restauro LUKS</string>
+    <string name="desktop_luks_restore_done">Imagem LUKS restaurada como %1$s (ainda bloqueada — desbloqueie separadamente)</string>
+    <string name="desktop_luks_restore_need_confirm">Confirmação necessária para restaurar a imagem LUKS</string>
+    <string name="desktop_luks_restore_locked_required">O vault deve estar bloqueado antes de restaurar a imagem LUKS</string>
     <string name="desktop_update_title">Atualização de desktop assinada</string>
-    <string name="desktop_update_hint">Verifica um caminho file:// local ou um manifesto HTTPS assinado com a chave Ed25519 Telos. As atualizações ficam em staging no temp portable/vault e nunca se instalam automaticamente.</string>
+    <string name="desktop_update_hint">Verifique um caminho file:// local ou um manifesto HTTPS assinado com a chave Ed25519 da Telos. As atualizações são preparadas em portable/vault temp e nunca são instaladas automaticamente. Canal predefinido: recurso GitHub Releases telos-desktop-update.manifest.</string>
+    <string name="desktop_update_releases_hint">Predefinição GitHub Releases: %1$s</string>
+    <string name="desktop_update_use_releases">Usar URL do GitHub Releases</string>
+    <string name="desktop_update_releases_filled">URL do manifesto GitHub Releases preenchido</string>
     <string name="desktop_update_url_label">Manifesto de atualização (caminho, file:// ou https://)</string>
     <string name="desktop_update_save_url">Guardar URL de atualização</string>
     <string name="desktop_update_url_saved">URL do manifesto de atualização guardada</string>
@@ -17,7 +30,11 @@
     <string name="desktop_update_ready">Atualização assinada %1$s verificada — confirme para preparar a instalação</string>
     <string name="desktop_update_install_confirm">Confirmar instalação preparada</string>
     <string name="desktop_update_install_cancel">Cancelar atualização</string>
-    <string name="desktop_update_installed">Atualização preparada como %1$s (reinicie manualmente)</string>
+    <string name="desktop_update_installed">Atualização preparada como %1$s — confirme o assistente de reinício (troca do jar em execução é best-effort)</string>
     <string name="desktop_update_sig_fail">Falha na verificação da assinatura da atualização</string>
     <string name="desktop_update_no_url">Defina primeiro um URL de manifesto file:// ou HTTPS</string>
+    <string name="desktop_update_restart_hint">O assistente de reinício escreve um marcador de atualização pendente e um script de substituição opcional e depois sai. Trocar um jar JVM em execução é best-effort.</string>
+    <string name="desktop_update_restart_confirm">Confirmar reinício após a atualização</string>
+    <string name="desktop_update_restart_later">Reiniciar mais tarde</string>
+    <string name="desktop_update_restart_failed">Não foi possível preparar o assistente de reinício da atualização</string>
 </resources>
