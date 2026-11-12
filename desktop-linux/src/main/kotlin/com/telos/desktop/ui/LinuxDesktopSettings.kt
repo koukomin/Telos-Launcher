@@ -544,6 +544,13 @@ private fun Vos5RestoreAndUpdateCard(settings: TelosDesktopSettings) {
     }
     var updateMsg by remember { mutableStateOf<String?>(null) }
     var updateOffer by remember { mutableStateOf<DesktopSignedUpdate.VerifiedOffer?>(null) }
+    var stagedUpdateJar by remember { mutableStateOf<File?>(null) }
+    var stagedUpdateVersion by remember { mutableStateOf<String?>(null) }
+    var luksBackupPath by remember {
+        mutableStateOf(DesktopLuksImageRestore.defaultDestImage().absolutePath)
+    }
+    var luksMsg by remember { mutableStateOf<String?>(null) }
+    var luksPreview by remember { mutableStateOf<DesktopLuksImageRestore.Preview?>(null) }
 
     HelixSettingsCard(com.telos.desktop.i18n.TelosI18n.t("desktop_vault_restore_title")) {
         Text(com.telos.desktop.i18n.TelosI18n.t("desktop_vault_restore_hint"), fontSize = 12.sp)
@@ -621,8 +628,87 @@ private fun Vos5RestoreAndUpdateCard(settings: TelosDesktopSettings) {
         restoreMsg?.let { Text(it, fontSize = 11.sp, color = TelosColors.primary) }
     }
 
+    HelixSettingsCard(com.telos.desktop.i18n.TelosI18n.t("desktop_luks_restore_title")) {
+        Text(com.telos.desktop.i18n.TelosI18n.t("desktop_luks_restore_hint"), fontSize = 12.sp)
+        OutlinedTextField(
+            luksBackupPath,
+            onValueChange = { luksBackupPath = it },
+            label = { Text(com.telos.desktop.i18n.TelosI18n.t("desktop_luks_restore_path_label")) },
+            modifier = Modifier.fillMaxWidth(),
+        )
+        TextButton(onClick = {
+            scope.launch(Dispatchers.IO) {
+                val unlocked = runCatching { PhantomVault.engine.unlocked }.getOrDefault(false)
+                val backup = File(luksBackupPath.trim())
+                val r = DesktopLuksImageRestore.preview(
+                    backup = backup,
+                    destImage = DesktopLuksImageRestore.defaultDestImage(),
+                    vaultUnlocked = unlocked,
+                )
+                if (r.isSuccess) {
+                    val prev = r.getOrThrow()
+                    luksPreview = prev
+                    luksMsg = com.telos.desktop.i18n.TelosI18n.t(
+                        "desktop_luks_restore_preview",
+                        prev.backupBytes.toString(),
+                        prev.backupSha256.take(16),
+                    )
+                } else {
+                    luksPreview = null
+                    luksMsg = r.exceptionOrNull()?.message
+                        ?: com.telos.desktop.i18n.TelosI18n.t("desktop_luks_restore_locked_required")
+                }
+            }
+        }) {
+            Text(com.telos.desktop.i18n.TelosI18n.t("desktop_luks_restore_preview_btn"))
+        }
+        luksPreview?.let { preview ->
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                TextButton(onClick = {
+                    scope.launch(Dispatchers.IO) {
+                        val unlocked = runCatching { PhantomVault.engine.unlocked }.getOrDefault(false)
+                        val r = DesktopLuksImageRestore.applyConfirmed(
+                            backup = preview.backup,
+                            destImage = preview.destImage,
+                            expectedSha256 = preview.backupSha256,
+                            confirmToken = preview.confirmToken,
+                            expectedToken = preview.confirmToken,
+                            vaultUnlocked = unlocked,
+                        )
+                        luksPreview = null
+                        luksMsg = if (r.isSuccess) {
+                            com.telos.desktop.i18n.TelosI18n.t(
+                                "desktop_luks_restore_done",
+                                r.getOrThrow().destImage.name,
+                            )
+                        } else {
+                            r.exceptionOrNull()?.message
+                                ?: com.telos.desktop.i18n.TelosI18n.t("desktop_luks_restore_need_confirm")
+                        }
+                    }
+                }) {
+                    Text(com.telos.desktop.i18n.TelosI18n.t("desktop_luks_restore_confirm"))
+                }
+                TextButton(onClick = {
+                    luksPreview = null
+                    luksMsg = com.telos.desktop.i18n.TelosI18n.t("desktop_luks_restore_cancel")
+                }) {
+                    Text(com.telos.desktop.i18n.TelosI18n.t("desktop_luks_restore_cancel"))
+                }
+            }
+        }
+        luksMsg?.let { Text(it, fontSize = 11.sp, color = TelosColors.primary) }
+    }
+
     HelixSettingsCard(com.telos.desktop.i18n.TelosI18n.t("desktop_update_title")) {
         Text(com.telos.desktop.i18n.TelosI18n.t("desktop_update_hint"), fontSize = 12.sp)
+        Text(
+            com.telos.desktop.i18n.TelosI18n.t(
+                "desktop_update_releases_hint",
+                DesktopGitHubReleasesChannel.latestDownloadUrl(),
+            ),
+            fontSize = 11.sp,
+        )
         OutlinedTextField(
             updateUrl,
             onValueChange = { updateUrl = it },
@@ -638,12 +724,22 @@ private fun Vos5RestoreAndUpdateCard(settings: TelosDesktopSettings) {
             }
             TextButton(onClick = {
                 scope.launch(Dispatchers.IO) {
+                    updateUrl = DesktopGitHubReleasesChannel.latestDownloadUrl()
+                    DesktopSignedUpdate.saveManifestUrl(settings, updateUrl)
+                    updateMsg = com.telos.desktop.i18n.TelosI18n.t("desktop_update_releases_filled")
+                }
+            }) {
+                Text(com.telos.desktop.i18n.TelosI18n.t("desktop_update_use_releases"))
+            }
+            TextButton(onClick = {
+                scope.launch(Dispatchers.IO) {
                     DesktopSignedUpdate.saveManifestUrl(settings, updateUrl)
                     val url = updateUrl.trim().ifEmpty {
                         DesktopSignedUpdate.preferredManifestUrl(settings).orEmpty()
                     }
                     if (url.isEmpty()) {
                         updateOffer = null
+                        stagedUpdateJar = null
                         updateMsg = com.telos.desktop.i18n.TelosI18n.t("desktop_update_no_url")
                         return@launch
                     }
@@ -651,6 +747,7 @@ private fun Vos5RestoreAndUpdateCard(settings: TelosDesktopSettings) {
                     when (result.status) {
                         DesktopSignedUpdate.CheckStatus.ReadyForConfirm -> {
                             updateOffer = result.offer
+                            stagedUpdateJar = null
                             updateMsg = com.telos.desktop.i18n.TelosI18n.t(
                                 "desktop_update_ready",
                                 result.offer?.version.orEmpty(),
@@ -658,10 +755,12 @@ private fun Vos5RestoreAndUpdateCard(settings: TelosDesktopSettings) {
                         }
                         DesktopSignedUpdate.CheckStatus.SignatureInvalid -> {
                             updateOffer = null
+                            stagedUpdateJar = null
                             updateMsg = com.telos.desktop.i18n.TelosI18n.t("desktop_update_sig_fail")
                         }
                         else -> {
                             updateOffer = null
+                            stagedUpdateJar = null
                             updateMsg = result.detail.ifBlank {
                                 com.telos.desktop.i18n.TelosI18n.t("desktop_update_no_url")
                             }
@@ -678,13 +777,17 @@ private fun Vos5RestoreAndUpdateCard(settings: TelosDesktopSettings) {
                     scope.launch(Dispatchers.IO) {
                         val r = DesktopSignedUpdate.installConfirmed(offer, offer.confirmToken)
                         updateOffer = null
-                        updateMsg = if (r.isSuccess) {
-                            com.telos.desktop.i18n.TelosI18n.t(
+                        if (r.isSuccess) {
+                            val dest = r.getOrThrow()
+                            stagedUpdateJar = dest
+                            stagedUpdateVersion = offer.version
+                            updateMsg = com.telos.desktop.i18n.TelosI18n.t(
                                 "desktop_update_installed",
-                                r.getOrThrow().name,
+                                dest.name,
                             )
                         } else {
-                            r.exceptionOrNull()?.message
+                            stagedUpdateJar = null
+                            updateMsg = r.exceptionOrNull()?.message
                         }
                     }
                 }) {
@@ -695,6 +798,34 @@ private fun Vos5RestoreAndUpdateCard(settings: TelosDesktopSettings) {
                     updateMsg = com.telos.desktop.i18n.TelosI18n.t("desktop_update_install_cancel")
                 }) {
                     Text(com.telos.desktop.i18n.TelosI18n.t("desktop_update_install_cancel"))
+                }
+            }
+        }
+        stagedUpdateJar?.let { staged ->
+            Text(com.telos.desktop.i18n.TelosI18n.t("desktop_update_restart_hint"), fontSize = 11.sp)
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                TextButton(onClick = {
+                    scope.launch(Dispatchers.IO) {
+                        // User-confirmed restart: marker + optional replace script, then exit.
+                        val r = DesktopUpdateRestartHelper.prepareRestartAfterUpdate(
+                            stagedJar = staged,
+                            version = stagedUpdateVersion,
+                            exitAfterSpawn = true,
+                        )
+                        if (r.isFailure) {
+                            updateMsg = r.exceptionOrNull()?.message
+                                ?: com.telos.desktop.i18n.TelosI18n.t("desktop_update_restart_failed")
+                        }
+                    }
+                }) {
+                    Text(com.telos.desktop.i18n.TelosI18n.t("desktop_update_restart_confirm"))
+                }
+                TextButton(onClick = {
+                    stagedUpdateJar = null
+                    stagedUpdateVersion = null
+                    updateMsg = com.telos.desktop.i18n.TelosI18n.t("desktop_update_restart_later")
+                }) {
+                    Text(com.telos.desktop.i18n.TelosI18n.t("desktop_update_restart_later"))
                 }
             }
         }
