@@ -23,4 +23,23 @@
     <string name="desktop_session_sync_imported">Seanso sync paketas importuotas</string>
     <string name="desktop_session_sync_key_stored">Sync raktas išsaugotas paleidimo importui be raginimo</string>
     <string name="desktop_session_sync_key_missing">Prieš įjungdami automatinį importą įveskite sync slaptafrazę</string>
+    <string name="desktop_vos_profiles_title">Seifo profiliai</string>
+    <string name="desktop_vos_profiles_summary">Įvardyti profilių aplankai config profiles/. desktop.properties saugo tik aktyvų vardą — niekada slaptažodžių.</string>
+    <string name="desktop_vos_profiles_active">Aktyvus profilis: %1$s</string>
+    <string name="desktop_vos_profiles_none">(nėra)</string>
+    <string name="desktop_vos_profiles_empty">Profilių dar nėra. Sukurkite vieną seifo tapatybėms perjungti.</string>
+    <string name="desktop_vos_profiles_kind_named">Įvardytas seifo profilis</string>
+    <string name="desktop_vos_profiles_kind_portable">Nešiojamo seifo šaknis</string>
+    <string name="desktop_vos_profiles_switch">Perjungti</string>
+    <string name="desktop_vos_profiles_use_portable">Naudoti šią nešiojamą šaknį</string>
+    <string name="desktop_vos_profiles_new_name">Naujo profilio pavadinimas</string>
+    <string name="desktop_vos_profiles_create">Sukurti ir perjungti</string>
+    <string name="desktop_vos_profiles_created">Sukurta ir perjungta į %1$s</string>
+    <string name="desktop_vos_profiles_switched">Perjungta į %1$s</string>
+    <string name="desktop_vos_profiles_invalid_name">Raidės, skaitmenys, taškai, pabraukimai arba brūkšneliai (maks. 64).</string>
+    <string name="desktop_vos_profiles_portable_hint">Nešiojamos šaknys laiko config, talpyklą ir temp už šeimininko profilio ribų (numatytasis „Windows“: Portable Data).</string>
+    <string name="desktop_vos_profiles_portable_path">Nešiojamo seifo aplanko kelias</string>
+    <string name="desktop_vos_profiles_add_portable">Pridėti nešiojamo seifo šaknį</string>
+    <string name="desktop_vos_profiles_portable_selected">Nešiojama šaknis: %1$s</string>
+    <string name="desktop_vos_profiles_portable_reject">Nešiojama šaknis negali būti šeimininko namų aplankas ar jo .config/.cache/.local.</string>
 </resources>

@@ -23,4 +23,23 @@
     <string name="desktop_session_sync_imported">Zaimportowano pakiet sync sesji</string>
     <string name="desktop_session_sync_key_stored">Zapisano klucz sync do importu przy starcie bez monitu</string>
     <string name="desktop_session_sync_key_missing">Wprowadź hasło sync przed włączeniem automatycznego importu</string>
+    <string name="desktop_vos_profiles_title">Profile sejfu</string>
+    <string name="desktop_vos_profiles_summary">Nazwane foldery profili w config profiles/. W desktop.properties tylko aktywna nazwa — nigdy hasła.</string>
+    <string name="desktop_vos_profiles_active">Aktywny profil: %1$s</string>
+    <string name="desktop_vos_profiles_none">(brak)</string>
+    <string name="desktop_vos_profiles_empty">Brak profili. Utwórz jeden, aby przełączać tożsamości sejfu.</string>
+    <string name="desktop_vos_profiles_kind_named">Nazwany profil sejfu</string>
+    <string name="desktop_vos_profiles_kind_portable">Przenośny katalog główny sejfu</string>
+    <string name="desktop_vos_profiles_switch">Przełącz</string>
+    <string name="desktop_vos_profiles_use_portable">Użyj tego przenośnego katalogu</string>
+    <string name="desktop_vos_profiles_new_name">Nazwa nowego profilu</string>
+    <string name="desktop_vos_profiles_create">Utwórz i przełącz</string>
+    <string name="desktop_vos_profiles_created">Utworzono i przełączono na %1$s</string>
+    <string name="desktop_vos_profiles_switched">Przełączono na %1$s</string>
+    <string name="desktop_vos_profiles_invalid_name">Litery, cyfry, kropki, podkreślenia lub myślniki (maks. 64).</string>
+    <string name="desktop_vos_profiles_portable_hint">Przenośne katalogi trzymają config, cache i temp poza profilem hosta (domyślnie Windows: Portable Data).</string>
+    <string name="desktop_vos_profiles_portable_path">Ścieżka folderu przenośnego sejfu</string>
+    <string name="desktop_vos_profiles_add_portable">Dodaj przenośny katalog sejfu</string>
+    <string name="desktop_vos_profiles_portable_selected">Przenośny katalog: %1$s</string>
+    <string name="desktop_vos_profiles_portable_reject">Przenośny katalog nie może być katalogiem domowym hosta ani jego .config/.cache/.local.</string>
 </resources>

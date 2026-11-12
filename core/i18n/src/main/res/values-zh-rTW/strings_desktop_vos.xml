@@ -23,4 +23,23 @@
     <string name="desktop_session_sync_imported">已匯入工作階段同步套件</string>
     <string name="desktop_session_sync_key_stored">已儲存同步金鑰，開機匯入無需提示</string>
     <string name="desktop_session_sync_key_missing">啟用自動匯入前請輸入同步密碼片語</string>
+    <string name="desktop_vos_profiles_title">保險庫設定檔</string>
+    <string name="desktop_vos_profiles_summary">位於 config profiles/ 下的命名設定檔資料夾。desktop.properties 僅保存作用中名稱 — 絕不保存密碼。</string>
+    <string name="desktop_vos_profiles_active">目前設定檔：%1$s</string>
+    <string name="desktop_vos_profiles_none">（無）</string>
+    <string name="desktop_vos_profiles_empty">尚無設定檔。建立一個以切換保險庫身分。</string>
+    <string name="desktop_vos_profiles_kind_named">命名保險庫設定檔</string>
+    <string name="desktop_vos_profiles_kind_portable">可攜式保險庫根目錄</string>
+    <string name="desktop_vos_profiles_switch">切換</string>
+    <string name="desktop_vos_profiles_use_portable">使用此可攜式根目錄</string>
+    <string name="desktop_vos_profiles_new_name">新設定檔名稱</string>
+    <string name="desktop_vos_profiles_create">建立並切換</string>
+    <string name="desktop_vos_profiles_created">已建立並切換到 %1$s</string>
+    <string name="desktop_vos_profiles_switched">已切換到 %1$s</string>
+    <string name="desktop_vos_profiles_invalid_name">使用字母、數字、點、底線或連字號（最多 64）。</string>
+    <string name="desktop_vos_profiles_portable_hint">可攜式根目錄將設定、快取和暫存檔保留在主機設定檔之外（Windows 預設：Portable Data）。</string>
+    <string name="desktop_vos_profiles_portable_path">可攜式保險庫資料夾路徑</string>
+    <string name="desktop_vos_profiles_add_portable">新增可攜式保險庫根目錄</string>
+    <string name="desktop_vos_profiles_portable_selected">可攜式根目錄：%1$s</string>
+    <string name="desktop_vos_profiles_portable_reject">可攜式根目錄不能是主機家目錄或其 .config/.cache/.local。</string>
 </resources>

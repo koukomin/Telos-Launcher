@@ -23,4 +23,23 @@
     <string name="desktop_session_sync_imported">Đã nhập gói sync phiên</string>
     <string name="desktop_session_sync_key_stored">Đã lưu khóa sync để nhập khi khởi động mà không hỏi</string>
     <string name="desktop_session_sync_key_missing">Nhập cụm mật khẩu sync trước khi bật nhập tự động</string>
+    <string name="desktop_vos_profiles_title">Hồ sơ vault</string>
+    <string name="desktop_vos_profiles_summary">Thư mục hồ sơ có tên dưới config profiles/. Chỉ tên đang dùng trong desktop.properties — không bao giờ mật khẩu.</string>
+    <string name="desktop_vos_profiles_active">Hồ sơ đang dùng: %1$s</string>
+    <string name="desktop_vos_profiles_none">(không)</string>
+    <string name="desktop_vos_profiles_empty">Chưa có hồ sơ. Tạo một để chuyển danh tính vault.</string>
+    <string name="desktop_vos_profiles_kind_named">Hồ sơ vault có tên</string>
+    <string name="desktop_vos_profiles_kind_portable">Gốc vault di động</string>
+    <string name="desktop_vos_profiles_switch">Chuyển</string>
+    <string name="desktop_vos_profiles_use_portable">Dùng gốc di động này</string>
+    <string name="desktop_vos_profiles_new_name">Tên hồ sơ mới</string>
+    <string name="desktop_vos_profiles_create">Tạo và chuyển</string>
+    <string name="desktop_vos_profiles_created">Đã tạo và chuyển sang %1$s</string>
+    <string name="desktop_vos_profiles_switched">Đã chuyển sang %1$s</string>
+    <string name="desktop_vos_profiles_invalid_name">Dùng chữ, số, chấm, gạch dưới hoặc gạch nối (tối đa 64).</string>
+    <string name="desktop_vos_profiles_portable_hint">Gốc di động giữ config, cache và temp khỏi hồ sơ máy chủ (mặc định Windows: Portable Data).</string>
+    <string name="desktop_vos_profiles_portable_path">Đường dẫn thư mục vault di động</string>
+    <string name="desktop_vos_profiles_add_portable">Thêm gốc vault di động</string>
+    <string name="desktop_vos_profiles_portable_selected">Gốc di động: %1$s</string>
+    <string name="desktop_vos_profiles_portable_reject">Gốc di động không được là thư mục home máy chủ hoặc .config/.cache/.local của nó.</string>
 </resources>

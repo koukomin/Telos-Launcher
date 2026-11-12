@@ -23,4 +23,23 @@
     <string name="desktop_session_sync_imported">Το πακέτο συγχρονισμού συνεδρίας εισήχθη</string>
     <string name="desktop_session_sync_key_stored">Το κλειδί sync αποθηκεύτηκε για εισαγωγή χωρίς προτροπή στην εκκίνηση</string>
     <string name="desktop_session_sync_key_missing">Εισαγάγετε συνθηματικό sync πριν ενεργοποιήσετε την αυτόματη εισαγωγή</string>
+    <string name="desktop_vos_profiles_title">Προφίλ vault</string>
+    <string name="desktop_vos_profiles_summary">Ονομασμένοι φάκελοι προφίλ στο config profiles/. Μόνο το ενεργό όνομα στο desktop.properties — ποτέ κωδικοί.</string>
+    <string name="desktop_vos_profiles_active">Ενεργό προφίλ: %1$s</string>
+    <string name="desktop_vos_profiles_none">(κανένα)</string>
+    <string name="desktop_vos_profiles_empty">Δεν υπάρχουν προφίλ ακόμη. Δημιουργήστε ένα για εναλλαγή ταυτοτήτων vault.</string>
+    <string name="desktop_vos_profiles_kind_named">Ονομαστικό προφίλ vault</string>
+    <string name="desktop_vos_profiles_kind_portable">Ρίζα φορητού vault</string>
+    <string name="desktop_vos_profiles_switch">Εναλλαγή</string>
+    <string name="desktop_vos_profiles_use_portable">Χρήση αυτής της φορητής ρίζας</string>
+    <string name="desktop_vos_profiles_new_name">Όνομα νέου προφίλ</string>
+    <string name="desktop_vos_profiles_create">Δημιουργία και εναλλαγή</string>
+    <string name="desktop_vos_profiles_created">Δημιουργήθηκε και εναλλαγή σε %1$s</string>
+    <string name="desktop_vos_profiles_switched">Εναλλαγή σε %1$s</string>
+    <string name="desktop_vos_profiles_invalid_name">Χρησιμοποιήστε γράμματα, αριθμούς, τελείες, κάτω παύλες ή παύλες (μέγ. 64).</string>
+    <string name="desktop_vos_profiles_portable_hint">Οι φορητές ρίζες κρατούν config, cache και temp μακριά από το προφίλ host (προεπιλογή Windows: Portable Data).</string>
+    <string name="desktop_vos_profiles_portable_path">Διαδρομή φακέλου φορητού vault</string>
+    <string name="desktop_vos_profiles_add_portable">Προσθήκη ρίζας φορητού vault</string>
+    <string name="desktop_vos_profiles_portable_selected">Φορητή ρίζα: %1$s</string>
+    <string name="desktop_vos_profiles_portable_reject">Η φορητή ρίζα δεν μπορεί να είναι το home του host ή τα .config/.cache/.local του.</string>
 </resources>

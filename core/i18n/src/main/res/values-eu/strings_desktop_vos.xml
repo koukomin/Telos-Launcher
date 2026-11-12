@@ -23,4 +23,23 @@
     <string name="desktop_session_sync_imported">Saioaren sync paketea inportatu da</string>
     <string name="desktop_session_sync_key_stored">Sync gakoa gorde da abiarazteko inporterako galdetu gabe</string>
     <string name="desktop_session_sync_key_missing">Idatzi sync pasahitza inportazio automatikoa gaitu aurretik</string>
+    <string name="desktop_vos_profiles_title">Kutxa-profilak</string>
+    <string name="desktop_vos_profiles_summary">Izeneko profil-karpetak config profiles/ -n. desktop.properties-en izen aktiboa soilik — inoiz ez pasahitzak.</string>
+    <string name="desktop_vos_profiles_active">Profil aktiboa: %1$s</string>
+    <string name="desktop_vos_profiles_none">(bat ere ez)</string>
+    <string name="desktop_vos_profiles_empty">Oraindik ez dago profilik. Sortu bat kutxa-identitateak aldatzeko.</string>
+    <string name="desktop_vos_profiles_kind_named">Izeneko kutxa-profila</string>
+    <string name="desktop_vos_profiles_kind_portable">Kutxa eramangarriaren erroa</string>
+    <string name="desktop_vos_profiles_switch">Aldatu</string>
+    <string name="desktop_vos_profiles_use_portable">Erabili erro eramangarri hau</string>
+    <string name="desktop_vos_profiles_new_name">Profil berriaren izena</string>
+    <string name="desktop_vos_profiles_create">Sortu eta aldatu</string>
+    <string name="desktop_vos_profiles_created">Sortu eta %1$s-ra aldatu da</string>
+    <string name="desktop_vos_profiles_switched">%1$s-ra aldatu da</string>
+    <string name="desktop_vos_profiles_invalid_name">Hizkiak, zenbakiak, puntuak, azpimarra edo marratxoak (gehienez 64).</string>
+    <string name="desktop_vos_profiles_portable_hint">Erro eramangarriek config, cache eta temp ostalariaren profiletik kanpo edukitzen dituzte (Windows lehenetsia: Portable Data).</string>
+    <string name="desktop_vos_profiles_portable_path">Kutxa eramangarriaren karpetaren bidea</string>
+    <string name="desktop_vos_profiles_add_portable">Gehitu kutxa eramangarriaren erroa</string>
+    <string name="desktop_vos_profiles_portable_selected">Erro eramangarria: %1$s</string>
+    <string name="desktop_vos_profiles_portable_reject">Erro eramangarria ezin da izan ostalariaren home edo haren .config/.cache/.local.</string>
 </resources>

@@ -158,6 +158,12 @@ fun LinuxDesktopSettingsPanel(
                 }
             }
         }
+        HelixSettingsCard(com.telos.desktop.i18n.TelosI18n.t("desktop_vos_profiles_title")) {
+            com.telos.desktop.vault.VaultProfileSwitchPanel(
+                vaultConfigDir = runCatching { com.telos.desktop.vault.PhantomVault.engine.configDir }.getOrNull(),
+                compact = true,
+            )
+        }
         if (filter.showPortableDesktopShell) {
             HelixSettingsCard("Portable") {
                 Text(com.telos.desktop.i18n.TelosI18n.t("desktop_helix_portable_note"), fontSize = 12.sp)

@@ -23,4 +23,23 @@
     <string name="desktop_session_sync_imported">Session-sync-pakke importeret</string>
     <string name="desktop_session_sync_key_stored">Sync-nøgle gemt til import ved opstart uden prompt</string>
     <string name="desktop_session_sync_key_missing">Angiv en sync-adgangskode, før automatisk import aktiveres</string>
+    <string name="desktop_vos_profiles_title">Vault-profiler</string>
+    <string name="desktop_vos_profiles_summary">Navngivne profilmapper under config profiles/. Kun aktivt navn i desktop.properties — aldrig adgangskoder.</string>
+    <string name="desktop_vos_profiles_active">Aktiv profil: %1$s</string>
+    <string name="desktop_vos_profiles_none">(ingen)</string>
+    <string name="desktop_vos_profiles_empty">Ingen profiler endnu. Opret en for at skifte vault-identiteter.</string>
+    <string name="desktop_vos_profiles_kind_named">Navngivet vault-profil</string>
+    <string name="desktop_vos_profiles_kind_portable">Bærbar vault-rod</string>
+    <string name="desktop_vos_profiles_switch">Skift</string>
+    <string name="desktop_vos_profiles_use_portable">Brug denne bærbare rod</string>
+    <string name="desktop_vos_profiles_new_name">Nyt profilnavn</string>
+    <string name="desktop_vos_profiles_create">Opret og skift</string>
+    <string name="desktop_vos_profiles_created">Oprettet og skiftet til %1$s</string>
+    <string name="desktop_vos_profiles_switched">Skiftet til %1$s</string>
+    <string name="desktop_vos_profiles_invalid_name">Bogstaver, tal, punktummer, understreger eller bindestreger (maks. 64).</string>
+    <string name="desktop_vos_profiles_portable_hint">Bærbare rødder holder config, cache og temp væk fra værtsprofilen (Windows-standard: Portable Data).</string>
+    <string name="desktop_vos_profiles_portable_path">Sti til bærbar vault-mappe</string>
+    <string name="desktop_vos_profiles_add_portable">Tilføj bærbar vault-rod</string>
+    <string name="desktop_vos_profiles_portable_selected">Bærbar rod: %1$s</string>
+    <string name="desktop_vos_profiles_portable_reject">Bærbar rod må ikke være værts-home eller dens .config/.cache/.local.</string>
 </resources>

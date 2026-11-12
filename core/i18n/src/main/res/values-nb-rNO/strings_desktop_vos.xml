@@ -23,4 +23,23 @@
     <string name="desktop_session_sync_imported">Sesjons-sync-pakke importert</string>
     <string name="desktop_session_sync_key_stored">Sync-nøkkel lagret for import ved oppstart uten spørsmål</string>
     <string name="desktop_session_sync_key_missing">Skriv inn en sync-passordfrase før du aktiverer automatisk import</string>
+    <string name="desktop_vos_profiles_title">Hvelvprofiler</string>
+    <string name="desktop_vos_profiles_summary">Navngitte profilmapper under config profiles/. Kun aktivt navn i desktop.properties — aldri passord.</string>
+    <string name="desktop_vos_profiles_active">Aktiv profil: %1$s</string>
+    <string name="desktop_vos_profiles_none">(ingen)</string>
+    <string name="desktop_vos_profiles_empty">Ingen profiler ennå. Opprett en for å bytte hvelvidentiteter.</string>
+    <string name="desktop_vos_profiles_kind_named">Navngitt hvelvprofil</string>
+    <string name="desktop_vos_profiles_kind_portable">Portabel hvelvrot</string>
+    <string name="desktop_vos_profiles_switch">Bytt</string>
+    <string name="desktop_vos_profiles_use_portable">Bruk denne portable roten</string>
+    <string name="desktop_vos_profiles_new_name">Nytt profilnavn</string>
+    <string name="desktop_vos_profiles_create">Opprett og bytt</string>
+    <string name="desktop_vos_profiles_created">Opprettet og byttet til %1$s</string>
+    <string name="desktop_vos_profiles_switched">Byttet til %1$s</string>
+    <string name="desktop_vos_profiles_invalid_name">Bokstaver, tall, punktum, understreker eller bindestreker (maks. 64).</string>
+    <string name="desktop_vos_profiles_portable_hint">Portable røtter holder config, cache og temp unna vertprofilen (Windows-standard: Portable Data).</string>
+    <string name="desktop_vos_profiles_portable_path">Sti til portabel hvelvmappe</string>
+    <string name="desktop_vos_profiles_add_portable">Legg til portabel hvelvrot</string>
+    <string name="desktop_vos_profiles_portable_selected">Portabel rot: %1$s</string>
+    <string name="desktop_vos_profiles_portable_reject">Portabel rot kan ikke være vertens hjem eller dens .config/.cache/.local.</string>
 </resources>

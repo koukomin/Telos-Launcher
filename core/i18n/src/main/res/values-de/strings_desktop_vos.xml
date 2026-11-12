@@ -23,4 +23,23 @@
     <string name="desktop_session_sync_imported">Sitzungs-Sync-Paket importiert</string>
     <string name="desktop_session_sync_key_stored">Sync-Schlüssel für promptfreien Startimport gespeichert</string>
     <string name="desktop_session_sync_key_missing">Sync-Passphrase eingeben, bevor der Auto-Import aktiviert wird</string>
+    <string name="desktop_vos_profiles_title">Vault-Profile</string>
+    <string name="desktop_vos_profiles_summary">Benannte Profilordner unter config profiles/. Nur aktiver Name in desktop.properties — niemals Passwörter.</string>
+    <string name="desktop_vos_profiles_active">Aktives Profil: %1$s</string>
+    <string name="desktop_vos_profiles_none">(keines)</string>
+    <string name="desktop_vos_profiles_empty">Noch keine Profile. Erstellen Sie eines, um Vault-Identitäten zu wechseln.</string>
+    <string name="desktop_vos_profiles_kind_named">Benanntes Vault-Profil</string>
+    <string name="desktop_vos_profiles_kind_portable">Portable Vault-Wurzel</string>
+    <string name="desktop_vos_profiles_switch">Wechseln</string>
+    <string name="desktop_vos_profiles_use_portable">Diese portable Wurzel verwenden</string>
+    <string name="desktop_vos_profiles_new_name">Neuer Profilname</string>
+    <string name="desktop_vos_profiles_create">Erstellen und wechseln</string>
+    <string name="desktop_vos_profiles_created">Erstellt und gewechselt zu %1$s</string>
+    <string name="desktop_vos_profiles_switched">Gewechselt zu %1$s</string>
+    <string name="desktop_vos_profiles_invalid_name">Buchstaben, Ziffern, Punkte, Unterstriche oder Bindestriche (max. 64).</string>
+    <string name="desktop_vos_profiles_portable_hint">Portable Wurzeln halten Config, Cache und Temp vom Host-Profil fern (Windows-Standard: Portable Data).</string>
+    <string name="desktop_vos_profiles_portable_path">Pfad zum portablen Vault-Ordner</string>
+    <string name="desktop_vos_profiles_add_portable">Portable Vault-Wurzel hinzufügen</string>
+    <string name="desktop_vos_profiles_portable_selected">Portable Wurzel: %1$s</string>
+    <string name="desktop_vos_profiles_portable_reject">Portable Wurzel darf nicht das Host-Home oder dessen .config/.cache/.local sein.</string>
 </resources>

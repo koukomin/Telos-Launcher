@@ -23,4 +23,23 @@
     <string name="desktop_session_sync_imported">Pachetul sync de sesiune a fost importat</string>
     <string name="desktop_session_sync_key_stored">Cheia sync a fost stocată pentru import la pornire fără solicitare</string>
     <string name="desktop_session_sync_key_missing">Introduceți fraza secretă sync înainte de a activa importul automat</string>
+    <string name="desktop_vos_profiles_title">Profiluri seif</string>
+    <string name="desktop_vos_profiles_summary">Foldere de profil denumite în config profiles/. Doar numele activ în desktop.properties — niciodată parole.</string>
+    <string name="desktop_vos_profiles_active">Profil activ: %1$s</string>
+    <string name="desktop_vos_profiles_none">(niciunul)</string>
+    <string name="desktop_vos_profiles_empty">Încă nu există profiluri. Creați unul pentru a comuta identitățile seifului.</string>
+    <string name="desktop_vos_profiles_kind_named">Profil seif denumit</string>
+    <string name="desktop_vos_profiles_kind_portable">Rădăcină seif portabil</string>
+    <string name="desktop_vos_profiles_switch">Comută</string>
+    <string name="desktop_vos_profiles_use_portable">Folosește această rădăcină portabilă</string>
+    <string name="desktop_vos_profiles_new_name">Nume profil nou</string>
+    <string name="desktop_vos_profiles_create">Creează și comută</string>
+    <string name="desktop_vos_profiles_created">Creat și comutat la %1$s</string>
+    <string name="desktop_vos_profiles_switched">Comutat la %1$s</string>
+    <string name="desktop_vos_profiles_invalid_name">Litere, cifre, puncte, underscore sau cratime (max. 64).</string>
+    <string name="desktop_vos_profiles_portable_hint">Rădăcinile portabile țin config, cache și temp în afara profilului host (implicit Windows: Portable Data).</string>
+    <string name="desktop_vos_profiles_portable_path">Calea folderului seif portabil</string>
+    <string name="desktop_vos_profiles_add_portable">Adaugă rădăcină seif portabil</string>
+    <string name="desktop_vos_profiles_portable_selected">Rădăcină portabilă: %1$s</string>
+    <string name="desktop_vos_profiles_portable_reject">Rădăcina portabilă nu poate fi home-ul host sau .config/.cache/.local ale acestuia.</string>
 </resources>

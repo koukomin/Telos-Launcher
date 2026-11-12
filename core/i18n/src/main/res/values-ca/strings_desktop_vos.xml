@@ -23,4 +23,23 @@
     <string name="desktop_session_sync_imported">S’ha importat el paquet de sync de sessió</string>
     <string name="desktop_session_sync_key_stored">Clau de sync desada per importar a l’arrencada sense demanar-la</string>
     <string name="desktop_session_sync_key_missing">Introduïu una frase de sync abans d’activar la importació automàtica</string>
+    <string name="desktop_vos_profiles_title">Perfils del vault</string>
+    <string name="desktop_vos_profiles_summary">Carpetes de perfil amb nom a config profiles/. Només el nom actiu a desktop.properties — mai contrasenyes.</string>
+    <string name="desktop_vos_profiles_active">Perfil actiu: %1$s</string>
+    <string name="desktop_vos_profiles_none">(cap)</string>
+    <string name="desktop_vos_profiles_empty">Encara no hi ha perfils. Creeu-ne un per canviar identitats del vault.</string>
+    <string name="desktop_vos_profiles_kind_named">Perfil de vault amb nom</string>
+    <string name="desktop_vos_profiles_kind_portable">Arrel de vault portàtil</string>
+    <string name="desktop_vos_profiles_switch">Canvia</string>
+    <string name="desktop_vos_profiles_use_portable">Usa aquesta arrel portàtil</string>
+    <string name="desktop_vos_profiles_new_name">Nom del nou perfil</string>
+    <string name="desktop_vos_profiles_create">Crea i canvia</string>
+    <string name="desktop_vos_profiles_created">Creat i canviat a %1$s</string>
+    <string name="desktop_vos_profiles_switched">Canviat a %1$s</string>
+    <string name="desktop_vos_profiles_invalid_name">Utilitzeu lletres, números, punts, guions baixos o guions (màx. 64).</string>
+    <string name="desktop_vos_profiles_portable_hint">Les arrels portàtils mantenen config, memòria cau i temp fora del perfil de l’amfitrió (per defecte a Windows: Portable Data).</string>
+    <string name="desktop_vos_profiles_portable_path">Camí de la carpeta del vault portàtil</string>
+    <string name="desktop_vos_profiles_add_portable">Afegeix arrel de vault portàtil</string>
+    <string name="desktop_vos_profiles_portable_selected">Arrel portàtil: %1$s</string>
+    <string name="desktop_vos_profiles_portable_reject">L’arrel portàtil no pot ser l’home de l’amfitrió ni els seus .config/.cache/.local.</string>
 </resources>

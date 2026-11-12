@@ -23,4 +23,23 @@
     <string name="desktop_session_sync_imported">Seansi sync-pakett imporditud</string>
     <string name="desktop_session_sync_key_stored">Sync-võti salvestatud käivitumise impordiks ilma küsimiseta</string>
     <string name="desktop_session_sync_key_missing">Sisestage sync-paroolifraas enne automaatse impordi lubamist</string>
+    <string name="desktop_vos_profiles_title">Hoidla profiilid</string>
+    <string name="desktop_vos_profiles_summary">Nimetatud profiilikaustad asukohas config profiles/. desktop.properties sisaldab ainult aktiivset nime — mitte kunagi paroole.</string>
+    <string name="desktop_vos_profiles_active">Aktiivne profiil: %1$s</string>
+    <string name="desktop_vos_profiles_none">(puudub)</string>
+    <string name="desktop_vos_profiles_empty">Profiile pole veel. Looge üks hoidla identiteetide vahetamiseks.</string>
+    <string name="desktop_vos_profiles_kind_named">Nimetatud hoidla profiil</string>
+    <string name="desktop_vos_profiles_kind_portable">Kaasaskantava hoidla juur</string>
+    <string name="desktop_vos_profiles_switch">Vaheta</string>
+    <string name="desktop_vos_profiles_use_portable">Kasuta seda kaasaskantavat juurt</string>
+    <string name="desktop_vos_profiles_new_name">Uue profiili nimi</string>
+    <string name="desktop_vos_profiles_create">Loo ja vaheta</string>
+    <string name="desktop_vos_profiles_created">Loodud ja vahetatud: %1$s</string>
+    <string name="desktop_vos_profiles_switched">Vahetatud: %1$s</string>
+    <string name="desktop_vos_profiles_invalid_name">Tähed, numbrid, punktid, alakriipsud või sidekriipsud (max 64).</string>
+    <string name="desktop_vos_profiles_portable_hint">Kaasaskantavad juured hoiavad configi, vahemälu ja tempi hostiprofiilist eemal (Windowsi vaikimisi: Portable Data).</string>
+    <string name="desktop_vos_profiles_portable_path">Kaasaskantava hoidla kausta tee</string>
+    <string name="desktop_vos_profiles_add_portable">Lisa kaasaskantava hoidla juur</string>
+    <string name="desktop_vos_profiles_portable_selected">Kaasaskantav juur: %1$s</string>
+    <string name="desktop_vos_profiles_portable_reject">Kaasaskantav juur ei tohi olla hosti kodu ega selle .config/.cache/.local.</string>
 </resources>

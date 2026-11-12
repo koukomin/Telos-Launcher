@@ -23,4 +23,23 @@
     <string name="desktop_session_sync_imported">Pacchetto de sync de session importate</string>
     <string name="desktop_session_sync_key_stored">Clave de sync immagazinate pro importation al initio sin invitation</string>
     <string name="desktop_session_sync_key_missing">Insere un phrase secret de sync ante activar le importation automatic</string>
+    <string name="desktop_vos_profiles_title">Profilos del coffre</string>
+    <string name="desktop_vos_profiles_summary">Dossieres de profilo nominate sub config profiles/. Solo le nomine active in desktop.properties — nunquam contrasignos.</string>
+    <string name="desktop_vos_profiles_active">Profilo active: %1$s</string>
+    <string name="desktop_vos_profiles_none">(necun)</string>
+    <string name="desktop_vos_profiles_empty">Ancora nulle profilos. Crea un pro cambiar identitates del coffre.</string>
+    <string name="desktop_vos_profiles_kind_named">Profilo de coffre nominate</string>
+    <string name="desktop_vos_profiles_kind_portable">Radice de coffre portabile</string>
+    <string name="desktop_vos_profiles_switch">Cambiar</string>
+    <string name="desktop_vos_profiles_use_portable">Usar iste radice portabile</string>
+    <string name="desktop_vos_profiles_new_name">Nomine del nove profilo</string>
+    <string name="desktop_vos_profiles_create">Crear e cambiar</string>
+    <string name="desktop_vos_profiles_created">Create e cambiate a %1$s</string>
+    <string name="desktop_vos_profiles_switched">Cambiate a %1$s</string>
+    <string name="desktop_vos_profiles_invalid_name">Usa litteras, numeros, punctos, sublineas o tractos de union (max. 64).</string>
+    <string name="desktop_vos_profiles_portable_hint">Le radices portabile mantene config, cache e temp foras del profilo hospite (predefinite Windows: Portable Data).</string>
+    <string name="desktop_vos_profiles_portable_path">Cammino del dossier de coffre portabile</string>
+    <string name="desktop_vos_profiles_add_portable">Adder radice de coffre portabile</string>
+    <string name="desktop_vos_profiles_portable_selected">Radice portabile: %1$s</string>
+    <string name="desktop_vos_profiles_portable_reject">Le radice portabile non pote esser le domicilio hospite o su .config/.cache/.local.</string>
 </resources>

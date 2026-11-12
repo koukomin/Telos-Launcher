@@ -23,4 +23,23 @@
     <string name="desktop_session_sync_imported">Paket sync seje je uvožen</string>
     <string name="desktop_session_sync_key_stored">Sync ključ shranjen za uvoz ob zagonu brez poziva</string>
     <string name="desktop_session_sync_key_missing">Pred vklopom samodejnega uvoza vnesite sync geselsko frazo</string>
+    <string name="desktop_vos_profiles_title">Profili trezorja</string>
+    <string name="desktop_vos_profiles_summary">Poimenovane mape profilov v config profiles/. V desktop.properties samo aktivno ime — nikoli gesla.</string>
+    <string name="desktop_vos_profiles_active">Aktivni profil: %1$s</string>
+    <string name="desktop_vos_profiles_none">(brez)</string>
+    <string name="desktop_vos_profiles_empty">Še ni profilov. Ustvarite enega za preklop identitet trezorja.</string>
+    <string name="desktop_vos_profiles_kind_named">Poimenovan profil trezorja</string>
+    <string name="desktop_vos_profiles_kind_portable">Koren prenosnega trezorja</string>
+    <string name="desktop_vos_profiles_switch">Preklopi</string>
+    <string name="desktop_vos_profiles_use_portable">Uporabi ta prenosni koren</string>
+    <string name="desktop_vos_profiles_new_name">Ime novega profila</string>
+    <string name="desktop_vos_profiles_create">Ustvari in preklopi</string>
+    <string name="desktop_vos_profiles_created">Ustvarjeno in preklopljeno na %1$s</string>
+    <string name="desktop_vos_profiles_switched">Preklopljeno na %1$s</string>
+    <string name="desktop_vos_profiles_invalid_name">Črke, številke, pike, podčrtaji ali vezaji (najv. 64).</string>
+    <string name="desktop_vos_profiles_portable_hint">Prenosni koreni držijo config, predpomnilnik in temp zunaj profila gostitelja (privzeto v Windows: Portable Data).</string>
+    <string name="desktop_vos_profiles_portable_path">Pot mape prenosnega trezorja</string>
+    <string name="desktop_vos_profiles_add_portable">Dodaj koren prenosnega trezorja</string>
+    <string name="desktop_vos_profiles_portable_selected">Prenosni koren: %1$s</string>
+    <string name="desktop_vos_profiles_portable_reject">Prenosni koren ne sme biti domača mapa gostitelja ali njene .config/.cache/.local.</string>
 </resources>

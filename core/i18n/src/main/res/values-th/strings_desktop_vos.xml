@@ -23,4 +23,23 @@
     <string name="desktop_session_sync_imported">นำเข้าชุดซิงค์เซสชันแล้ว</string>
     <string name="desktop_session_sync_key_stored">เก็บคีย์ซิงค์ไว้สำหรับนำเข้าตอนบูตโดยไม่ต้องถาม</string>
     <string name="desktop_session_sync_key_missing">ป้อนรหัสผ่านซิงค์ก่อนเปิดการนำเข้าอัตโนมัติ</string>
+    <string name="desktop_vos_profiles_title">โปรไฟล์วอลต์</string>
+    <string name="desktop_vos_profiles_summary">โฟลเดอร์โปรไฟล์ที่มีชื่อภายใต้ config profiles/ เก็บเฉพาะชื่อที่ใช้งานใน desktop.properties — ไม่เก็บรหัสผ่าน</string>
+    <string name="desktop_vos_profiles_active">โปรไฟล์ที่ใช้งาน: %1$s</string>
+    <string name="desktop_vos_profiles_none">(ไม่มี)</string>
+    <string name="desktop_vos_profiles_empty">ยังไม่มีโปรไฟล์ สร้างหนึ่งรายการเพื่อสลับตัวตนวอลต์</string>
+    <string name="desktop_vos_profiles_kind_named">โปรไฟล์วอลต์ที่มีชื่อ</string>
+    <string name="desktop_vos_profiles_kind_portable">รากวอลต์พกพา</string>
+    <string name="desktop_vos_profiles_switch">สลับ</string>
+    <string name="desktop_vos_profiles_use_portable">ใช้รากพกพานี้</string>
+    <string name="desktop_vos_profiles_new_name">ชื่อโปรไฟล์ใหม่</string>
+    <string name="desktop_vos_profiles_create">สร้างและสลับ</string>
+    <string name="desktop_vos_profiles_created">สร้างและสลับเป็น %1$s แล้ว</string>
+    <string name="desktop_vos_profiles_switched">สลับเป็น %1$s แล้ว</string>
+    <string name="desktop_vos_profiles_invalid_name">ใช้ตัวอักษร ตัวเลข จุด ขีดล่าง หรือยัติภังค์ (สูงสุด 64)</string>
+    <string name="desktop_vos_profiles_portable_hint">รากพกพาเก็บ config แคช และ temp นอกโปรไฟล์โฮสต์ (ค่าเริ่มต้น Windows: Portable Data)</string>
+    <string name="desktop_vos_profiles_portable_path">พาธโฟลเดอร์วอลต์พกพา</string>
+    <string name="desktop_vos_profiles_add_portable">เพิ่มรากวอลต์พกพา</string>
+    <string name="desktop_vos_profiles_portable_selected">รากพกพา: %1$s</string>
+    <string name="desktop_vos_profiles_portable_reject">รากพกพาต้องไม่ใช่โฮมของโฮสต์หรือ .config/.cache/.local ของมัน</string>
 </resources>

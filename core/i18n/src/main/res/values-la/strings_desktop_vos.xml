@@ -23,4 +23,23 @@
     <string name="desktop_session_sync_imported">Fasciculus sync sessionis importatus est</string>
     <string name="desktop_session_sync_key_stored">Clavis sync reposita ad importationem in initio sine interrogatione</string>
     <string name="desktop_session_sync_key_missing">Phrase secreta sync ante importationem automaticam activandam inserenda est</string>
+    <string name="desktop_vos_profiles_title">Profila arcae</string>
+    <string name="desktop_vos_profiles_summary">Fasciculi profili nominati sub config profiles/. Solum nomen activum in desktop.properties — numquam tesserae.</string>
+    <string name="desktop_vos_profiles_active">Profilum activum: %1$s</string>
+    <string name="desktop_vos_profiles_none">(nullum)</string>
+    <string name="desktop_vos_profiles_empty">Nulla profila adhuc. Unum crea ut identitates arcae mutes.</string>
+    <string name="desktop_vos_profiles_kind_named">Profilum arcae nominatum</string>
+    <string name="desktop_vos_profiles_kind_portable">Radix arcae portatilis</string>
+    <string name="desktop_vos_profiles_switch">Mutare</string>
+    <string name="desktop_vos_profiles_use_portable">Hac radice portatili uti</string>
+    <string name="desktop_vos_profiles_new_name">Nomen novi profili</string>
+    <string name="desktop_vos_profiles_create">Creare et mutare</string>
+    <string name="desktop_vos_profiles_created">Creatum et mutatum ad %1$s</string>
+    <string name="desktop_vos_profiles_switched">Mutatum ad %1$s</string>
+    <string name="desktop_vos_profiles_invalid_name">Litteris, numeris, punctis, lineis inferioribus vel hyphenis utere (max. 64).</string>
+    <string name="desktop_vos_profiles_portable_hint">Radices portatiles config, cache et temp extra profilum hospitis servant (praedefinitum Windows: Portable Data).</string>
+    <string name="desktop_vos_profiles_portable_path">Via fasciculi arcae portatilis</string>
+    <string name="desktop_vos_profiles_add_portable">Radicem arcae portatilis addere</string>
+    <string name="desktop_vos_profiles_portable_selected">Radix portatilis: %1$s</string>
+    <string name="desktop_vos_profiles_portable_reject">Radix portatilis non potest esse domus hospitis nec eius .config/.cache/.local.</string>
 </resources>
