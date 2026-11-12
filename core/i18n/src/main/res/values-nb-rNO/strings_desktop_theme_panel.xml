@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_panel_surface">Panelflate</string>
+    <string name="desktop_theme_panel_surface_hint">Gjennomsiktig eller uskarp gjelder bare panelroten; menyer forblir ugjennomsiktige. Uskarp lagrer panelBlur for frost; vertsbakgrunnsuskarphet er best-effort hvis den mangler.</string>
+    <string name="desktop_theme_panel_transparent">Gjennomsiktig</string>
+    <string name="desktop_theme_panel_blurred">Uskarp</string>
+    <string name="desktop_theme_panel_solid">Solid</string>
+    <string name="desktop_theme_panel_opacity">Paneldekkevne: %1$d%%</string>
+    <string name="desktop_theme_panel_blur">Glassuskarphet: %1$d</string>
+    <string name="desktop_theme_panel_blur_unavailable">Vertsbakgrunnsuskarphet er utilgjengelig; Telos bruker en gjennomskinnelig frostplate og beholder uskarphetspreferansen.</string>
+</resources>

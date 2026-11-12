@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_panel_surface">พื้นผิวแผง</string>
+    <string name="desktop_theme_panel_surface_hint">โปร่งใสหรือเบลอมีผลเฉพาะรากแผง เมนูยังทึบ โหมดเบลอบันทึก panelBlur สำหรับ frost การเบลอวอลเปเปอร์โฮสต์เป็น best-effort หากไม่มี</string>
+    <string name="desktop_theme_panel_transparent">โปร่งใส</string>
+    <string name="desktop_theme_panel_blurred">เบลอ</string>
+    <string name="desktop_theme_panel_solid">ทึบ</string>
+    <string name="desktop_theme_panel_opacity">ความทึบของแผง: %1$d%%</string>
+    <string name="desktop_theme_panel_blur">เบลอแก้ว: %1$d</string>
+    <string name="desktop_theme_panel_blur_unavailable">ไม่มีเบลอวอลเปเปอร์โฮสต์ Telos ใช้แผ่น frost กึ่งโปร่งใสและเก็บค่าเบลอไว้</string>
+</resources>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_panel_surface">Dromchla an phainéil</string>
+    <string name="desktop_theme_panel_surface_hint">Trédhearcach nó doiléir a bhaineann leis an bhfréamh painéil amháin; fanann na roghchláir teimhneach. Coinníonn doiléir panelBlur le haghaidh frost; is best-effort doiléiriú cúlra an ósta mura bhfuil sé ar fáil.</string>
+    <string name="desktop_theme_panel_transparent">Trédhearcach</string>
+    <string name="desktop_theme_panel_blurred">Doiléir</string>
+    <string name="desktop_theme_panel_solid">Soladach</string>
+    <string name="desktop_theme_panel_opacity">Teimhneacht an phainéil: %1$d%%</string>
+    <string name="desktop_theme_panel_blur">Doiléiriú gloine: %1$d</string>
+    <string name="desktop_theme_panel_blur_unavailable">Níl doiléiriú cúlra an ósta ar fáil; úsáideann Telos pláta frost tréshoilseach agus coinníonn do rogha doiléirithe.</string>
+</resources>

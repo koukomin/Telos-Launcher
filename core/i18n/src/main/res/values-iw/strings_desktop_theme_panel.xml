@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_panel_surface">משטח הפאנל</string>
+    <string name="desktop_theme_panel_surface_hint">שקוף או מטושטש משפיע רק על שורש הפאנל; תפריטים נשארים אטומים. מטושטש שומר panelBlur ל־frost; טשטוש רקע המארח הוא best-effort כשאינו זמין.</string>
+    <string name="desktop_theme_panel_transparent">שקוף</string>
+    <string name="desktop_theme_panel_blurred">מטושטש</string>
+    <string name="desktop_theme_panel_solid">אטום</string>
+    <string name="desktop_theme_panel_opacity">אטימות הפאנל: %1$d%%</string>
+    <string name="desktop_theme_panel_blur">טשטוש זכוכית: %1$d</string>
+    <string name="desktop_theme_panel_blur_unavailable">טשטוש רקע המארח אינו זמין; Telos משתמש בלוח frost שקוף חלקית ושומר את העדפת הטשטוש.</string>
+</resources>

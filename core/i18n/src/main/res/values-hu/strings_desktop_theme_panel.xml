@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_panel_surface">Panelszín</string>
+    <string name="desktop_theme_panel_surface_hint">Az átlátszó vagy elmosott csak a panel gyökerét érinti; a menük átlátszatlanok maradnak. Az elmosott a panelBlur értéket tárolja frosthoz; a gazda háttérkép-elmosása best-effort, ha nincs.</string>
+    <string name="desktop_theme_panel_transparent">Átlátszó</string>
+    <string name="desktop_theme_panel_blurred">Elmosott</string>
+    <string name="desktop_theme_panel_solid">Tömör</string>
+    <string name="desktop_theme_panel_opacity">Panel átlátszatlanság: %1$d%%</string>
+    <string name="desktop_theme_panel_blur">Üveg elmosás: %1$d</string>
+    <string name="desktop_theme_panel_blur_unavailable">A gazda háttérkép-elmosása nem érhető el; a Telos áttetsző frost lemezt használ, és megőrzi az elmosási beállítást.</string>
+</resources>

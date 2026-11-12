@@ -26,6 +26,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.telos.desktop.cursor.CursorPreset
@@ -45,6 +46,8 @@ import com.telos.desktop.sync.DesktopSessionSync
 import com.telos.desktop.sync.DesktopVaultRestore
 import com.telos.desktop.sync.pairing.LanPairProtocol
 import com.telos.desktop.sync.pairing.LanPairingServer
+import com.telos.desktop.theme.PanelSurfaceMapping
+import com.telos.desktop.theme.PanelSurfaceMode
 import com.telos.desktop.update.DesktopGitHubReleasesChannel
 import com.telos.desktop.update.DesktopSignedUpdate
 import com.telos.desktop.update.DesktopUpdateRestartHelper
@@ -86,6 +89,9 @@ fun LinuxDesktopSettingsPanel(
                 settings.themeAccent.equals("wallpaper", ignoreCase = true),
         )
     }
+    var panelMode by remember { mutableStateOf(PanelSurfaceMode.parse(settings.panelSurfaceMode)) }
+    var panelAlpha by remember { mutableStateOf(settings.panelAlpha) }
+    var panelBlur by remember { mutableStateOf(settings.panelBlur) }
     val t = com.telos.desktop.i18n.TelosI18n
     val indexEntries = remember {
         helixSettingsIndexEntries(
@@ -131,6 +137,19 @@ fun LinuxDesktopSettingsPanel(
                 t.t("desktop_theme_workspace_tints_hint"),
                 "workspace",
                 "tint",
+            ),
+            appearanceTitle = t.t("desktop_theme_panel_surface"),
+            appearanceKeywords = listOf(
+                t.t("desktop_theme_panel_surface"),
+                t.t("desktop_theme_panel_transparent"),
+                t.t("desktop_theme_panel_blurred"),
+                t.t("desktop_theme_panel_solid"),
+                t.t("desktop_theme_panel_surface_hint"),
+                "panel",
+                "glass",
+                "blur",
+                "transparent",
+                "opaque",
             ),
             portalKeywords = listOf(
                 t.t("desktop_perm_camera"),
@@ -354,6 +373,82 @@ fun LinuxDesktopSettingsPanel(
                     fontSize = 11.sp,
                     color = TelosColors.onSurface.copy(0.7f),
                 )
+            }
+        }
+        if (show("appearance")) {
+            HelixSettingsCard(t.t("desktop_theme_panel_surface")) {
+                Text(
+                    t.t("desktop_theme_panel_surface_hint"),
+                    fontSize = 11.sp,
+                    color = TelosColors.onSurface.copy(0.7f),
+                )
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    HelixTechPill(
+                        t.t("desktop_theme_panel_transparent"),
+                        selected = panelMode == PanelSurfaceMode.Transparent,
+                        accent = TelosColors.secondary,
+                    ) {
+                        panelMode = PanelSurfaceMode.Transparent
+                        settings.panelSurfaceMode = panelMode.propertyValue
+                        settings.save()
+                    }
+                    HelixTechPill(
+                        t.t("desktop_theme_panel_blurred"),
+                        selected = panelMode == PanelSurfaceMode.Blurred,
+                        accent = Color(0xFF00E676),
+                    ) {
+                        panelMode = PanelSurfaceMode.Blurred
+                        settings.panelSurfaceMode = panelMode.propertyValue
+                        settings.save()
+                    }
+                    HelixTechPill(
+                        t.t("desktop_theme_panel_solid"),
+                        selected = panelMode == PanelSurfaceMode.Solid,
+                        accent = TelosColors.primary,
+                    ) {
+                        panelMode = PanelSurfaceMode.Solid
+                        settings.panelSurfaceMode = panelMode.propertyValue
+                        settings.save()
+                    }
+                }
+                val resolved = PanelSurfaceMapping.resolve(panelMode, panelAlpha, panelBlur)
+                if (resolved.frostPlateFallback) {
+                    Text(
+                        t.t("desktop_theme_panel_blur_unavailable"),
+                        fontSize = 10.sp,
+                        color = TelosColors.secondary.copy(0.85f),
+                    )
+                }
+                if (panelMode != PanelSurfaceMode.Solid) {
+                    Text(
+                        t.t("desktop_theme_panel_opacity", (panelAlpha * 100).toInt()),
+                        fontSize = 11.sp,
+                        color = TelosColors.onSurface,
+                    )
+                    Slider(
+                        value = panelAlpha.coerceIn(0.2f, 1f),
+                        onValueChange = {
+                            panelAlpha = it.coerceIn(0.2f, 1f)
+                            settings.panelAlpha = panelAlpha
+                        },
+                        onValueChangeFinished = { settings.save() },
+                    )
+                }
+                if (panelMode == PanelSurfaceMode.Blurred) {
+                    Text(
+                        t.t("desktop_theme_panel_blur", panelBlur.toInt()),
+                        fontSize = 11.sp,
+                        color = TelosColors.onSurface,
+                    )
+                    Slider(
+                        value = (panelBlur / 32f).coerceIn(0f, 1f),
+                        onValueChange = {
+                            panelBlur = (it * 32f).coerceIn(0f, 32f)
+                            settings.panelBlur = panelBlur
+                        },
+                        onValueChangeFinished = { settings.save() },
+                    )
+                }
             }
         }
         if (filter.showLinuxIconThemeSelector && show("icons")) {
@@ -954,6 +1049,8 @@ private fun helixSettingsIndexEntries(
     nightKeywords: List<String>,
     sessionKeywords: List<String>,
     desktopKeywords: List<String>,
+    appearanceTitle: String,
+    appearanceKeywords: List<String>,
     portalKeywords: List<String>,
     opsecKeywords: List<String>,
 ): List<HelixSettingsIndexEntry> = listOf(
@@ -962,6 +1059,7 @@ private fun helixSettingsIndexEntries(
     HelixSettingsIndexEntry("wallpaper_tonal", wallpaperTonalTitle, wallpaperTonalKeywords),
     HelixSettingsIndexEntry("night_light", nightTitle, nightKeywords),
     HelixSettingsIndexEntry("desktop", desktopTitle, desktopKeywords),
+    HelixSettingsIndexEntry("appearance", appearanceTitle, appearanceKeywords),
     HelixSettingsIndexEntry("icons", iconsTitle, listOf("theme", "papirus", "tela", "candy")),
     HelixSettingsIndexEntry("windows", windowsTitle, listOf("klassy", "buttons")),
     HelixSettingsIndexEntry("cursor", cursorTitle, listOf("xcursor", "size", "breeze")),

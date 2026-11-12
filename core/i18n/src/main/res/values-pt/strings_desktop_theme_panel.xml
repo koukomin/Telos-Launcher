@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_panel_surface">Superfície do painel</string>
+    <string name="desktop_theme_panel_surface_hint">Transparente ou desfocada limpa só a raiz do painel; os menus ficam opacos. Desfocada guarda panelBlur para frost; o desfoque do fundo do anfitrião é best-effort quando indisponível.</string>
+    <string name="desktop_theme_panel_transparent">Transparente</string>
+    <string name="desktop_theme_panel_blurred">Desfocada</string>
+    <string name="desktop_theme_panel_solid">Sólida</string>
+    <string name="desktop_theme_panel_opacity">Opacidade do painel: %1$d%%</string>
+    <string name="desktop_theme_panel_blur">Desfoque de vidro: %1$d</string>
+    <string name="desktop_theme_panel_blur_unavailable">O desfoque do fundo do anfitrião não está disponível; o Telos usa uma placa frost translúcida e mantém a sua preferência de desfoque.</string>
+</resources>

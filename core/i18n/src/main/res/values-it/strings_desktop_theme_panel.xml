@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_panel_surface">Superficie del pannello</string>
+    <string name="desktop_theme_panel_surface_hint">Trasparente o sfocato riguarda solo la radice del pannello; i menu restano opachi. Sfocato memorizza panelBlur per il frost; lo sfocamento dello sfondo host è best-effort se non disponibile.</string>
+    <string name="desktop_theme_panel_transparent">Trasparente</string>
+    <string name="desktop_theme_panel_blurred">Sfocato</string>
+    <string name="desktop_theme_panel_solid">Solido</string>
+    <string name="desktop_theme_panel_opacity">Opacità del pannello: %1$d%%</string>
+    <string name="desktop_theme_panel_blur">Sfocatura vetro: %1$d</string>
+    <string name="desktop_theme_panel_blur_unavailable">Lo sfocamento dello sfondo host non è disponibile; Telos usa una lastra frost traslucida e mantiene la preferenza di sfocatura.</string>
+</resources>

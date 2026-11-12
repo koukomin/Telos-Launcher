@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_panel_surface">Surface du panneau</string>
+    <string name="desktop_theme_panel_surface_hint">Transparent ou flou n’affecte que la racine du panneau ; les menus restent opaques. Flou enregistre panelBlur pour le givre ; le flou d’arrière-plan hôte est best-effort s’il est indisponible.</string>
+    <string name="desktop_theme_panel_transparent">Transparent</string>
+    <string name="desktop_theme_panel_blurred">Flou</string>
+    <string name="desktop_theme_panel_solid">Opaque</string>
+    <string name="desktop_theme_panel_opacity">Opacité du panneau : %1$d%%</string>
+    <string name="desktop_theme_panel_blur">Flou de verre : %1$d</string>
+    <string name="desktop_theme_panel_blur_unavailable">Le flou du fond d’écran hôte est indisponible ; Telos utilise une plaque givrée translucide et conserve votre préférence de flou.</string>
+</resources>

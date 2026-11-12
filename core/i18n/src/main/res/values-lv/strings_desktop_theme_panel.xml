@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_panel_surface">Paneļa virsma</string>
+    <string name="desktop_theme_panel_surface_hint">Caurspīdīgs vai izplūdis ietekmē tikai paneļa sakni; izvēlnes paliek necaurspīdīgas. Izplūdis saglabā panelBlur frostam; resursdatora fona izplūdums ir best-effort, ja nav pieejams.</string>
+    <string name="desktop_theme_panel_transparent">Caurspīdīgs</string>
+    <string name="desktop_theme_panel_blurred">Izplūdis</string>
+    <string name="desktop_theme_panel_solid">Blīvs</string>
+    <string name="desktop_theme_panel_opacity">Paneļa necaurspīdīgums: %1$d%%</string>
+    <string name="desktop_theme_panel_blur">Stikla izplūdums: %1$d</string>
+    <string name="desktop_theme_panel_blur_unavailable">Resursdatora fona izplūdums nav pieejams; Telos izmanto caurspīdīgu frost plāksni un saglabā izplūduma iestatījumu.</string>
+</resources>

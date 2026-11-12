@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_panel_surface">Panelflade</string>
+    <string name="desktop_theme_panel_surface_hint">Gennemsigtig eller sløret gælder kun panelroden; menuer forbliver uigennemsigtige. Sløret gemmer panelBlur til frost; værtsbaggrundssløring er best-effort, hvis den mangler.</string>
+    <string name="desktop_theme_panel_transparent">Gennemsigtig</string>
+    <string name="desktop_theme_panel_blurred">Sløret</string>
+    <string name="desktop_theme_panel_solid">Massiv</string>
+    <string name="desktop_theme_panel_opacity">Panelgennemsigtighed: %1$d%%</string>
+    <string name="desktop_theme_panel_blur">Glassløring: %1$d</string>
+    <string name="desktop_theme_panel_blur_unavailable">Værtsbaggrundssløring er ikke tilgængelig; Telos bruger en gennemskinnelig frostplade og bevarer din sløringspræference.</string>
+</resources>

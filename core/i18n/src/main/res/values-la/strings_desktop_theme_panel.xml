@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_panel_surface">Superficies tabulae</string>
+    <string name="desktop_theme_panel_surface_hint">Pellucida vel obscurata solum radicem tabulae afficit; tabulae manent opacae. Obscurata panelBlur pro frost servat; obscuratio fundi hospitis best-effort est si deest.</string>
+    <string name="desktop_theme_panel_transparent">Pellucida</string>
+    <string name="desktop_theme_panel_blurred">Obscurata</string>
+    <string name="desktop_theme_panel_solid">Solida</string>
+    <string name="desktop_theme_panel_opacity">Opacitas tabulae: %1$d%%</string>
+    <string name="desktop_theme_panel_blur">Obscuratio vitri: %1$d</string>
+    <string name="desktop_theme_panel_blur_unavailable">Obscuratio fundi hospitis deest; Telos lamina frost pellucida utitur et praeferentiam obscurationis servat.</string>
+</resources>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_panel_surface">Bề mặt thanh</string>
+    <string name="desktop_theme_panel_surface_hint">Trong suốt hoặc làm mờ chỉ áp dụng cho gốc thanh; menu vẫn đục. Làm mờ lưu panelBlur cho frost; làm mờ nền máy chủ là best-effort khi không có.</string>
+    <string name="desktop_theme_panel_transparent">Trong suốt</string>
+    <string name="desktop_theme_panel_blurred">Làm mờ</string>
+    <string name="desktop_theme_panel_solid">Đặc</string>
+    <string name="desktop_theme_panel_opacity">Độ đục thanh: %1$d%%</string>
+    <string name="desktop_theme_panel_blur">Làm mờ kính: %1$d</string>
+    <string name="desktop_theme_panel_blur_unavailable">Không có làm mờ nền máy chủ; Telos dùng tấm frost bán trong suốt và giữ tùy chọn làm mờ.</string>
+</resources>

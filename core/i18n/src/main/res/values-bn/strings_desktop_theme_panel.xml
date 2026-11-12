@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_panel_surface">প্যানেল পৃষ্ঠ</string>
+    <string name="desktop_theme_panel_surface_hint">স্বচ্ছ বা ঝাপসা শুধু প্যানেল রুটে প্রযোজ্য; মেনু অস্বচ্ছ থাকে। ঝাপসা frost-এর জন্য panelBlur সংরক্ষণ করে; হোস্ট ওয়ালপেপার ব্লার না থাকলে best-effort।</string>
+    <string name="desktop_theme_panel_transparent">স্বচ্ছ</string>
+    <string name="desktop_theme_panel_blurred">ঝাপসা</string>
+    <string name="desktop_theme_panel_solid">অস্বচ্ছ</string>
+    <string name="desktop_theme_panel_opacity">প্যানেল অস্বচ্ছতা: %1$d%%</string>
+    <string name="desktop_theme_panel_blur">কাঁচের ঝাপসা: %1$d</string>
+    <string name="desktop_theme_panel_blur_unavailable">হোস্ট ওয়ালপেপার ব্লার নেই; Telos অর্ধস্বচ্ছ frost প্লেট ব্যবহার করে এবং ঝাপসা পছন্দ রাখে।</string>
+</resources>

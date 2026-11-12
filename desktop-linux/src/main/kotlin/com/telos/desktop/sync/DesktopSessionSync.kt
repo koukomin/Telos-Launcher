@@ -60,6 +60,7 @@ object DesktopSessionSync {
             manifest["helix.panelArgb"] = s.panelArgb.toString()
             manifest["helix.panelAlpha"] = s.panelAlpha.toString()
             manifest["helix.panelBlur"] = s.panelBlur.toString()
+            manifest["helix.panelSurfaceMode"] = s.panelSurfaceMode
             manifest["helix.startFullscreen"] = s.startFullscreen.toString()
         }
         val manifestFile = File(stagingDir, "telos-manifest-${System.nanoTime()}.properties")
