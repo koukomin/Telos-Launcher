@@ -1,5 +1,7 @@
 package com.telos.desktop.apps
 
+import com.telos.desktop.network.DesktopNetworkController
+import com.telos.desktop.vault.TelosSessionAuditLog
 import java.io.File
 
 object DesktopFileLauncher {
@@ -22,6 +24,20 @@ object DesktopFileLauncher {
         if (command.isBlank()) return false
         val argv = tokenize(command)
         if (argv.isEmpty()) return false
+        val candidates = DesktopNetworkController.desktopIdCandidates(file.name, command)
+        val decision = DesktopNetworkController.launchRouteDecision(candidates)
+        when (decision) {
+            DesktopNetworkController.LaunchRouteDecision.Deny -> {
+                TelosSessionAuditLog.append(
+                    "network_policy",
+                    "app_route_deny:${candidates.firstOrNull().orEmpty()}",
+                )
+                return false
+            }
+            DesktopNetworkController.LaunchRouteDecision.Allow,
+            DesktopNetworkController.LaunchRouteDecision.Vpn,
+            -> Unit
+        }
         val finalArgv = if (entry.terminal) wrapTerminal(argv) else argv
         return try {
             val pb = ProcessBuilder(finalArgv)
@@ -29,14 +45,22 @@ object DesktopFileLauncher {
                 val wd = File(dir)
                 if (wd.isDirectory) pb.directory(wd)
             }
-            
+
             // Integrate KsshaskpassManager env injection
             com.telos.desktop.security.KsshaskpassManager().injectAskPassEnv(pb)
-            
+
             // === TELOS_PENDING_REVIEW_START: telos_elastic_sharded_pqc_vault ===
             com.telos.desktop.vault.PortableEnvironmentIsolator.inject(pb)
             // === TELOS_PENDING_REVIEW_END: telos_elastic_sharded_pqc_vault ===
             com.telos.desktop.cursor.CursorThemeApplier.inject(pb)
+            if (decision == DesktopNetworkController.LaunchRouteDecision.Vpn) {
+                // Best-effort tag only — do not fake a network namespace.
+                pb.environment()["TELOS_APP_ROUTE"] = "vpn"
+                TelosSessionAuditLog.append(
+                    "network_policy",
+                    "app_route_vpn:${candidates.firstOrNull().orEmpty()}",
+                )
+            }
             pb.redirectErrorStream(true)
             pb.redirectOutput(ProcessBuilder.Redirect.DISCARD)
             pb.start()

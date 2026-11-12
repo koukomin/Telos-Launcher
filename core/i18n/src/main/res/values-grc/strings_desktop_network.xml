@@ -12,16 +12,21 @@
     <string name="desktop_net_kill_switch_clear_blocked">Ἡ ἐκκαθάρισις τοῦ τείχους πυρός τῆς συνεδρίας κεκώλυται ἕως ὁ διακόπτης ἐνεργός ἐστιν</string>
     <string name="desktop_net_apps_tab">Ἐφαρμογαί</string>
     <string name="desktop_net_apps_title">Δρομολόγησις καθ’ ἐφαρμογήν</string>
-    <string name="desktop_net_apps_hint">Ἓν desktop-id ἢ δέμα καθ’ ἑκάστην γραμμὴν μετὰ allow, deny ἢ vpn. Σῴζεται ἐν ~/.config/telos/app-routing.txt. Ἡ κατὰ διεργασίαν ἐπιβολή οὔπω πάρεστι· ὁ διακόπτης ἔτι ἀπορρίπτει τὴν μὴ ἐπιτρεπομένην ἔξοδον ἐν Linux.</string>
+    <string name="desktop_net_apps_hint">Ένα desktop-id ή πακέτο ανά γραμμή με allow, deny ή vpn. Αποθηκεύεται στο ~/.config/telos/app-routing.txt. Στο Linux, το deny μπλοκάρει την εκκίνηση από τον εκκινητή Telos και το vpn ορίζει TELOS_APP_ROUTE=vpn (βέλτιστη προσπάθεια, χωρίς ψεύτικο netns). Η δρομολόγηση nftables owner/cgroup ανά διεργασία δεν εφαρμόζεται, ώστε το session kill-switch να παραμένει άθικτο.</string>
     <string name="desktop_net_apps_file">Πίναξ δρομολογήσεως</string>
     <string name="desktop_net_dns_filters_title">Φίλτρα DNS</string>
-    <string name="desktop_net_dns_filters_hint">Οι λίστες αποκλεισμού και επιτρεπόμενων αποθηκεύονται στο vault ~/.config/telos/ (dns-block.txt, dns-allow.txt). Ένα NextDNS configuration ID εφαρμόζει DoT μέσω resolvectl στο Linux όταν είναι διαθέσιμο. Οι τοπικές λίστες μόνες τους μένουν μόνο ως προτίμηση εκτός αν οριστεί dns-stub.port και τα nftables μπορούν να ανακατευθύνουν το DNS σε αυτό το stub. Στα Windows και macOS αποθηκεύονται μόνο προτιμήσεις.</string>
+    <string name="desktop_net_dns_filters_hint">Οι λίστες αποκλεισμού και επιτρεπόμενων αποθηκεύονται στο vault ~/.config/telos/ (dns-block.txt, dns-allow.txt). Ένα NextDNS configuration ID εφαρμόζει DoT μέσω resolvectl στο Linux όταν είναι διαθέσιμο. Ενεργοποιήστε το Telos DNS stub (ή ορίστε dns-stub.port) για τοπικό forwarder στο 127.0.0.1 που απαντά NXDOMAIN σε αποκλεισμένους hosts και ανακατεύθυνση DNS με nftables — τότε οι λίστες γίνονται Enforced. Αν το stub δεν κάνει bind ή αποτύχει το nft, η κατάσταση μένει Failed/PreferenceOnly. Στα Windows και macOS αποθηκεύονται μόνο προτιμήσεις.</string>
     <string name="desktop_net_nextdns_id">NextDNS configuration ID</string>
     <string name="desktop_net_nextdns_id_invalid">Μη έγκυρο NextDNS configuration ID (χρησιμοποιήστε 4–12 γράμματα ή ψηφία)</string>
     <string name="desktop_net_dns_blocklist">Λίστα αποκλεισμού DNS</string>
     <string name="desktop_net_dns_allowlist">Λίστα επιτρεπόμενων DNS</string>
     <string name="desktop_net_dns_filter_status">Κατάσταση φίλτρου</string>
-    <string name="desktop_net_dns_filter_enforced">Εφαρμόζεται (NextDNS DoT και/ή ανακατεύθυνση τοπικού DNS stub)</string>
+    <string name="desktop_net_dns_filter_enforced">Εφαρμόζεται (NextDNS DoT και/ή Telos DNS stub + ανακατεύθυνση nft)</string>
     <string name="desktop_net_dns_filter_pref_only">Η προτίμηση αποθηκεύτηκε· το φιλτράρισμα δεν εφαρμόζεται σε αυτή τη διαδρομή</string>
-    <string name="desktop_net_dns_filter_failed">Ρυθμίστηκε, αλλά το resolvectl/nftables δεν μπόρεσε να εφαρμόσει φιλτράρισμα</string>
+    <string name="desktop_net_dns_filter_failed">Ρυθμίστηκε, αλλά το DNS stub δεν μπόρεσε να κάνει bind ή το resolvectl/nftables δεν μπόρεσε να εφαρμόσει φιλτράρισμα</string>
+    <string name="desktop_net_apps_enforced">Εφαρμόζεται: η πύλη εκκίνησης είναι ενεργή (οι κανόνες deny ελέγχονται από το DesktopFileLauncher)</string>
+    <string name="desktop_net_apps_pref_only">Η προτίμηση αποθηκεύτηκε· δεν υπάρχουν κανόνες deny στο Linux ή δεν εφαρμόζεται σε αυτή την πλατφόρμα</string>
+    <string name="desktop_net_dns_stub_enable">Ενεργοποίηση Telos DNS stub</string>
+    <string name="desktop_net_dns_stub_disable">Απενεργοποίηση Telos DNS stub</string>
+    <string name="desktop_net_dns_stub_hint">Το Telos DNS stub ακούει στο 127.0.0.1 (προεπιλεγμένη θύρα 5353), απαντά NXDOMAIN για το dns-block.txt (η allowlist υπερισχύει) και προωθεί τις άλλες ερωτήσεις. Το nftables inet telos_dns ανακατευθύνει την εξερχόμενη θύρα 53 όταν επιτύχει η προνομιακή εφαρμογή.</string>
 </resources>

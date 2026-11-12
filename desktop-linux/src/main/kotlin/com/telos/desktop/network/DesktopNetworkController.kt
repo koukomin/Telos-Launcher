@@ -44,10 +44,13 @@ object DesktopNetworkController {
     fun nextDnsConfigIdFile(): File = File(configHome(), "nextdns-id.txt")
 
     /**
-     * Optional local DNS stub listen port. When set and nftables works, Telos can redirect
-     * outbound UDP/TCP 53 to 127.0.0.1:port. Without a real stub process, lists stay PreferenceOnly.
+     * Optional local DNS stub listen port. When set (or stub enabled), Telos starts a local
+     * UDP/TCP forwarder on 127.0.0.1 and can redirect outbound DNS via nftables `inet telos_dns`.
      */
     fun dnsStubPortFile(): File = File(configHome(), "dns-stub.port")
+
+    /** User toggle for the built-in Telos DNS stub (true|false). */
+    fun dnsStubEnabledFile(): File = File(configHome(), "dns-stub.enabled")
 
     fun killSwitchPreferenceFile(): File = File(configHome(), "kill-switch.txt")
 
@@ -275,13 +278,79 @@ object DesktopNetworkController {
         """
             # Telos per-app routing (desktop-id or package → allow|deny|vpn)
             # Persisted under the vault ~/.config/telos/app-routing.txt
-            # Linux MVP: table is stored; process-level nftables owner/cgroup
-            # enforcement is not applied yet. Kill-switch still drops non-allowlisted egress.
+            # Linux: DesktopFileLauncher consults this table (deny blocks launch;
+            # vpn sets TELOS_APP_ROUTE=vpn best-effort — no fake netns).
+            # Process-level nftables owner/cgroup routing is not applied (avoids
+            # breaking the session kill-switch). Kill-switch still drops non-allowlisted egress.
             # Windows/macOS: preference only.
         """.trimIndent() + "\n"
 
-    /** Preference-only for now; returns whether process-level rules are enforced. */
-    fun appRoutingEnforced(): Boolean = false
+    /**
+     * True when Linux has deny rules and the launcher consults the table (launch-gate).
+     * Does not claim nftables owner/cgroup enforcement.
+     */
+    fun appRoutingEnforced(routes: List<AppRoute> = readAppRoutes()): Boolean =
+        isLinux && routes.any { it.mode == AppRouteMode.Deny }
+
+    fun resolveAppRoute(
+        candidates: Collection<String>,
+        routes: List<AppRoute> = readAppRoutes(),
+    ): AppRoute? {
+        if (candidates.isEmpty() || routes.isEmpty()) return null
+        val normalized = candidates.map { it.trim() }.filter { it.isNotEmpty() }.toSet()
+        return routes.firstOrNull { route ->
+            val id = route.id.trim()
+            id in normalized ||
+                id.removeSuffix(".desktop") in normalized ||
+                "$id.desktop" in normalized
+        }
+    }
+
+    enum class LaunchRouteDecision {
+        Allow,
+        Deny,
+        Vpn,
+    }
+
+    fun launchRouteDecision(
+        candidates: Collection<String>,
+        routes: List<AppRoute> = readAppRoutes(),
+    ): LaunchRouteDecision {
+        val match = resolveAppRoute(candidates, routes) ?: return LaunchRouteDecision.Allow
+        return when (match.mode) {
+            AppRouteMode.Allow -> LaunchRouteDecision.Allow
+            AppRouteMode.Deny -> LaunchRouteDecision.Deny
+            AppRouteMode.Vpn -> LaunchRouteDecision.Vpn
+        }
+    }
+
+    fun desktopIdCandidates(fileName: String, exec: String): List<String> {
+        val out = LinkedHashSet<String>()
+        val base = fileName.substringAfterLast('/').trim()
+        if (base.isNotEmpty()) {
+            out += base
+            if (base.endsWith(".desktop", ignoreCase = true)) {
+                out += base.removeSuffix(".desktop").removeSuffix(".Desktop")
+            } else {
+                out += "$base.desktop"
+            }
+        }
+        val tokens = exec.trim().split(Regex("\\s+"))
+        val flatpakIdx = tokens.indexOfFirst { it == "flatpak" || it.endsWith("/flatpak") }
+        if (flatpakIdx >= 0) {
+            var i = flatpakIdx + 1
+            while (i < tokens.size && tokens[i].startsWith("-")) i++
+            if (i < tokens.size && tokens[i] == "run") {
+                i++
+                while (i < tokens.size && tokens[i].startsWith("-")) i++
+                if (i < tokens.size) {
+                    val appId = tokens[i].trim()
+                    if (appId.isNotEmpty() && !appId.startsWith("-")) out += appId
+                }
+            }
+        }
+        return out.toList()
+    }
 
     enum class WireGuardBackend { WgQuick, Wg }
 
@@ -452,9 +521,10 @@ object DesktopNetworkController {
         """
             # Telos DNS blocklist — one hostname/domain per line
             # Persisted under vault ~/.config/telos/dns-block.txt
-            # Linux: enforced only with a NextDNS config ID (resolvectl DoT) and/or a
-            # local DNS stub port in dns-stub.port + nftables redirect. Without those,
-            # this file is preference-only. Windows/macOS: preference-only.
+            # Linux: enforced when the Telos DNS stub is running (dns-stub.port and/or
+            # dns-stub.enabled) and nftables redirects DNS to 127.0.0.1, and/or with a
+            # NextDNS config ID via resolvectl DoT. Without those paths, preference-only.
+            # Windows/macOS: preference-only.
         """.trimIndent() + "\n"
 
     fun defaultDnsAllowlistTemplate(): String =
@@ -559,16 +629,61 @@ object DesktopNetworkController {
         return port.takeIf { it in 1..65535 }
     }
 
+    fun writeDnsStubPort(port: Int?) {
+        dnsStubPortFile().apply { parentFile?.mkdirs() }.writeText(
+            buildString {
+                appendLine("# Telos local DNS stub listen port (127.0.0.1)")
+                appendLine("# Used with nftables inet telos_dns redirect of outbound :53.")
+                if (port != null) appendLine(port.coerceIn(1, 65535).toString())
+            },
+        )
+    }
+
+    fun readDnsStubEnabled(): Boolean {
+        val file = dnsStubEnabledFile()
+        if (!file.isFile) return false
+        val line = file.readLines().map { it.trim() }.firstOrNull {
+            it.isNotEmpty() && !it.startsWith("#")
+        } ?: return false
+        return line.equals("true", ignoreCase = true) ||
+            line.equals("on", ignoreCase = true) ||
+            line == "1"
+    }
+
+    fun writeDnsStubEnabled(enabled: Boolean) {
+        dnsStubEnabledFile().apply { parentFile?.mkdirs() }.writeText(
+            buildString {
+                appendLine("# Telos DNS stub: true|false")
+                appendLine("# When true (Linux), Telos starts a 127.0.0.1 UDP/TCP forwarder")
+                appendLine("# that NXDOMAINs dns-block.txt (allowlist wins) and redirects via nft.")
+                appendLine(if (enabled) "true" else "false")
+            },
+        )
+        TelosSessionAuditLog.append(
+            "network_policy",
+            if (enabled) "dns_stub_enabled" else "dns_stub_disabled",
+        )
+    }
+
+    /** Stub wanted when the port file is set or the user enabled "Telos DNS stub". */
+    fun dnsStubWanted(): Boolean = readDnsStubEnabled() || readDnsStubPort() != null
+
+    fun ensureDnsStubPort(): Int {
+        readDnsStubPort()?.let { return it }
+        writeDnsStubPort(TelosDnsStub.DEFAULT_PORT)
+        return TelosDnsStub.DEFAULT_PORT
+    }
+
     fun nextDnsDotHost(id: String): String = "${id.trim()}.dns.nextdns.io"
 
     fun nextDnsDotPreferenceLine(id: String): String = "tls://${nextDnsDotHost(id)}"
 
     /**
      * Apply NextDNS-class filter foundations:
-     * - Persist lists/ID already expected via write* helpers.
-     * - Linux + valid NextDNS ID + resolvectl → DoT to NextDNS (real cloud filtering).
-     * - Linux + dns-stub.port + nft → redirect DNS to local stub (lists for that stub).
-     * - Otherwise PreferenceOnly — never claim host-list filtering without a path.
+     * - Linux + valid NextDNS ID + resolvectl → DoT to NextDNS.
+     * - Linux + (dns-stub.port OR dns-stub.enabled) → start local stub + nft redirect;
+     *   host lists alone become Enforced when both succeed.
+     * - Otherwise PreferenceOnly.
      */
     fun applyDnsFilters(): DnsFilterStatus {
         val id = readNextDnsConfigId()
@@ -580,10 +695,11 @@ object DesktopNetworkController {
         if (!rawId.isNullOrEmpty() && id == null) return DnsFilterStatus.Invalid
 
         val hasLists = readDnsBlocklist().isNotEmpty() || readDnsAllowlist().isNotEmpty()
-        val stubPort = readDnsStubPort()
-        val configured = id != null || hasLists || stubPort != null
+        val stubWanted = dnsStubWanted()
+        val configured = id != null || hasLists || stubWanted
 
         if (!isLinux) {
+            TelosDnsStub.stop()
             return if (configured) DnsFilterStatus.PreferenceOnly else DnsFilterStatus.Disabled
         }
 
@@ -593,7 +709,6 @@ object DesktopNetworkController {
         if (id != null) {
             if (Sys.which("resolvectl") == null) {
                 // Config-only when privileged resolver tooling is missing.
-                // Still try stub redirect below if configured.
             } else {
                 writeDnsPreference(nextDnsDotPreferenceLine(id))
                 when (applyDnsPreference()) {
@@ -608,11 +723,11 @@ object DesktopNetworkController {
             }
         }
 
-        when (applyLocalDnsRedirectIfConfigured()) {
+        when (applyLocalDnsStubAndRedirect()) {
             DnsApplyResult.Applied -> enforced = true
             DnsApplyResult.Failed -> failed = true
             DnsApplyResult.Invalid -> return DnsFilterStatus.Invalid
-            DnsApplyResult.PreferenceOnly -> Unit // lists alone stay preference-only
+            DnsApplyResult.PreferenceOnly -> Unit
         }
 
         return when {
@@ -635,11 +750,14 @@ object DesktopNetworkController {
         val invalidId = !rawId.isNullOrEmpty() && id == null
         val block = readDnsBlocklist()
         val allow = readDnsAllowlist()
-        val stub = readDnsStubPort()
+        val stub = readDnsStubPort() ?: TelosDnsStub.listeningPort()
+        val stubWanted = dnsStubWanted()
+        val stubRunning = TelosDnsStub.isRunning()
+        val redirectOk = stub != null && localDnsRedirectActive(stub)
         val status = when {
             invalidId -> DnsFilterStatus.Invalid
             !isLinux -> {
-                if (id != null || block.isNotEmpty() || allow.isNotEmpty() || stub != null) {
+                if (id != null || block.isNotEmpty() || allow.isNotEmpty() || stubWanted) {
                     DnsFilterStatus.PreferenceOnly
                 } else {
                     DnsFilterStatus.Disabled
@@ -647,8 +765,9 @@ object DesktopNetworkController {
             }
             id != null && Sys.which("resolvectl") != null && nextDnsResolvectlActive(id) ->
                 DnsFilterStatus.Enforced
-            stub != null && localDnsRedirectActive(stub) -> DnsFilterStatus.Enforced
-            id != null || block.isNotEmpty() || allow.isNotEmpty() || stub != null ->
+            stubRunning && redirectOk -> DnsFilterStatus.Enforced
+            stubWanted && (!stubRunning || !redirectOk) -> DnsFilterStatus.Failed
+            id != null || block.isNotEmpty() || allow.isNotEmpty() || stubWanted ->
                 DnsFilterStatus.PreferenceOnly
             else -> DnsFilterStatus.Disabled
         }
@@ -656,15 +775,40 @@ object DesktopNetworkController {
     }
 
     /**
-     * When `dns-stub.port` names a local stub, redirect outbound DNS (53) via nftables NAT.
-     * Without that port file, returns PreferenceOnly (lists are not silently faked).
+     * Start the local DNS stub when port/enabled is set, then redirect outbound DNS (53)
+     * via nftables NAT. Host lists become Enforced only when both bind and nft succeed.
      */
-    fun applyLocalDnsRedirectIfConfigured(): DnsApplyResult {
-        val port = readDnsStubPort() ?: return DnsApplyResult.PreferenceOnly
+    fun applyLocalDnsStubAndRedirect(): DnsApplyResult {
+        if (!dnsStubWanted()) {
+            TelosDnsStub.stop()
+            return DnsApplyResult.PreferenceOnly
+        }
+        if (!isLinux) {
+            TelosDnsStub.stop()
+            return DnsApplyResult.PreferenceOnly
+        }
+        val port = ensureDnsStubPort()
+        val started = TelosDnsStub.start(
+            port = port,
+            blocklist = readDnsBlocklist(),
+            allowlist = readDnsAllowlist(),
+            upstream = TelosDnsStub.resolveDefaultUpstream(),
+        )
+        if (!started) {
+            TelosSessionAuditLog.append("network_policy", "dns_stub_bind_failed")
+            return DnsApplyResult.Failed
+        }
+        TelosSessionAuditLog.append("network_policy", "dns_stub_started")
+        return applyLocalDnsRedirect(port)
+    }
+
+    fun applyLocalDnsRedirectIfConfigured(): DnsApplyResult = applyLocalDnsStubAndRedirect()
+
+    fun applyLocalDnsRedirect(port: Int = readDnsStubPort() ?: TelosDnsStub.DEFAULT_PORT): DnsApplyResult {
         if (!isLinux || !PlatformEnvironment.settings.showNftSessionNetGuard) {
             return DnsApplyResult.PreferenceOnly
         }
-        if (Sys.which("nft") == null) return DnsApplyResult.PreferenceOnly
+        if (Sys.which("nft") == null) return DnsApplyResult.Failed
         val script = File.createTempFile("telos-dns-nft", ".nft")
         script.writeText(dnsRedirectNftRules(port))
         runCatching {
@@ -685,8 +829,22 @@ object DesktopNetworkController {
 
     fun clearLocalDnsRedirect() {
         if (!isLinux) return
+        TelosDnsStub.stop()
         Sys.run("pkexec", "nft", "delete", "table", "inet", "telos_dns", timeoutSec = 10)
         Sys.run("nft", "delete", "table", "inet", "telos_dns", timeoutSec = 8)
+    }
+
+    fun setDnsStubEnabled(enabled: Boolean): DnsFilterStatus {
+        writeDnsStubEnabled(enabled)
+        if (enabled) {
+            ensureDnsStubPort()
+            return applyDnsFilters()
+        }
+        if (readDnsStubPort() == null) {
+            clearLocalDnsRedirect()
+            return DnsFilterStatus.Disabled
+        }
+        return applyDnsFilters()
     }
 
     internal fun dnsRedirectNftRules(port: Int): String =

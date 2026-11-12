@@ -12,16 +12,21 @@
     <string name="desktop_net_kill_switch_clear_blocked">Kill-switch açıkken oturum güvenlik duvarını temizlemek engellenir</string>
     <string name="desktop_net_apps_tab">Uygulamalar</string>
     <string name="desktop_net_apps_title">Uygulama başına yönlendirme</string>
-    <string name="desktop_net_apps_hint">Satır başına bir desktop-id veya paket; allow, deny veya vpn. ~/.config/telos/app-routing.txt altında saklanır. Süreç düzeyinde uygulama henüz yok; kill-switch Linux’ta izin listesinde olmayan çıkışı düşürmeye devam eder.</string>
+    <string name="desktop_net_apps_hint">Her satırda allow, deny veya vpn ile bir desktop-id ya da paket. ~/.config/telos/app-routing.txt içinde saklanır. Linux’ta deny, Telos başlatıcısında başlatmayı engeller; vpn TELOS_APP_ROUTE=vpn ayarlar (best-effort, sahte netns yok). Oturum kill-switch’ini bozmamak için süreç düzeyinde nftables owner/cgroup yönlendirme uygulanmaz.</string>
     <string name="desktop_net_apps_file">Yönlendirme tablosu</string>
     <string name="desktop_net_dns_filters_title">DNS filtreleri</string>
-    <string name="desktop_net_dns_filters_hint">Engelleme ve izin listeleri vault ~/.config/telos/ altında saklanır (dns-block.txt, dns-allow.txt). Bir NextDNS yapılandırma kimliği, kullanılabilir olduğunda Linux’ta resolvectl ile DoT uygular. Yerel listeler tek başına yalnızca tercih olarak kalır; dns-stub.port ayarlanıp nftables DNS’i bu stub’a yönlendirmedikçe. Windows ve macOS yalnızca tercihleri saklar.</string>
+    <string name="desktop_net_dns_filters_hint">Engelleme ve izin listeleri vault ~/.config/telos/ (dns-block.txt, dns-allow.txt) altında. NextDNS yapılandırma kimliği Linux’ta varsa resolvectl ile DoT uygular. Telos DNS stub’ı etkinleştirin (veya dns-stub.port ayarlayın); 127.0.0.1 yerel iletici engellenenlere NXDOMAIN döner ve nftables ile DNS yönlendirir — listeler Enforced olur. Stub bağlanamazsa veya nft başarısız olursa durum Failed/PreferenceOnly kalır. Windows ve macOS yalnızca tercihleri saklar.</string>
     <string name="desktop_net_nextdns_id">NextDNS yapılandırma kimliği</string>
     <string name="desktop_net_nextdns_id_invalid">Geçersiz NextDNS yapılandırma kimliği (4–12 harf veya rakam kullanın)</string>
     <string name="desktop_net_dns_blocklist">DNS engelleme listesi</string>
     <string name="desktop_net_dns_allowlist">DNS izin listesi</string>
     <string name="desktop_net_dns_filter_status">Filtre durumu</string>
-    <string name="desktop_net_dns_filter_enforced">Uygulanıyor (NextDNS DoT ve/veya yerel DNS stub yönlendirmesi)</string>
+    <string name="desktop_net_dns_filter_enforced">Zorunlu (NextDNS DoT ve/veya Telos DNS stub + nft yönlendirme)</string>
     <string name="desktop_net_dns_filter_pref_only">Tercih kaydedildi; bu yolda filtreleme uygulanmıyor</string>
-    <string name="desktop_net_dns_filter_failed">Yapılandırıldı ancak resolvectl/nftables filtrelemeyi uygulayamadı</string>
+    <string name="desktop_net_dns_filter_failed">Yapılandırıldı, ancak DNS stub bağlanamadı veya resolvectl/nftables filtrelemeyi uygulayamadı</string>
+    <string name="desktop_net_apps_enforced">Zorunlu: başlatma kapısı etkin (DesktopFileLauncher deny kurallarını denetler)</string>
+    <string name="desktop_net_apps_pref_only">Tercih kaydedildi; Linux’ta deny kuralı yok veya bu platformda uygulanmıyor</string>
+    <string name="desktop_net_dns_stub_enable">Telos DNS stub’ı etkinleştir</string>
+    <string name="desktop_net_dns_stub_disable">Telos DNS stub’ı devre dışı bırak</string>
+    <string name="desktop_net_dns_stub_hint">Telos DNS stub 127.0.0.1 üzerinde dinler (varsayılan bağlantı noktası 5353), dns-block.txt için NXDOMAIN yanıtlar (izin listesi üstündür) ve diğer sorguları iletir. Ayrıcalıklı uygulama başarılı olunca nftables inet telos_dns giden 53. bağlantı noktasını yönlendirir.</string>
 </resources>

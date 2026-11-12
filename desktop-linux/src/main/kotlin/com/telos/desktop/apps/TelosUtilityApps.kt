@@ -126,8 +126,12 @@ fun TelosNetworkApp() {
         mutableStateOf(DesktopNetworkController.readNextDnsConfigId().orEmpty())
     }
     var dnsFilterStatus by remember { mutableStateOf(DesktopNetworkController.dnsFilterStatus()) }
+    var dnsStubEnabled by remember { mutableStateOf(DesktopNetworkController.readDnsStubEnabled()) }
     var allowText by remember { mutableStateOf(DesktopNetworkController.readAllowlistText()) }
     var appRoutingText by remember { mutableStateOf(DesktopNetworkController.readAppRoutingText()) }
+    var appRoutingEnforced by remember {
+        mutableStateOf(DesktopNetworkController.appRoutingEnforced())
+    }
     var wgConfDraft by remember {
         mutableStateOf(
             DesktopNetworkController.wireguardConfFile().takeIf { it.isFile }?.readText().orEmpty(),
@@ -233,18 +237,31 @@ fun TelosNetworkApp() {
                 onDnsAllowDomainsText = { dnsAllowText = it },
                 nextDnsId = nextDnsId,
                 onNextDnsId = { nextDnsId = it },
+                dnsStubEnabled = dnsStubEnabled,
                 dnsApply = dnsApply,
                 dnsFilterStatus = dnsFilterStatus,
                 cardShape = cardShape,
                 neon = neon,
+                onToggleStub = {
+                    scope.launch(Dispatchers.IO) {
+                        val next = !DesktopNetworkController.readDnsStubEnabled()
+                        dnsFilterStatus = DesktopNetworkController.setDnsStubEnabled(next)
+                        dnsStubEnabled = DesktopNetworkController.readDnsStubEnabled()
+                    }
+                },
                 onSave = {
                     scope.launch(Dispatchers.IO) {
                         DesktopNetworkController.writeDnsPreference(dnsText)
                         DesktopNetworkController.writeDnsBlocklistText(dnsBlockText)
                         DesktopNetworkController.writeDnsAllowlistText(dnsAllowText)
                         DesktopNetworkController.writeNextDnsConfigId(nextDnsId)
+                        if (dnsStubEnabled) {
+                            DesktopNetworkController.writeDnsStubEnabled(true)
+                            DesktopNetworkController.ensureDnsStubPort()
+                        }
                         dnsApply = DesktopNetworkController.applyDnsPreference()
                         dnsFilterStatus = DesktopNetworkController.applyDnsFilters()
+                        dnsStubEnabled = DesktopNetworkController.readDnsStubEnabled()
                         dnsText = DesktopNetworkController.readDnsPreference()
                         dnsBlockText = DesktopNetworkController.readDnsBlocklistText()
                         dnsAllowText = DesktopNetworkController.readDnsAllowlistText()
@@ -285,12 +302,14 @@ fun TelosNetworkApp() {
             NetworkTab.Apps -> NetworkAppsPane(
                 routingText = appRoutingText,
                 onRoutingText = { appRoutingText = it },
+                routingEnforced = appRoutingEnforced,
                 cardShape = cardShape,
                 neon = neon,
                 onSave = {
                     scope.launch(Dispatchers.IO) {
                         DesktopNetworkController.writeAppRoutingText(appRoutingText)
                         appRoutingText = DesktopNetworkController.readAppRoutingText()
+                        appRoutingEnforced = DesktopNetworkController.appRoutingEnforced()
                     }
                 },
             )
@@ -721,10 +740,12 @@ private fun NetworkDnsPane(
     onDnsAllowDomainsText: (String) -> Unit,
     nextDnsId: String,
     onNextDnsId: (String) -> Unit,
+    dnsStubEnabled: Boolean,
     dnsApply: DesktopNetworkController.DnsApplyResult,
     dnsFilterStatus: DesktopNetworkController.DnsFilterStatus,
     cardShape: RoundedCornerShape,
     neon: androidx.compose.ui.graphics.Color,
+    onToggleStub: () -> Unit,
     onSave: () -> Unit,
 ) {
     Column(
@@ -770,6 +791,16 @@ private fun NetworkDnsPane(
             modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
             label = { Text(t("desktop_net_dns_allowlist")) },
             minLines = 4,
+        )
+        Text(
+            t("desktop_net_dns_stub_hint"),
+            color = TelosColors.onSurface.copy(alpha = 0.85f),
+            fontSize = 12.sp,
+        )
+        neonButton(
+            if (dnsStubEnabled) t("desktop_net_dns_stub_disable") else t("desktop_net_dns_stub_enable"),
+            onToggleStub,
+            filled = dnsStubEnabled,
         )
         Text(
             "${t("desktop_net_dns_filter_status")}: ${dnsFilterStatusLabel(dnsFilterStatus)}",
@@ -830,6 +861,7 @@ private fun NetworkFirewallPane(
 private fun NetworkAppsPane(
     routingText: String,
     onRoutingText: (String) -> Unit,
+    routingEnforced: Boolean,
     cardShape: RoundedCornerShape,
     neon: androidx.compose.ui.graphics.Color,
     onSave: () -> Unit,
@@ -839,6 +871,15 @@ private fun NetworkAppsPane(
         Text(
             t("desktop_net_apps_hint"),
             color = TelosColors.onSurface.copy(alpha = 0.85f),
+            fontSize = 12.sp,
+        )
+        Text(
+            if (routingEnforced) {
+                t("desktop_net_apps_enforced")
+            } else {
+                t("desktop_net_apps_pref_only")
+            },
+            color = neon,
             fontSize = 12.sp,
         )
         OutlinedTextField(

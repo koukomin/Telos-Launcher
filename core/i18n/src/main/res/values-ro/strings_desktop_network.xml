@@ -12,16 +12,21 @@
     <string name="desktop_net_kill_switch_clear_blocked">Ștergerea firewall-ului de sesiune este blocată cât timp kill-switch este activ</string>
     <string name="desktop_net_apps_tab">Aplicații</string>
     <string name="desktop_net_apps_title">Rutare pe aplicație</string>
-    <string name="desktop_net_apps_hint">Un desktop-id sau pachet pe linie cu allow, deny sau vpn. Stocat în ~/.config/telos/app-routing.txt. Aplicarea la nivel de proces lipsește încă; kill-switch continuă să abandoneze ieșirea nepermisă pe Linux.</string>
+    <string name="desktop_net_apps_hint">Un desktop-id o paquete por línea con allow, deny o vpn. Se guarda en ~/.config/telos/app-routing.txt. En Linux, deny bloquea el lanzamiento en el launcher de Telos y vpn define TELOS_APP_ROUTE=vpn (mejor esfuerzo, sin netns falso). No se aplica enrutado nftables por owner/cgroup a nivel de proceso, para no romper el kill-switch de sesión.</string>
     <string name="desktop_net_apps_file">Tabel de rutare</string>
     <string name="desktop_net_dns_filters_title">Filtre DNS</string>
-    <string name="desktop_net_dns_filters_hint">Listele de blocare și de permitere sunt stocate în vault ~/.config/telos/ (dns-block.txt, dns-allow.txt). Un ID de configurare NextDNS aplică DoT prin resolvectl pe Linux când este disponibil. Listele locale singure rămân doar preferință, dacă dns-stub.port nu este setat și nftables nu poate redirecționa DNS către acel stub. Windows și macOS stochează doar preferințe.</string>
+    <string name="desktop_net_dns_filters_hint">Las listas de bloqueo y permitidas se guardan en el vault ~/.config/telos/ (dns-block.txt, dns-allow.txt). Un ID de configuración NextDNS aplica DoT con resolvectl en Linux cuando está disponible. Active el stub DNS de Telos (o defina dns-stub.port) para un reenviador local en 127.0.0.1 que responde NXDOMAIN a hosts bloqueados y redirige DNS con nftables — entonces las listas pasan a Enforced. Si el stub no puede hacer bind o falla nft, el estado queda Failed/PreferenceOnly. Windows y macOS solo guardan preferencias.</string>
     <string name="desktop_net_nextdns_id">ID de configurare NextDNS</string>
     <string name="desktop_net_nextdns_id_invalid">ID de configurare NextDNS nevalid (folosiți 4–12 litere sau cifre)</string>
     <string name="desktop_net_dns_blocklist">Listă de blocare DNS</string>
     <string name="desktop_net_dns_allowlist">Listă de permitere DNS</string>
     <string name="desktop_net_dns_filter_status">Starea filtrului</string>
-    <string name="desktop_net_dns_filter_enforced">Aplicat (DoT NextDNS și/sau redirecționare stub DNS local)</string>
+    <string name="desktop_net_dns_filter_enforced">Applicato (NextDNS DoT e/o stub DNS Telos + redirect nft)</string>
     <string name="desktop_net_dns_filter_pref_only">Preferință salvată; filtrarea nu este aplicată pe această cale</string>
-    <string name="desktop_net_dns_filter_failed">Configurat, dar resolvectl/nftables nu a putut aplica filtrarea</string>
+    <string name="desktop_net_dns_filter_failed">Configurato, ma lo stub DNS non è riuscito a fare bind oppure resolvectl/nftables non ha potuto applicare il filtro</string>
+    <string name="desktop_net_apps_enforced">Applicato: gate di avvio attivo (DesktopFileLauncher consulta le regole deny)</string>
+    <string name="desktop_net_apps_pref_only">Preferenza salvata; nessuna regola deny su Linux o non applicata su questa piattaforma</string>
+    <string name="desktop_net_dns_stub_enable">Abilita stub DNS Telos</string>
+    <string name="desktop_net_dns_stub_disable">Disabilita stub DNS Telos</string>
+    <string name="desktop_net_dns_stub_hint">El stub DNS de Telos escucha en 127.0.0.1 (puerto predeterminado 5353), responde NXDOMAIN para dns-block.txt (la allowlist gana) y reenvía el resto. nftables inet telos_dns redirige el puerto 53 de salida cuando la aplicación privilegiada tiene éxito.</string>
 </resources>

@@ -12,16 +12,21 @@
     <string name="desktop_net_kill_switch_clear_blocked">Vymazání session firewallu je blokováno, dokud je kill-switch zapnutý</string>
     <string name="desktop_net_apps_tab">Aplikace</string>
     <string name="desktop_net_apps_title">Směrování podle aplikace</string>
-    <string name="desktop_net_apps_hint">Jeden desktop-id nebo balíček na řádek s allow, deny nebo vpn. Uloženo v ~/.config/telos/app-routing.txt. Vynucení na úrovni procesu zatím není; kill-switch stále zahazuje nepovolený odchozí provoz na Linuxu.</string>
+    <string name="desktop_net_apps_hint">Eine Desktop-ID oder ein Paket pro Zeile mit allow, deny oder vpn. Gespeichert unter ~/.config/telos/app-routing.txt. Unter Linux blockiert deny den Start im Telos-Launcher und vpn setzt TELOS_APP_ROUTE=vpn (best effort, kein gefälschtes netns). Prozessbezogene nftables-Owner/Cgroup-Routing wird nicht angewendet, damit der Session-Kill-Switch intakt bleibt.</string>
     <string name="desktop_net_apps_file">Směrovací tabulka</string>
     <string name="desktop_net_dns_filters_title">Filtry DNS</string>
-    <string name="desktop_net_dns_filters_hint">Blokovací a povolovací seznamy jsou ve vault ~/.config/telos/ (dns-block.txt, dns-allow.txt). ID konfigurace NextDNS použije DoT přes resolvectl na Linuxu, pokud je k dispozici. Samotné místní seznamy zůstávají jen preferencí, pokud není nastaven dns-stub.port a nftables nemůže přesměrovat DNS na tento stub. Windows a macOS ukládají jen preference.</string>
+    <string name="desktop_net_dns_filters_hint">Block- und Allow-Listen liegen im Vault unter ~/.config/telos/ (dns-block.txt, dns-allow.txt). Eine NextDNS-Konfigurations-ID wendet DoT über resolvectl unter Linux an, sofern verfügbar. Aktivieren Sie den Telos-DNS-Stub (oder setzen Sie dns-stub.port) für einen lokalen 127.0.0.1-Forwarder, der blockierte Hosts mit NXDOMAIN beantwortet und DNS per nftables umleitet — dann werden Host-Listen Enforced. Wenn der Stub nicht binden kann oder nft fehlschlägt, bleibt der Status Failed/PreferenceOnly. Windows und macOS speichern nur Einstellungen.</string>
     <string name="desktop_net_nextdns_id">ID konfigurace NextDNS</string>
     <string name="desktop_net_nextdns_id_invalid">Neplatné ID konfigurace NextDNS (použijte 4–12 písmen nebo číslic)</string>
     <string name="desktop_net_dns_blocklist">Blokovací seznam DNS</string>
     <string name="desktop_net_dns_allowlist">Povolovací seznam DNS</string>
     <string name="desktop_net_dns_filter_status">Stav filtru</string>
-    <string name="desktop_net_dns_filter_enforced">Vynuceno (DoT NextDNS a/nebo přesměrování místního DNS stubu)</string>
+    <string name="desktop_net_dns_filter_enforced">Erzwungen (NextDNS DoT und/oder Telos-DNS-Stub + nft-Umleitung)</string>
     <string name="desktop_net_dns_filter_pref_only">Preference uložena; filtrování se na této cestě nepoužívá</string>
-    <string name="desktop_net_dns_filter_failed">Nakonfigurováno, ale resolvectl/nftables nemohl filtrování použít</string>
+    <string name="desktop_net_dns_filter_failed">Konfiguriert, aber der DNS-Stub konnte nicht binden oder resolvectl/nftables konnte die Filterung nicht anwenden</string>
+    <string name="desktop_net_apps_enforced">Erzwungen: Start-Gate aktiv (Deny-Regeln werden von DesktopFileLauncher geprüft)</string>
+    <string name="desktop_net_apps_pref_only">Einstellung gespeichert; keine Deny-Regeln unter Linux oder auf dieser Plattform nicht angewendet</string>
+    <string name="desktop_net_dns_stub_enable">Telos-DNS-Stub aktivieren</string>
+    <string name="desktop_net_dns_stub_disable">Telos-DNS-Stub deaktivieren</string>
+    <string name="desktop_net_dns_stub_hint">Der Telos-DNS-Stub lauscht auf 127.0.0.1 (Standardport 5353), antwortet NXDOMAIN für dns-block.txt (Allowlist hat Vorrang) und leitet andere Anfragen weiter. nftables inet telos_dns leitet ausgehenden Port 53 um, wenn die privilegierte Anwendung gelingt.</string>
 </resources>

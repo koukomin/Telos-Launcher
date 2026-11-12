@@ -29,10 +29,17 @@ and rclone-sync modified carriers on lock. Pre-boot offers host home, unlock, cr
 
 **VOS-1 profiles (partial):** `DesktopProfiles` keeps named folders under config `profiles/` and the
 active name in `profile.active` (vault `desktop.properties` + marker file; never passwords).
-`VaultProfileSwitchPanel` lists/creates/switches profiles and portable vault roots in pre-boot and
-Helix Settings. On Windows Portable Data, profile config stays under the portable session home so
-the host profile is not written. Selecting a portable root rejects the host home / `.config` /
-`.cache` / `.local`. Lock-gated remount across hosts is not claimed as complete.
+`profile.meta` may store an optional host-id fingerprint (SHA-256 of hostname+`os.name`, plus a
+human label) for multi-host awareness text — no secrets. `VaultProfileSwitchPanel` lists/creates/
+switches profiles and portable vault roots in pre-boot and Helix Settings. On Windows Portable
+Data, profile config stays under the portable session home so the host profile is not written.
+Selecting a portable root rejects the host home / `.config` / `.cache` / `.local`.
+**Lock-gated switch (enforced while unlocked):** re-auth via password callback →
+`PhantomVaultEngine.lock()` → switch profile name or portable root; the UI tells the user to
+unlock again. Telos does **not** automatically remount a different LUKS image without a password.
+**Encrypted portable export:** `PortableProfileExport` writes an AES-256 zip of the profile folder
+plus a name-only `desktop.properties` marker; WireGuard private keys and secret property keys are
+excluded. Import requires an explicit confirmation flag and never persists the passphrase.
 
 **Stego FS (Mode B, partial):** carrier pools write `telos-carriers.json` (offsets/sizes only).
 `assembleAndOpen` prefers Linux `losetup`/`dmsetup`; when that is unavailable it concatenates
@@ -104,7 +111,7 @@ W0 (Wayland shell): labwc `<margin>` and niri `struts` reserve 36 px top / 56 px
 
 Install `labwc`. `./install-telos-de.sh` copies the jar and session files to `/opt/telos-desktop`, installs `/usr/local/bin/telos-session`, `/usr/local/bin/start-telos-de`, and `/usr/local/bin/telos-desktop-test`, and registers `/usr/share/wayland-sessions/telos.desktop`. Desktop JVM flags use Generational ZGC, string deduplication, AlwaysPreTouch, and OpenGL Java2D. `.desktop` scanning is parallel with an mtime cache; `/proc/stat` and `/proc/meminfo` use a reused byte buffer. Arm64 uses the same `packageUberJarForCurrentOS` on an aarch64 machine. `--session --already-unlocked` exits if the vault is not mounted. Empty unlock passwords are rejected. `packageUberJarForCurrentOS` copies `session/` next to the jar. Autostart reads `TELOS_JAR` from the environment (no sed). A second `telos-session` is refused via flock. Nesting labwc on an existing Wayland session needs `TELOS_ALLOW_NESTED=1`. `:desktop-linux:test` covers nftables allowlist parsing and shell quoting.
 
-**VOS-2 Network MVP:** `DesktopNetworkController` + multi-tab `TelosNetworkApp` (Status/DNS/session nftables allowlist/Apps routing/WireGuard/Tor). Config under vault `~/.config/telos/` (`net-allow.txt`, `dns.txt`, `dns-block.txt`, `dns-allow.txt`, `nextdns-id.txt`, optional `dns-stub.port`, `kill-switch.txt`, `app-routing.txt`, `wireguard/`, `tor/`). Kill-switch on Linux re-applies `inet telos_session` and blocks clear while enabled; portable platforms show preference-only. Per-app routing table is stored (allow/deny/vpn) without process-level enforcement yet. Linux applies DoT via `resolvectl` when present (including NextDNS config ID → `<id>.dns.nextdns.io`); optional nftables `inet telos_dns` redirects DNS to a local stub when `dns-stub.port` is set. Host block/allow lists without that path stay preference-only. Windows portable stores preferences only. See [desktop-roadmap.md](./desktop-roadmap.md) VOS rows.
+**VOS-2 Network MVP:** `DesktopNetworkController` + multi-tab `TelosNetworkApp` (Status/DNS/session nftables allowlist/Apps routing/WireGuard/Tor). Config under vault `~/.config/telos/` (`net-allow.txt`, `dns.txt`, `dns-block.txt`, `dns-allow.txt`, `nextdns-id.txt`, optional `dns-stub.port` / `dns-stub.enabled`, `kill-switch.txt`, `app-routing.txt`, `wireguard/`, `tor/`). Kill-switch on Linux re-applies `inet telos_session` and blocks clear while enabled; portable platforms show preference-only. Per-app routing: Linux launcher consults the table (deny blocks launch; vpn sets `TELOS_APP_ROUTE=vpn` best-effort); nftables owner/cgroup routing is not applied. Linux applies DoT via `resolvectl` when present (including NextDNS config ID → `<id>.dns.nextdns.io`). Enabling Telos DNS stub (or setting `dns-stub.port`) starts a 127.0.0.1 UDP/TCP forwarder that NXDOMAINs blocklist hits and uses nftables `inet telos_dns` to redirect outbound DNS — host lists become Enforced only when bind + nft succeed. Windows portable stores preferences only. See [desktop-roadmap.md](./desktop-roadmap.md) VOS rows.
 
 **VOS-3 App runtime (partial):** Store can open a Flatpak permissions pane (sandbox tiers + common overrides via `flatpak override --user`). Without Flatpak the UI shows an unavailable state and does not crash. `telos://` links (`app`, `search`, `files`, short aliases) are parsed from `--open` / argv, queued into the Compose shell, and registered as `x-scheme-handler/telos` on Linux session install / boot (Windows HKCU protocol best-effort). See [desktop-roadmap.md](./desktop-roadmap.md) VOS rows.
 
