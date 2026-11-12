@@ -64,7 +64,7 @@ object DesktopSessionSync {
         }
         val manifestFile = File(stagingDir, "telos-manifest-${System.nanoTime()}.properties")
         manifestFile.outputStream().use { manifest.store(it, "Telos Desktop session sync") }
-        zip.addFile(manifestFile, encryptedParams(passphrase).apply { fileNameInZip = MANIFEST })
+        zip.addFile(manifestFile, encryptedParams().apply { fileNameInZip = MANIFEST })
         manifestFile.delete()
         if (dest.exists()) dest.delete()
         staging.copyTo(dest, overwrite = true)
@@ -121,7 +121,7 @@ object DesktopSessionSync {
         return importBundle(bundle, pass, vaultSettings).isSuccess
     }
 
-    private fun encryptedParams(passphrase: CharArray): ZipParameters {
+    private fun encryptedParams(): ZipParameters {
         val p = ZipParameters()
         p.isEncryptFiles = true
         p.encryptionMethod = EncryptionMethod.AES
