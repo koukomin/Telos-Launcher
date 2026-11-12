@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_net_dns_pref_hint">Zapisywane w sejfie. W Linuxie Telos stosuje DoT przez resolvectl, gdy jest dostępny; DoH pozostaje tylko preferencją.</string>
+    <string name="desktop_net_profiles_sum">Foldery profili sejfu w ~/.config/telos/profiles/</string>
+    <string name="desktop_net_allowlist_path">Plik listy dozwolonych</string>
+</resources>

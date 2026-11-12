@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_net_dns_pref_hint">Seyfdə saxlanılır. Linux-da Telos mövcuddursa resolvectl ilə DoT tətbiq edir; DoH yalnız üstünlük olaraq qalır.</string>
+    <string name="desktop_net_profiles_sum">~/.config/telos/profiles/ altında seyf profil qovluqları</string>
+    <string name="desktop_net_allowlist_path">İcazə siyahısı faylı</string>
+</resources>

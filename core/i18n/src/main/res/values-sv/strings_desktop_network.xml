@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_net_dns_pref_hint">Sparas i valvet. På Linux tillämpar Telos DoT via resolvectl när det finns; DoH förblir bara en preferens.</string>
+    <string name="desktop_net_profiles_sum">Valvprofilmappar under ~/.config/telos/profiles/</string>
+    <string name="desktop_net_allowlist_path">Allowlist-fil</string>
+</resources>

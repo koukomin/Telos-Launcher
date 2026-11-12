@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_net_dns_pref_hint">ভল্টে সংরক্ষিত হয়। Linux-এ resolvectl পাওয়া গেলে Telos DoT প্রয়োগ করে; DoH শুধু পছন্দ হিসেবে থাকে।</string>
+    <string name="desktop_net_profiles_sum">~/.config/telos/profiles/ এর অধীনে ভল্ট প্রোফাইল ফোল্ডার</string>
+    <string name="desktop_net_allowlist_path">অ্যালাউলিস্ট ফাইল</string>
+</resources>

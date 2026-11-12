@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_net_dns_pref_hint">Disimpan dalam vault. Pada Linux, Telos menggunakan DoT melalui resolvectl jika tersedia; DoH kekal sebagai keutamaan sahaja.</string>
+    <string name="desktop_net_profiles_sum">Folder profil vault di bawah ~/.config/telos/profiles/</string>
+    <string name="desktop_net_allowlist_path">Fail senarai benarkan</string>
+</resources>

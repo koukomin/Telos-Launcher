@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_net_dns_pref_hint">Salvate in le coffre. Sur Linux, Telos applica DoT via resolvectl quando disponibile; DoH resta solmente un preferentia.</string>
+    <string name="desktop_net_profiles_sum">Dossieres de profilo del coffre sub ~/.config/telos/profiles/</string>
+    <string name="desktop_net_allowlist_path">File de lista de permission</string>
+</resources>

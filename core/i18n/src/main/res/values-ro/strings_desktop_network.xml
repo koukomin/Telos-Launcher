@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_net_dns_pref_hint">Salvat în seif. Pe Linux, Telos aplică DoT prin resolvectl când este disponibil; DoH rămâne doar o preferință.</string>
+    <string name="desktop_net_profiles_sum">Foldere de profil ale seifului în ~/.config/telos/profiles/</string>
+    <string name="desktop_net_allowlist_path">Fișier listă de permisiuni</string>
+</resources>

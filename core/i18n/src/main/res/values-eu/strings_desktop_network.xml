@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_net_dns_pref_hint">Kutxan gordetzen da. Linuxen, Telosek DoT aplikatzen du resolvectl bidez eskuragarri dagoenean; DoH hobespen gisa soilik geratzen da.</string>
+    <string name="desktop_net_profiles_sum">Kutxaren profil-karpetak ~/.config/telos/profiles/ -n</string>
+    <string name="desktop_net_allowlist_path">Baimen-zerrendaren fitxategia</string>
+</resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_net_dns_pref_hint">Ἐν τῷ θησαυροφυλακίῳ σώζεται. Ἐν Linux τὸ Telos DoT διὰ resolvectl ἐφαρμόζει ὅταν πάρεστι· τὸ DoH μόνον προτίμησις μένει.</string>
+    <string name="desktop_net_profiles_sum">Φάκελοι προφίλ θησαυροφυλακίου ἐν ~/.config/telos/profiles/</string>
+    <string name="desktop_net_allowlist_path">Ἀρχεῖον καταλόγου ἐπιτρεπομένων</string>
+</resources>

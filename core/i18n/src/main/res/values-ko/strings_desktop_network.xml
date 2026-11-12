@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_net_dns_pref_hint">볼트에 저장됩니다. Linux에서는 resolvectl이 있으면 Telos가 DoT를 적용하고, DoH는 환경설정으로만 유지됩니다.</string>
+    <string name="desktop_net_profiles_sum">~/.config/telos/profiles/ 아래의 볼트 프로필 폴더</string>
+    <string name="desktop_net_allowlist_path">허용 목록 파일</string>
+</resources>

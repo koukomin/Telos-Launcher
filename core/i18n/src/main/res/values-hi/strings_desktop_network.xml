@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_net_dns_pref_hint">वॉल्ट में सहेजा जाता है। Linux पर, उपलब्ध होने पर Telos resolvectl से DoT लागू करता है; DoH केवल वरीयता रहता है।</string>
+    <string name="desktop_net_profiles_sum">~/.config/telos/profiles/ के अंतर्गत वॉल्ट प्रोफ़ाइल फ़ोल्डर</string>
+    <string name="desktop_net_allowlist_path">अनुमति-सूची फ़ाइल</string>
+</resources>

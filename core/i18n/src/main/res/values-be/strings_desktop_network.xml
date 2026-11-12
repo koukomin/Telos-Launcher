@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_net_dns_pref_hint">Захоўваецца ў сховішчы. У Linux Telos прымяняе DoT праз resolvectl, калі ён даступны; DoH застаецца толькі наладай.</string>
+    <string name="desktop_net_profiles_sum">Папкі профіляў сховішча ў ~/.config/telos/profiles/</string>
+    <string name="desktop_net_allowlist_path">Файл спіса дазволеных</string>
+</resources>

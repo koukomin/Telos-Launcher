@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_net_dns_pref_hint">Ukládá se do trezoru. Na Linuxu Telos použije DoT přes resolvectl, pokud je k dispozici; DoH zůstává jen jako preference.</string>
+    <string name="desktop_net_profiles_sum">Složky profilů trezoru v ~/.config/telos/profiles/</string>
+    <string name="desktop_net_allowlist_path">Soubor seznamu povolených</string>
+</resources>

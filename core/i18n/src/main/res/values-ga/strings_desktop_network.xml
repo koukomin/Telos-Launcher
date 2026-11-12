@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_net_dns_pref_hint">Sábháilte sa vault. Ar Linux, cuireann Telos DoT i bhfeidhm trí resolvectl nuair atá sé ar fáil; fanann DoH mar rogha amháin.</string>
+    <string name="desktop_net_profiles_sum">Fillteáin próifíle an vault faoi ~/.config/telos/profiles/</string>
+    <string name="desktop_net_allowlist_path">Comhad liosta ceadaithe</string>
+</resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_net_dns_pref_hint">Opgeslagen in de kluis. Op Linux past Telos DoT toe via resolvectl indien beschikbaar; DoH blijft alleen een voorkeur.</string>
+    <string name="desktop_net_profiles_sum">Kluisprofielmappen onder ~/.config/telos/profiles/</string>
+    <string name="desktop_net_allowlist_path">Allowlist-bestand</string>
+</resources>

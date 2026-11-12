@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_net_dns_pref_hint">נשמר בכספת. בלינוקס Telos מפעיל DoT דרך resolvectl כשהוא זמין; DoH נשאר העדפה בלבד.</string>
+    <string name="desktop_net_profiles_sum">תיקיות פרופיל הכספת תחת ~/.config/telos/profiles/</string>
+    <string name="desktop_net_allowlist_path">קובץ רשימת התרות</string>
+</resources>

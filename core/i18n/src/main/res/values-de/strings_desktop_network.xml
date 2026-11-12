@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_net_dns_pref_hint">Wird im Vault gespeichert. Unter Linux wendet Telos DoT über resolvectl an, wenn verfügbar; DoH bleibt nur eine Einstellung.</string>
+    <string name="desktop_net_profiles_sum">Vault-Profilordner unter ~/.config/telos/profiles/</string>
+    <string name="desktop_net_allowlist_path">Allowlist-Datei</string>
+</resources>

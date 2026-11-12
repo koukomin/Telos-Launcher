@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_net_dns_pref_hint">Maħżun fil-vault. Fuq Linux, Telos japplika DoT permezz ta’ resolvectl meta jkun disponibbli; DoH jibqa’ preferenza biss.</string>
+    <string name="desktop_net_profiles_sum">Folders tal-profil tal-vault taħt ~/.config/telos/profiles/</string>
+    <string name="desktop_net_allowlist_path">Fajl tal-allowlist</string>
+</resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_net_dns_pref_hint">Được lưu trong vault. Trên Linux, Telos áp dụng DoT qua resolvectl khi có sẵn; DoH chỉ còn là tùy chọn.</string>
+    <string name="desktop_net_profiles_sum">Thư mục hồ sơ vault tại ~/.config/telos/profiles/</string>
+    <string name="desktop_net_allowlist_path">Tệp danh sách cho phép</string>
+</resources>

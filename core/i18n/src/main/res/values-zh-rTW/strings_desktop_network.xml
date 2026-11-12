@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_net_dns_pref_hint">儲存在保險庫中。在 Linux 上，若可用，Telos 會透過 resolvectl 套用 DoT；DoH 僅作為偏好設定。</string>
+    <string name="desktop_net_profiles_sum">保險庫設定檔資料夾位於 ~/.config/telos/profiles/</string>
+    <string name="desktop_net_allowlist_path">允許清單檔案</string>
+</resources>

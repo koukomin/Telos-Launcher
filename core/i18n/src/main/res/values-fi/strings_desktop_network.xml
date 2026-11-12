@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_net_dns_pref_hint">Tallennetaan holviin. Linuxissa Telos käyttää DoT:ia resolvectl:llä, jos se on saatavilla; DoH jää vain asetukseksi.</string>
+    <string name="desktop_net_profiles_sum">Holviprofiilikansiot polussa ~/.config/telos/profiles/</string>
+    <string name="desktop_net_allowlist_path">Sallittujen luettelotiedosto</string>
+</resources>

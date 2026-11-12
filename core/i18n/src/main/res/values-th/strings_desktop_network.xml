@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_net_dns_pref_hint">บันทึกในวอลต์ บน Linux Telos จะใช้ DoT ผ่าน resolvectl เมื่อมีให้ใช้ ส่วน DoH เก็บเป็นค่ากำหนดเท่านั้น</string>
+    <string name="desktop_net_profiles_sum">โฟลเดอร์โปรไฟล์วอลต์ภายใต้ ~/.config/telos/profiles/</string>
+    <string name="desktop_net_allowlist_path">ไฟล์รายการอนุญาต</string>
+</resources>

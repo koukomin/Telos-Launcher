@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_net_dns_pref_hint">Saglabāts seifā. Linuxā Telos lieto DoT ar resolvectl, ja tas ir pieejams; DoH paliek tikai kā preferences.</string>
+    <string name="desktop_net_profiles_sum">Seifa profilu mapes vietā ~/.config/telos/profiles/</string>
+    <string name="desktop_net_allowlist_path">Atļauju saraksta fails</string>
+</resources>

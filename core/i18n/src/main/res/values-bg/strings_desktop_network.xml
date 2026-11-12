@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_net_dns_pref_hint">Запазва се в трезора. На Linux Telos прилага DoT чрез resolvectl, когато е наличен; DoH остава само предпочитание.</string>
+    <string name="desktop_net_profiles_sum">Папки на профили на трезора в ~/.config/telos/profiles/</string>
+    <string name="desktop_net_allowlist_path">Файл със списък за разрешаване</string>
+</resources>

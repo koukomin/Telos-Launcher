@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_net_dns_pref_hint">Shranjeno v trezorju. V Linuxu Telos uporabi DoT prek resolvectl, če je na voljo; DoH ostane le nastavitev.</string>
+    <string name="desktop_net_profiles_sum">Mape profilov trezorja v ~/.config/telos/profiles/</string>
+    <string name="desktop_net_allowlist_path">Datoteka dovoljenega seznama</string>
+</resources>

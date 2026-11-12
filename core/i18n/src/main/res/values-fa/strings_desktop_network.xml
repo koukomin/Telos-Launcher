@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_net_dns_pref_hint">در خزانه ذخیره می‌شود. در لینوکس، Telos در صورت موجود بودن، DoT را از طریق resolvectl اعمال می‌کند؛ DoH فقط به‌عنوان ترجیح باقی می‌ماند.</string>
+    <string name="desktop_net_profiles_sum">پوشه‌های نمایه خزانه در ~/.config/telos/profiles/</string>
+    <string name="desktop_net_allowlist_path">پرونده فهرست مجاز</string>
+</resources>

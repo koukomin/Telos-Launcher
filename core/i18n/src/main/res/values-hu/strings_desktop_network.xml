@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_net_dns_pref_hint">A trezorban tárolódik. Linuxon a Telos DoT-ot alkalmaz a resolvectl-lel, ha elérhető; a DoH csak beállítás marad.</string>
+    <string name="desktop_net_profiles_sum">Trezorprofil-mappák itt: ~/.config/telos/profiles/</string>
+    <string name="desktop_net_allowlist_path">Engedélyezési lista fájl</string>
+</resources>

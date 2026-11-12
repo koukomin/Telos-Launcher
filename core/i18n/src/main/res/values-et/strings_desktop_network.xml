@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_net_dns_pref_hint">Salvestatakse hoidlasse. Linuxis rakendab Telos DoT-i resolvectl kaudu, kui see on saadaval; DoH jääb vaid eelistuseks.</string>
+    <string name="desktop_net_profiles_sum">Hoidla profiilikaustad asukohas ~/.config/telos/profiles/</string>
+    <string name="desktop_net_allowlist_path">Lubatud loendi fail</string>
+</resources>

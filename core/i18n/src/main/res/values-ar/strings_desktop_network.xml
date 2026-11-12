@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_net_dns_pref_hint">يُحفظ في الخزنة. على لينكس يطبّق Telos بروتوكول DoT عبر resolvectl عند توافره؛ ويبقى DoH تفضيلاً فقط.</string>
+    <string name="desktop_net_profiles_sum">مجلدات ملفات تعريف الخزنة ضمن ~/.config/telos/profiles/</string>
+    <string name="desktop_net_allowlist_path">ملف قائمة السماح</string>
+</resources>

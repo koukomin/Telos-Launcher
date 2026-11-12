@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_net_dns_pref_hint">Salvo no vault. No Linux, o Telos aplica DoT pelo resolvectl quando disponível; o DoH fica só como preferência.</string>
+    <string name="desktop_net_profiles_sum">Pastas de perfil do vault em ~/.config/telos/profiles/</string>
+    <string name="desktop_net_allowlist_path">Arquivo de allowlist</string>
+</resources>

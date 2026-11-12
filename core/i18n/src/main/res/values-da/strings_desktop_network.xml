@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_net_dns_pref_hint">Gemmes i vaulten. På Linux anvender Telos DoT via resolvectl, når det er tilgængeligt; DoH forbliver kun en præference.</string>
+    <string name="desktop_net_profiles_sum">Vault-profilmapper under ~/.config/telos/profiles/</string>
+    <string name="desktop_net_allowlist_path">Allowlist-fil</string>
+</resources>
