@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_helix_palette_title">HELIX-KOMMANDO</string>
+    <string name="desktop_helix_palette_placeholder">Søk etter apper, vinduer, kalkulator…</string>
+    <string name="desktop_helix_palette_hint">Super+Punktum eller Ctrl+Mellomrom</string>
+    <string name="desktop_helix_palette_privacy">Kun vault- og portable røtter — indekserer ikke host-home utenfor økten.</string>
+    <string name="desktop_helix_palette_open_files">Åpne Filer</string>
+    <string name="desktop_helix_palette_open_settings">Åpne Innstillinger</string>
+    <string name="desktop_helix_palette_open_network">Åpne Nettverk</string>
+    <string name="desktop_helix_palette_kill_window">Lukk fokusert vindu</string>
+    <string name="desktop_helix_palette_paste_vault_clip">Lim inn siste vault-utklippstavle</string>
+    <string name="desktop_helix_palette_window">Vindu</string>
+    <string name="desktop_helix_palette_calc">Kalkulator</string>
+    <string name="desktop_helix_palette_command">Kommando</string>
+    <string name="desktop_helix_palette_file">Fil</string>
+    <string name="desktop_helix_palette_no_results">Ingen treff</string>
+</resources>

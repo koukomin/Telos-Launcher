@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_helix_palette_title">פקודת HELIX</string>
+    <string name="desktop_helix_palette_placeholder">חיפוש אפליקציות, חלונות, מחשבון…</string>
+    <string name="desktop_helix_palette_hint">Super+נקודה או Ctrl+רווח</string>
+    <string name="desktop_helix_palette_privacy">שורשי vault וניידים בלבד — ללא אינדקס של בית המארח מחוץ להפעלה.</string>
+    <string name="desktop_helix_palette_open_files">פתח קבצים</string>
+    <string name="desktop_helix_palette_open_settings">פתח הגדרות</string>
+    <string name="desktop_helix_palette_open_network">פתח רשת</string>
+    <string name="desktop_helix_palette_kill_window">סגור חלון ממוקד</string>
+    <string name="desktop_helix_palette_paste_vault_clip">הדבק לוח vault אחרון</string>
+    <string name="desktop_helix_palette_window">חלון</string>
+    <string name="desktop_helix_palette_calc">מחשבון</string>
+    <string name="desktop_helix_palette_command">פקודה</string>
+    <string name="desktop_helix_palette_file">קובץ</string>
+    <string name="desktop_helix_palette_no_results">אין תוצאות</string>
+</resources>

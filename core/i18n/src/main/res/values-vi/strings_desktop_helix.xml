@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_helix_palette_title">LỆNH HELIX</string>
+    <string name="desktop_helix_palette_placeholder">Tìm ứng dụng, cửa sổ, máy tính…</string>
+    <string name="desktop_helix_palette_hint">Super+Dấu chấm hoặc Ctrl+Space</string>
+    <string name="desktop_helix_palette_privacy">Chỉ gốc vault và portable — không lập chỉ mục home máy chủ ngoài phiên.</string>
+    <string name="desktop_helix_palette_open_files">Mở Tệp</string>
+    <string name="desktop_helix_palette_open_settings">Mở Cài đặt</string>
+    <string name="desktop_helix_palette_open_network">Mở Mạng</string>
+    <string name="desktop_helix_palette_kill_window">Đóng cửa sổ đang focus</string>
+    <string name="desktop_helix_palette_paste_vault_clip">Dán clipboard vault gần nhất</string>
+    <string name="desktop_helix_palette_window">Cửa sổ</string>
+    <string name="desktop_helix_palette_calc">Máy tính</string>
+    <string name="desktop_helix_palette_command">Lệnh</string>
+    <string name="desktop_helix_palette_file">Tệp</string>
+    <string name="desktop_helix_palette_no_results">Không có kết quả</string>
+</resources>

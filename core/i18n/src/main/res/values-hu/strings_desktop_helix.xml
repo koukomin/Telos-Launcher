@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_helix_palette_title">HELIX PARANCS</string>
+    <string name="desktop_helix_palette_placeholder">Alkalmazások, ablakok, számológép keresése…</string>
+    <string name="desktop_helix_palette_hint">Super+Pont vagy Ctrl+Szóköz</string>
+    <string name="desktop_helix_palette_privacy">Csak vault és hordozható gyökerek — nem indexeli a host home-ot a munkameneten kívül.</string>
+    <string name="desktop_helix_palette_open_files">Fájlok megnyitása</string>
+    <string name="desktop_helix_palette_open_settings">Beállítások megnyitása</string>
+    <string name="desktop_helix_palette_open_network">Hálózat megnyitása</string>
+    <string name="desktop_helix_palette_kill_window">Fókuszált ablak bezárása</string>
+    <string name="desktop_helix_palette_paste_vault_clip">Utolsó vault vágólap beillesztése</string>
+    <string name="desktop_helix_palette_window">Ablak</string>
+    <string name="desktop_helix_palette_calc">Számológép</string>
+    <string name="desktop_helix_palette_command">Parancs</string>
+    <string name="desktop_helix_palette_file">Fájl</string>
+    <string name="desktop_helix_palette_no_results">Nincs találat</string>
+</resources>

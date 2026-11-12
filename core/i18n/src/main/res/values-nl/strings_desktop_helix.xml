@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_helix_palette_title">HELIX-OPDRACHT</string>
+    <string name="desktop_helix_palette_placeholder">Zoek apps, vensters, rekenmachine…</string>
+    <string name="desktop_helix_palette_hint">Super+Punt of Ctrl+Spatie</string>
+    <string name="desktop_helix_palette_privacy">Alleen vault- en portable-wortels — indexeert geen host-home buiten de sessie.</string>
+    <string name="desktop_helix_palette_open_files">Bestanden openen</string>
+    <string name="desktop_helix_palette_open_settings">Instellingen openen</string>
+    <string name="desktop_helix_palette_open_network">Netwerk openen</string>
+    <string name="desktop_helix_palette_kill_window">Gefocust venster sluiten</string>
+    <string name="desktop_helix_palette_paste_vault_clip">Laatste vault-klembord plakken</string>
+    <string name="desktop_helix_palette_window">Venster</string>
+    <string name="desktop_helix_palette_calc">Rekenmachine</string>
+    <string name="desktop_helix_palette_command">Opdracht</string>
+    <string name="desktop_helix_palette_file">Bestand</string>
+    <string name="desktop_helix_palette_no_results">Geen resultaten</string>
+</resources>

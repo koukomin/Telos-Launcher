@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_helix_palette_title">HELIX コマンド</string>
+    <string name="desktop_helix_palette_placeholder">アプリ・ウィンドウ・電卓を検索…</string>
+    <string name="desktop_helix_palette_hint">Super+ピリオド または Ctrl+スペース</string>
+    <string name="desktop_helix_palette_privacy">vault とポータブルルートのみ — セッション外のホストホームは索引しません。</string>
+    <string name="desktop_helix_palette_open_files">ファイルを開く</string>
+    <string name="desktop_helix_palette_open_settings">設定を開く</string>
+    <string name="desktop_helix_palette_open_network">ネットワークを開く</string>
+    <string name="desktop_helix_palette_kill_window">フォーカス中のウィンドウを閉じる</string>
+    <string name="desktop_helix_palette_paste_vault_clip">最後の vault クリップボードを貼り付け</string>
+    <string name="desktop_helix_palette_window">ウィンドウ</string>
+    <string name="desktop_helix_palette_calc">電卓</string>
+    <string name="desktop_helix_palette_command">コマンド</string>
+    <string name="desktop_helix_palette_file">ファイル</string>
+    <string name="desktop_helix_palette_no_results">一致なし</string>
+</resources>

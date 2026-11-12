@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_helix_palette_title">COMANDĂ HELIX</string>
+    <string name="desktop_helix_palette_placeholder">Caută aplicații, ferestre, calculator…</string>
+    <string name="desktop_helix_palette_hint">Super+Punct sau Ctrl+Spațiu</string>
+    <string name="desktop_helix_palette_privacy">Doar rădăcini vault și portabile — nu indexează home-ul host în afara sesiunii.</string>
+    <string name="desktop_helix_palette_open_files">Deschide Fișiere</string>
+    <string name="desktop_helix_palette_open_settings">Deschide Setări</string>
+    <string name="desktop_helix_palette_open_network">Deschide Rețea</string>
+    <string name="desktop_helix_palette_kill_window">Închide fereastra activă</string>
+    <string name="desktop_helix_palette_paste_vault_clip">Lipește ultimul clipboard vault</string>
+    <string name="desktop_helix_palette_window">Fereastră</string>
+    <string name="desktop_helix_palette_calc">Calculator</string>
+    <string name="desktop_helix_palette_command">Comandă</string>
+    <string name="desktop_helix_palette_file">Fișier</string>
+    <string name="desktop_helix_palette_no_results">Niciun rezultat</string>
+</resources>

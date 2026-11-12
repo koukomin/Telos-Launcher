@@ -384,6 +384,28 @@ fun DesktopWorkspace(
                     onDismiss = { DesktopChrome.controlCenterOpen = false },
                 )
             }
+            Box(Modifier.fillMaxSize().zIndex(206f)) {
+                HelixCommandPalette(
+                    visible = DesktopChrome.commandPaletteOpen,
+                    wm = wm,
+                    icons = icons,
+                    onDismiss = { DesktopChrome.commandPaletteOpen = false },
+                    onOpenTelos = { app ->
+                        when (app.windowTitle) {
+                            "Quake" -> TelosQuake.toggle()
+                            "Settings" -> {
+                                showSettings = true
+                                wm.open("Settings")
+                            }
+                            else -> wm.open(app.windowTitle, y = wm.workArea.minY + 12f)
+                        }
+                    },
+                    onOpenSettings = {
+                        showSettings = true
+                        wm.open("Settings")
+                    },
+                )
+            }
             // === TELOS_PENDING_REVIEW_END: telos_window_drag_and_ui_fix ===
             TelosQuakeTerminal(wm.workArea)
             TelosOsdOverlay()
@@ -498,6 +520,10 @@ fun handleDesktopKeys(
             TelosCaptureTool.menuOpen = false
             return true
         }
+        if (DesktopChrome.commandPaletteOpen) {
+            DesktopChrome.commandPaletteOpen = false
+            return true
+        }
         if (DesktopChrome.appGridOpen) {
             DesktopChrome.appGridOpen = false
             return true
@@ -519,6 +545,11 @@ fun handleDesktopKeys(
     // Compose Desktop exposes Key.Spacebar (not Key.Space).
     if (ev.isMetaPressed && key == Key.Spacebar) {
         DesktopChrome.toggleAppGrid()
+        return true
+    }
+    // Helix command palette (KRunner / PowerToys Run): Super+Period or Ctrl+Space.
+    if ((ev.isMetaPressed && key == Key.Period) || (ctrl && !ev.isMetaPressed && key == Key.Spacebar)) {
+        DesktopChrome.toggleCommandPalette()
         return true
     }
     // Helix snap zones: Super+Arrow cycles 50/50 → 2/3 → 1/3; Up maximizes; Down restores.

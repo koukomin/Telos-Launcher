@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_helix_palette_title">HELIX KÄSK</string>
+    <string name="desktop_helix_palette_placeholder">Otsi rakendusi, aknaid, kalkulaatorit…</string>
+    <string name="desktop_helix_palette_hint">Super+Punkt või Ctrl+Tühik</string>
+    <string name="desktop_helix_palette_privacy">Ainult vault ja kaasaskantavad juured — ei indekseeri host home’i väljaspool seanssi.</string>
+    <string name="desktop_helix_palette_open_files">Ava Failid</string>
+    <string name="desktop_helix_palette_open_settings">Ava Seaded</string>
+    <string name="desktop_helix_palette_open_network">Ava Võrk</string>
+    <string name="desktop_helix_palette_kill_window">Sulge fookuses aken</string>
+    <string name="desktop_helix_palette_paste_vault_clip">Kleebi viimane vault lõikelaud</string>
+    <string name="desktop_helix_palette_window">Aken</string>
+    <string name="desktop_helix_palette_calc">Kalkulaator</string>
+    <string name="desktop_helix_palette_command">Käsk</string>
+    <string name="desktop_helix_palette_file">Fail</string>
+    <string name="desktop_helix_palette_no_results">Tulemusi pole</string>
+</resources>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_helix_palette_title">HELIX NAREDBA</string>
+    <string name="desktop_helix_palette_placeholder">Pretraži aplikacije, prozore, kalkulator…</string>
+    <string name="desktop_helix_palette_hint">Super+Točka ili Ctrl+Razmaknica</string>
+    <string name="desktop_helix_palette_privacy">Samo vault i prenosivi korijeni — ne indeksira host home izvan sesije.</string>
+    <string name="desktop_helix_palette_open_files">Otvori Datoteke</string>
+    <string name="desktop_helix_palette_open_settings">Otvori Postavke</string>
+    <string name="desktop_helix_palette_open_network">Otvori Mrežu</string>
+    <string name="desktop_helix_palette_kill_window">Zatvori fokusirani prozor</string>
+    <string name="desktop_helix_palette_paste_vault_clip">Zalijepi zadnji vault međuspremnik</string>
+    <string name="desktop_helix_palette_window">Prozor</string>
+    <string name="desktop_helix_palette_calc">Kalkulator</string>
+    <string name="desktop_helix_palette_command">Naredba</string>
+    <string name="desktop_helix_palette_file">Datoteka</string>
+    <string name="desktop_helix_palette_no_results">Nema rezultata</string>
+</resources>
