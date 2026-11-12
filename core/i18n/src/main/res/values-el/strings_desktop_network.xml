@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_net_dns_pref_hint">Αποθηκεύεται στο vault. Στο Linux, το Telos εφαρμόζει DoT μέσω resolvectl όταν είναι διαθέσιμο· το DoH μένει μόνο ως προτίμηση.</string>
+    <string name="desktop_net_profiles_sum">Φάκελοι προφίλ vault στο ~/.config/telos/profiles/</string>
+    <string name="desktop_net_allowlist_path">Αρχείο allowlist</string>
+</resources>
