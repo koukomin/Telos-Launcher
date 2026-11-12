@@ -112,8 +112,8 @@ fun HelixCommandPalette(
     LaunchedEffect(query, apps, visible, wm.focusedId, wm.windows.size, TelosClipboardManager.history.size) {
         if (!visible) return@LaunchedEffect
         val windows = wm.visibleWindows().map { HelixPaletteWindow(it.id, it.title) }
-        val vaultClip = TelosClipboardManager.history.any { it.vaulted } ||
-            runCatching { PhantomVault.engine.opsec.vaultedClip() != null }.getOrDefault(false)
+        val vaultClip = TelosClipboardManager.hasVaultedRecall() ||
+            TelosClipboardManager.history.isNotEmpty()
         val roots = withContext(Dispatchers.IO) { HelixPaletteActions.privacySafeFileRoots() }
         results = withContext(Dispatchers.Default) {
             HelixPaletteActions.build(
