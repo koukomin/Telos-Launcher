@@ -11,4 +11,7 @@
     <string name="desktop_opsec_audit_title">Registro de auditoría de sesión</string>
     <string name="desktop_opsec_audit_refresh">Actualizar registro</string>
     <string name="desktop_opsec_audit_empty">Aún no hay eventos de auditoría</string>
+    <string name="desktop_opsec_tpm_status">Estado TPM: %1$s</string>
+    <string name="desktop_opsec_tpm_unknown">aún no medido</string>
+    <string name="desktop_opsec_tpm_hint">Resumen local de digest PCR 0/7 con tpm2-tools si está presente. No es atestación remota (RAP).</string>
 </resources>

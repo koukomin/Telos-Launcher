@@ -11,4 +11,7 @@
     <string name="desktop_opsec_audit_title">Sitzungs-Auditprotokoll</string>
     <string name="desktop_opsec_audit_refresh">Auditprotokoll aktualisieren</string>
     <string name="desktop_opsec_audit_empty">Noch keine Audit-Ereignisse</string>
+    <string name="desktop_opsec_tpm_status">TPM-Status: %1$s</string>
+    <string name="desktop_opsec_tpm_unknown">noch nicht gemessen</string>
+    <string name="desktop_opsec_tpm_hint">Lokale PCR-0/7-Digest-Zusammenfassung über tpm2-tools, falls vorhanden. Keine Remote-Attestierung (RAP).</string>
 </resources>

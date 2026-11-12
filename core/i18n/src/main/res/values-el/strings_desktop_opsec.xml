@@ -11,4 +11,7 @@
     <string name="desktop_opsec_audit_title">Ημερολόγιο ελέγχου συνεδρίας</string>
     <string name="desktop_opsec_audit_refresh">Ανανέωση ημερολογίου</string>
     <string name="desktop_opsec_audit_empty">Δεν υπάρχουν ακόμη συμβάντα</string>
+    <string name="desktop_opsec_tpm_status">Κατάσταση TPM: %1$s</string>
+    <string name="desktop_opsec_tpm_unknown">δεν μετρήθηκε ακόμη</string>
+    <string name="desktop_opsec_tpm_hint">Τοπική σύνοψη digest PCR 0/7 μέσω tpm2-tools όταν υπάρχει. Δεν είναι απομακρυσμένη βεβαίωση (RAP).</string>
 </resources>

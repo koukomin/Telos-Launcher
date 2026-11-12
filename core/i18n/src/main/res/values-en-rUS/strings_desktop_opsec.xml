@@ -11,4 +11,7 @@
     <string name="desktop_opsec_audit_title">Session audit log</string>
     <string name="desktop_opsec_audit_refresh">Refresh audit log</string>
     <string name="desktop_opsec_audit_empty">No audit events yet</string>
+    <string name="desktop_opsec_tpm_status">TPM status: %1$s</string>
+    <string name="desktop_opsec_tpm_unknown">not measured yet</string>
+    <string name="desktop_opsec_tpm_hint">Local PCR 0/7 digest summary via tpm2-tools when present. This is not remote attestation (RAP).</string>
 </resources>

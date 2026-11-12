@@ -11,4 +11,7 @@
     <string name="desktop_opsec_audit_title">Log tal-awditjar tas-sessjoni</string>
     <string name="desktop_opsec_audit_refresh">Aġġorna l-log</string>
     <string name="desktop_opsec_audit_empty">Għad m’hemmx avvenimenti ta’ awditjar</string>
+    <string name="desktop_opsec_tpm_status">Status tat-TPM: %1$s</string>
+    <string name="desktop_opsec_tpm_unknown">għadu mhux imkejjel</string>
+    <string name="desktop_opsec_tpm_hint">Sommarju lokali tad-digest PCR 0/7 permezz ta’ tpm2-tools jekk preżenti. Din mhix attestazzjoni remota (RAP).</string>
 </resources>

@@ -11,4 +11,7 @@
     <string name="desktop_opsec_audit_title">Auditný denník relácie</string>
     <string name="desktop_opsec_audit_refresh">Obnoviť denník</string>
     <string name="desktop_opsec_audit_empty">Zatiaľ žiadne auditné udalosti</string>
+    <string name="desktop_opsec_tpm_status">Stav TPM: %1$s</string>
+    <string name="desktop_opsec_tpm_unknown">zatiaľ nemerané</string>
+    <string name="desktop_opsec_tpm_hint">Miestny súhrn digestov PCR 0/7 cez tpm2-tools, ak sú dostupné. Nie je to vzdialená atestácia (RAP).</string>
 </resources>

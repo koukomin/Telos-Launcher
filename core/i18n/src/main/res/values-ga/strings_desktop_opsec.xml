@@ -11,4 +11,7 @@
     <string name="desktop_opsec_audit_title">Log iniúchta an tseisiúin</string>
     <string name="desktop_opsec_audit_refresh">Athnuaigh an log</string>
     <string name="desktop_opsec_audit_empty">Níl aon teagmhais iniúchta fós</string>
+    <string name="desktop_opsec_tpm_status">Stádas TPM: %1$s</string>
+    <string name="desktop_opsec_tpm_unknown">gan tomhas fós</string>
+    <string name="desktop_opsec_tpm_hint">Achoimre áitiúil digest PCR 0/7 trí tpm2-tools más ann dóibh. Ní fianú cianda (RAP) é seo.</string>
 </resources>

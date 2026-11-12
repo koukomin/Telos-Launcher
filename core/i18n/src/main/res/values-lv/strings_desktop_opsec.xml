@@ -11,4 +11,7 @@
     <string name="desktop_opsec_audit_title">Sesijas audita žurnāls</string>
     <string name="desktop_opsec_audit_refresh">Atsvaidzināt žurnālu</string>
     <string name="desktop_opsec_audit_empty">Vēl nav audita notikumu</string>
+    <string name="desktop_opsec_tpm_status">TPM statuss: %1$s</string>
+    <string name="desktop_opsec_tpm_unknown">vēl nav mērīts</string>
+    <string name="desktop_opsec_tpm_hint">Lokāls PCR 0/7 sagremošanas kopsavilkums ar tpm2-tools, ja pieejams. Tas nav attālināta apliecināšana (RAP).</string>
 </resources>

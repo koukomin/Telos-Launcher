@@ -11,4 +11,7 @@
     <string name="desktop_opsec_audit_title">Nhật ký kiểm toán phiên</string>
     <string name="desktop_opsec_audit_refresh">Làm mới nhật ký</string>
     <string name="desktop_opsec_audit_empty">Chưa có sự kiện kiểm toán</string>
+    <string name="desktop_opsec_tpm_status">Trạng thái TPM: %1$s</string>
+    <string name="desktop_opsec_tpm_unknown">chưa đo</string>
+    <string name="desktop_opsec_tpm_hint">Tóm tắt digest PCR 0/7 cục bộ qua tpm2-tools khi có. Đây không phải chứng thực từ xa (RAP).</string>
 </resources>

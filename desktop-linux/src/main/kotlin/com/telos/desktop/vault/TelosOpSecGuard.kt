@@ -14,10 +14,14 @@ import java.awt.datatransfer.StringSelection
 import java.io.File
 
 /**
- * Session OpSec helpers (VOS-6 first slice): USB dead-man, core-dump block,
- * secure clipboard vaulting / auto-clear, and light host attestation into the audit log.
+ * Session OpSec helpers (VOS-6): USB dead-man, core-dump block,
+ * secure clipboard vaulting / auto-clear, and light host attestation
+ * (os-release / compositor / portable + optional TPM PCR 0/7) into the audit log.
  */
-class TelosOpSecGuard {
+class TelosOpSecGuard(
+    private val tpmRunner: TpmAttestation.CommandRunner = TpmAttestation.SysRunner,
+    private val tpmConfigRoot: (() -> File?) = { TpmAttestation.defaultConfigRoot() },
+) {
     var usbSerial: String? = null
     var panic: (() -> Unit)? = null
     var secureClipboardEnabled: Boolean = true
@@ -29,6 +33,10 @@ class TelosOpSecGuard {
     @Volatile private var vaultedClip: String? = null
     @Volatile private var lastSeenClip: String? = null
     @Volatile private var lastSeenAtMs: Long = 0L
+    /** Last TPM status line for Settings OpSec UI (updated on attestation). */
+    @Volatile var lastTpmStatus: String = "unknown"
+        private set
+    @Volatile private var lastTpmSnapshot: TpmAttestation.Snapshot? = null
 
     fun enableCoreDumpBlock() {
         Sys.run("bash", "-lc", "ulimit -c 0")
@@ -80,13 +88,24 @@ class TelosOpSecGuard {
         val os = prettyOsName()
         val compositor = resolveCompositor()
         val portable = PortableTraceGuard.isPortable()
-        return linkedMapOf(
+        val tpm = TpmAttestation.collect(
+            configRoot = tpmConfigRoot(),
+            runner = tpmRunner,
+        )
+        lastTpmSnapshot = tpm
+        lastTpmStatus = tpm.statusLine()
+        val out = linkedMapOf(
             "os" to os,
             "compositor" to compositor,
             "portable" to portable.toString(),
             "platform" to PlatformEnvironment.current.name,
         )
+        out.putAll(tpm.fields)
+        return out
     }
+
+    /** Human-readable TPM line for Settings (local PCR light — not RAP). */
+    fun tpmStatusForUi(): String = lastTpmStatus.ifBlank { "unknown" }
 
     fun vaultedClip(): String? = vaultedClip
 

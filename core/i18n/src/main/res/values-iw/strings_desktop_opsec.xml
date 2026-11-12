@@ -11,4 +11,7 @@
     <string name="desktop_opsec_audit_title">יומן ביקורת של הסשן</string>
     <string name="desktop_opsec_audit_refresh">רענן יומן</string>
     <string name="desktop_opsec_audit_empty">עדיין אין אירועי ביקורת</string>
+    <string name="desktop_opsec_tpm_status">מצב TPM: %1$s</string>
+    <string name="desktop_opsec_tpm_unknown">עדיין לא נמדד</string>
+    <string name="desktop_opsec_tpm_hint">סיכום digest מקומי של PCR 0/7 באמצעות tpm2-tools כשקיים. זו אינה אימות מרוחק (RAP).</string>
 </resources>

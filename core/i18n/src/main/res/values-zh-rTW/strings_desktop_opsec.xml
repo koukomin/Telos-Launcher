@@ -11,4 +11,7 @@
     <string name="desktop_opsec_audit_title">工作階段稽核紀錄</string>
     <string name="desktop_opsec_audit_refresh">重新整理稽核紀錄</string>
     <string name="desktop_opsec_audit_empty">尚無稽核事件</string>
+    <string name="desktop_opsec_tpm_status">TPM 狀態：%1$s</string>
+    <string name="desktop_opsec_tpm_unknown">尚未測量</string>
+    <string name="desktop_opsec_tpm_hint">若有 tpm2-tools，則在本機彙總 PCR 0/7 摘要。這不是遠端證明（RAP）。</string>
 </resources>

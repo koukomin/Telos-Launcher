@@ -11,4 +11,7 @@
     <string name="desktop_opsec_audit_title">Oturum denetim günlüğü</string>
     <string name="desktop_opsec_audit_refresh">Günlüğü yenile</string>
     <string name="desktop_opsec_audit_empty">Henüz denetim olayı yok</string>
+    <string name="desktop_opsec_tpm_status">TPM durumu: %1$s</string>
+    <string name="desktop_opsec_tpm_unknown">henüz ölçülmedi</string>
+    <string name="desktop_opsec_tpm_hint">Varsa tpm2-tools ile yerel PCR 0/7 özet özeti. Uzak doğrulama (RAP) değildir.</string>
 </resources>

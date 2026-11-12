@@ -11,4 +11,7 @@
     <string name="desktop_opsec_audit_title">Revizijski zapisnik sesije</string>
     <string name="desktop_opsec_audit_refresh">Osvježi zapisnik</string>
     <string name="desktop_opsec_audit_empty">Još nema revizijskih događaja</string>
+    <string name="desktop_opsec_tpm_status">TPM status: %1$s</string>
+    <string name="desktop_opsec_tpm_unknown">još nije izmjereno</string>
+    <string name="desktop_opsec_tpm_hint">Lokalni sažetak digest-a PCR 0/7 putem tpm2-tools ako su dostupni. Ovo nije udaljena atestacija (RAP).</string>
 </resources>

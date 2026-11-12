@@ -11,4 +11,7 @@
     <string name="desktop_opsec_audit_title">Auditní protokol relace</string>
     <string name="desktop_opsec_audit_refresh">Obnovit protokol</string>
     <string name="desktop_opsec_audit_empty">Zatím žádné auditní události</string>
+    <string name="desktop_opsec_tpm_status">Stav TPM: %1$s</string>
+    <string name="desktop_opsec_tpm_unknown">zatím neměřeno</string>
+    <string name="desktop_opsec_tpm_hint">Místní souhrn digestů PCR 0/7 přes tpm2-tools, pokud jsou k dispozici. Nejde o vzdálenou atestaci (RAP).</string>
 </resources>

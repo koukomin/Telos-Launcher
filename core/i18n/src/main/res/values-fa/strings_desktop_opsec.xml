@@ -11,4 +11,7 @@
     <string name="desktop_opsec_audit_title">گزارش ممیزی نشست</string>
     <string name="desktop_opsec_audit_refresh">بازخوانی گزارش</string>
     <string name="desktop_opsec_audit_empty">هنوز رویدادی در ممیزی نیست</string>
+    <string name="desktop_opsec_tpm_status">وضعیت TPM: %1$s</string>
+    <string name="desktop_opsec_tpm_unknown">هنوز اندازه‌گیری نشده</string>
+    <string name="desktop_opsec_tpm_hint">خلاصه محلی digestهای PCR 0/7 با tpm2-tools در صورت وجود. این تأیید هویت از راه دور (RAP) نیست.</string>
 </resources>

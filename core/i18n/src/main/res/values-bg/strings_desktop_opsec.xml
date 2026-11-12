@@ -11,4 +11,7 @@
     <string name="desktop_opsec_audit_title">Одитен дневник на сесията</string>
     <string name="desktop_opsec_audit_refresh">Обнови дневника</string>
     <string name="desktop_opsec_audit_empty">Все още няма одитни събития</string>
+    <string name="desktop_opsec_tpm_status">TPM статус: %1$s</string>
+    <string name="desktop_opsec_tpm_unknown">все още не е измерено</string>
+    <string name="desktop_opsec_tpm_hint">Локално резюме на digest за PCR 0/7 чрез tpm2-tools, ако са налични. Това не е отдалечена атестация (RAP).</string>
 </resources>

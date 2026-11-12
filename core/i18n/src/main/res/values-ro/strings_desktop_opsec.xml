@@ -11,4 +11,7 @@
     <string name="desktop_opsec_audit_title">Jurnal de audit al sesiunii</string>
     <string name="desktop_opsec_audit_refresh">Reîmprospătează jurnalul</string>
     <string name="desktop_opsec_audit_empty">Încă nu există evenimente de audit</string>
+    <string name="desktop_opsec_tpm_status">Stare TPM: %1$s</string>
+    <string name="desktop_opsec_tpm_unknown">încă nemăsurat</string>
+    <string name="desktop_opsec_tpm_hint">Rezumat local al digest-urilor PCR 0/7 prin tpm2-tools, dacă sunt prezente. Nu este atestare la distanță (RAP).</string>
 </resources>

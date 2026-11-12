@@ -11,4 +11,7 @@
     <string name="desktop_opsec_audit_title">সেশন অডিট লগ</string>
     <string name="desktop_opsec_audit_refresh">অডিট লগ রিফ্রেশ</string>
     <string name="desktop_opsec_audit_empty">এখনও কোনো অডিট ইভেন্ট নেই</string>
+    <string name="desktop_opsec_tpm_status">TPM অবস্থা: %1$s</string>
+    <string name="desktop_opsec_tpm_unknown">এখনও পরিমাপ হয়নি</string>
+    <string name="desktop_opsec_tpm_hint">tpm2-tools থাকলে স্থানীয় PCR 0/7 ডাইজেস্ট সারাংশ। এটি রিমোট অ্যাটেস্টেশন (RAP) নয়।</string>
 </resources>

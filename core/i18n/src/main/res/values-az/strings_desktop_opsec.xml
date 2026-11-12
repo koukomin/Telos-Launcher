@@ -11,4 +11,7 @@
     <string name="desktop_opsec_audit_title">Sessiya audit jurnalı</string>
     <string name="desktop_opsec_audit_refresh">Jurnalı yenilə</string>
     <string name="desktop_opsec_audit_empty">Hələ audit hadisəsi yoxdur</string>
+    <string name="desktop_opsec_tpm_status">TPM statusu: %1$s</string>
+    <string name="desktop_opsec_tpm_unknown">hələ ölçülməyib</string>
+    <string name="desktop_opsec_tpm_hint">tpm2-tools olduqda yerli PCR 0/7 digest xülasəsi. Bu uzaqdan attestasiya (RAP) deyil.</string>
 </resources>

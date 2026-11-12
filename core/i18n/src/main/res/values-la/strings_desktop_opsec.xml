@@ -11,4 +11,7 @@
     <string name="desktop_opsec_audit_title">Commentarii auditionis sessionis</string>
     <string name="desktop_opsec_audit_refresh">Commentarios renovare</string>
     <string name="desktop_opsec_audit_empty">Nondum eventa auditionis</string>
+    <string name="desktop_opsec_tpm_status">Status TPM: %1$s</string>
+    <string name="desktop_opsec_tpm_unknown">nondum mensus</string>
+    <string name="desktop_opsec_tpm_hint">Summarium locale digestorum PCR 0/7 per tpm2-tools si adsunt. Haec non est attestatio remota (RAP).</string>
 </resources>

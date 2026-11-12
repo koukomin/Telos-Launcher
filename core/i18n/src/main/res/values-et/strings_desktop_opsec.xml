@@ -11,4 +11,7 @@
     <string name="desktop_opsec_audit_title">Seansi auditilogi</string>
     <string name="desktop_opsec_audit_refresh">Värskenda logi</string>
     <string name="desktop_opsec_audit_empty">Auditilogis pole veel sündmusi</string>
+    <string name="desktop_opsec_tpm_status">TPM olek: %1$s</string>
+    <string name="desktop_opsec_tpm_unknown">veel mõõtmata</string>
+    <string name="desktop_opsec_tpm_hint">Kohalik PCR 0/7 räsi kokkuvõte tpm2-tools abil, kui need on olemas. See ei ole kaugattesteerimine (RAP).</string>
 </resources>

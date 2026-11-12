@@ -11,4 +11,7 @@
     <string name="desktop_opsec_audit_title">Log audit sesi</string>
     <string name="desktop_opsec_audit_refresh">Muat semula log audit</string>
     <string name="desktop_opsec_audit_empty">Belum ada peristiwa audit</string>
+    <string name="desktop_opsec_tpm_status">Status TPM: %1$s</string>
+    <string name="desktop_opsec_tpm_unknown">belum diukur</string>
+    <string name="desktop_opsec_tpm_hint">Ringkasan digest PCR 0/7 tempatan melalui tpm2-tools jika ada. Ini bukan pengesahan jauh (RAP).</string>
 </resources>

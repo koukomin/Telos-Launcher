@@ -11,4 +11,7 @@
     <string name="desktop_opsec_audit_title">Istunnon auditointiloki</string>
     <string name="desktop_opsec_audit_refresh">Päivitä loki</string>
     <string name="desktop_opsec_audit_empty">Ei vielä auditointitapahtumia</string>
+    <string name="desktop_opsec_tpm_status">TPM-tila: %1$s</string>
+    <string name="desktop_opsec_tpm_unknown">ei vielä mitattu</string>
+    <string name="desktop_opsec_tpm_hint">Paikallinen PCR 0/7 -tiivisteyhteenveto tpm2-toolsilla, jos saatavilla. Tämä ei ole etäattestointi (RAP).</string>
 </resources>

@@ -11,4 +11,7 @@
     <string name="desktop_opsec_audit_title">セッション監査ログ</string>
     <string name="desktop_opsec_audit_refresh">監査ログを更新</string>
     <string name="desktop_opsec_audit_empty">監査イベントはまだありません</string>
+    <string name="desktop_opsec_tpm_status">TPM 状態: %1$s</string>
+    <string name="desktop_opsec_tpm_unknown">未測定</string>
+    <string name="desktop_opsec_tpm_hint">tpm2-tools がある場合のローカル PCR 0/7 ダイジェスト要約。リモート証明（RAP）ではありません。</string>
 </resources>

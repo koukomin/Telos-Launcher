@@ -11,4 +11,7 @@
     <string name="desktop_opsec_audit_title">सत्र ऑडिट लॉग</string>
     <string name="desktop_opsec_audit_refresh">ऑडिट लॉग ताज़ा करें</string>
     <string name="desktop_opsec_audit_empty">अभी कोई ऑडिट इवेंट नहीं</string>
+    <string name="desktop_opsec_tpm_status">TPM स्थिति: %1$s</string>
+    <string name="desktop_opsec_tpm_unknown">अभी मापा नहीं गया</string>
+    <string name="desktop_opsec_tpm_hint">tpm2-tools मौजूद होने पर स्थानीय PCR 0/7 डाइजेस्ट सारांश। यह रिमोट अटेस्टेशन (RAP) नहीं है।</string>
 </resources>

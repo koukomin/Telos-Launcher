@@ -11,4 +11,7 @@
     <string name="desktop_opsec_audit_title">Sessionsgranskningslogg</string>
     <string name="desktop_opsec_audit_refresh">Uppdatera granskningsloggen</string>
     <string name="desktop_opsec_audit_empty">Inga granskningshändelser ännu</string>
+    <string name="desktop_opsec_tpm_status">TPM-status: %1$s</string>
+    <string name="desktop_opsec_tpm_unknown">inte mätt ännu</string>
+    <string name="desktop_opsec_tpm_hint">Lokal PCR 0/7-digestsammamfattning via tpm2-tools om de finns. Detta är inte fjärrattestering (RAP).</string>
 </resources>

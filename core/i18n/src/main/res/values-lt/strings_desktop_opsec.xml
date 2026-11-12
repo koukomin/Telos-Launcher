@@ -11,4 +11,7 @@
     <string name="desktop_opsec_audit_title">Sesijos audito žurnalas</string>
     <string name="desktop_opsec_audit_refresh">Atnaujinti žurnalą</string>
     <string name="desktop_opsec_audit_empty">Dar nėra audito įvykių</string>
+    <string name="desktop_opsec_tpm_status">TPM būsena: %1$s</string>
+    <string name="desktop_opsec_tpm_unknown">dar neišmatuota</string>
+    <string name="desktop_opsec_tpm_hint">Vietinė PCR 0/7 santraukų santrauka per tpm2-tools, jei yra. Tai nėra nuotolinis patvirtinimas (RAP).</string>
 </resources>

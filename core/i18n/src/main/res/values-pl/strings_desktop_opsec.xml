@@ -11,4 +11,7 @@
     <string name="desktop_opsec_audit_title">Dziennik audytu sesji</string>
     <string name="desktop_opsec_audit_refresh">Odśwież dziennik</string>
     <string name="desktop_opsec_audit_empty">Brak zdarzeń audytu</string>
+    <string name="desktop_opsec_tpm_status">Status TPM: %1$s</string>
+    <string name="desktop_opsec_tpm_unknown">jeszcze nie zmierzono</string>
+    <string name="desktop_opsec_tpm_hint">Lokalne podsumowanie skrótów PCR 0/7 przez tpm2-tools, jeśli dostępne. To nie jest zdalne poświadczenie (RAP).</string>
 </resources>

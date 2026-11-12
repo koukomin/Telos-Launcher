@@ -11,4 +11,7 @@
     <string name="desktop_opsec_audit_title">บันทึกการตรวจสอบเซสชัน</string>
     <string name="desktop_opsec_audit_refresh">รีเฟรชบันทึก</string>
     <string name="desktop_opsec_audit_empty">ยังไม่มีเหตุการณ์การตรวจสอบ</string>
+    <string name="desktop_opsec_tpm_status">สถานะ TPM: %1$s</string>
+    <string name="desktop_opsec_tpm_unknown">ยังไม่ได้วัด</string>
+    <string name="desktop_opsec_tpm_hint">สรุปไดเจสต์ PCR 0/7 ภายในเครื่องผ่าน tpm2-tools หากมี นี่ไม่ใช่การรับรองระยะไกล (RAP)</string>
 </resources>

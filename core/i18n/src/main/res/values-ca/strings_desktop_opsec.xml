@@ -11,4 +11,7 @@
     <string name="desktop_opsec_audit_title">Registre d’auditoria de la sessió</string>
     <string name="desktop_opsec_audit_refresh">Actualitza el registre</string>
     <string name="desktop_opsec_audit_empty">Encara no hi ha esdeveniments d’auditoria</string>
+    <string name="desktop_opsec_tpm_status">Estat TPM: %1$s</string>
+    <string name="desktop_opsec_tpm_unknown">encara no mesurat</string>
+    <string name="desktop_opsec_tpm_hint">Resum local dels digest PCR 0/7 amb tpm2-tools si hi són. No és attestació remota (RAP).</string>
 </resources>

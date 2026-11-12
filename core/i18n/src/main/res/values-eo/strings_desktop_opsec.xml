@@ -11,4 +11,7 @@
     <string name="desktop_opsec_audit_title">Seanca kontrolprotokolo</string>
     <string name="desktop_opsec_audit_refresh">Refreŝigi protokolon</string>
     <string name="desktop_opsec_audit_empty">Ankoraŭ neniuj kontrolaj eventoj</string>
+    <string name="desktop_opsec_tpm_status">TPM-stato: %1$s</string>
+    <string name="desktop_opsec_tpm_unknown">ankoraŭ ne mezurita</string>
+    <string name="desktop_opsec_tpm_hint">Loka PCR 0/7 digest-resumo per tpm2-tools se ĉeestas. Ĉi tio ne estas fora atestado (RAP).</string>
 </resources>

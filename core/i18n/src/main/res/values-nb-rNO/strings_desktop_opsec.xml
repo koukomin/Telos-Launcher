@@ -11,4 +11,7 @@
     <string name="desktop_opsec_audit_title">Øktrevisjonslogg</string>
     <string name="desktop_opsec_audit_refresh">Oppdater revisjonsloggen</string>
     <string name="desktop_opsec_audit_empty">Ingen revisjonshendelser ennå</string>
+    <string name="desktop_opsec_tpm_status">TPM-status: %1$s</string>
+    <string name="desktop_opsec_tpm_unknown">ikke målt ennå</string>
+    <string name="desktop_opsec_tpm_hint">Lokal PCR 0/7-digestoppsummering via tpm2-tools hvis tilgjengelig. Dette er ikke fjernattestering (RAP).</string>
 </resources>

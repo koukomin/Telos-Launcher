@@ -11,4 +11,7 @@
     <string name="desktop_opsec_audit_title">Saioaren auditoria-egunkaria</string>
     <string name="desktop_opsec_audit_refresh">Freskatu egunkaria</string>
     <string name="desktop_opsec_audit_empty">Oraindik ez dago auditoria-gertakaririk</string>
+    <string name="desktop_opsec_tpm_status">TPM egoera: %1$s</string>
+    <string name="desktop_opsec_tpm_unknown">oraindik neurtu gabe</string>
+    <string name="desktop_opsec_tpm_hint">PCR 0/7 digest laburpen lokala tpm2-tools bidez, badaude. Ez da urruneko egiaztapena (RAP).</string>
 </resources>

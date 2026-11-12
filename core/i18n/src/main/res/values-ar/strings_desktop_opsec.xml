@@ -11,4 +11,7 @@
     <string name="desktop_opsec_audit_title">سجل تدقيق الجلسة</string>
     <string name="desktop_opsec_audit_refresh">تحديث سجل التدقيق</string>
     <string name="desktop_opsec_audit_empty">لا توجد أحداث تدقيق بعد</string>
+    <string name="desktop_opsec_tpm_status">حالة TPM: %1$s</string>
+    <string name="desktop_opsec_tpm_unknown">لم تُقَس بعد</string>
+    <string name="desktop_opsec_tpm_hint">ملخص محلي لملخصات PCR 0/7 عبر tpm2-tools إن وُجدت. هذه ليست مصادقة عن بُعد (RAP).</string>
 </resources>

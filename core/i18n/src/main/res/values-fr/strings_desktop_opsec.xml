@@ -11,4 +11,7 @@
     <string name="desktop_opsec_audit_title">Journal d’audit de session</string>
     <string name="desktop_opsec_audit_refresh">Actualiser le journal</string>
     <string name="desktop_opsec_audit_empty">Aucun événement d’audit pour l’instant</string>
+    <string name="desktop_opsec_tpm_status">État TPM : %1$s</string>
+    <string name="desktop_opsec_tpm_unknown">pas encore mesuré</string>
+    <string name="desktop_opsec_tpm_hint">Résumé local des digest PCR 0/7 via tpm2-tools si présent. Ce n’est pas une attestation distante (RAP).</string>
 </resources>

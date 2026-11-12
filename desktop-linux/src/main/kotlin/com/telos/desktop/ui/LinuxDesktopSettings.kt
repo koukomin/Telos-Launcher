@@ -483,8 +483,28 @@ fun LinuxDesktopSettingsPanel(
             }) {
                 Text(com.telos.desktop.i18n.TelosI18n.t("desktop_opsec_clipboard_clear_now"))
             }
+            var tpmStatus by remember {
+                mutableStateOf(
+                    opsec?.tpmStatusForUi()?.takeIf { it != "unknown" }
+                        ?: com.telos.desktop.i18n.TelosI18n.t("desktop_opsec_tpm_unknown"),
+                )
+            }
+            Text(
+                com.telos.desktop.i18n.TelosI18n.t("desktop_opsec_tpm_status", tpmStatus),
+                fontSize = 12.sp,
+                color = TelosColors.onSurface,
+            )
+            Text(
+                com.telos.desktop.i18n.TelosI18n.t("desktop_opsec_tpm_hint"),
+                fontSize = 10.sp,
+                color = TelosColors.onSurface.copy(0.65f),
+            )
             TextButton(onClick = {
                 runCatching { com.telos.desktop.vault.PhantomVault.engine.opsec.recordAttestation() }
+                tpmStatus = runCatching {
+                    com.telos.desktop.vault.PhantomVault.engine.opsec.tpmStatusForUi()
+                }.getOrNull()?.takeIf { it.isNotBlank() && it != "unknown" }
+                    ?: com.telos.desktop.i18n.TelosI18n.t("desktop_opsec_tpm_unknown")
                 auditLines = com.telos.desktop.vault.TelosSessionAuditLog.readTail(24)
             }) {
                 Text(com.telos.desktop.i18n.TelosI18n.t("desktop_opsec_attestation_run"))

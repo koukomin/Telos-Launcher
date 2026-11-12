@@ -11,4 +11,7 @@
     <string name="desktop_opsec_audit_title">Журнал аудиту сеансу</string>
     <string name="desktop_opsec_audit_refresh">Оновити журнал</string>
     <string name="desktop_opsec_audit_empty">Поки немає подій аудиту</string>
+    <string name="desktop_opsec_tpm_status">Статус TPM: %1$s</string>
+    <string name="desktop_opsec_tpm_unknown">ще не виміряно</string>
+    <string name="desktop_opsec_tpm_hint">Локальний підсумок digest PCR 0/7 через tpm2-tools за наявності. Це не віддалена атестація (RAP).</string>
 </resources>

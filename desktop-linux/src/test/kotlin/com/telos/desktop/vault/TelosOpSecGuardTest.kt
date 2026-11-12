@@ -28,12 +28,19 @@ class TelosOpSecGuardTest {
     fun hostIntegritySnapshotIncludesPortableAndPlatform() {
         PortableTraceGuard.clearSelectedRoot()
         System.clearProperty("telos.portable.active")
-        val snap = TelosOpSecGuard().hostIntegritySnapshot()
+        // Inject empty TPM tools so CI hosts without tpm2-tools stay deterministic.
+        val noTpm = object : TpmAttestation.CommandRunner {
+            override fun which(name: String): String? = null
+            override fun run(vararg args: String, timeoutSec: Long) =
+                com.telos.desktop.linux.Sys.Result(1, "unused")
+        }
+        val snap = TelosOpSecGuard(tpmRunner = noTpm).hostIntegritySnapshot()
         assertTrue(snap.containsKey("os"))
         assertTrue(snap.containsKey("compositor"))
         assertTrue(snap.containsKey("portable"))
         assertTrue(snap.containsKey("platform"))
         assertEquals(false.toString(), snap["portable"])
+        assertEquals("unavailable", snap["tpm"])
     }
 
     @Test

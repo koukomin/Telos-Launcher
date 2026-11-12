@@ -11,4 +11,7 @@
     <string name="desktop_opsec_audit_title">세션 감사 로그</string>
     <string name="desktop_opsec_audit_refresh">감사 로그 새로고침</string>
     <string name="desktop_opsec_audit_empty">아직 감사 이벤트가 없습니다</string>
+    <string name="desktop_opsec_tpm_status">TPM 상태: %1$s</string>
+    <string name="desktop_opsec_tpm_unknown">아직 측정되지 않음</string>
+    <string name="desktop_opsec_tpm_hint">tpm2-tools가 있으면 로컬 PCR 0/7 다이제스트 요약. 원격 증명(RAP)이 아닙니다.</string>
 </resources>

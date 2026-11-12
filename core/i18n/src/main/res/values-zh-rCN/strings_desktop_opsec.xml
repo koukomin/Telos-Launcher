@@ -11,4 +11,7 @@
     <string name="desktop_opsec_audit_title">会话审计日志</string>
     <string name="desktop_opsec_audit_refresh">刷新审计日志</string>
     <string name="desktop_opsec_audit_empty">暂无审计事件</string>
+    <string name="desktop_opsec_tpm_status">TPM 状态：%1$s</string>
+    <string name="desktop_opsec_tpm_unknown">尚未测量</string>
+    <string name="desktop_opsec_tpm_hint">在存在 tpm2-tools 时本地汇总 PCR 0/7 摘要。这不是远程证明（RAP）。</string>
 </resources>

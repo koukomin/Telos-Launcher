@@ -11,4 +11,7 @@
     <string name="desktop_opsec_audit_title">Sessie-auditlogboek</string>
     <string name="desktop_opsec_audit_refresh">Auditlogboek vernieuwen</string>
     <string name="desktop_opsec_audit_empty">Nog geen auditgebeurtenissen</string>
+    <string name="desktop_opsec_tpm_status">TPM-status: %1$s</string>
+    <string name="desktop_opsec_tpm_unknown">nog niet gemeten</string>
+    <string name="desktop_opsec_tpm_hint">Lokale PCR 0/7-digestsamenvatting via tpm2-tools indien aanwezig. Dit is geen externe attestatie (RAP).</string>
 </resources>

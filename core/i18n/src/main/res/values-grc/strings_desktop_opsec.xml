@@ -11,4 +11,7 @@
     <string name="desktop_opsec_audit_title">Ἡμερολόγιον ἐλέγχου συνεδρίας</string>
     <string name="desktop_opsec_audit_refresh">Ἀνανέωσις ἡμερολογίου</string>
     <string name="desktop_opsec_audit_empty">Οὔπω ὑπάρχουσι συμβάντα ἐλέγχου</string>
+    <string name="desktop_opsec_tpm_status">Κατάστασις TPM: %1$s</string>
+    <string name="desktop_opsec_tpm_unknown">οὔπω μετρηθέν</string>
+    <string name="desktop_opsec_tpm_hint">Τοπικὴ σύνοψις digest PCR 0/7 διὰ tpm2-tools ἐὰν παρῇ. Οὐκ ἔστιν ἀπομεμακρυσμένη βεβαίωσις (RAP).</string>
 </resources>

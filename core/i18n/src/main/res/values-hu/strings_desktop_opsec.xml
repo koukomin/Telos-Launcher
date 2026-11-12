@@ -11,4 +11,7 @@
     <string name="desktop_opsec_audit_title">Munkamenet-auditnapló</string>
     <string name="desktop_opsec_audit_refresh">Napló frissítése</string>
     <string name="desktop_opsec_audit_empty">Még nincsenek auditesemények</string>
+    <string name="desktop_opsec_tpm_status">TPM állapot: %1$s</string>
+    <string name="desktop_opsec_tpm_unknown">még nem mérve</string>
+    <string name="desktop_opsec_tpm_hint">Helyi PCR 0/7 kivonat-összefoglaló tpm2-tools segítségével, ha elérhető. Ez nem távoli tanúsítás (RAP).</string>
 </resources>
