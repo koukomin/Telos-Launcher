@@ -292,7 +292,18 @@ fun DesktopWorkspace(
             )
             }
             // === TELOS_PENDING_REVIEW_START: telos_window_drag_and_ui_fix ===
-            AnimatedVisibility(DesktopChrome.appGridOpen, modifier = Modifier.fillMaxSize().zIndex(200f), enter = HelixMotion.enter, exit = HelixMotion.exit) {
+            // Kickoff drops from under the Helix top bar (Yakuake motion); not a fullscreen DE replace.
+            val panelH = (settings.panelHeightDp).dp
+            AnimatedVisibility(
+                DesktopChrome.appGridOpen,
+                modifier = Modifier
+                    .align(Alignment.TopStart)
+                    .fillMaxSize()
+                    .padding(top = panelH)
+                    .zIndex(200f),
+                enter = HelixMotion.drawerEnter,
+                exit = HelixMotion.drawerExit,
+            ) {
                 PlasmaAppGrid(
                     icons = icons,
                     onDismiss = { DesktopChrome.appGridOpen = false },
@@ -430,6 +441,11 @@ fun handleDesktopKeys(
     }
     if (ev.isMetaPressed && key == Key.Tab) {
         DesktopChrome.toggleOverview()
+        return true
+    }
+    // Plasma-style Kickoff: Super+Space (logo click also toggles). Avoid Meta-alone vs Meta+Tab race.
+    if (ev.isMetaPressed && key == Key.Space) {
+        DesktopChrome.toggleAppGrid()
         return true
     }
     // === TELOS_PENDING_REVIEW_END: telos_de_final_polish ===

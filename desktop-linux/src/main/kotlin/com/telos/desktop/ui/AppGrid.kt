@@ -1,9 +1,11 @@
 package com.telos.desktop.ui
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -12,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -28,6 +31,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.telos.desktop.apps.DesktopEntry
@@ -81,16 +85,27 @@ fun PlasmaAppGrid(
                 (query.isBlank() || it.name.contains(query, true))
         }
     }
-    Box(
-        Modifier.fillMaxSize().background(TelosColors.background.copy(alpha = 0.82f)).clickable { onDismiss() },
+    // Kickoff hangs under the top panel (Yakuake-style). Scrim dismisses; host WM stays visible.
+    BoxWithConstraints(
+        Modifier.fillMaxSize().clickable(
+            indication = null,
+            interactionSource = remember { MutableInteractionSource() },
+        ) { onDismiss() },
     ) {
+        Box(Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.28f)))
+        val drawerWidth = maxWidth.coerceAtMost(720.dp).coerceAtLeast(420.dp)
+        val drawerHeight = (maxHeight * 0.62f).coerceIn(360.dp, 640.dp)
+        val shape = RoundedCornerShape(bottomStart = 14.dp, bottomEnd = 14.dp)
         Row(
             Modifier
-                .align(Alignment.Center)
-                .fillMaxWidth(0.82f)
-                .height(560.dp)
-                .clip(RoundedCornerShape(20.dp))
+                .align(Alignment.TopStart)
+                .padding(start = 8.dp)
+                .widthIn(max = drawerWidth)
+                .fillMaxWidth(0.58f)
+                .height(drawerHeight)
+                .clip(shape)
                 .background(TelosColors.surface)
+                .border(1.dp, TelosColors.outline, shape)
                 .clickable(indication = null, interactionSource = remember { MutableInteractionSource() }) { },
         ) {
             Column(
