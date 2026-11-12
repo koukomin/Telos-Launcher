@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_helix_palette_title">ARAHAN HELIX</string>
+    <string name="desktop_helix_palette_placeholder">Cari apl, tetingkap, kalkulator…</string>
+    <string name="desktop_helix_palette_hint">Super+Titik atau Ctrl+Spasi</string>
+    <string name="desktop_helix_palette_privacy">Hanya akar vault dan portabel — tidak mengindeks home host di luar sesi.</string>
+    <string name="desktop_helix_palette_open_files">Buka Fail</string>
+    <string name="desktop_helix_palette_open_settings">Buka Tetapan</string>
+    <string name="desktop_helix_palette_open_network">Buka Rangkaian</string>
+    <string name="desktop_helix_palette_kill_window">Tutup tetingkap fokus</string>
+    <string name="desktop_helix_palette_paste_vault_clip">Tempel papan klip vault terakhir</string>
+    <string name="desktop_helix_palette_window">Tetingkap</string>
+    <string name="desktop_helix_palette_calc">Kalkulator</string>
+    <string name="desktop_helix_palette_command">Arahan</string>
+    <string name="desktop_helix_palette_file">Fail</string>
+    <string name="desktop_helix_palette_no_results">Tidak ada hasil</string>
+</resources>

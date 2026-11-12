@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_helix_palette_title">أمر HELIX</string>
+    <string name="desktop_helix_palette_placeholder">ابحث عن التطبيقات والنوافذ والآلة الحاسبة…</string>
+    <string name="desktop_helix_palette_hint">Super+نقطة أو Ctrl+مسافة</string>
+    <string name="desktop_helix_palette_privacy">جذور الخزنة والمحمولة فقط — لا يفهرس منزل المضيف خارج الجلسة.</string>
+    <string name="desktop_helix_palette_open_files">فتح الملفات</string>
+    <string name="desktop_helix_palette_open_settings">فتح الإعدادات</string>
+    <string name="desktop_helix_palette_open_network">فتح الشبكة</string>
+    <string name="desktop_helix_palette_kill_window">إغلاق النافذة المركّز عليها</string>
+    <string name="desktop_helix_palette_paste_vault_clip">لصق آخر حافظة خزنة</string>
+    <string name="desktop_helix_palette_window">نافذة</string>
+    <string name="desktop_helix_palette_calc">آلة حاسبة</string>
+    <string name="desktop_helix_palette_command">أمر</string>
+    <string name="desktop_helix_palette_file">ملف</string>
+    <string name="desktop_helix_palette_no_results">لا نتائج</string>
+</resources>

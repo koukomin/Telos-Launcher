@@ -25,6 +25,7 @@ Beat GNOME / Cosmic / Hyprland-default chrome on density and search, using KDE-c
 | **H0** | In tree (tokens) | `TelosSharedColors` Helix surfaces: `surfaceHigh`, `outline`, `panel`, `menu`. Dark Breeze-like tones + Telos primary `#FF007F` and secondary `#00F0FF`. |
 | **H1** | In tree (panel glyphs) | `TelosTopPanel` system tray uses `CandyCyberIcon` (volume, network, battery, tray, clip, bell, shot) instead of English word chips. Popups stay opaque `TelosColors.surface`. |
 | **H2** | In tree (Kickoff) | `PlasmaAppGrid` Kickoff: left favorites + power, right search (`DesktopSearch`) + Telos/Linux grids. Opens as a **Yakuake-style pull-down under the top panel** (`HelixMotion.drawerEnter`), not a fullscreen DE replace. Logo click + Super+Space (`Key.Spacebar`) toggle `DesktopChrome.toggleAppGrid()`. Host apps stay labwc/niri windows. |
+| **H2b** | In tree (palette) | `HelixCommandPalette`: KRunner / PowerToys Run-class overlay (`Super+Period` or `Ctrl+Space`). Opaque `TelosColors.menu` / `surfaceContainer` Cyber-Tech popup. Actions: launch apps (`DesktopSearch` / `.desktop`), jump to open windows, calculator, Open Files/Settings/Network, kill focused window (Compose `wm.close` + best-effort labwc via `wlrctl`), paste last vault clipboard. File hits use vault/portable roots only — never host home outside the session. Rank/filter logic in `HelixPaletteActions` (unit-tested). |
 | **H3** | Already in tree | Klassy titlebars, workspace dots, dock row, Alt-Tab strip. Polish only if gaps. |
 | **H4** | In tree | Settings window: opaque Helix `surface` + grouped `surfaceContainer` cards with `outline`. Same toggles and actions as before. |
 | **H5** | In tree | Bottom dock uses `CandyCyberIcon` + labels. Apps opens Kickoff (`toggleAppGrid`). Alt-Tab uses opaque `menu` chips. |
@@ -50,6 +51,7 @@ Wallpaper is the stage. Menus stay opaque. Motion is 120–160 ms, no bounce.
 - Tokens: `ui-kmp/.../TelosSharedTheme.kt`
 - Panel: `desktop-linux/.../panel/TelosTopPanel.kt`
 - Kickoff: `desktop-linux/.../ui/AppGrid.kt`
+- Command palette: `desktop-linux/.../ui/HelixCommandPalette.kt`, `…/search/HelixPaletteActions.kt`
 - Icons: `desktop-linux/.../icons/CandyCyberIcons.kt`
 - Status comment: `desktop-linux/.../ui/Helix.kt`
 - Settings: `desktop-linux/.../ui/LinuxDesktopSettings.kt`

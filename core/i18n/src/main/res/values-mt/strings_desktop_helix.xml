@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_helix_palette_title">KUMANDA HELIX</string>
+    <string name="desktop_helix_palette_placeholder">Fittex apps, twieqi, kalkulatur…</string>
+    <string name="desktop_helix_palette_hint">Super+Punt jew Ctrl+Spazju</string>
+    <string name="desktop_helix_palette_privacy">Biss għeruq vault u portabbli — ma jindikax home tal-host barra mis-sessjoni.</string>
+    <string name="desktop_helix_palette_open_files">Iftaħ Fajls</string>
+    <string name="desktop_helix_palette_open_settings">Iftaħ Settings</string>
+    <string name="desktop_helix_palette_open_network">Iftaħ Network</string>
+    <string name="desktop_helix_palette_kill_window">Agħlaq it-tieqa ffukata</string>
+    <string name="desktop_helix_palette_paste_vault_clip">Waħħal l-aħħar clipboard tal-vault</string>
+    <string name="desktop_helix_palette_window">Tieqa</string>
+    <string name="desktop_helix_palette_calc">Kalkulatur</string>
+    <string name="desktop_helix_palette_command">Kumanda</string>
+    <string name="desktop_helix_palette_file">Fajl</string>
+    <string name="desktop_helix_palette_no_results">Ebda riżultat</string>
+</resources>

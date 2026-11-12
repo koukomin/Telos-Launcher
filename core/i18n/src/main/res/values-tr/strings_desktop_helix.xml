@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_helix_palette_title">HELIX KOMUTU</string>
+    <string name="desktop_helix_palette_placeholder">Uygulama, pencere, hesap makinesi ara…</string>
+    <string name="desktop_helix_palette_hint">Super+Period veya Ctrl+Space</string>
+    <string name="desktop_helix_palette_privacy">Yalnızca vault ve taşınabilir kökler — oturum dışında host home dizinlenmez.</string>
+    <string name="desktop_helix_palette_open_files">Dosyaları aç</string>
+    <string name="desktop_helix_palette_open_settings">Ayarları aç</string>
+    <string name="desktop_helix_palette_open_network">Ağı aç</string>
+    <string name="desktop_helix_palette_kill_window">Odaklı pencereyi kapat</string>
+    <string name="desktop_helix_palette_paste_vault_clip">Son vault panosunu yapıştır</string>
+    <string name="desktop_helix_palette_window">Pencere</string>
+    <string name="desktop_helix_palette_calc">Hesap makinesi</string>
+    <string name="desktop_helix_palette_command">Komut</string>
+    <string name="desktop_helix_palette_file">Dosya</string>
+    <string name="desktop_helix_palette_no_results">Sonuç yok</string>
+</resources>

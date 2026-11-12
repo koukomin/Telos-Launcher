@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_helix_palette_title">HELIX KOMANDA</string>
+    <string name="desktop_helix_palette_placeholder">Ieškoti programų, langų, skaičiuotuvo…</string>
+    <string name="desktop_helix_palette_hint">Super+Taškas arba Ctrl+Tarpas</string>
+    <string name="desktop_helix_palette_privacy">Tik vault ir nešiojamos šaknys — neindeksuoja host home už sesijos ribų.</string>
+    <string name="desktop_helix_palette_open_files">Atidaryti Failus</string>
+    <string name="desktop_helix_palette_open_settings">Atidaryti Nustatymus</string>
+    <string name="desktop_helix_palette_open_network">Atidaryti Tinklą</string>
+    <string name="desktop_helix_palette_kill_window">Uždaryti sufokusuotą langą</string>
+    <string name="desktop_helix_palette_paste_vault_clip">Įklijuoti paskutinę vault iškarpinę</string>
+    <string name="desktop_helix_palette_window">Langas</string>
+    <string name="desktop_helix_palette_calc">Skaičiuotuvas</string>
+    <string name="desktop_helix_palette_command">Komanda</string>
+    <string name="desktop_helix_palette_file">Failas</string>
+    <string name="desktop_helix_palette_no_results">Nėra rezultatų</string>
+</resources>

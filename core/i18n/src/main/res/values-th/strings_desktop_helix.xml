@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_helix_palette_title">คำสั่ง HELIX</string>
+    <string name="desktop_helix_palette_placeholder">ค้นหาแอป หน้าต่าง เครื่องคิดเลข…</string>
+    <string name="desktop_helix_palette_hint">Super+จุด หรือ Ctrl+Space</string>
+    <string name="desktop_helix_palette_privacy">เฉพาะราก vault และพกพา — ไม่จัดทำดัชนีโฮมโฮสต์นอกเซสชัน</string>
+    <string name="desktop_helix_palette_open_files">เปิดไฟล์</string>
+    <string name="desktop_helix_palette_open_settings">เปิดการตั้งค่า</string>
+    <string name="desktop_helix_palette_open_network">เปิดเครือข่าย</string>
+    <string name="desktop_helix_palette_kill_window">ปิดหน้าต่างที่โฟกัส</string>
+    <string name="desktop_helix_palette_paste_vault_clip">วางคลิปบอร์ด vault ล่าสุด</string>
+    <string name="desktop_helix_palette_window">หน้าต่าง</string>
+    <string name="desktop_helix_palette_calc">เครื่องคิดเลข</string>
+    <string name="desktop_helix_palette_command">คำสั่ง</string>
+    <string name="desktop_helix_palette_file">ไฟล์</string>
+    <string name="desktop_helix_palette_no_results">ไม่พบผลลัพธ์</string>
+</resources>

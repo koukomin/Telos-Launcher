@@ -39,6 +39,7 @@ object LayerShellBridge {
         when (id) {
             "ready" -> connected = true
             "kickoff" -> DesktopChrome.toggleAppGrid()
+            "palette" -> DesktopChrome.toggleCommandPalette()
             "overview" -> DesktopChrome.toggleOverview()
             "control" -> DesktopChrome.toggleControlCenter()
             "notify" -> TelosNotificationCenter.open.value = !TelosNotificationCenter.open.value

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_helix_palette_title">HELIX KOMANDOA</string>
+    <string name="desktop_helix_palette_placeholder">Bilatu appak, leihoak, kalkulagailua…</string>
+    <string name="desktop_helix_palette_hint">Super+Puntua edo Ctrl+Zuriunea</string>
+    <string name="desktop_helix_palette_privacy">Vault eta eramangarri sustraiak soilik — ez du host home-a indexatzen saiotik kanpo.</string>
+    <string name="desktop_helix_palette_open_files">Ireki Fitxategiak</string>
+    <string name="desktop_helix_palette_open_settings">Ireki Ezarpenak</string>
+    <string name="desktop_helix_palette_open_network">Ireki Sarea</string>
+    <string name="desktop_helix_palette_kill_window">Itxi fokatutako leihoa</string>
+    <string name="desktop_helix_palette_paste_vault_clip">Itsatsi azken vault arbela</string>
+    <string name="desktop_helix_palette_window">Leihoa</string>
+    <string name="desktop_helix_palette_calc">Kalkulagailua</string>
+    <string name="desktop_helix_palette_command">Komandoa</string>
+    <string name="desktop_helix_palette_file">Fitxategia</string>
+    <string name="desktop_helix_palette_no_results">Ez dago emaitzarik</string>
+</resources>

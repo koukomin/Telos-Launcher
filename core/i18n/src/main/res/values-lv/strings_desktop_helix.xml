@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_helix_palette_title">HELIX KOMANDA</string>
+    <string name="desktop_helix_palette_placeholder">Meklēt lietotnes, logus, kalkulatoru…</string>
+    <string name="desktop_helix_palette_hint">Super+Punkts vai Ctrl+Atstarpe</string>
+    <string name="desktop_helix_palette_privacy">Tikai vault un pārnēsājamās saknes — neindeksē host home ārpus sesijas.</string>
+    <string name="desktop_helix_palette_open_files">Atvērt Failus</string>
+    <string name="desktop_helix_palette_open_settings">Atvērt Iestatījumus</string>
+    <string name="desktop_helix_palette_open_network">Atvērt Tīklu</string>
+    <string name="desktop_helix_palette_kill_window">Aizvērt fokusēto logu</string>
+    <string name="desktop_helix_palette_paste_vault_clip">Ielīmēt pēdējo vault starpliktuvi</string>
+    <string name="desktop_helix_palette_window">Logs</string>
+    <string name="desktop_helix_palette_calc">Kalkulators</string>
+    <string name="desktop_helix_palette_command">Komanda</string>
+    <string name="desktop_helix_palette_file">Fails</string>
+    <string name="desktop_helix_palette_no_results">Nav rezultātu</string>
+</resources>
