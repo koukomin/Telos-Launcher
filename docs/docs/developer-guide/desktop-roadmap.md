@@ -39,3 +39,7 @@ These sit **on top of** P0–W3 (still in tree). They describe the Telos Desktop
 | **VOS-6** | Planned | OpSec: attestation light, secure clipboard, audit log. |
 
 Constraints that stay in force: no `:app:app` dependency on `:desktop-linux`; i18n keys from `:core:i18n` only; labwc is a **host package**, not bundled.
+
+## Beyond the in-tree phases
+
+Portable multi-host packaging, hardened hybrid PQ key wrapping, steganographic carrier transport productization, and a Windows shell/companion path are **not** additional unfinished P/H/S/W phases above. They are separate productization work. Do not describe them as shipped in user-facing docs until implemented.
