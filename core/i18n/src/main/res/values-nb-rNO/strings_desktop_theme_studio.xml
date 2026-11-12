@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_studio_title">Temastudio</string>
+    <string name="desktop_theme_studio_hint">Quiet Ops er standard. Vault Neon styrker Cyber-Tech-kanter og HUD-målere. Paper Ops er et lyst dagsalternativ. Hurtigmenyer forblir ugjennomsiktige; det finnes ingen andre uskarphet.</string>
+    <string name="desktop_theme_intensity">Intensitet</string>
+    <string name="desktop_theme_quiet_ops">Quiet Ops</string>
+    <string name="desktop_theme_vault_neon">Vault Neon</string>
+    <string name="desktop_theme_paper_ops">Paper Ops</string>
+    <string name="desktop_theme_accent">Aksent</string>
+    <string name="desktop_theme_from_wallpaper">Aksent fra bakgrunn</string>
+    <string name="desktop_theme_from_wallpaper_hint">Lagrer innstillingen nå; lokal tonal sampling fra bakgrunnen kan komme senere. Ingenting lastes opp.</string>
+    <string name="desktop_theme_density">Tetthet</string>
+    <string name="desktop_theme_density_compact">Kompakt</string>
+    <string name="desktop_theme_density_comfort">Komfort</string>
+    <string name="desktop_theme_density_touch">Touch</string>
+    <string name="desktop_theme_panel_height">Panelhøyde: %1$d dp</string>
+    <string name="desktop_theme_panel_icon">Panelikoner: %1$d dp</string>
+    <string name="desktop_theme_panel_opacity">Paneldekkevne: %1$d%%</string>
+</resources>

@@ -2,14 +2,18 @@ package com.telos.desktop.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.DropdownMenu
@@ -49,12 +53,17 @@ import com.telos.desktop.update.DesktopGitHubReleasesChannel
 import com.telos.desktop.update.DesktopSignedUpdate
 import com.telos.desktop.update.DesktopUpdateRestartHelper
 import com.telos.desktop.settings.TelosDesktopSettings
+import com.telos.desktop.theme.DesktopThemeChrome
+import com.telos.desktop.theme.ThemeAccent
+import com.telos.desktop.theme.ThemeDensity
+import com.telos.desktop.theme.ThemeIntensity
 import com.telos.desktop.vault.PhantomVault
 import com.telos.desktop.wm.WindowButtonStyle
 import de.mm20.launcher2.uikmp.TelosSurfaceTokens
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import androidx.compose.ui.graphics.Color
 import java.io.File
 
 @Composable
@@ -83,6 +92,7 @@ fun LinuxDesktopSettingsPanel(
     val t = com.telos.desktop.i18n.TelosI18n
     val indexEntries = remember {
         helixSettingsIndexEntries(
+            themeStudioTitle = t.t("desktop_theme_studio_title"),
             sessionTitle = t.t("desktop_settings_session"),
             displayTitle = t.t("desktop_settings_display"),
             nightTitle = t.t("desktop_night_light_title"),
@@ -99,6 +109,22 @@ fun LinuxDesktopSettingsPanel(
             opsecTitle = t.t("desktop_opsec_title"),
             restoreTitle = t.t("desktop_vault_restore_title"),
             updateTitle = t.t("desktop_update_title"),
+            themeStudioKeywords = listOf(
+                t.t("desktop_theme_intensity"),
+                t.t("desktop_theme_quiet_ops"),
+                t.t("desktop_theme_vault_neon"),
+                t.t("desktop_theme_paper_ops"),
+                t.t("desktop_theme_accent"),
+                t.t("desktop_theme_density"),
+                t.t("desktop_theme_density_compact"),
+                t.t("desktop_theme_density_comfort"),
+                t.t("desktop_theme_density_touch"),
+                t.t("desktop_theme_from_wallpaper"),
+                t.t("desktop_night_light_title"),
+                "appearance",
+                "neon",
+                "panel",
+            ),
             nightKeywords = listOf(
                 t.t("desktop_night_light_enable"),
                 t.t("desktop_night_light_temperature"),
@@ -164,6 +190,44 @@ fun LinuxDesktopSettingsPanel(
                 t.t("desktop_settings_search_empty"),
                 fontSize = 12.sp,
                 color = TelosColors.onSurface.copy(0.7f),
+            )
+        }
+        if (show("theme_studio")) {
+            ThemeStudioCard(
+                settings = settings,
+                themes = themes,
+                cursorThemes = cursorThemes,
+                icons = icons,
+                onThemesRefresh = {
+                    icons.invalidate()
+                    com.telos.desktop.cursor.XCursorThemeDiscovery.invalidate()
+                    themes = icons.listInstalledThemes()
+                    cursorThemes = com.telos.desktop.cursor.XCursorThemeDiscovery.listInstalled()
+                },
+                nightEnabled = nightEnabled,
+                nightTemp = nightTemp,
+                nightStatus = nightStatus,
+                onNightEnabled = { on ->
+                    nightEnabled = on
+                    settings.nightLightEnabled = on
+                    settings.nightLightTemperatureK = NightLightController.clampTemp(nightTemp.toInt())
+                    settings.save()
+                    val status = NightLightController.apply(on, settings.nightLightTemperatureK)
+                    nightStatus = NightLightController.snapshot(on, settings.nightLightTemperatureK).copy(status = status)
+                },
+                onNightTemp = { value -> nightTemp = value },
+                onNightTempFinished = {
+                    val kelvin = NightLightController.clampTemp(nightTemp.toInt())
+                    nightTemp = kelvin.toFloat()
+                    settings.nightLightTemperatureK = kelvin
+                    settings.save()
+                    if (nightEnabled) {
+                        val status = NightLightController.apply(true, kelvin)
+                        nightStatus = NightLightController.snapshot(true, kelvin).copy(status = status)
+                    } else {
+                        nightStatus = NightLightController.snapshot(false, kelvin)
+                    }
+                },
             )
         }
         if (show("session")) HelixSettingsCard(t.t("desktop_settings_session")) {
@@ -895,6 +959,7 @@ private fun reapplyCursor(settings: TelosDesktopSettings) {
 }
 
 private fun helixSettingsIndexEntries(
+    themeStudioTitle: String,
     sessionTitle: String,
     displayTitle: String,
     nightTitle: String,
@@ -911,12 +976,14 @@ private fun helixSettingsIndexEntries(
     opsecTitle: String,
     restoreTitle: String,
     updateTitle: String,
+    themeStudioKeywords: List<String>,
     nightKeywords: List<String>,
     sessionKeywords: List<String>,
     desktopKeywords: List<String>,
     portalKeywords: List<String>,
     opsecKeywords: List<String>,
 ): List<HelixSettingsIndexEntry> = listOf(
+    HelixSettingsIndexEntry("theme_studio", themeStudioTitle, themeStudioKeywords),
     HelixSettingsIndexEntry("session", sessionTitle, sessionKeywords),
     HelixSettingsIndexEntry("display", displayTitle, listOf("resolution", "scale", "refresh")),
     HelixSettingsIndexEntry("night_light", nightTitle, nightKeywords),
@@ -934,6 +1001,257 @@ private fun helixSettingsIndexEntries(
     HelixSettingsIndexEntry("vault_restore", restoreTitle, listOf("restore", "backup")),
     HelixSettingsIndexEntry("update", updateTitle, listOf("update", "signed", "manifest")),
 )
+
+@Composable
+private fun ThemeStudioCard(
+    settings: TelosDesktopSettings,
+    themes: List<IconThemeInfo>,
+    cursorThemes: List<XCursorThemeInfo>,
+    icons: LinuxIconThemeResolver,
+    onThemesRefresh: () -> Unit,
+    nightEnabled: Boolean,
+    nightTemp: Float,
+    nightStatus: NightLightController.Snapshot,
+    onNightEnabled: (Boolean) -> Unit,
+    onNightTemp: (Float) -> Unit,
+    onNightTempFinished: () -> Unit,
+) {
+    val t = com.telos.desktop.i18n.TelosI18n
+    var intensity by remember {
+        mutableStateOf(ThemeIntensity.parse(settings.themeIntensity))
+    }
+    var accent by remember {
+        mutableStateOf(ThemeAccent.parse(settings.themeAccent))
+    }
+    var density by remember {
+        mutableStateOf(ThemeDensity.parse(settings.themeDensity))
+    }
+    var panelHeight by remember { mutableStateOf(settings.panelHeightDp) }
+    var panelIcon by remember { mutableStateOf(settings.panelIconDp) }
+    var panelAlpha by remember { mutableStateOf(settings.panelAlpha) }
+    var iconOpen by remember { mutableStateOf(false) }
+    var cursorOpen by remember { mutableStateOf(false) }
+
+    HelixSettingsCard(t.t("desktop_theme_studio_title")) {
+        Text(t.t("desktop_theme_studio_hint"), fontSize = 11.sp, color = TelosColors.onSurface.copy(0.7f))
+
+        Text(t.t("desktop_theme_intensity"), fontSize = 12.sp, color = TelosColors.onSurface)
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            HelixTechPill(
+                t.t("desktop_theme_quiet_ops"),
+                selected = intensity == ThemeIntensity.QuietOps,
+                accent = TelosColors.secondary,
+            ) {
+                intensity = ThemeIntensity.QuietOps
+                settings.applyThemeIntensity(intensity)
+                settings.save()
+            }
+            HelixTechPill(
+                t.t("desktop_theme_vault_neon"),
+                selected = intensity == ThemeIntensity.VaultNeon,
+                accent = Color(0xFFFF007F),
+            ) {
+                intensity = ThemeIntensity.VaultNeon
+                settings.applyThemeIntensity(intensity)
+                settings.save()
+            }
+            HelixTechPill(
+                t.t("desktop_theme_paper_ops"),
+                selected = intensity == ThemeIntensity.PaperOps,
+                accent = Color(0xFF00838F),
+            ) {
+                intensity = ThemeIntensity.PaperOps
+                settings.applyThemeIntensity(intensity)
+                settings.save()
+            }
+        }
+
+        Text(t.t("desktop_theme_accent"), fontSize = 12.sp, color = TelosColors.onSurface)
+        Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+            ThemeAccent.NEON_PRESETS.forEach { preset ->
+                val selected = accent == preset
+                Box(
+                    Modifier
+                        .size(28.dp)
+                        .clip(CircleShape)
+                        .background(preset.color)
+                        .border(
+                            width = if (selected) 2.dp else 1.dp,
+                            color = if (selected) {
+                                TelosColors.onSurface
+                            } else {
+                                preset.color.copy(alpha = DesktopThemeChrome.techBorderAlpha)
+                            },
+                            shape = CircleShape,
+                        )
+                        .clickable {
+                            accent = preset
+                            settings.applyThemeAccent(preset)
+                            settings.save()
+                        },
+                )
+            }
+        }
+        Toggle(t.t("desktop_theme_from_wallpaper"), accent == ThemeAccent.FromWallpaper) { on ->
+            accent = if (on) ThemeAccent.FromWallpaper else ThemeAccent.NeonMagenta
+            settings.applyThemeAccent(accent)
+            settings.save()
+        }
+        Text(t.t("desktop_theme_from_wallpaper_hint"), fontSize = 10.sp, color = TelosColors.onSurface.copy(0.6f))
+
+        Text(t.t("desktop_theme_density"), fontSize = 12.sp, color = TelosColors.onSurface)
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            listOf(
+                ThemeDensity.Compact to t.t("desktop_theme_density_compact"),
+                ThemeDensity.Comfort to t.t("desktop_theme_density_comfort"),
+                ThemeDensity.Touch to t.t("desktop_theme_density_touch"),
+            ).forEach { (dens, label) ->
+                HelixTechPill(label, selected = density == dens, accent = TelosColors.secondary) {
+                    density = dens
+                    settings.applyThemeDensity(dens)
+                    panelHeight = dens.panelHeightDp
+                    panelIcon = dens.panelIconDp
+                    settings.save()
+                }
+            }
+        }
+
+        Text(
+            t.t("desktop_theme_panel_height", panelHeight.toInt()),
+            fontSize = 11.sp,
+            color = TelosColors.onSurface,
+        )
+        Slider(
+            value = ((panelHeight - 32f) / 16f).coerceIn(0f, 1f),
+            onValueChange = {
+                panelHeight = (32f + it * 16f).coerceIn(32f, 48f)
+                settings.panelHeightDp = panelHeight
+            },
+            onValueChangeFinished = { settings.save() },
+        )
+        Text(
+            t.t("desktop_theme_panel_icon", panelIcon.toInt()),
+            fontSize = 11.sp,
+            color = TelosColors.onSurface,
+        )
+        Slider(
+            value = ((panelIcon - 20f) / 16f).coerceIn(0f, 1f),
+            onValueChange = {
+                panelIcon = (20f + it * 16f).coerceIn(20f, 36f)
+                settings.panelIconDp = panelIcon
+            },
+            onValueChangeFinished = { settings.save() },
+        )
+        Text(
+            t.t("desktop_theme_panel_opacity", (panelAlpha * 100).toInt()),
+            fontSize = 11.sp,
+            color = TelosColors.onSurface,
+        )
+        Slider(
+            value = panelAlpha.coerceIn(0.2f, 1f),
+            onValueChange = {
+                panelAlpha = it.coerceIn(0.2f, 1f)
+                settings.panelAlpha = panelAlpha
+            },
+            onValueChangeFinished = { settings.save() },
+        )
+
+        Text(t.t("desktop_icons_theme_label"), fontSize = 12.sp, color = TelosColors.onSurface)
+        val selectedIconLabel = themes.firstOrNull { it.name == settings.iconTheme }?.displayName
+            ?: settings.iconTheme
+        TextButton(onClick = {
+            onThemesRefresh()
+            iconOpen = true
+        }) { Text(selectedIconLabel) }
+        DropdownMenu(
+            expanded = iconOpen,
+            onDismissRequest = { iconOpen = false },
+            modifier = Modifier.background(TelosColors.menu),
+        ) {
+            themes.forEach { theme ->
+                DropdownMenuItem(
+                    text = { Text(theme.displayName) },
+                    onClick = {
+                        settings.iconTheme = theme.name
+                        settings.save()
+                        icons.preferredTheme = theme.name
+                        iconOpen = false
+                    },
+                )
+            }
+        }
+
+        Text(t.t("desktop_cursor_theme"), fontSize = 12.sp, color = TelosColors.onSurface)
+        TextButton(onClick = {
+            onThemesRefresh()
+            cursorOpen = true
+        }) {
+            Text(
+                settings.cursorTheme.ifBlank { t.t("desktop_cursor_system_default") },
+            )
+        }
+        DropdownMenu(
+            expanded = cursorOpen,
+            onDismissRequest = { cursorOpen = false },
+            modifier = Modifier.background(TelosColors.menu),
+        ) {
+            DropdownMenuItem(
+                text = { Text(t.t("desktop_cursor_system_default")) },
+                onClick = {
+                    settings.cursorTheme = ""
+                    settings.save()
+                    reapplyCursor(settings)
+                    cursorOpen = false
+                },
+            )
+            cursorThemes.forEach { theme ->
+                DropdownMenuItem(
+                    text = { Text(theme.displayName) },
+                    onClick = {
+                        settings.cursorTheme = theme.name
+                        settings.save()
+                        reapplyCursor(settings)
+                        cursorOpen = false
+                    },
+                )
+            }
+        }
+
+        Text(t.t("desktop_night_light_title"), fontSize = 12.sp, color = TelosColors.onSurface)
+        Toggle(t.t("desktop_night_light_enable"), nightEnabled, onNightEnabled)
+        Text(
+            t.t("desktop_night_light_temperature", NightLightController.clampTemp(nightTemp.toInt())),
+            fontSize = 11.sp,
+            color = TelosColors.onSurface,
+        )
+        Slider(
+            value = ((nightTemp - NightLightController.MIN_TEMP_K) /
+                (NightLightController.MAX_TEMP_K - NightLightController.MIN_TEMP_K).toFloat())
+                .coerceIn(0f, 1f),
+            onValueChange = {
+                onNightTemp(
+                    NightLightController.MIN_TEMP_K +
+                        it * (NightLightController.MAX_TEMP_K - NightLightController.MIN_TEMP_K),
+                )
+            },
+            onValueChangeFinished = onNightTempFinished,
+        )
+        Text(
+            when (nightStatus.status) {
+                NightLightController.ApplyStatus.PreferenceOnly ->
+                    t.t("desktop_night_light_pref_only")
+                NightLightController.ApplyStatus.Failed ->
+                    t.t("desktop_night_light_failed")
+                NightLightController.ApplyStatus.Applied ->
+                    t.t("desktop_night_light_applied", nightStatus.backend.name.lowercase())
+                NightLightController.ApplyStatus.Cleared ->
+                    t.t("desktop_night_light_cleared")
+            },
+            fontSize = 11.sp,
+            color = TelosColors.secondary,
+        )
+    }
+}
 
 @Composable
 private fun Vos5RestoreAndUpdateCard(
@@ -1241,12 +1559,15 @@ private fun Vos5RestoreAndUpdateCard(
 @Composable
 private fun HelixSettingsCard(title: String, body: @Composable ColumnScope.() -> Unit) {
     val shape = RoundedCornerShape(12.dp)
+    val borderColor = com.telos.desktop.theme.DesktopThemeChrome.resolvedAccent
+        .copy(alpha = com.telos.desktop.theme.DesktopThemeChrome.techBorderAlpha)
     Column(
         Modifier
             .fillMaxWidth()
             .clip(shape)
+            // Opaque card — never a second blur / cleared surface.
             .background(TelosSurfaceTokens.cardOpaque)
-            .border(1.dp, TelosColors.outline, shape)
+            .border(1.dp, borderColor, shape)
             .padding(12.dp),
         verticalArrangement = Arrangement.spacedBy(4.dp),
     ) {

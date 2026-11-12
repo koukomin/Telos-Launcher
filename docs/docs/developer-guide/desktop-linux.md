@@ -75,6 +75,8 @@ One Telos product, three chrome modes from the same settings store:
 
 Shared preferences (theme, icon pack, grid size, vault, display) live in the vault `desktop.properties` on Linux and Datastore on Android. They are not compiled together; names stay aligned so a future sync can copy keys.
 
+**Theme Studio** (Helix Settings): `theme.intensity` (`quiet` / `neon` / `paper`), `theme.accent` (neon hex or `wallpaper`), and `theme.density` (`compact` / `comfort` / `touch`) co-locate intensity, accent, density presets (panel height/icon + snap/overview pill scale), panel opacity, Night Light, and quick icon/cursor picks. Quiet Ops keeps low Cyber-Tech border glow; Vault Neon raises border alpha and shows HUD gauges; popups stay opaque `surfaceContainer` with no second blur. Wallpaper accent is preference-only until local tonal seeding lands.
+
 ## Windowed vs fullscreen
 
 F11 and Settings toggle a normal resizable window vs undecorated fullscreen. When

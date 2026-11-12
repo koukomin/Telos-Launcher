@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_studio_title">테마 스튜디오</string>
+    <string name="desktop_theme_studio_hint">Quiet Ops가 기본입니다. Vault Neon은 Cyber-Tech 테두리와 HUD 게이지를 강화합니다. Paper Ops는 주간용 밝은 옵션입니다. 팝업은 불투명하게 유지되며 두 번째 흐림은 없습니다.</string>
+    <string name="desktop_theme_intensity">강도</string>
+    <string name="desktop_theme_quiet_ops">Quiet Ops</string>
+    <string name="desktop_theme_vault_neon">Vault Neon</string>
+    <string name="desktop_theme_paper_ops">Paper Ops</string>
+    <string name="desktop_theme_accent">강조색</string>
+    <string name="desktop_theme_from_wallpaper">배경화면에서 강조색</string>
+    <string name="desktop_theme_from_wallpaper_hint">지금은 설정을 저장합니다. 배경화면의 로컬 톤 추출은 이후 업데이트에서 올 수 있습니다. 아무것도 업로드되지 않습니다.</string>
+    <string name="desktop_theme_density">밀도</string>
+    <string name="desktop_theme_density_compact">압축</string>
+    <string name="desktop_theme_density_comfort">편안함</string>
+    <string name="desktop_theme_density_touch">터치</string>
+    <string name="desktop_theme_panel_height">패널 높이: %1$d dp</string>
+    <string name="desktop_theme_panel_icon">패널 아이콘: %1$d dp</string>
+    <string name="desktop_theme_panel_opacity">패널 불투명도: %1$d%%</string>
+</resources>

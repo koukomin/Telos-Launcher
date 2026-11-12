@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_studio_title">Στούντιο θέματος</string>
+    <string name="desktop_theme_studio_hint">Το Quiet Ops είναι το προεπιλεγμένο. Το Vault Neon ενισχύει τα περιγράμματα Cyber-Tech και τα HUD gauges. Το Paper Ops είναι ανοιχτόχρωμη επιλογή για τη μέρα. Τα αναδυόμενα μένουν αδιαφανή· δεν υπάρχει δεύτερο θόλωμα.</string>
+    <string name="desktop_theme_intensity">Ένταση</string>
+    <string name="desktop_theme_quiet_ops">Quiet Ops</string>
+    <string name="desktop_theme_vault_neon">Vault Neon</string>
+    <string name="desktop_theme_paper_ops">Paper Ops</string>
+    <string name="desktop_theme_accent">Τονισμός</string>
+    <string name="desktop_theme_from_wallpaper">Τονισμός από ταπετσαρία</string>
+    <string name="desktop_theme_from_wallpaper_hint">Αποθηκεύει την προτίμηση τώρα· η τοπική τονική δειγματοληψία από την ταπετσαρία μπορεί να έρθει σε νεότερη ενημέρωση. Τίποτα δεν αποστέλλεται.</string>
+    <string name="desktop_theme_density">Πυκνότητα</string>
+    <string name="desktop_theme_density_compact">Συμπαγής</string>
+    <string name="desktop_theme_density_comfort">Άνετη</string>
+    <string name="desktop_theme_density_touch">Αφή</string>
+    <string name="desktop_theme_panel_height">Ύψος πίνακα: %1$d dp</string>
+    <string name="desktop_theme_panel_icon">Εικονίδια πίνακα: %1$d dp</string>
+    <string name="desktop_theme_panel_opacity">Αδιαφάνεια πίνακα: %1$d%%</string>
+</resources>

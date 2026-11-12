@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_studio_title">テーマスタジオ</string>
+    <string name="desktop_theme_studio_hint">Quiet Ops が既定です。Vault Neon は Cyber-Tech の枠と HUD ゲージを強めます。Paper Ops は昼間向けの明るい選択肢です。ポップアップは不透明のままです。二重ぼかしはありません。</string>
+    <string name="desktop_theme_intensity">強度</string>
+    <string name="desktop_theme_quiet_ops">Quiet Ops</string>
+    <string name="desktop_theme_vault_neon">Vault Neon</string>
+    <string name="desktop_theme_paper_ops">Paper Ops</string>
+    <string name="desktop_theme_accent">アクセント</string>
+    <string name="desktop_theme_from_wallpaper">壁紙からアクセント</string>
+    <string name="desktop_theme_from_wallpaper_hint">設定は今すぐ保存されます。壁紙からのローカルな色調抽出は後の更新で入る場合があります。何もアップロードしません。</string>
+    <string name="desktop_theme_density">密度</string>
+    <string name="desktop_theme_density_compact">コンパクト</string>
+    <string name="desktop_theme_density_comfort">快適</string>
+    <string name="desktop_theme_density_touch">タッチ</string>
+    <string name="desktop_theme_panel_height">パネルの高さ: %1$d dp</string>
+    <string name="desktop_theme_panel_icon">パネルアイコン: %1$d dp</string>
+    <string name="desktop_theme_panel_opacity">パネルの不透明度: %1$d%%</string>
+</resources>

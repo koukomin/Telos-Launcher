@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_studio_title">Temostudio</string>
+    <string name="desktop_theme_studio_hint">Quiet Ops estas la defaŭlto. Vault Neon plifortigas Cyber-Tech-randojn kaj HUD-mezurilojn. Paper Ops estas hela taga opcio. Ŝprucfenestroj restas maldiafanaj; ne ekzistas dua malklariĝo.</string>
+    <string name="desktop_theme_intensity">Intenseco</string>
+    <string name="desktop_theme_quiet_ops">Quiet Ops</string>
+    <string name="desktop_theme_vault_neon">Vault Neon</string>
+    <string name="desktop_theme_paper_ops">Paper Ops</string>
+    <string name="desktop_theme_accent">Akcento</string>
+    <string name="desktop_theme_from_wallpaper">Akcento el fonbildo</string>
+    <string name="desktop_theme_from_wallpaper_hint">Konservas la preferon nun; loka tonala specimenado el fonbildo eble venos poste. Nenio estas alŝutita.</string>
+    <string name="desktop_theme_density">Denseco</string>
+    <string name="desktop_theme_density_compact">Kompakta</string>
+    <string name="desktop_theme_density_comfort">Komforto</string>
+    <string name="desktop_theme_density_touch">Tuŝo</string>
+    <string name="desktop_theme_panel_height">Panela alteco: %1$d dp</string>
+    <string name="desktop_theme_panel_icon">Panelaj piktogramoj: %1$d dp</string>
+    <string name="desktop_theme_panel_opacity">Panela maldiafaneco: %1$d%%</string>
+</resources>

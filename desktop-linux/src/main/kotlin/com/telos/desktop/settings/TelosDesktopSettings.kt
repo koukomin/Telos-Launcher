@@ -1,5 +1,9 @@
 package com.telos.desktop.settings
 
+import com.telos.desktop.theme.DesktopThemeChrome
+import com.telos.desktop.theme.ThemeAccent
+import com.telos.desktop.theme.ThemeDensity
+import com.telos.desktop.theme.ThemeIntensity
 import com.telos.desktop.theme.WorkspaceTintStrips
 import java.io.File
 import java.util.Properties
@@ -61,6 +65,14 @@ class TelosDesktopSettings(private val vaultConfigDir: File) {
      */
     var themeQuietOps: Boolean = false
     var themePanicMute: Boolean = false
+    /** Theme Studio: Quiet Ops (default) / Vault Neon / Paper Ops. Stored as `theme.intensity`. */
+    var themeIntensity: String = ThemeIntensity.QuietOps.propertyValue
+    /** Theme Studio accent hex or `wallpaper`. Stored as `theme.accent`. */
+    var themeAccent: String = ThemeAccent.NeonMagenta.propertyValue
+    /** Theme Studio density: compact / comfort / touch. Stored as `theme.density`. */
+    var themeDensity: String = ThemeDensity.Comfort.propertyValue
+    /** Overview / snap pill scale (also set by density presets). */
+    var themeSnapPillScale: Float = ThemeDensity.Comfort.snapPillScale
 
     private val file: File get() = File(vaultConfigDir, "desktop.properties")
 
@@ -111,14 +123,22 @@ class TelosDesktopSettings(private val vaultConfigDir: File) {
         nightLightTemperatureK = p.getProperty("nightLight.temperatureK")?.toIntOrNull()
             ?.coerceIn(1000, 6500) ?: 4500
         workspaceTints = WorkspaceTintStrips.parseWorkspaceTints(p, default = true)
-        themeQuietOps = WorkspaceTintStrips.parseQuietOps(p)
         themePanicMute = WorkspaceTintStrips.parsePanicMute(p)
+        themeIntensity = ThemeIntensity.parse(p.getProperty("theme.intensity")).propertyValue
+        themeAccent = ThemeAccent.parse(p.getProperty("theme.accent")).propertyValue
+        themeDensity = ThemeDensity.parse(p.getProperty("theme.density")).propertyValue
+        themeSnapPillScale = p.getProperty("theme.snapPillScale")?.toFloatOrNull()
+            ?.coerceIn(0.7f, 1.4f)
+            ?: ThemeDensity.parse(themeDensity).snapPillScale
+        themeQuietOps = WorkspaceTintStrips.parseQuietOps(p) ||
+            ThemeIntensity.parse(themeIntensity) == ThemeIntensity.QuietOps
         outputPrefs.clear()
         p.stringPropertyNames().forEach { key ->
             if (key.startsWith("output.")) {
                 outputPrefs[key.removePrefix("output.")] = p.getProperty(key).orEmpty()
             }
         }
+        syncThemeChrome()
     }
 
     fun save() {
@@ -169,8 +189,42 @@ class TelosDesktopSettings(private val vaultConfigDir: File) {
         p["nightLight.enabled"] = nightLightEnabled.toString()
         p["nightLight.temperatureK"] = nightLightTemperatureK.toString()
         p[WorkspaceTintStrips.PREF_KEY] = workspaceTints.toString()
+        p["theme.intensity"] = ThemeIntensity.parse(themeIntensity).propertyValue
+        p["theme.accent"] = ThemeAccent.parse(themeAccent).propertyValue
+        p["theme.density"] = ThemeDensity.parse(themeDensity).propertyValue
+        p["theme.snapPillScale"] = themeSnapPillScale.coerceIn(0.7f, 1.4f).toString()
         outputPrefs.forEach { (name, spec) -> p["output.$name"] = spec }
         file.outputStream().use { p.store(it, "Telos Linux Desktop") }
+        syncThemeChrome()
+    }
+
+    /** Apply a named density preset to panel metrics + snap/overview pill scale. */
+    fun applyThemeDensity(density: ThemeDensity) {
+        themeDensity = density.propertyValue
+        panelHeightDp = density.panelHeightDp
+        panelIconDp = density.panelIconDp
+        themeSnapPillScale = density.snapPillScale
+        DesktopThemeChrome.applyDensity(density)
+    }
+
+    fun applyThemeIntensity(intensity: ThemeIntensity) {
+        themeIntensity = intensity.propertyValue
+        themeQuietOps = intensity == ThemeIntensity.QuietOps
+        DesktopThemeChrome.intensity = intensity
+    }
+
+    fun applyThemeAccent(accent: ThemeAccent) {
+        themeAccent = accent.propertyValue
+        DesktopThemeChrome.accent = accent
+    }
+
+    fun syncThemeChrome() {
+        DesktopThemeChrome.applyFromSettings(
+            intensityRaw = themeIntensity,
+            accentRaw = themeAccent,
+            densityRaw = themeDensity,
+            snapScale = themeSnapPillScale,
+        )
     }
 
     fun rememberOutput(name: String, resolution: String, refresh: Double, scale: Double) {

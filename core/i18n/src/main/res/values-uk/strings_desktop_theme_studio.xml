@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_studio_title">Студія тем</string>
+    <string name="desktop_theme_studio_hint">Quiet Ops — типовий режим. Vault Neon підсилює рамки Cyber-Tech і індикатори HUD. Paper Ops — світлий денний варіант. Спливні вікна лишаються непрозорими; другого розмиття немає.</string>
+    <string name="desktop_theme_intensity">Інтенсивність</string>
+    <string name="desktop_theme_quiet_ops">Quiet Ops</string>
+    <string name="desktop_theme_vault_neon">Vault Neon</string>
+    <string name="desktop_theme_paper_ops">Paper Ops</string>
+    <string name="desktop_theme_accent">Акцент</string>
+    <string name="desktop_theme_from_wallpaper">Акцент зі шпалер</string>
+    <string name="desktop_theme_from_wallpaper_hint">Зберігає налаштування зараз; локальний тональний розбір шпалер може з’явитися пізніше. Нічого не надсилається.</string>
+    <string name="desktop_theme_density">Щільність</string>
+    <string name="desktop_theme_density_compact">Компактна</string>
+    <string name="desktop_theme_density_comfort">Комфорт</string>
+    <string name="desktop_theme_density_touch">Дотик</string>
+    <string name="desktop_theme_panel_height">Висота панелі: %1$d dp</string>
+    <string name="desktop_theme_panel_icon">Піктограми панелі: %1$d dp</string>
+    <string name="desktop_theme_panel_opacity">Непрозорість панелі: %1$d%%</string>
+</resources>

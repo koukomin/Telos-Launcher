@@ -108,7 +108,16 @@ fun main(args: Array<String>) {
             handleDesktopKeys(ev, wm, telemetry)
         },
     ) {
-        TelosDesktopTheme(accent = hostTheme.accent) {
+        // Theme Studio accent drives chrome; "from wallpaper" falls back to host accent until tonal seed lands.
+        val themeAccent =
+            if (com.telos.desktop.theme.DesktopThemeChrome.accent ==
+                com.telos.desktop.theme.ThemeAccent.FromWallpaper
+            ) {
+                hostTheme.accent
+            } else {
+                com.telos.desktop.theme.DesktopThemeChrome.resolvedAccent
+            }
+        TelosDesktopTheme(accent = themeAccent) {
             if (!unlocked) {
                 TelosPreBootScreen(vault) {
                     com.telos.desktop.session.SessionNetGuard.apply()
@@ -118,9 +127,13 @@ fun main(args: Array<String>) {
                 val scope = rememberCoroutineScope()
                 androidx.compose.runtime.LaunchedEffect(Unit) { vault.startDaemons(scope) }
                 val settings = remember {
-                    TelosDesktopSettings(vault.configDir).also { it.load() }
+                    TelosDesktopSettings(vault.configDir).also {
+                        it.load()
+                        it.syncThemeChrome()
+                    }
                 }
                 androidx.compose.runtime.LaunchedEffect(settings) {
+                    settings.syncThemeChrome()
                     vault.opsec.secureClipboardEnabled = settings.secureClipboard
                     vault.opsec.clipboardClearSeconds = settings.clipboardClearSeconds
                     com.telos.desktop.search.VaultFileNameIndex.enabled = settings.fileNameIndexEnabled

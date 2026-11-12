@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_studio_title">Студия тем</string>
+    <string name="desktop_theme_studio_hint">Quiet Ops — режим по умолчанию. Vault Neon усиливает рамки Cyber-Tech и индикаторы HUD. Paper Ops — светлый дневной вариант. Всплывающие окна остаются непрозрачными; второго размытия нет.</string>
+    <string name="desktop_theme_intensity">Интенсивность</string>
+    <string name="desktop_theme_quiet_ops">Quiet Ops</string>
+    <string name="desktop_theme_vault_neon">Vault Neon</string>
+    <string name="desktop_theme_paper_ops">Paper Ops</string>
+    <string name="desktop_theme_accent">Акцент</string>
+    <string name="desktop_theme_from_wallpaper">Акцент с обоев</string>
+    <string name="desktop_theme_from_wallpaper_hint">Сохраняет настройку сейчас; локальный тональный разбор обоев может появиться позже. Ничего не отправляется.</string>
+    <string name="desktop_theme_density">Плотность</string>
+    <string name="desktop_theme_density_compact">Компактная</string>
+    <string name="desktop_theme_density_comfort">Комфорт</string>
+    <string name="desktop_theme_density_touch">Сенсорная</string>
+    <string name="desktop_theme_panel_height">Высота панели: %1$d dp</string>
+    <string name="desktop_theme_panel_icon">Значки панели: %1$d dp</string>
+    <string name="desktop_theme_panel_opacity">Непрозрачность панели: %1$d%%</string>
+</resources>

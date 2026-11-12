@@ -61,16 +61,25 @@ fun HelixControlCenter(
     var nightSnap by remember {
         mutableStateOf(NightLightController.snapshot(settingsStore.nightLightEnabled, settingsStore.nightLightTemperatureK))
     }
+    val chromeBorder = com.telos.desktop.theme.DesktopThemeChrome.resolvedAccent
+        .copy(alpha = com.telos.desktop.theme.DesktopThemeChrome.techBorderAlpha)
     Column(
         Modifier
             .width(360.dp)
             .clip(shape)
             .background(TelosSurfaceTokens.popupOpaque)
-            .border(1.dp, TelosColors.outline, shape)
+            .border(1.dp, chromeBorder, shape)
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(10.dp),
     ) {
         Text("Control Center", color = TelosSurfaceTokens.hudLabel, fontSize = 16.sp)
+        if (com.telos.desktop.theme.DesktopThemeChrome.showGauges) {
+            Text(
+                "VAULT NEON · HUD",
+                color = com.telos.desktop.theme.DesktopThemeChrome.resolvedAccent,
+                fontSize = 10.sp,
+            )
+        }
         Text(audio.track.ifBlank { "No media" }, color = TelosColors.onSurface, fontSize = 12.sp)
         Slider(audio.volume.toFloat() / 100f, { AudioControlManager.setVolume(it * 100.0) })
         Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {

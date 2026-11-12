@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_studio_title">Gaien estudioa</string>
+    <string name="desktop_theme_studio_hint">Quiet Ops da lehenetsia. Vault Neon-ek Cyber-Tech ertzak eta HUD neurriak indartzen ditu. Paper Ops eguneko aukera argia da. Leiho gainerakorrak opakuak dira; ez dago bigarren lausorik.</string>
+    <string name="desktop_theme_intensity">Intentsitatea</string>
+    <string name="desktop_theme_quiet_ops">Quiet Ops</string>
+    <string name="desktop_theme_vault_neon">Vault Neon</string>
+    <string name="desktop_theme_paper_ops">Paper Ops</string>
+    <string name="desktop_theme_accent">Azentu</string>
+    <string name="desktop_theme_from_wallpaper">Azentu horma-paperetik</string>
+    <string name="desktop_theme_from_wallpaper_hint">Hobespena orain gordetzen du; horma-paperaren tonu-laginketa lokala geroago etor daiteke. Ez da ezer igotzen.</string>
+    <string name="desktop_theme_density">Dentsitatea</string>
+    <string name="desktop_theme_density_compact">Trinkoa</string>
+    <string name="desktop_theme_density_comfort">Eroso</string>
+    <string name="desktop_theme_density_touch">Ukimen</string>
+    <string name="desktop_theme_panel_height">Panelaren altuera: %1$d dp</string>
+    <string name="desktop_theme_panel_icon">Panelaren ikonoak: %1$d dp</string>
+    <string name="desktop_theme_panel_opacity">Panelaren opakutasuna: %1$d%%</string>
+</resources>

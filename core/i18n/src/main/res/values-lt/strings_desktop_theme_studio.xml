@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_studio_title">Temų studija</string>
+    <string name="desktop_theme_studio_hint">Quiet Ops yra numatytasis. Vault Neon sustiprina Cyber-Tech kraštus ir HUD rodiklius. Paper Ops – šviesi dienos parinktis. Iššokantys langai lieka nepermatomi; antrojo suliejimo nėra.</string>
+    <string name="desktop_theme_intensity">Intensyvumas</string>
+    <string name="desktop_theme_quiet_ops">Quiet Ops</string>
+    <string name="desktop_theme_vault_neon">Vault Neon</string>
+    <string name="desktop_theme_paper_ops">Paper Ops</string>
+    <string name="desktop_theme_accent">Akcentas</string>
+    <string name="desktop_theme_from_wallpaper">Akcentas iš fono</string>
+    <string name="desktop_theme_from_wallpaper_hint">Dabar išsaugo nuostatą; vietinis tonalus fono ėmimas gali ateiti vėliau. Nieko nesiunčiama.</string>
+    <string name="desktop_theme_density">Tankis</string>
+    <string name="desktop_theme_density_compact">Kompaktiškas</string>
+    <string name="desktop_theme_density_comfort">Patogus</string>
+    <string name="desktop_theme_density_touch">Lietimas</string>
+    <string name="desktop_theme_panel_height">Skydelio aukštis: %1$d dp</string>
+    <string name="desktop_theme_panel_icon">Skydelio piktogramos: %1$d dp</string>
+    <string name="desktop_theme_panel_opacity">Skydelio nepermatomumas: %1$d%%</string>
+</resources>

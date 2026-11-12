@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_studio_title">Teemastuudio</string>
+    <string name="desktop_theme_studio_hint">Quiet Ops on vaikimisi. Vault Neon tugevdab Cyber-Tech ääriseid ja HUD näidikuid. Paper Ops on hele päevane valik. Hüpikud jäävad läbipaistmatuks; teist hägu pole.</string>
+    <string name="desktop_theme_intensity">Tugevus</string>
+    <string name="desktop_theme_quiet_ops">Quiet Ops</string>
+    <string name="desktop_theme_vault_neon">Vault Neon</string>
+    <string name="desktop_theme_paper_ops">Paper Ops</string>
+    <string name="desktop_theme_accent">Rõhk</string>
+    <string name="desktop_theme_from_wallpaper">Rõhk taustapildilt</string>
+    <string name="desktop_theme_from_wallpaper_hint">Salvestab eelistuse praegu; kohalik tonaalne valim taustapildilt võib tulla hiljem. Midagi ei laadita üles.</string>
+    <string name="desktop_theme_density">Tihedus</string>
+    <string name="desktop_theme_density_compact">Kompaktne</string>
+    <string name="desktop_theme_density_comfort">Mugav</string>
+    <string name="desktop_theme_density_touch">Puute</string>
+    <string name="desktop_theme_panel_height">Paneeli kõrgus: %1$d dp</string>
+    <string name="desktop_theme_panel_icon">Paneeli ikoonid: %1$d dp</string>
+    <string name="desktop_theme_panel_opacity">Paneeli läbipaistmatus: %1$d%%</string>
+</resources>

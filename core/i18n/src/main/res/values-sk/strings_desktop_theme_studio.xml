@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_studio_title">Štúdio motívov</string>
+    <string name="desktop_theme_studio_hint">Quiet Ops je predvolené. Vault Neon posilňuje rámy Cyber-Tech a ukazovatele HUD. Paper Ops je svetlá denná voľba. Vyskakovacie okná zostávajú nepriehľadné; druhé rozmazanie nie je.</string>
+    <string name="desktop_theme_intensity">Intenzita</string>
+    <string name="desktop_theme_quiet_ops">Quiet Ops</string>
+    <string name="desktop_theme_vault_neon">Vault Neon</string>
+    <string name="desktop_theme_paper_ops">Paper Ops</string>
+    <string name="desktop_theme_accent">Akcent</string>
+    <string name="desktop_theme_from_wallpaper">Akcent z tapety</string>
+    <string name="desktop_theme_from_wallpaper_hint">Uloží preferenciu teraz; miestne tonálne vzorkovanie tapety môže prísť neskôr. Nič sa neodosiela.</string>
+    <string name="desktop_theme_density">Hustota</string>
+    <string name="desktop_theme_density_compact">Kompaktná</string>
+    <string name="desktop_theme_density_comfort">Komfort</string>
+    <string name="desktop_theme_density_touch">Dotyk</string>
+    <string name="desktop_theme_panel_height">Výška panela: %1$d dp</string>
+    <string name="desktop_theme_panel_icon">Ikony panela: %1$d dp</string>
+    <string name="desktop_theme_panel_opacity">Nepriehľadnosť panela: %1$d%%</string>
+</resources>
