@@ -46,6 +46,10 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.SearchEmptyState
+import de.mm20.launcher2.ui.component.TelosCyber
+import de.mm20.launcher2.ui.component.TelosCyberAppBarTitle
+import de.mm20.launcher2.ui.component.TelosTechPill
+import de.mm20.launcher2.ui.component.telosTechSurface
 import de.mm20.launcher2.ui.component.TelosSearchTopBar
 import de.mm20.launcher2.ui.theme.transparency.transparency
 import kotlinx.coroutines.launch
@@ -129,9 +133,18 @@ fun NotesScreen() {
                     if (searching) {
                         TelosSearchTopBar(query, { vm.query.value = it }, stringResource(I18nR.string.tsp_search_notes), Modifier.weight(1f), autoFocus = true)
                     } else {
-                        Text(stringResource(when (filter) {
-                            NotesFilter.Notes -> I18nR.string.notes_title; NotesFilter.Archive -> I18nR.string.notes_archive; NotesFilter.Trash -> I18nR.string.notes_trash
-                        }), style = MaterialTheme.typography.headlineSmall, modifier = Modifier.weight(1f))
+                        TelosCyberAppBarTitle(
+                            title = stringResource(when (filter) {
+                                NotesFilter.Notes -> I18nR.string.notes_title; NotesFilter.Archive -> I18nR.string.notes_archive; NotesFilter.Trash -> I18nR.string.notes_trash
+                            }),
+                            status = stringResource(I18nR.string.notes_title),
+                            statusColor = when (filter) {
+                                NotesFilter.Notes -> TelosCyber.NeonCyan
+                                NotesFilter.Archive -> TelosCyber.NeonOrange
+                                NotesFilter.Trash -> TelosCyber.NeonMagenta
+                            },
+                            modifier = Modifier.weight(1f),
+                        )
                     }
                     var showFontDialog by remember { mutableStateOf(false) }
                     if (showFontDialog) {
@@ -160,7 +173,14 @@ fun NotesScreen() {
                     }
                 }
                 if (labels.isNotEmpty()) LazyRow(Modifier.padding(horizontal = 12.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    items(labels) { l -> FilterChip(label == l, { vm.label.value = if (label == l) null else l }, { Text(l) }) }
+                    items(labels) { l ->
+                        TelosTechPill(
+                            text = l,
+                            isSelected = label == l,
+                            onClick = { vm.label.value = if (label == l) null else l },
+                            accentColor = TelosCyber.accentFor(l.hashCode()),
+                        )
+                    }
                 }
                 if (notes.isEmpty() && query.isNotBlank()) {
                     SearchEmptyState(query)

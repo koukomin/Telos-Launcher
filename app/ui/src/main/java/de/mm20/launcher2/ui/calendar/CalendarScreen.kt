@@ -41,6 +41,10 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavKey
+import de.mm20.launcher2.ui.component.TelosCyber
+import de.mm20.launcher2.ui.component.TelosCyberAppBarTitle
+import de.mm20.launcher2.ui.component.TelosTechPill
+import de.mm20.launcher2.ui.component.telosTechSurface
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.SearchEmptyState
 import de.mm20.launcher2.ui.component.TelosSearchBar
@@ -365,8 +369,12 @@ private fun CalendarContent(vm: CalendarViewModel) {
         Column(Modifier.padding(pad)) {
             Row(Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 4.dp), verticalAlignment = Alignment.CenterVertically) {
                 IconButton(onClick = { vm.go(month.minusMonths(1)) }) { Icon(painterResource(BaseR.drawable.chevron_backward_24px), stringResource(I18nR.string.cal_previous)) }
-                Text(month.atDay(1).format(DateTimeFormatter.ofPattern("LLLL yyyy")).replaceFirstChar { it.uppercase() }, style = MaterialTheme.typography.titleLarge,
-                    modifier = Modifier.weight(1f).clickable { pickMonth = true }, textAlign = TextAlign.Center, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                TelosCyberAppBarTitle(
+                    title = month.atDay(1).format(DateTimeFormatter.ofPattern("LLLL yyyy")).replaceFirstChar { it.uppercase() },
+                    status = stringResource(if (agenda) I18nR.string.cal_view_agenda else I18nR.string.cal_view_month),
+                    statusColor = if (agenda) TelosCyber.NeonOrange else TelosCyber.NeonCyan,
+                    modifier = Modifier.weight(1f).clickable { pickMonth = true },
+                )
                 IconButton(onClick = { vm.go(month.plusMonths(1)) }) { Icon(painterResource(BaseR.drawable.chevron_forward_24px), stringResource(I18nR.string.cal_next)) }
                 IconButton(onClick = { vm.selected.value = LocalDate.now(); vm.go(YearMonth.now()) }) { Icon(painterResource(BaseR.drawable.today_24px), stringResource(I18nR.string.cal_today)) }
                 var showFontDialog by remember { mutableStateOf(false) }
@@ -397,6 +405,26 @@ private fun CalendarContent(vm: CalendarViewModel) {
                         DropdownMenuItem(text = { Text(stringResource(I18nR.string.cal_export)) }, onClick = { menu = false; exporter.launch("telos-calendar.ics") })
                     }
                 }
+            }
+            Row(
+                Modifier
+                    .fillMaxWidth()
+                    .horizontalScroll(rememberScrollState())
+                    .padding(horizontal = 12.dp, vertical = 4.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                TelosTechPill(
+                    text = stringResource(I18nR.string.cal_view_month),
+                    isSelected = !agenda,
+                    onClick = { agenda = false },
+                    accentColor = TelosCyber.NeonCyan,
+                )
+                TelosTechPill(
+                    text = stringResource(I18nR.string.cal_view_agenda),
+                    isSelected = agenda,
+                    onClick = { agenda = true },
+                    accentColor = TelosCyber.NeonOrange,
+                )
             }
             if (searching) {
                 TelosSearchBar(calQuery, { calQuery = it }, stringResource(I18nR.string.tsp_search_events), autoFocus = true)

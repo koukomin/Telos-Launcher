@@ -5,9 +5,11 @@ import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
@@ -25,7 +27,12 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.component.TelosCyber
+import de.mm20.launcher2.ui.component.TelosCyberAppBarTitle
+import de.mm20.launcher2.ui.component.TelosCyberSectionLabel
+import de.mm20.launcher2.ui.component.TelosTechPill
 import de.mm20.launcher2.ui.component.VirtualAppWindow
+import de.mm20.launcher2.ui.component.telosTechSurface
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -53,16 +60,13 @@ fun TelosBackupScreen() {
             topBar = {
                 TopAppBar(
                     title = {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            Icon(
-                                painter = painterResource(de.mm20.launcher2.base.R.drawable.ic_app_backup_fg),
-                                contentDescription = null,
-                                modifier = Modifier.size(28.dp),
-                                tint = MaterialTheme.colorScheme.primary
-                            )
-                            Spacer(Modifier.width(12.dp))
-                            Text(stringResource(I18nR.string.preference_backup), fontWeight = FontWeight.Bold)
-                        }
+                        TelosCyberAppBarTitle(
+                            title = stringResource(I18nR.string.preference_backup),
+                            status = stringResource(
+                                if (shizukuAvailable) I18nR.string.net_hub_status else I18nR.string.telos_backup_shizuku_required
+                            ),
+                            statusColor = if (shizukuAvailable) TelosCyber.NeonCyan else TelosCyber.NeonMagenta,
+                        )
                     },
                     actions = {
                         IconButton(onClick = { /* Open Settings */ }) {
@@ -86,59 +90,68 @@ fun TelosBackupScreen() {
                     .padding(paddingValues)
             ) {
                 if (!shizukuAvailable) {
-                    Surface(
-                        color = MaterialTheme.colorScheme.errorContainer,
-                        modifier = Modifier.fillMaxWidth().padding(16.dp),
-                        shape = RoundedCornerShape(12.dp)
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp)
+                            .telosTechSurface(borderColor = TelosCyber.NeonMagenta, shape = RoundedCornerShape(12.dp))
+                            .padding(16.dp),
                     ) {
-                        Row(
-                            modifier = Modifier.padding(16.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Icon(painterResource(BaseR.drawable.warning_24px), contentDescription = null, tint = MaterialTheme.colorScheme.onErrorContainer)
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Icon(painterResource(BaseR.drawable.warning_24px), contentDescription = null, tint = TelosCyber.NeonMagenta)
                             Spacer(Modifier.width(12.dp))
                             Column {
-                                Text(stringResource(I18nR.string.telos_backup_shizuku_required), fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onErrorContainer)
-                                Text(stringResource(I18nR.string.telos_backup_shizuku_body), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onErrorContainer.copy(alpha = 0.8f))
+                                Text(stringResource(I18nR.string.telos_backup_shizuku_required), fontWeight = FontWeight.Bold)
+                                Text(stringResource(I18nR.string.telos_backup_shizuku_body), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                             }
                         }
                     }
                 }
 
                 if (jobProgress.inProgress) {
-                    Surface(
-                        color = MaterialTheme.colorScheme.primaryContainer,
-                        modifier = Modifier.fillMaxWidth().padding(16.dp),
-                        shape = RoundedCornerShape(12.dp)
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp)
+                            .telosTechSurface(borderColor = TelosCyber.NeonCyan, shape = RoundedCornerShape(12.dp))
+                            .padding(16.dp),
                     ) {
-                        Column(Modifier.padding(16.dp)) {
-                            Text(jobProgress.currentTask, fontWeight = FontWeight.Bold)
-                            Spacer(Modifier.height(8.dp))
-                            LinearProgressIndicator(
-                                progress = { jobProgress.progress },
-                                modifier = Modifier.fillMaxWidth()
-                            )
-                            Spacer(Modifier.height(8.dp))
-                            Text("${jobProgress.completedItems} / ${jobProgress.totalItems}", style = MaterialTheme.typography.labelSmall)
-                        }
+                        TelosCyberSectionLabel(jobProgress.currentTask, accent = TelosCyber.NeonCyan)
+                        Spacer(Modifier.height(8.dp))
+                        LinearProgressIndicator(
+                            progress = { jobProgress.progress },
+                            modifier = Modifier.fillMaxWidth(),
+                            color = TelosCyber.NeonCyan,
+                        )
+                        Spacer(Modifier.height(8.dp))
+                        Text("${jobProgress.completedItems} / ${jobProgress.totalItems}", style = MaterialTheme.typography.labelSmall)
                     }
                 }
 
-                TabRow(selectedTabIndex = selectedTab) {
-                    Tab(
-                        selected = selectedTab == 0,
+                Row(
+                    Modifier
+                        .fillMaxWidth()
+                        .horizontalScroll(rememberScrollState())
+                        .padding(horizontal = 16.dp, vertical = 8.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    TelosTechPill(
+                        text = stringResource(I18nR.string.telos_backup_tab_apps, appList.size),
+                        isSelected = selectedTab == 0,
                         onClick = { selectedTab = 0 },
-                        text = { Text(stringResource(I18nR.string.telos_backup_tab_apps, appList.size)) }
+                        accentColor = TelosCyber.NeonGreen,
                     )
-                    Tab(
-                        selected = selectedTab == 1,
+                    TelosTechPill(
+                        text = stringResource(I18nR.string.telos_backup_tab_system),
+                        isSelected = selectedTab == 1,
                         onClick = { selectedTab = 1 },
-                        text = { Text(stringResource(I18nR.string.telos_backup_tab_system)) }
+                        accentColor = TelosCyber.NeonCyan,
                     )
-                    Tab(
-                        selected = selectedTab == 2,
+                    TelosTechPill(
+                        text = stringResource(I18nR.string.telos_backup_tab_schedules),
+                        isSelected = selectedTab == 2,
                         onClick = { selectedTab = 2 },
-                        text = { Text(stringResource(I18nR.string.telos_backup_tab_schedules)) }
+                        accentColor = TelosCyber.NeonOrange,
                     )
                 }
 
@@ -162,15 +175,14 @@ private fun AppListTab(apps: List<AppBackupEntry>) {
         modifier = Modifier.fillMaxSize()
     ) {
         items(apps, key = { it.packageName }) { app ->
-            Surface(
-                shape = RoundedCornerShape(12.dp),
-                color = MaterialTheme.colorScheme.surfaceContainerHigh,
-                modifier = Modifier.fillMaxWidth().clickable { /* Show details/options */ }
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .telosTechSurface(borderColor = TelosCyber.accentFor(app.packageName.hashCode()), shape = RoundedCornerShape(12.dp))
+                    .clickable { /* Show details/options */ }
+                    .padding(16.dp),
             ) {
-                Row(
-                    modifier = Modifier.padding(16.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
                     Box(
                         modifier = Modifier.size(40.dp).clip(CircleShape).background(MaterialTheme.colorScheme.surfaceContainerHighest),
                         contentAlignment = Alignment.Center
@@ -219,19 +231,17 @@ private fun SystemDataTab(items: List<String>) {
         modifier = Modifier.fillMaxSize()
     ) {
         items(items) { item ->
-            Surface(
-                shape = RoundedCornerShape(12.dp),
-                color = MaterialTheme.colorScheme.surfaceContainerHigh,
-                modifier = Modifier.fillMaxWidth().clickable { /* Backup item */ }
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .telosTechSurface(borderColor = TelosCyber.NeonCyan, shape = RoundedCornerShape(12.dp))
+                    .clickable { /* Backup item */ }
+                    .padding(16.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Row(
-                    modifier = Modifier.padding(16.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Text(item, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
-                    Icon(painterResource(BaseR.drawable.save_24px), contentDescription = "Backup", tint = MaterialTheme.colorScheme.primary)
-                }
+                Text(item, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+                Icon(painterResource(BaseR.drawable.save_24px), contentDescription = "Backup", tint = TelosCyber.NeonCyan)
             }
         }
     }

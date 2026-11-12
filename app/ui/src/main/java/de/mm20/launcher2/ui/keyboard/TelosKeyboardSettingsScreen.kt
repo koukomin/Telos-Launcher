@@ -8,9 +8,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -25,9 +24,13 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.base.R as BaseR
 import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.ui.component.TelosCyber
+import de.mm20.launcher2.ui.component.TelosCyberAppBarTitle
+import de.mm20.launcher2.ui.component.TelosCyberSectionLabel
 import de.mm20.launcher2.ui.component.VirtualAppWindow
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
+import de.mm20.launcher2.ui.component.telosTechSurface
 import de.mm20.launcher2.ui.locals.LocalBackStack
 import kotlinx.serialization.Serializable
 
@@ -58,43 +61,42 @@ fun TelosKeyboardSettingsScreen() {
                         )
                     }
                 }
-                Text(
-                    text = stringResource(I18nR.string.settings_keyboard),
-                    style = MaterialTheme.typography.titleLarge,
+                TelosCyberAppBarTitle(
+                    title = stringResource(I18nR.string.settings_keyboard),
+                    status = stringResource(I18nR.string.keyboard_settings_category),
+                    statusColor = TelosCyber.NeonCyan,
                     modifier = Modifier.weight(1f),
                 )
             }
 
-            Card(
-                colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.surfaceContainerLow,
-                ),
-                modifier = Modifier.fillMaxWidth(),
+            TelosCyberSectionLabel(stringResource(I18nR.string.keyboard_enable_title), accent = TelosCyber.NeonGreen)
+
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .telosTechSurface(borderColor = TelosCyber.NeonCyan, shape = RoundedCornerShape(18.dp))
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
-                Column(
-                    modifier = Modifier.padding(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                Text(
+                    text = stringResource(I18nR.string.keyboard_enable_title),
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.onSurface,
+                )
+                Text(
+                    text = stringResource(I18nR.string.keyboard_enable_summary),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+                Button(
+                    onClick = {
+                        context.startActivity(
+                            Intent(Settings.ACTION_INPUT_METHOD_SETTINGS)
+                                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
+                        )
+                    },
                 ) {
-                    Text(
-                        text = stringResource(I18nR.string.keyboard_enable_title),
-                        style = MaterialTheme.typography.titleMedium,
-                        color = MaterialTheme.colorScheme.onSurface,
-                    )
-                    Text(
-                        text = stringResource(I18nR.string.keyboard_enable_summary),
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                    Button(
-                        onClick = {
-                            context.startActivity(
-                                Intent(Settings.ACTION_INPUT_METHOD_SETTINGS)
-                                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
-                            )
-                        },
-                    ) {
-                        Text(stringResource(I18nR.string.keyboard_enable_action))
-                    }
+                    Text(stringResource(I18nR.string.keyboard_enable_action))
                 }
             }
 

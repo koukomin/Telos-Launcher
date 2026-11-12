@@ -21,9 +21,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import de.mm20.launcher2.ui.component.TelosDotMatrixText
+import de.mm20.launcher2.ui.component.TelosCyber
+import de.mm20.launcher2.ui.component.TelosCyberAppBarTitle
+import de.mm20.launcher2.ui.component.TelosCyberSectionLabel
 import de.mm20.launcher2.ui.component.TelosTechPill
-import de.mm20.launcher2.ui.component.telosTechCard
+import de.mm20.launcher2.ui.component.telosTechSurface
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -61,16 +63,13 @@ fun SyncScreen() {
             topBar = {
                 TopAppBar(
                     title = {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            Icon(
-                                painter = painterResource(de.mm20.launcher2.base.R.drawable.ic_app_sync_fg),
-                                contentDescription = null,
-                                modifier = Modifier.size(28.dp),
-                                tint = MaterialTheme.colorScheme.primary
-                            )
-                            Spacer(Modifier.width(12.dp))
-                            Text(stringResource(I18nR.string.notes_sync_settings), fontWeight = FontWeight.Bold)
-                        }
+                        TelosCyberAppBarTitle(
+                            title = stringResource(I18nR.string.notes_sync_settings),
+                            status = stringResource(
+                                if (serviceRunning) I18nR.string.net_hub_state_on else I18nR.string.net_hub_state_off
+                            ),
+                            statusColor = if (serviceRunning) TelosCyber.NeonGreen else TelosCyber.NeonMagenta,
+                        )
                     },
                     actions = {
                         IconButton(onClick = { showFontDialog = true }) {
@@ -107,9 +106,6 @@ fun SyncScreen() {
                 }
             }
         ) { paddingValues ->
-            val neonCyan = Color(0xFF00F0FF)
-            val neonMagenta = Color(0xFFFF007F)
-            val neonGreen = Color(0xFF00E676)
             BoxWithConstraints(Modifier.fillMaxSize().padding(paddingValues)) {
                 val shortHeight = maxHeight < 480.dp
                 Column(Modifier.fillMaxSize()) {
@@ -117,13 +113,12 @@ fun SyncScreen() {
                         Modifier
                             .fillMaxWidth()
                             .padding(horizontal = 16.dp, vertical = 8.dp)
-                            .telosTechCard(
-                                borderColor = if (serviceRunning) neonGreen else neonMagenta,
-                                alpha = 0.45f,
+                            .telosTechSurface(
+                                borderColor = if (serviceRunning) TelosCyber.NeonGreen else TelosCyber.NeonMagenta,
                             )
                             .padding(16.dp),
                     ) {
-                        TelosDotMatrixText(stringResource(I18nR.string.sync_preview_title), fontSize = 10.sp, color = neonCyan)
+                        TelosCyberSectionLabel(stringResource(I18nR.string.sync_preview_title), accent = TelosCyber.NeonCyan)
                         Row(
                             Modifier.fillMaxWidth().padding(top = 8.dp),
                             verticalAlignment = Alignment.CenterVertically,
@@ -143,9 +138,9 @@ fun SyncScreen() {
                             .padding(horizontal = 16.dp, vertical = 8.dp),
                         horizontalArrangement = Arrangement.spacedBy(8.dp),
                     ) {
-                        TelosTechPill(stringResource(I18nR.string.telos_sync_folders, folders.size), selectedTab == 0, { selectedTab = 0 }, accentColor = neonGreen)
-                        TelosTechPill(stringResource(I18nR.string.telos_sync_devices, devices.size), selectedTab == 1, { selectedTab = 1 }, accentColor = neonCyan)
-                        TelosTechPill(stringResource(I18nR.string.hc_settings), selectedTab == 2, { selectedTab = 2 }, accentColor = neonMagenta)
+                        TelosTechPill(stringResource(I18nR.string.telos_sync_folders, folders.size), selectedTab == 0, { selectedTab = 0 }, accentColor = TelosCyber.NeonGreen)
+                        TelosTechPill(stringResource(I18nR.string.telos_sync_devices, devices.size), selectedTab == 1, { selectedTab = 1 }, accentColor = TelosCyber.NeonCyan)
+                        TelosTechPill(stringResource(I18nR.string.hc_settings), selectedTab == 2, { selectedTab = 2 }, accentColor = TelosCyber.NeonMagenta)
                     }
                     Box(
                         Modifier
@@ -271,7 +266,7 @@ private fun FoldersTab(folders: List<SyncthingFolder>, onTogglePause: (String) -
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .telosTechCard(borderColor = Color(0xFF00E676), alpha = 0.4f)
+                    .telosTechSurface(borderColor = TelosCyber.NeonGreen)
                     .padding(16.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
@@ -313,7 +308,7 @@ private fun DevicesTab(devices: List<SyncthingDevice>, onTogglePause: (String) -
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .telosTechCard(borderColor = Color(0xFF00F0FF), alpha = 0.4f)
+                    .telosTechSurface(borderColor = TelosCyber.NeonCyan)
                     .padding(16.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
@@ -371,7 +366,7 @@ private fun SettingsTab(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .telosTechCard(borderColor = Color(0xFFFF007F), alpha = 0.35f)
+                .telosTechSurface(borderColor = TelosCyber.NeonMagenta)
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
@@ -402,12 +397,12 @@ private fun SettingsTab(
                 }
         }
         
-        Text(stringResource(I18nR.string.telos_sync_sleep_title), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(top = 8.dp, start = 8.dp))
+        TelosCyberSectionLabel(stringResource(I18nR.string.telos_sync_sleep_title), accent = TelosCyber.NeonCyan, modifier = Modifier.padding(top = 8.dp, start = 8.dp))
         
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .telosTechCard(borderColor = Color(0xFF00F0FF), alpha = 0.35f)
+                .telosTechSurface(borderColor = TelosCyber.NeonCyan)
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {

@@ -53,8 +53,13 @@ import app.keemobile.kotpass.models.Entry
 import app.keemobile.kotpass.models.EntryValue
 import de.mm20.launcher2.base.R as BaseR
 import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.ui.component.TelosCyber
+import de.mm20.launcher2.ui.component.TelosCyberAppBarTitle
+import de.mm20.launcher2.ui.component.TelosCyberSectionLabel
 import de.mm20.launcher2.ui.component.VirtualAppWindow
+import de.mm20.launcher2.ui.component.telosTechSurface
 import de.mm20.launcher2.ui.component.virtualAppPopup
+import androidx.compose.foundation.shape.RoundedCornerShape
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -94,11 +99,13 @@ fun KeePassDashboardScreen() {
             topBar = {
                 TopAppBar(
                     title = {
-                        Text(
-                            if (!isUnlocked) stringResource(I18nR.string.keepass_title)
+                        TelosCyberAppBarTitle(
+                            title = if (!isUnlocked) stringResource(I18nR.string.keepass_title)
                             else selectedEntry?.let { entryPlain(it, "Title") }
                                 ?: currentGroup?.name
                                 ?: stringResource(I18nR.string.keepass_title),
+                            status = stringResource(if (isUnlocked) I18nR.string.net_hub_state_on else I18nR.string.keepass_lock),
+                            statusColor = if (isUnlocked) TelosCyber.NeonGreen else TelosCyber.NeonMagenta,
                         )
                     },
                     navigationIcon = {
@@ -189,35 +196,42 @@ private fun UnlockPane(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
-        Icon(
-            painter = painterResource(BaseR.drawable.lock_24px),
-            contentDescription = null,
-            modifier = Modifier.size(64.dp),
-            tint = MaterialTheme.colorScheme.primary,
-        )
-        Spacer(modifier = Modifier.height(16.dp))
-        OutlinedTextField(
-            value = password,
-            onValueChange = onPasswordChange,
-            label = { Text(stringResource(I18nR.string.keepass_db_password)) },
-            visualTransformation = PasswordVisualTransformation(),
-            singleLine = true,
-            modifier = Modifier.fillMaxWidth(),
-        )
-        if (unlockError) {
-            Text(
-                stringResource(I18nR.string.keepass_wrong_password),
-                color = MaterialTheme.colorScheme.error,
-                modifier = Modifier.padding(top = 8.dp),
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .telosTechSurface(borderColor = TelosCyber.NeonMagenta, shape = RoundedCornerShape(18.dp))
+                .padding(20.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(12.dp),
+        ) {
+            TelosCyberSectionLabel(stringResource(I18nR.string.keepass_title), accent = TelosCyber.NeonMagenta)
+            Icon(
+                painter = painterResource(BaseR.drawable.lock_24px),
+                contentDescription = null,
+                modifier = Modifier.size(64.dp),
+                tint = TelosCyber.NeonMagenta,
             )
-        }
-        Spacer(modifier = Modifier.height(16.dp))
-        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            Button(onClick = onOpenKdbx, enabled = password.isNotEmpty()) {
-                Text(stringResource(I18nR.string.keepass_open_kdbx))
+            OutlinedTextField(
+                value = password,
+                onValueChange = onPasswordChange,
+                label = { Text(stringResource(I18nR.string.keepass_db_password)) },
+                visualTransformation = PasswordVisualTransformation(),
+                singleLine = true,
+                modifier = Modifier.fillMaxWidth(),
+            )
+            if (unlockError) {
+                Text(
+                    stringResource(I18nR.string.keepass_wrong_password),
+                    color = MaterialTheme.colorScheme.error,
+                )
             }
-            FilledTonalButton(onClick = onOpenStego, enabled = password.isNotEmpty()) {
-                Text(stringResource(I18nR.string.keepass_open_stego))
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                Button(onClick = onOpenKdbx, enabled = password.isNotEmpty()) {
+                    Text(stringResource(I18nR.string.keepass_open_kdbx))
+                }
+                FilledTonalButton(onClick = onOpenStego, enabled = password.isNotEmpty()) {
+                    Text(stringResource(I18nR.string.keepass_open_stego))
+                }
             }
         }
     }

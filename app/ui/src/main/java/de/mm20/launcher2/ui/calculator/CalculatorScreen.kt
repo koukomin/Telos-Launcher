@@ -59,6 +59,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberModalBottomSheetState
 import de.mm20.launcher2.ui.component.virtualAppPopup
+import de.mm20.launcher2.ui.component.TelosCyber
+import de.mm20.launcher2.ui.component.TelosCyberAppBarTitle
+import de.mm20.launcher2.ui.component.TelosTechPill
+import de.mm20.launcher2.ui.component.telosTechSurface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -167,7 +171,12 @@ private fun TopBar(title: String, onBack: () -> Unit, actions: @Composable () ->
                 Icon(painterResource(BaseR.drawable.arrow_back_24px), contentDescription = stringResource(I18nR.string.calculator_back))
             }
         }
-        Text(title, style = MaterialTheme.typography.titleLarge, modifier = Modifier.weight(1f).padding(start = if (backStack.size > 1) 4.dp else 12.dp), maxLines = 1, overflow = TextOverflow.Ellipsis)
+        TelosCyberAppBarTitle(
+            title = title,
+            status = stringResource(I18nR.string.calculator_title),
+            statusColor = TelosCyber.NeonCyan,
+            modifier = Modifier.weight(1f).padding(start = if (backStack.size > 1) 4.dp else 12.dp),
+        )
         IconButton(onClick = { showFontDialog = true }) {
             Icon(painterResource(BaseR.drawable.settings_24px), contentDescription = stringResource(I18nR.string.per_app_font_size))
         }
@@ -316,7 +325,9 @@ private fun Display(vm: CalculatorViewModel, modifier: Modifier, onHistory: () -
         modifier
             .fillMaxWidth()
             .fillMaxHeight()
-            .padding(horizontal = 20.dp, vertical = 4.dp)
+            .padding(horizontal = 12.dp, vertical = 4.dp)
+            .telosTechSurface(borderColor = TelosCyber.NeonCyan, shape = RoundedCornerShape(18.dp))
+            .padding(horizontal = 12.dp, vertical = 8.dp)
             .pointerInput(Unit) {
                 // swipe down on the display opens the history, like in the OxygenOS calculator
                 detectVerticalDragGestures(
@@ -589,7 +600,10 @@ private fun UnitDetailPage(vm: CalculatorViewModel, cat: UnitCat, onBack: () -> 
 
 @Composable
 private fun UnitCard(title: String, content: @Composable () -> Unit) {
-    Card(Modifier.fillMaxWidth(), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh)) {
+    Card(
+        Modifier.fillMaxWidth().telosTechSurface(borderColor = TelosCyber.NeonGreen, shape = RoundedCornerShape(16.dp)),
+        colors = CardDefaults.cardColors(containerColor = Color.Transparent),
+    ) {
         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
             Text(title, style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
             content()
@@ -647,7 +661,7 @@ private fun VatPage(vm: CalculatorViewModel, onBack: () -> Unit, onUseInCalculat
             )
             Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 for (preset in listOf("24", "13", "6", "0")) {
-                    FilterChip(selected = vm.vatRate == preset, onClick = { vm.updateVatRate(preset) }, label = { Text("$preset%") })
+                    TelosTechPill(text = "$preset%", isSelected = vm.vatRate == preset, onClick = { vm.updateVatRate(preset) }, accentColor = TelosCyber.NeonOrange)
                 }
             }
 
