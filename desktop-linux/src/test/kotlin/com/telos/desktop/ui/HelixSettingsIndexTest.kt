@@ -13,6 +13,11 @@ class HelixSettingsIndexTest {
             keywords = listOf("fullscreen", "theme", "idle"),
         ),
         HelixSettingsIndexEntry(
+            id = "wallpaper_tonal",
+            title = "Wallpaper accent",
+            keywords = listOf("wallpaper", "tonal", "accent"),
+        ),
+        HelixSettingsIndexEntry(
             id = "night_light",
             title = "Night Light",
             keywords = listOf("Enable Night Light", "temperature", "gammastep", "redshift"),
@@ -50,7 +55,13 @@ class HelixSettingsIndexTest {
     @Test
     fun filtersCaseInsensitive() {
         assertEquals(setOf("cursor"), HelixSettingsIndex.filterIds(entries, "XCURSOR"))
-        assertTrue(HelixSettingsIndex.matches(entries[1], "GAMMASTEP"))
+        assertTrue(HelixSettingsIndex.matches(entries.first { it.id == "night_light" }, "GAMMASTEP"))
+    }
+
+    @Test
+    fun filtersWallpaperTonal() {
+        assertEquals(setOf("wallpaper_tonal"), HelixSettingsIndex.filterIds(entries, "tonal"))
+        assertTrue(HelixSettingsIndex.matches(entries.first { it.id == "wallpaper_tonal" }, "WALLPAPER"))
     }
 
     @Test

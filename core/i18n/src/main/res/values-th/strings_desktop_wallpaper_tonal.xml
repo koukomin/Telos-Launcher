@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_wallpaper_tonal_title">สีเน้นจากวอลเปเปอร์</string>
+    <string name="desktop_wallpaper_tonal_enable">สีเน้นจากวอลเปเปอร์</string>
+    <string name="desktop_wallpaper_tonal_hint">สุ่มตัวอย่างวอลเปเปอร์ vault หรือ portable บนอุปกรณ์นี้แล้วคำนวณ Material tonal seed บนเครื่อง ไม่มีการอัปโหลดพิกเซล หากล้มเหลว chrome จะใช้สีฟ้าเขียวนีออน</string>
+    <string name="desktop_wallpaper_tonal_accent_wallpaper">theme.accent=wallpaper — seed ภายในเครื่องใช้งานอยู่</string>
+</resources>

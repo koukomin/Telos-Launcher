@@ -61,6 +61,15 @@ class TelosDesktopSettings(private val vaultConfigDir: File) {
      */
     var themeQuietOps: Boolean = false
     var themePanicMute: Boolean = false
+    /**
+     * Accent preference: neon preset name, or `wallpaper` to drive chrome from a local
+     * wallpaper tonal seed ([wallpaperTonal] is an alternate boolean switch for the same).
+     */
+    var themeAccent: String = "neon-magenta"
+    /** When true, chrome uses a locally sampled wallpaper tonal seed (no network). */
+    var wallpaperTonal: Boolean = false
+    /** Optional vault/portable wallpaper path; blank = search Pictures / config defaults. */
+    var wallpaperPath: String = ""
 
     private val file: File get() = File(vaultConfigDir, "desktop.properties")
 
@@ -113,6 +122,10 @@ class TelosDesktopSettings(private val vaultConfigDir: File) {
         workspaceTints = WorkspaceTintStrips.parseWorkspaceTints(p, default = true)
         themeQuietOps = WorkspaceTintStrips.parseQuietOps(p)
         themePanicMute = WorkspaceTintStrips.parsePanicMute(p)
+        themeAccent = p.getProperty("theme.accent") ?: themeAccent
+        wallpaperTonal = p.getProperty("theme.wallpaperTonal", "false").toBoolean() ||
+            themeAccent.equals("wallpaper", ignoreCase = true)
+        wallpaperPath = p.getProperty("theme.wallpaperPath") ?: wallpaperPath
         outputPrefs.clear()
         p.stringPropertyNames().forEach { key ->
             if (key.startsWith("output.")) {
@@ -169,6 +182,9 @@ class TelosDesktopSettings(private val vaultConfigDir: File) {
         p["nightLight.enabled"] = nightLightEnabled.toString()
         p["nightLight.temperatureK"] = nightLightTemperatureK.toString()
         p[WorkspaceTintStrips.PREF_KEY] = workspaceTints.toString()
+        p["theme.accent"] = themeAccent
+        p["theme.wallpaperTonal"] = wallpaperTonal.toString()
+        if (wallpaperPath.isNotBlank()) p["theme.wallpaperPath"] = wallpaperPath
         outputPrefs.forEach { (name, spec) -> p["output.$name"] = spec }
         file.outputStream().use { p.store(it, "Telos Linux Desktop") }
     }

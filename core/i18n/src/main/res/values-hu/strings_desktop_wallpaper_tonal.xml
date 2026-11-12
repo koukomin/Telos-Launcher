@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_wallpaper_tonal_title">Kiemelés a háttérképből</string>
+    <string name="desktop_wallpaper_tonal_enable">Kiemelés a háttérképből</string>
+    <string name="desktop_wallpaper_tonal_hint">Mintavételezi a vault vagy portable háttérképet ezen az eszközön, és helyben Material tonális seedet vezet le. A képpontok soha nem töltődnek fel. Hiba esetén a chrome neon ciánt használ.</string>
+    <string name="desktop_wallpaper_tonal_accent_wallpaper">theme.accent=wallpaper — helyi seed aktív</string>
+</resources>

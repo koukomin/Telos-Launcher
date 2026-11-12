@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_wallpaper_tonal_title">Acento desde el fondo</string>
+    <string name="desktop_wallpaper_tonal_enable">Acento desde el fondo de pantalla</string>
+    <string name="desktop_wallpaper_tonal_hint">Muestrea el fondo del vault o portable en este dispositivo y deriva localmente una semilla tonal Material. Los píxeles nunca se suben. Si falla, el chrome usa cian neón.</string>
+    <string name="desktop_wallpaper_tonal_accent_wallpaper">theme.accent=wallpaper — semilla local activa</string>
+</resources>

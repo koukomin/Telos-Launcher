@@ -90,6 +90,7 @@ fun main(args: Array<String>) {
     // === TELOS_PENDING_REVIEW_START: telos_de_final_polish ===
     val windowState = rememberWindowState(width = 1440.dp, height = 900.dp, placement = WindowPlacement.Floating)
     val hostTheme = remember { SystemThemeBridge.load() }
+    var chromeAccent by remember { mutableStateOf(hostTheme.accent) }
     LaunchedEffect(DesktopChrome.fullscreen) {
         windowState.placement = DesktopChrome.placement
     }
@@ -108,7 +109,7 @@ fun main(args: Array<String>) {
             handleDesktopKeys(ev, wm, telemetry)
         },
     ) {
-        TelosDesktopTheme(accent = hostTheme.accent) {
+        TelosDesktopTheme(accent = chromeAccent) {
             if (!unlocked) {
                 TelosPreBootScreen(vault) {
                     com.telos.desktop.session.SessionNetGuard.apply()
@@ -119,6 +120,31 @@ fun main(args: Array<String>) {
                 androidx.compose.runtime.LaunchedEffect(Unit) { vault.startDaemons(scope) }
                 val settings = remember {
                     TelosDesktopSettings(vault.configDir).also { it.load() }
+                }
+                LaunchedEffect(
+                    DesktopChrome.accentEpoch,
+                    settings.themeAccent,
+                    settings.wallpaperTonal,
+                    settings.wallpaperPath,
+                    settings.followSystemTheme,
+                ) {
+                    chromeAccent = if (
+                        com.telos.desktop.theme.WallpaperTonalSeed.usesWallpaperAccent(
+                            settings.themeAccent,
+                            settings.wallpaperTonal,
+                        )
+                    ) {
+                        com.telos.desktop.theme.WallpaperTonalSeed.resolveAccent(
+                            themeAccent = settings.themeAccent,
+                            wallpaperTonal = settings.wallpaperTonal,
+                            wallpaperPath = settings.wallpaperPath.ifBlank { null },
+                            hostFallback = androidx.compose.ui.graphics.Color(
+                                com.telos.desktop.theme.WallpaperTonalSeed.FALLBACK_SEED_ARGB,
+                            ),
+                        )
+                    } else {
+                        hostTheme.accent
+                    }
                 }
                 androidx.compose.runtime.LaunchedEffect(settings) {
                     vault.opsec.secureClipboardEnabled = settings.secureClipboard

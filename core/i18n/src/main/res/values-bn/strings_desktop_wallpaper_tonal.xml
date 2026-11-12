@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_wallpaper_tonal_title">ওয়ালপেপার থেকে অ্যাকসেন্ট</string>
+    <string name="desktop_wallpaper_tonal_enable">ওয়ালপেপার থেকে অ্যাকসেন্ট</string>
+    <string name="desktop_wallpaper_tonal_hint">এই ডিভাইসে vault বা portable ওয়ালপেপার নমুনা নিয়ে স্থানীয়ভাবে Material টোনাল সিড তৈরি করে। পিক্সেল কখনো আপলোড হয় না। ব্যর্থ হলে ক্রোম নিয়ন সায়ানে ফিরে যায়।</string>
+    <string name="desktop_wallpaper_tonal_accent_wallpaper">theme.accent=wallpaper — স্থানীয় সিড সক্রিয়</string>
+</resources>

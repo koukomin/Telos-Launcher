@@ -80,11 +80,18 @@ fun LinuxDesktopSettingsPanel(
             NightLightController.snapshot(settings.nightLightEnabled, settings.nightLightTemperatureK),
         )
     }
+    var wallpaperTonalOn by remember {
+        mutableStateOf(
+            settings.wallpaperTonal ||
+                settings.themeAccent.equals("wallpaper", ignoreCase = true),
+        )
+    }
     val t = com.telos.desktop.i18n.TelosI18n
     val indexEntries = remember {
         helixSettingsIndexEntries(
             sessionTitle = t.t("desktop_settings_session"),
             displayTitle = t.t("desktop_settings_display"),
+            wallpaperTonalTitle = t.t("desktop_wallpaper_tonal_title"),
             nightTitle = t.t("desktop_night_light_title"),
             desktopTitle = t.t("desktop_settings_desktop"),
             iconsTitle = t.t("desktop_icons_title"),
@@ -99,6 +106,13 @@ fun LinuxDesktopSettingsPanel(
             opsecTitle = t.t("desktop_opsec_title"),
             restoreTitle = t.t("desktop_vault_restore_title"),
             updateTitle = t.t("desktop_update_title"),
+            wallpaperTonalKeywords = listOf(
+                t.t("desktop_wallpaper_tonal_enable"),
+                t.t("desktop_wallpaper_tonal_hint"),
+                "wallpaper",
+                "tonal",
+                "accent",
+            ),
             nightKeywords = listOf(
                 t.t("desktop_night_light_enable"),
                 t.t("desktop_night_light_temperature"),
@@ -241,6 +255,30 @@ fun LinuxDesktopSettingsPanel(
                             }) { Text(com.telos.desktop.session.SessionCompositor.scaleLabel(scale)) }
                         }
                     }
+                }
+            }
+        }
+        if (show("wallpaper_tonal")) {
+            HelixSettingsCard(t.t("desktop_wallpaper_tonal_title")) {
+                Text(
+                    t.t("desktop_wallpaper_tonal_hint"),
+                    fontSize = 11.sp,
+                    color = TelosColors.onSurface.copy(0.7f),
+                )
+                Toggle(t.t("desktop_wallpaper_tonal_enable"), wallpaperTonalOn) { on ->
+                    wallpaperTonalOn = on
+                    settings.wallpaperTonal = on
+                    settings.themeAccent = if (on) "wallpaper" else "neon-magenta"
+                    settings.save()
+                    com.telos.desktop.theme.WallpaperTonalSeed.clearCache()
+                    DesktopChrome.bumpAccentEpoch()
+                }
+                if (wallpaperTonalOn) {
+                    Text(
+                        t.t("desktop_wallpaper_tonal_accent_wallpaper"),
+                        fontSize = 11.sp,
+                        color = TelosColors.secondary,
+                    )
                 }
             }
         }
@@ -897,6 +935,7 @@ private fun reapplyCursor(settings: TelosDesktopSettings) {
 private fun helixSettingsIndexEntries(
     sessionTitle: String,
     displayTitle: String,
+    wallpaperTonalTitle: String,
     nightTitle: String,
     desktopTitle: String,
     iconsTitle: String,
@@ -911,6 +950,7 @@ private fun helixSettingsIndexEntries(
     opsecTitle: String,
     restoreTitle: String,
     updateTitle: String,
+    wallpaperTonalKeywords: List<String>,
     nightKeywords: List<String>,
     sessionKeywords: List<String>,
     desktopKeywords: List<String>,
@@ -919,6 +959,7 @@ private fun helixSettingsIndexEntries(
 ): List<HelixSettingsIndexEntry> = listOf(
     HelixSettingsIndexEntry("session", sessionTitle, sessionKeywords),
     HelixSettingsIndexEntry("display", displayTitle, listOf("resolution", "scale", "refresh")),
+    HelixSettingsIndexEntry("wallpaper_tonal", wallpaperTonalTitle, wallpaperTonalKeywords),
     HelixSettingsIndexEntry("night_light", nightTitle, nightKeywords),
     HelixSettingsIndexEntry("desktop", desktopTitle, desktopKeywords),
     HelixSettingsIndexEntry("icons", iconsTitle, listOf("theme", "papirus", "tela", "candy")),

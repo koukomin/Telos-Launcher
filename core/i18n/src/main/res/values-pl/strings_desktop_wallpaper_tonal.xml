@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_wallpaper_tonal_title">Akcent z tapety</string>
+    <string name="desktop_wallpaper_tonal_enable">Akcent z tapety</string>
+    <string name="desktop_wallpaper_tonal_hint">Próbkuje tapetę vault lub portable na tym urządzeniu i lokalnie wyprowadza tonalny seed Material. Piksele nigdy nie są wysyłane. Przy błędzie chrome używa neonowego cyjanu.</string>
+    <string name="desktop_wallpaper_tonal_accent_wallpaper">theme.accent=wallpaper — lokalny seed aktywny</string>
+</resources>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_wallpaper_tonal_title">Aċċent mill-isfond</string>
+    <string name="desktop_wallpaper_tonal_enable">Aċċent mill-isfond</string>
+    <string name="desktop_wallpaper_tonal_hint">Jieħu kampjun mill-isfond vault jew portable fuq dan l-apparat u jiddderivja seed tonali Material lokalment. Il-pixels qatt ma jittellgħu. Jekk jfalli, il-chrome juża ċijan neon.</string>
+    <string name="desktop_wallpaper_tonal_accent_wallpaper">theme.accent=wallpaper — seed lokali attiv</string>
+</resources>

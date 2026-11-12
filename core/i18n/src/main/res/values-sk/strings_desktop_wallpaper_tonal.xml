@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_wallpaper_tonal_title">Akcent z tapety</string>
+    <string name="desktop_wallpaper_tonal_enable">Akcent z tapety</string>
+    <string name="desktop_wallpaper_tonal_hint">Vzorkuje tapetu vault alebo portable na tomto zariadení a lokálne odvodí Material tonálny seed. Pixely sa nikdy neodosielajú. Pri zlyhaní chrome použije neonovú cyan.</string>
+    <string name="desktop_wallpaper_tonal_accent_wallpaper">theme.accent=wallpaper — lokálny seed aktívny</string>
+</resources>

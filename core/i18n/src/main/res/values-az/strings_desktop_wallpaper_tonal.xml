@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_wallpaper_tonal_title">Divar kağızından vurğu</string>
+    <string name="desktop_wallpaper_tonal_enable">Divar kağızından vurğu</string>
+    <string name="desktop_wallpaper_tonal_hint">Bu cihazda vault və ya portable divar kağızını nümunə götürür və Material tonal seed-i yerli yaradır. Piksellər heç vaxt yüklənmir. Uğursuzluqda chrome neon cyan istifadə edir.</string>
+    <string name="desktop_wallpaper_tonal_accent_wallpaper">theme.accent=wallpaper — yerli seed aktivdir</string>
+</resources>

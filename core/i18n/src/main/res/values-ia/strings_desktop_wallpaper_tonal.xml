@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_wallpaper_tonal_title">Accento del fundo</string>
+    <string name="desktop_wallpaper_tonal_enable">Accento del fundo</string>
+    <string name="desktop_wallpaper_tonal_hint">Samplea le fundo vault o portable sur iste dispositivo e deriva localmente un semine tonal Material. Le pixeles nunquam es cargate. Si illo falli, le chrome usa cyan neon.</string>
+    <string name="desktop_wallpaper_tonal_accent_wallpaper">theme.accent=wallpaper — semine local active</string>
+</resources>

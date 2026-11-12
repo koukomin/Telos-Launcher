@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_wallpaper_tonal_title">Điểm nhấn từ hình nền</string>
+    <string name="desktop_wallpaper_tonal_enable">Điểm nhấn từ hình nền</string>
+    <string name="desktop_wallpaper_tonal_hint">Lấy mẫu hình nền vault hoặc portable trên thiết bị này và suy ra seed tonal Material cục bộ. Pixel không bao giờ được tải lên. Nếu thất bại, chrome dùng xanh cyan neon.</string>
+    <string name="desktop_wallpaper_tonal_accent_wallpaper">theme.accent=wallpaper — seed cục bộ đang bật</string>
+</resources>

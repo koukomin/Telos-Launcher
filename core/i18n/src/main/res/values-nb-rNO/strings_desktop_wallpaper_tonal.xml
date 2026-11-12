@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_wallpaper_tonal_title">Aksent fra bakgrunn</string>
+    <string name="desktop_wallpaper_tonal_enable">Aksent fra bakgrunnsbilde</string>
+    <string name="desktop_wallpaper_tonal_hint">Sampler vault- eller portable-bakgrunnen på denne enheten og utleder lokalt et Material-tonalt seed. Piksler lastes aldri opp. Ved feil faller chrome tilbake til neon cyan.</string>
+    <string name="desktop_wallpaper_tonal_accent_wallpaper">theme.accent=wallpaper — lokalt seed aktivt</string>
+</resources>

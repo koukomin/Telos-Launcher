@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_wallpaper_tonal_title">वॉलपेपर से उच्चारण रंग</string>
+    <string name="desktop_wallpaper_tonal_enable">वॉलपेपर से उच्चारण</string>
+    <string name="desktop_wallpaper_tonal_hint">इस डिवाइस पर वॉल्ट या पोर्टेबल वॉलपेपर का नमूना लेता है और स्थानीय रूप से Material टोनल सीड निकालता है। पिक्सेल कभी अपलोड नहीं होते। विफल होने पर क्रोम नीयन सियान पर वापस आता है।</string>
+    <string name="desktop_wallpaper_tonal_accent_wallpaper">theme.accent=wallpaper — स्थानीय सीड सक्रिय</string>
+</resources>

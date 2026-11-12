@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_wallpaper_tonal_title">Rõhk taustapildist</string>
+    <string name="desktop_wallpaper_tonal_enable">Rõhk taustapildist</string>
+    <string name="desktop_wallpaper_tonal_hint">Võtab selle seadme vault- või portable-taustapildist proovi ja tuletab kohapeal Material tonaalse seemne. Piksleid ei laadita kunagi üles. Ebaõnnestumisel kasutab chrome neon-tsüaani.</string>
+    <string name="desktop_wallpaper_tonal_accent_wallpaper">theme.accent=wallpaper — kohalik seeme aktiivne</string>
+</resources>

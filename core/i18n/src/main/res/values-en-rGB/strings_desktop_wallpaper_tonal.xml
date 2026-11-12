@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_wallpaper_tonal_title">Wallpaper accent</string>
+    <string name="desktop_wallpaper_tonal_enable">Accent from wallpaper</string>
+    <string name="desktop_wallpaper_tonal_hint">Samples the vault or portable wallpaper on this device and derives a Material tonal seed locally. Pixels are never uploaded. If sampling fails, chrome falls back to neon cyan.</string>
+    <string name="desktop_wallpaper_tonal_accent_wallpaper">theme.accent=wallpaper — local seed active</string>
+</resources>
