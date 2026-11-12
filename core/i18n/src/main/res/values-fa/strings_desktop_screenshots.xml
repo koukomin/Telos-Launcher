@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_shot_title">نماگرفت</string>
+    <string name="desktop_shot_full">تمام صفحه</string>
+    <string name="desktop_shot_region">ناحیه مستطیلی</string>
+    <string name="desktop_shot_window">پنجره</string>
+    <string name="desktop_shot_clipboard">رونوشت به کلیپ‌بورد</string>
+    <string name="desktop_shot_clipboard_hint">به‌طور پیش‌فرض خاموش. همچنین با TELOS_SHOT_CLIPBOARD=1.</string>
+    <string name="desktop_shot_redact">سیاه‌کردن پیش از ذخیره</string>
+    <string name="desktop_shot_redact_hint">مستطیلی بکشید تا محتوای خصوصی سیاه شود، سپس ذخیره کنید.</string>
+    <string name="desktop_shot_save">ذخیره</string>
+    <string name="desktop_shot_save_without_redact">ذخیره بدون سیاه‌کردن</string>
+    <string name="desktop_shot_saved">نماگرفت ذخیره شد</string>
+    <string name="desktop_shot_failed">نماگرفت ناموفق بود</string>
+    <string name="desktop_shot_path_hint">در Pictures/Screenshots خزانه (یا داده قابل‌حمل) فقط برای مالک (0600) ذخیره می‌شود.</string>
+</resources>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_shot_title">Екранна снимка</string>
+    <string name="desktop_shot_full">Целият екран</string>
+    <string name="desktop_shot_region">Правоъгълна област</string>
+    <string name="desktop_shot_window">Прозорец</string>
+    <string name="desktop_shot_clipboard">Копиране в клипборда</string>
+    <string name="desktop_shot_clipboard_hint">Изключено по подразбиране. Също с TELOS_SHOT_CLIPBOARD=1.</string>
+    <string name="desktop_shot_redact">Затъмни преди запис</string>
+    <string name="desktop_shot_redact_hint">Начертайте правоъгълник, за да скриете лично съдържание, после запишете.</string>
+    <string name="desktop_shot_save">Запис</string>
+    <string name="desktop_shot_save_without_redact">Запис без затъмняване</string>
+    <string name="desktop_shot_saved">Снимката е записана</string>
+    <string name="desktop_shot_failed">Снимката се провали</string>
+    <string name="desktop_shot_path_hint">Записва в Pictures/Screenshots на treзора (или portable data), само собственик (0600).</string>
+</resources>

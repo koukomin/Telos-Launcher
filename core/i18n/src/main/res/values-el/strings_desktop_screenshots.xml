@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_shot_title">Στιγμιότυπο</string>
+    <string name="desktop_shot_full">Πλήρης οθόνη</string>
+    <string name="desktop_shot_region">Ορθογώνια περιοχή</string>
+    <string name="desktop_shot_window">Παράθυρο</string>
+    <string name="desktop_shot_clipboard">Αντιγραφή στο πρόχειρο</string>
+    <string name="desktop_shot_clipboard_hint">Απενεργοποιημένο από προεπιλογή. Ενεργοποιείται και με TELOS_SHOT_CLIPBOARD=1.</string>
+    <string name="desktop_shot_redact">Απόκρυψη πριν την αποθήκευση</string>
+    <string name="desktop_shot_redact_hint">Σχεδιάστε ένα ορθογώνιο για να μαυρίσετε ιδιωτικό περιεχόμενο και αποθηκεύστε.</string>
+    <string name="desktop_shot_save">Αποθήκευση</string>
+    <string name="desktop_shot_save_without_redact">Αποθήκευση χωρίς απόκρυψη</string>
+    <string name="desktop_shot_saved">Το στιγμιότυπο αποθηκεύτηκε</string>
+    <string name="desktop_shot_failed">Η λήψη στιγμιότυπου απέτυχε</string>
+    <string name="desktop_shot_path_hint">Αποθηκεύεται στο Pictures/Screenshots του vault (ή portable data), μόνο για τον κάτοχο (0600).</string>
+</resources>

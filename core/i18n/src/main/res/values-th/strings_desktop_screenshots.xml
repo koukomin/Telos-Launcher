@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_shot_title">ภาพหน้าจอ</string>
+    <string name="desktop_shot_full">เต็มหน้าจอ</string>
+    <string name="desktop_shot_region">พื้นที่สี่เหลี่ยม</string>
+    <string name="desktop_shot_window">หน้าต่าง</string>
+    <string name="desktop_shot_clipboard">คัดลอกไปยังคลิปบอร์ด</string>
+    <string name="desktop_shot_clipboard_hint">ปิดตามค่าเริ่มต้น เปิดได้ด้วย TELOS_SHOT_CLIPBOARD=1</string>
+    <string name="desktop_shot_redact">ปิดบังก่อนบันทึก</string>
+    <string name="desktop_shot_redact_hint">ลากสี่เหลี่ยมเพื่อทาดำเนื้อหาส่วนตัว แล้วบันทึก</string>
+    <string name="desktop_shot_save">บันทึก</string>
+    <string name="desktop_shot_save_without_redact">บันทึกโดยไม่ปิดบัง</string>
+    <string name="desktop_shot_saved">บันทึกภาพหน้าจอแล้ว</string>
+    <string name="desktop_shot_failed">ถ่ายภาพหน้าจอไม่สำเร็จ</string>
+    <string name="desktop_shot_path_hint">บันทึกไว้ที่ Pictures/Screenshots ใน vault (หรือข้อมูลพกพา) เฉพาะเจ้าของ (0600)</string>
+</resources>

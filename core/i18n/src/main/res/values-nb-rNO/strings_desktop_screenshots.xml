@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_shot_title">Skjermbilde</string>
+    <string name="desktop_shot_full">Hele skjermen</string>
+    <string name="desktop_shot_region">Rektangulært område</string>
+    <string name="desktop_shot_window">Vindu</string>
+    <string name="desktop_shot_clipboard">Kopier til utklippstavle</string>
+    <string name="desktop_shot_clipboard_hint">Av som standard. Også med TELOS_SHOT_CLIPBOARD=1.</string>
+    <string name="desktop_shot_redact">Sladd før lagring</string>
+    <string name="desktop_shot_redact_hint">Tegn et rektangel for å sverte privat innhold, deretter lagre.</string>
+    <string name="desktop_shot_save">Lagre</string>
+    <string name="desktop_shot_save_without_redact">Lagre uten sladding</string>
+    <string name="desktop_shot_saved">Skjermbilde lagret</string>
+    <string name="desktop_shot_failed">Skjermbilde mislyktes</string>
+    <string name="desktop_shot_path_hint">Lagrer under Pictures/Screenshots i hvelvet (eller portable data), kun eier (0600).</string>
+</resources>

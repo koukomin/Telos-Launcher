@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_shot_title">Snímek obrazovky</string>
+    <string name="desktop_shot_full">Celá obrazovka</string>
+    <string name="desktop_shot_region">Obdélníková oblast</string>
+    <string name="desktop_shot_window">Okno</string>
+    <string name="desktop_shot_clipboard">Kopírovat do schránky</string>
+    <string name="desktop_shot_clipboard_hint">Ve výchozím stavu vypnuto. Také s TELOS_SHOT_CLIPBOARD=1.</string>
+    <string name="desktop_shot_redact">Zakryt před uložením</string>
+    <string name="desktop_shot_redact_hint">Nakreslete obdélník pro začernění soukromého obsahu a uložte.</string>
+    <string name="desktop_shot_save">Uložit</string>
+    <string name="desktop_shot_save_without_redact">Uložit bez zakrytí</string>
+    <string name="desktop_shot_saved">Snímek uložen</string>
+    <string name="desktop_shot_failed">Snímek se nezdařil</string>
+    <string name="desktop_shot_path_hint">Ukládá do Pictures/Screenshots trezoru (nebo portable data), pouze vlastník (0600).</string>
+</resources>

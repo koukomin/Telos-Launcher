@@ -152,7 +152,7 @@ fun TelosTopPanel(
                 }
                 Box(Modifier.clickable { TelosClipboardManager.popup = !TelosClipboardManager.popup }.padding(2.dp)) { CandyCyberIcon(CandyIcon.Clip, 18.dp) }
                 Box(Modifier.clickable { TelosNotificationCenter.open.value = !TelosNotificationCenter.open.value }.padding(2.dp)) { CandyCyberIcon(CandyIcon.Bell, 18.dp) }
-                Box(Modifier.clickable { TelosCaptureTool.fullscreen() }.padding(2.dp)) { CandyCyberIcon(CandyIcon.Shot, 18.dp) }
+                Box(Modifier.clickable { TelosCaptureTool.openMenu() }.padding(2.dp)) { CandyCyberIcon(CandyIcon.Shot, 18.dp) }
                 Text("Vault+", fontSize = 11.sp, color = TelosColors.secondary, modifier = Modifier.clickable {
                     runCatching { com.telos.desktop.vault.PhantomVault.engine.expandManual() }
                 })

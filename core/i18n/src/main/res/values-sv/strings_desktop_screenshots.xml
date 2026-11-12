@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_shot_title">Skärmbild</string>
+    <string name="desktop_shot_full">Hela skärmen</string>
+    <string name="desktop_shot_region">Rektangulärt område</string>
+    <string name="desktop_shot_window">Fönster</string>
+    <string name="desktop_shot_clipboard">Kopiera till urklipp</string>
+    <string name="desktop_shot_clipboard_hint">Av som standard. Även med TELOS_SHOT_CLIPBOARD=1.</string>
+    <string name="desktop_shot_redact">Svarta ut före sparande</string>
+    <string name="desktop_shot_redact_hint">Rita en rektangel för att svarta privat innehåll och spara.</string>
+    <string name="desktop_shot_save">Spara</string>
+    <string name="desktop_shot_save_without_redact">Spara utan svärtning</string>
+    <string name="desktop_shot_saved">Skärmbild sparad</string>
+    <string name="desktop_shot_failed">Skärmbilden misslyckades</string>
+    <string name="desktop_shot_path_hint">Sparar under Pictures/Screenshots i valvet (eller portable data), endast ägare (0600).</string>
+</resources>

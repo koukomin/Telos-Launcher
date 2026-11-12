@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_shot_title">Ekran görüntüsü</string>
+    <string name="desktop_shot_full">Tam ekran</string>
+    <string name="desktop_shot_region">Düzbucaqlı sahə</string>
+    <string name="desktop_shot_window">Pəncərə</string>
+    <string name="desktop_shot_clipboard">Buferə kopyala</string>
+    <string name="desktop_shot_clipboard_hint">Varsayılan olaraq sönülü. Həmçinin TELOS_SHOT_CLIPBOARD=1.</string>
+    <string name="desktop_shot_redact">Saxlamazdan əvvəl qaraldır</string>
+    <string name="desktop_shot_redact_hint">Şəxsi məzmunu qaraltmaq üçün düzbucaqlı çəkin, sonra saxlayın.</string>
+    <string name="desktop_shot_save">Saxla</string>
+    <string name="desktop_shot_save_without_redact">Qaraltmadan saxla</string>
+    <string name="desktop_shot_saved">Ekran görüntüsü saxlanıldı</string>
+    <string name="desktop_shot_failed">Ekran görüntüsü alınmadı</string>
+    <string name="desktop_shot_path_hint">Vault (və ya daşınan data) Pictures/Screenshots altına yalnız sahibi (0600) üçün saxlayır.</string>
+</resources>

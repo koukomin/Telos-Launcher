@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_shot_title">Tangkapan layar</string>
+    <string name="desktop_shot_full">Layar penuh</string>
+    <string name="desktop_shot_region">Wilayah persegi panjang</string>
+    <string name="desktop_shot_window">Jendela</string>
+    <string name="desktop_shot_clipboard">Salin ke papan klip</string>
+    <string name="desktop_shot_clipboard_hint">Nonaktif secara bawaan. Juga dengan TELOS_SHOT_CLIPBOARD=1.</string>
+    <string name="desktop_shot_redact">Sensor sebelum simpan</string>
+    <string name="desktop_shot_redact_hint">Gambar persegi panjang untuk menghitamkan konten pribadi, lalu simpan.</string>
+    <string name="desktop_shot_save">Simpan</string>
+    <string name="desktop_shot_save_without_redact">Simpan tanpa sensor</string>
+    <string name="desktop_shot_saved">Tangkapan layar disimpan</string>
+    <string name="desktop_shot_failed">Tangkapan layar gagal</string>
+    <string name="desktop_shot_path_hint">Menyimpan di Pictures/Screenshots vault (atau data portabel), hanya pemilik (0600).</string>
+</resources>

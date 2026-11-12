@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_shot_title">螢幕截圖</string>
+    <string name="desktop_shot_full">全螢幕</string>
+    <string name="desktop_shot_region">矩形區域</string>
+    <string name="desktop_shot_window">視窗</string>
+    <string name="desktop_shot_clipboard">複製到剪貼簿</string>
+    <string name="desktop_shot_clipboard_hint">預設關閉。也可用 TELOS_SHOT_CLIPBOARD=1 啟用。</string>
+    <string name="desktop_shot_redact">儲存前遮蓋</string>
+    <string name="desktop_shot_redact_hint">拖曳矩形以塗黑隱私內容，然後儲存。</string>
+    <string name="desktop_shot_save">儲存</string>
+    <string name="desktop_shot_save_without_redact">不遮蓋直接儲存</string>
+    <string name="desktop_shot_saved">截圖已儲存</string>
+    <string name="desktop_shot_failed">截圖失敗</string>
+    <string name="desktop_shot_path_hint">儲存至保險庫（或可攜資料）的 Pictures/Screenshots，僅擁有者（0600）。</string>
+</resources>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_shot_title">Ekran görüntüsü</string>
+    <string name="desktop_shot_full">Tam ekran</string>
+    <string name="desktop_shot_region">Dikdörtgen bölge</string>
+    <string name="desktop_shot_window">Pencere</string>
+    <string name="desktop_shot_clipboard">Panoya kopyala</string>
+    <string name="desktop_shot_clipboard_hint">Varsayılan olarak kapalı. TELOS_SHOT_CLIPBOARD=1 ile de açılır.</string>
+    <string name="desktop_shot_redact">Kaydetmeden önce karart</string>
+    <string name="desktop_shot_redact_hint">Özel içeriği karartmak için bir dikdörtgen çizin, sonra kaydedin.</string>
+    <string name="desktop_shot_save">Kaydet</string>
+    <string name="desktop_shot_save_without_redact">Karartmadan kaydet</string>
+    <string name="desktop_shot_saved">Ekran görüntüsü kaydedildi</string>
+    <string name="desktop_shot_failed">Ekran görüntüsü başarısız</string>
+    <string name="desktop_shot_path_hint">Vault (veya taşınabilir veri) Pictures/Screenshots altına kaydeder, yalnızca sahip (0600).</string>
+</resources>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_shot_title">Screenshot</string>
+    <string name="desktop_shot_full">Skrin sħiħ</string>
+    <string name="desktop_shot_region">Reġjun rettangolari</string>
+    <string name="desktop_shot_window">Tieqa</string>
+    <string name="desktop_shot_clipboard">Ikkopja fil-clipboard</string>
+    <string name="desktop_shot_clipboard_hint">Mitfi b’mod awtomatiku. Ukoll b’TELOS_SHOT_CLIPBOARD=1.</string>
+    <string name="desktop_shot_redact">Irranġa qabel tissejvja</string>
+    <string name="desktop_shot_redact_hint">Pinġi rettangolu biex tissiġilla kontenut privat, imbagħad issejvja.</string>
+    <string name="desktop_shot_save">Issejvja</string>
+    <string name="desktop_shot_save_without_redact">Issejvja mingħajr redazzjoni</string>
+    <string name="desktop_shot_saved">Screenshot issejvjat</string>
+    <string name="desktop_shot_failed">Screenshot fallut</string>
+    <string name="desktop_shot_path_hint">Jissejvja taħt Pictures/Screenshots fil-vault (jew data portabbli), sid biss (0600).</string>
+</resources>

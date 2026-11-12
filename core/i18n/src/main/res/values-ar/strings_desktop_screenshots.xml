@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_shot_title">لقطة شاشة</string>
+    <string name="desktop_shot_full">الشاشة بالكامل</string>
+    <string name="desktop_shot_region">منطقة مستطيلة</string>
+    <string name="desktop_shot_window">نافذة</string>
+    <string name="desktop_shot_clipboard">نسخ إلى الحافظة</string>
+    <string name="desktop_shot_clipboard_hint">معطّل افتراضيًا. يُفعَّل أيضًا بـ TELOS_SHOT_CLIPBOARD=1.</string>
+    <string name="desktop_shot_redact">طمس قبل الحفظ</string>
+    <string name="desktop_shot_redact_hint">ارسم مستطيلًا لطمس المحتوى الخاص ثم احفظ.</string>
+    <string name="desktop_shot_save">حفظ</string>
+    <string name="desktop_shot_save_without_redact">حفظ دون طمس</string>
+    <string name="desktop_shot_saved">تم حفظ لقطة الشاشة</string>
+    <string name="desktop_shot_failed">فشلت لقطة الشاشة</string>
+    <string name="desktop_shot_path_hint">يُحفظ ضمن Pictures/Screenshots في الخزنة (أو البيانات المحمولة)، للمالك فقط (0600).</string>
+</resources>

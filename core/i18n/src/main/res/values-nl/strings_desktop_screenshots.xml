@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_shot_title">Schermafbeelding</string>
+    <string name="desktop_shot_full">Volledig scherm</string>
+    <string name="desktop_shot_region">Rechthoekig gebied</string>
+    <string name="desktop_shot_window">Venster</string>
+    <string name="desktop_shot_clipboard">Kopiëren naar klembord</string>
+    <string name="desktop_shot_clipboard_hint">Standaard uit. Ook met TELOS_SHOT_CLIPBOARD=1.</string>
+    <string name="desktop_shot_redact">Zwatten vóór opslaan</string>
+    <string name="desktop_shot_redact_hint">Teken een rechthoek om privé-inhoud zwart te maken, daarna opslaan.</string>
+    <string name="desktop_shot_save">Opslaan</string>
+    <string name="desktop_shot_save_without_redact">Opslaan zonder zwarten</string>
+    <string name="desktop_shot_saved">Schermafbeelding opgeslagen</string>
+    <string name="desktop_shot_failed">Schermafbeelding mislukt</string>
+    <string name="desktop_shot_path_hint">Slaat op onder Pictures/Screenshots in de kluis (of portable data), alleen eigenaar (0600).</string>
+</resources>

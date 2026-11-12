@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_shot_title">Imago scrinii</string>
+    <string name="desktop_shot_full">Totum scrinium</string>
+    <string name="desktop_shot_region">Regio rectangula</string>
+    <string name="desktop_shot_window">Fenestra</string>
+    <string name="desktop_shot_clipboard">In tabulam transfer</string>
+    <string name="desktop_shot_clipboard_hint">Defecto exstinctum. Etiam cum TELOS_SHOT_CLIPBOARD=1.</string>
+    <string name="desktop_shot_redact">Ante servandum obscura</string>
+    <string name="desktop_shot_redact_hint">Rectangulum duc ut privata nigrescant, deinde serva.</string>
+    <string name="desktop_shot_save">Serva</string>
+    <string name="desktop_shot_save_without_redact">Serva sine obscuratione</string>
+    <string name="desktop_shot_saved">Imago servata</string>
+    <string name="desktop_shot_failed">Imago defecit</string>
+    <string name="desktop_shot_path_hint">Servat sub Pictures/Screenshots in vault (aut portable data), solum domino (0600).</string>
+</resources>
