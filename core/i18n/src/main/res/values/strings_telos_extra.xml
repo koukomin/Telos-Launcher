@@ -14,12 +14,4 @@
     <string name="keepass_lock">Lock Vault</string>
     <string name="keepass_encrypted_val">Encrypted</string>
     <string name="keepass_unnamed">Unnamed</string>
-    <string name="backup_group_app_data">App Data (Root/Shizuku)</string>
-    <string name="backup_group_app_data_summary">Application data and preferences</string>
-    <string name="backup_group_apps">Apps (APK &amp; Splits)</string>
-    <string name="backup_group_apps_summary">Installable packages for selected applications</string>
-    <string name="backup_group_system_data">System Data</string>
-    <string name="backup_group_system_data_summary">SMS, Call Logs, Wi-Fi Networks</string>
-    <string name="backup_group_virtual_apps">Telos Virtual Apps</string>
-    <string name="backup_group_virtual_apps_summary">Configurations for Telos Sync, Viewer, Calculator, etc.</string>
 </resources>
