@@ -2,6 +2,7 @@ package com.telos.desktop.vault
 
 import com.telos.desktop.linux.ProcMounts
 import com.telos.desktop.linux.Sys
+import com.telos.desktop.platform.PlatformEnvironment
 import kotlinx.coroutines.CoroutineScope
 import java.io.File
 import java.nio.file.Files
@@ -50,9 +51,10 @@ class PhantomVaultEngine(
             BootMode.EphemeralGhost -> return ephemeral()
             else -> Unit
         }
+        val pool = resolveCarrierPool(carrier)
         val files = when {
-            carrier == null -> listOf(luks.vaultImage)
-            else -> shards.listCarriers(carrier).ifEmpty { listOf(carrier) }
+            pool == null -> listOf(luks.vaultImage)
+            else -> shards.listCarriers(pool).ifEmpty { listOf(pool) }
         }
         carriers = files
         val salt = HardwareCryptoAccelerator.hmacSha512(password.toByteArray(), "telos-salt".toByteArray()).copyOf(16)
@@ -69,6 +71,55 @@ class PhantomVaultEngine(
         }
         lastRole = VolumeRole.Outer
         return openOuter(master, files, password, decoy = false)
+    }
+
+    /**
+     * Assemble media carriers (manifest + payloads) and open via dm-linear when
+     * available, otherwise a portable linear `.tvault` under the allowed root.
+     * Does not claim full VOS-6 OpSec; Linux dm path still needs root helpers.
+     */
+    fun openStegoCarriers(
+        password: String,
+        pool: File,
+        perShardBytes: Long = 20L * 1024 * 1024,
+    ): LuksVaultManager.UnlockResult {
+        opsec.enableCoreDumpBlock()
+        val salt = HardwareCryptoAccelerator.hmacSha512(password.toByteArray(), "telos-salt".toByteArray()).copyOf(16)
+        val master = HybridPqcHeader.deriveVolumeKey(password.toCharArray(), salt)
+        val linearOut = if (PortableTraceGuard.isPortable() || bootMode == BootMode.PortableVault) {
+            val root = PortableTraceGuard.ensurePortableDataRoot()
+            PortableTraceGuard.assertNoHostWrites(root)
+            PortableStegoFs.assembledImage(root)
+        } else {
+            File(if (pool.isDirectory) pool else pool.parentFile ?: pool, PortableStegoFs.ASSEMBLED_IMAGE)
+        }
+        val assembled = shards.assembleAndOpen(
+            masterKey = master,
+            pool = pool,
+            perShardBytes = perShardBytes,
+            preferDeviceMapper = PlatformEnvironment.settings.showLuksVault,
+            linearImageOut = linearOut,
+        )
+        carriers = when (assembled) {
+            is StegoAssembleResult.DeviceMapper -> assembled.bindings.map { it.file }
+            is StegoAssembleResult.LinearImage -> assembled.bindings.map { it.file }
+            is StegoAssembleResult.Prepared -> assembled.bindings.map { it.file }
+            is StegoAssembleResult.Failed -> emptyList()
+        }
+        return when (assembled) {
+            is StegoAssembleResult.Failed -> LuksVaultManager.UnlockResult.Failed(assembled.message)
+            is StegoAssembleResult.Prepared ->
+                LuksVaultManager.UnlockResult.Failed("prepared only; open requires dm or linear image")
+            is StegoAssembleResult.DeviceMapper -> {
+                val opened = HardwareCryptoAccelerator.pkcsOpen(assembled.mapperPath, cryptName, password)
+                if (!opened) {
+                    formatCrypt(master, password)
+                    HardwareCryptoAccelerator.pkcsOpen(assembled.mapperPath, cryptName, password)
+                }
+                afterOpen(decoy = false)
+            }
+            is StegoAssembleResult.LinearImage -> openAssembledLinearImage(assembled.image, password, initialize = false)
+        }
     }
 
     fun lock(syncCloud: Boolean = true) {
@@ -110,24 +161,53 @@ class PhantomVaultEngine(
     }
 
     fun createElastic(passwordOuter: String, passwordInner: String, passwordDuress: String, pool: File): LuksVaultManager.UnlockResult {
-        val files = shards.listCarriers(pool).ifEmpty { listOf(pool) }
+        val resolvedPool = if (pool.isDirectory) pool else pool.parentFile ?: pool
+        if (PortableTraceGuard.isPortable() || bootMode == BootMode.PortableVault || bootMode == BootMode.PortableData) {
+            PortableTraceGuard.assertNoHostWrites(PortableTraceGuard.ensurePortableDataRoot())
+        }
+        val files = shards.listCarriers(pool).ifEmpty {
+            if (pool.isFile) listOf(pool) else {
+                val seed = File(resolvedPool.apply { mkdirs() }, "telos-carrier.tvault")
+                if (!seed.exists()) seed.writeBytes(ByteArray(0))
+                listOf(seed)
+            }
+        }
         files.forEach { if (!it.exists()) it.writeBytes(ByteArray(0)) }
         val salt = HardwareCryptoAccelerator.hmacSha512(passwordOuter.toByteArray(), "telos-salt".toByteArray()).copyOf(16)
         val outerKey = HybridPqcHeader.deriveVolumeKey(passwordOuter.toCharArray(), salt)
         markDuress(passwordDuress, files)
-        val bindings = shards.preparePool(outerKey, files, 20L * 1024 * 1024)
-        if (!shards.attachSpan(bindings)) return LuksVaultManager.UnlockResult.Failed("dmsetup span failed")
-        formatCrypt(outerKey, passwordOuter)
-        val innerOffset = innerOffsetSectors(passwordInner)
-        Sys.run(
-            "pkexec", "cryptsetup", "-q", "luksFormat",
-            "--type", "luks2", "--cipher", HardwareCryptoAccelerator.cipherSpec(),
-            "--key-size", "512", "--offset", innerOffset.toString(),
-            shards.mapperPath,
-            timeoutSec = 60,
-            input = passwordInner + "\n" + passwordInner + "\n",
+        val assembled = shards.assembleAndOpen(
+            masterKey = outerKey,
+            pool = if (pool.isDirectory) pool else resolvedPool,
+            perShardBytes = 20L * 1024 * 1024,
+            preferDeviceMapper = PlatformEnvironment.settings.showLuksVault,
+            linearImageOut = if (PortableTraceGuard.isPortable()) {
+                PortableStegoFs.assembledImage(PortableTraceGuard.ensurePortableDataRoot())
+            } else {
+                null
+            },
         )
-        return unlock(passwordInner, pool, false)
+        return when (assembled) {
+            is StegoAssembleResult.Failed -> LuksVaultManager.UnlockResult.Failed(assembled.message)
+            is StegoAssembleResult.DeviceMapper -> {
+                formatCrypt(outerKey, passwordOuter)
+                val innerOffset = innerOffsetSectors(passwordInner)
+                Sys.run(
+                    "pkexec", "cryptsetup", "-q", "luksFormat",
+                    "--type", "luks2", "--cipher", HardwareCryptoAccelerator.cipherSpec(),
+                    "--key-size", "512", "--offset", innerOffset.toString(),
+                    shards.mapperPath,
+                    timeoutSec = 60,
+                    input = passwordInner + "\n" + passwordInner + "\n",
+                )
+                unlock(passwordInner, pool, false)
+            }
+            is StegoAssembleResult.LinearImage -> {
+                carriers = assembled.bindings.map { it.file }
+                openAssembledLinearImage(assembled.image, passwordInner, initialize = true)
+            }
+            is StegoAssembleResult.Prepared -> LuksVaultManager.UnlockResult.Failed("prepared only")
+        }
     }
 
     private fun tryInner(master: ByteArray, files: List<File>, password: String): LuksVaultManager.UnlockResult {
@@ -200,6 +280,7 @@ class PhantomVaultEngine(
     private fun unlockPortableData(): LuksVaultManager.UnlockResult {
         val root = PortableTraceGuard.ensurePortableDataRoot()
         PortableTraceGuard.assertNoHostWrites(root)
+        PortableStegoFs.ensureCarriersRoot()
         val session = File(root, "session").apply { mkdirs() }
         luks.bindPortableSessionRoot(session)
         File(session, "config").mkdirs()
@@ -216,9 +297,84 @@ class PhantomVaultEngine(
         val session = File(root, "session").apply { mkdirs() }
         luks.bindPortableSessionRoot(session)
         luks.ensureLayout()
+        val carriersDir = PortableStegoFs.ensureCarriersRoot()
+        val hasCarriers = shards.listCarriers(carriersDir).isNotEmpty() ||
+            PortableStegoFs.manifestFile(root).isFile
+        if (hasCarriers && password.isNotEmpty()) {
+            bootMode = BootMode.PortableVault
+            val stego = openStegoCarriers(password, carriersDir)
+            if (stego.ok) return stego
+        }
         val result = luks.unlock(password, initializeIfMissing = initialize)
         if (result.ok) {
             PortableEnvironmentIsolator.apply(session, fullSessionHome = false)
+        }
+        return result
+    }
+
+    private fun resolveCarrierPool(carrier: File?): File? {
+        if (carrier != null) return carrier
+        if (PortableTraceGuard.isPortable() ||
+            bootMode == BootMode.PortableData ||
+            bootMode == BootMode.PortableVault
+        ) {
+            val portable = PortableStegoFs.carriersRoot()
+            if (portable.isDirectory &&
+                (shards.listCarriers(portable).isNotEmpty() || PortableStegoFs.manifestFile().isFile)
+            ) {
+                return portable
+            }
+        }
+        return null
+    }
+
+    private fun openAssembledLinearImage(
+        image: File,
+        password: String,
+        initialize: Boolean = false,
+    ): LuksVaultManager.UnlockResult {
+        if (PortableTraceGuard.isPortable() || bootMode == BootMode.PortableVault) {
+            val root = PortableTraceGuard.ensurePortableDataRoot()
+            PortableTraceGuard.assertNoHostWrites(root)
+            val session = File(root, "session").apply { mkdirs() }
+            luks.bindPortableSessionRoot(session)
+        }
+        val target = luks.vaultImage
+        if (!image.exists()) return LuksVaultManager.UnlockResult.Failed("assembled image missing")
+        if (image.canonicalFile != target.canonicalFile) {
+            target.parentFile?.mkdirs()
+            if (!(target.exists() && target.length() == image.length())) {
+                image.copyTo(target, overwrite = true)
+            }
+        }
+        if (!PlatformEnvironment.settings.showLuksVault) {
+            File(luks.mountPoint, "config").mkdirs()
+            File(luks.mountPoint, "state").mkdirs()
+            File(luks.mountPoint, "db").mkdirs()
+            PortableEnvironmentIsolator.apply(luks.mountPoint, fullSessionHome = false)
+            luks.unlocked = true
+            return LuksVaultManager.UnlockResult.Unlocked
+        }
+        if (initialize) {
+            val opened = HardwareCryptoAccelerator.pkcsOpen(target.absolutePath, cryptName, password)
+            if (!opened) {
+                Sys.run(
+                    "pkexec", "cryptsetup", "-q", "luksFormat", "--type", "luks2",
+                    "--cipher", HardwareCryptoAccelerator.cipherSpec(), "--key-size", "512",
+                    "--pbkdf", "argon2id", target.absolutePath,
+                    timeoutSec = 60,
+                    input = password + "\n" + password + "\n",
+                )
+                HardwareCryptoAccelerator.pkcsOpen(target.absolutePath, cryptName, password)
+            }
+            return afterOpen(decoy = false)
+        }
+        val result = luks.unlock(password, initializeIfMissing = false)
+        if (result.ok) {
+            PortableEnvironmentIsolator.apply(
+                luks.mountPoint,
+                fullSessionHome = TelosSessionHome.full && !PortableTraceGuard.isPortable(),
+            )
         }
         return result
     }
@@ -239,18 +395,32 @@ class PhantomVaultEngine(
     }
 
     private fun isDuress(master: ByteArray, files: List<File>): Boolean {
-        val mark = File(hostHome.toFile(), ".local/share/telos/.duress")
-        if (!mark.isFile) return false
-        val expect = mark.readBytes()
+        val candidates = buildList {
+            if (PortableTraceGuard.isPortable() ||
+                bootMode == BootMode.PortableData ||
+                bootMode == BootMode.PortableVault
+            ) {
+                add(File(PortableTraceGuard.dataRoot(), "state/.duress"))
+            }
+            add(File(hostHome.toFile(), ".local/share/telos/.duress"))
+        }
         val got = HardwareCryptoAccelerator.hmacSha512(master, "TELOS-DURESS".toByteArray())
-        return expect.contentEquals(got)
+        return candidates.any { mark ->
+            mark.isFile && mark.readBytes().contentEquals(got)
+        }
     }
 
     private fun markDuress(password: String, files: List<File>) {
         val salt = HardwareCryptoAccelerator.hmacSha512(password.toByteArray(), "telos-salt".toByteArray()).copyOf(16)
         val master = HybridPqcHeader.deriveVolumeKey(password.toCharArray(), salt)
-        val dir = File(hostHome.toFile(), ".local/share/telos")
-        dir.mkdirs()
+        val dir = if (PortableTraceGuard.isPortable() ||
+            bootMode == BootMode.PortableData ||
+            bootMode == BootMode.PortableVault
+        ) {
+            File(PortableTraceGuard.ensurePortableDataRoot(), "state").apply { mkdirs() }
+        } else {
+            File(hostHome.toFile(), ".local/share/telos").apply { mkdirs() }
+        }
         File(dir, ".duress").writeBytes(HardwareCryptoAccelerator.hmacSha512(master, "TELOS-DURESS".toByteArray()))
     }
 

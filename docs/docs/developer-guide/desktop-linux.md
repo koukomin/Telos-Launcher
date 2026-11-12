@@ -23,6 +23,12 @@ The Phantom Vault can sit on a single image or a folder of media carriers (stego
 `dmsetup` linear span), grow online with BTRFS zstd, use AES-NI `aes-xts-plain64` plus Argon2id,
 and rclone-sync modified carriers on lock. Pre-boot offers host home, unlock, create, and tmpfs ghost modes.
 
+**Stego FS (Mode B, partial):** carrier pools write `telos-carriers.json` (offsets/sizes only).
+`assembleAndOpen` prefers Linux `losetup`/`dmsetup`; when that is unavailable it concatenates
+payloads into `stego_assembled.tvault`. Portable Data / Portable Vault use
+`TelosPortableData/carriers/` via `PortableStegoFs` so media carriers stay outside the host
+profile home. This is optional transport obfuscation, not forensic steganography or completed VOS-6 OpSec.
+
 ## Vault (legacy image)
 
 `LuksVaultManager` asks for a master password, then unlocks `~/.local/share/telos/telos_vault.img` with `cryptsetup` / `udisksctl` / `pkexec` and mounts it at `~/.local/share/telos/vault_mnt`. Desktop settings, state and databases are written only under that mount. A JVM shutdown hook syncs and locks the vault.

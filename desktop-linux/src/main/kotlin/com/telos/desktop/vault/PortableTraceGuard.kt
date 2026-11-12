@@ -21,6 +21,11 @@ object PortableTraceGuard {
         selectedRoot = root
     }
 
+    /** Clears an explicit portable root selection (tests / exit portable mode). */
+    fun clearSelectedRoot() {
+        selectedRoot = null
+    }
+
     fun ensurePortableDataRoot(): File =
         dataRoot().apply { mkdirs() }.also {
             selectedRoot = it

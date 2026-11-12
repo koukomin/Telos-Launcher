@@ -58,10 +58,15 @@ fun TelosPreBootScreen(
     var error by remember { mutableStateOf<String?>(null) }
     var busy by remember { mutableStateOf(false) }
     var picker by remember { mutableStateOf(false) }
-    var carrier by remember { mutableStateOf<File?>(null) }
+    var carrier by remember {
+        mutableStateOf<File?>(
+            if (portableShell) PortableStegoFs.ensureCarriersRoot() else null,
+        )
+    }
     var cloudRemote by remember { mutableStateOf("") }
     val hw = remember { HardwareCryptoAccelerator.probe() }
     val portableRoot = remember { PortableTraceGuard.dataRoot().absolutePath }
+    val portableCarriers = remember { PortableStegoFs.carriersRoot().absolutePath }
 
     Box(Modifier.fillMaxSize().background(TelosColors.background), contentAlignment = Alignment.Center) {
         Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(10.dp), modifier = Modifier.padding(24.dp)) {
@@ -70,6 +75,7 @@ fun TelosPreBootScreen(
             if (portableShell) {
                 Text(t("desktop_portable_data_root"), color = TelosColors.onSurface.copy(0.75f), fontSize = 11.sp)
                 Text(portableRoot, color = TelosColors.onSurface.copy(0.6f), fontSize = 10.sp)
+                Text("Stego carriers: $portableCarriers", color = TelosColors.onSurface.copy(0.55f), fontSize = 10.sp)
             }
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 bootModes.forEach { m ->
@@ -82,16 +88,30 @@ fun TelosPreBootScreen(
             if (mode == BootMode.HostHome && portableShell) {
                 Text(t("desktop_host_home_trace_warning"), color = TelosColors.primary, fontSize = 12.sp)
             }
-            if (mode == BootMode.UnlockExisting || mode == BootMode.CreateWizard) {
-                Button(onClick = { picker = true }) { Text(carrier?.absolutePath ?: "Select carrier file or folder") }
-                Button(onClick = {
-                    val rem = cloudRemote.ifBlank { engine.cloud.listRcloneRemotes().firstOrNull() ?: engine.cloud.detectLocalCloud().firstOrNull()?.absolutePath }
-                    if (rem != null) {
-                        val dest = carrier ?: File(System.getProperty("user.home"), "Music")
-                        engine.cloud.pullLatest(dest, rem)
-                    }
-                }) { Text("Pull latest vault from cloud") }
-                OutlinedTextField(cloudRemote, { cloudRemote = it }, label = { Text("rclone remote or local cloud path") }, modifier = Modifier.width(420.dp))
+            if (mode == BootMode.UnlockExisting || mode == BootMode.CreateWizard || mode == BootMode.PortableVault) {
+                Button(onClick = { picker = true }) {
+                    Text(carrier?.absolutePath ?: "Select carrier file or folder")
+                }
+                if (mode != BootMode.PortableVault) {
+                    Button(onClick = {
+                        val rem = cloudRemote.ifBlank {
+                            engine.cloud.listRcloneRemotes().firstOrNull()
+                                ?: engine.cloud.detectLocalCloud().firstOrNull()?.absolutePath
+                        }
+                        if (rem != null) {
+                            val dest = carrier
+                                ?: if (portableShell) PortableStegoFs.ensureCarriersRoot()
+                                else File(System.getProperty("user.home"), "Music")
+                            engine.cloud.pullLatest(dest, rem)
+                        }
+                    }) { Text("Pull latest vault from cloud") }
+                    OutlinedTextField(
+                        cloudRemote,
+                        { cloudRemote = it },
+                        label = { Text("rclone remote or local cloud path") },
+                        modifier = Modifier.width(420.dp),
+                    )
+                }
             }
             if (mode == BootMode.CreateWizard) {
                 OutlinedTextField(outer, { outer = it }, label = { Text("Outer decoy password") }, visualTransformation = PasswordVisualTransformation(), modifier = Modifier.width(360.dp))
@@ -106,11 +126,31 @@ fun TelosPreBootScreen(
                 onClick = {
                     busy = true
                     engine.bootMode = mode
+                    val defaultPool =
+                        if (portableShell) PortableStegoFs.ensureCarriersRoot()
+                        else File(System.getProperty("user.home"), "Music")
                     val result = when (mode) {
-                        BootMode.CreateWizard -> engine.createElastic(outer, inner, duress, carrier ?: File(System.getProperty("user.home"), "Music"))
+                        BootMode.CreateWizard -> engine.createElastic(outer, inner, duress, carrier ?: defaultPool)
                         BootMode.HostHome -> engine.unlock("host", null, false)
                         BootMode.PortableData -> engine.unlock("", null, false)
-                        BootMode.PortableVault -> engine.unlock(password, null, true)
+                        BootMode.PortableVault -> {
+                            val pool = carrier ?: PortableStegoFs.ensureCarriersRoot()
+                            if (engine.shards.listCarriers(pool).isNotEmpty() ||
+                                File(pool, StegoCarrierManifest.FILE_NAME).isFile
+                            ) {
+                                engine.openStegoCarriers(password, pool)
+                            } else {
+                                engine.unlock(password, null, true)
+                            }
+                        }
+                        BootMode.UnlockExisting -> {
+                            val pool = carrier
+                            if (pool != null && (pool.isDirectory || pool.isFile)) {
+                                engine.openStegoCarriers(password, pool)
+                            } else {
+                                engine.unlock(password, carrier, true)
+                            }
+                        }
                         else -> engine.unlock(password, carrier, true)
                     }
                     busy = false
