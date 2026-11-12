@@ -3,4 +3,15 @@
     <string name="desktop_net_dns_pref_hint">Konservita en la trezorejo. Sur Linukso, Telos aplikas DoT per resolvectl kiam disponebla; DoH restas nur prefero.</string>
     <string name="desktop_net_profiles_sum">Profilaj dosierujoj de la trezorejo sub ~/.config/telos/profiles/</string>
     <string name="desktop_net_allowlist_path">Permeslista dosiero</string>
+    <string name="desktop_net_kill_switch">Mortiga ŝaltilo</string>
+    <string name="desktop_net_kill_switch_enable">Ŝalti mortigan ŝaltilon</string>
+    <string name="desktop_net_kill_switch_disable">Malŝalti mortigan ŝaltilon</string>
+    <string name="desktop_net_kill_switch_enforced">Aplikita: nepermesita elira trafiko estas forĵetita (nftables inet telos_session)</string>
+    <string name="desktop_net_kill_switch_pref_only">Prefero konservita; ne aplikita sur ĉi tiu platformo</string>
+    <string name="desktop_net_kill_switch_failed">Ŝaltita, sed nftables ne povis esti aplikita — trafiko ne estas blokita</string>
+    <string name="desktop_net_kill_switch_clear_blocked">Forigi la seancan fajromuron estas blokita dum la mortiga ŝaltilo estas ŝaltita</string>
+    <string name="desktop_net_apps_tab">Aplikoj</string>
+    <string name="desktop_net_apps_title">Enkursigo laŭ apliko</string>
+    <string name="desktop_net_apps_hint">Unu desktop-id aŭ pako po linio kun allow, deny aŭ vpn. Konservita en ~/.config/telos/app-routing.txt. Proceza nivelo ankoraŭ mankas; la mortiga ŝaltilo ankoraŭ forĵetas nepermesitan eliron sur Linukso.</string>
+    <string name="desktop_net_apps_file">Enkursiga tabelo</string>
 </resources>

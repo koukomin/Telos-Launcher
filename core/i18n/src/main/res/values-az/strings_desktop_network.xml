@@ -3,4 +3,15 @@
     <string name="desktop_net_dns_pref_hint">Seyfdə saxlanılır. Linux-da Telos mövcuddursa resolvectl ilə DoT tətbiq edir; DoH yalnız üstünlük olaraq qalır.</string>
     <string name="desktop_net_profiles_sum">~/.config/telos/profiles/ altında seyf profil qovluqları</string>
     <string name="desktop_net_allowlist_path">İcazə siyahısı faylı</string>
+    <string name="desktop_net_kill_switch">Kill-switch</string>
+    <string name="desktop_net_kill_switch_enable">Kill-switch-i aktiv et</string>
+    <string name="desktop_net_kill_switch_disable">Kill-switch-i söndür</string>
+    <string name="desktop_net_kill_switch_enforced">Tətbiq olunur: icazə verilməyən çıxış atılır (nftables inet telos_session)</string>
+    <string name="desktop_net_kill_switch_pref_only">Tercih saxlanıldı; bu platformada tətbiq olunmur</string>
+    <string name="desktop_net_kill_switch_failed">Açıqdır, amma nftables tətbiq edilə bilmədi — trafik bloklanmayıb</string>
+    <string name="desktop_net_kill_switch_clear_blocked">Kill-switch açıqkən sessiya firewall-unun təmizlənməsi bloklanır</string>
+    <string name="desktop_net_apps_tab">Tətbiqlər</string>
+    <string name="desktop_net_apps_title">Tətbiq üzrə marşrutlaşdırma</string>
+    <string name="desktop_net_apps_hint">Hər sətirdə bir desktop-id və ya paket: allow, deny və ya vpn. ~/.config/telos/app-routing.txt-də saxlanır. Proses səviyyəsində icra hələ yoxdur; Linux-da kill-switch icazəsiz çıxışı atmağa davam edir.</string>
+    <string name="desktop_net_apps_file">Marşrut cədvəli</string>
 </resources>

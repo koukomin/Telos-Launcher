@@ -3,4 +3,15 @@
     <string name="desktop_net_dns_pref_hint">Захоўваецца ў сховішчы. У Linux Telos прымяняе DoT праз resolvectl, калі ён даступны; DoH застаецца толькі наладай.</string>
     <string name="desktop_net_profiles_sum">Папкі профіляў сховішча ў ~/.config/telos/profiles/</string>
     <string name="desktop_net_allowlist_path">Файл спіса дазволеных</string>
+    <string name="desktop_net_kill_switch">Kill-switch</string>
+    <string name="desktop_net_kill_switch_enable">Уключыць kill-switch</string>
+    <string name="desktop_net_kill_switch_disable">Выключыць kill-switch</string>
+    <string name="desktop_net_kill_switch_enforced">Ужыта: недазволены выходны трафік адкідаецца (nftables inet telos_session)</string>
+    <string name="desktop_net_kill_switch_pref_only">Налада захавана; на гэтай платформе не ўжываецца</string>
+    <string name="desktop_net_kill_switch_failed">Уключана, але nftables не ўдалося ўжыць — трафік не блакуецца</string>
+    <string name="desktop_net_kill_switch_clear_blocked">Ачыстка міжсеткавага экрана сеанса заблакавана, пакуль уключаны kill-switch</string>
+    <string name="desktop_net_apps_tab">Праграмы</string>
+    <string name="desktop_net_apps_title">Маршрутызацыя па праграмах</string>
+    <string name="desktop_net_apps_hint">Адзін desktop-id ці пакет у радку з allow, deny ці vpn. Захоўваецца ў ~/.config/telos/app-routing.txt. Прымус на ўзроўні працэсаў яшчэ няма; kill-switch надалей адкідае недазволены выходны трафік у Linux.</string>
+    <string name="desktop_net_apps_file">Табліца маршрутызацыі</string>
 </resources>

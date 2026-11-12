@@ -3,4 +3,15 @@
     <string name="desktop_net_dns_pref_hint">Kasada saklanır. Linux’ta Telos, varsa resolvectl ile DoT uygular; DoH yalnızca tercih olarak kalır.</string>
     <string name="desktop_net_profiles_sum">~/.config/telos/profiles/ altındaki kasa profil klasörleri</string>
     <string name="desktop_net_allowlist_path">İzin listesi dosyası</string>
+    <string name="desktop_net_kill_switch">Kill-switch</string>
+    <string name="desktop_net_kill_switch_enable">Kill-switch’i aç</string>
+    <string name="desktop_net_kill_switch_disable">Kill-switch’i kapat</string>
+    <string name="desktop_net_kill_switch_enforced">Uygulanıyor: izin listesinde olmayan çıkış düşürülür (nftables inet telos_session)</string>
+    <string name="desktop_net_kill_switch_pref_only">Tercih kaydedildi; bu platformda uygulanmıyor</string>
+    <string name="desktop_net_kill_switch_failed">Açık, ancak nftables uygulanamadı — trafik engellenmiyor</string>
+    <string name="desktop_net_kill_switch_clear_blocked">Kill-switch açıkken oturum güvenlik duvarını temizlemek engellenir</string>
+    <string name="desktop_net_apps_tab">Uygulamalar</string>
+    <string name="desktop_net_apps_title">Uygulama başına yönlendirme</string>
+    <string name="desktop_net_apps_hint">Satır başına bir desktop-id veya paket; allow, deny veya vpn. ~/.config/telos/app-routing.txt altında saklanır. Süreç düzeyinde uygulama henüz yok; kill-switch Linux’ta izin listesinde olmayan çıkışı düşürmeye devam eder.</string>
+    <string name="desktop_net_apps_file">Yönlendirme tablosu</string>
 </resources>

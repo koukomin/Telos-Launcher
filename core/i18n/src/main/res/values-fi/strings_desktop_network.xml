@@ -3,4 +3,15 @@
     <string name="desktop_net_dns_pref_hint">Tallennetaan holviin. Linuxissa Telos käyttää DoT:ia resolvectl:llä, jos se on saatavilla; DoH jää vain asetukseksi.</string>
     <string name="desktop_net_profiles_sum">Holviprofiilikansiot polussa ~/.config/telos/profiles/</string>
     <string name="desktop_net_allowlist_path">Sallittujen luettelotiedosto</string>
+    <string name="desktop_net_kill_switch">Kill-switch</string>
+    <string name="desktop_net_kill_switch_enable">Ota kill-switch käyttöön</string>
+    <string name="desktop_net_kill_switch_disable">Poista kill-switch käytöstä</string>
+    <string name="desktop_net_kill_switch_enforced">Käytössä: sallimaton lähtevä liikenne pudotetaan (nftables inet telos_session)</string>
+    <string name="desktop_net_kill_switch_pref_only">Asetus tallennettu; ei käytössä tällä alustalla</string>
+    <string name="desktop_net_kill_switch_failed">Päällä, mutta nftablesia ei voitu soveltaa — liikennettä ei estetä</string>
+    <string name="desktop_net_kill_switch_clear_blocked">Istunnon palomuurin tyhjennys on estetty kill-switchin ollessa päällä</string>
+    <string name="desktop_net_apps_tab">Sovellukset</string>
+    <string name="desktop_net_apps_title">Reititys sovelluksittain</string>
+    <string name="desktop_net_apps_hint">Yksi desktop-id tai paketti rivillä allow-, deny- tai vpn-arvolla. Tallennetaan polkuun ~/.config/telos/app-routing.txt. Prosessitason valvonta puuttuu vielä; kill-switch pudottaa edelleen sallimattoman lähtevän liikenteen Linuxissa.</string>
+    <string name="desktop_net_apps_file">Reititystaulu</string>
 </resources>

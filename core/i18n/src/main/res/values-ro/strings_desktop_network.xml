@@ -3,4 +3,15 @@
     <string name="desktop_net_dns_pref_hint">Salvat în seif. Pe Linux, Telos aplică DoT prin resolvectl când este disponibil; DoH rămâne doar o preferință.</string>
     <string name="desktop_net_profiles_sum">Foldere de profil ale seifului în ~/.config/telos/profiles/</string>
     <string name="desktop_net_allowlist_path">Fișier listă de permisiuni</string>
+    <string name="desktop_net_kill_switch">Kill-switch</string>
+    <string name="desktop_net_kill_switch_enable">Activează kill-switch</string>
+    <string name="desktop_net_kill_switch_disable">Dezactivează kill-switch</string>
+    <string name="desktop_net_kill_switch_enforced">Aplicat: traficul de ieșire nepermis este abandonat (nftables inet telos_session)</string>
+    <string name="desktop_net_kill_switch_pref_only">Preferință salvată; nu se aplică pe această platformă</string>
+    <string name="desktop_net_kill_switch_failed">Activat, dar nftables nu a putut fi aplicat — traficul nu este blocat</string>
+    <string name="desktop_net_kill_switch_clear_blocked">Ștergerea firewall-ului de sesiune este blocată cât timp kill-switch este activ</string>
+    <string name="desktop_net_apps_tab">Aplicații</string>
+    <string name="desktop_net_apps_title">Rutare pe aplicație</string>
+    <string name="desktop_net_apps_hint">Un desktop-id sau pachet pe linie cu allow, deny sau vpn. Stocat în ~/.config/telos/app-routing.txt. Aplicarea la nivel de proces lipsește încă; kill-switch continuă să abandoneze ieșirea nepermisă pe Linux.</string>
+    <string name="desktop_net_apps_file">Tabel de rutare</string>
 </resources>

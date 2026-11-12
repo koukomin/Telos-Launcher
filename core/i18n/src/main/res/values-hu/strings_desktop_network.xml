@@ -3,4 +3,15 @@
     <string name="desktop_net_dns_pref_hint">A trezorban tárolódik. Linuxon a Telos DoT-ot alkalmaz a resolvectl-lel, ha elérhető; a DoH csak beállítás marad.</string>
     <string name="desktop_net_profiles_sum">Trezorprofil-mappák itt: ~/.config/telos/profiles/</string>
     <string name="desktop_net_allowlist_path">Engedélyezési lista fájl</string>
+    <string name="desktop_net_kill_switch">Kill-switch</string>
+    <string name="desktop_net_kill_switch_enable">Kill-switch bekapcsolása</string>
+    <string name="desktop_net_kill_switch_disable">Kill-switch kikapcsolása</string>
+    <string name="desktop_net_kill_switch_enforced">Érvényesítve: a nem engedélyezett kimenő forgalom eldobásra kerül (nftables inet telos_session)</string>
+    <string name="desktop_net_kill_switch_pref_only">Beállítás mentve; ezen a platformon nem alkalmazott</string>
+    <string name="desktop_net_kill_switch_failed">Be, de az nftables nem alkalmazható — a forgalom nincs blokkolva</string>
+    <string name="desktop_net_kill_switch_clear_blocked">A session tűzfal törlése tiltott, amíg a kill-switch be van kapcsolva</string>
+    <string name="desktop_net_apps_tab">Alkalmazások</string>
+    <string name="desktop_net_apps_title">Alkalmazásonkénti útválasztás</string>
+    <string name="desktop_net_apps_hint">Soronként egy desktop-id vagy csomag allow, deny vagy vpn értékkel. A ~/.config/telos/app-routing.txt fájlban tárolódik. Folyamatszintű érvényesítés még nincs; a kill-switch továbbra is eldobja a nem engedélyezett kimenő forgalmat Linuxon.</string>
+    <string name="desktop_net_apps_file">Útválasztási tábla</string>
 </resources>

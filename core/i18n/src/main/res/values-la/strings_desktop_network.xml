@@ -3,4 +3,15 @@
     <string name="desktop_net_dns_pref_hint">In arca servatur. In Linux Telos DoT per resolvectl adhibet cum praesto sit; DoH solum praelatio manet.</string>
     <string name="desktop_net_profiles_sum">Fasciculi profili arcae sub ~/.config/telos/profiles/</string>
     <string name="desktop_net_allowlist_path">Fasciculus elenchi permissorum</string>
+    <string name="desktop_net_kill_switch">Interruptor exitialis</string>
+    <string name="desktop_net_kill_switch_enable">Interruptorem exitialem activa</string>
+    <string name="desktop_net_kill_switch_disable">Interruptorem exitialem desactiva</string>
+    <string name="desktop_net_kill_switch_enforced">Applicatum: egressus non permissus abicitur (nftables inet telos_session)</string>
+    <string name="desktop_net_kill_switch_pref_only">Praeferentia servata; in hac platforma non applicatur</string>
+    <string name="desktop_net_kill_switch_failed">Activus, sed nftables applicari non potuerunt — commeatus non occlusus est</string>
+    <string name="desktop_net_kill_switch_clear_blocked">Purgatio muri ignis sessionis impeditur dum interruptor exitialis activus est</string>
+    <string name="desktop_net_apps_tab">Applicationes</string>
+    <string name="desktop_net_apps_title">Directio per applicationem</string>
+    <string name="desktop_net_apps_hint">Unum desktop-id vel fasciculum per lineam cum allow, deny vel vpn. Servatur in ~/.config/telos/app-routing.txt. Coactio in gradu processus nondum adest; interruptor exitialis egressum non permissum in Linux adhuc abicit.</string>
+    <string name="desktop_net_apps_file">Tabula directionis</string>
 </resources>

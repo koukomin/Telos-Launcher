@@ -3,4 +3,15 @@
     <string name="desktop_net_dns_pref_hint">Sábháilte sa vault. Ar Linux, cuireann Telos DoT i bhfeidhm trí resolvectl nuair atá sé ar fáil; fanann DoH mar rogha amháin.</string>
     <string name="desktop_net_profiles_sum">Fillteáin próifíle an vault faoi ~/.config/telos/profiles/</string>
     <string name="desktop_net_allowlist_path">Comhad liosta ceadaithe</string>
+    <string name="desktop_net_kill_switch">Kill-switch</string>
+    <string name="desktop_net_kill_switch_enable">Cumasaigh an kill-switch</string>
+    <string name="desktop_net_kill_switch_disable">Díchumasaigh an kill-switch</string>
+    <string name="desktop_net_kill_switch_enforced">Curtha i bhfeidhm: scaoiltear egress nach bhfuil ar an liosta ceada (nftables inet telos_session)</string>
+    <string name="desktop_net_kill_switch_pref_only">Sábháladh an rogha; ní chuirtear i bhfeidhm ar an ardán seo</string>
+    <string name="desktop_net_kill_switch_failed">Ar siúl, ach níorbh fhéidir nftables a chur i bhfeidhm — níl an trácht blocáilte</string>
+    <string name="desktop_net_kill_switch_clear_blocked">Tá glanadh balla tine an tseisiúin blocáilte fad is atá an kill-switch ar siúl</string>
+    <string name="desktop_net_apps_tab">Aipeanna</string>
+    <string name="desktop_net_apps_title">Bealachú de réir aipe</string>
+    <string name="desktop_net_apps_hint">Desktop-id nó pacáiste amháin in aghaidh na líne le allow, deny nó vpn. Stóráilte faoi ~/.config/telos/app-routing.txt. Níl forfheidhmiú ag leibhéal an phróisis fós; scaoileann an kill-switch egress neamhcheadaithe fós ar Linux.</string>
+    <string name="desktop_net_apps_file">Tábla bealachaithe</string>
 </resources>

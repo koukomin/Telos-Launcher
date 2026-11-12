@@ -3,4 +3,15 @@
     <string name="desktop_net_dns_pref_hint">ভল্টে সংরক্ষিত হয়। Linux-এ resolvectl পাওয়া গেলে Telos DoT প্রয়োগ করে; DoH শুধু পছন্দ হিসেবে থাকে।</string>
     <string name="desktop_net_profiles_sum">~/.config/telos/profiles/ এর অধীনে ভল্ট প্রোফাইল ফোল্ডার</string>
     <string name="desktop_net_allowlist_path">অ্যালাউলিস্ট ফাইল</string>
+    <string name="desktop_net_kill_switch">কিল-সুইচ</string>
+    <string name="desktop_net_kill_switch_enable">কিল-সুইচ চালু করুন</string>
+    <string name="desktop_net_kill_switch_disable">কিল-সুইচ বন্ধ করুন</string>
+    <string name="desktop_net_kill_switch_enforced">প্রয়োগকৃত: অনুমোদিত তালিকার বাইরের আউটবাউন্ড বাদ দেওয়া হয় (nftables inet telos_session)</string>
+    <string name="desktop_net_kill_switch_pref_only">পছন্দ সংরক্ষিত; এই প্ল্যাটফর্মে প্রয়োগ হয় না</string>
+    <string name="desktop_net_kill_switch_failed">চালু, কিন্তু nftables প্রয়োগ করা যায়নি — ট্র্যাফিক অবরুদ্ধ নয়</string>
+    <string name="desktop_net_kill_switch_clear_blocked">কিল-সুইচ চালু থাকলে সেশন ফায়ারওয়াল মুছে ফেলা অবরুদ্ধ</string>
+    <string name="desktop_net_apps_tab">অ্যাপ</string>
+    <string name="desktop_net_apps_title">অ্যাপ অনুযায়ী রাউটিং</string>
+    <string name="desktop_net_apps_hint">প্রতি লাইনে একটি desktop-id বা প্যাকেজ এবং allow, deny বা vpn। ~/.config/telos/app-routing.txt-এ সংরক্ষিত। প্রক্রিয়া-স্তরের প্রয়োগ এখনো নেই; Linux-এ কিল-সুইচ এখনো অননুমোদিত আউটবাউন্ড বাদ দেয়।</string>
+    <string name="desktop_net_apps_file">রাউটিং টেবিল</string>
 </resources>

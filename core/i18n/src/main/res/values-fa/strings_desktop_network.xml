@@ -3,4 +3,15 @@
     <string name="desktop_net_dns_pref_hint">در خزانه ذخیره می‌شود. در لینوکس، Telos در صورت موجود بودن، DoT را از طریق resolvectl اعمال می‌کند؛ DoH فقط به‌عنوان ترجیح باقی می‌ماند.</string>
     <string name="desktop_net_profiles_sum">پوشه‌های نمایه خزانه در ~/.config/telos/profiles/</string>
     <string name="desktop_net_allowlist_path">پرونده فهرست مجاز</string>
+    <string name="desktop_net_kill_switch">کلید قطع</string>
+    <string name="desktop_net_kill_switch_enable">فعال‌سازی کلید قطع</string>
+    <string name="desktop_net_kill_switch_disable">غیرفعال‌سازی کلید قطع</string>
+    <string name="desktop_net_kill_switch_enforced">اعمال‌شده: ترافیک خروجی غیرمجاز دور انداخته می‌شود (nftables inet telos_session)</string>
+    <string name="desktop_net_kill_switch_pref_only">ترجیح ذخیره شد؛ در این سکو اعمال نمی‌شود</string>
+    <string name="desktop_net_kill_switch_failed">روشن است، اما nftables اعمال نشد — ترافیک مسدود نیست</string>
+    <string name="desktop_net_kill_switch_clear_blocked">پاک‌کردن فایروال نشست تا وقتی کلید قطع روشن است مسدود است</string>
+    <string name="desktop_net_apps_tab">برنامه‌ها</string>
+    <string name="desktop_net_apps_title">مسیریابی به‌ازای برنامه</string>
+    <string name="desktop_net_apps_hint">در هر خط یک desktop-id یا بسته با allow، deny یا vpn. در ~/.config/telos/app-routing.txt ذخیره می‌شود. اجرای سطح فرایند هنوز نیست؛ کلید قطع همچنان خروجی غیرمجاز را در لینوکس دور می‌اندازد.</string>
+    <string name="desktop_net_apps_file">جدول مسیریابی</string>
 </resources>

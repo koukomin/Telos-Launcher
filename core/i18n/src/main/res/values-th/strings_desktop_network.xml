@@ -3,4 +3,15 @@
     <string name="desktop_net_dns_pref_hint">บันทึกในวอลต์ บน Linux Telos จะใช้ DoT ผ่าน resolvectl เมื่อมีให้ใช้ ส่วน DoH เก็บเป็นค่ากำหนดเท่านั้น</string>
     <string name="desktop_net_profiles_sum">โฟลเดอร์โปรไฟล์วอลต์ภายใต้ ~/.config/telos/profiles/</string>
     <string name="desktop_net_allowlist_path">ไฟล์รายการอนุญาต</string>
+    <string name="desktop_net_kill_switch">คิลสวิตช์</string>
+    <string name="desktop_net_kill_switch_enable">เปิดคิลสวิตช์</string>
+    <string name="desktop_net_kill_switch_disable">ปิดคิลสวิตช์</string>
+    <string name="desktop_net_kill_switch_enforced">บังคับใช้แล้ว: ทิ้งทราฟฟิกขาออกที่ไม่อยู่ในรายการอนุญาต (nftables inet telos_session)</string>
+    <string name="desktop_net_kill_switch_pref_only">บันทึกการตั้งค่าแล้ว แต่ไม่ใช้บนแพลตฟอร์มนี้</string>
+    <string name="desktop_net_kill_switch_failed">เปิดอยู่ แต่ใช้ nftables ไม่ได้ — ทราฟฟิกไม่ได้ถูกบล็อก</string>
+    <string name="desktop_net_kill_switch_clear_blocked">ล้างไฟร์วอลล์เซสชันไม่ได้ขณะที่คิลสวิตช์เปิดอยู่</string>
+    <string name="desktop_net_apps_tab">แอป</string>
+    <string name="desktop_net_apps_title">การกำหนดเส้นทางต่อแอป</string>
+    <string name="desktop_net_apps_hint">หนึ่ง desktop-id หรือแพ็กเกจต่อบรรทัดพร้อม allow, deny หรือ vpn เก็บไว้ที่ ~/.config/telos/app-routing.txt ยังไม่บังคับใช้ระดับโปรเซส คิลสวิตช์ยังทิ้งขาออกที่ไม่อนุญาตบน Linux</string>
+    <string name="desktop_net_apps_file">ตารางเส้นทาง</string>
 </resources>

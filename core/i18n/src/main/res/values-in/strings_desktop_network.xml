@@ -3,4 +3,15 @@
     <string name="desktop_net_dns_pref_hint">Disimpan di vault. Di Linux, Telos menerapkan DoT lewat resolvectl jika tersedia; DoH hanya sebagai preferensi.</string>
     <string name="desktop_net_profiles_sum">Folder profil vault di ~/.config/telos/profiles/</string>
     <string name="desktop_net_allowlist_path">File daftar izin</string>
+    <string name="desktop_net_kill_switch">Kill-switch</string>
+    <string name="desktop_net_kill_switch_enable">Aktifkan kill-switch</string>
+    <string name="desktop_net_kill_switch_disable">Nonaktifkan kill-switch</string>
+    <string name="desktop_net_kill_switch_enforced">Diterapkan: lalu lintas keluar yang tidak diizinkan dibuang (nftables inet telos_session)</string>
+    <string name="desktop_net_kill_switch_pref_only">Preferensi disimpan; tidak diterapkan di platform ini</string>
+    <string name="desktop_net_kill_switch_failed">Aktif, tetapi nftables tidak dapat diterapkan — lalu lintas tidak diblokir</string>
+    <string name="desktop_net_kill_switch_clear_blocked">Menghapus firewall sesi diblokir selama kill-switch aktif</string>
+    <string name="desktop_net_apps_tab">Aplikasi</string>
+    <string name="desktop_net_apps_title">Perutean per aplikasi</string>
+    <string name="desktop_net_apps_hint">Satu desktop-id atau paket per baris dengan allow, deny, atau vpn. Disimpan di ~/.config/telos/app-routing.txt. Penegakan tingkat proses belum ada; kill-switch tetap membuang keluar yang tidak diizinkan di Linux.</string>
+    <string name="desktop_net_apps_file">Tabel perutean</string>
 </resources>

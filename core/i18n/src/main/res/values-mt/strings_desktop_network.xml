@@ -3,4 +3,15 @@
     <string name="desktop_net_dns_pref_hint">Maħżun fil-vault. Fuq Linux, Telos japplika DoT permezz ta’ resolvectl meta jkun disponibbli; DoH jibqa’ preferenza biss.</string>
     <string name="desktop_net_profiles_sum">Folders tal-profil tal-vault taħt ~/.config/telos/profiles/</string>
     <string name="desktop_net_allowlist_path">Fajl tal-allowlist</string>
+    <string name="desktop_net_kill_switch">Kill-switch</string>
+    <string name="desktop_net_kill_switch_enable">Attiva l-kill-switch</string>
+    <string name="desktop_net_kill_switch_disable">Iddiżattiva l-kill-switch</string>
+    <string name="desktop_net_kill_switch_enforced">Infurzat: egress mhux permess jintrema (nftables inet telos_session)</string>
+    <string name="desktop_net_kill_switch_pref_only">Preferenza ssejvjata; mhux applikata fuq din il-pjattaforma</string>
+    <string name="desktop_net_kill_switch_failed">On, imma nftables ma setgħux jiġu applikati — it-traffiku mhux imblukkat</string>
+    <string name="desktop_net_kill_switch_clear_blocked">It-tneħħija tal-firewall tas-sessjoni hija mblukkata waqt li l-kill-switch ikun on</string>
+    <string name="desktop_net_apps_tab">Apps</string>
+    <string name="desktop_net_apps_title">Routing għal kull app</string>
+    <string name="desktop_net_apps_hint">Desktop-id jew pakkett wieħed għal kull linja b’allow, deny jew vpn. Maħżun taħt ~/.config/telos/app-routing.txt. L-infurzar fil-livell tal-proċess għadu mhuwiex; il-kill-switch xorta jarmi egress mhux permess fuq Linux.</string>
+    <string name="desktop_net_apps_file">Tabella tar-routing</string>
 </resources>

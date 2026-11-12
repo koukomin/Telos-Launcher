@@ -3,4 +3,15 @@
     <string name="desktop_net_dns_pref_hint">Salvate in le coffre. Sur Linux, Telos applica DoT via resolvectl quando disponibile; DoH resta solmente un preferentia.</string>
     <string name="desktop_net_profiles_sum">Dossieres de profilo del coffre sub ~/.config/telos/profiles/</string>
     <string name="desktop_net_allowlist_path">File de lista de permission</string>
+    <string name="desktop_net_kill_switch">Kill-switch</string>
+    <string name="desktop_net_kill_switch_enable">Activar le kill-switch</string>
+    <string name="desktop_net_kill_switch_disable">Disactivar le kill-switch</string>
+    <string name="desktop_net_kill_switch_enforced">Applicate: le traffico de exito non autorisate es abandonate (nftables inet telos_session)</string>
+    <string name="desktop_net_kill_switch_pref_only">Preferentia salvate; non applicate sur iste platteforma</string>
+    <string name="desktop_net_kill_switch_failed">Activate, ma nftables non poteva esser applicate — le traffico non es blocate</string>
+    <string name="desktop_net_kill_switch_clear_blocked">Rader le firewall del session es blocate durante que le kill-switch es active</string>
+    <string name="desktop_net_apps_tab">Applicationes</string>
+    <string name="desktop_net_apps_title">Routing per application</string>
+    <string name="desktop_net_apps_hint">Un desktop-id o pacchetto per linea con allow, deny o vpn. Salvate in ~/.config/telos/app-routing.txt. Le application al nivello de processo ancora manca; le kill-switch continua a abandonar le exito non autorisate sur Linux.</string>
+    <string name="desktop_net_apps_file">Tabella de routing</string>
 </resources>

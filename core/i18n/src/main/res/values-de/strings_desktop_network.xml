@@ -3,4 +3,15 @@
     <string name="desktop_net_dns_pref_hint">Wird im Vault gespeichert. Unter Linux wendet Telos DoT über resolvectl an, wenn verfügbar; DoH bleibt nur eine Einstellung.</string>
     <string name="desktop_net_profiles_sum">Vault-Profilordner unter ~/.config/telos/profiles/</string>
     <string name="desktop_net_allowlist_path">Allowlist-Datei</string>
+    <string name="desktop_net_kill_switch">Kill-Switch</string>
+    <string name="desktop_net_kill_switch_enable">Kill-Switch aktivieren</string>
+    <string name="desktop_net_kill_switch_disable">Kill-Switch deaktivieren</string>
+    <string name="desktop_net_kill_switch_enforced">Aktiv: Nicht freigegebener Ausgangsverkehr wird verworfen (nftables inet telos_session)</string>
+    <string name="desktop_net_kill_switch_pref_only">Einstellung gespeichert; auf dieser Plattform nicht angewendet</string>
+    <string name="desktop_net_kill_switch_failed">An, aber nftables konnte nicht angewendet werden — Verkehr wird nicht blockiert</string>
+    <string name="desktop_net_kill_switch_clear_blocked">Löschen der Sitzungs-Firewall ist blockiert, solange der Kill-Switch an ist</string>
+    <string name="desktop_net_apps_tab">Apps</string>
+    <string name="desktop_net_apps_title">Routing pro App</string>
+    <string name="desktop_net_apps_hint">Eine Desktop-ID oder ein Paket pro Zeile mit allow, deny oder vpn. Gespeichert unter ~/.config/telos/app-routing.txt. Prozessbezogene Durchsetzung fehlt noch; der Kill-Switch verwirft weiterhin nicht freigegebenen Ausgangsverkehr unter Linux.</string>
+    <string name="desktop_net_apps_file">Routing-Tabelle</string>
 </resources>

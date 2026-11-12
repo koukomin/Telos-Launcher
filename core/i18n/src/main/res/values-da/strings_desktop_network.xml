@@ -3,4 +3,15 @@
     <string name="desktop_net_dns_pref_hint">Gemmes i vaulten. På Linux anvender Telos DoT via resolvectl, når det er tilgængeligt; DoH forbliver kun en præference.</string>
     <string name="desktop_net_profiles_sum">Vault-profilmapper under ~/.config/telos/profiles/</string>
     <string name="desktop_net_allowlist_path">Allowlist-fil</string>
+    <string name="desktop_net_kill_switch">Kill-switch</string>
+    <string name="desktop_net_kill_switch_enable">Aktivér kill-switch</string>
+    <string name="desktop_net_kill_switch_disable">Deaktivér kill-switch</string>
+    <string name="desktop_net_kill_switch_enforced">Håndhævet: ikke-tilladt udgående trafik droppes (nftables inet telos_session)</string>
+    <string name="desktop_net_kill_switch_pref_only">Præference gemt; anvendes ikke på denne platform</string>
+    <string name="desktop_net_kill_switch_failed">Til, men nftables kunne ikke anvendes — trafikken blokeres ikke</string>
+    <string name="desktop_net_kill_switch_clear_blocked">Rydning af sessionsfirewall er blokeret, mens kill-switch er til</string>
+    <string name="desktop_net_apps_tab">Apps</string>
+    <string name="desktop_net_apps_title">Routing pr. app</string>
+    <string name="desktop_net_apps_hint">Ét desktop-id eller pakke pr. linje med allow, deny eller vpn. Gemmes under ~/.config/telos/app-routing.txt. Proceshåndhævelse mangler endnu; kill-switch dropper stadig ikke-tilladt udgående trafik på Linux.</string>
+    <string name="desktop_net_apps_file">Routingtabel</string>
 </resources>
