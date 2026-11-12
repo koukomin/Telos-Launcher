@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_icons_title">Piktogramoj</string>
+    <string name="desktop_icons_theme_label">Piktograma etoso</string>
+    <string name="desktop_icons_download_section">Elŝuti el Telos</string>
+    <string name="desktop_icons_download">Elŝuti</string>
+    <string name="desktop_icons_installing">Instalado…</string>
+    <string name="desktop_icons_installed">Instalita</string>
+    <string name="desktop_icons_apply">Apliki</string>
+    <string name="desktop_icons_source_system">Sistemo</string>
+    <string name="desktop_icons_source_telos">Telos</string>
+    <string name="desktop_icons_source_builtin">Enkonstruita</string>
+    <string name="desktop_icons_path">Dosierujo de piktogramaj pakoj: %1$s</string>
+    <string name="desktop_icons_freedesktop_note">Labortablaj freedesktop-piktogramaj etosoj (ne Android ADW-pakoj).</string>
+    <string name="desktop_icons_download_failed">Elŝuto malsukcesis</string>
+    <string name="desktop_icons_download_ok">Etoso instalita</string>
+    <string name="desktop_icons_license">Permesilo: %1$s</string>
+    <string name="desktop_icons_portable_only">En reĝimo Portable Data, pakoj restas en la portebla piktograma dosierujo (ne en la gastiga profilo).</string>
+</resources>

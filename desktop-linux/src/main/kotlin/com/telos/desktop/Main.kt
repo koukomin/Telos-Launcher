@@ -147,7 +147,7 @@ fun main(args: Array<String>) {
                 }
                 val icons = remember {
                     val themeName = if (settings.followSystemTheme) hostTheme.iconTheme ?: settings.iconTheme else settings.iconTheme
-                    LinuxIconThemeResolver(preferredTheme = themeName)
+                    LinuxIconThemeResolver.withManagedRoots(preferredTheme = themeName)
                 }
                 val display = remember { LinuxDisplayManager(settings) }
                 DesktopWorkspace(

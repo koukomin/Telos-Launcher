@@ -2,11 +2,19 @@ package com.telos.desktop.icons
 
 import java.io.File
 
+enum class IconThemeSource {
+    System,
+    TelosDownloaded,
+    BuiltIn,
+}
+
 data class IconThemeInfo(
     val name: String,
-    val directory: File,
+    val directory: File?,
     val inherits: List<String>,
     val directories: List<ThemeDir>,
+    val displayName: String = name,
+    val source: IconThemeSource = IconThemeSource.System,
 )
 
 data class ThemeDir(
@@ -20,38 +28,93 @@ data class ThemeDir(
 class LinuxIconThemeResolver(
     var preferredTheme: String = "hicolor",
     var fallbackChain: List<String> = DEFAULT_FALLBACK_CHAIN,
+    extraRoots: List<File> = emptyList(),
 ) {
+    private val extraRoots: MutableList<File> = extraRoots.toMutableList()
+    @Volatile private var cachedThemes: List<IconThemeInfo>? = null
+
+    fun addExtraRoot(root: File) {
+        if (extraRoots.none { it.absolutePath == root.absolutePath }) {
+            extraRoots += root
+            invalidate()
+        }
+    }
+
+    fun invalidate() {
+        cachedThemes = null
+    }
+
     private val themeRoots: List<File>
         get() {
             val home = System.getProperty("user.home")
-            return listOf(
-                File("/usr/share/icons"),
-                File("$home/.local/share/icons"),
-                File("$home/.icons"),
-            )
+            val xdgDataHome = System.getenv("XDG_DATA_HOME")?.takeIf { it.isNotBlank() }
+                ?: "$home/.local/share"
+            val xdgDataDirs = (System.getenv("XDG_DATA_DIRS") ?: "/usr/local/share:/usr/share")
+                .split(':')
+                .map { it.trim() }
+                .filter { it.isNotEmpty() }
+            val roots = LinkedHashSet<File>()
+            roots += File("/usr/share/icons")
+            roots += File("/usr/local/share/icons")
+            roots += File(xdgDataHome, "icons")
+            roots += File("$home/.icons")
+            for (dir in xdgDataDirs) {
+                roots += File(dir, "icons")
+            }
+            roots += File("/var/lib/flatpak/exports/share/icons")
+            roots += File("$home/.local/share/flatpak/exports/share/icons")
+            for (managed in TelosIconPackPaths.managedThemeRoots()) {
+                roots += managed
+            }
+            for (extra in extraRoots) {
+                roots += extra
+            }
+            return roots.toList()
         }
 
     private val pixmapDir = File("/usr/share/pixmaps")
 
     fun listInstalledThemes(): List<IconThemeInfo> {
+        cachedThemes?.let { return it }
         val out = ArrayList<IconThemeInfo>()
+        val managedCanonical = TelosIconPackPaths.managedThemeRoots().mapNotNull {
+            runCatching { it.canonicalFile }.getOrNull()
+        }
         for (root in themeRoots) {
             val children = root.listFiles() ?: continue
             for (dir in children) {
                 if (!dir.isDirectory) continue
+                if (dir.name.startsWith(".")) continue
                 val index = File(dir, "index.theme")
                 if (!index.isFile) continue
-                parseIndex(dir, index)?.let { out += it }
+                if (isCursorOnlyTheme(index)) continue
+                val parsed = parseIndex(dir, index) ?: continue
+                val underManaged = managedCanonical.any { managed ->
+                    runCatching { dir.canonicalFile.path.startsWith(managed.path + File.separator) }.getOrDefault(false)
+                }
+                out += if (underManaged) parsed.copy(source = IconThemeSource.TelosDownloaded) else parsed
             }
         }
-        return out.distinctBy { it.name }.sortedBy { it.name.lowercase() }
+        if (out.none { it.name == TelosIconPackPaths.BUILTIN_CANDY }) {
+            out += IconThemeInfo(
+                name = TelosIconPackPaths.BUILTIN_CANDY,
+                directory = null,
+                inherits = listOf("hicolor"),
+                directories = emptyList(),
+                displayName = "CandyCyber",
+                source = IconThemeSource.BuiltIn,
+            )
+        }
+        val sorted = out.distinctBy { it.name }.sortedBy { it.name.lowercase() }
+        cachedThemes = sorted
+        return sorted
     }
 
     fun resolve(iconName: String, size: Int = 48): File? {
         if (iconName.isBlank()) return null
         val asPath = File(iconName)
         if (asPath.isFile) return asPath
-        val themes = listInstalledThemes().associateBy { it.name }
+        val themes = listInstalledThemes().filter { it.directory != null }.associateBy { it.name }
         val chain = buildChain(preferredTheme, themes)
         for (themeName in chain) {
             val theme = themes[themeName] ?: continue
@@ -74,23 +137,24 @@ class LinuxIconThemeResolver(
             ordered += name
             themes[name]?.inherits?.forEach { walk(it) }
         }
-        walk(start)
+        if (start != TelosIconPackPaths.BUILTIN_CANDY) walk(start)
         for (fb in fallbackChain) walk(fb)
         walk("hicolor")
         return ordered
     }
 
     private fun resolveInTheme(theme: IconThemeInfo, iconName: String, size: Int): File? {
+        val base = theme.directory ?: return null
         val ranked = theme.directories.sortedBy { kotlin.math.abs(it.size - size) }
         val dirs = if (ranked.isEmpty()) listOf(ThemeDir(".", size, 1, "", "Threshold")) else ranked
         for (dir in dirs) {
-            val folder = File(theme.directory, dir.path)
+            val folder = File(base, dir.path)
             for (ext in listOf("svg", "png")) {
                 val f = File(folder, "$iconName.$ext")
                 if (f.isFile) return f
             }
         }
-        return theme.directory.walkTopDown().maxDepth(4).firstOrNull { f ->
+        return base.walkTopDown().maxDepth(4).firstOrNull { f ->
             f.isFile && (f.name == "$iconName.svg" || f.name == "$iconName.png")
         }
     }
@@ -113,7 +177,7 @@ class LinuxIconThemeResolver(
                 line.substring(eq + 1).trim()
         }
         val iconTheme = values["Icon Theme"] ?: return null
-        val name = iconTheme["Name"] ?: dir.name
+        val display = iconTheme["Name"] ?: dir.name
         val inherits = (iconTheme["Inherits"] ?: "").split(',').map { it.trim() }.filter { it.isNotEmpty() }
         val dirNames = (iconTheme["Directories"] ?: "").split(',').map { it.trim() }.filter { it.isNotEmpty() }
         val directories = dirNames.map { d ->
@@ -126,7 +190,21 @@ class LinuxIconThemeResolver(
                 type = m["Type"] ?: "Threshold",
             )
         }
-        return IconThemeInfo(name = dir.name, directory = dir, inherits = inherits, directories = directories)
+        return IconThemeInfo(
+            name = dir.name,
+            directory = dir,
+            inherits = inherits,
+            directories = directories,
+            displayName = display,
+            source = IconThemeSource.System,
+        )
+    }
+
+    private fun isCursorOnlyTheme(index: File): Boolean {
+        val text = runCatching { index.readText() }.getOrNull() ?: return false
+        val hasCursor = text.lines().any { it.trim() == "[Cursor Theme]" }
+        val hasIcon = text.lines().any { it.trim() == "[Icon Theme]" }
+        return hasCursor && !hasIcon
     }
 
     companion object {
@@ -137,5 +215,11 @@ class LinuxIconThemeResolver(
             "gnome",
             "hicolor",
         )
+
+        fun withManagedRoots(preferredTheme: String): LinuxIconThemeResolver =
+            LinuxIconThemeResolver(
+                preferredTheme = preferredTheme,
+                extraRoots = TelosIconPackPaths.managedThemeRoots(),
+            )
     }
 }

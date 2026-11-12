@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_icons_title">ไอคอน</string>
+    <string name="desktop_icons_theme_label">ชุดไอคอน</string>
+    <string name="desktop_icons_download_section">ดาวน์โหลดจาก Telos</string>
+    <string name="desktop_icons_download">ดาวน์โหลด</string>
+    <string name="desktop_icons_installing">กำลังติดตั้ง…</string>
+    <string name="desktop_icons_installed">ติดตั้งแล้ว</string>
+    <string name="desktop_icons_apply">ใช้</string>
+    <string name="desktop_icons_source_system">ระบบ</string>
+    <string name="desktop_icons_source_telos">Telos</string>
+    <string name="desktop_icons_source_builtin">ในตัว</string>
+    <string name="desktop_icons_path">โฟลเดอร์แพ็กไอคอน: %1$s</string>
+    <string name="desktop_icons_freedesktop_note">ชุดไอคอน freedesktop สำหรับเดสก์ท็อป (ไม่ใช่แพ็ก ADW ของ Android)</string>
+    <string name="desktop_icons_download_failed">ดาวน์โหลดล้มเหลว</string>
+    <string name="desktop_icons_download_ok">ติดตั้งชุดไอคอนแล้ว</string>
+    <string name="desktop_icons_license">สัญญาอนุญาต: %1$s</string>
+    <string name="desktop_icons_portable_only">ในโหมด Portable Data แพ็กจะอยู่ในโฟลเดอร์ไอคอนแบบพกพา (ไม่ใช่โปรไฟล์โฮสต์)</string>
+</resources>

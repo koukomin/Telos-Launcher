@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_icons_title">Deilbhíní</string>
+    <string name="desktop_icons_theme_label">Téama deilbhíní</string>
+    <string name="desktop_icons_download_section">Íoslódáil ó Telos</string>
+    <string name="desktop_icons_download">Íoslódáil</string>
+    <string name="desktop_icons_installing">Á shuiteáil…</string>
+    <string name="desktop_icons_installed">Suiteáilte</string>
+    <string name="desktop_icons_apply">Cuir i bhfeidhm</string>
+    <string name="desktop_icons_source_system">Córas</string>
+    <string name="desktop_icons_source_telos">Telos</string>
+    <string name="desktop_icons_source_builtin">Inteagraithe</string>
+    <string name="desktop_icons_path">Fillteán pacáistí deilbhíní: %1$s</string>
+    <string name="desktop_icons_freedesktop_note">Téamaí deilbhíní freedesktop deisce (ní pacáistí ADW Android).</string>
+    <string name="desktop_icons_download_failed">Theip ar an íoslódáil</string>
+    <string name="desktop_icons_download_ok">Téama suiteáilte</string>
+    <string name="desktop_icons_license">Ceadúnas: %1$s</string>
+    <string name="desktop_icons_portable_only">I mód Portable Data, fanann pacáistí sa fhillteán iniompartha deilbhíní (ní i bpróifíl an óstaigh).</string>
+</resources>

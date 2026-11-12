@@ -45,7 +45,7 @@ profile home. This is optional transport obfuscation, not forensic steganography
 ## Desktop shell
 
 - Freedesktop `.desktop` scan and launch (`LinuxAppScanner`, `DesktopFileLauncher`)
-- Icon themes with `Inherits=` fallback (`LinuxIconThemeResolver`)
+- Icon themes with `Inherits=` fallback (`LinuxIconThemeResolver`): scans `~/.local/share/icons`, `/usr/share/icons`, `XDG_DATA_DIRS`, Flatpak exports, plus Telos-managed packs under vault `icons/` or portable `TelosPortableData/icons/` (never host HOME in Portable Data). Settings lists system + downloaded themes and a Telos catalog (Papirus, Tela, candy-icons — GPL-3.0, downloaded on demand). Built-in **CandyCyber** Compose glyphs remain the chrome fallback on Windows/macOS when no XDG theme exists. These are freedesktop themes, not Android ADW icon packs.
 - XDG user dirs and a live `WatchService` desktop icon grid
 - Wayland/X11 display modes (`wlr-randr`, `kscreen-doctor`, `xrandr`)
 - Klassy / SierraBreeze-inspired Compose window chrome and Sweet cursor presets

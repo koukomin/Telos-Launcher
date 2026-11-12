@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_icons_title">İkonlar</string>
+    <string name="desktop_icons_theme_label">İkon teması</string>
+    <string name="desktop_icons_download_section">Telos-dan yüklə</string>
+    <string name="desktop_icons_download">Yüklə</string>
+    <string name="desktop_icons_installing">Quraşdırılır…</string>
+    <string name="desktop_icons_installed">Quraşdırılıb</string>
+    <string name="desktop_icons_apply">Tətbiq et</string>
+    <string name="desktop_icons_source_system">Sistem</string>
+    <string name="desktop_icons_source_telos">Telos</string>
+    <string name="desktop_icons_source_builtin">Daxili</string>
+    <string name="desktop_icons_path">İkon paketləri qovluğu: %1$s</string>
+    <string name="desktop_icons_freedesktop_note">Masaüstü freedesktop ikon temaları (Android ADW paketləri deyil).</string>
+    <string name="desktop_icons_download_failed">Yükləmə uğursuz oldu</string>
+    <string name="desktop_icons_download_ok">Tema quraşdırıldı</string>
+    <string name="desktop_icons_license">Lisenziya: %1$s</string>
+    <string name="desktop_icons_portable_only">Portable Data rejimində paketlər portativ ikon qovluğunda qalır (host profilində deyil).</string>
+</resources>

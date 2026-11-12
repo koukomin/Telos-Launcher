@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_icons_title">Icones</string>
+    <string name="desktop_icons_theme_label">Thema iconum</string>
+    <string name="desktop_icons_download_section">De Telos depromere</string>
+    <string name="desktop_icons_download">Depromere</string>
+    <string name="desktop_icons_installing">Installatur…</string>
+    <string name="desktop_icons_installed">Installatum</string>
+    <string name="desktop_icons_apply">Adhibere</string>
+    <string name="desktop_icons_source_system">Systema</string>
+    <string name="desktop_icons_source_telos">Telos</string>
+    <string name="desktop_icons_source_builtin">Innatum</string>
+    <string name="desktop_icons_path">Scrinium fasciculorum iconum: %1$s</string>
+    <string name="desktop_icons_freedesktop_note">Themara iconum freedesktop pro mensa (non fasciculi ADW Android).</string>
+    <string name="desktop_icons_download_failed">Depromptio defecit</string>
+    <string name="desktop_icons_download_ok">Thema installatum</string>
+    <string name="desktop_icons_license">Licentia: %1$s</string>
+    <string name="desktop_icons_portable_only">In modo Portable Data fasciculi in scrinio portabili iconum manent (non in profilo hospitis).</string>
+</resources>

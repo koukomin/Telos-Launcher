@@ -54,6 +54,9 @@ based on" table in `readme.md`.
 | [Spy Camera OS](https://github.com/wolkenschieber/spy-camera-os) | CC-BY-NC-3.0 | Feature ideas only for discreet capture; no source copied |
 | [PdfBox-Android](https://github.com/TomRoush/PdfBox-Android) | Apache-2.0 | Copyright the Apache PDFBox authors and Tom Roush; used unchanged as a Maven dependency |
 | [baresip](https://github.com/baresip/baresip), [baresip-studio](https://github.com/juha-h/baresip-studio) | BSD-3-Clause | Planned, not yet included |
+| [Papirus icon theme](https://github.com/PapirusDevelopmentTeam/papirus-icon-theme) | GPL-3.0 | Copyright (C) Papirus Development Team. Optional desktop download catalog entry only; not bundled. |
+| [Tela icon theme](https://github.com/vinceliuice/Tela-icon-theme) | GPL-3.0 | Copyright (C) vinceliuice. Optional desktop download catalog entry only; not bundled. |
+| [candy-icons](https://github.com/EliverLara/candy-icons) | GPL-3.0 | Copyright (C) Eliver Lara. Optional desktop download catalog entry only; not bundled. Distinct from Telos built-in CandyCyber Compose glyphs. |
 
 ## Trademarks
 

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_icons_title">Icone</string>
+    <string name="desktop_icons_theme_label">Tema icone</string>
+    <string name="desktop_icons_download_section">Scarica da Telos</string>
+    <string name="desktop_icons_download">Scarica</string>
+    <string name="desktop_icons_installing">Installazione…</string>
+    <string name="desktop_icons_installed">Installato</string>
+    <string name="desktop_icons_apply">Applica</string>
+    <string name="desktop_icons_source_system">Sistema</string>
+    <string name="desktop_icons_source_telos">Telos</string>
+    <string name="desktop_icons_source_builtin">Integrato</string>
+    <string name="desktop_icons_path">Cartella pacchetti icone: %1$s</string>
+    <string name="desktop_icons_freedesktop_note">Temi di icone freedesktop per desktop (non pacchetti ADW Android).</string>
+    <string name="desktop_icons_download_failed">Download non riuscito</string>
+    <string name="desktop_icons_download_ok">Tema installato</string>
+    <string name="desktop_icons_license">Licenza: %1$s</string>
+    <string name="desktop_icons_portable_only">In modalità Portable Data, i pacchetti restano nella cartella icone portatile (non nel profilo host).</string>
+</resources>

@@ -1280,6 +1280,7 @@ adapted, the original license is respected.
 | [libarchive](https://libarchive.org) with [libarchive-android](https://github.com/zhanghai/libarchive-android) | BSD-2-Clause, Apache-2.0 | RAR and RAR5 reading in Telos Files (standard version only, prebuilt library, used unchanged) |
 | [Kvaesitso](https://github.com/MM2-0/Kvaesitso) | GPL-3.0 | The whole launcher, plugin SDK and architecture |
 | [Compose Multiplatform](https://github.com/JetBrains/compose-multiplatform) | Apache-2.0 | JVM desktop shell in `:desktop-linux` only (not packaged in the Android APK) |
+| [Papirus / Tela / candy-icons](https://github.com/PapirusDevelopmentTeam/papirus-icon-theme) | GPL-3.0 | Optional Telos Desktop icon-theme catalog downloads (not bundled); CandyCyber chrome glyphs are Telos originals |
 | [QUIK](https://github.com/quik-sms/quik) | GPL-3.0 | Ideas for Telos Messages: pin, archive, delayed send, any-file attachments, speech-to-text (written in Compose, no QUIK code copied) |
 | [Right Dialer (Goodwy/Dialer)](https://github.com/Goodwy/Dialer) | GPL-3.0 | Phone app layout and look: recents, contacts, dialpad, call screens |
 | [Secure Dialer](https://github.com/Secure-Phone-apps/Secure-Dialer) | GPL-3.0 | Privacy features: biometric lock, secure call screen, call screening, callback reminders |

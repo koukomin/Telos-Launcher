@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_icons_title">Ikons</string>
+    <string name="desktop_icons_theme_label">Tema tal-ikons</string>
+    <string name="desktop_icons_download_section">Niżżel minn Telos</string>
+    <string name="desktop_icons_download">Niżżel</string>
+    <string name="desktop_icons_installing">Qed jinstalla…</string>
+    <string name="desktop_icons_installed">Installat</string>
+    <string name="desktop_icons_apply">Applika</string>
+    <string name="desktop_icons_source_system">Sistema</string>
+    <string name="desktop_icons_source_telos">Telos</string>
+    <string name="desktop_icons_source_builtin">Integrat</string>
+    <string name="desktop_icons_path">Folder tal-pakketti tal-ikons: %1$s</string>
+    <string name="desktop_icons_freedesktop_note">Temi tal-ikons freedesktop għad-desktop (mhux pakketti ADW tal-Android).</string>
+    <string name="desktop_icons_download_failed">It-tniżżil falla</string>
+    <string name="desktop_icons_download_ok">Tema installata</string>
+    <string name="desktop_icons_license">Liċenzja: %1$s</string>
+    <string name="desktop_icons_portable_only">Fil-modalità Portable Data, il-pakketti jibqgħu fil-folder portabbli tal-ikons (mhux fil-profil tal-host).</string>
+</resources>
