@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_keyboard">Claviatura</string>
+    <string name="keyboard_enable_title">Telos Keyboard activa</string>
+    <string name="keyboard_enable_summary">Telos Keyboard in Androidi inputationis configurationibus activa et id ut methodum inputationis praedefinitam elige.</string>
+    <string name="keyboard_enable_action">Configurationes inputationis aperi</string>
+    <string name="keyboard_settings_category">Configurationes claviaturae</string>
+    <string name="keyboard_incognito_title">Modus occultus</string>
+    <string name="preference_private_keyboard_summary">Claviaturam impedit ne textum in quaestu et in nexibus applicationum interretialium discat aut reponat</string>
+</resources>
