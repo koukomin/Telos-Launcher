@@ -69,7 +69,7 @@
     <string name="au_messages_no_conversations_hint">Je berichten verschijnen hier.</string>
     <string name="au_messages_not_sent">niet verzonden</string>
     <string name="au_messages_attached_count">%1$d bijgevoegd</string>
-    <string name="au_messages_attach">Foto\u0027s of video\u0027s bijvoegen</string>
+    <string name="au_messages_attach">Foto\'s of video\'s bijvoegen</string>
     <string name="au_messages_attachment">Bijlage</string>
     <string name="au_messages_picture">Afbeelding</string>
     <string name="au_messages_mms">Multimediabericht</string>
@@ -78,7 +78,7 @@
     <string name="au_messages_scheduled_fill_fields">Voer een nummer en een bericht in om het te plannen.</string>
     <string name="au_messages_scheduled_past">Kies een tijdstip in de toekomst.</string>
     <string name="au_messages_scheduled_saved">Bericht gepland</string>
-    <string name="au_messages_scheduled_permission">Telos heeft toestemming nodig om sms\u0027jes te verzenden op het geplande tijdstip.</string>
+    <string name="au_messages_scheduled_permission">Telos heeft toestemming nodig om sms\'jes te verzenden op het geplande tijdstip.</string>
     <string name="au_music_title">Muziek</string>
     <string name="au_music_tab_songs">Nummers</string>
     <string name="au_music_tab_artists">Artiesten</string>
@@ -229,14 +229,14 @@
     <string name="au_store_src_play">Play Store</string>
     <string name="au_store_hours_short">%1$d u</string>
     <string name="au_store_no_installed_candidates">Er zijn geen andere apps om toe te voegen</string>
-    <string name="au_video_title">Video\u0027s</string>
+    <string name="au_video_title">Video\'s</string>
     <string name="au_video_tab_library">Bibliotheek</string>
     <string name="au_video_tab_movies">Films</string>
     <string name="au_video_tab_series">Series</string>
     <string name="au_video_tab_folders">Mappen</string>
     <string name="au_video_episodes_count">Afleveringen: %1$d</string>
     <string name="au_video_files_count">Bestanden: %1$d</string>
-    <string name="au_video_videos_count">Video\u0027s: %1$d</string>
+    <string name="au_video_videos_count">Video\'s: %1$d</string>
     <string name="au_video_no_movies">Geen films gevonden</string>
     <string name="au_video_no_series">Geen series herkend. Noem bestanden zoals Show.S01E02.mkv</string>
     <string name="au_video_watchlist_added">Toegevoegd aan je Trakt-kijklijst</string>

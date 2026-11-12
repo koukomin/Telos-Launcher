@@ -309,7 +309,7 @@
     <string name="dl_m_sites">Suíomhanna tacaithe</string>
     <string name="dl_p3_block_schedule">Ag fanacht leis an am ceadaithe den lá</string>
     <string name="dl_p3_detect_clipboard">Braith naisc sa ghearrthaisce</string>
-    <string name="dl_p3_detect_clipboard_sum">Nuair a osclaíonn tú Downloads, mol nasc, seoladh suíomh físeáin nó nasc maighnéad a chóipeáil tú. D\u0027fhéadfadh Android a rá leat gur léigh an aip an gearrthaisce.</string>
+    <string name="dl_p3_detect_clipboard_sum">Nuair a osclaíonn tú Downloads, mol nasc, seoladh suíomh físeáin nó nasc maighnéad a chóipeáil tú. D\'fhéadfadh Android a rá leat gur léigh an aip an gearrthaisce.</string>
     <string name="dl_p3_clip_found">Sa ghearrthaisce: %1$s</string>
     <string name="dl_p3_clip_add">@string/hc_add</string>
     <string name="dl_p3_schedule_title">Sceideal</string>

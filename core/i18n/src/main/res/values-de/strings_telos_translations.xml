@@ -1303,7 +1303,7 @@
     <string name="fit_dashboard">Dashboard</string>
     <string name="fit_fat">Fat</string>
     <string name="fit_heart_rate">Heart Rate</string>
-    <string name="fit_meals">Today\u0027s Meals</string>
+    <string name="fit_meals">Today\'s Meals</string>
     <string name="fit_nutrition">Nutrition &amp; Macros</string>
     <string name="fit_protein">Protein</string>
     <string name="fit_search_food">Search food, protein, supplement...</string>

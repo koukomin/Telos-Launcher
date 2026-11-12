@@ -90,7 +90,7 @@
     <string name="netfw_c_empty">Ingen regler endnu</string>
     <string name="netfw_c_invalid">Denne værdi er ugyldig.</string>
     <string name="netfw_b_title">Blokeringslister</string>
-    <string name="netfw_b_intro">Rethink DNS\u0027 blokeringslister stopper domæner med reklamer, sporere, malware og mere, mens Telos Network er slået til. Intet downloades fra dl.rethinkdns.com, før du beder om det.</string>
+    <string name="netfw_b_intro">Rethink DNS\' blokeringslister stopper domæner med reklamer, sporere, malware og mere, mens Telos Network er slået til. Intet downloades fra dl.rethinkdns.com, før du beder om det.</string>
     <string name="netfw_b_download">Download blokeringslister</string>
     <string name="netfw_b_not_installed">Ikke downloadet endnu</string>
     <string name="netfw_b_check">Søg efter opdateringer</string>

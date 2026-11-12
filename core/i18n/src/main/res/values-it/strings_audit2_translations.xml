@@ -2,7 +2,7 @@
 <resources>
     <string name="au2_callsec_sip_verify">Verifica il certificato del server</string>
     <string name="au2_callsec_sip_verify_hint">Un FRITZ!Box con un proprio certificato (autofirmato) di solito richiede che questa opzione sia disattivata.</string>
-    <string name="au2_callsec_sip_err_tls">Impossibile verificare il certificato del server. Controlla l\u0027indirizzo del server oppure disattiva «Verifica il certificato del server» per un FRITZ!Box con certificato autofirmato.</string>
+    <string name="au2_callsec_sip_err_tls">Impossibile verificare il certificato del server. Controlla l\'indirizzo del server oppure disattiva «Verifica il certificato del server» per un FRITZ!Box con certificato autofirmato.</string>
     <string name="au2_callsec_cannot_confirm">La richiesta di conferma non può essere mostrata qui, quindi la chiamata non è stata effettuata.</string>
     <string name="au2_callsec_block_international_summary">Rifiuta le chiamate da paesi diversi dal tuo</string>
     <string name="au2_callsec_home_country">Paese di origine</string>
@@ -20,8 +20,8 @@
     <string name="au2_msg2_blocked_empty_hint">I messaggi dei numeri bloccati vengono conservati qui senza notifica.</string>
     <string name="au2_msg2_blocked_restore_hint">Dopo lo sblocco, i messaggi di quel numero tornano nelle conversazioni quando Telos è la tua app SMS.</string>
     <string name="au2_netsec_http_not_allowed">Usa un indirizzo https://. Il semplice http:// è consentito solo per i server locali (loopback, rete privata, .local, .lan, .home.arpa, .internal o un nome host a etichetta singola).</string>
-    <string name="au2_netsec_clear_logs_message">Tutte le voci di questo registro verranno eliminate. L\u0027operazione non può essere annullata.</string>
-    <string name="au2_netsec_clear_app_logs_message">Tutte le voci di registro di %1$s verranno eliminate. L\u0027operazione non può essere annullata.</string>
+    <string name="au2_netsec_clear_logs_message">Tutte le voci di questo registro verranno eliminate. L\'operazione non può essere annullata.</string>
+    <string name="au2_netsec_clear_app_logs_message">Tutte le voci di registro di %1$s verranno eliminate. L\'operazione non può essere annullata.</string>
     <string name="au2_netsec_confirm_clear">Cancella</string>
     <string name="au2_netsec_reset_message">Le regole del firewall delle %1$d app attualmente mostrate verranno ripristinate ai valori predefiniti.</string>
     <string name="au2_netsec_confirm_reset">Ripristina</string>

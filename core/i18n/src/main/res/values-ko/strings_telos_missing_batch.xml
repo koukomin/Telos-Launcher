@@ -391,7 +391,7 @@
     <string name="preference_search_owncloud">Owncloud</string>
     <string name="preference_search_search_actions_summary">빠른 동작 구성 및 검색 바로 가기</string>
     <string name="preference_search_unitconverter">단위 변환</string>
-    <string name="preference_search_unitconverter_summary">사용법: \u00271.5 kg\u0027 또는 \u00274 cm &gt;&gt; in\u0027</string>
+    <string name="preference_search_unitconverter_summary">사용법: \'1.5 kg\' 또는 \'4 cm &gt;&gt; in\'</string>
     <string name="preference_search_websites">웹사이트</string>
     <string name="preference_search_websites_summary">검색어가 URL이면 해당 웹사이트의 미리보기 표시</string>
     <string name="preference_search_wikipedia">위키백과</string>
@@ -489,7 +489,7 @@
     <string name="websearch_dialog_query_encoding_none">없음</string>
     <string name="websearch_dialog_query_encoding_url">퍼센트 인코딩</string>
     <string name="websearch_dialog_replace_icon">아이콘 교체</string>
-    <string name="websearch_dialog_url_error">이 URL에는 실제 검색어로 바뀔 \u0027${1}\u0027이 빠져 있습니다.</string>
+    <string name="websearch_dialog_url_error">이 URL에는 실제 검색어로 바뀔 \'${1}\'이 빠져 있습니다.</string>
     <string name="widget_action_remove">제거</string>
     <string name="widget_action_replace">교체</string>
     <string name="widget_add_widget">위젯 추가</string>

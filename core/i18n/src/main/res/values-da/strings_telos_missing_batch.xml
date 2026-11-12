@@ -92,7 +92,7 @@
     <string name="default_websearch_2_url">https://www.youtube.com/results?search_query=${1}</string>
     <string name="default_websearch_3_name">Google Play</string>
     <string name="default_websearch_3_url">https://play.google.com/store/search?q=${1}</string>
-    <string name="websearch_dialog_url_error">Pladsholderen \u0027${1}\u0027 mangler i denne URL</string>
+    <string name="websearch_dialog_url_error">Pladsholderen \'${1}\' mangler i denne URL</string>
     <string name="websearch_dialog_replace_icon">Erstat ikon</string>
     <string name="websearch_dialog_delete_icon">Slet ikon</string>
     <string name="websearch_dialog_custom_icon">Tilpasset ikon</string>
@@ -453,7 +453,7 @@
     <string name="preference_search_localfiles">Lokale filer</string>
     <string name="preference_search_localfiles_summary">Søg i dokumenter, fotos og andre filer gemt på denne enhed</string>
     <string name="preference_search_nextcloud">Nextcloud</string>
-    <string name="preference_search_cloud_summary">Søg i %1$s\u0027s filer</string>
+    <string name="preference_search_cloud_summary">Søg i %1$s\'s filer</string>
     <string name="preference_search_owncloud">Owncloud</string>
     <string name="preference_calendar_calendars">Kalendere</string>
     <string name="preference_calendar_hide_completed">Skjul fuldførte opgaver</string>
@@ -531,7 +531,7 @@
     <string name="search_action_label">Navn</string>
     <string name="search_action_app">App</string>
     <string name="search_action_websearch_url">URL-skabelon</string>
-    <string name="search_action_websearch_url_hint">URL-skabelonet, der bruges til at konstruere websøgnings-URL\u0027en. Brug ‘${1}’ som pladsholder for det faktiske søgeudtryk, f.eks. https://google.dk/search?q=${1}.</string>
+    <string name="search_action_websearch_url_hint">URL-skabelonet, der bruges til at konstruere websøgnings-URL\'en. Brug ‘${1}’ som pladsholder for det faktiske søgeudtryk, f.eks. https://google.dk/search?q=${1}.</string>
     <string name="more_information">Mere information</string>
     <string name="experimental_feature">Eksperimentel</string>
     <string name="tag_exists_error">Der findes allerede et tag med dette navn.</string>

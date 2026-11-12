@@ -160,7 +160,7 @@
     <string name="pdft_allow_copy">Αντιγραφή κειμένου και εικόνων</string>
     <string name="pdft_allow_modify">Επεξεργασία</string>
     <string name="pdft_unlock_hint_protected">Ο κωδικός πρόσβασης έγινε δεκτός. Αποθηκεύστε ένα αντίγραφο του αρχείου χωρίς προστασία.</string>
-    <string name="pdft_unlock_hint_not_protected">Αυτό το αρχείο δεν προστατεύεται με κωδικό. Μπορείτε παρ\u0027 όλα αυτά να αποθηκεύσετε ένα καθαρό αντίγραφο.</string>
+    <string name="pdft_unlock_hint_not_protected">Αυτό το αρχείο δεν προστατεύεται με κωδικό. Μπορείτε παρ\' όλα αυτά να αποθηκεύσετε ένα καθαρό αντίγραφο.</string>
     <string name="pdft_unlock_save">Αποθήκευση αντιγράφου χωρίς προστασία</string>
     <string name="pdft_watermark_text">Κείμενο</string>
     <string name="pdft_watermark_image">Εικόνα</string>

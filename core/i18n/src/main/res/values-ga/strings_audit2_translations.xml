@@ -7,9 +7,9 @@
     <string name="au2_callsec_block_international_summary">Diúltaigh do ghlaonna ó thíortha seachas do thír dhúchais</string>
     <string name="au2_callsec_home_country">Tír dhúchais</string>
     <string name="au2_callsec_home_country_auto">Uathoibríoch (SIM, líonra, teanga)</string>
-    <string name="au2_dlsec_ftps_anyhost">Glac le teastas d\u0027óstainm eile</string>
-    <string name="au2_dlsec_ftps_anyhost_summary">Níos lú slándála: tugtar iontaoibh do theastas an fhreastalaí fiú má eisíodh é d\u0027óstainm eile</string>
-    <string name="au2_dlsec_ftps_hostname_failed">Ní hionann teastas an fhreastalaí agus an t-óstainm %1$s. Má theastaíonn uait iontaoibh a thabhairt don fhreastalaí seo, cuir \"Glac le teastas d\u0027óstainm eile\" ar siúl sa nasc.</string>
+    <string name="au2_dlsec_ftps_anyhost">Glac le teastas d\'óstainm eile</string>
+    <string name="au2_dlsec_ftps_anyhost_summary">Níos lú slándála: tugtar iontaoibh do theastas an fhreastalaí fiú má eisíodh é d\'óstainm eile</string>
+    <string name="au2_dlsec_ftps_hostname_failed">Ní hionann teastas an fhreastalaí agus an t-óstainm %1$s. Má theastaíonn uait iontaoibh a thabhairt don fhreastalaí seo, cuir \"Glac le teastas d\'óstainm eile\" ar siúl sa nasc.</string>
     <string name="au2_msg2_send_with">Seol le</string>
     <string name="au2_msg2_block_number">Bac uimhir</string>
     <string name="au2_msg2_unblock_number">Díbhac</string>
@@ -18,8 +18,8 @@
     <string name="au2_msg2_blocked_numbers">Uimhreacha blocáilte</string>
     <string name="au2_msg2_blocked_empty_title">Gan teachtaireachtaí blocáilte</string>
     <string name="au2_msg2_blocked_empty_hint">Coinnítear teachtaireachtaí ó uimhreacha blocáilte anseo gan fógra.</string>
-    <string name="au2_msg2_blocked_restore_hint">Tar éis díbhlocáil, filleann teachtaireachtaí na huimhreach sin ar na comhráite nuair is é Telos d\u0027aip SMS.</string>
-    <string name="au2_netsec_http_not_allowed">Úsáid seoladh https://. Ní cheadaítear http:// simplí ach d\u0027fhreastalaithe áitiúla (loopback, líonra príobháideach, .local, .lan, .home.arpa, .internal nó óstainm aon-chuid).</string>
+    <string name="au2_msg2_blocked_restore_hint">Tar éis díbhlocáil, filleann teachtaireachtaí na huimhreach sin ar na comhráite nuair is é Telos d\'aip SMS.</string>
+    <string name="au2_netsec_http_not_allowed">Úsáid seoladh https://. Ní cheadaítear http:// simplí ach d\'fhreastalaithe áitiúla (loopback, líonra príobháideach, .local, .lan, .home.arpa, .internal nó óstainm aon-chuid).</string>
     <string name="au2_netsec_clear_logs_message">Scriosfar na hiontrálacha go léir sa log seo. Ní féidir é seo a chealú.</string>
     <string name="au2_netsec_clear_app_logs_message">Scriosfar iontrálacha logála %1$s go léir. Ní féidir é seo a chealú.</string>
     <string name="au2_netsec_confirm_clear">Glan</string>

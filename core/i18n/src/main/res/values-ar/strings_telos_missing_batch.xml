@@ -776,7 +776,7 @@
     <string name="search_action_timer">بدء المؤقت</string>
     <string name="search_action_websearch">بحث في الويب</string>
     <string name="search_action_websearch_url">قالب عنوان URL</string>
-    <string name="search_action_websearch_url_hint">قالب عنوان URL المستخدم لإنشاء عنوان URL للبحث على الويب. استخدم \u0027${1}\u0027 كعنصر نائب لعبارة البحث الفعلية.</string>
+    <string name="search_action_websearch_url_hint">قالب عنوان URL المستخدم لإنشاء عنوان URL للبحث على الويب. استخدم \'${1}\' كعنصر نائب لعبارة البحث الفعلية.</string>
     <string name="search_bar_placeholder">بحث</string>
     <string name="search_bar_position_bottom">أسفل</string>
     <string name="search_bar_position_top">أعلى</string>
@@ -886,7 +886,7 @@
     <string name="websearch_dialog_query_encoding_none">لا شيء</string>
     <string name="websearch_dialog_query_encoding_url">ترميز النسبة المئوية</string>
     <string name="websearch_dialog_replace_icon">استبدال الأيقونة</string>
-    <string name="websearch_dialog_url_error">العنصر \u0027${1}\u0027 مفقود في عنوان URL هذا</string>
+    <string name="websearch_dialog_url_error">العنصر \'${1}\' مفقود في عنوان URL هذا</string>
     <string name="widget_action_remove">إزالة</string>
     <string name="widget_action_replace">إستبدال</string>
     <string name="widget_add_widget">إضافة أداة واجهة</string>

@@ -5,8 +5,8 @@
     <string name="au13_tvextra_epg_title">Телепрограма</string>
     <string name="au13_tvextra_epg_summary">Показує, що йде зараз і що буде далі на грецьких каналах (програма XMLTV з ext.greektv.app або epgshare01.online, оновлюється не частіше ніж раз на 6 годин). Використовується лише за вибраної Греції.</string>
     <string name="au13_tvextra_marker">Додатково</string>
-    <string name="au13_tvextra_marker_description">Цей канал походить із додаткового необов\u0027язкового джерела і може бути менш надійним</string>
-    <string name="au13_tvextraui_disclaimer_extra">Для грецьких каналів Telos TV також може використовувати необов\u0027язкові додаткові джерела: публічні плейлисти (raw.githubusercontent.com) і телепрограму (ext.greektv.app, epgshare01.online). Звернення до них відбувається лише за вибраної Греції та ввімкненого відповідного перемикача, і лише поки відкрито ТБ. Їх можна вимкнути у списку країн.</string>
+    <string name="au13_tvextra_marker_description">Цей канал походить із додаткового необов\'язкового джерела і може бути менш надійним</string>
+    <string name="au13_tvextraui_disclaimer_extra">Для грецьких каналів Telos TV також може використовувати необов\'язкові додаткові джерела: публічні плейлисти (raw.githubusercontent.com) і телепрограму (ext.greektv.app, epgshare01.online). Звернення до них відбувається лише за вибраної Греції та ввімкненого відповідного перемикача, і лише поки відкрито ТБ. Їх можна вимкнути у списку країн.</string>
     <string name="au13_tvextraui_now_line">Зараз: %1$s</string>
     <string name="au13_tvextraui_player_now">Зараз: %1$s  %2$s–%3$s</string>
     <string name="au13_tvextraui_player_next">Далі: %1$s %2$s</string>

@@ -1108,8 +1108,8 @@
     <string name="screenshot_scrolling">Rullende skjermbilde</string>
     <string name="screenshot_scrolling_summary">Ruller skjermen og setter sammen bildene (eksperimentell)</string>
     <string name="screenshot_scrolling_started">Tar et rullende skjermbilde, ikke rør skjermen</string>
-    <string name="screenshot_needs_accessibility">Slå på Telos\u0027 tilgjengelighetstjeneste i Innstillinger &gt; Bevegelser</string>
-    <string name="screenshot_needs_android11">Dette krever Android 11 eller nyere og Telos\u0027 tilgjengelighetstjeneste</string>
+    <string name="screenshot_needs_accessibility">Slå på Telos\' tilgjengelighetstjeneste i Innstillinger &gt; Bevegelser</string>
+    <string name="screenshot_needs_android11">Dette krever Android 11 eller nyere og Telos\' tilgjengelighetstjeneste</string>
     <string name="screenshot_accessibility_banner">Telos tar skjermbilder via tilgjengelighetstjenesten sin. Den kjører ikke.</string>
     <string name="screenshot_open_accessibility">Åpne tilgjengelighetsinnstillinger</string>
     <string name="screenshot_saved">Skjermbilde lagret</string>
@@ -1208,7 +1208,7 @@
     <string name="voice_speaker">Spill av via høyttaleren</string>
     <string name="voice_speaker_summary">Slå av for å spille av via øretelefonhøyttaleren, som under en telefonsamtale</string>
     <string name="voice_settings_privacy">Personvern</string>
-    <string name="voice_privacy_text">Opptak forblir i Telos\u0027 private lagring på denne telefonen. Ingenting lastes opp. Samtaleopptak fra Telos Telefon vises også her, de forblir kryptert.</string>
+    <string name="voice_privacy_text">Opptak forblir i Telos\' private lagring på denne telefonen. Ingenting lastes opp. Samtaleopptak fra Telos Telefon vises også her, de forblir kryptert.</string>
     <string name="weather_alert_channel">Ekstremvær</string>
     <string name="weather_alert_rain">Regn ventet</string>
     <string name="weather_alert_heavy_rain">Kraftig regn ventet</string>
@@ -1525,7 +1525,7 @@
     <string name="settings_shizuku_diagnostics_summary">Inspect live OS compatibility, self-grant permissions, and copy ADB commands</string>
     <string name="settings_shizuku_dialog_title">Shizuku Auto-Start Diagnostics &amp; Setup</string>
     <string name="settings_shizuku_grant_retry">Grant via Shizuku &amp; Retry</string>
-    <string name="settings_shizuku_step1_desc">Open the Shizuku app, start it once via Wireless Debugging, and tap \u0027Grant via Shizuku\u0027 below so the Launcher can configure itself automatically.</string>
+    <string name="settings_shizuku_step1_desc">Open the Shizuku app, start it once via Wireless Debugging, and tap \'Grant via Shizuku\' below so the Launcher can configure itself automatically.</string>
     <string name="settings_shizuku_step1_title">Step 1 (Automatic without PC):</string>
     <string name="settings_shizuku_step2_title">Step 2 (Manual via ADB / Termux):</string>
     <string name="settings_shizuku_step3_title">Step 3 (Preventing OS Background Killing):</string>
@@ -1585,7 +1585,7 @@
     <string name="fit_dashboard">Dashboard</string>
     <string name="fit_fat">Fat</string>
     <string name="fit_heart_rate">Heart Rate</string>
-    <string name="fit_meals">Today\u0027s Meals</string>
+    <string name="fit_meals">Today\'s Meals</string>
     <string name="fit_nutrition">Nutrition &amp; Macros</string>
     <string name="fit_protein">Protein</string>
     <string name="fit_search_food">Search food, protein, supplement...</string>

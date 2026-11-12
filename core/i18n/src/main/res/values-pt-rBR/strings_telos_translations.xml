@@ -106,7 +106,7 @@
     <string name="freeze_widget_frozen_now">%1$d de %2$d congelados</string>
     <string name="reminders_widget_empty">Sem lembretes</string>
     <string name="widgets_tutorial_add_title">Adicionar um widget</string>
-    <string name="widgets_tutorial_add_text">Toque em \u0027Editar widgets\u0027 abaixo e depois em \u0027Adicionar widget\u0027 para colocar um novo widget aqui.</string>
+    <string name="widgets_tutorial_add_text">Toque em \'Editar widgets\' abaixo e depois em \'Adicionar widget\' para colocar um novo widget aqui.</string>
     <string name="widgets_tutorial_move_title">Mover um widget</string>
     <string name="widgets_tutorial_move_text">No modo de edição, arraste a alça no cabeçalho de um widget para reordená-lo.</string>
     <string name="widgets_tutorial_resize_title">Redimensionar um widget</string>
@@ -1166,7 +1166,7 @@
     <string name="fit_dashboard">Dashboard</string>
     <string name="fit_fat">Fat</string>
     <string name="fit_heart_rate">Heart Rate</string>
-    <string name="fit_meals">Today\u0027s Meals</string>
+    <string name="fit_meals">Today\'s Meals</string>
     <string name="fit_nutrition">Nutrition &amp; Macros</string>
     <string name="fit_protein">Protein</string>
     <string name="fit_search_food">Search food, protein, supplement...</string>

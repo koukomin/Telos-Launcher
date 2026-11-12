@@ -325,7 +325,7 @@
     <string name="preference_icon_shape_square">Neliö</string>
     <string name="preference_icon_shape_squircle">Ympyräneliö</string>
     <string name="preference_icon_shape_teardrop">Pisara</string>
-    <string name="preference_icon_shape_triangle">Reuleaux\u0027n kolmio</string>
+    <string name="preference_icon_shape_triangle">Reuleaux\'n kolmio</string>
     <string name="preference_imperial_units">Brittiläiset yksiköt</string>
     <string name="preference_imperial_units_summary">Käytä Fahrenheitia ja maileja</string>
     <string name="preference_layout_fixed_rotation">Lukittu näytön kierto</string>
@@ -470,7 +470,7 @@
     <string name="search_action_timer">Aloita ajastin</string>
     <string name="search_action_websearch">Verkkohaku</string>
     <string name="search_action_websearch_url">URL-pohja</string>
-    <string name="search_action_websearch_url_hint">URL-pohja, jota käytetään verkkohaun osoitteena. Käytä \u0027${1}\u0027 osoittamaan varsinaisen hakutermin paikkaa.</string>
+    <string name="search_action_websearch_url_hint">URL-pohja, jota käytetään verkkohaun osoitteena. Käytä \'${1}\' osoittamaan varsinaisen hakutermin paikkaa.</string>
     <string name="search_bar_placeholder">Hae</string>
     <string name="search_bar_position_bottom">Alhaalla</string>
     <string name="search_bar_position_top">Ylhäällä</string>
@@ -551,7 +551,7 @@
     <string name="websearch_dialog_query_encoding_none">Ei mitään</string>
     <string name="websearch_dialog_query_encoding_url">Prosenttikoodaus</string>
     <string name="websearch_dialog_replace_icon">Korvaa kuvake</string>
-    <string name="websearch_dialog_url_error">Korvattava termi \u0027${1}\u0027 puuttuu osoitteesta</string>
+    <string name="websearch_dialog_url_error">Korvattava termi \'${1}\' puuttuu osoitteesta</string>
     <string name="widget_action_remove">Poista</string>
     <string name="widget_action_replace">Korvaa</string>
     <string name="widget_add_widget">Lisää pienoisohjelma</string>

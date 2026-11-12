@@ -281,7 +281,7 @@
     <string name="websearch_dialog_query_encoding_none">Нема</string>
     <string name="websearch_dialog_query_encoding_url">Відсоткове кодування</string>
     <string name="websearch_dialog_replace_icon">Замінити значок</string>
-    <string name="websearch_dialog_url_error">В цьому URL відсутній заповнювач \u0027${1}\u0027</string>
+    <string name="websearch_dialog_url_error">В цьому URL відсутній заповнювач \'${1}\'</string>
     <string name="widget_action_remove">Прибрати</string>
     <string name="widget_action_replace">Замінити</string>
     <string name="widget_add_widget">Додати віджет</string>

@@ -136,7 +136,7 @@
     <string name="au3_launcher3_drag_handle">ক্রম বদলাতে টেনে আনুন</string>
     <string name="au3_launcher3_add_shortcut">শর্টকাট যোগ করুন</string>
     <string name="au3_launcher3_widgets_none_found">কোনো মিলে যাওয়া উইজেট নেই</string>
-    <string name="au3_launcher3_tutorial_add_text">সার্চ বারের পাশের মেনু থেকে, বা হোম স্ক্রিনে দীর্ঘক্ষণ চাপলে খোলা মেনু থেকে \u0027উইজেট যোগ করুন\u0027 বেছে নিয়ে নতুন উইজেট রাখুন।</string>
+    <string name="au3_launcher3_tutorial_add_text">সার্চ বারের পাশের মেনু থেকে, বা হোম স্ক্রিনে দীর্ঘক্ষণ চাপলে খোলা মেনু থেকে \'উইজেট যোগ করুন\' বেছে নিয়ে নতুন উইজেট রাখুন।</string>
     <string name="au3_launcher4b_collapse">সংকুচিত করুন</string>
     <string name="au3_launcher4b_edit_favorites">প্রিয় সম্পাদনা করুন</string>
     <string name="au3_searchset_intent_query">কোয়েরি</string>

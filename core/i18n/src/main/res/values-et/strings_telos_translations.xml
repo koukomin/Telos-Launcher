@@ -17,7 +17,7 @@
     <string name="alert_delete_directory">Kaust %1$s ja kogu selle sisu kustutatakse jäädavalt. Kas jätkata?</string>
     <string name="alert_delete_file">Fail %1$s kustutatakse jäädavalt. Kas jätkata?</string>
     <string name="alert_delete_shortcut">Otsetee %1$s eemaldatakse jäädavalt. Kas jätkata?</string>
-    <string name="websearch_dialog_url_error">Selles URL-is puudub kohatäide \u0027${1}\u0027</string>
+    <string name="websearch_dialog_url_error">Selles URL-is puudub kohatäide \'${1}\'</string>
     <string name="websearch_dialog_query_encoding_url">Protsentkodeering</string>
     <string name="widget_name_apps">Rakendused</string>
     <string name="widget_name_battery">Aku</string>
@@ -331,7 +331,7 @@
     <string name="preference_debug_cleanup_database_summary">Eemalda launcheri andmebaasist vigased ja kasutamata kirjed</string>
     <string name="preference_debug_reinstall_iconpacks_summary">Tühjenda ja ehita ikoonipakettide vahemälu uuesti</string>
     <string name="preference_icon_shape_squircle">Squircle</string>
-    <string name="preference_icon_shape_triangle">Reuleaux\u0027 kolmnurk</string>
+    <string name="preference_icon_shape_triangle">Reuleaux\' kolmnurk</string>
     <string name="preference_screen_freeze">Külmutushaldur</string>
     <string name="preference_screen_freeze_summary">Külmuta rakendusi aku säästmiseks</string>
     <string name="preference_freeze_backend_category">Taustasüsteem</string>
@@ -388,7 +388,7 @@
     <string name="freeze_device_owner_status_active">Seadme omanik on aktiivne</string>
     <string name="freeze_device_owner_status_inactive">Pole veel seadme omanik</string>
     <string name="freeze_device_owner_risk_warning">Seadme omaniku staatus annab sellele rakendusele seadme üle sügava kontrolli ja seda on raske tagasi võtta – tavaliselt aitab vaid tehaseseadetele lähtestamine, kui seda ei eemaldata samal viisil, kuidas see anti. Seadista see ainult siis, kui mõistad, mida seadme omaniku režiim tähendab, ja oled valmis adb-käske käivitama.</string>
-    <string name="freeze_device_owner_requirements">Seda saab anda ainult seadmes, kus pole Google\u0027i kontot, tööprofiili ega juba seadistatud seadme/profiili omanikku. Kui seadmes on kontosid, eemalda need esmalt (Seaded → Kontod) – hiljem saad need tagasi lisada; see blokeerib vaid ühekordse seadistuse, mitte tavakasutust pärast seda.</string>
+    <string name="freeze_device_owner_requirements">Seda saab anda ainult seadmes, kus pole Google\'i kontot, tööprofiili ega juba seadistatud seadme/profiili omanikku. Kui seadmes on kontosid, eemalda need esmalt (Seaded → Kontod) – hiljem saad need tagasi lisada; see blokeerib vaid ühekordse seadistuse, mitte tavakasutust pärast seda.</string>
     <string name="freeze_device_owner_step1">1. Ühenda see seade adb abil arvutiga ja luba USB silumine (Seaded → Arendaja valikud).</string>
     <string name="freeze_device_owner_step2">2. Käivita arvutis täpselt see käsk:</string>
     <string name="freeze_device_owner_step3">3. Tule siia tagasi ja kontrolli allolevat olekut – seal peaks olema „Seadme omanik on aktiivne“.</string>
@@ -645,7 +645,7 @@
     <string name="preference_tasks_integration_ready">Tasks-integratsioon on täielikult seadistatud ja kasutusvalmis.</string>
     <string name="preference_breezyweather_integration">Breezy Weather</string>
     <string name="preference_breezyweather_integration_description">Breezy Weather on tasuta ja avatud lähtekoodiga ilmarakendus. Kui see on paigaldatud, saab %1$s kasutada Breezy Weatherit ilmaandmete allikana.</string>
-    <string name="preference_breezyweather_integration_instructions">Breezy Weatheri kasutamiseks ilmateenuse pakkujana:\n\n1. Ava Breezy Weather &gt; Seaded &gt; Vidinad ja live-taustapilt &gt; Saada Gadgetbridge\u0027i andmeid &gt; Luba %1$s\n\n2. Vali rakenduses %1$s ilmateenuse pakkujaks Breezy Weather</string>
+    <string name="preference_breezyweather_integration_instructions">Breezy Weatheri kasutamiseks ilmateenuse pakkujana:\n\n1. Ava Breezy Weather &gt; Seaded &gt; Vidinad ja live-taustapilt &gt; Saada Gadgetbridge\'i andmeid &gt; Luba %1$s\n\n2. Vali rakenduses %1$s ilmateenuse pakkujaks Breezy Weather</string>
     <string name="preference_smartspacer_integration">Smartspacer</string>
     <string name="preference_smartspacer_integration_description">Smartspacer on tasuta ja avatud lähtekoodiga vidin At a Glance. Kui see on paigaldatud, saab selle lõimida kellavidina dünaamilisse tsooni</string>
     <string name="preference_smartspacer_enable">Luba Smartspaceri integratsioon</string>
@@ -1241,7 +1241,7 @@
     <string name="cal_on_phone">Sellel telefonil</string>
     <string name="cal_new_local">Uus kohalik kalender</string>
     <string name="cal_ok">@android:string/ok</string>
-    <string name="cal_sync_note">Google\u0027i, CalDAVi (DAVx5) ja Exchange\u0027i kalendreid sünkroonib süsteem nende konto kaudu. Kohalikud kalendrid jäävad telefoni ja sisalduvad Telose varukoopias.</string>
+    <string name="cal_sync_note">Google\'i, CalDAVi (DAVx5) ja Exchange\'i kalendreid sünkroonib süsteem nende konto kaudu. Kohalikud kalendrid jäävad telefoni ja sisalduvad Telose varukoopias.</string>
     <string name="cal_view_agenda">Järgmised 30 päeva</string>
     <string name="cal_view_month">Kuuvaade</string>
     <string name="notes_title">Märkmed</string>
@@ -1413,7 +1413,7 @@
     <string name="voice_speaker">Esita kõlari kaudu</string>
     <string name="voice_speaker_summary">Lülita välja, et esitada kõrvakuulari kaudu nagu telefonikõne ajal</string>
     <string name="voice_settings_privacy">Privaatsus</string>
-    <string name="voice_privacy_text">Salvestused jäävad Telose privaatsesse salvestusruumi sellel telefonil. Midagi ei laeta üles. Siin on loetletud ka Telos Phone\u0027i kõnesalvestused, need jäävad krüptituks.</string>
+    <string name="voice_privacy_text">Salvestused jäävad Telose privaatsesse salvestusruumi sellel telefonil. Midagi ei laeta üles. Siin on loetletud ka Telos Phone\'i kõnesalvestused, need jäävad krüptituks.</string>
     <string name="weather_alert_channel">Ohtlik ilm</string>
     <string name="weather_alert_rain">Oodata on vihma</string>
     <string name="weather_alert_heavy_rain">Oodata on tugevat vihma</string>
@@ -1948,7 +1948,7 @@
     <string name="settings_shizuku_diagnostics_summary">Inspect live OS compatibility, self-grant permissions, and copy ADB commands</string>
     <string name="settings_shizuku_dialog_title">Shizuku Auto-Start Diagnostics &amp; Setup</string>
     <string name="settings_shizuku_grant_retry">Grant via Shizuku &amp; Retry</string>
-    <string name="settings_shizuku_step1_desc">Open the Shizuku app, start it once via Wireless Debugging, and tap \u0027Grant via Shizuku\u0027 below so the Launcher can configure itself automatically.</string>
+    <string name="settings_shizuku_step1_desc">Open the Shizuku app, start it once via Wireless Debugging, and tap \'Grant via Shizuku\' below so the Launcher can configure itself automatically.</string>
     <string name="settings_shizuku_step1_title">Step 1 (Automatic without PC):</string>
     <string name="settings_shizuku_step2_title">Step 2 (Manual via ADB / Termux):</string>
     <string name="settings_shizuku_step3_title">Step 3 (Preventing OS Background Killing):</string>
@@ -2054,7 +2054,7 @@
     <string name="fit_dashboard">Dashboard</string>
     <string name="fit_fat">Fat</string>
     <string name="fit_heart_rate">Heart Rate</string>
-    <string name="fit_meals">Today\u0027s Meals</string>
+    <string name="fit_meals">Today\'s Meals</string>
     <string name="fit_nutrition">Nutrition &amp; Macros</string>
     <string name="fit_protein">Protein</string>
     <string name="fit_search_food">Search food, protein, supplement...</string>

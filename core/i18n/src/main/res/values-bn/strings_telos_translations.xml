@@ -110,7 +110,7 @@
     <string name="freeze_widget_frozen_now">%2$d এর মধ্যে %1$d ফ্রিজ হয়েছে</string>
     <string name="reminders_widget_empty">কোনো রিমাইন্ডার নেই</string>
     <string name="widgets_tutorial_add_title">একটি উইজেট যোগ করুন</string>
-    <string name="widgets_tutorial_add_text">নিচে \u0027উইজেট সম্পাদনা\u0027 ট্যাপ করুন, তারপর \u0027উইজেট যোগ করুন\u0027 ট্যাপ করে এখানে নতুন উইজেট রাখুন।</string>
+    <string name="widgets_tutorial_add_text">নিচে \'উইজেট সম্পাদনা\' ট্যাপ করুন, তারপর \'উইজেট যোগ করুন\' ট্যাপ করে এখানে নতুন উইজেট রাখুন।</string>
     <string name="widgets_tutorial_move_title">উইজেট সরান</string>
     <string name="widgets_tutorial_move_text">এডিট মোডে, উইজেটের হেডারের হ্যান্ডেল টেনে ক্রম পরিবর্তন করুন।</string>
     <string name="widgets_tutorial_resize_title">উইজেটের আকার পরিবর্তন করুন</string>
@@ -2183,7 +2183,7 @@
     <string name="settings_shizuku_diagnostics_summary">Inspect live OS compatibility, self-grant permissions, and copy ADB commands</string>
     <string name="settings_shizuku_dialog_title">Shizuku Auto-Start Diagnostics &amp; Setup</string>
     <string name="settings_shizuku_grant_retry">Grant via Shizuku &amp; Retry</string>
-    <string name="settings_shizuku_step1_desc">Open the Shizuku app, start it once via Wireless Debugging, and tap \u0027Grant via Shizuku\u0027 below so the Launcher can configure itself automatically.</string>
+    <string name="settings_shizuku_step1_desc">Open the Shizuku app, start it once via Wireless Debugging, and tap \'Grant via Shizuku\' below so the Launcher can configure itself automatically.</string>
     <string name="settings_shizuku_step1_title">Step 1 (Automatic without PC):</string>
     <string name="settings_shizuku_step2_title">Step 2 (Manual via ADB / Termux):</string>
     <string name="settings_shizuku_step3_title">Step 3 (Preventing OS Background Killing):</string>
@@ -2243,7 +2243,7 @@
     <string name="fit_dashboard">Dashboard</string>
     <string name="fit_fat">Fat</string>
     <string name="fit_heart_rate">Heart Rate</string>
-    <string name="fit_meals">Today\u0027s Meals</string>
+    <string name="fit_meals">Today\'s Meals</string>
     <string name="fit_nutrition">Nutrition &amp; Macros</string>
     <string name="fit_protein">Protein</string>
     <string name="fit_search_food">Search food, protein, supplement...</string>

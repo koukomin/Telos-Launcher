@@ -44,8 +44,8 @@
     <string name="au14_videoui_less">Minder</string>
     <string name="au14_videoui_minutes">%1$d min</string>
     <string name="au14_videoui_seasons">%1$d seizoenen</string>
-    <string name="au14_videoui_empty_title">Nog geen video\u0027s</string>
-    <string name="au14_videoui_empty_text">Video\u0027s op dit apparaat verschijnen hier</string>
+    <string name="au14_videoui_empty_title">Nog geen video\'s</string>
+    <string name="au14_videoui_empty_text">Video\'s op dit apparaat verschijnen hier</string>
     <string name="au15_tvbg_menu_playback">Afspelen</string>
     <string name="au15_tvbg_title">Op de achtergrond blijven afspelen</string>
     <string name="au15_tvbg_summary">De zender blijft spelen als het scherm uit is of wanneer je de app verlaat. Er wordt een melding met bediening getoond.</string>

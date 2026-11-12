@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="au22_stremio_notice_title">Faoi bhreiseáin</string>
-    <string name="au22_stremio_notice_text">Is cliant neamhoifigiúil é an spás seo do bhreiseáin Stremio. Seirbhísí beaga gréasáin iad na breiseáin a rinne forbróirí neamhspleácha. Ní thaispeánann Telos ach an méid a thairgeann breiseán agus seinneann sé é: níl aon bhreiseán ann, ní óstálann sé aon fhíseáin agus ní dhéanann sé seiceáil ar an méid a sholáthraíonn breiseán. Tá tú freagrach as an méid a chuireann tú leis agus a fhaireann tú, agus as an gceart a bheith agat é a fhéachaint san áit a bhfuil tú i do chónaí. Úsáideann roinnt breiseán BitTorrent, rud a thaispeánann do sheoladh IP d\u0027úsáideoirí eile. Níl Telos ceangailte le Stremio.</string>
+    <string name="au22_stremio_notice_text">Is cliant neamhoifigiúil é an spás seo do bhreiseáin Stremio. Seirbhísí beaga gréasáin iad na breiseáin a rinne forbróirí neamhspleácha. Ní thaispeánann Telos ach an méid a thairgeann breiseán agus seinneann sé é: níl aon bhreiseán ann, ní óstálann sé aon fhíseáin agus ní dhéanann sé seiceáil ar an méid a sholáthraíonn breiseán. Tá tú freagrach as an méid a chuireann tú leis agus a fhaireann tú, agus as an gceart a bheith agat é a fhéachaint san áit a bhfuil tú i do chónaí. Úsáideann roinnt breiseán BitTorrent, rud a thaispeánann do sheoladh IP d\'úsáideoirí eile. Níl Telos ceangailte le Stremio.</string>
     <string name="au22_stremio_notice_accept">Tuigim</string>
     <string name="au22_stremio_addons">Breiseáin</string>
     <string name="au22_stremio_add_addon">Cuir breiseán leis</string>

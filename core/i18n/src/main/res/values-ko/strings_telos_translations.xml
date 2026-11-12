@@ -113,7 +113,7 @@
     <string name="freeze_widget_frozen_now">%2$d개 중 %1$d개 정지됨</string>
     <string name="reminders_widget_empty">미리 알림 없음</string>
     <string name="widgets_tutorial_add_title">위젯 추가</string>
-    <string name="widgets_tutorial_add_text">아래의 \u0027위젯 편집\u0027을 탭한 다음 \u0027위젯 추가\u0027를 탭하면 새 위젯을 이곳에 배치할 수 있어요.</string>
+    <string name="widgets_tutorial_add_text">아래의 \'위젯 편집\'을 탭한 다음 \'위젯 추가\'를 탭하면 새 위젯을 이곳에 배치할 수 있어요.</string>
     <string name="widgets_tutorial_move_title">위젯 이동</string>
     <string name="widgets_tutorial_move_text">편집 모드에서 위젯 헤더의 핸들을 드래그하여 순서를 바꿔요.</string>
     <string name="widgets_tutorial_resize_title">위젯 크기 조절</string>
@@ -1667,7 +1667,7 @@
     <string name="fit_dashboard">Dashboard</string>
     <string name="fit_fat">Fat</string>
     <string name="fit_heart_rate">Heart Rate</string>
-    <string name="fit_meals">Today\u0027s Meals</string>
+    <string name="fit_meals">Today\'s Meals</string>
     <string name="fit_nutrition">Nutrition &amp; Macros</string>
     <string name="fit_protein">Protein</string>
     <string name="fit_search_food">Search food, protein, supplement...</string>

@@ -60,7 +60,7 @@
     <string name="dl_details">Dettagli</string>
     <string name="dl_delete">Rimuovi</string>
     <string name="dl_delete_title">Rimuovi download</string>
-    <string name="dl_delete_text_done">Rimuovere %1$s dall\u0027elenco? Puoi tenere il file o eliminarlo.</string>
+    <string name="dl_delete_text_done">Rimuovere %1$s dall\'elenco? Puoi tenere il file o eliminarlo.</string>
     <string name="dl_delete_text_partial">Rimuovere %1$s? La parte scaricata verrà eliminata.</string>
     <string name="dl_delete_with_file">Rimuovi ed elimina il file</string>
     <string name="dl_delete_keep_file">Rimuovi, tieni il file</string>
@@ -132,14 +132,14 @@
     <string name="dl_t_state_seeding">In seeding</string>
     <string name="dl_t_state_queue">In attesa nella coda dei torrent</string>
     <string name="dl_t_state_moving">Copia nella cartella</string>
-    <string name="dl_t_state_metadata">Recupero dell\u0027elenco dei file</string>
+    <string name="dl_t_state_metadata">Recupero dell\'elenco dei file</string>
     <string name="dl_t_notification_seeding">Seeding · rapporto %1$s · %2$s inviati</string>
     <string name="dl_t_add_title">Aggiungi torrent</string>
     <string name="dl_t_source_hint">Magnet link o indirizzo .torrent</string>
     <string name="dl_t_source_invalid">Non è un magnet link né un indirizzo .torrent</string>
     <string name="dl_t_choose_file">Scegli file .torrent</string>
     <string name="dl_t_fetch">Ottieni elenco file</string>
-    <string name="dl_t_fetching">Richiesta dell\u0027elenco dei file ai peer…</string>
+    <string name="dl_t_fetching">Richiesta dell\'elenco dei file ai peer…</string>
     <string name="dl_t_fetch_failed">Impossibile leggere il torrent: %1$s</string>
     <string name="dl_t_files_selected">%1$d di %2$d file · %3$s</string>
     <string name="dl_t_select_all">Tutti</string>
@@ -147,7 +147,7 @@
     <string name="dl_t_no_files_selected">Scegli almeno un file</string>
     <string name="dl_t_keep_one_file">Almeno un file deve restare selezionato</string>
     <string name="dl_t_sequential">Scarica in ordine</string>
-    <string name="dl_t_sequential_summary">I pezzi arrivano dall\u0027inizio dei file. Utile per guardare durante il download, ma più lento nel complesso.</string>
+    <string name="dl_t_sequential_summary">I pezzi arrivano dall\'inizio dei file. Utile per guardare durante il download, ma più lento nel complesso.</string>
     <string name="dl_t_seed_options">Seeding</string>
     <string name="dl_t_stop_at_done">Fermati al 100 %</string>
     <string name="dl_t_ratio_limit">Fermati al rapporto</string>
@@ -157,7 +157,7 @@
     <string name="dl_t_hours">%1$d h</string>
     <string name="dl_t_download_button">Scarica</string>
     <string name="dl_t_add_without_list">Aggiungi senza elenco file</string>
-    <string name="dl_t_duplicate">Questo torrent è già nell\u0027elenco</string>
+    <string name="dl_t_duplicate">Questo torrent è già nell\'elenco</string>
     <string name="dl_t_download_in_downloads">Scarica in Telos Downloads</string>
     <string name="dl_t_prio_skip">Salta</string>
     <string name="dl_t_prio_low">Bassa</string>
@@ -170,7 +170,7 @@
     <string name="dl_t_tab_info">Info</string>
     <string name="dl_t_recheck">Ricontrolla i file</string>
     <string name="dl_t_reannounce">Riannuncia</string>
-    <string name="dl_t_files_wait">L\u0027elenco dei file appare quando arrivano i metadati.</string>
+    <string name="dl_t_files_wait">L\'elenco dei file appare quando arrivano i metadati.</string>
     <string name="dl_t_not_running">Avvia il torrent per vederlo.</string>
     <string name="dl_t_peers_empty">Nessun peer connesso</string>
     <string name="dl_t_flags_legend">D/d download/richiesto, U/u upload/richiesto, O ottimistico, S snobbato, I in entrata, C in uscita, E cifrato, P uTP</string>
@@ -232,7 +232,7 @@
     <string name="dl_t_set_sequential_default">Scarica in ordine per impostazione predefinita</string>
     <string name="dl_t_set_blocklists">Elenchi di peer bloccati</string>
     <string name="dl_t_set_shared_note">Queste impostazioni sono usate anche da Telos Video quando riproduce un torrent in streaming.</string>
-    <string name="dl_t_set_staging_note">I dati del torrent vengono scritti in una cartella di lavoro nell\u0027archivio dell\u0027app e copiati nella tua cartella al termine. Durante il seeding esistono entrambe le copie.</string>
+    <string name="dl_t_set_staging_note">I dati del torrent vengono scritti in una cartella di lavoro nell\'archivio dell\'app e copiati nella tua cartella al termine. Durante il seeding esistono entrambe le copie.</string>
     <string name="blocklists_data_date">Elenco del %1$s</string>
     <string name="blocklists_torrent_active">%1$d intervalli da %2$d elenchi sono bloccati</string>
     <string name="blocklists_torrent_none_active">Nessun elenco di blocco attivo</string>
@@ -244,8 +244,8 @@
     <string name="dl_m_analyzing">Analisi del link in corso; la prima volta viene estratto il downloader</string>
     <string name="dl_m_analyze_failed">Impossibile analizzare il link: %1$s</string>
     <string name="dl_m_missing_title">Il downloader video non fa parte di questa build</string>
-    <string name="dl_m_missing_text">Aggiunge circa 70 MB all\u0027app, quindi è facoltativo. Le build create con l\u0027opzione media lo includono. Consulta la documentazione.</string>
-    <string name="dl_m_notice">Sei responsabile di ciò che scarichi e dei termini d\u0027uso dei siti. Scarica solo ciò che hai il diritto di scaricare.</string>
+    <string name="dl_m_missing_text">Aggiunge circa 70 MB all\'app, quindi è facoltativo. Le build create con l\'opzione media lo includono. Consulta la documentazione.</string>
+    <string name="dl_m_notice">Sei responsabile di ciò che scarichi e dei termini d\'uso dei siti. Scarica solo ciò che hai il diritto di scaricare.</string>
     <string name="dl_m_playlist">Playlist con %1$d elementi</string>
     <string name="dl_m_select_all">Seleziona tutto</string>
     <string name="dl_m_select_none">Deseleziona tutto</string>
@@ -264,7 +264,7 @@
     <string name="dl_m_embed_thumb">Incorpora la miniatura</string>
     <string name="dl_m_embed_meta">Incorpora titolo e altri metadati</string>
     <string name="dl_m_sponsorblock">Taglia i segmenti sponsor (SponsorBlock, YouTube)</string>
-    <string name="dl_m_use_cookies">Usa i cookie importati (siti che richiedono l\u0027accesso)</string>
+    <string name="dl_m_use_cookies">Usa i cookie importati (siti che richiedono l\'accesso)</string>
     <string name="dl_m_cookies_import">Importa cookies.txt</string>
     <string name="dl_m_cookies_imported">%1$d cookie importati</string>
     <string name="dl_m_cookies_invalid">Questo non è un file cookies.txt (formato Netscape)</string>
@@ -279,11 +279,11 @@
     <string name="dl_m_stage_starting">Avvio del downloader</string>
     <string name="dl_m_stage_downloading">Download in corso</string>
     <string name="dl_m_stage_merging">Unione di video e audio</string>
-    <string name="dl_m_stage_audio">Estrazione dell\u0027audio</string>
+    <string name="dl_m_stage_audio">Estrazione dell\'audio</string>
     <string name="dl_m_stage_embedding">Aggiunta di miniatura, sottotitoli e metadati</string>
     <string name="dl_m_stage_copying">Copia nella cartella</string>
     <string name="dl_m_err_notinstalled">Il downloader video non fa parte di questa build.</string>
-    <string name="dl_m_err_unsupported">Questo indirizzo non è supportato. Controlla l\u0027elenco dei siti supportati.</string>
+    <string name="dl_m_err_unsupported">Questo indirizzo non è supportato. Controlla l\'elenco dei siti supportati.</string>
     <string name="dl_m_err_login">Il sito richiede di accedere (o di dimostrare che non sei un robot). Importa i cookie nelle impostazioni.</string>
     <string name="dl_m_err_private">Questo video è privato.</string>
     <string name="dl_m_err_geo">Questo video non è disponibile nel tuo paese.</string>
@@ -302,14 +302,14 @@
     <string name="dl_m_last_update">Ultimo aggiornamento: %1$s</string>
     <string name="dl_m_never">mai</string>
     <string name="dl_m_update">Aggiorna il downloader</string>
-    <string name="dl_m_update_sum">Scarica l\u0027ultimo yt-dlp da GitHub. I siti cambiano spesso: un aggiornamento risolve la maggior parte degli errori.</string>
+    <string name="dl_m_update_sum">Scarica l\'ultimo yt-dlp da GitHub. I siti cambiano spesso: un aggiornamento risolve la maggior parte degli errori.</string>
     <string name="dl_m_updating">Aggiornamento in corso</string>
     <string name="dl_m_updated">Aggiornato: %1$s</string>
     <string name="dl_m_update_failed">Aggiornamento non riuscito: %1$s</string>
     <string name="dl_m_sites">Siti supportati</string>
     <string name="dl_p3_block_schedule">In attesa della fascia oraria consentita</string>
     <string name="dl_p3_detect_clipboard">Rileva i link negli appunti</string>
-    <string name="dl_p3_detect_clipboard_sum">Quando apri Download, propone un link, l\u0027indirizzo di un sito video o un magnet link che hai copiato. Android potrebbe avvisarti che l\u0027app ha letto gli appunti.</string>
+    <string name="dl_p3_detect_clipboard_sum">Quando apri Download, propone un link, l\'indirizzo di un sito video o un magnet link che hai copiato. Android potrebbe avvisarti che l\'app ha letto gli appunti.</string>
     <string name="dl_p3_clip_found">Negli appunti: %1$s</string>
     <string name="dl_p3_clip_add">@string/hc_add</string>
     <string name="dl_p3_schedule_title">Pianificazione</string>
@@ -336,7 +336,7 @@
     <string name="dl_p3_torrent_limit">Limite di velocità di questo torrent (KB/s, 0 = nessuno)</string>
     <string name="dl_p3_file_missing">File mancante</string>
     <string name="dl_p3_backup_group_downloads">Download</string>
-    <string name="dl_p3_backup_group_downloads_summary">L\u0027elenco dei download e le impostazioni di Telos Downloads (non i file scaricati, non i cookie)</string>
+    <string name="dl_p3_backup_group_downloads_summary">L\'elenco dei download e le impostazioni di Telos Downloads (non i file scaricati, non i cookie)</string>
     <string name="dl_p3_download_with_telos">Scarica con Telos</string>
     <plurals name="dl_add_count">
         <item quantity="one">Aggiungi %1$d download</item>

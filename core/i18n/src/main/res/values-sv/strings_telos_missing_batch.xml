@@ -320,7 +320,7 @@
     <string name="websearch_dialog_custom_icon">Anpassad ikon</string>
     <string name="websearch_dialog_delete_icon">Radera ikon</string>
     <string name="websearch_dialog_replace_icon">Ersätt ikon</string>
-    <string name="websearch_dialog_url_error">Platshållaren \u0027${1}\u0027 saknas i denna URL</string>
+    <string name="websearch_dialog_url_error">Platshållaren \'${1}\' saknas i denna URL</string>
     <string name="widget_action_remove">Radera</string>
     <string name="widget_add_widget">Lägg till widget</string>
     <string name="widget_name_calendar">Kalender</string>

@@ -24,7 +24,7 @@
     <string name="au12_lastfmweb_not_pending">Δεν ξεκίνησε σύνδεση στο Last.fm από την εφαρμογή, η απάντηση αγνοήθηκε</string>
     <string name="au12_lastfmweb_expired">Η σύνδεση διήρκεσε περισσότερο από 10 λεπτά. Δοκιμάστε ξανά</string>
     <string name="au12_lastfmweb_failed">Η σύνδεση στο Last.fm απέτυχε. Ελέγξτε το κλειδί API, το κοινό μυστικό και το callback URL</string>
-    <string name="au12_lastfmweb_limit_note">Το Last.fm δεν στέλνει τιμή επαλήθευσης, γι\u0027 αυτό η απάντηση γίνεται δεκτή μόνο για 10 λεπτά μετά το πάτημα του κουμπιού και μόνο μία φορά.</string>
+    <string name="au12_lastfmweb_limit_note">Το Last.fm δεν στέλνει τιμή επαλήθευσης, γι\' αυτό η απάντηση γίνεται δεκτή μόνο για 10 λεπτά μετά το πάτημα του κουμπιού και μόνο μία φορά.</string>
     <string name="au12_tvsearch_pref_title">Κανάλια TV</string>
     <string name="au12_tvsearch_pref_summary">Εμφάνιση των αγαπημένων, προσαρμοσμένων και πρόσφατα προβεβλημένων καναλιών TV που ταιριάζουν με την αναζήτηση. Με ένα πάτημα το κανάλι ξεκινά στο Telos Media.</string>
     <string name="au12_tvsearch_badge_tv">TV</string>

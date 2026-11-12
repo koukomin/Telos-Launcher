@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="au8_traktweb_howto">Trakt에는 직접 만든 애플리케이션이 필요합니다. trakt.tv에 로그인하여 trakt.tv/oauth/applications를 열고 New Application을 선택한 다음, 이름은 아무거나 입력하고 리디렉션 주소에는 아래에 표시된 주소를 그대로 입력하세요. 저장한 후 클라이언트 ID와 클라이언트 시크릿을 여기에 입력하고 \u0027브라우저로 로그인\u0027을 누르세요. 로그인과 승인은 trakt.tv에서 직접 진행되며, Telos는 Trakt 비밀번호를 절대 볼 수 없습니다.</string>
+    <string name="au8_traktweb_howto">Trakt에는 직접 만든 애플리케이션이 필요합니다. trakt.tv에 로그인하여 trakt.tv/oauth/applications를 열고 New Application을 선택한 다음, 이름은 아무거나 입력하고 리디렉션 주소에는 아래에 표시된 주소를 그대로 입력하세요. 저장한 후 클라이언트 ID와 클라이언트 시크릿을 여기에 입력하고 \'브라우저로 로그인\'을 누르세요. 로그인과 승인은 trakt.tv에서 직접 진행되며, Telos는 Trakt 비밀번호를 절대 볼 수 없습니다.</string>
     <string name="au8_traktweb_redirect_label">Trakt 애플리케이션의 리디렉션 주소</string>
     <string name="au8_traktweb_copy_redirect">주소 복사</string>
     <string name="au8_traktweb_sign_in_browser">브라우저로 로그인</string>

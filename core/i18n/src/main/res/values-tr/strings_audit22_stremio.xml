@@ -7,7 +7,7 @@
     <string name="au22_stremio_add_addon">Eklenti ekle</string>
     <string name="au22_stremio_addon_address">Eklenti adresi</string>
     <string name="au22_stremio_addon_address_hint">https://…/manifest.json veya stremio://…</string>
-    <string name="au22_stremio_add_cinemeta">Cinemeta ekle (Stremio\u0027nun meta veri eklentisi)</string>
+    <string name="au22_stremio_add_cinemeta">Cinemeta ekle (Stremio\'nun meta veri eklentisi)</string>
     <string name="au22_stremio_empty">Henüz eklenti yok. Kataloglarını ve yayınlarını görmek için bir eklenti ekleyin. Telos hiçbirini içermez.</string>
     <string name="au22_stremio_home">Ana sayfa</string>
     <string name="au22_stremio_library">Kitaplık</string>

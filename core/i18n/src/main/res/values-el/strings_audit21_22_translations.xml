@@ -17,7 +17,7 @@
     <string name="au21_arch_pw_optional">Κωδικός (AES-256, προαιρετικός)</string>
     <string name="au21_arch_pw_repeat">Επανάληψη κωδικού</string>
     <string name="au21_arch_pw_mismatch">Οι κωδικοί δεν ταιριάζουν</string>
-    <string name="au21_arch_zip_note">Με κωδικό, τα αρχεία κρυπτογραφούνται με AES-256. Τα ονόματα αρχείων παραμένουν ορατά. Το Telos δεν χρησιμοποιεί ποτέ την αδύναμη κρυπτογράφηση ZipCrypto. Ο κωδικός δεν μπορεί να ανακτηθεί, γι\u0027 αυτό φυλάξτε τον καλά.</string>
+    <string name="au21_arch_zip_note">Με κωδικό, τα αρχεία κρυπτογραφούνται με AES-256. Τα ονόματα αρχείων παραμένουν ορατά. Το Telos δεν χρησιμοποιεί ποτέ την αδύναμη κρυπτογράφηση ZipCrypto. Ο κωδικός δεν μπορεί να ανακτηθεί, γι\' αυτό φυλάξτε τον καλά.</string>
     <string name="au21_arch_no_pw_note">Τα αρχεία 7z και tar.gz δημιουργούνται χωρίς κωδικό.</string>
     <string name="au22_files_open_as_archive">Άνοιγμα ως αρχείο</string>
     <string name="au22_files_view_mode">Προβολή</string>

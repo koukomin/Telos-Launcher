@@ -19,7 +19,7 @@
     <string name="camera_burst">Seri ×%1$d</string>
     <string name="camera_webcam_start">IP webcam başlat</string>
     <string name="camera_webcam_stop">Webcam durdur</string>
-    <string name="camera_usb_hint">USB webcam OEM gadget ister. IP MJPEG her LAN\u0027de çalışır.</string>
+    <string name="camera_usb_hint">USB webcam OEM gadget ister. IP MJPEG her LAN\'de çalışır.</string>
     <string name="camera_discreet">Gizli çekim</string>
     <string name="camera_geotag">GPS on photos</string>
     <string name="camera_pano_done">Stitch panorama (%1$d)</string>

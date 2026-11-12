@@ -9,7 +9,7 @@
     <string name="au2_callsec_home_country_auto">Автоматично (SIM, мережа, мова)</string>
     <string name="au2_dlsec_ftps_anyhost">Приймати сертифікат для іншого імені хоста</string>
     <string name="au2_dlsec_ftps_anyhost_summary">Менш безпечно: сертифікату сервера довіряють, навіть якщо його видано для іншого імені хоста</string>
-    <string name="au2_dlsec_ftps_hostname_failed">Сертифікат сервера не відповідає імені хоста %1$s. Якщо ви довіряєте цьому серверу, увімкніть у з\u0027єднанні \"Приймати сертифікат для іншого імені хоста\".</string>
+    <string name="au2_dlsec_ftps_hostname_failed">Сертифікат сервера не відповідає імені хоста %1$s. Якщо ви довіряєте цьому серверу, увімкніть у з\'єднанні \"Приймати сертифікат для іншого імені хоста\".</string>
     <string name="au2_msg2_send_with">Надіслати через</string>
     <string name="au2_msg2_block_number">Заблокувати номер</string>
     <string name="au2_msg2_unblock_number">Розблокувати</string>
@@ -19,7 +19,7 @@
     <string name="au2_msg2_blocked_empty_title">Немає заблокованих повідомлень</string>
     <string name="au2_msg2_blocked_empty_hint">Повідомлення із заблокованих номерів зберігаються тут без сповіщення.</string>
     <string name="au2_msg2_blocked_restore_hint">Після розблокування повідомлення цього номера повертаються до розмов, якщо Telos є вашим застосунком для SMS.</string>
-    <string name="au2_netsec_http_not_allowed">Використовуйте адресу https://. Звичайний http:// дозволено лише для локальних серверів (loopback, приватна мережа, .local, .lan, .home.arpa, .internal або ім\u0027я хоста з однієї частини).</string>
+    <string name="au2_netsec_http_not_allowed">Використовуйте адресу https://. Звичайний http:// дозволено лише для локальних серверів (loopback, приватна мережа, .local, .lan, .home.arpa, .internal або ім\'я хоста з однієї частини).</string>
     <string name="au2_netsec_clear_logs_message">Усі записи в цьому журналі буде видалено. Цю дію не можна скасувати.</string>
     <string name="au2_netsec_clear_app_logs_message">Усі записи журналу застосунку %1$s буде видалено. Цю дію не можна скасувати.</string>
     <string name="au2_netsec_confirm_clear">Очистити</string>

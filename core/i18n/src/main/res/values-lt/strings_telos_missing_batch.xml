@@ -465,7 +465,7 @@
     <string name="search_action_timer">Pradėti laikmatį</string>
     <string name="search_action_websearch">Internetinė paieška</string>
     <string name="search_action_websearch_url">URL pavizdys</string>
-    <string name="search_action_websearch_url_hint">Šis URL šablonas naudojamas paieškos URL sukurti. Naudokite \u0027${1}\u0027 kaip vietą paieškos terminui.</string>
+    <string name="search_action_websearch_url_hint">Šis URL šablonas naudojamas paieškos URL sukurti. Naudokite \'${1}\' kaip vietą paieškos terminui.</string>
     <string name="search_bar_placeholder">Ieškoti</string>
     <string name="search_bar_position_bottom">Apačia</string>
     <string name="search_bar_position_top">Viršus</string>
@@ -546,7 +546,7 @@
     <string name="websearch_dialog_query_encoding_none">Nėvienas</string>
     <string name="websearch_dialog_query_encoding_url">Procentų-kodavimas</string>
     <string name="websearch_dialog_replace_icon">Pakeisti ikoną</string>
-    <string name="websearch_dialog_url_error">Trūksta vietos (placeholder) \u0027${1}\u0027 šiame URL</string>
+    <string name="websearch_dialog_url_error">Trūksta vietos (placeholder) \'${1}\' šiame URL</string>
     <string name="widget_action_remove">Pašalinti</string>
     <string name="widget_action_replace">Pakeisti</string>
     <string name="widget_add_widget">Pridėti valdiklį</string>

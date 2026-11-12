@@ -3,7 +3,7 @@
     <string name="hc_accessibility_service">Accessibility service</string>
     <string name="hc_account">Account</string>
     <string name="hc_add">Add</string>
-    <string name="hc_add_a_nextcloud_owncloud_webdav_sftp_smb">Add a Nextcloud, ownCloud, WebDAV, SFTP, SMB or FTP server, a Dropbox, Google Drive or OneDrive account, or the cloud app of the phone (it uses the phone\u0027s account). They show up in Telos Files.</string>
+    <string name="hc_add_a_nextcloud_owncloud_webdav_sftp_smb">Add a Nextcloud, ownCloud, WebDAV, SFTP, SMB or FTP server, a Dropbox, Google Drive or OneDrive account, or the cloud app of the phone (it uses the phone\'s account). They show up in Telos Files.</string>
     <string name="hc_add_an_app">Add an app</string>
     <string name="hc_add_app">Add app</string>
     <string name="hc_add_contacts_from_a_vcf_file">Add contacts from a .vcf file</string>
@@ -296,7 +296,7 @@
     <string name="hc_radio">Radio</string>
     <string name="hc_rain_mode">Rain mode</string>
     <string name="hc_raise_to_answer">Raise to answer</string>
-    <string name="hc_raises_github_s_limit_from_60_to_5000_re">Raises GitHub\u0027s limit from 60 to 5000 requests per hour</string>
+    <string name="hc_raises_github_s_limit_from_60_to_5000_re">Raises GitHub\'s limit from 60 to 5000 requests per hour</string>
     <string name="hc_recording_backend">Recording backend</string>
     <string name="hc_recording_quality">Recording quality</string>
     <string name="hc_recordings">Recordings</string>

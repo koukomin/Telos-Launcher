@@ -29,7 +29,7 @@
     <string name="au20_viewer_empty_title">Belge bulunamadı</string>
     <string name="au20_viewer_empty_text">Telefonunuzdaki belgeler burada görünür. Başka bir yerdeki dosya için Dosya aç… seçeneğini kullanın.</string>
     <string name="au20_viewer_access_title">Dosyalarınıza erişime izin verin</string>
-    <string name="au20_viewer_access_text">Telefonunuzdaki belgeleri listelemek için Telos Viewer\u0027ın tüm dosyalara erişmesi gerekir. Bu izin olmadan da tek bir dosya açabilirsiniz.</string>
+    <string name="au20_viewer_access_text">Telefonunuzdaki belgeleri listelemek için Telos Viewer\'ın tüm dosyalara erişmesi gerekir. Bu izin olmadan da tek bir dosya açabilirsiniz.</string>
     <string name="au20_viewer_access_button">Erişime izin ver</string>
     <string name="au20_viewer_share_failed">Paylaşım başarısız oldu</string>
     <string name="au20_viewer_open_failed">Bu dosyayı açabilecek uygulama yok</string>

@@ -161,7 +161,7 @@
     <string name="hc_flip">Iompaigh</string>
     <string name="hc_flip_to_decline">Iompaigh chun diúltú</string>
     <string name="hc_floating_launcher">Seoltóir snámhach</string>
-    <string name="hc_floating_panel_with_quick_access_to_your">Painéal snámhach le rochtain thapa ar d\u0027aipeanna</string>
+    <string name="hc_floating_panel_with_quick_access_to_your">Painéal snámhach le rochtain thapa ar d\'aipeanna</string>
     <string name="hc_folders_cannot_be_shared_compress_them_f">Ní féidir fillteáin a roinnt. Comhbhrúigh ar dtús iad.</string>
     <string name="hc_for_example_arm64_or_universal_empty_mea">Mar shampla arm64 nó universal. Ciallaíonn folamh an match is fearr don ghuthán seo.</string>
     <string name="hc_fritz_box_connection">Ceangal FRITZ!Box</string>
@@ -182,7 +182,7 @@
     <string name="hc_hide_from_contacts_tab">Folaigh ón tab teagmhálaithe</string>
     <string name="hc_hide_from_recents">Folaigh ó na cinn le déanaí</string>
     <string name="hc_hide_this_menu_after_pin_is_set">Folaigh an roghchlár seo tar éis PIN a shocrú</string>
-    <string name="hc_hide_your_number_on_outgoing_calls">Folaigh d\u0027uimhir ar ghlaonna amach</string>
+    <string name="hc_hide_your_number_on_outgoing_calls">Folaigh d\'uimhir ar ghlaonna amach</string>
     <string name="hc_i_understand_the_risks">Tuigim na rioscaí</string>
     <string name="hc_identify_callers_from_fritz_box">Aithin glaoirí ó FRITZ!Box</string>
     <string name="hc_ignore_taps_on_incoming_calls_when_the_p">Déan neamhaird de thapáil ar ghlaonna isteach nuair a bhíonn an braiteoir comharsanachta clúdaithe</string>
@@ -210,7 +210,7 @@
     <string name="hc_lock_phone_app">Cuir glas ar an aip Gutháin</string>
     <string name="hc_lock_vault">Cuir glas ar an taisceadán</string>
     <string name="hc_look_inside_the_archive_or_unpack_it_int">Breathnaigh taobh istigh den chartlann, nó díphacáil í i bhfillteán in aice léi?</string>
-    <string name="hc_make_telos_your_sms_app_to_receive_messa">Déan Telos de d\u0027aip SMS chun teachtaireachtaí a fháil anseo, pictiúir a sheoladh agus teagmhálaithe folaithe a choinneáil as radharc.</string>
+    <string name="hc_make_telos_your_sms_app_to_receive_messa">Déan Telos de d\'aip SMS chun teachtaireachtaí a fháil anseo, pictiúir a sheoladh agus teagmhálaithe folaithe a choinneáil as radharc.</string>
     <string name="hc_manage_frozen_apps_and_shizuku_status">Bainistigh aipeanna reoite agus stádas Shizuku</string>
     <string name="hc_manage_numbers_that_are_blocked_from_cal">Bainistigh uimhreacha atá cosc orthu glaoch nó téacs a chur chugat</string>
     <string name="hc_mask_name_on_incoming_calls">Folaigh an t-ainm ar ghlaonna isteach</string>
@@ -298,9 +298,9 @@
     <string name="hc_recording_quality">Cáilíocht taifeadta</string>
     <string name="hc_recordings">Taifid</string>
     <string name="hc_refresh">Athnuaigh</string>
-    <string name="hc_reject_numbers_that_are_not_in_your_cont">Diúltaigh d\u0027uimhreacha nach bhfuil i do theagmhálaithe</string>
-    <string name="hc_reject_numbers_that_start_with_or_00">Diúltaigh d\u0027uimhreacha a thosaíonn le + nó 00</string>
-    <string name="hc_reject_private_restricted_and_unknown_ca">Diúltaigh d\u0027ID glaoiteora príobháideach, srianta agus anaithnid</string>
+    <string name="hc_reject_numbers_that_are_not_in_your_cont">Diúltaigh d\'uimhreacha nach bhfuil i do theagmhálaithe</string>
+    <string name="hc_reject_numbers_that_start_with_or_00">Diúltaigh d\'uimhreacha a thosaíonn le + nó 00</string>
+    <string name="hc_reject_private_restricted_and_unknown_ca">Diúltaigh d\'ID glaoiteora príobháideach, srianta agus anaithnid</string>
     <string name="hc_reject_sms">Diúltaigh + SMS</string>
     <string name="hc_reject_with_sms">Diúltaigh le SMS</string>
     <string name="hc_remember_dialpad_digits">Cuimhnigh digití an eochaircheap diailithe</string>
@@ -315,7 +315,7 @@
     <string name="hc_rename_station">Athainmnigh an stáisiún</string>
     <string name="hc_repeat">Athdhéan</string>
     <string name="hc_repeat_this_video">Athdhéan an físeán seo</string>
-    <string name="hc_reports_what_you_listen_to_once_half_of">Tuairiscíonn sé an méid a éisteann tú leis nuair a bhíonn leath d\u0027amhrán seinnte. Seoltar amhráin nach féidir a sheoladh (gan líonra) níos déanaí.</string>
+    <string name="hc_reports_what_you_listen_to_once_half_of">Tuairiscíonn sé an méid a éisteann tú leis nuair a bhíonn leath d\'amhrán seinnte. Seoltar amhráin nach féidir a sheoladh (gan líonra) níos déanaí.</string>
     <string name="hc_require_biometrics_or_device_pin_when_op">Éiligh bithmhéadrachtaí nó PIN an ghléis agus an Guthán á oscailt</string>
     <string name="hc_reset_widget">Athshocraigh an giuirléid</string>
     <string name="hc_restore">Athchóirigh</string>
@@ -354,7 +354,7 @@
     <string name="hc_shared_secret">Rún comhroinnte</string>
     <string name="hc_show_a_callback_sheet_after_a_missed_cal">Taispeáin bileog glaoite ar ais i ndiaidh glao caillte</string>
     <string name="hc_show_a_confirmation_sheet_before_placing">Taispeáin bileog dheimhnithe sula gcuirtear glaoch</string>
-    <string name="hc_show_names_from_the_fritz_box_telephone">Taispeáin ainmneacha ó leabhar teileafóin FRITZ!Box d\u0027uimhreacha nach bhfuil i do theagmhálaithe</string>
+    <string name="hc_show_names_from_the_fritz_box_telephone">Taispeáin ainmneacha ó leabhar teileafóin FRITZ!Box d\'uimhreacha nach bhfuil i do theagmhálaithe</string>
     <string name="hc_show_numbers_in_recents">Taispeáin uimhreacha sna cinn le déanaí</string>
     <string name="hc_show_only_digits_on_the_keypad">Taispeáin digití amháin ar an eochaircheap</string>
     <string name="hc_show_the_keypad_when_phone_opens">Taispeáin an t-eochaircheap nuair a osclaítear an Guthán</string>
@@ -401,8 +401,8 @@
     <string name="hc_the_apps_that_are_part_of_telos_installi">Na haipeanna atá mar chuid de Telos. Taispeánann suiteáil ceann acu a dheilbhín sa ghreille aipeanna agus sa chuardach, folaíonn a bhaint an deilbhín arís. Ní íoslódáiltear aon rud: fanann na haipeanna laistigh de Telos.</string>
     <string name="hc_the_file_is_longer_only_the_first_2_mb_a">Tá an comhad níos faide, ní thaispeántar ach an chéad 2 MB. Ní féidir é a chur in eagar anseo, mar sin ní ró-scríobhtar aon rud.</string>
     <string name="hc_the_message_could_not_be_sent">Níorbh fhéidir an teachtaireacht a sheoladh.</string>
-    <string name="hc_this_can_take_a_minute">D\u0027fhéadfadh sé seo nóiméad a thógáil.</string>
-    <string name="hc_this_is_a_system_location_a_wrong_permis">Is suíomh córais é seo. D\u0027fhéadfadh cead mícheart stop a chur leis an nguthán ó thosú.</string>
+    <string name="hc_this_can_take_a_minute">D\'fhéadfadh sé seo nóiméad a thógáil.</string>
+    <string name="hc_this_is_a_system_location_a_wrong_permis">Is suíomh córais é seo. D\'fhéadfadh cead mícheart stop a chur leis an nguthán ó thosú.</string>
     <string name="hc_title_large">Teideal mór</string>
     <string name="hc_title_large_emphasized">Teideal mór aibhsithe</string>
     <string name="hc_title_medium">Teideal meánach</string>

@@ -8,7 +8,7 @@
     <string name="vn_move_up">Yukarı taşı</string>
     <string name="vn_move_down">Aşağı taşı</string>
     <string name="vn_os_user_agent">OpenSubtitles User-Agent (isteğe bağlı)</string>
-    <string name="vn_os_user_agent_help">Boş bırakılırsa genel test aracısı kullanılır. opensubtitles.org\u0027dan alınan ücretsiz kayıtlı bir aracı daha güvenilirdir.</string>
+    <string name="vn_os_user_agent_help">Boş bırakılırsa genel test aracısı kullanılır. opensubtitles.org\'dan alınan ücretsiz kayıtlı bir aracı daha güvenilirdir.</string>
     <string name="vn_search_all_sources">Tüm kaynaklarda ara</string>
     <string name="vn_source_label">Kaynak: %1$s</string>
     <string name="vn_no_sources">Hiçbir altyazı kaynağı açık değil. Video hizmetleri bölümünden birini açın.</string>
@@ -82,7 +82,7 @@
     <string name="blocklists_schedule_off">Kapalı</string>
     <string name="blocklists_schedule_daily">Günlük</string>
     <string name="blocklists_schedule_weekly">Haftalık</string>
-    <string name="blocklists_wifi_only">Yalnızca Wi-Fi\u0027de güncelle</string>
+    <string name="blocklists_wifi_only">Yalnızca Wi-Fi\'de güncelle</string>
     <string name="blocklists_schedule_info">Tüm engelleme listeleri, web uygulamaları ve torrentler için geçerlidir. Güncellemeler yalnızca sunucuya listenin değişip değişmediğini sorar ve pil azaldığında atlanır.</string>
 
     

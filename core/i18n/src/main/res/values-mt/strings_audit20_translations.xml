@@ -19,7 +19,7 @@
     <string name="au20_viewer_sort_name">Isem</string>
     <string name="au20_viewer_sort_size">Daqs</string>
     <string name="au20_viewer_share">Aqsam</string>
-    <string name="au20_viewer_open_with">Iftaħ b\u0027</string>
+    <string name="au20_viewer_open_with">Iftaħ b\'</string>
     <string name="au20_viewer_info">Informazzjoni</string>
     <string name="au20_viewer_info_name">Isem</string>
     <string name="au20_viewer_info_folder">Folder</string>
@@ -27,12 +27,12 @@
     <string name="au20_viewer_info_size">Daqs</string>
     <string name="au20_viewer_info_date">Data</string>
     <string name="au20_viewer_empty_title">Ma nstab ebda dokument</string>
-    <string name="au20_viewer_empty_text">Id-dokumenti fuq it-telefon tiegħek jidhru hawn. Uża Iftaħ fajl… għal fajl x\u0027imkien ieħor.</string>
+    <string name="au20_viewer_empty_text">Id-dokumenti fuq it-telefon tiegħek jidhru hawn. Uża Iftaħ fajl… għal fajl x\'imkien ieħor.</string>
     <string name="au20_viewer_access_title">Ippermetti aċċess għall-fajls tiegħek</string>
-    <string name="au20_viewer_access_text">Biex jelenka d-dokumenti fuq it-telefon tiegħek, Telos Viewer jeħtieġ aċċess għall-fajls kollha. Tista\u0027 wkoll tiftaħ fajl wieħed mingħajru.</string>
+    <string name="au20_viewer_access_text">Biex jelenka d-dokumenti fuq it-telefon tiegħek, Telos Viewer jeħtieġ aċċess għall-fajls kollha. Tista\' wkoll tiftaħ fajl wieħed mingħajru.</string>
     <string name="au20_viewer_access_button">Ippermetti aċċess</string>
     <string name="au20_viewer_share_failed">L-qsim falla</string>
-    <string name="au20_viewer_open_failed">Ebda app ma tista\u0027 tiftaħ dan il-fajl</string>
+    <string name="au20_viewer_open_failed">Ebda app ma tista\' tiftaħ dan il-fajl</string>
 
     
     

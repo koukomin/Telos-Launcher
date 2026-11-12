@@ -10,7 +10,7 @@
     <string name="desktop_opsec_clipboard_history_empty">Iškarpinės istorijos dar nėra</string>
     <string name="desktop_opsec_clipboard_pin_until_lock">Prisegti</string>
     <string name="desktop_opsec_clipboard_unpin">Atsegti</string>
-    <string name="desktop_opsec_clipboard_recall_vaulted">Atkurti vault\u0027e saugomą jautrų klipą</string>
+    <string name="desktop_opsec_clipboard_recall_vaulted">Atkurti vault’e saugomą jautrų klipą</string>
     <string name="desktop_opsec_clipboard_timer">Automatiškai išvalyti po %1$d s</string>
     <string name="desktop_opsec_clipboard_timer_off">Išjungta</string>
     <string name="desktop_opsec_attestation_run">Įrašyti pagrindinio kompiuterio vientisumo momentinę kopiją</string>

@@ -32,13 +32,13 @@
     <string name="keepass_entry_notes">Noti</string>
     <string name="keepass_entry_reveal">Uri l-password</string>
     <string name="keepass_entry_hide">Aħbi l-password</string>
-    <string name="fit_status_synced">Sinkronizzat ma\u0027 Health Connect</string>
+    <string name="fit_status_synced">Sinkronizzat ma\' Health Connect</string>
     <string name="fit_status_partial">Health Connect disponibbli — data demo lokali</string>
     <string name="fit_status_local_demo">Data demo lokali</string>
     <string name="fit_food_search_title">Fittex ikel</string>
     <string name="fit_food_search_hint">Ikel, brand jew barcode</string>
-    <string name="sync_preview_title">Preview ta\u0027 Sync</string>
-    <string name="sync_preview_summary">Il-listi ta\u0027 folders u apparati huma eżempji. L-ipparjar u s-sinkronizzazzjoni live għadhom mhumiex disponibbli.</string>
+    <string name="sync_preview_title">Preview ta\' Sync</string>
+    <string name="sync_preview_summary">Il-listi ta\' folders u apparati huma eżempji. L-ipparjar u s-sinkronizzazzjoni live għadhom mhumiex disponibbli.</string>
     <string name="aether_compose_title">Ikteb nota</string>
     <string name="aether_compose_hint">Ikteb nota lokali. Ir-relays għadhom mhumiex konnessi.</string>
     <string name="aether_preview_summary">Aether huwa preview lokali. Ix-xandir lejn relays Nostr għadu mhux disponibbli.</string>

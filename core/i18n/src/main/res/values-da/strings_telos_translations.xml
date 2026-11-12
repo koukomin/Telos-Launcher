@@ -110,7 +110,7 @@
     <string name="freeze_widget_frozen_now">Frosset %1$d af %2$d</string>
     <string name="reminders_widget_empty">Ingen påmindelser</string>
     <string name="widgets_tutorial_add_title">Tilføj en widget</string>
-    <string name="widgets_tutorial_add_text">Tryk på \u0027Rediger widgets\u0027 nedenfor og derefter \u0027Tilføj widget\u0027 for at placere en ny widget her.</string>
+    <string name="widgets_tutorial_add_text">Tryk på \'Rediger widgets\' nedenfor og derefter \'Tilføj widget\' for at placere en ny widget her.</string>
     <string name="widgets_tutorial_move_title">Flyt en widget</string>
     <string name="widgets_tutorial_move_text">Træk i håndtaget i en widgets overskrift i redigeringstilstand for at ændre rækkefølgen.</string>
     <string name="widgets_tutorial_resize_title">Ændr størrelsen på en widget</string>
@@ -664,7 +664,7 @@
     <string name="preference_web_app_zoom_controls">Knib for at zoome</string>
     <string name="preference_web_app_zoom_controls_summary">Gælder webapps, der åbnes i den indbyggede browser, ikke dem, der åbnes i en ekstern browser</string>
     <string name="preference_web_app_tracking_param_stripping">Fjern sporingsparametre fra links</string>
-    <string name="preference_web_app_tracking_param_stripping_summary">Fjerner utm_, fbclid, gclid og lignende sporingsparametre fra URL\u0027er. Gælder webapps, der åbnes i den indbyggede browser, ikke dem, der åbnes i en ekstern browser</string>
+    <string name="preference_web_app_tracking_param_stripping_summary">Fjerner utm_, fbclid, gclid og lignende sporingsparametre fra URL\'er. Gælder webapps, der åbnes i den indbyggede browser, ikke dem, der åbnes i en ekstern browser</string>
     <string name="web_apps_panel_items">Webapps i panel</string>
     <string name="web_apps_panel_ungrouped">Ikke grupperet</string>
     <string name="web_apps_panel_add_existing">Tilføj eksisterende webapp-genvej</string>
@@ -1032,8 +1032,8 @@
     <string name="screenshot_scrolling">Rullende skærmbillede</string>
     <string name="screenshot_scrolling_summary">Ruller skærmen og sætter billederne sammen (eksperimentelt)</string>
     <string name="screenshot_scrolling_started">Tager et rullende skærmbillede, rør ikke ved skærmen</string>
-    <string name="screenshot_needs_accessibility">Slå Telos\u0027 tilgængelighedstjeneste til under Indstillinger &gt; Bevægelser</string>
-    <string name="screenshot_needs_android11">Dette kræver Android 11 eller nyere og Telos\u0027 tilgængelighedstjeneste</string>
+    <string name="screenshot_needs_accessibility">Slå Telos\' tilgængelighedstjeneste til under Indstillinger &gt; Bevægelser</string>
+    <string name="screenshot_needs_android11">Dette kræver Android 11 eller nyere og Telos\' tilgængelighedstjeneste</string>
     <string name="screenshot_accessibility_banner">Telos tager skærmbilleder via sin tilgængelighedstjeneste. Den kører ikke.</string>
     <string name="screenshot_open_accessibility">Åbn tilgængelighedsindstillinger</string>
     <string name="screenshot_saved">Skærmbillede gemt</string>
@@ -1132,7 +1132,7 @@
     <string name="voice_speaker">Afspil via højttaleren</string>
     <string name="voice_speaker_summary">Slå fra for at afspille via øremusling, som under et telefonopkald</string>
     <string name="voice_settings_privacy">Privatliv</string>
-    <string name="voice_privacy_text">Optagelser forbliver i Telos\u0027 private lager på denne telefon. Intet uploades. Opkaldsoptagelser fra Telos Telefon vises også her og forbliver krypterede.</string>
+    <string name="voice_privacy_text">Optagelser forbliver i Telos\' private lager på denne telefon. Intet uploades. Opkaldsoptagelser fra Telos Telefon vises også her og forbliver krypterede.</string>
     <string name="weather_alert_channel">Voldsomt vejr</string>
     <string name="weather_alert_rain">Regn ventes</string>
     <string name="weather_alert_heavy_rain">Kraftig regn ventes</string>
@@ -1466,7 +1466,7 @@
     <string name="settings_shizuku_diagnostics_summary">Inspect live OS compatibility, self-grant permissions, and copy ADB commands</string>
     <string name="settings_shizuku_dialog_title">Shizuku Auto-Start Diagnostics &amp; Setup</string>
     <string name="settings_shizuku_grant_retry">Grant via Shizuku &amp; Retry</string>
-    <string name="settings_shizuku_step1_desc">Open the Shizuku app, start it once via Wireless Debugging, and tap \u0027Grant via Shizuku\u0027 below so the Launcher can configure itself automatically.</string>
+    <string name="settings_shizuku_step1_desc">Open the Shizuku app, start it once via Wireless Debugging, and tap \'Grant via Shizuku\' below so the Launcher can configure itself automatically.</string>
     <string name="settings_shizuku_step1_title">Step 1 (Automatic without PC):</string>
     <string name="settings_shizuku_step2_title">Step 2 (Manual via ADB / Termux):</string>
     <string name="settings_shizuku_step3_title">Step 3 (Preventing OS Background Killing):</string>
@@ -1526,7 +1526,7 @@
     <string name="fit_dashboard">Dashboard</string>
     <string name="fit_fat">Fat</string>
     <string name="fit_heart_rate">Heart Rate</string>
-    <string name="fit_meals">Today\u0027s Meals</string>
+    <string name="fit_meals">Today\'s Meals</string>
     <string name="fit_nutrition">Nutrition &amp; Macros</string>
     <string name="fit_protein">Protein</string>
     <string name="fit_search_food">Search food, protein, supplement...</string>

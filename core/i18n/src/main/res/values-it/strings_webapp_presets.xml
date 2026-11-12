@@ -2,7 +2,7 @@
 <resources>
     <string name="web_app_presets_title">Categorie suggerite</string>
     <string name="web_app_presets_summary">Aggiungi una cartella già pronta con siti web popolari come web app. Non viene aggiunto nulla finché non la scegli, e ogni cartella e web app potrà essere modificata o eliminata in seguito.</string>
-    <string name="web_app_presets_login_note">Accedi su ciascun sito web. Gli accessi vengono conservati dal browser integrato. Questo vale solo per le web app che si aprono nel browser integrato; quelle aperte in un browser esterno usano l\u0027accesso del browser stesso.</string>
+    <string name="web_app_presets_login_note">Accedi su ciascun sito web. Gli accessi vengono conservati dal browser integrato. Questo vale solo per le web app che si aprono nel browser integrato; quelle aperte in un browser esterno usano l\'accesso del browser stesso.</string>
     <string name="web_app_preset_category_social">Social</string>
     <string name="web_app_preset_category_email">Email</string>
     <string name="web_app_preset_category_messaging">Messaggistica</string>
@@ -31,12 +31,12 @@
     <string name="web_app_group_delete_title">Eliminare la cartella?</string>
     <string name="web_app_group_delete_message">La cartella \"%1$s\" verrà eliminata. Le web app al suo interno vengono mantenute e rimarranno senza cartella.</string>
     <string name="web_app_delete_title">Eliminare la web app?</string>
-    <string name="web_app_delete_message">\"%1$s\" verrà rimossa dalla ricerca, dalla schermata Home, dalle cartelle e dal pannello delle web app. L\u0027operazione non può essere annullata.</string>
+    <string name="web_app_delete_message">\"%1$s\" verrà rimossa dalla ricerca, dalla schermata Home, dalle cartelle e dal pannello delle web app. L\'operazione non può essere annullata.</string>
     <string name="web_app_shortcut_ad_block">Blocco annunci</string>
     <string name="web_app_shortcut_ad_block_global">Usa impostazione globale</string>
     <string name="web_app_shortcut_ad_block_on">Attivo</string>
     <string name="web_app_shortcut_ad_block_off">Disattivo</string>
-    <string name="web_app_shortcut_ad_block_summary">Vale solo per il browser integrato. I browser esterni (Custom Tabs) sono gestiti dall\u0027app del browser.</string>
+    <string name="web_app_shortcut_ad_block_summary">Vale solo per il browser integrato. I browser esterni (Custom Tabs) sono gestiti dall\'app del browser.</string>
 
     
     

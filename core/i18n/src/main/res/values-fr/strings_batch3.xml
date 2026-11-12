@@ -1,18 +1,18 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="vn_subtitle_sources">Sources de sous-titres</string>
-    <string name="vn_subtitle_sources_help">Les sources sont interrogées de haut en bas jusqu\u0027à ce que l\u0027une donne des résultats. Les deux premières ne nécessitent aucun compte.</string>
+    <string name="vn_subtitle_sources_help">Les sources sont interrogées de haut en bas jusqu\'à ce que l\'une donne des résultats. Les deux premières ne nécessitent aucun compte.</string>
     <string name="vn_source_os_legacy">OpenSubtitles (sans compte)</string>
     <string name="vn_source_podnapisi">Podnapisi (sans compte)</string>
     <string name="vn_source_os_com">OpenSubtitles.com (votre compte)</string>
     <string name="vn_move_up">Monter</string>
     <string name="vn_move_down">Descendre</string>
     <string name="vn_os_user_agent">User-Agent OpenSubtitles (facultatif)</string>
-    <string name="vn_os_user_agent_help">Si vide, l\u0027agent de test générique est utilisé. Un agent gratuit enregistré sur opensubtitles.org est plus fiable.</string>
+    <string name="vn_os_user_agent_help">Si vide, l\'agent de test générique est utilisé. Un agent gratuit enregistré sur opensubtitles.org est plus fiable.</string>
     <string name="vn_search_all_sources">Rechercher dans toutes les sources</string>
     <string name="vn_source_label">Source : %1$s</string>
-    <string name="vn_no_sources">Aucune source de sous-titres n\u0027est activée. Activez-en une dans Services vidéo.</string>
-    <string name="vn_some_sources_failed">Certaines sources n\u0027ont pas répondu : %1$s</string>
+    <string name="vn_no_sources">Aucune source de sous-titres n\'est activée. Activez-en une dans Services vidéo.</string>
+    <string name="vn_some_sources_failed">Certaines sources n\'ont pas répondu : %1$s</string>
     <string name="vn_exact_match">correspondance exacte</string>
     <string name="vn_subtitle_delay">Décalage des sous-titres</string>
     <string name="vn_subtitle_delay_help">Fonctionne pour les sous-titres chargés depuis un fichier ou Internet, pas pour ceux intégrés à la vidéo.</string>
@@ -33,7 +33,7 @@
     <string name="vn_edge_box">Encadré</string>
     <string name="vn_fixed_width">Largeur fixe</string>
     <string name="vn_fixed_height">Hauteur fixe</string>
-    <string name="vn_match_frame_rate">Adapter l\u0027écran à la fréquence d\u0027images de la vidéo</string>
+    <string name="vn_match_frame_rate">Adapter l\'écran à la fréquence d\'images de la vidéo</string>
     <string name="vn_mark_watched">Marquer comme vu</string>
     <string name="vn_mark_unwatched">Marquer comme non vu</string>
     <string name="vn_delete_video">Supprimer du téléphone</string>
@@ -46,10 +46,10 @@
     <string name="vn_rescan">Analyser à nouveau</string>
     <string name="vn_scanning">Analyse en cours…</string>
     <string name="vn_scan_done">%1$d vidéos trouvées</string>
-    <string name="vn_no_connections">Aucun stockage réseau n\u0027est configuré. Ajoutez-en un dans Paramètres &gt; Intégrations &gt; Stockage cloud et réseau.</string>
+    <string name="vn_no_connections">Aucun stockage réseau n\'est configuré. Ajoutez-en un dans Paramètres &gt; Intégrations &gt; Stockage cloud et réseau.</string>
     <string name="vn_remove">Supprimer</string>
     <string name="vn_choose_storage">Choisir un stockage</string>
-    <string name="vn_network_open_failed">Impossible d\u0027ouvrir cette vidéo du réseau</string>
+    <string name="vn_network_open_failed">Impossible d\'ouvrir cette vidéo du réseau</string>
     <string name="vn_subtitle_loaded">Sous-titre chargé : %1$s</string>
     <string name="vn_network_scan_title">Dossiers réseau dans la médiathèque</string>
     <string name="vn_close">Fermer</string>
@@ -59,8 +59,8 @@
     <string name="vn_no_subtitles_found">Aucun sous-titre trouvé pour « %1$s »</string>
     <string name="blocklists_web_title">Listes de blocage</string>
     <string name="blocklists_torrent_title">Listes de blocage de pairs</string>
-    <string name="blocklists_web_info">Listes de domaines ajoutées à la liste intégrée de publicités et de traqueurs des applications web. Rien n\u0027est téléchargé tant que vous n\u0027activez pas une liste. Chaque liste activée est récupérée directement à l\u0027adresse indiquée dessous ; aucun autre serveur n\u0027est contacté et rien à votre sujet n\u0027est envoyé.</string>
-    <string name="blocklists_torrent_info">Plages d\u0027adresses IP auxquelles le streaming de torrents refuse de se connecter. Rien n\u0027est téléchargé tant que vous n\u0027activez pas une liste. Chaque liste activée est récupérée directement à l\u0027adresse indiquée dessous ; aucun autre serveur n\u0027est contacté et rien à votre sujet n\u0027est envoyé. Une liste de blocage réduit les connexions indésirables mais ne garantit pas l\u0027anonymat.</string>
+    <string name="blocklists_web_info">Listes de domaines ajoutées à la liste intégrée de publicités et de traqueurs des applications web. Rien n\'est téléchargé tant que vous n\'activez pas une liste. Chaque liste activée est récupérée directement à l\'adresse indiquée dessous ; aucun autre serveur n\'est contacté et rien à votre sujet n\'est envoyé.</string>
+    <string name="blocklists_torrent_info">Plages d\'adresses IP auxquelles le streaming de torrents refuse de se connecter. Rien n\'est téléchargé tant que vous n\'activez pas une liste. Chaque liste activée est récupérée directement à l\'adresse indiquée dessous ; aucun autre serveur n\'est contacté et rien à votre sujet n\'est envoyé. Une liste de blocage réduit les connexions indésirables mais ne garantit pas l\'anonymat.</string>
     <string name="blocklists_downloaded_from">Téléchargée depuis %1$s</string>
     <string name="blocklists_license">Licence : %1$s</string>
     <string name="blocklists_never">Pas encore téléchargée</string>
@@ -77,13 +77,13 @@
     <string name="blocklists_add">@string/hc_add</string>
     <string name="blocklists_cancel">@string/hc_cancel</string>
     <string name="blocklists_invalid_url">Seules les adresses https sont acceptées</string>
-    <string name="blocklists_import_failed">Le fichier ne contient aucune entrée exploitable ou n\u0027a pas pu être lu</string>
+    <string name="blocklists_import_failed">Le fichier ne contient aucune entrée exploitable ou n\'a pas pu être lu</string>
     <string name="blocklists_schedule">Mise à jour automatique</string>
     <string name="blocklists_schedule_off">Désactivée</string>
     <string name="blocklists_schedule_daily">Quotidienne</string>
     <string name="blocklists_schedule_weekly">Hebdomadaire</string>
     <string name="blocklists_wifi_only">Mettre à jour uniquement en Wi-Fi</string>
-    <string name="blocklists_schedule_info">S\u0027applique à toutes les listes de blocage, applications web et torrents. Les mises à jour demandent seulement au serveur si la liste a changé et sont ignorées quand la batterie est faible.</string>
+    <string name="blocklists_schedule_info">S\'applique à toutes les listes de blocage, applications web et torrents. Les mises à jour demandent seulement au serveur si la liste a changé et sont ignorées quand la batterie est faible.</string>
 
     
     

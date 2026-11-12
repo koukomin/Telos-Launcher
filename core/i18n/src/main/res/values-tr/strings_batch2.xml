@@ -23,8 +23,8 @@
     <string name="hc_allow_access_to_your_music_to_build_the">Kitaplığı oluşturmak için müziğinize erişime izin verin</string>
     <string name="hc_allow_access_to_your_photos">Fotoğraflarınıza erişime izin verin</string>
     <string name="hc_allow_access_to_your_videos_to_build_the">Kitaplığı oluşturmak için videolarınıza erişime izin verin</string>
-    <string name="hc_allow_telos_to_read_and_send_text_messag">Telos\u0027un kısa mesajları okumasına ve göndermesine izin verin; böylece burada görüp yanıtlayabilirsiniz.</string>
-    <string name="hc_always_use_this_sim_for_this_number">Bu numara için her zaman bu SIM\u0027i kullan</string>
+    <string name="hc_allow_telos_to_read_and_send_text_messag">Telos\'un kısa mesajları okumasına ve göndermesine izin verin; böylece burada görüp yanıtlayabilirsiniz.</string>
+    <string name="hc_always_use_this_sim_for_this_number">Bu numara için her zaman bu SIM\'i kullan</string>
     <string name="hc_answer_incoming_calls_by_lifting_the_pho">Telefonu kulağınıza kaldırarak gelen aramaları yanıtlayın</string>
     <string name="hc_answer_style">Yanıt biçimi</string>
     <string name="hc_answer_with_a_left_right_left_right_shak">Sola-sağa-sola-sağa sallayarak yanıtla</string>
@@ -77,7 +77,7 @@
     <string name="hc_check_for_updates">Güncellemeleri denetle</string>
     <string name="hc_check_now">Şimdi denetle</string>
     <string name="hc_checksums">Sağlama toplamları</string>
-    <string name="hc_choose_apps_you_already_have_telos_looks">Zaten sahip olduğunuz uygulamaları seçin. Telos bunları F-Droid ve IzzyOnDroid\u0027de arar ve bulduklarını güncel tutar.</string>
+    <string name="hc_choose_apps_you_already_have_telos_looks">Zaten sahip olduğunuz uygulamaları seçin. Telos bunları F-Droid ve IzzyOnDroid\'de arar ve bulduklarını güncel tutar.</string>
     <string name="hc_choose_torrent_file">.torrent dosyası seç</string>
     <string name="hc_clear">Temizle</string>
     <string name="hc_clear_all_music_data">Tüm müzik verilerini temizle</string>
@@ -89,9 +89,9 @@
     <string name="hc_cloud_and_network_storage">Bulut ve ağ depolaması</string>
     <string name="hc_compress_to_zip">Zip olarak sıkıştır</string>
     <string name="hc_confirm_before_calling">Aramadan önce onayla</string>
-    <string name="hc_connect_last_fm">Last.fm\u0027e bağlan</string>
-    <string name="hc_connect_libre_fm">Libre.fm\u0027e bağlan</string>
-    <string name="hc_connect_trakt">Trakt\u0027a bağlan</string>
+    <string name="hc_connect_last_fm">Last.fm\'e bağlan</string>
+    <string name="hc_connect_libre_fm">Libre.fm\'e bağlan</string>
+    <string name="hc_connect_trakt">Trakt\'a bağlan</string>
     <string name="hc_connected_scrobbling">Bağlandı, scrobble yapılıyor</string>
     <string name="hc_connection">Bağlantı</string>
     <string name="hc_contact_groups">Kişi grupları</string>
@@ -111,7 +111,7 @@
     <string name="hc_cut">Kes</string>
     <string name="hc_cycled">Döngülendi</string>
     <string name="hc_decline_by_turning_the_phone_face_down">Telefonu ters çevirerek reddet</string>
-    <string name="hc_default_call_sim">Varsayılan arama SIM\u0027i</string>
+    <string name="hc_default_call_sim">Varsayılan arama SIM\'i</string>
     <string name="hc_default_phone_app">Varsayılan telefon uygulaması</string>
     <string name="hc_delay_seconds">Gecikme (saniye)</string>
     <string name="hc_delete">Sil</string>
@@ -177,14 +177,14 @@
     <string name="hc_headline_small">Üst başlık küçük</string>
     <string name="hc_headline_small_emphasized">Üst başlık küçük vurgulu</string>
     <string name="hc_hidden_contacts">Gizli kişiler</string>
-    <string name="hc_hidden_contacts_pin">Gizli kişiler PIN\u0027i</string>
+    <string name="hc_hidden_contacts_pin">Gizli kişiler PIN\'i</string>
     <string name="hc_hide_dialpad_letters">Tuş takımı harflerini gizle</string>
     <string name="hc_hide_from_contacts_tab">Kişiler sekmesinden gizle</string>
     <string name="hc_hide_from_recents">Son aramalardan gizle</string>
     <string name="hc_hide_this_menu_after_pin_is_set">PIN ayarlandıktan sonra bu menüyü gizle</string>
     <string name="hc_hide_your_number_on_outgoing_calls">Giden aramalarda numaranı gizle</string>
     <string name="hc_i_understand_the_risks">Riskleri anlıyorum</string>
-    <string name="hc_identify_callers_from_fritz_box">Arayanları FRITZ!Box\u0027tan tanımla</string>
+    <string name="hc_identify_callers_from_fritz_box">Arayanları FRITZ!Box\'tan tanımla</string>
     <string name="hc_ignore_taps_on_incoming_calls_when_the_p">Yakınlık sensörü kapalıyken gelen aramalardaki dokunuşları yoksay</string>
     <string name="hc_import_backup">Yedeği içe aktar</string>
     <string name="hc_import_obtainium_file">İçe aktar (Obtainium dosyası)</string>
@@ -210,7 +210,7 @@
     <string name="hc_lock_phone_app">Telefon uygulamasını kilitle</string>
     <string name="hc_lock_vault">Kasayı kilitle</string>
     <string name="hc_look_inside_the_archive_or_unpack_it_int">Arşivin içine mi bakmak istersiniz, yoksa yanındaki bir klasöre mi açmak istersiniz?</string>
-    <string name="hc_make_telos_your_sms_app_to_receive_messa">Mesajları burada almak, resim göndermek ve gizli kişileri göz önünden uzak tutmak için Telos\u0027u SMS uygulamanız yapın.</string>
+    <string name="hc_make_telos_your_sms_app_to_receive_messa">Mesajları burada almak, resim göndermek ve gizli kişileri göz önünden uzak tutmak için Telos\'u SMS uygulamanız yapın.</string>
     <string name="hc_manage_frozen_apps_and_shizuku_status">Dondurulmuş uygulamaları ve Shizuku durumunu yönet</string>
     <string name="hc_manage_numbers_that_are_blocked_from_cal">Sizi aramasını veya mesaj göndermesini engellediğiniz numaraları yönet</string>
     <string name="hc_mask_name_on_incoming_calls">Gelen aramalarda adı maskele</string>
@@ -248,7 +248,7 @@
     <string name="hc_numbers_hidden_from_lists_until_unlocked">Numaralar, kilidi açılana kadar listelerde gizlenir</string>
     <string name="hc_off">Kapalı</string>
     <string name="hc_offline_spam_list">Çevrimdışı spam listesi</string>
-    <string name="hc_only_on_wi_fi">Yalnızca Wi-Fi\u0027de</string>
+    <string name="hc_only_on_wi_fi">Yalnızca Wi-Fi\'de</string>
     <string name="hc_open">Aç</string>
     <string name="hc_open_dialpad_on_launch">Açılışta tuş takımını aç</string>
     <string name="hc_open_trakt_tv_activate">trakt.tv/activate adresini aç</string>
@@ -271,7 +271,7 @@
     <string name="hc_place_call">Arama yap</string>
     <string name="hc_plain">Düz</string>
     <string name="hc_play">Oynat</string>
-    <string name="hc_play_from_the_web">Web\u0027den oynat</string>
+    <string name="hc_play_from_the_web">Web\'den oynat</string>
     <string name="hc_play_in_a_separate_process">Ayrı bir işlemde oynat</string>
     <string name="hc_play_or_delete_saved_call_recordings">Kayıtlı arama kayıtlarını oynatın veya silin</string>
     <string name="hc_play_sound_tones_when_using_the_dialpad">Tuş takımını kullanırken ses tonları çal</string>
@@ -281,7 +281,7 @@
     <string name="hc_pocket_mode">Cep modu</string>
     <string name="hc_popup_after_every_call">Her aramadan sonra açılır pencere</string>
     <string name="hc_posters_and_descriptions">Posterler ve açıklamalar</string>
-    <string name="hc_posters_work_without_a_key_from_wikipedi">Posterler anahtar olmadan çalışır (Wikipedia\u0027dan). Ücretsiz bir TMDB API anahtarı (themoviedb.org, Settings, API) daha fazlasını bulur ve puanlar ekler. Bu ürün TMDB API\u0027sini kullanır ancak TMDB tarafından onaylanmamış veya sertifikalandırılmamıştır.</string>
+    <string name="hc_posters_work_without_a_key_from_wikipedi">Posterler anahtar olmadan çalışır (Wikipedia\'dan). Ücretsiz bir TMDB API anahtarı (themoviedb.org, Settings, API) daha fazlasını bulur ve puanlar ekler. Bu ürün TMDB API\'sini kullanır ancak TMDB tarafından onaylanmamış veya sertifikalandırılmamıştır.</string>
     <string name="hc_preferred_mode">Tercih edilen mod</string>
     <string name="hc_prefix">Önek</string>
     <string name="hc_previous">Önceki</string>
@@ -293,7 +293,7 @@
     <string name="hc_radio">Radyo</string>
     <string name="hc_rain_mode">Yağmur modu</string>
     <string name="hc_raise_to_answer">Yanıtlamak için kaldır</string>
-    <string name="hc_raises_github_s_limit_from_60_to_5000_re">GitHub\u0027ın saatlik istek sınırını 60\u0027tan 5000\u0027e çıkarır</string>
+    <string name="hc_raises_github_s_limit_from_60_to_5000_re">GitHub\'ın saatlik istek sınırını 60\'tan 5000\'e çıkarır</string>
     <string name="hc_recording_backend">Kayıt arka ucu</string>
     <string name="hc_recording_quality">Kayıt kalitesi</string>
     <string name="hc_recordings">Kayıtlar</string>
@@ -316,8 +316,8 @@
     <string name="hc_repeat">Tekrarla</string>
     <string name="hc_repeat_this_video">Bu videoyu tekrarla</string>
     <string name="hc_reports_what_you_listen_to_once_half_of">Bir şarkının yarısı çalındığında dinlediklerinizi bildirir. Gönderilemeyen şarkılar (ağ yok) daha sonra gönderilir.</string>
-    <string name="hc_require_biometrics_or_device_pin_when_op">Telefon uygulaması açılırken biyometrik veya cihaz PIN\u0027i iste</string>
-    <string name="hc_reset_widget">Widget\u0027ı sıfırla</string>
+    <string name="hc_require_biometrics_or_device_pin_when_op">Telefon uygulaması açılırken biyometrik veya cihaz PIN\'i iste</string>
+    <string name="hc_reset_widget">Widget\'ı sıfırla</string>
     <string name="hc_restore">Geri yükle</string>
     <string name="hc_restore_an_encrypted_telos_phone_backup">Şifreli bir Telos Phone yedeğini geri yükle</string>
     <string name="hc_restore_backup">Yedeği geri yükle</string>
@@ -331,7 +331,7 @@
     <string name="hc_rotate_right">Sağa döndür</string>
     <string name="hc_saturation">Doygunluk</string>
     <string name="hc_save">Kaydet</string>
-    <string name="hc_save_listenbrainz">ListenBrainz\u0027i kaydet</string>
+    <string name="hc_save_listenbrainz">ListenBrainz\'i kaydet</string>
     <string name="hc_schedule_a_simulated_incoming_call">Sanal bir gelen arama zamanla</string>
     <string name="hc_schedule_fake_call">Sahte arama zamanla</string>
     <string name="hc_scheduled_sms">Zamanlanmış SMS</string>
@@ -346,7 +346,7 @@
     <string name="hc_server">Sunucu</string>
     <string name="hc_server_fritz_box_fritz_box">Sunucu (FRITZ!Box: fritz.box)</string>
     <string name="hc_set">Ayarla</string>
-    <string name="hc_set_telos_phone_as_default_dialer">Telos Phone\u0027u varsayılan arama uygulaması yap</string>
+    <string name="hc_set_telos_phone_as_default_dialer">Telos Phone\'u varsayılan arama uygulaması yap</string>
     <string name="hc_settings">Ayarlar</string>
     <string name="hc_share">Paylaş</string>
     <string name="hc_share_link">Bağlantıyı paylaş</string>
@@ -398,7 +398,7 @@
     <string name="hc_telos_files">Telos Files</string>
     <string name="hc_telos_files_will_ask_for_superuser_acces">Telos Files, uygulamaların normalde erişemediği /system, /data ve /vendor gibi dosyaları görebilmeniz ve değiştirebilmeniz için süper kullanıcı erişimi isteyecek.</string>
     <string name="hc_test">Dene</string>
-    <string name="hc_the_apps_that_are_part_of_telos_installi">Telos\u0027un parçası olan uygulamalar. Birini yüklemek simgesini uygulama ızgarasında ve aramada gösterir, kaldırmak simgeyi yeniden gizler. Hiçbir şey indirilmez: uygulamalar Telos içinde kalır.</string>
+    <string name="hc_the_apps_that_are_part_of_telos_installi">Telos\'un parçası olan uygulamalar. Birini yüklemek simgesini uygulama ızgarasında ve aramada gösterir, kaldırmak simgeyi yeniden gizler. Hiçbir şey indirilmez: uygulamalar Telos içinde kalır.</string>
     <string name="hc_the_file_is_longer_only_the_first_2_mb_a">Dosya daha uzun, yalnızca ilk 2 MB gösteriliyor. Burada düzenlenemez, bu yüzden hiçbir şeyin üzerine yazılmaz.</string>
     <string name="hc_the_message_could_not_be_sent">Mesaj gönderilemedi.</string>
     <string name="hc_this_can_take_a_minute">Bu bir dakika sürebilir.</string>
@@ -410,7 +410,7 @@
     <string name="hc_title_small">Başlık küçük</string>
     <string name="hc_title_small_emphasized">Başlık küçük vurgulu</string>
     <string name="hc_tmdb_api_key">TMDB API anahtarı</string>
-    <string name="hc_to_show_and_manage_the_files_on_your_pho">Telefonunuzdaki dosyaları göstermek ve yönetmek için Telos\u0027un tüm dosyalara erişmesi gerekir.</string>
+    <string name="hc_to_show_and_manage_the_files_on_your_pho">Telefonunuzdaki dosyaları göstermek ve yönetmek için Telos\'un tüm dosyalara erişmesi gerekir.</string>
     <string name="hc_today">Bugün</string>
     <string name="hc_tools">Araçlar</string>
     <string name="hc_torrents_are_downloaded_while_they_play">Torrentler oynatılırken indirilir ve oynatıcı kapatıldığında silinir. Yalnızca izlemenize izin verilen içerikleri oynatın.</string>
@@ -433,11 +433,11 @@
     <string name="hc_vibrate_when_using_the_dialpad">Tuş takımını kullanırken titret</string>
     <string name="hc_video_services">Video hizmetleri</string>
     <string name="hc_volume_dnd_only_on_lock_screen">Ses Rahatsız Etme yalnızca kilit ekranında</string>
-    <string name="hc_volume_keys_toggle_dnd">Ses tuşları Rahatsız Etme\u0027yi açıp kapatır</string>
+    <string name="hc_volume_keys_toggle_dnd">Ses tuşları Rahatsız Etme\'yi açıp kapatır</string>
     <string name="hc_web_address_of_a_video_or_stream_hls_das">Bir videonun veya yayının web adresi (HLS, DASH, MP4…), bir magnet bağlantısı veya bir .torrent dosyasının adresi.</string>
     <string name="hc_withhold_caller_id_clir">Arayan kimliğini gizle (CLIR)</string>
     <string name="hc_write">Yaz</string>
-    <string name="hc_your_root_manager_magisk_kernelsu_will_a">Root yöneticiniz (Magisk, KernelSU, ...) önce Telos\u0027a izin vermenizi isteyecek. Root erişimi burada kapattığınızda sona erer.</string>
+    <string name="hc_your_root_manager_magisk_kernelsu_will_a">Root yöneticiniz (Magisk, KernelSU, ...) önce Telos\'a izin vermenizi isteyecek. Root erişimi burada kapattığınızda sona erer.</string>
     <string name="hc_stop_skipping_version">v%1$s sürümünü atlamayı bırak</string>
     <string name="hc_remove_item_question">%1$s kaldırılsın mı?</string>
     <string name="hc_update_all_count">Tümünü güncelle (%1$d)</string>

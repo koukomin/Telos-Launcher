@@ -18,8 +18,8 @@
     <string name="telos_files_collections">Bailiúcháin</string>
     <string name="telos_files_collections_empty">Níl aon chomhaid sa bhailiúchán seo.</string>
     <string name="telos_files_collections_failed">Ní féidir an bailiúchán seo a léamh. Seiceáil rochtain ar an stóras.</string>
-    <string name="telos_files_collections_partial">Amharc páirteach: taispeántar suas le 300 comhad. D\u0027fhéadfadh roinnt fillteán a bheith dorochtana nó teorainneacha an innéacs a shárú.</string>
-    <string name="telos_files_collections_scope">Comhaid áitiúla in %1$s. Féadfaidh leabharmharcanna tagairt d\u0027áiteanna eile.</string>
+    <string name="telos_files_collections_partial">Amharc páirteach: taispeántar suas le 300 comhad. D\'fhéadfadh roinnt fillteán a bheith dorochtana nó teorainneacha an innéacs a shárú.</string>
+    <string name="telos_files_collections_scope">Comhaid áitiúla in %1$s. Féadfaidh leabharmharcanna tagairt d\'áiteanna eile.</string>
     <string name="telos_files_decrypt">Díchriptigh comhad</string>
     <string name="telos_files_drop_title">An bhfuil fonn ort %1$d mír a chóipeáil nó a bhogadh anseo?</string>
     <string name="telos_files_duplicates_count">%1$d grúpa comhad comhionann</string>
@@ -30,7 +30,7 @@
     <string name="telos_files_encryption_info">Cruthaigh comhad ar leith atá cosanta le focal faire, le criptiú fíordheimhnithe AES-256-GCM. Coinnítear an bunleagan. Úsáid 8 gcarachtar ar a laghad agus tú ag criptiú. Ní shábháiltear an focal faire; má chailleann tú é, caillfidh tú rochtain.</string>
     <string name="telos_files_encryption_output">Ainm an chomhaid aschuir</string>
     <string name="telos_files_encryption_password">Focal faire</string>
-    <string name="telos_files_encryption_publish_note">Úsáideann Telos a fhormáid féin do chomhaid chriptithe, ní ZIP criptithe. Ní fhorscríobhtar comhaid atá ann cheana riamh. Má chailltear cumhacht agus an toradh á shábháil, d\u0027fhéadfadh comhad aschuir neamhiomlán a bheith fágtha; coinnigh an bunleagan go dtí go bhfíoraíonn tú an toradh.</string>
+    <string name="telos_files_encryption_publish_note">Úsáideann Telos a fhormáid féin do chomhaid chriptithe, ní ZIP criptithe. Ní fhorscríobhtar comhaid atá ann cheana riamh. Má chailltear cumhacht agus an toradh á shábháil, d\'fhéadfadh comhad aschuir neamhiomlán a bheith fágtha; coinnigh an bunleagan go dtí go bhfíoraíonn tú an toradh.</string>
     <string name="telos_files_find_duplicates">Aimsigh comhaid chomhionanna</string>
     <string name="telos_files_largest">Na comhaid is mó</string>
     <string name="telos_files_new_tab">Cluaisín nua</string>
@@ -53,7 +53,7 @@
     <string name="telos_files_search_extensions">Iarmhíreanna (mar shampla: jpg, pdf)</string>
     <string name="telos_files_search_filters">Scagairí cuardaigh</string>
     <string name="telos_files_search_invalid">Cuir isteach méideanna agus dátaí bailí, agus an t-íosluach roimh an uasluach.</string>
-    <string name="telos_files_search_limited">Torthaí páirteacha: 300 meaitseáil agus 50,000 iontráil innéacsaithe ar a mhéad. D\u0027fhéadfadh roinnt fillteán a bheith doléite.</string>
+    <string name="telos_files_search_limited">Torthaí páirteacha: 300 meaitseáil agus 50,000 iontráil innéacsaithe ar a mhéad. D\'fhéadfadh roinnt fillteán a bheith doléite.</string>
     <string name="telos_files_search_maximum">Uasmhéid (KiB)</string>
     <string name="telos_files_search_minimum">Íosmhéid (KiB)</string>
     <string name="telos_files_search_recursive">Cuir fofhillteáin san áireamh</string>

@@ -65,7 +65,7 @@
     <string name="websearch_dialog_replace_icon">Αντικατάσταση εικονιδίου</string>
     <string name="websearch_dialog_delete_icon">Διαγραφή εικονιδίου</string>
     <string name="websearch_dialog_advanced">Προχωρημένο</string>
-    <string name="websearch_dialog_url_error">Το σύμβολο θέσης \u0027${1}\u0027 λείπει σε αυτήν τη διεύθυνση URL</string>
+    <string name="websearch_dialog_url_error">Το σύμβολο θέσης \'${1}\' λείπει σε αυτήν τη διεύθυνση URL</string>
     <string name="widget_name_weather">Καιρός</string>
     <string name="widget_name_calendar">Ημερολόγιο</string>
     <string name="widget_name_music">Μουσική</string>
@@ -260,7 +260,7 @@
     <string name="recommendation_desc_tutanota">Κρυπτογραφημένο email και ημερολόγιο</string>
     <string name="recommendation_desc_bitwarden">Ανοιχτού κώδικα διαχειριστής κωδικών</string>
     <string name="recommendation_desc_1password">Διαχειριστής κωδικών με κοινή χρήση οικογένειας</string>
-    <string name="recommendation_desc_pcloud">Διαθέσιμα πλάνα εφ\u0027 όρου ζωής</string>
+    <string name="recommendation_desc_pcloud">Διαθέσιμα πλάνα εφ\' όρου ζωής</string>
     <string name="recommendation_desc_mega">Αποθήκευση cloud με end-to-end κρυπτογράφηση</string>
     <string name="recommendation_desc_notion">Σημειώσεις, έγγραφα και βάσεις δεδομένων σε μία εφαρμογή</string>
     <string name="recommendation_desc_todoist">Διαχείριση εργασιών με υπενθυμίσεις</string>
@@ -645,7 +645,7 @@
 
     <string name="preference_reset_widgets_tutorial">Επαναφορά οδηγού χρήσης</string>
     <string name="preference_reset_widgets_tutorial_summary">Εμφάνιση ξανά του οδηγού χρήσης widget την επόμενη φορά που θα ανοίξετε την οθόνη widget</string>
-    <string name="widgets_tutorial_add_text">Πατήστε \u0027Επεξεργασία widget\u0027 παρακάτω, μετά \u0027Προσθήκη widget\u0027, για να τοποθετήσετε ένα νέο widget εδώ.</string>
+    <string name="widgets_tutorial_add_text">Πατήστε \'Επεξεργασία widget\' παρακάτω, μετά \'Προσθήκη widget\', για να τοποθετήσετε ένα νέο widget εδώ.</string>
     <string name="widgets_tutorial_add_title">Προσθήκη widget</string>
     <string name="widgets_tutorial_done">Το κατάλαβα</string>
     <string name="widgets_tutorial_move_text">Σε λειτουργία επεξεργασίας, σύρετε τη λαβή στην κεφαλίδα ενός widget για να το αναδιατάξετε.</string>
@@ -1027,7 +1027,7 @@
     <string name="freeze_exclusion_strictness_relaxed">Χαλαρή</string>
     <string name="freeze_exclusion_strictness_strict">Αυστηρή</string>
     <string name="freeze_island_notification_channel">Πάγωμα μέσω Island</string>
-    <string name="freeze_island_notification_text">%d εφαρμογή(ές) έτοιμες για πάγωμα στο Island - το Android εμποδίζει τις εφαρμογές να το κάνουν μόνες τους στο παρασκήνιο, γι\u0027 αυτό χρειάζεται ένα πάτημα</string>
+    <string name="freeze_island_notification_text">%d εφαρμογή(ές) έτοιμες για πάγωμα στο Island - το Android εμποδίζει τις εφαρμογές να το κάνουν μόνες τους στο παρασκήνιο, γι\' αυτό χρειάζεται ένα πάτημα</string>
     <string name="freeze_island_notification_title">Πατήστε για πάγωμα εφαρμογών</string>
     <string name="freeze_no_backend_available">Δεν υπάρχει διαθέσιμο backend πάγωσης. Εγκαταστήστε και ρυθμίστε το Shizuku, ή χρησιμοποιήστε συσκευή με root.</string>
     <string name="freeze_permission_granted">Η άδεια παραχωρήθηκε</string>
@@ -1466,7 +1466,7 @@
     <string name="viewer_thumbs_documents_summary">Προεπισκόπηση PDF και αρχείων Office στη λίστα εγγράφων. Ενεργό από προεπιλογή.</string>
     <string name="floating_launcher_edit">@string/hc_edit</string>
     <string name="floating_launcher_recent_files">Πρόσφατα αρχεία</string>
-    <string name="floating_launcher_recent_files_empty">Δεν υπάρχουν πρόσφατα αρχεία. Το Telos χρειάζεται πρόσβαση στα αρχεία γι\u0027 αυτό· μπορείτε να την επιτρέψετε όταν ανοίξετε το Telos Files.</string>
+    <string name="floating_launcher_recent_files_empty">Δεν υπάρχουν πρόσφατα αρχεία. Το Telos χρειάζεται πρόσβαση στα αρχεία γι\' αυτό· μπορείτε να την επιτρέψετε όταν ανοίξετε το Telos Files.</string>
     <string name="floating_launcher_recent_files_no_app">Καμία εφαρμογή δεν μπορεί να ανοίξει αυτό το αρχείο</string>
     <string name="floating_launcher_tool_needs_accessibility">Ενεργοποιήστε την υπηρεσία προσβασιμότητας στις Ρυθμίσεις &gt; Χειρονομίες για λήψη στιγμιότυπων</string>
     <string name="floating_launcher_tool_quick_settings">Γρήγορες ρυθμίσεις</string>
@@ -1501,7 +1501,7 @@
     <string name="preference_floating_launcher_thickness">Πάχος λαβής</string>
     <string name="preference_location_breezy">Διαχείριση τοποθεσίας στο Breezy Weather</string>
     <string name="preference_location_managed">Διαχειρίζεται από πρόσθετο</string>
-    <string name="preference_location_managed_summary">Η τοποθεσία γι\u0027 αυτόν τον πάροχο διαχειρίζεται από την εφαρμογή του πρόσθετου</string>
+    <string name="preference_location_managed_summary">Η τοποθεσία γι\' αυτόν τον πάροχο διαχειρίζεται από την εφαρμογή του πρόσθετου</string>
     <string name="provider_breezy">Breezy Weather</string>
     <string name="provider_openmeteo">Open-Meteo</string>
     <string name="preference_grid_glass_summary">Θολό διαφανές φόντο για το συρτάρι και το πλέγμα εφαρμογών, σε φωτεινή και σκούρα ταπετσαρία</string>
@@ -1658,7 +1658,7 @@
     <string name="desktop_mode_start_menu_empty">No apps found</string>
     <string name="floating_launcher_title">Smart functions</string>
     <string name="floating_launcher_tool_calculator">Calculator</string>
-    <string name="floating_launcher_zone_apps_summary">Apps you add here appear in this zone\u0027s panel. You can also drag an app icon from the home screen or the apps tab onto this zone to add it.</string>
+    <string name="floating_launcher_zone_apps_summary">Apps you add here appear in this zone\'s panel. You can also drag an app icon from the home screen or the apps tab onto this zone to add it.</string>
     <string name="freeze_game_booster_apps">Games that need the booster</string>
     <string name="freeze_game_booster_apps_summary">Package names, comma separated</string>
     <string name="freeze_game_booster_package">Game booster package</string>
@@ -1681,9 +1681,9 @@
     <string name="note_widget_conflict_keep_selected">Keep selected</string>
     <string name="note_widget_conflict_local_version">Last saved version:</string>
     <string name="note_widget_file_read_error">Error reading note</string>
-    <string name="note_widget_file_read_error_description">The linked file could not be read. A copy has been restored from the launcher\u0027s internal storage. If you edit the note, the linked file will possibly be overwritten</string>
+    <string name="note_widget_file_read_error_description">The linked file could not be read. A copy has been restored from the launcher\'s internal storage. If you edit the note, the linked file will possibly be overwritten</string>
     <string name="note_widget_file_write_error">Error saving note</string>
-    <string name="note_widget_file_write_error_description">The note could not be written to the linked file. A copy has been saved to the launcher\u0027s internal storage</string>
+    <string name="note_widget_file_write_error_description">The note could not be written to the linked file. A copy has been saved to the launcher\'s internal storage</string>
     <string name="note_widget_link_file">Link to file</string>
     <string name="note_widget_link_file_summary">Sync the contents of this widget with an external file</string>
     <string name="note_widget_linked_file_summary">Linked to %1$s</string>
@@ -1809,7 +1809,7 @@
     <string name="preference_launch_smartspacer_app">Open Smartspacer</string>
     <string name="preference_launch_tasks_app">Open Tasks app</string>
     <string name="preference_lock_launcher">Lock launcher</string>
-    <string name="preference_lock_launcher_summary">Require authentication to view the home screen after leaving it. Uses the device credential, not a separate PIN. If you get locked out, use system Settings → Apps → %1$s → the gear icon to open this launcher\u0027s settings directly and turn it back off.</string>
+    <string name="preference_lock_launcher_summary">Require authentication to view the home screen after leaving it. Uses the device credential, not a separate PIN. If you get locked out, use system Settings → Apps → %1$s → the gear icon to open this launcher\'s settings directly and turn it back off.</string>
     <string name="preference_media_integration">Έλεγχος πολυμέσων</string>
     <string name="preference_restore_default">Επαναφορά προεπιλογής</string>
     <string name="preference_screen_homescreen_summary">Clock, search bar, wallpaper, system bars</string>
@@ -1864,20 +1864,20 @@
     <string name="profile_work_profile_action_lock">Pause work apps</string>
     <string name="profile_work_profile_action_unlock">Unpause</string>
     <string name="profile_work_profile_state_locked">Work apps are paused</string>
-    <string name="recommendation_info_body">Telos occasionally shows one editorial app suggestion in the drawer or in search results that match a category like VPN or password managers. These are separate from your search results and installed apps - Telos doesn\u0027t currently have any affiliate or advertising relationship with the apps shown. You can turn these suggestions off entirely in Search settings.</string>
+    <string name="recommendation_info_body">Telos occasionally shows one editorial app suggestion in the drawer or in search results that match a category like VPN or password managers. These are separate from your search results and installed apps - Telos doesn\'t currently have any affiliate or advertising relationship with the apps shown. You can turn these suggestions off entirely in Search settings.</string>
     <string name="recommendation_info_title">About this recommendation</string>
     <string name="remove_font_style">Remove this font style</string>
-    <string name="restricted_settings_hint">Didn\u0027t work? Android blocks this setting the first time for apps installed outside an app store. Open App info, tap the ⋮ menu in the top right, then tap "Allow restricted settings".</string>
+    <string name="restricted_settings_hint">Didn\'t work? Android blocks this setting the first time for apps installed outside an app store. Open App info, tap the ⋮ menu in the top right, then tap "Allow restricted settings".</string>
     <string name="restricted_settings_hint_action">Open App info</string>
     <string name="save_as_file">Save as file</string>
     <string name="settings_lock_prompt_title">Unlock settings</string>
     <string name="settings_locked_message">These settings are protected. Authenticate to continue.</string>
-    <string name="shortcut_unavailable_description">This shortcut is unavailable because %1$s isn\u0027t the default launcher</string>
+    <string name="shortcut_unavailable_description">This shortcut is unavailable because %1$s isn\'t the default launcher</string>
     <string name="system_widget_used_of_total">%1$s of %2$s used</string>
     <string name="tag_exists_message">A tag with this name already exists. If you continue, the two tags will be merged</string>
     <string name="tag_no_items_message">No items are assigned to this tag. If you continue, the tag will be deleted</string>
     <string name="tags_auto_categorize">Auto-organize</string>
-    <string name="tags_auto_categorize_summary">Groups installed apps into tags by their system category (Games, Social, etc). Pin a tag as a favorite to use it as a folder. Re-run after installing new apps - this doesn\u0027t happen automatically, and re-running replaces the contents of any existing tag with the same name as a category.</string>
+    <string name="tags_auto_categorize_summary">Groups installed apps into tags by their system category (Games, Social, etc). Pin a tag as a favorite to use it as a folder. Re-run after installing new apps - this doesn\'t happen automatically, and re-running replaces the contents of any existing tag with the same name as a category.</string>
     <string name="theme_bundle_author">Author</string>
     <string name="theme_bundle_name">Name</string>
     <string name="theme_color_scheme_autogenerate">From primary color</string>
@@ -1892,7 +1892,7 @@
     <string name="typo_preview_short1">Ava</string>
     <string name="typo_preview_short2">Typ</string>
     <string name="uv_index">UV %1$d</string>
-    <string name="wallpaper_set_failure">Couldn\u0027t set wallpaper</string>
+    <string name="wallpaper_set_failure">Couldn\'t set wallpaper</string>
     <string name="wallpaper_set_success">Wallpaper set</string>
     <string name="wallpaper_video_active">Video wallpaper is active</string>
     <string name="wallpaper_video_inactive">Video selected — tap to activate</string>

@@ -43,7 +43,7 @@
         <item quantity="two">מילימטרים</item>
         <item quantity="other">מילימטרים</item>
     </plurals>
-    <string name="unit_inch_symbol">אינץ\u0027</string>
+    <string name="unit_inch_symbol">אינץ\'</string>
     <plurals name="unit_inch">
         <item quantity="one">אינץ\'</item>
         <item quantity="two">אינצ\'ים</item>
@@ -97,7 +97,7 @@
         <item quantity="two">מילימטר רבועים</item>
         <item quantity="other">מילימטר רבועים</item>
     </plurals>
-    <string name="unit_sqinch_symbol">אינץ\u0027 רבוע</string>
+    <string name="unit_sqinch_symbol">אינץ\' רבוע</string>
     <plurals name="unit_sqinch">
         <item quantity="one">אינץ\' רבוע</item>
         <item quantity="two">אינץ\' רבועים</item>
@@ -247,7 +247,7 @@
         <item quantity="two">טרהסיביות</item>
         <item quantity="other">טרהסיביות</item>
     </plurals>
-    <string name="unit_meter_per_second_symbol">מ\u0027/ש\u0027</string>
+    <string name="unit_meter_per_second_symbol">מ\'/ש\'</string>
     <plurals name="unit_meter_per_second">
         <item quantity="one">מ\'/ש\'</item>
         <item quantity="two">מ\'/ש\'</item>
@@ -277,13 +277,13 @@
         <item quantity="two">קילוגרמים</item>
         <item quantity="other">קילוגרמים</item>
     </plurals>
-    <string name="unit_gram_symbol">ג\u0027</string>
+    <string name="unit_gram_symbol">ג\'</string>
     <plurals name="unit_gram">
         <item quantity="one">גרם</item>
         <item quantity="two">גרמים</item>
         <item quantity="other">גרמים</item>
     </plurals>
-    <string name="unit_metric_ton_symbol">ט\u0027</string>
+    <string name="unit_metric_ton_symbol">ט\'</string>
     <plurals name="unit_metric_ton">
         <item quantity="one">טונה</item>
         <item quantity="two">טונות</item>
@@ -337,7 +337,7 @@
         <item quantity="two">קלווין</item>
         <item quantity="other">קלווין</item>
     </plurals>
-    <string name="unit_cubic_inch_symbol">אינץ\u0027 מעוקב</string>
+    <string name="unit_cubic_inch_symbol">אינץ\' מעוקב</string>
     <plurals name="unit_cubic_inch">
         <item quantity="one">אינץ\' מעוקב</item>
         <item quantity="two">אינץ\' מעוקב</item>
@@ -409,7 +409,7 @@
         <item quantity="two">כפיות</item>
         <item quantity="other">כפיות</item>
     </plurals>
-    <string name="unit_liter_symbol">ל\u0027</string>
+    <string name="unit_liter_symbol">ל\'</string>
     <plurals name="unit_liter">
         <item quantity="one">ליטר</item>
         <item quantity="two">ליטרים</item>

@@ -95,7 +95,7 @@
     <string name="default_websearch_2_url">https://www.youtube.com/results?search_query=${1}</string>
     <string name="default_websearch_3_name">Google Play</string>
     <string name="default_websearch_3_url">https://play.google.com/store/search?q=${1}</string>
-    <string name="websearch_dialog_url_error">Tá an sealbhóir áit \u0027${1}\u0027 ar iarraidh sa URL seo</string>
+    <string name="websearch_dialog_url_error">Tá an sealbhóir áit \'${1}\' ar iarraidh sa URL seo</string>
     <string name="websearch_dialog_replace_icon">Cuir deilbhín in ionad</string>
     <string name="websearch_dialog_delete_icon">Scrios an deilbhín</string>
     <string name="websearch_dialog_custom_icon">Deilbhín saincheaptha</string>
@@ -334,7 +334,7 @@
     <string name="recommendation_tab_intro">Tacaíonn íoslódáil na n-aipeanna seo le forbairt Telos.</string>
     <string name="recommendation_tab_hide">Folaigh an cluaisín seo</string>
     <string name="recommendation_info_title">Maidir leis an mholadh seo</string>
-    <string name="recommendation_info_body">Taispeánann Telos moladh aipe eagarthóireachta amháin ó am go chéile sa tarraiceán nó i dtorthaí cuardaigh a mheaitseálann catagóir cosúil le VPN nó bainisteoirí pasfhocal. Tá siad scartha ó do thorthaí cuardaigh agus ó d\u0027aipeanna suiteáilte - níl aon chaidreamh cleamhnaithe ná fógraíochta ag Telos leis na haipeanna a thaispeántar faoi láthair. Is féidir leat na moltaí seo a chur as go hiomlán i socruithe Cuardaigh.</string>
+    <string name="recommendation_info_body">Taispeánann Telos moladh aipe eagarthóireachta amháin ó am go chéile sa tarraiceán nó i dtorthaí cuardaigh a mheaitseálann catagóir cosúil le VPN nó bainisteoirí pasfhocal. Tá siad scartha ó do thorthaí cuardaigh agus ó d\'aipeanna suiteáilte - níl aon chaidreamh cleamhnaithe ná fógraíochta ag Telos leis na haipeanna a thaispeántar faoi láthair. Is féidir leat na moltaí seo a chur as go hiomlán i socruithe Cuardaigh.</string>
     <string name="preference_show_app_recommendations">Taispeáin moltaí aipeanna</string>
     <string name="preference_show_app_recommendations_summary">Mol aip amháin ó am go chéile i gcatagóir cosúil le VPN nó bainisteoirí pasfhocal, sa tarraiceán agus i dtorthaí cuardaigh comhoiriúnacha</string>
     <string name="preference_screen_routines">Modhanna agus Gnáthaimh</string>
@@ -350,7 +350,7 @@
     <string name="preference_advanced_search_fuzzy_matching">Meaitseáil doiléir</string>
     <string name="preference_advanced_search_fuzzy_matching_summary">Meaitseáil torthaí bunaithe ar thúslitreacha focal (m.sh. \"PS\" do Play Store)</string>
     <string name="preference_advanced_search_app_shortcuts">Aicearraí aipe</string>
-    <string name="preference_advanced_search_app_shortcuts_summary">Taispeáin gníomhartha dinimiciúla ó d\u0027aipeanna</string>
+    <string name="preference_advanced_search_app_shortcuts_summary">Taispeáin gníomhartha dinimiciúla ó d\'aipeanna</string>
     <string name="preference_advanced_search_contact_actions">Gníomhartha tapa teagmhálaí</string>
     <string name="preference_advanced_search_contact_actions_summary">Cnaipí glao/SMS/ríomhphoist inlíne do theagmhálaithe</string>
     <string name="preference_advanced_search_quick_settings">Cuardach socruithe tapa</string>
@@ -852,7 +852,7 @@
     <string name="charging_type_ac">Cuibheoir cumhachta</string>
     <string name="charging_type_wireless">Gan sreang</string>
     <string name="context_profile_activate_now">Gníomhach anois</string>
-    <string name="context_profile_activate_now_summary">Cuir an phróifíl seo ar siúl d\u0027aon turas, gan aird ar a truicear, go dtí go múchfar anseo í</string>
+    <string name="context_profile_activate_now_summary">Cuir an phróifíl seo ar siúl d\'aon turas, gan aird ar a truicear, go dtí go múchfar anseo í</string>
     <string name="context_profile_active_now">gníomhach anois</string>
     <string name="missing_permission_context_profile_wifi">Éilíonn léamh ainm an líonra WiFi cheangailte rochtain suímh. Ní úsáideann an launcher seo é ach chun ainm an líonra a sheiceáil don truicear seo.</string>
     <string name="missing_permission_context_profile_bluetooth">Éilíonn braite gléasanna Bluetooth ceangailte an cead Bluetooth.</string>
@@ -911,7 +911,7 @@
     <string name="widget_name_unknown">Anaithnid</string>
     <string name="widget_add_widget">Cuir giuirléid leis</string>
     <string name="widgets_tutorial_add_title">Cuir giuirléid leis</string>
-    <string name="widgets_tutorial_add_text">Tapáil \u0027Cuir giuirléidí in eagar\u0027 thíos, ansin \u0027Cuir giuirléid leis\u0027, chun giuirléid nua a chur anseo.</string>
+    <string name="widgets_tutorial_add_text">Tapáil \'Cuir giuirléidí in eagar\' thíos, ansin \'Cuir giuirléid leis\', chun giuirléid nua a chur anseo.</string>
     <string name="widgets_tutorial_move_title">Bog giuirléid</string>
     <string name="widgets_tutorial_move_text">Sa mhód eagarthóireachta, tarraing an hanla ar cheannteideal giuirléide chun í a athordú.</string>
     <string name="widgets_tutorial_resize_title">Athraigh méid giuirléide</string>
@@ -1050,7 +1050,7 @@
     <string name="missing_permission_appshortcuts_search">Socraigh %1$s mar an aip bhaile réamhshocraithe chun aicearraí aipe a chuardach.</string>
     <string name="missing_permission_appshortcuts_create">Socraigh %1$s mar an aip bhaile réamhshocraithe chun aicearraí a chruthú.</string>
     <string name="grant_permission">Deonaigh</string>
-    <string name="restricted_settings_hint">Níor oibrigh sé? Cuireann Android bac ar an socrú seo an chéad uair d\u0027aipeanna a suiteáladh lasmuigh d\u0027siopa aipeanna. Oscail Eolas faoin aip, tapáil an roghchlár ⋮ ag an gcúinne uachtarach ar dheis, ansin tapáil \"Ceadaigh socruithe srianta\".</string>
+    <string name="restricted_settings_hint">Níor oibrigh sé? Cuireann Android bac ar an socrú seo an chéad uair d\'aipeanna a suiteáladh lasmuigh d\'siopa aipeanna. Oscail Eolas faoin aip, tapáil an roghchlár ⋮ ag an gcúinne uachtarach ar dheis, ansin tapáil \"Ceadaigh socruithe srianta\".</string>
     <string name="restricted_settings_hint_action">Oscail Eolas faoin aip</string>
     <string name="preference_screen_appearance">Cuma</string>
     <string name="preference_theme">Téama</string>
@@ -1183,7 +1183,7 @@
     <string name="freeze_app_state_never">Ná reo choíche</string>
     <string name="preference_freeze_show_system_apps">Taispeáin aipeanna córais</string>
     <string name="preference_freeze_show_system_apps_summary">Is féidir le reo aipe córais bunfheidhmiúlacht an ghutháin a bhriseadh. Ná cumasaigh é seo ach má tá a fhios agat cad atá á dhéanamh agat.</string>
-    <string name="freeze_system_apps_warning">Is féidir le haip chórais a dhíchumasú nó a fhoirfheidhmiú a stopadh bunfheidhmiúlacht an ghutháin a bhriseadh agus, sa chás is measa, d\u0027fhéadfadh nach bhféadfadh do ghléas tosú. Ná hathraigh staid aipe córais ach má tá a fhios agat go beacht cad a dhéanann sí.</string>
+    <string name="freeze_system_apps_warning">Is féidir le haip chórais a dhíchumasú nó a fhoirfheidhmiú a stopadh bunfheidhmiúlacht an ghutháin a bhriseadh agus, sa chás is measa, d\'fhéadfadh nach bhféadfadh do ghléas tosú. Ná hathraigh staid aipe córais ach má tá a fhios agat go beacht cad a dhéanann sí.</string>
     <string name="preference_freeze_show_iconless_apps">Taispeáin aipeanna gan deilbhín</string>
     <string name="preference_freeze_show_iconless_apps_summary">Liostaigh freisin comhpháirteanna cúlra agus seirbhísí córais nach bhfuil deilbhín inseolta acu. Is féidir iad a reo nó a dhíchumasú mar aon aip eile.</string>
     <string name="preference_freeze_advanced_features">Gnéithe casta</string>
@@ -1288,8 +1288,8 @@
     <string name="preference_wallpaper_summary">Roghnaigh cúlbhrat</string>
     <string name="preference_category_badges">Suaitheantais</string>
     <string name="preference_notification_badges">Suaitheantais fógra</string>
-    <string name="preference_notification_badges_summary">Taispeáin suaitheantas d\u0027aipeanna le fógraí gan léamh</string>
-    <string name="preference_suspended_badges_summary">Taispeáin suaitheantas d\u0027aipeanna ar fionraí</string>
+    <string name="preference_notification_badges_summary">Taispeáin suaitheantas d\'aipeanna le fógraí gan léamh</string>
+    <string name="preference_suspended_badges_summary">Taispeáin suaitheantas d\'aipeanna ar fionraí</string>
     <string name="preference_suspended_badges">Aipeanna ar fionraí</string>
     <string name="preference_cloud_badges">Suaitheantais scamaill</string>
     <string name="preference_cloud_badges_summary">Taispeáin suaitheantas do chomhaid atá stóráilte sa scamall</string>
@@ -1310,7 +1310,7 @@
     <string name="web_app_shortcut_detect_icon">Brath an deilbhín go huathoibríoch</string>
     <string name="web_app_shortcut_enable_notifications">Cumasaigh fógraí</string>
     <string name="notification_channel_web_apps">Fógraí Gréasán-aipe</string>
-    <string name="notification_channel_web_apps_description">Fógraí a sheolann d\u0027aicearraí Gréasán-aipe</string>
+    <string name="notification_channel_web_apps_description">Fógraí a sheolann d\'aicearraí Gréasán-aipe</string>
     <string name="web_app_icon_picker_tab_icon_pack">Pacáiste deilbhíní</string>
     <string name="web_app_icon_picker_tab_photo">Grianghraf</string>
     <string name="web_app_icon_picker_tab_favicon">Favicon an tsuímh</string>
@@ -1629,7 +1629,7 @@
     <string name="backup_complete">Tá an cúltaca críochnaithe.</string>
     <string name="restore_invalid_file">Ní cosúil gur cúltaca é an comhad roghnaithe. An bhfuil tú cinnte gur roghnaigh tú an comhad ceart?</string>
     <string name="restore_incompatible_file">Cruthaíodh an cúltaca seo le leagan eile de %1$s agus ní féidir é a athchóiriú leis an leagan seo.</string>
-    <string name="restore_different_minor_version">Cruthaíodh an cúltaca seo le leagan eile de %1$s. D\u0027fhéadfadh nach n-athchóireofaí roinnt sonraí i gceart.</string>
+    <string name="restore_different_minor_version">Cruthaíodh an cúltaca seo le leagan eile de %1$s. D\'fhéadfadh nach n-athchóireofaí roinnt sonraí i gceart.</string>
     <string name="restore_meta">Cruthaithe %1$s ar %2$s le %3$s.</string>
     <string name="restore_complete">Athchóiríodh an cúltaca.</string>
     <string name="icon_picker_default_icon">Réamhshocraithe</string>
@@ -1914,7 +1914,7 @@
     <string name="gesture_action_web_apps_panel">Painéal Gréasán-aipeanna</string>
     <string name="web_apps_panel_edit">Cuir Painéal Gréasán-aipeanna in eagar</string>
     <string name="preference_screen_web_apps_panel">Painéal Gréasán-aipeanna</string>
-    <string name="preference_screen_web_apps_panel_summary">Painéal tiomnaithe ar an scáileán baile d\u0027aicearraí gréasán-aipe, a shroichtear trí scriosadh</string>
+    <string name="preference_screen_web_apps_panel_summary">Painéal tiomnaithe ar an scáileán baile d\'aicearraí gréasán-aipe, a shroichtear trí scriosadh</string>
     <string name="preference_web_apps_panel">Cumasaigh Painéal Gréasán-aipeanna</string>
     <string name="preference_web_apps_panel_summary">Sroich é trí scriosadh ón bpríomhscáileán baile. As de réir réamhshocraithe.</string>
     <string name="web_apps_panel_direction">Treo an scriosta</string>
@@ -1989,7 +1989,7 @@
     <string name="preference_search_locations_hide_uncategorized">Folaigh áiteanna gan chatagóir</string>
     <string name="preference_search_locations_hide_uncategorized_summary">Ná taispeáin ach torthaí le catagóirí sainmhínithe go maith, cosúil le caiféanna nó bialanna</string>
     <string name="preference_search_locations_show_map">Léarscáil</string>
-    <string name="preference_search_locations_show_map_summary">Taispeáin réamhamharc léarscáile d\u0027áiteanna</string>
+    <string name="preference_search_locations_show_map_summary">Taispeáin réamhamharc léarscáile d\'áiteanna</string>
     <string name="preference_search_locations_theme_map">Téamú léarscáile</string>
     <string name="preference_search_locations_theme_map_summary">Cuir scéim datha an launcher i bhfeidhm ar an léarscáil</string>
     <string name="preference_search_location_custom_tile_server_url">URL freastalaí tíleanna</string>
@@ -2030,7 +2030,7 @@
     <string name="preference_filter_bar_summary">Taispeáin scagairí tapa os cionn an mhéarchláir</string>
     <string name="preference_customize_filter_bar">Saincheap an barra scagairí</string>
     <string name="preference_customize_filter_bar_summary">Saincheap na míreanna atá sa bharra scagairí</string>
-    <string name="filter_settings_network_warning">Cumasaíonn an scagaire reatha torthaí ar líne de réir réamhshocraithe. D\u0027fhéadfaí do cheisteanna cuardaigh a sheoladh chuig seirbhísí gréasáin seachtracha gan fhios duit. Ar chúiseanna príobháideachta, ní mholtar é seo.</string>
+    <string name="filter_settings_network_warning">Cumasaíonn an scagaire reatha torthaí ar líne de réir réamhshocraithe. D\'fhéadfaí do cheisteanna cuardaigh a sheoladh chuig seirbhísí gréasáin seachtracha gan fhios duit. Ar chúiseanna príobháideachta, ní mholtar é seo.</string>
     <string name="preference_search_osm_locations">OpenStreetMap</string>
     <string name="preference_search_osm_locations_summary">Cuardaigh OpenStreetMap le haghaidh siopaí agus áiteanna eile sa cheantar áitiúil</string>
     <string name="poi_category_restaurant">Bialann</string>
@@ -2666,7 +2666,7 @@
     <string name="hf_files_compress_action">Comhbhrúigh</string>
     <string name="hf_files_delete_named">Scrios \"%1$s\"?</string>
     <string name="hf_files_delete_selected">Scrios na míreanna roghnaithe (%1$d)?</string>
-    <string name="hf_files_delete_system_warning">Is suíomh córais é seo. Má scriosann tú comhaid anseo, d\u0027fhéadfadh apanna nó an fón ar fad stopadh ag obair, agus ní féidir é a chealú.</string>
+    <string name="hf_files_delete_system_warning">Is suíomh córais é seo. Má scriosann tú comhaid anseo, d\'fhéadfadh apanna nó an fón ar fad stopadh ag obair, agus ní féidir é a chealú.</string>
     <string name="hf_files_cannot_undo">Ní féidir é seo a chealú.</string>
     <string name="hf_files_sort_descending">Íslitheach</string>
     <string name="hf_files_sort_folders_first">Fillteáin ar dtús</string>
@@ -2767,7 +2767,7 @@
     <string name="hf_comms_pin_digits">4–6 dhigit</string>
     <string name="hf_comms_lte_screen_off">4G nuair a bhíonn an scáileán as</string>
     <string name="hf_comms_lte_battery_saver">4G sa Chaomhnóir Ceallraí</string>
-    <string name="hf_sms_exact_alarm_hint">Gan an cead seo, d\u0027fhéadfadh teachtaireacht imeacht cúpla nóiméad déanach. Ceadaigh \"Alarms &amp; reminders\" do Telos chun é a sheoladh in am.</string>
+    <string name="hf_sms_exact_alarm_hint">Gan an cead seo, d\'fhéadfadh teachtaireacht imeacht cúpla nóiméad déanach. Ceadaigh \"Alarms &amp; reminders\" do Telos chun é a sheoladh in am.</string>
     <string name="hf_buildinfo_type">Cineál tógála</string>
     <string name="hf_buildinfo_signature">Hais sínithe</string>
     <string name="hf_buildinfo_features">Gnéithe</string>
@@ -2954,7 +2954,7 @@
     <string name="settings_shizuku_diagnostics_summary">Inspect live OS compatibility, self-grant permissions, and copy ADB commands</string>
     <string name="settings_shizuku_dialog_title">Shizuku Auto-Start Diagnostics &amp; Setup</string>
     <string name="settings_shizuku_grant_retry">Grant via Shizuku &amp; Retry</string>
-    <string name="settings_shizuku_step1_desc">Open the Shizuku app, start it once via Wireless Debugging, and tap \u0027Grant via Shizuku\u0027 below so the Launcher can configure itself automatically.</string>
+    <string name="settings_shizuku_step1_desc">Open the Shizuku app, start it once via Wireless Debugging, and tap \'Grant via Shizuku\' below so the Launcher can configure itself automatically.</string>
     <string name="settings_shizuku_step1_title">Step 1 (Automatic without PC):</string>
     <string name="settings_shizuku_step2_title">Step 2 (Manual via ADB / Termux):</string>
     <string name="settings_shizuku_step3_title">Step 3 (Preventing OS Background Killing):</string>
@@ -3060,7 +3060,7 @@
     <string name="fit_dashboard">Dashboard</string>
     <string name="fit_fat">Fat</string>
     <string name="fit_heart_rate">Heart Rate</string>
-    <string name="fit_meals">Today\u0027s Meals</string>
+    <string name="fit_meals">Today\'s Meals</string>
     <string name="fit_nutrition">Nutrition &amp; Macros</string>
     <string name="fit_protein">Protein</string>
     <string name="fit_search_food">Search food, protein, supplement...</string>

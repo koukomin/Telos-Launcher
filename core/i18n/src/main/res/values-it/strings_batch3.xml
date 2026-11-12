@@ -1,14 +1,14 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="vn_subtitle_sources">Fonti dei sottotitoli</string>
-    <string name="vn_subtitle_sources_help">Le fonti vengono interrogate dall\u0027alto finché una non dà risultati. Le prime due non richiedono un account.</string>
+    <string name="vn_subtitle_sources_help">Le fonti vengono interrogate dall\'alto finché una non dà risultati. Le prime due non richiedono un account.</string>
     <string name="vn_source_os_legacy">OpenSubtitles (senza account)</string>
     <string name="vn_source_podnapisi">Podnapisi (senza account)</string>
     <string name="vn_source_os_com">OpenSubtitles.com (il tuo account)</string>
     <string name="vn_move_up">Sposta su</string>
     <string name="vn_move_down">Sposta giù</string>
     <string name="vn_os_user_agent">User-Agent di OpenSubtitles (facoltativo)</string>
-    <string name="vn_os_user_agent_help">Se vuoto, usa l\u0027agente di prova generico. Un agente gratuito registrato su opensubtitles.org è più affidabile.</string>
+    <string name="vn_os_user_agent_help">Se vuoto, usa l\'agente di prova generico. Un agente gratuito registrato su opensubtitles.org è più affidabile.</string>
     <string name="vn_search_all_sources">Cerca in tutte le fonti</string>
     <string name="vn_source_label">Fonte: %1$s</string>
     <string name="vn_no_sources">Nessuna fonte di sottotitoli è attiva. Attivane una in Servizi video.</string>
@@ -59,8 +59,8 @@
     <string name="vn_no_subtitles_found">Nessun sottotitolo trovato per «%1$s»</string>
     <string name="blocklists_web_title">Liste di blocco</string>
     <string name="blocklists_torrent_title">Liste di blocco dei peer</string>
-    <string name="blocklists_web_info">Liste di domini aggiunte all\u0027elenco integrato di pubblicità e tracker delle app web. Non viene scaricato nulla finché non attivi una lista. Ogni lista attiva viene recuperata direttamente dall\u0027indirizzo mostrato sotto; non viene contattato nessun altro server e non viene inviato nulla su di te.</string>
-    <string name="blocklists_torrent_info">Intervalli di indirizzi IP ai quali lo streaming di torrent rifiuta di connettersi. Non viene scaricato nulla finché non attivi una lista. Ogni lista attiva viene recuperata direttamente dall\u0027indirizzo mostrato sotto; non viene contattato nessun altro server e non viene inviato nulla su di te. Una lista di blocco riduce le connessioni indesiderate ma non garantisce l\u0027anonimato.</string>
+    <string name="blocklists_web_info">Liste di domini aggiunte all\'elenco integrato di pubblicità e tracker delle app web. Non viene scaricato nulla finché non attivi una lista. Ogni lista attiva viene recuperata direttamente dall\'indirizzo mostrato sotto; non viene contattato nessun altro server e non viene inviato nulla su di te.</string>
+    <string name="blocklists_torrent_info">Intervalli di indirizzi IP ai quali lo streaming di torrent rifiuta di connettersi. Non viene scaricato nulla finché non attivi una lista. Ogni lista attiva viene recuperata direttamente dall\'indirizzo mostrato sotto; non viene contattato nessun altro server e non viene inviato nulla su di te. Una lista di blocco riduce le connessioni indesiderate ma non garantisce l\'anonimato.</string>
     <string name="blocklists_downloaded_from">Scaricata da %1$s</string>
     <string name="blocklists_license">Licenza: %1$s</string>
     <string name="blocklists_never">Non ancora scaricata</string>

@@ -109,7 +109,7 @@
     <string name="au3_commsfreeze_clir_custom">Personalizzat</string>
     <string name="au3_commsfreeze_dialer_is_default">Telos Phone hija l-app tat-telefon default</string>
     <string name="au3_commsfreeze_dialer_required">Meħtieġ għall-UI tas-sejħa, it-tweġiba, u l-mute/speaker</string>
-    <string name="au3_commsfreeze_sip_unavailable">SIP mhuwiex disponibbli f\u0027din il-build jew fuq dan l-apparat (jeħtieġ Android 9 jew aktar ġdid)</string>
+    <string name="au3_commsfreeze_sip_unavailable">SIP mhuwiex disponibbli f\'din il-build jew fuq dan l-apparat (jeħtieġ Android 9 jew aktar ġdid)</string>
     <string name="au3_commsfreeze_sip_off">Mitfi</string>
     <string name="au3_commsfreeze_sip_registered">Irreġistrat, lest għas-sejħiet</string>
     <string name="au3_commsfreeze_sip_connecting">Qed jikkonnettja…</string>
@@ -119,7 +119,7 @@
     <string name="au3_commsfreeze_not_configured">Mhux ikkonfigurat</string>
     <string name="au3_commsfreeze_sip_out_off">Qatt, irċievi sejħiet biss</string>
     <string name="au3_commsfreeze_sip_out_choose">Offri buttuna SIP meta tagħmel sejħa</string>
-    <string name="au3_commsfreeze_sip_out_default">Uża SIP b\u0027mod default</string>
+    <string name="au3_commsfreeze_sip_out_default">Uża SIP b\'mod default</string>
     <string name="au3_commsfreeze_last_sync">L-aħħar sinkronizzazzjoni: %1$s</string>
     <string name="au3_commsfreeze_never_synced">Qatt sinkronizzat</string>
     <string name="au3_commsfreeze_syncing">Qed jissinkronizza…</string>
@@ -133,7 +133,7 @@
     <string name="au3_launcher3_permission_denied">Mhux mogħti</string>
     <string name="au3_launcher3_no_permissions">Din l-app ma titlobx ebda permess</string>
     <string name="au3_launcher3_change_icon">Biddel l-ikona</string>
-    <string name="au3_launcher3_drag_handle">Kebbes biex terġa\u0027 tirranġa</string>
+    <string name="au3_launcher3_drag_handle">Kebbes biex terġa\' tirranġa</string>
     <string name="au3_launcher3_add_shortcut">Żid shortcut</string>
     <string name="au3_launcher3_widgets_none_found">L-ebda widget li jaqbel</string>
     <string name="au3_launcher3_tutorial_add_text">Agħżel ‘Żid widget’ mill-menu ħdejn il-bar tat-tfittxija, jew mill-menu li jinfetaħ meta tagħfas fit-tul l-iskrin ewlieni, biex tpoġġi widget ġdid.</string>
@@ -165,10 +165,10 @@
     <string name="au3_searchset_more_options">Aktar għażliet</string>
     <string name="au3_searchset_tag_delete_confirm">Tħassar it-tikketta “%1$s”? L-oġġetti assenjati lilha ma jitħassrux.</string>
     <string name="au3_secplug_wrong_pin">PIN ħażin</string>
-    <string name="au3_secplug_web_apps_empty">Għad m\u0027hemm l-ebda web apps. Żid waħda bil-buttuna t\u0027hawn taħt jew agħżel xi wħud mill-presets hawn fuq.</string>
-    <string name="au3_secplug_applock_web_apps_empty">Għad m\u0027hemm l-ebda web apps biex jinqafluh. Oħloq waħda l-ewwel fis-settings tal-Web Apps.</string>
-    <string name="au3_sysa_backup_failed">Il-backup ma setax jinħoloq. Iċċekkja li l-post jista\u0027 jinkiteb u li hemm biżżejjed spazju ħieles, imbagħad erġa\u0027 pprova.</string>
-    <string name="au3_sysa_try_again">Erġa\u0027 pprova</string>
+    <string name="au3_secplug_web_apps_empty">Għad m\'hemm l-ebda web apps. Żid waħda bil-buttuna t\'hawn taħt jew agħżel xi wħud mill-presets hawn fuq.</string>
+    <string name="au3_secplug_applock_web_apps_empty">Għad m\'hemm l-ebda web apps biex jinqafluh. Oħloq waħda l-ewwel fis-settings tal-Web Apps.</string>
+    <string name="au3_sysa_backup_failed">Il-backup ma setax jinħoloq. Iċċekkja li l-post jista\' jinkiteb u li hemm biżżejjed spazju ħieles, imbagħad erġa\' pprova.</string>
+    <string name="au3_sysa_try_again">Erġa\' pprova</string>
     <string name="au3_sysa_restore_failed">Il-backup ma setax jiġi restawrat.</string>
     <string name="au3_sysa_restore_partial">Il-backup ġie restawrat, iżda xi partijiet ma setgħux jiġu restawrati.</string>
     <string name="au3_sysb_yes">Iva</string>
@@ -177,12 +177,12 @@
     <string name="au3_sysb_crash_type_exception">Eċċezzjoni</string>
     <string name="au3_sysb_crash_type_crash">Crash</string>
     <string name="au3_sysb_crash_device_info">Informazzjoni dwar l-apparat</string>
-    <string name="au3_sysb_crash_share_via">Aqsam permezz ta\u0027</string>
+    <string name="au3_sysb_crash_share_via">Aqsam permezz ta\'</string>
     <string name="au3_sysb_crash_create_issue">Irrapporta fuq GitHub</string>
     <string name="au3_sysb_crash_show_exceptions">Uri l-eċċezzjonijiet</string>
     <string name="au3_sysb_crash_show_crashes">Uri s-crashes</string>
     <string name="au3_sysb_crash_empty">L-ebda rapport mill-aħħar 7 ijiem</string>
-    <string name="au3_sysb_crash_not_found">Dan ir-rapport m\u0027għadux jeżisti</string>
+    <string name="au3_sysb_crash_not_found">Dan ir-rapport m\'għadux jeżisti</string>
     <string name="au3_sysb_no_browser">Ma nstab l-ebda web browser</string>
     <string name="au3_sysb_dump_failed">L-istampa tal-memorja ma setgħetx tinħoloq</string>
     <string name="au3_sysb_normalizer_title">Test tan-normalizzazzjoni tal-istrings</string>

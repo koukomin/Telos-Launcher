@@ -6,7 +6,7 @@
     <string name="au13_tvextra_epg_summary">Mostra cosa è in onda ora e dopo per i canali greci (guida XMLTV da ext.greektv.app o epgshare01.online, aggiornata al massimo ogni 6 ore). Usato solo quando è selezionata la Grecia.</string>
     <string name="au13_tvextra_marker">Extra</string>
     <string name="au13_tvextra_marker_description">Questo canale proviene da una fonte aggiuntiva facoltativa e potrebbe essere meno affidabile</string>
-    <string name="au13_tvextraui_disclaimer_extra">Per i canali greci Telos TV può usare anche fonti aggiuntive facoltative: playlist pubbliche (raw.githubusercontent.com) e una guida ai programmi (ext.greektv.app, epgshare01.online). Vengono contattate solo quando è selezionata la Grecia e l\u0027interruttore corrispondente è attivo, e solo mentre TV è aperta. Puoi disattivarle nell\u0027elenco dei paesi.</string>
+    <string name="au13_tvextraui_disclaimer_extra">Per i canali greci Telos TV può usare anche fonti aggiuntive facoltative: playlist pubbliche (raw.githubusercontent.com) e una guida ai programmi (ext.greektv.app, epgshare01.online). Vengono contattate solo quando è selezionata la Grecia e l\'interruttore corrispondente è attivo, e solo mentre TV è aperta. Puoi disattivarle nell\'elenco dei paesi.</string>
     <string name="au13_tvextraui_now_line">Ora: %1$s</string>
     <string name="au13_tvextraui_player_now">Ora: %1$s  %2$s–%3$s</string>
     <string name="au13_tvextraui_player_next">Dopo: %1$s %2$s</string>

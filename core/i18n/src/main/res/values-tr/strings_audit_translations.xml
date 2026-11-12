@@ -78,7 +78,7 @@
     <string name="au_messages_scheduled_fill_fields">Zamanlamak için bir numara ve mesaj girin.</string>
     <string name="au_messages_scheduled_past">Gelecekte bir zaman seçin.</string>
     <string name="au_messages_scheduled_saved">Mesaj zamanlandı</string>
-    <string name="au_messages_scheduled_permission">Telos\u0027un zamanlanan saatte kısa mesaj gönderebilmesi için izin gerekiyor.</string>
+    <string name="au_messages_scheduled_permission">Telos\'un zamanlanan saatte kısa mesaj gönderebilmesi için izin gerekiyor.</string>
     <string name="au_music_title">Müzik</string>
     <string name="au_music_tab_songs">Şarkılar</string>
     <string name="au_music_tab_artists">Sanatçılar</string>
@@ -267,7 +267,7 @@
     <string name="au_video_trakt_contacting">Trakt ile bağlantı kuruluyor…</string>
     <string name="au_video_trakt_connected">Bağlandı</string>
     <string name="au_video_trakt_signin_failed">Oturum açma başarısız</string>
-    <string name="au_video_trakt_unreachable">Trakt\u0027a ulaşılamadı</string>
+    <string name="au_video_trakt_unreachable">Trakt\'a ulaşılamadı</string>
     <string name="au_video_trakt_open_and_enter">%1$s adresini açın ve kodu girin</string>
     <string name="au_viewer_yesterday">Dün</string>
     <string name="au_viewer_other">Diğer</string>

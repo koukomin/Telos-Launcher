@@ -119,7 +119,7 @@
     <string name="pdft_then">Na chéad chéimeanna eile</string>
     <string name="pdft_share">Comhroinn</string>
     <string name="pdft_open">Oscail</string>
-    <string name="pdft_use_as_input">Úsáid mar ionchur d\u0027uirlis eile</string>
+    <string name="pdft_use_as_input">Úsáid mar ionchur d\'uirlis eile</string>
     <string name="pdft_copy_text">Cóipeáil an téacs</string>
     <string name="pdft_copied">Cóipeáladh an téacs</string>
     <string name="pdft_merge_hint">Cuir leis na PDF ba mhaith leat a chumasc.</string>
@@ -174,7 +174,7 @@
     <string name="pdft_rotation">Rothlú</string>
     <string name="pdft_numbers_format">Formáid</string>
     <string name="pdft_numbers_format_label">Formáid uimhrithe</string>
-    <string name="pdft_numbers_format_hint">Úsáid {n} d\u0027uimhir an leathanaigh agus {total} do líon na leathanach.</string>
+    <string name="pdft_numbers_format_hint">Úsáid {n} d\'uimhir an leathanaigh agus {total} do líon na leathanach.</string>
     <string name="pdft_numbers_sample">Sampla: %1$s</string>
     <string name="pdft_numbers_start">An chéad uimhir</string>
     <string name="pdft_numbers_skip">Líon na gcéad leathanach le scipeáil</string>
@@ -226,7 +226,7 @@
     <string name="pdft_extract_action">Bain íomhánna amach: %1$d</string>
     <string name="pdft_text_markers">Marcáil tús gach leathanaigh</string>
     <string name="pdft_page_marker">--- Leathanach {n} ---</string>
-    <string name="pdft_no_text">Níl aon téacs inléite sa PDF seo. B\u0027fhéidir gur scanadh atá ann.</string>
+    <string name="pdft_no_text">Níl aon téacs inléite sa PDF seo. B\'fhéidir gur scanadh atá ann.</string>
     <string name="pdft_preview_hint">Tapáil leathanach chun é a fheiceáil ar scáileán iomlán.</string>
     <string name="pdft_compare_original">Bunleagan</string>
     <string name="pdft_compare_revised">Leagan athbhreithnithe</string>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="camera_title">Fotocamera</string>
-    <string name="camera_need_permission">Serve l\u0027autorizzazione fotocamera</string>
+    <string name="camera_need_permission">Serve l\'autorizzazione fotocamera</string>
     <string name="camera_mode_photo">Foto</string>
     <string name="camera_mode_video">Video</string>
     <string name="camera_mode_portrait">Ritratto</string>

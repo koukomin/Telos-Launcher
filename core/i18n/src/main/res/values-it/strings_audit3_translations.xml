@@ -96,7 +96,7 @@
     <string name="au3_commsfreeze_quality_high">Alta (96 kbps)</string>
     <string name="au3_commsfreeze_sim_ask">Chiedi sempre</string>
     <string name="au3_commsfreeze_sim_last">Ultima SIM usata</string>
-    <string name="au3_commsfreeze_sim_log">Stessa SIM dell\u0027ultima chiamata a questo numero</string>
+    <string name="au3_commsfreeze_sim_log">Stessa SIM dell\'ultima chiamata a questo numero</string>
     <string name="au3_commsfreeze_sim_1">SIM 1</string>
     <string name="au3_commsfreeze_sim_2">SIM 2</string>
     <string name="au3_commsfreeze_not_assigned">Non assegnato</string>
@@ -107,8 +107,8 @@
     <string name="au3_commsfreeze_clir_uk">Regno Unito 141</string>
     <string name="au3_commsfreeze_clir_jp">Giappone 1831</string>
     <string name="au3_commsfreeze_clir_custom">Personalizzato</string>
-    <string name="au3_commsfreeze_dialer_is_default">Telos Phone è l\u0027app telefono predefinita</string>
-    <string name="au3_commsfreeze_dialer_required">Necessario per l\u0027interfaccia di chiamata, la risposta e muto/vivavoce</string>
+    <string name="au3_commsfreeze_dialer_is_default">Telos Phone è l\'app telefono predefinita</string>
+    <string name="au3_commsfreeze_dialer_required">Necessario per l\'interfaccia di chiamata, la risposta e muto/vivavoce</string>
     <string name="au3_commsfreeze_sip_unavailable">SIP non è disponibile in questa build o su questo dispositivo (richiede Android 9 o successivo)</string>
     <string name="au3_commsfreeze_sip_off">Disattivato</string>
     <string name="au3_commsfreeze_sip_registered">Registrato, pronto per le chiamate</string>
@@ -145,8 +145,8 @@
     <string name="au3_searchset_intent_extra_key">Chiave extra</string>
     <string name="au3_searchset_intent_data_template">Modello dati</string>
     <string name="au3_searchset_intent_extra_template">Modello extra stringa</string>
-    <string name="au3_searchset_intent_data_template_hint">Il modello di URI usato per costruire l\u0027URI dei dati dell\u0027intent. Usa ‘${1}’ come segnaposto per il termine di ricerca effettivo</string>
-    <string name="au3_searchset_intent_extra_template_hint">Il modello usato per costruire la stringa passata all\u0027intent come extra stringa. Usa ‘${1}’ come segnaposto per il termine di ricerca effettivo</string>
+    <string name="au3_searchset_intent_data_template_hint">Il modello di URI usato per costruire l\'URI dei dati dell\'intent. Usa ‘${1}’ come segnaposto per il termine di ricerca effettivo</string>
+    <string name="au3_searchset_intent_extra_template_hint">Il modello usato per costruire la stringa passata all\'intent come extra stringa. Usa ‘${1}’ come segnaposto per il termine di ricerca effettivo</string>
     <string name="au3_searchset_intent_base">Intent di base</string>
     <string name="au3_searchset_intent_action">Azione</string>
     <string name="au3_searchset_intent_category">Categoria</string>
