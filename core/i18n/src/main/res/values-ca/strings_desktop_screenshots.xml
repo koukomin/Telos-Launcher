@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_shot_title">Captura de pantalla</string>
+    <string name="desktop_shot_full">Pantalla completa</string>
+    <string name="desktop_shot_region">Regió rectangular</string>
+    <string name="desktop_shot_window">Finestra</string>
+    <string name="desktop_shot_clipboard">Copia al porta-retalls</string>
+    <string name="desktop_shot_clipboard_hint">Desactivat per defecte. També amb TELOS_SHOT_CLIPBOARD=1.</string>
+    <string name="desktop_shot_redact">Redacta abans de desar</string>
+    <string name="desktop_shot_redact_hint">Dibuixa un rectangle per enfosquir contingut privat i desa.</string>
+    <string name="desktop_shot_save">Desa</string>
+    <string name="desktop_shot_save_without_redact">Desa sense redactar</string>
+    <string name="desktop_shot_saved">Captura desada</string>
+    <string name="desktop_shot_failed">La captura ha fallat</string>
+    <string name="desktop_shot_path_hint">Desa a Pictures/Screenshots del vault (o dades portàtils), només propietari (0600).</string>
+</resources>

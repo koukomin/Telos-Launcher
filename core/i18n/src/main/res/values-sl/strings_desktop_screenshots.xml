@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_shot_title">Posnetek zaslona</string>
+    <string name="desktop_shot_full">Cel zaslon</string>
+    <string name="desktop_shot_region">Pravokotno območje</string>
+    <string name="desktop_shot_window">Okno</string>
+    <string name="desktop_shot_clipboard">Kopiraj na odložišče</string>
+    <string name="desktop_shot_clipboard_hint">Privzeto izklopnjeno. Tudi z TELOS_SHOT_CLIPBOARD=1.</string>
+    <string name="desktop_shot_redact">Zakrij pred shranjevanjem</string>
+    <string name="desktop_shot_redact_hint">Narišite pravokotnik za počrnitev zasebne vsebine in shranite.</string>
+    <string name="desktop_shot_save">Shrani</string>
+    <string name="desktop_shot_save_without_redact">Shrani brez zakritja</string>
+    <string name="desktop_shot_saved">Posnetek shranjen</string>
+    <string name="desktop_shot_failed">Posnetek ni uspel</string>
+    <string name="desktop_shot_path_hint">Shrani v Pictures/Screenshots trezorja (ali portable data), samo lastnik (0600).</string>
+</resources>

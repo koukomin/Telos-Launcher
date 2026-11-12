@@ -390,6 +390,14 @@ fun DesktopWorkspace(
             Box(Modifier.align(Alignment.TopEnd).padding(top = 40.dp, end = 12.dp).zIndex(203f)) { ClipboardPopup() }
             Box(Modifier.align(Alignment.CenterEnd).zIndex(204f)) { NotificationSidebar() }
             HelixToastOverlay(Modifier.align(Alignment.TopEnd).padding(top = 48.dp, end = 12.dp).zIndex(205f))
+            Box(Modifier.align(Alignment.TopEnd).padding(top = 40.dp, end = 48.dp).zIndex(206f)) {
+                com.telos.desktop.overlay.ScreenshotCaptureMenu()
+            }
+            if (TelosCaptureTool.pendingRedact != null) {
+                Box(Modifier.fillMaxSize().zIndex(320f)) {
+                    com.telos.desktop.overlay.ScreenshotRedactionOverlay()
+                }
+            }
             com.telos.desktop.session.PortalFileChooser.pending?.let { req ->
                 Box(Modifier.align(Alignment.Center).zIndex(310f)) {
                     com.telos.desktop.vault.TelosFilePickerModal(
@@ -482,6 +490,14 @@ fun handleDesktopKeys(
         return true
     }
     if (key == Key.Escape) {
+        if (TelosCaptureTool.pendingRedact != null) {
+            TelosCaptureTool.cancelPending()
+            return true
+        }
+        if (TelosCaptureTool.menuOpen) {
+            TelosCaptureTool.menuOpen = false
+            return true
+        }
         if (DesktopChrome.appGridOpen) {
             DesktopChrome.appGridOpen = false
             return true
@@ -524,7 +540,11 @@ fun handleDesktopKeys(
     }
     // === TELOS_PENDING_REVIEW_END: telos_de_final_polish ===
     if (key == Key.PrintScreen) {
-        if (shift) TelosCaptureTool.area() else TelosCaptureTool.fullscreen()
+        when {
+            ctrl -> TelosCaptureTool.window()
+            shift -> TelosCaptureTool.area()
+            else -> TelosCaptureTool.fullscreen()
+        }
         return true
     }
     if (ctrl && key == Key.Escape) {

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_shot_title">Zrzut ekranu</string>
+    <string name="desktop_shot_full">Pełny ekran</string>
+    <string name="desktop_shot_region">Obszar prostokątny</string>
+    <string name="desktop_shot_window">Okno</string>
+    <string name="desktop_shot_clipboard">Kopiuj do schowka</string>
+    <string name="desktop_shot_clipboard_hint">Domyślnie wyłączone. Też z TELOS_SHOT_CLIPBOARD=1.</string>
+    <string name="desktop_shot_redact">Zasłoń przed zapisem</string>
+    <string name="desktop_shot_redact_hint">Narysuj prostokąt, aby zamazać prywatną treść, potem zapisz.</string>
+    <string name="desktop_shot_save">Zapisz</string>
+    <string name="desktop_shot_save_without_redact">Zapisz bez zasłaniania</string>
+    <string name="desktop_shot_saved">Zrzut zapisany</string>
+    <string name="desktop_shot_failed">Zrzut nie powiódł się</string>
+    <string name="desktop_shot_path_hint">Zapisuje w Pictures/Screenshots sejfu (lub danych przenośnych), tylko właściciel (0600).</string>
+</resources>

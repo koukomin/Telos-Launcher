@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_shot_title">Skærmbillede</string>
+    <string name="desktop_shot_full">Hele skærmen</string>
+    <string name="desktop_shot_region">Rektangulært område</string>
+    <string name="desktop_shot_window">Vindue</string>
+    <string name="desktop_shot_clipboard">Kopiér til udklipsholder</string>
+    <string name="desktop_shot_clipboard_hint">Fra som standard. Også med TELOS_SHOT_CLIPBOARD=1.</string>
+    <string name="desktop_shot_redact">Slør før gem</string>
+    <string name="desktop_shot_redact_hint">Tegn et rektangel for at sortlægge privat indhold, og gem.</string>
+    <string name="desktop_shot_save">Gem</string>
+    <string name="desktop_shot_save_without_redact">Gem uden sløring</string>
+    <string name="desktop_shot_saved">Skærmbillede gemt</string>
+    <string name="desktop_shot_failed">Skærmbillede mislykkedes</string>
+    <string name="desktop_shot_path_hint">Gemmer under Pictures/Screenshots i vault (eller portable data), kun ejer (0600).</string>
+</resources>

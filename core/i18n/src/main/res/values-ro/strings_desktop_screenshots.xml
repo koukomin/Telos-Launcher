@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_shot_title">Captură de ecran</string>
+    <string name="desktop_shot_full">Ecran complet</string>
+    <string name="desktop_shot_region">Regiune dreptunghiulară</string>
+    <string name="desktop_shot_window">Fereastră</string>
+    <string name="desktop_shot_clipboard">Copiază în clipboard</string>
+    <string name="desktop_shot_clipboard_hint">Dezactivat implicit. Și cu TELOS_SHOT_CLIPBOARD=1.</string>
+    <string name="desktop_shot_redact">Ascunde înainte de salvare</string>
+    <string name="desktop_shot_redact_hint">Desenați un dreptunghi pentru a înnegri conținut privat, apoi salvați.</string>
+    <string name="desktop_shot_save">Salvează</string>
+    <string name="desktop_shot_save_without_redact">Salvează fără ascundere</string>
+    <string name="desktop_shot_saved">Captură salvată</string>
+    <string name="desktop_shot_failed">Captura a eșuat</string>
+    <string name="desktop_shot_path_hint">Salvează în Pictures/Screenshots din vault (sau date portabile), doar proprietar (0600).</string>
+</resources>

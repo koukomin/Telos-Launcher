@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_shot_title">স্ক্রিনশট</string>
+    <string name="desktop_shot_full">পূর্ণ স্ক্রিন</string>
+    <string name="desktop_shot_region">আয়তাকার অঞ্চল</string>
+    <string name="desktop_shot_window">উইন্ডো</string>
+    <string name="desktop_shot_clipboard">ক্লিপবোর্ডে অনুলিপি</string>
+    <string name="desktop_shot_clipboard_hint">ডিফল্টে বন্ধ। TELOS_SHOT_CLIPBOARD=1 দিয়েও চালু।</string>
+    <string name="desktop_shot_redact">সংরক্ষণের আগে লুকান</string>
+    <string name="desktop_shot_redact_hint">ব্যক্তিগত বিষয়বস্তু কালো করতে আয়তক্ষেত্র আঁকুন, তারপর সংরক্ষণ করুন।</string>
+    <string name="desktop_shot_save">সংরক্ষণ</string>
+    <string name="desktop_shot_save_without_redact">না লুকিয়ে সংরক্ষণ</string>
+    <string name="desktop_shot_saved">স্ক্রিনশট সংরক্ষিত</string>
+    <string name="desktop_shot_failed">স্ক্রিনশট ব্যর্থ</string>
+    <string name="desktop_shot_path_hint">ভল্ট (বা পোর্টেবল ডেটা) এর Pictures/Screenshots-এ শুধু মালিক (0600) হিসেবে সংরক্ষণ করে।</string>
+</resources>

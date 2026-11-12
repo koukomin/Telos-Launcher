@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_shot_title">Screenshot</string>
+    <string name="desktop_shot_full">Full screen</string>
+    <string name="desktop_shot_region">Rectangular region</string>
+    <string name="desktop_shot_window">Window</string>
+    <string name="desktop_shot_clipboard">Copy to clipboard</string>
+    <string name="desktop_shot_clipboard_hint">Off by default. Also enabled with TELOS_SHOT_CLIPBOARD=1.</string>
+    <string name="desktop_shot_redact">Redact before save</string>
+    <string name="desktop_shot_redact_hint">Draw a rectangle to black out private content, then save.</string>
+    <string name="desktop_shot_save">Save</string>
+    <string name="desktop_shot_save_without_redact">Save without redaction</string>
+    <string name="desktop_shot_saved">Screenshot saved</string>
+    <string name="desktop_shot_failed">Screenshot failed</string>
+    <string name="desktop_shot_path_hint">Saves under Pictures/Screenshots in the vault (or portable data), owner-only (0600).</string>
+</resources>

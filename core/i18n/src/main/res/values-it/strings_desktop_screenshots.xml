@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_shot_title">Screenshot</string>
+    <string name="desktop_shot_full">Schermo intero</string>
+    <string name="desktop_shot_region">Area rettangolare</string>
+    <string name="desktop_shot_window">Finestra</string>
+    <string name="desktop_shot_clipboard">Copia negli appunti</string>
+    <string name="desktop_shot_clipboard_hint">Disattivato per impostazione predefinita. Anche con TELOS_SHOT_CLIPBOARD=1.</string>
+    <string name="desktop_shot_redact">Oscura prima di salvare</string>
+    <string name="desktop_shot_redact_hint">Disegna un rettangolo per annerire contenuti privati, poi salva.</string>
+    <string name="desktop_shot_save">Salva</string>
+    <string name="desktop_shot_save_without_redact">Salva senza oscurare</string>
+    <string name="desktop_shot_saved">Screenshot salvato</string>
+    <string name="desktop_shot_failed">Screenshot non riuscito</string>
+    <string name="desktop_shot_path_hint">Salva in Pictures/Screenshots del vault (o dati portatili), solo proprietario (0600).</string>
+</resources>

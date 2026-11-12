@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_shot_title">Ekrano kopija</string>
+    <string name="desktop_shot_full">Visas ekranas</string>
+    <string name="desktop_shot_region">Stačiakampė sritis</string>
+    <string name="desktop_shot_window">Langas</string>
+    <string name="desktop_shot_clipboard">Kopijuoti į iškarpinę</string>
+    <string name="desktop_shot_clipboard_hint">Pagal numatymą išjungta. Taip pat su TELOS_SHOT_CLIPBOARD=1.</string>
+    <string name="desktop_shot_redact">Užtušuoti prieš įrašant</string>
+    <string name="desktop_shot_redact_hint">Nubrėžkite stačiakampį privačiam turiniui užtušuoti ir įrašykite.</string>
+    <string name="desktop_shot_save">Įrašyti</string>
+    <string name="desktop_shot_save_without_redact">Įrašyti be užtušavimo</string>
+    <string name="desktop_shot_saved">Ekrano kopija įrašyta</string>
+    <string name="desktop_shot_failed">Ekrano kopija nepavyko</string>
+    <string name="desktop_shot_path_hint">Įrašo į vault (arba portable data) Pictures/Screenshots, tik savininkas (0600).</string>
+</resources>

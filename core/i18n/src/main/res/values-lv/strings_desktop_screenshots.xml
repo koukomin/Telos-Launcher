@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_shot_title">Ekrānuzņēmums</string>
+    <string name="desktop_shot_full">Viss ekrāns</string>
+    <string name="desktop_shot_region">Taisnstūra apgabals</string>
+    <string name="desktop_shot_window">Logs</string>
+    <string name="desktop_shot_clipboard">Kopēt starpliktuvē</string>
+    <string name="desktop_shot_clipboard_hint">Pēc noklusējuma izslēgts. Arī ar TELOS_SHOT_CLIPBOARD=1.</string>
+    <string name="desktop_shot_redact">Aizklāt pirms saglabāšanas</string>
+    <string name="desktop_shot_redact_hint">Uzzīmējiet taisnstūri, lai aptumšotu privāto saturu, un saglabājiet.</string>
+    <string name="desktop_shot_save">Saglabāt</string>
+    <string name="desktop_shot_save_without_redact">Saglabāt bez aizklāšanas</string>
+    <string name="desktop_shot_saved">Ekrānuzņēmums saglabāts</string>
+    <string name="desktop_shot_failed">Ekrānuzņēmums neizdevās</string>
+    <string name="desktop_shot_path_hint">Saglabā vault (vai portable data) Pictures/Screenshots, tikai īpašnieks (0600).</string>
+</resources>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_shot_title">צילום מסך</string>
+    <string name="desktop_shot_full">מסך מלא</string>
+    <string name="desktop_shot_region">אזור מלבני</string>
+    <string name="desktop_shot_window">חלון</string>
+    <string name="desktop_shot_clipboard">העתקה ללוח</string>
+    <string name="desktop_shot_clipboard_hint">כבוי כברירת מחדל. גם עם TELOS_SHOT_CLIPBOARD=1.</string>
+    <string name="desktop_shot_redact">השחרה לפני שמירה</string>
+    <string name="desktop_shot_redact_hint">ציירו מלבן כדי להשחיר תוכן פרטי ואז שמרו.</string>
+    <string name="desktop_shot_save">שמירה</string>
+    <string name="desktop_shot_save_without_redact">שמירה בלי השחרה</string>
+    <string name="desktop_shot_saved">צילום המסך נשמר</string>
+    <string name="desktop_shot_failed">צילום המסך נכשל</string>
+    <string name="desktop_shot_path_hint">נשמר תחת Pictures/Screenshots בכספת (או נתונים ניידים), בעלים בלבד (0600).</string>
+</resources>

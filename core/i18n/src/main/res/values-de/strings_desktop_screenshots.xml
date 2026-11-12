@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_shot_title">Bildschirmfoto</string>
+    <string name="desktop_shot_full">Ganzes Bild</string>
+    <string name="desktop_shot_region">Rechteckiger Bereich</string>
+    <string name="desktop_shot_window">Fenster</string>
+    <string name="desktop_shot_clipboard">In Zwischenablage kopieren</string>
+    <string name="desktop_shot_clipboard_hint">Standardmäßig aus. Auch mit TELOS_SHOT_CLIPBOARD=1 aktiv.</string>
+    <string name="desktop_shot_redact">Vor dem Speichern schwärzen</string>
+    <string name="desktop_shot_redact_hint">Rechteck ziehen, um privaten Inhalt zu schwärzen, dann speichern.</string>
+    <string name="desktop_shot_save">Speichern</string>
+    <string name="desktop_shot_save_without_redact">Ohne Schwärzung speichern</string>
+    <string name="desktop_shot_saved">Bildschirmfoto gespeichert</string>
+    <string name="desktop_shot_failed">Bildschirmfoto fehlgeschlagen</string>
+    <string name="desktop_shot_path_hint">Speichert unter Pictures/Screenshots im Vault (oder portable data), nur Eigentümer (0600).</string>
+</resources>

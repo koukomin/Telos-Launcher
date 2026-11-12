@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_shot_title">スクリーンショット</string>
+    <string name="desktop_shot_full">画面全体</string>
+    <string name="desktop_shot_region">矩形領域</string>
+    <string name="desktop_shot_window">ウィンドウ</string>
+    <string name="desktop_shot_clipboard">クリップボードにコピー</string>
+    <string name="desktop_shot_clipboard_hint">既定ではオフ。TELOS_SHOT_CLIPBOARD=1 でも有効。</string>
+    <string name="desktop_shot_redact">保存前に墨消し</string>
+    <string name="desktop_shot_redact_hint">矩形を描いて非公開部分を黒く塗り、保存します。</string>
+    <string name="desktop_shot_save">保存</string>
+    <string name="desktop_shot_save_without_redact">墨消しせずに保存</string>
+    <string name="desktop_shot_saved">スクリーンショットを保存しました</string>
+    <string name="desktop_shot_failed">スクリーンショットに失敗しました</string>
+    <string name="desktop_shot_path_hint">ボルト（またはポータブルデータ）の Pictures/Screenshots に所有者のみ（0600）で保存します。</string>
+</resources>

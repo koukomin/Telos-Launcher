@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_shot_title">Εἰκὼν ὀθόνης</string>
+    <string name="desktop_shot_full">Πᾶσα ἡ ὀθόνη</string>
+    <string name="desktop_shot_region">Ὀρθογώνιον χωρίον</string>
+    <string name="desktop_shot_window">Θυρίς</string>
+    <string name="desktop_shot_clipboard">Ἀντίγραφον εἰς τὸ πρόχειρον</string>
+    <string name="desktop_shot_clipboard_hint">Κατὰ προεπιλογὴν ἀπενεργόν. Καὶ διὰ TELOS_SHOT_CLIPBOARD=1.</string>
+    <string name="desktop_shot_redact">Ἀπόκρυψις πρὸ τῆς ἀποθηκεύσεως</string>
+    <string name="desktop_shot_redact_hint">Γράψον ὀρθογώνιον ἵνα μέλαν ᾖ τὸ ἰδιωτικόν, εἶτα ἀπόθησον.</string>
+    <string name="desktop_shot_save">Ἀποθήκευσον</string>
+    <string name="desktop_shot_save_without_redact">Ἀποθήκευσον ἄνευ ἀποκρύψεως</string>
+    <string name="desktop_shot_saved">Ἡ εἰκὼν ἀπεθηκέυθη</string>
+    <string name="desktop_shot_failed">Ἡ λῆψις ἀπέτυχεν</string>
+    <string name="desktop_shot_path_hint">Ἀποθηκεύει εἰς Pictures/Screenshots τοῦ θησαυροφυλακίου (ἢ portable data), μόνον τῷ κυρίῳ (0600).</string>
+</resources>

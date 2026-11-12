@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_shot_title">Snimka zaslona</string>
+    <string name="desktop_shot_full">Cijeli zaslon</string>
+    <string name="desktop_shot_region">Pravokutno područje</string>
+    <string name="desktop_shot_window">Prozor</string>
+    <string name="desktop_shot_clipboard">Kopiraj u međuspremnik</string>
+    <string name="desktop_shot_clipboard_hint">Zadano isključeno. Također s TELOS_SHOT_CLIPBOARD=1.</string>
+    <string name="desktop_shot_redact">Zacrni prije spremanja</string>
+    <string name="desktop_shot_redact_hint">Nacrtajte pravokutnik da zacrnite privatni sadržaj, zatim spremite.</string>
+    <string name="desktop_shot_save">Spremi</string>
+    <string name="desktop_shot_save_without_redact">Spremi bez zacrnjivanja</string>
+    <string name="desktop_shot_saved">Snimka spremljena</string>
+    <string name="desktop_shot_failed">Snimka nije uspjela</string>
+    <string name="desktop_shot_path_hint">Sprema u Pictures/Screenshots trezora (ili portable data), samo vlasnik (0600).</string>
+</resources>

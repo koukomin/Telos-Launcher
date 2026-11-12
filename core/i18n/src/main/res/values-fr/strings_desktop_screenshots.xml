@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_shot_title">Capture d’écran</string>
+    <string name="desktop_shot_full">Plein écran</string>
+    <string name="desktop_shot_region">Région rectangulaire</string>
+    <string name="desktop_shot_window">Fenêtre</string>
+    <string name="desktop_shot_clipboard">Copier dans le presse-papiers</string>
+    <string name="desktop_shot_clipboard_hint">Désactivé par défaut. Aussi avec TELOS_SHOT_CLIPBOARD=1.</string>
+    <string name="desktop_shot_redact">Caviarder avant d’enregistrer</string>
+    <string name="desktop_shot_redact_hint">Dessinez un rectangle pour noircir le contenu privé, puis enregistrez.</string>
+    <string name="desktop_shot_save">Enregistrer</string>
+    <string name="desktop_shot_save_without_redact">Enregistrer sans caviardage</string>
+    <string name="desktop_shot_saved">Capture enregistrée</string>
+    <string name="desktop_shot_failed">Échec de la capture</string>
+    <string name="desktop_shot_path_hint">Enregistre sous Pictures/Screenshots du coffre (ou données portables), propriétaire uniquement (0600).</string>
+</resources>
