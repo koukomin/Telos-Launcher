@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_vault_restore_title">שחזור vault מלא</string>
+    <string name="desktop_vault_restore_hint">משחזר את desktop.properties ו-~/.config/telos מגיבוי סשן AES. מפתחות פרטיים של WireGuard לעולם אינם נכתבים ליומנים. נדרש אישור.</string>
+    <string name="desktop_vault_restore_preview_btn">תצוגה מקדימה של שחזור</string>
+    <string name="desktop_vault_restore_preview">מוכן לשחזר %1$s קובצי תצורה של Telos (desktop.properties: %2$s). אשרו כדי להחיל.</string>
+    <string name="desktop_vault_restore_confirm">אשר שחזור</string>
+    <string name="desktop_vault_restore_cancel">בטל שחזור</string>
+    <string name="desktop_vault_restore_done">תצורת סשן ה-vault שוחזרה</string>
+    <string name="desktop_vault_restore_need_confirm">נדרש אישור שחזור</string>
+    <string name="desktop_update_title">עדכון שולחן עבודה חתום</string>
+    <string name="desktop_update_hint">בודק נתיב file:// מקומי או מניפסט HTTPS החתום במפתח Ed25519 של Telos. עדכונים מוכנים תחת temp של portable/vault ולעולם אינם מותקנים אוטומטית.</string>
+    <string name="desktop_update_url_label">מניפסט עדכון (נתיב, file:// או https://)</string>
+    <string name="desktop_update_save_url">שמור כתובת עדכון</string>
+    <string name="desktop_update_url_saved">כתובת מניפסט העדכון נשמרה</string>
+    <string name="desktop_update_check">בדוק עדכון חתום</string>
+    <string name="desktop_update_ready">עדכון חתום %1$s אומת — אשרו כדי להכין התקנה</string>
+    <string name="desktop_update_install_confirm">אשר התקנה מוכנה</string>
+    <string name="desktop_update_install_cancel">בטל עדכון</string>
+    <string name="desktop_update_installed">העדכון הוכן כ-%1$s (הפעילו מחדש ידנית)</string>
+    <string name="desktop_update_sig_fail">אימות חתימת העדכון נכשל</string>
+    <string name="desktop_update_no_url">הגדירו תחילה כתובת מניפסט file:// או HTTPS</string>
+</resources>

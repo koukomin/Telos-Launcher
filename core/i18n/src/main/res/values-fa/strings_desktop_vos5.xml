@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_vault_restore_title">بازیابی کامل خزانه</string>
+    <string name="desktop_vault_restore_hint">desktop.properties و ~/.config/telos را از پشتیبان نشست AES بازیابی می‌کند. کلیدهای خصوصی WireGuard هرگز در گزارش‌ها نوشته نمی‌شوند. تأیید لازم است.</string>
+    <string name="desktop_vault_restore_preview_btn">پیش‌نمایش بازیابی</string>
+    <string name="desktop_vault_restore_preview">آماده بازیابی %1$s پرونده پیکربندی Telos (desktop.properties: %2$s). برای اعمال تأیید کنید.</string>
+    <string name="desktop_vault_restore_confirm">تأیید بازیابی</string>
+    <string name="desktop_vault_restore_cancel">لغو بازیابی</string>
+    <string name="desktop_vault_restore_done">پیکربندی نشست خزانه بازیابی شد</string>
+    <string name="desktop_vault_restore_need_confirm">تأیید بازیابی لازم است</string>
+    <string name="desktop_update_title">به‌روزرسانی رومیزی امضاشده</string>
+    <string name="desktop_update_hint">مسیر محلی file:// یا مانیفست HTTPS امضاشده با کلید Ed25519 تلوس را بررسی می‌کند. به‌روزرسانی‌ها در temp قابل‌حمل/خزانه آماده‌سازی می‌شوند و هرگز به‌صورت خودکار نصب نمی‌شوند.</string>
+    <string name="desktop_update_url_label">مانیفست به‌روزرسانی (مسیر، file:// یا https://)</string>
+    <string name="desktop_update_save_url">ذخیره URL به‌روزرسانی</string>
+    <string name="desktop_update_url_saved">URL مانیفست به‌روزرسانی ذخیره شد</string>
+    <string name="desktop_update_check">بررسی به‌روزرسانی امضاشده</string>
+    <string name="desktop_update_ready">به‌روزرسانی امضاشده %1$s تأیید شد — برای آماده‌سازی نصب تأیید کنید</string>
+    <string name="desktop_update_install_confirm">تأیید نصب آماده‌شده</string>
+    <string name="desktop_update_install_cancel">لغو به‌روزرسانی</string>
+    <string name="desktop_update_installed">به‌روزرسانی به‌عنوان %1$s آماده شد (دستی راه‌اندازی مجدد کنید)</string>
+    <string name="desktop_update_sig_fail">تأیید امضای به‌روزرسانی ناموفق بود</string>
+    <string name="desktop_update_no_url">ابتدا URL مانیفست file:// یا HTTPS را تنظیم کنید</string>
+</resources>

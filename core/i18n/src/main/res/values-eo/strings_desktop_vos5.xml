@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_vault_restore_title">Plena restaŭro de la trezorejo</string>
+    <string name="desktop_vault_restore_hint">Restaŭras desktop.properties kaj ~/.config/telos el AES-seanca savkopio. Privatecaj ŝlosiloj de WireGuard neniam skribiĝas en protokolojn. Konfirmo bezonata.</string>
+    <string name="desktop_vault_restore_preview_btn">Antaŭrigardo de restaŭro</string>
+    <string name="desktop_vault_restore_preview">Preta restaŭri %1$s Telos-agordodosierojn (desktop.properties: %2$s). Konfirmu por apliki.</string>
+    <string name="desktop_vault_restore_confirm">Konfirmi restaŭron</string>
+    <string name="desktop_vault_restore_cancel">Nuligi restaŭron</string>
+    <string name="desktop_vault_restore_done">Seanca agordo de la trezorejo restaŭrita</string>
+    <string name="desktop_vault_restore_need_confirm">Konfirmo de restaŭro bezonata</string>
+    <string name="desktop_update_title">Subskribita labortabla ĝisdatigo</string>
+    <string name="desktop_update_hint">Kontrolas lokan file://-vojon aŭ HTTPS-manifeston subskribitan per Telos Ed25519-ŝlosilo. Ĝisdatigoj prepariĝas sub portable/vault-temp kaj neniam aŭtomate instaliĝas.</string>
+    <string name="desktop_update_url_label">Ĝisdatiga manifesto (vojo, file:// aŭ https://)</string>
+    <string name="desktop_update_save_url">Konservi ĝisdatigan URL</string>
+    <string name="desktop_update_url_saved">URL de ĝisdatiga manifesto konservita</string>
+    <string name="desktop_update_check">Kontroli subskribitan ĝisdatigon</string>
+    <string name="desktop_update_ready">Subskribita ĝisdatigo %1$s kontrolita — konfirmu por prepari instalon</string>
+    <string name="desktop_update_install_confirm">Konfirmi preparitan instalon</string>
+    <string name="desktop_update_install_cancel">Nuligi ĝisdatigon</string>
+    <string name="desktop_update_installed">Ĝisdatigo preparita kiel %1$s (restartigu permane)</string>
+    <string name="desktop_update_sig_fail">Kontrolo de ĝisdatiga subskribo malsukcesis</string>
+    <string name="desktop_update_no_url">Unue agordu file:// aŭ HTTPS-manifestan URL</string>
+</resources>

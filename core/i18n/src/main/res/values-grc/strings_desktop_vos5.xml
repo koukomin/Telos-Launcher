@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_vault_restore_title">Πλήρης ἀποκατάστασις θησαυροφυλακίου</string>
+    <string name="desktop_vault_restore_hint">Ἀποκαθιστᾷ desktop.properties καὶ ~/.config/telos ἐξ ἀντιγράφου ἀσφαλείας συνεδρίας AES. Τὰ ἰδιωτικὰ κλειδία WireGuard οὐδέποτε γράφονται εἰς ἀναγραφάς. Ἀπαιτεῖται ἐπιβεβαίωσις.</string>
+    <string name="desktop_vault_restore_preview_btn">Προεπισκόπησις ἀποκαταστάσεως</string>
+    <string name="desktop_vault_restore_preview">Ἕτοιμον πρὸς ἀποκατάστασιν %1$s ἀρχείων διαμορφώσεως Telos (desktop.properties: %2$s). Ἐπιβεβαιώσατε πρὸς ἐφαρμογήν.</string>
+    <string name="desktop_vault_restore_confirm">Ἐπιβεβαίωσις ἀποκαταστάσεως</string>
+    <string name="desktop_vault_restore_cancel">Ἀκύρωσις ἀποκαταστάσεως</string>
+    <string name="desktop_vault_restore_done">Ἡ διαμόρφωσις συνεδρίας τοῦ θησαυροφυλακίου ἀποκατεστάθη</string>
+    <string name="desktop_vault_restore_need_confirm">Ἀπαιτεῖται ἐπιβεβαίωσις ἀποκαταστάσεως</string>
+    <string name="desktop_update_title">Ὑπογεγραμμένη ἐνημέρωσις ἐπιτραπεζίου</string>
+    <string name="desktop_update_hint">Ἐλέγχει τοπικὴν διαδρομὴν file:// ἢ HTTPS manifest ὑπογεγραμμένον διὰ τοῦ κλειδίου Ed25519 τοῦ Telos. Αἱ ἐνημερώσεις σταθμεύουσιν ὑπὸ portable/vault temp καὶ οὐδέποτε ἐγκαθίστανται αὐτομάτως.</string>
+    <string name="desktop_update_url_label">Manifest ἐνημερώσεως (διαδρομή, file:// ἢ https://)</string>
+    <string name="desktop_update_save_url">Ἀποθήκευσις URL ἐνημερώσεως</string>
+    <string name="desktop_update_url_saved">Τὸ URL τοῦ manifest ἐνημερώσεως ἀπεθηκεύθη</string>
+    <string name="desktop_update_check">Ἔλεγχος ὑπογεγραμμένης ἐνημερώσεως</string>
+    <string name="desktop_update_ready">Ἡ ὑπογεγραμμένη ἐνημέρωσις %1$s ἐπεβεβαιώθη — ἐπιβεβαιώσατε πρὸς σταδιακὴν ἐγκατάστασιν</string>
+    <string name="desktop_update_install_confirm">Ἐπιβεβαίωσις σταδιακῆς ἐγκαταστάσεως</string>
+    <string name="desktop_update_install_cancel">Ἀκύρωσις ἐνημερώσεως</string>
+    <string name="desktop_update_installed">Ἡ ἐνημέρωσις ἐσταθμεύθη ὡς %1$s (ἐπανεκκινήσατε χειροκινήτως)</string>
+    <string name="desktop_update_sig_fail">Ἡ ἐπαλήθευσις ὑπογραφῆς ἐνημερώσεως ἀπέτυχεν</string>
+    <string name="desktop_update_no_url">Ὁρίσατε πρῶτον URL manifest file:// ἢ HTTPS</string>
+</resources>

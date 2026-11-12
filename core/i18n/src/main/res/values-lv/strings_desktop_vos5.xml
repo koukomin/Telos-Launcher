@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_vault_restore_title">Pilnīga vault atjaunošana</string>
+    <string name="desktop_vault_restore_hint">Atjauno desktop.properties un ~/.config/telos no AES sesijas dublējuma. WireGuard privātās atslēgas nekad netiek rakstītas žurnālos. Nepieciešams apstiprinājums.</string>
+    <string name="desktop_vault_restore_preview_btn">Atjaunošanas priekšskatījums</string>
+    <string name="desktop_vault_restore_preview">Gatavs atjaunot %1$s Telos konfigurācijas failus (desktop.properties: %2$s). Apstipriniet, lai lietotu.</string>
+    <string name="desktop_vault_restore_confirm">Apstiprināt atjaunošanu</string>
+    <string name="desktop_vault_restore_cancel">Atcelt atjaunošanu</string>
+    <string name="desktop_vault_restore_done">Vault sesijas konfigurācija atjaunota</string>
+    <string name="desktop_vault_restore_need_confirm">Nepieciešams atjaunošanas apstiprinājums</string>
+    <string name="desktop_update_title">Parakstīts darbvirsmas atjauninājums</string>
+    <string name="desktop_update_hint">Pārbauda lokālu file:// ceļu vai ar Telos Ed25519 atslēgu parakstītu HTTPS manifestu. Atjauninājumi tiek sagatavoti portable/vault temp un nekad neinstalējas automātiski.</string>
+    <string name="desktop_update_url_label">Atjauninājuma manifests (ceļš, file:// vai https://)</string>
+    <string name="desktop_update_save_url">Saglabāt atjauninājuma URL</string>
+    <string name="desktop_update_url_saved">Atjauninājuma manifesta URL saglabāts</string>
+    <string name="desktop_update_check">Pārbaudīt parakstītu atjauninājumu</string>
+    <string name="desktop_update_ready">Parakstīts atjauninājums %1$s verificēts — apstipriniet instalācijas sagatavošanu</string>
+    <string name="desktop_update_install_confirm">Apstiprināt sagatavoto instalāciju</string>
+    <string name="desktop_update_install_cancel">Atcelt atjauninājumu</string>
+    <string name="desktop_update_installed">Atjauninājums sagatavots kā %1$s (restartējiet manuāli)</string>
+    <string name="desktop_update_sig_fail">Atjauninājuma paraksta pārbaude neizdevās</string>
+    <string name="desktop_update_no_url">Vispirms iestatiet file:// vai HTTPS manifesta URL</string>
+</resources>

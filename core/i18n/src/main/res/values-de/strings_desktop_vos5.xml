@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_vault_restore_title">Vollständige Vault-Wiederherstellung</string>
+    <string name="desktop_vault_restore_hint">Stellt desktop.properties und ~/.config/telos aus einem AES-Sitzungsbackup wieder her. WireGuard-Privatschlüssel werden nie in Protokolle geschrieben. Bestätigung erforderlich.</string>
+    <string name="desktop_vault_restore_preview_btn">Wiederherstellung Vorschau</string>
+    <string name="desktop_vault_restore_preview">Bereit, %1$s Telos-Konfigurationsdateien wiederherzustellen (desktop.properties: %2$s). Zum Anwenden bestätigen.</string>
+    <string name="desktop_vault_restore_confirm">Wiederherstellung bestätigen</string>
+    <string name="desktop_vault_restore_cancel">Wiederherstellung abbrechen</string>
+    <string name="desktop_vault_restore_done">Vault-Sitzungskonfiguration wiederhergestellt</string>
+    <string name="desktop_vault_restore_need_confirm">Bestätigung der Wiederherstellung erforderlich</string>
+    <string name="desktop_update_title">Signiertes Desktop-Update</string>
+    <string name="desktop_update_hint">Prüft einen lokalen file://-Pfad oder ein HTTPS-Manifest, signiert mit dem Telos-Ed25519-Schlüssel. Updates landen unter portable/vault-Temp und installieren sich nie automatisch.</string>
+    <string name="desktop_update_url_label">Update-Manifest (Dateipfad, file:// oder https://)</string>
+    <string name="desktop_update_save_url">Update-URL speichern</string>
+    <string name="desktop_update_url_saved">Update-Manifest-URL gespeichert</string>
+    <string name="desktop_update_check">Nach signiertem Update suchen</string>
+    <string name="desktop_update_ready">Signiertes Update %1$s verifiziert — Bestätigen zum Bereitstellen</string>
+    <string name="desktop_update_install_confirm">Bereitstellung bestätigen</string>
+    <string name="desktop_update_install_cancel">Update abbrechen</string>
+    <string name="desktop_update_installed">Update bereitgestellt als %1$s (manuell neu starten)</string>
+    <string name="desktop_update_sig_fail">Update-Signaturprüfung fehlgeschlagen</string>
+    <string name="desktop_update_no_url">Zuerst eine file://- oder HTTPS-Manifest-URL setzen</string>
+</resources>

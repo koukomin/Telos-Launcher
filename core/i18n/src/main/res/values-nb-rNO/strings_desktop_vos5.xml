@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_vault_restore_title">Full vault-gjenoppretting</string>
+    <string name="desktop_vault_restore_hint">Gjenoppretter desktop.properties og ~/.config/telos fra en AES-øktbackup. WireGuard-private nøkler skrives aldri til logger. Krever bekreftelse.</string>
+    <string name="desktop_vault_restore_preview_btn">Forhåndsvis gjenoppretting</string>
+    <string name="desktop_vault_restore_preview">Klar til å gjenopprette %1$s Telos-konfigurasjonsfiler (desktop.properties: %2$s). Bekreft for å bruke.</string>
+    <string name="desktop_vault_restore_confirm">Bekreft gjenoppretting</string>
+    <string name="desktop_vault_restore_cancel">Avbryt gjenoppretting</string>
+    <string name="desktop_vault_restore_done">Vault-øktkonfigurasjon gjenopprettet</string>
+    <string name="desktop_vault_restore_need_confirm">Bekreftelse av gjenoppretting kreves</string>
+    <string name="desktop_update_title">Signert skrivebordsoppdatering</string>
+    <string name="desktop_update_hint">Sjekker en lokal file://-bane eller HTTPS-manifest signert med Telos Ed25519-nøkkel. Oppdateringer stages under portable/vault-temp og installeres aldri automatisk.</string>
+    <string name="desktop_update_url_label">Oppdateringsmanifest (bane, file:// eller https://)</string>
+    <string name="desktop_update_save_url">Lagre oppdaterings-URL</string>
+    <string name="desktop_update_url_saved">URL for oppdateringsmanifest lagret</string>
+    <string name="desktop_update_check">Se etter signert oppdatering</string>
+    <string name="desktop_update_ready">Signert oppdatering %1$s bekreftet — bekreft for å klargjøre installasjon</string>
+    <string name="desktop_update_install_confirm">Bekreft klargjort installasjon</string>
+    <string name="desktop_update_install_cancel">Avbryt oppdatering</string>
+    <string name="desktop_update_installed">Oppdatering klargjort som %1$s (start på nytt manuelt)</string>
+    <string name="desktop_update_sig_fail">Verifisering av oppdateringssignatur mislyktes</string>
+    <string name="desktop_update_no_url">Angi først en file://- eller HTTPS-manifest-URL</string>
+</resources>

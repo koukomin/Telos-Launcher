@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_vault_restore_title">Täysi vault-palautus</string>
+    <string name="desktop_vault_restore_hint">Palauttaa desktop.properties- ja ~/.config/telos-tiedostot AES-istuntovarmuuskopiosta. WireGuard-yksityisavaimia ei koskaan kirjoiteta lokiin. Vaatii vahvistuksen.</string>
+    <string name="desktop_vault_restore_preview_btn">Palautuksen esikatselu</string>
+    <string name="desktop_vault_restore_preview">Valmis palauttamaan %1$s Telos-asetustiedostoa (desktop.properties: %2$s). Vahvista soveltaaksesi.</string>
+    <string name="desktop_vault_restore_confirm">Vahvista palautus</string>
+    <string name="desktop_vault_restore_cancel">Peruuta palautus</string>
+    <string name="desktop_vault_restore_done">Vault-istunnon asetukset palautettu</string>
+    <string name="desktop_vault_restore_need_confirm">Palautuksen vahvistus vaaditaan</string>
+    <string name="desktop_update_title">Allekirjoitettu työpöytäpäivitys</string>
+    <string name="desktop_update_hint">Tarkistaa paikallisen file://-polun tai Telos Ed25519 -avaimella allekirjoitetun HTTPS-maniféstin. Päivitykset valmistellaan portable/vault-temp-hakemistoon eivätkä asennu automaattisesti.</string>
+    <string name="desktop_update_url_label">Päivitysmanifésti (polku, file:// tai https://)</string>
+    <string name="desktop_update_save_url">Tallenna päivityksen URL</string>
+    <string name="desktop_update_url_saved">Päivitysmaniféstin URL tallennettu</string>
+    <string name="desktop_update_check">Tarkista allekirjoitettu päivitys</string>
+    <string name="desktop_update_ready">Allekirjoitettu päivitys %1$s varmennettu — vahvista asennuksen valmistelu</string>
+    <string name="desktop_update_install_confirm">Vahvista valmisteltu asennus</string>
+    <string name="desktop_update_install_cancel">Peruuta päivitys</string>
+    <string name="desktop_update_installed">Päivitys valmisteltu nimellä %1$s (käynnistä uudelleen manuaalisesti)</string>
+    <string name="desktop_update_sig_fail">Päivityksen allekirjoituksen varmennus epäonnistui</string>
+    <string name="desktop_update_no_url">Aseta ensin file://- tai HTTPS-maniféstin URL</string>
+</resources>

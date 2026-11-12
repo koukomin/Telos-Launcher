@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_vault_restore_title">Vault の完全復元</string>
+    <string name="desktop_vault_restore_hint">AES セッションバックアップから desktop.properties と ~/.config/telos を復元します。WireGuard 秘密鍵はログに書き込まれません。確認が必要です。</string>
+    <string name="desktop_vault_restore_preview_btn">復元のプレビュー</string>
+    <string name="desktop_vault_restore_preview">Telos 設定ファイル %1$s 件を復元する準備ができました（desktop.properties: %2$s）。適用するには確認してください。</string>
+    <string name="desktop_vault_restore_confirm">復元を確認</string>
+    <string name="desktop_vault_restore_cancel">復元をキャンセル</string>
+    <string name="desktop_vault_restore_done">Vault セッション設定を復元しました</string>
+    <string name="desktop_vault_restore_need_confirm">復元の確認が必要です</string>
+    <string name="desktop_update_title">署名付きデスクトップ更新</string>
+    <string name="desktop_update_hint">Telos Ed25519 鍵で署名されたローカル file:// パスまたは HTTPS マニフェストを確認します。更新は portable/vault の一時領域にステージされ、自動インストールはしません。</string>
+    <string name="desktop_update_url_label">更新マニフェスト（パス、file://、または https://）</string>
+    <string name="desktop_update_save_url">更新 URL を保存</string>
+    <string name="desktop_update_url_saved">更新マニフェスト URL を保存しました</string>
+    <string name="desktop_update_check">署名付き更新を確認</string>
+    <string name="desktop_update_ready">署名付き更新 %1$s を検証しました — ステージインストールを確認</string>
+    <string name="desktop_update_install_confirm">ステージインストールを確認</string>
+    <string name="desktop_update_install_cancel">更新をキャンセル</string>
+    <string name="desktop_update_installed">更新を %1$s としてステージしました（手動で再起動してください）</string>
+    <string name="desktop_update_sig_fail">更新署名の検証に失敗しました</string>
+    <string name="desktop_update_no_url">先に file:// または HTTPS の更新マニフェスト URL を設定してください</string>
+</resources>

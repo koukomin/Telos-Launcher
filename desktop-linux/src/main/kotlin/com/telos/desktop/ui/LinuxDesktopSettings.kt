@@ -14,12 +14,14 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -31,8 +33,12 @@ import com.telos.desktop.icons.LinuxIconThemeResolver
 import com.telos.desktop.platform.PlatformEnvironment
 import com.telos.desktop.platform.WindowsShellIntegration
 import com.telos.desktop.sync.DesktopSessionSync
+import com.telos.desktop.sync.DesktopVaultRestore
+import com.telos.desktop.update.DesktopSignedUpdate
 import com.telos.desktop.settings.TelosDesktopSettings
 import com.telos.desktop.wm.WindowButtonStyle
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.io.File
 
 @Composable
@@ -293,6 +299,7 @@ fun LinuxDesktopSettingsPanel(
                 )
             }
         }
+        Vos5RestoreAndUpdateCard(settings)
         if (filter.showLuksVault) {
             HelixSettingsCard("Vault") {
                 Text("Configurations are stored only inside ~/.local/share/telos/vault_mnt after unlock.", fontSize = 12.sp)
@@ -395,6 +402,175 @@ private fun reapplyCursor(settings: TelosDesktopSettings) {
             null
         },
     )
+}
+
+@Composable
+private fun Vos5RestoreAndUpdateCard(settings: TelosDesktopSettings) {
+    val scope = rememberCoroutineScope()
+    var restorePass by remember { mutableStateOf("") }
+    var restoreMsg by remember { mutableStateOf<String?>(null) }
+    var restorePreview by remember { mutableStateOf<DesktopVaultRestore.RestorePreview?>(null) }
+    var updateUrl by remember {
+        mutableStateOf(DesktopSignedUpdate.preferredManifestUrl(settings).orEmpty())
+    }
+    var updateMsg by remember { mutableStateOf<String?>(null) }
+    var updateOffer by remember { mutableStateOf<DesktopSignedUpdate.VerifiedOffer?>(null) }
+
+    HelixSettingsCard(com.telos.desktop.i18n.TelosI18n.t("desktop_vault_restore_title")) {
+        Text(com.telos.desktop.i18n.TelosI18n.t("desktop_vault_restore_hint"), fontSize = 12.sp)
+        OutlinedTextField(
+            restorePass,
+            onValueChange = { restorePass = it },
+            label = {
+                Text(
+                    com.telos.desktop.i18n.TelosI18n.t(
+                        "desktop_session_sync_pass",
+                        DesktopSessionSync.DEFAULT_KEEPASS_ENTRY,
+                    ),
+                )
+            },
+            modifier = Modifier.fillMaxWidth(),
+        )
+        TextButton(onClick = {
+            scope.launch(Dispatchers.IO) {
+                val pass = restorePass.toCharArray()
+                if (pass.isEmpty()) {
+                    restoreMsg = com.telos.desktop.i18n.TelosI18n.t("desktop_session_sync_pass_required")
+                    restorePreview = null
+                    return@launch
+                }
+                val r = DesktopVaultRestore.preview(DesktopVaultRestore.defaultBundle(), pass)
+                pass.fill('\u0000')
+                if (r.isSuccess) {
+                    val prev = r.getOrThrow()
+                    restorePreview = prev
+                    restoreMsg = com.telos.desktop.i18n.TelosI18n.t(
+                        "desktop_vault_restore_preview",
+                        prev.telosConfigFileCount.toString(),
+                        if (prev.hasDesktopProperties) "yes" else "no",
+                    )
+                } else {
+                    restorePreview = null
+                    restoreMsg = r.exceptionOrNull()?.message
+                }
+            }
+        }) {
+            Text(com.telos.desktop.i18n.TelosI18n.t("desktop_vault_restore_preview_btn"))
+        }
+        restorePreview?.let { preview ->
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                TextButton(onClick = {
+                    scope.launch(Dispatchers.IO) {
+                        val pass = restorePass.toCharArray()
+                        val r = DesktopVaultRestore.applyConfirmed(
+                            preview.bundle,
+                            pass,
+                            confirmToken = preview.confirmToken,
+                            expectedToken = preview.confirmToken,
+                            vaultSettings = settings,
+                        )
+                        pass.fill('\u0000')
+                        restorePreview = null
+                        restoreMsg = if (r.isSuccess) {
+                            com.telos.desktop.i18n.TelosI18n.t("desktop_vault_restore_done")
+                        } else {
+                            r.exceptionOrNull()?.message
+                                ?: com.telos.desktop.i18n.TelosI18n.t("desktop_vault_restore_need_confirm")
+                        }
+                    }
+                }) {
+                    Text(com.telos.desktop.i18n.TelosI18n.t("desktop_vault_restore_confirm"))
+                }
+                TextButton(onClick = {
+                    restorePreview = null
+                    restoreMsg = com.telos.desktop.i18n.TelosI18n.t("desktop_vault_restore_cancel")
+                }) {
+                    Text(com.telos.desktop.i18n.TelosI18n.t("desktop_vault_restore_cancel"))
+                }
+            }
+        }
+        restoreMsg?.let { Text(it, fontSize = 11.sp, color = TelosColors.primary) }
+    }
+
+    HelixSettingsCard(com.telos.desktop.i18n.TelosI18n.t("desktop_update_title")) {
+        Text(com.telos.desktop.i18n.TelosI18n.t("desktop_update_hint"), fontSize = 12.sp)
+        OutlinedTextField(
+            updateUrl,
+            onValueChange = { updateUrl = it },
+            label = { Text(com.telos.desktop.i18n.TelosI18n.t("desktop_update_url_label")) },
+            modifier = Modifier.fillMaxWidth(),
+        )
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            TextButton(onClick = {
+                DesktopSignedUpdate.saveManifestUrl(settings, updateUrl)
+                updateMsg = com.telos.desktop.i18n.TelosI18n.t("desktop_update_url_saved")
+            }) {
+                Text(com.telos.desktop.i18n.TelosI18n.t("desktop_update_save_url"))
+            }
+            TextButton(onClick = {
+                scope.launch(Dispatchers.IO) {
+                    DesktopSignedUpdate.saveManifestUrl(settings, updateUrl)
+                    val url = updateUrl.trim().ifEmpty {
+                        DesktopSignedUpdate.preferredManifestUrl(settings).orEmpty()
+                    }
+                    if (url.isEmpty()) {
+                        updateOffer = null
+                        updateMsg = com.telos.desktop.i18n.TelosI18n.t("desktop_update_no_url")
+                        return@launch
+                    }
+                    val result = DesktopSignedUpdate.check(url)
+                    when (result.status) {
+                        DesktopSignedUpdate.CheckStatus.ReadyForConfirm -> {
+                            updateOffer = result.offer
+                            updateMsg = com.telos.desktop.i18n.TelosI18n.t(
+                                "desktop_update_ready",
+                                result.offer?.version.orEmpty(),
+                            )
+                        }
+                        DesktopSignedUpdate.CheckStatus.SignatureInvalid -> {
+                            updateOffer = null
+                            updateMsg = com.telos.desktop.i18n.TelosI18n.t("desktop_update_sig_fail")
+                        }
+                        else -> {
+                            updateOffer = null
+                            updateMsg = result.detail.ifBlank {
+                                com.telos.desktop.i18n.TelosI18n.t("desktop_update_no_url")
+                            }
+                        }
+                    }
+                }
+            }) {
+                Text(com.telos.desktop.i18n.TelosI18n.t("desktop_update_check"))
+            }
+        }
+        updateOffer?.let { offer ->
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                TextButton(onClick = {
+                    scope.launch(Dispatchers.IO) {
+                        val r = DesktopSignedUpdate.installConfirmed(offer, offer.confirmToken)
+                        updateOffer = null
+                        updateMsg = if (r.isSuccess) {
+                            com.telos.desktop.i18n.TelosI18n.t(
+                                "desktop_update_installed",
+                                r.getOrThrow().name,
+                            )
+                        } else {
+                            r.exceptionOrNull()?.message
+                        }
+                    }
+                }) {
+                    Text(com.telos.desktop.i18n.TelosI18n.t("desktop_update_install_confirm"))
+                }
+                TextButton(onClick = {
+                    updateOffer = null
+                    updateMsg = com.telos.desktop.i18n.TelosI18n.t("desktop_update_install_cancel")
+                }) {
+                    Text(com.telos.desktop.i18n.TelosI18n.t("desktop_update_install_cancel"))
+                }
+            }
+        }
+        updateMsg?.let { Text(it, fontSize = 11.sp, color = TelosColors.primary) }
+    }
 }
 
 @Composable

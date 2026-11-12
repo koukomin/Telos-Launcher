@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_vault_restore_title">পূর্ণ vault পুনরুদ্ধার</string>
+    <string name="desktop_vault_restore_hint">AES সেশন ব্যাকআপ থেকে desktop.properties ও ~/.config/telos পুনরুদ্ধার করে। WireGuard প্রাইভেট কী কখনও লগে লেখা হয় না। নিশ্চিতকরণ প্রয়োজন।</string>
+    <string name="desktop_vault_restore_preview_btn">পুনরুদ্ধার প্রিভিউ</string>
+    <string name="desktop_vault_restore_preview">%1$s টি Telos কনফিগ ফাইল পুনরুদ্ধার করতে প্রস্তুত (desktop.properties: %2$s)। প্রয়োগ করতে নিশ্চিত করুন।</string>
+    <string name="desktop_vault_restore_confirm">পুনরুদ্ধার নিশ্চিত করুন</string>
+    <string name="desktop_vault_restore_cancel">পুনরুদ্ধার বাতিল</string>
+    <string name="desktop_vault_restore_done">Vault সেশন কনফিগ পুনরুদ্ধার হয়েছে</string>
+    <string name="desktop_vault_restore_need_confirm">পুনরুদ্ধার নিশ্চিতকরণ প্রয়োজন</string>
+    <string name="desktop_update_title">স্বাক্ষরিত ডেস্কটপ আপডেট</string>
+    <string name="desktop_update_hint">Telos Ed25519 কী দিয়ে স্বাক্ষরিত স্থানীয় file:// পথ বা HTTPS ম্যানিফেস্ট যাচাই করে। আপডেট portable/vault টেম্পে স্টেজ হয় এবং কখনও স্বয়ংক্রিয় ইনস্টল হয় না।</string>
+    <string name="desktop_update_url_label">আপডেট ম্যানিফেস্ট (পথ, file://, বা https://)</string>
+    <string name="desktop_update_save_url">আপডেট URL সংরক্ষণ</string>
+    <string name="desktop_update_url_saved">আপডেট ম্যানিফেস্ট URL সংরক্ষিত</string>
+    <string name="desktop_update_check">স্বাক্ষরিত আপডেট যাচাই</string>
+    <string name="desktop_update_ready">স্বাক্ষরিত আপডেট %1$s যাচাই হয়েছে — স্টেজ ইনস্টল নিশ্চিত করুন</string>
+    <string name="desktop_update_install_confirm">স্টেজ ইনস্টল নিশ্চিত করুন</string>
+    <string name="desktop_update_install_cancel">আপডেট বাতিল</string>
+    <string name="desktop_update_installed">আপডেট %1$s হিসেবে স্টেজ হয়েছে (ম্যানুয়ালি পুনরায় চালু করুন)</string>
+    <string name="desktop_update_sig_fail">আপডেট স্বাক্ষর যাচাই ব্যর্থ</string>
+    <string name="desktop_update_no_url">আগে file:// বা HTTPS আপডেট ম্যানিফেস্ট URL সেট করুন</string>
+</resources>

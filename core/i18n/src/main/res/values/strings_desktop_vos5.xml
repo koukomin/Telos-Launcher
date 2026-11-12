@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_vault_restore_title">Full vault restore</string>
+    <string name="desktop_vault_restore_hint">Restore desktop.properties and ~/.config/telos from an AES session backup. WireGuard private keys are never written to logs. Requires confirmation.</string>
+    <string name="desktop_vault_restore_preview_btn">Preview restore</string>
+    <string name="desktop_vault_restore_preview">Ready to restore %1$s Telos config files (desktop.properties: %2$s). Confirm to apply.</string>
+    <string name="desktop_vault_restore_confirm">Confirm restore</string>
+    <string name="desktop_vault_restore_cancel">Cancel restore</string>
+    <string name="desktop_vault_restore_done">Vault session config restored</string>
+    <string name="desktop_vault_restore_need_confirm">Restore confirmation required</string>
+    <string name="desktop_update_title">Signed desktop update</string>
+    <string name="desktop_update_hint">Check a local file:// path or HTTPS manifest signed with the Telos Ed25519 key. Updates stage under portable/vault temp and never auto-install.</string>
+    <string name="desktop_update_url_label">Update manifest (file path, file://, or https://)</string>
+    <string name="desktop_update_save_url">Save update URL</string>
+    <string name="desktop_update_url_saved">Update manifest URL saved</string>
+    <string name="desktop_update_check">Check for signed update</string>
+    <string name="desktop_update_ready">Signed update %1$s verified — confirm to stage install</string>
+    <string name="desktop_update_install_confirm">Confirm stage install</string>
+    <string name="desktop_update_install_cancel">Cancel update</string>
+    <string name="desktop_update_installed">Update staged as %1$s (restart manually to use)</string>
+    <string name="desktop_update_sig_fail">Update signature verification failed</string>
+    <string name="desktop_update_no_url">Set a file:// or HTTPS update manifest URL first</string>
+</resources>

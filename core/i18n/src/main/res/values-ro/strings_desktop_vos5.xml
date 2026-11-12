@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_vault_restore_title">Restaurare completă vault</string>
+    <string name="desktop_vault_restore_hint">Restaurează desktop.properties și ~/.config/telos dintr-o copie de rezervă AES a sesiunii. Cheile private WireGuard nu sunt niciodată scrise în jurnale. Necesită confirmare.</string>
+    <string name="desktop_vault_restore_preview_btn">Previzualizare restaurare</string>
+    <string name="desktop_vault_restore_preview">Gata să restaureze %1$s fișiere de configurare Telos (desktop.properties: %2$s). Confirmați pentru aplicare.</string>
+    <string name="desktop_vault_restore_confirm">Confirmă restaurarea</string>
+    <string name="desktop_vault_restore_cancel">Anulează restaurarea</string>
+    <string name="desktop_vault_restore_done">Configurația sesiunii vault a fost restaurată</string>
+    <string name="desktop_vault_restore_need_confirm">Este necesară confirmarea restaurării</string>
+    <string name="desktop_update_title">Actualizare desktop semnată</string>
+    <string name="desktop_update_hint">Verifică o cale file:// locală sau un manifest HTTPS semnat cu cheia Ed25519 Telos. Actualizările sunt pregătite în temp portable/vault și nu se instalează automat.</string>
+    <string name="desktop_update_url_label">Manifest actualizare (cale, file:// sau https://)</string>
+    <string name="desktop_update_save_url">Salvează URL-ul actualizării</string>
+    <string name="desktop_update_url_saved">URL-ul manifestului de actualizare a fost salvat</string>
+    <string name="desktop_update_check">Caută actualizare semnată</string>
+    <string name="desktop_update_ready">Actualizarea semnată %1$s a fost verificată — confirmați pregătirea instalării</string>
+    <string name="desktop_update_install_confirm">Confirmă instalarea pregătită</string>
+    <string name="desktop_update_install_cancel">Anulează actualizarea</string>
+    <string name="desktop_update_installed">Actualizare pregătită ca %1$s (reporniți manual)</string>
+    <string name="desktop_update_sig_fail">Verificarea semnăturii actualizării a eșuat</string>
+    <string name="desktop_update_no_url">Setați mai întâi un URL de manifest file:// sau HTTPS</string>
+</resources>

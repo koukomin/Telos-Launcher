@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_vault_restore_title">전체 vault 복원</string>
+    <string name="desktop_vault_restore_hint">AES 세션 백업에서 desktop.properties와 ~/.config/telos를 복원합니다. WireGuard 개인 키는 로그에 기록되지 않습니다. 확인이 필요합니다.</string>
+    <string name="desktop_vault_restore_preview_btn">복원 미리보기</string>
+    <string name="desktop_vault_restore_preview">Telos 구성 파일 %1$s개를 복원할 준비가 되었습니다(desktop.properties: %2$s). 적용하려면 확인하세요.</string>
+    <string name="desktop_vault_restore_confirm">복원 확인</string>
+    <string name="desktop_vault_restore_cancel">복원 취소</string>
+    <string name="desktop_vault_restore_done">Vault 세션 구성이 복원되었습니다</string>
+    <string name="desktop_vault_restore_need_confirm">복원 확인이 필요합니다</string>
+    <string name="desktop_update_title">서명된 데스크톱 업데이트</string>
+    <string name="desktop_update_hint">Telos Ed25519 키로 서명된 로컬 file:// 경로 또는 HTTPS 매니페스트를 확인합니다. 업데이트는 portable/vault 임시 영역에 준비되며 자동 설치되지 않습니다.</string>
+    <string name="desktop_update_url_label">업데이트 매니페스트(경로, file:// 또는 https://)</string>
+    <string name="desktop_update_save_url">업데이트 URL 저장</string>
+    <string name="desktop_update_url_saved">업데이트 매니페스트 URL이 저장되었습니다</string>
+    <string name="desktop_update_check">서명된 업데이트 확인</string>
+    <string name="desktop_update_ready">서명된 업데이트 %1$s 검증됨 — 준비 설치를 확인하세요</string>
+    <string name="desktop_update_install_confirm">준비 설치 확인</string>
+    <string name="desktop_update_install_cancel">업데이트 취소</string>
+    <string name="desktop_update_installed">업데이트가 %1$s(으)로 준비되었습니다(수동으로 다시 시작)</string>
+    <string name="desktop_update_sig_fail">업데이트 서명 검증 실패</string>
+    <string name="desktop_update_no_url">먼저 file:// 또는 HTTPS 업데이트 매니페스트 URL을 설정하세요</string>
+</resources>

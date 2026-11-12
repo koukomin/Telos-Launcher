@@ -45,6 +45,8 @@ import com.telos.desktop.panel.ConnectivityManager
 import com.telos.desktop.panel.ConnectivityState
 import com.telos.desktop.ui.TelosColors
 import com.telos.desktop.sync.DesktopSessionSync
+import com.telos.desktop.sync.DesktopVaultRestore
+import com.telos.desktop.update.DesktopSignedUpdate
 import com.telos.desktop.vault.DesktopProfiles
 import com.telos.desktop.settings.TelosDesktopSettings
 import com.telos.desktop.vault.PhantomVault
@@ -379,6 +381,16 @@ private fun NetworkStatusPane(
         )
     }
     var syncMsg by remember { mutableStateOf<String?>(null) }
+    var restorePreview by remember { mutableStateOf<DesktopVaultRestore.RestorePreview?>(null) }
+    var updateUrl by remember {
+        mutableStateOf(
+            runCatching {
+                val s = TelosDesktopSettings(PhantomVault.engine.configDir).also { it.load() }
+                DesktopSignedUpdate.preferredManifestUrl(s).orEmpty()
+            }.getOrDefault(""),
+        )
+    }
+    var updateOffer by remember { mutableStateOf<DesktopSignedUpdate.VerifiedOffer?>(null) }
     val scope = rememberCoroutineScope()
     BoxWithConstraints(Modifier.fillMaxSize()) {
         val tall = maxHeight >= 520.dp
@@ -551,6 +563,102 @@ private fun NetworkStatusPane(
                     )
                 }
                 syncMsg?.let { Text(it, color = TelosColors.primary, fontSize = 11.sp) }
+                statusCard(cardShape, neon, t("desktop_vault_restore_title"), t("desktop_vault_restore_hint"))
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    neonButton(t("desktop_vault_restore_preview_btn"), onClick = {
+                        scope.launch(Dispatchers.IO) {
+                            val pass = syncPass.toCharArray()
+                            if (pass.isEmpty()) {
+                                syncMsg = t("desktop_session_sync_pass_required")
+                                return@launch
+                            }
+                            val r = DesktopVaultRestore.preview(DesktopVaultRestore.defaultBundle(), pass)
+                            pass.fill('\u0000')
+                            if (r.isSuccess) {
+                                val prev = r.getOrThrow()
+                                restorePreview = prev
+                                syncMsg = t(
+                                    "desktop_vault_restore_preview",
+                                    prev.telosConfigFileCount.toString(),
+                                    if (prev.hasDesktopProperties) "yes" else "no",
+                                )
+                            } else {
+                                restorePreview = null
+                                syncMsg = r.exceptionOrNull()?.message
+                            }
+                        }
+                    })
+                    restorePreview?.let { preview ->
+                        neonButton(t("desktop_vault_restore_confirm"), onClick = {
+                            scope.launch(Dispatchers.IO) {
+                                val pass = syncPass.toCharArray()
+                                val settings = TelosDesktopSettings(PhantomVault.engine.configDir).also { it.load() }
+                                val r = DesktopVaultRestore.applyConfirmed(
+                                    preview.bundle,
+                                    pass,
+                                    confirmToken = preview.confirmToken,
+                                    expectedToken = preview.confirmToken,
+                                    vaultSettings = settings,
+                                )
+                                pass.fill('\u0000')
+                                restorePreview = null
+                                syncMsg = if (r.isSuccess) t("desktop_vault_restore_done")
+                                else r.exceptionOrNull()?.message
+                            }
+                        })
+                    }
+                }
+                statusCard(cardShape, neon, t("desktop_update_title"), t("desktop_update_hint"))
+                OutlinedTextField(
+                    updateUrl,
+                    onValueChange = { updateUrl = it },
+                    label = { Text(t("desktop_update_url_label")) },
+                    modifier = Modifier.fillMaxWidth(),
+                )
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    neonButton(t("desktop_update_check"), onClick = {
+                        scope.launch(Dispatchers.IO) {
+                            val settings = TelosDesktopSettings(PhantomVault.engine.configDir).also { it.load() }
+                            DesktopSignedUpdate.saveManifestUrl(settings, updateUrl)
+                            val url = updateUrl.trim().ifEmpty {
+                                DesktopSignedUpdate.preferredManifestUrl(settings).orEmpty()
+                            }
+                            if (url.isEmpty()) {
+                                updateOffer = null
+                                syncMsg = t("desktop_update_no_url")
+                                return@launch
+                            }
+                            val result = DesktopSignedUpdate.check(url)
+                            when (result.status) {
+                                DesktopSignedUpdate.CheckStatus.ReadyForConfirm -> {
+                                    updateOffer = result.offer
+                                    syncMsg = t("desktop_update_ready", result.offer?.version.orEmpty())
+                                }
+                                DesktopSignedUpdate.CheckStatus.SignatureInvalid -> {
+                                    updateOffer = null
+                                    syncMsg = t("desktop_update_sig_fail")
+                                }
+                                else -> {
+                                    updateOffer = null
+                                    syncMsg = result.detail.ifBlank { t("desktop_update_no_url") }
+                                }
+                            }
+                        }
+                    })
+                    updateOffer?.let { offer ->
+                        neonButton(t("desktop_update_install_confirm"), onClick = {
+                            scope.launch(Dispatchers.IO) {
+                                val r = DesktopSignedUpdate.installConfirmed(offer, offer.confirmToken)
+                                updateOffer = null
+                                syncMsg = if (r.isSuccess) {
+                                    t("desktop_update_installed", r.getOrThrow().name)
+                                } else {
+                                    r.exceptionOrNull()?.message
+                                }
+                            }
+                        })
+                    }
+                }
             }
         }
         val actionsCol: @Composable () -> Unit = {

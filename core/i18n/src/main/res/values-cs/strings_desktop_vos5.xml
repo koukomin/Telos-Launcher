@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_vault_restore_title">Úplné obnovení vaultu</string>
+    <string name="desktop_vault_restore_hint">Obnoví desktop.properties a ~/.config/telos ze zálohy relace AES. Soukromé klíče WireGuard se nikdy nezapisují do protokolů. Vyžaduje potvrzení.</string>
+    <string name="desktop_vault_restore_preview_btn">Náhled obnovení</string>
+    <string name="desktop_vault_restore_preview">Připraveno obnovit %1$s konfiguračních souborů Telos (desktop.properties: %2$s). Potvrďte pro použití.</string>
+    <string name="desktop_vault_restore_confirm">Potvrdit obnovení</string>
+    <string name="desktop_vault_restore_cancel">Zrušit obnovení</string>
+    <string name="desktop_vault_restore_done">Konfigurace relace vaultu obnovena</string>
+    <string name="desktop_vault_restore_need_confirm">Je vyžadováno potvrzení obnovení</string>
+    <string name="desktop_update_title">Podepsaná aktualizace desktopu</string>
+    <string name="desktop_update_hint">Zkontroluje místní cestu file:// nebo HTTPS manifest podepsaný klíčem Telos Ed25519. Aktualizace se připraví v dočasném portable/vault a nikdy se neinstalují automaticky.</string>
+    <string name="desktop_update_url_label">Manifest aktualizace (cesta, file:// nebo https://)</string>
+    <string name="desktop_update_save_url">Uložit URL aktualizace</string>
+    <string name="desktop_update_url_saved">URL manifestu aktualizace uložena</string>
+    <string name="desktop_update_check">Zkontrolovat podepsanou aktualizaci</string>
+    <string name="desktop_update_ready">Podepsaná aktualizace %1$s ověřena — potvrďte přípravu instalace</string>
+    <string name="desktop_update_install_confirm">Potvrdit připravenou instalaci</string>
+    <string name="desktop_update_install_cancel">Zrušit aktualizaci</string>
+    <string name="desktop_update_installed">Aktualizace připravena jako %1$s (restartujte ručně)</string>
+    <string name="desktop_update_sig_fail">Ověření podpisu aktualizace selhalo</string>
+    <string name="desktop_update_no_url">Nejprve nastavte URL manifestu file:// nebo HTTPS</string>
+</resources>

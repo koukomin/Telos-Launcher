@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_vault_restore_title">Restitutio cellae plena</string>
+    <string name="desktop_vault_restore_hint">Restituit desktop.properties et ~/.config/telos e tergiversatione sessionis AES. Claves privatae WireGuard numquam in commentarios scribuntur. Confirmatio requiritur.</string>
+    <string name="desktop_vault_restore_preview_btn">Praevisio restitutionis</string>
+    <string name="desktop_vault_restore_preview">Paratum est restituere %1$s fasciculos configurationis Telos (desktop.properties: %2$s). Confirma ut applicetur.</string>
+    <string name="desktop_vault_restore_confirm">Confirma restitutionem</string>
+    <string name="desktop_vault_restore_cancel">Abroga restitutionem</string>
+    <string name="desktop_vault_restore_done">Configuratio sessionis cellae restituta</string>
+    <string name="desktop_vault_restore_need_confirm">Confirmatio restitutionis requiritur</string>
+    <string name="desktop_update_title">Renovatio desktop subscripta</string>
+    <string name="desktop_update_hint">Explorat semitam file:// localem vel manifestum HTTPS clave Ed25519 Telos subscriptum. Renovationes in temp portable/vault parantur nec umquam sponte instituuntur.</string>
+    <string name="desktop_update_url_label">Manifestum renovationis (semita, file://, vel https://)</string>
+    <string name="desktop_update_save_url">Serva URL renovationis</string>
+    <string name="desktop_update_url_saved">URL manifesti renovationis servatum</string>
+    <string name="desktop_update_check">Quaere renovationem subscriptam</string>
+    <string name="desktop_update_ready">Renovatio subscripta %1$s comprobata — confirma ut institutio praeparetur</string>
+    <string name="desktop_update_install_confirm">Confirma institutionem praeparatam</string>
+    <string name="desktop_update_install_cancel">Abroga renovationem</string>
+    <string name="desktop_update_installed">Renovatio praeparata ut %1$s (manu reinicia)</string>
+    <string name="desktop_update_sig_fail">Comprobatio subscriptionis renovationis defecit</string>
+    <string name="desktop_update_no_url">Prius statue URL manifesti file:// vel HTTPS</string>
+</resources>
