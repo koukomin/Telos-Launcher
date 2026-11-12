@@ -133,6 +133,17 @@ fun main(args: Array<String>) {
                         com.telos.desktop.search.VaultFileNameIndex.clearMemory()
                     }
                 }
+                androidx.compose.runtime.LaunchedEffect(
+                    settings.nightLightEnabled,
+                    settings.nightLightTemperatureK,
+                ) {
+                    kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+                        com.telos.desktop.display.NightLightController.apply(
+                            settings.nightLightEnabled,
+                            settings.nightLightTemperatureK,
+                        )
+                    }
+                }
                 LaunchedEffect(Unit) {
                     kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
                         // Prefer vaulted sync/session key — no KeePass master-password prompt.

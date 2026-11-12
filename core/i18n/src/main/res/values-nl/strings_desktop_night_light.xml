@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_night_light_title">Nachtlicht</string>
+    <string name="desktop_night_light_hint">Maakt het scherm warmer via een hostprogramma (gammastep, redshift of wlsunset). Geen locatiediensten en niets wordt over het netwerk gestuurd. Zonder programma wordt alleen de voorkeur opgeslagen.</string>
+    <string name="desktop_night_light_enable">Nachtlicht inschakelen</string>
+    <string name="desktop_night_light_temperature">Kleurtemperatuur: %1$d K</string>
+    <string name="desktop_night_light_on">Aan</string>
+    <string name="desktop_night_light_off">Uit</string>
+    <string name="desktop_night_light_pref_only">Voorkeur opgeslagen; installeer gammastep, redshift of wlsunset om toe te passen op deze host</string>
+    <string name="desktop_night_light_failed">Hostprogramma kon de schermtemperatuur niet wijzigen</string>
+    <string name="desktop_night_light_applied">Toegepast met %1$s</string>
+    <string name="desktop_night_light_cleared">Nachtlicht uitgeschakeld</string>
+    <string name="desktop_settings_search_hint">Instellingen zoeken</string>
+    <string name="desktop_settings_search_empty">Geen instellingen komen overeen met deze zoekopdracht</string>
+    <string name="desktop_settings_session">Sessie</string>
+    <string name="desktop_settings_display">Beeldscherm</string>
+    <string name="desktop_settings_desktop">Bureaublad</string>
+    <string name="desktop_settings_windows">Vensters</string>
+    <string name="desktop_settings_portable">Draagbaar</string>
+    <string name="desktop_settings_vault">Kluis</string>
+</resources>

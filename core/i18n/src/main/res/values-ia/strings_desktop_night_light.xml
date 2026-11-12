@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_night_light_title">Luce nocturne</string>
+    <string name="desktop_night_light_hint">Calefa le schermo con un instrumento del hospite (gammastep, redshift o wlsunset). Sin servicios de localisation e nihil es inviate per le rete. Sin instrumento, solmente le preferentia es salvate.</string>
+    <string name="desktop_night_light_enable">Activar luce nocturne</string>
+    <string name="desktop_night_light_temperature">Temperatura de color: %1$d K</string>
+    <string name="desktop_night_light_on">Active</string>
+    <string name="desktop_night_light_off">Inactive</string>
+    <string name="desktop_night_light_pref_only">Preferentia salvate; installa gammastep, redshift o wlsunset pro applicar sur iste hospite</string>
+    <string name="desktop_night_light_failed">Le instrumento del hospite non poteva cambiar le temperatura del schermo</string>
+    <string name="desktop_night_light_applied">Applicate con %1$s</string>
+    <string name="desktop_night_light_cleared">Luce nocturne disactivate</string>
+    <string name="desktop_settings_search_hint">Cercar configurationes</string>
+    <string name="desktop_settings_search_empty">Nulle configuration corresponde a iste cerca</string>
+    <string name="desktop_settings_session">Session</string>
+    <string name="desktop_settings_display">Schermo</string>
+    <string name="desktop_settings_desktop">Scriptorio</string>
+    <string name="desktop_settings_windows">Fenestras</string>
+    <string name="desktop_settings_portable">Portabile</string>
+    <string name="desktop_settings_vault">Camera forte</string>
+</resources>

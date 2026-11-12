@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_night_light_title">Luce notturna</string>
+    <string name="desktop_night_light_hint">Riscalda lo schermo con uno strumento host (gammastep, redshift o wlsunset). Nessun servizio di localizzazione e nulla viene inviato in rete. Senza strumento, viene salvata solo la preferenza.</string>
+    <string name="desktop_night_light_enable">Attiva luce notturna</string>
+    <string name="desktop_night_light_temperature">Temperatura colore: %1$d K</string>
+    <string name="desktop_night_light_on">Attiva</string>
+    <string name="desktop_night_light_off">Disattiva</string>
+    <string name="desktop_night_light_pref_only">Preferenza salvata; installa gammastep, redshift o wlsunset per applicarla su questo host</string>
+    <string name="desktop_night_light_failed">Lo strumento host non è riuscito a cambiare la temperatura dello schermo</string>
+    <string name="desktop_night_light_applied">Applicata con %1$s</string>
+    <string name="desktop_night_light_cleared">Luce notturna disattivata</string>
+    <string name="desktop_settings_search_hint">Cerca impostazioni</string>
+    <string name="desktop_settings_search_empty">Nessuna impostazione corrisponde a questa ricerca</string>
+    <string name="desktop_settings_session">Sessione</string>
+    <string name="desktop_settings_display">Schermo</string>
+    <string name="desktop_settings_desktop">Scrivania</string>
+    <string name="desktop_settings_windows">Finestre</string>
+    <string name="desktop_settings_portable">Portatile</string>
+    <string name="desktop_settings_vault">Vault</string>
+</resources>

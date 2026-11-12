@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_night_light_title">תאורת לילה</string>
+    <string name="desktop_night_light_hint">מחמם את התצוגה בכלי מארח (gammastep, redshift או wlsunset). ללא שירותי מיקום וללא שליחה ברשת. ללא כלי נשמרת רק ההעדפה.</string>
+    <string name="desktop_night_light_enable">הפעלת תאורת לילה</string>
+    <string name="desktop_night_light_temperature">טמפרטורת צבע: %1$d K</string>
+    <string name="desktop_night_light_on">פועל</string>
+    <string name="desktop_night_light_off">כבוי</string>
+    <string name="desktop_night_light_pref_only">ההעדפה נשמרה; התקן gammastep, redshift או wlsunset כדי להחיל במארח זה</string>
+    <string name="desktop_night_light_failed">כלי המארח נכשל בשינוי טמפרטורת התצוגה</string>
+    <string name="desktop_night_light_applied">הוחל עם %1$s</string>
+    <string name="desktop_night_light_cleared">תאורת הלילה בוטלה</string>
+    <string name="desktop_settings_search_hint">חיפוש בהגדרות</string>
+    <string name="desktop_settings_search_empty">אין הגדרות התואמות לחיפוש זה</string>
+    <string name="desktop_settings_session">הפעלה</string>
+    <string name="desktop_settings_display">תצוגה</string>
+    <string name="desktop_settings_desktop">שולחן עבודה</string>
+    <string name="desktop_settings_windows">חלונות</string>
+    <string name="desktop_settings_portable">נייד</string>
+    <string name="desktop_settings_vault">כספת</string>
+</resources>

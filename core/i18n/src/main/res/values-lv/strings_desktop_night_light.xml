@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_night_light_title">Nakts gaisma</string>
+    <string name="desktop_night_light_hint">Sasilda displeju ar saimniekdatora rīku (gammastep, redshift vai wlsunset). Bez atrašanās vietas pakalpojumiem un bez sūtīšanas tīklā. Bez rīka tiek saglabāts tikai iestatījums.</string>
+    <string name="desktop_night_light_enable">Iespējot nakts gaismu</string>
+    <string name="desktop_night_light_temperature">Krāsu temperatūra: %1$d K</string>
+    <string name="desktop_night_light_on">Ieslēgts</string>
+    <string name="desktop_night_light_off">Izslēgts</string>
+    <string name="desktop_night_light_pref_only">Iestatījums saglabāts; instalējiet gammastep, redshift vai wlsunset, lai lietotu šajā saimniekdatorā</string>
+    <string name="desktop_night_light_failed">Saimniekdatora rīks nevarēja mainīt displeja temperatūru</string>
+    <string name="desktop_night_light_applied">Lietots ar %1$s</string>
+    <string name="desktop_night_light_cleared">Nakts gaisma izslēgta</string>
+    <string name="desktop_settings_search_hint">Meklēt iestatījumos</string>
+    <string name="desktop_settings_search_empty">Nekādi iestatījumi neatbilst šai meklēšanai</string>
+    <string name="desktop_settings_session">Sesija</string>
+    <string name="desktop_settings_display">Displejs</string>
+    <string name="desktop_settings_desktop">Darbvirsma</string>
+    <string name="desktop_settings_windows">Logi</string>
+    <string name="desktop_settings_portable">Portatīvs</string>
+    <string name="desktop_settings_vault">Seifs</string>
+</resources>

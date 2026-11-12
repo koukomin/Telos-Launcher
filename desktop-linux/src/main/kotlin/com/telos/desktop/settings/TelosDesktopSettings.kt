@@ -46,6 +46,9 @@ class TelosDesktopSettings(private val vaultConfigDir: File) {
      * `TELOS_COMPOSITOR` is unset.
      */
     var windowMode: String = "stacking"
+    /** Warm display temperature (Night Light); applied via host gammastep/redshift/wlsunset when present. */
+    var nightLightEnabled: Boolean = false
+    var nightLightTemperatureK: Int = 4500
 
     private val file: File get() = File(vaultConfigDir, "desktop.properties")
 
@@ -92,6 +95,9 @@ class TelosDesktopSettings(private val vaultConfigDir: File) {
         windowMode = com.telos.desktop.wm.WindowMode.parse(
             p.getProperty("desktop.windowMode") ?: p.getProperty("windowMode"),
         ).propertyValue
+        nightLightEnabled = p.getProperty("nightLight.enabled", "false").toBoolean()
+        nightLightTemperatureK = p.getProperty("nightLight.temperatureK")?.toIntOrNull()
+            ?.coerceIn(1000, 6500) ?: 4500
         outputPrefs.clear()
         p.stringPropertyNames().forEach { key ->
             if (key.startsWith("output.")) {
@@ -141,6 +147,8 @@ class TelosDesktopSettings(private val vaultConfigDir: File) {
         val mode = com.telos.desktop.wm.WindowMode.parse(windowMode).propertyValue
         p["desktop.windowMode"] = mode
         p["windowMode"] = mode
+        p["nightLight.enabled"] = nightLightEnabled.toString()
+        p["nightLight.temperatureK"] = nightLightTemperatureK.toString()
         outputPrefs.forEach { (name, spec) -> p["output.$name"] = spec }
         file.outputStream().use { p.store(it, "Telos Linux Desktop") }
     }

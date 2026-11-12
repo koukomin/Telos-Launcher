@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_night_light_title">ナイトライト</string>
+    <string name="desktop_night_light_hint">ホストのツール（gammastep、redshift、または wlsunset）で画面を暖色にします。位置情報サービスは使わず、ネットワークにも送信しません。ツールがない場合は設定のみ保存されます。</string>
+    <string name="desktop_night_light_enable">ナイトライトを有効にする</string>
+    <string name="desktop_night_light_temperature">色温度: %1$d K</string>
+    <string name="desktop_night_light_on">オン</string>
+    <string name="desktop_night_light_off">オフ</string>
+    <string name="desktop_night_light_pref_only">設定を保存しました。このホストで適用するには gammastep、redshift、または wlsunset をインストールしてください</string>
+    <string name="desktop_night_light_failed">ホストツールが画面の色温度を変更できませんでした</string>
+    <string name="desktop_night_light_applied">%1$s で適用しました</string>
+    <string name="desktop_night_light_cleared">ナイトライトを解除しました</string>
+    <string name="desktop_settings_search_hint">設定を検索</string>
+    <string name="desktop_settings_search_empty">この検索に一致する設定はありません</string>
+    <string name="desktop_settings_session">セッション</string>
+    <string name="desktop_settings_display">ディスプレイ</string>
+    <string name="desktop_settings_desktop">デスクトップ</string>
+    <string name="desktop_settings_windows">ウィンドウ</string>
+    <string name="desktop_settings_portable">ポータブル</string>
+    <string name="desktop_settings_vault">ボルト</string>
+</resources>

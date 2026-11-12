@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_night_light_title">Éclairage nocturne</string>
+    <string name="desktop_night_light_hint">Réchauffe l’affichage avec un outil hôte (gammastep, redshift ou wlsunset). Pas de services de localisation et rien n’est envoyé sur le réseau. Sans outil, seule la préférence est enregistrée.</string>
+    <string name="desktop_night_light_enable">Activer l’éclairage nocturne</string>
+    <string name="desktop_night_light_temperature">Température de couleur : %1$d K</string>
+    <string name="desktop_night_light_on">Activé</string>
+    <string name="desktop_night_light_off">Désactivé</string>
+    <string name="desktop_night_light_pref_only">Préférence enregistrée ; installez gammastep, redshift ou wlsunset pour l’appliquer sur cet hôte</string>
+    <string name="desktop_night_light_failed">L’outil hôte n’a pas pu modifier la température d’affichage</string>
+    <string name="desktop_night_light_applied">Appliqué avec %1$s</string>
+    <string name="desktop_night_light_cleared">Éclairage nocturne désactivé</string>
+    <string name="desktop_settings_search_hint">Rechercher dans les paramètres</string>
+    <string name="desktop_settings_search_empty">Aucun paramètre ne correspond à cette recherche</string>
+    <string name="desktop_settings_session">Session</string>
+    <string name="desktop_settings_display">Affichage</string>
+    <string name="desktop_settings_desktop">Bureau</string>
+    <string name="desktop_settings_windows">Fenêtres</string>
+    <string name="desktop_settings_portable">Portable</string>
+    <string name="desktop_settings_vault">Coffre</string>
+</resources>

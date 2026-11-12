@@ -15,6 +15,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -28,8 +29,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.telos.desktop.cursor.CursorPreset
-import com.telos.desktop.display.LinuxDisplayManager
 import com.telos.desktop.cursor.XCursorThemeInfo
+import com.telos.desktop.display.LinuxDisplayManager
+import com.telos.desktop.display.NightLightController
 import com.telos.desktop.icons.IconThemeInfo
 import com.telos.desktop.icons.IconThemeSource
 import com.telos.desktop.icons.LinuxIconThemeResolver
@@ -69,6 +71,66 @@ fun LinuxDesktopSettingsPanel(
     val iconScope = rememberCoroutineScope()
     var iconBusyId by remember { mutableStateOf<String?>(null) }
     var iconStatus by remember { mutableStateOf<String?>(null) }
+    var searchQuery by remember { mutableStateOf("") }
+    var nightEnabled by remember { mutableStateOf(settings.nightLightEnabled) }
+    var nightTemp by remember { mutableStateOf(settings.nightLightTemperatureK.toFloat()) }
+    var nightStatus by remember {
+        mutableStateOf(
+            NightLightController.snapshot(settings.nightLightEnabled, settings.nightLightTemperatureK),
+        )
+    }
+    val t = com.telos.desktop.i18n.TelosI18n
+    val indexEntries = remember {
+        helixSettingsIndexEntries(
+            sessionTitle = t.t("desktop_settings_session"),
+            displayTitle = t.t("desktop_settings_display"),
+            nightTitle = t.t("desktop_night_light_title"),
+            desktopTitle = t.t("desktop_settings_desktop"),
+            iconsTitle = t.t("desktop_icons_title"),
+            windowsTitle = t.t("desktop_settings_windows"),
+            cursorTitle = t.t("desktop_cursor_title"),
+            profilesTitle = t.t("desktop_vos_profiles_title"),
+            portableTitle = t.t("desktop_settings_portable"),
+            shellTitle = t.t("desktop_windows_shell_title"),
+            syncTitle = t.t("desktop_session_sync_title"),
+            vaultTitle = t.t("desktop_settings_vault"),
+            portalTitle = t.t("desktop_portal_device_title"),
+            opsecTitle = t.t("desktop_opsec_title"),
+            restoreTitle = t.t("desktop_vault_restore_title"),
+            updateTitle = t.t("desktop_update_title"),
+            nightKeywords = listOf(
+                t.t("desktop_night_light_enable"),
+                t.t("desktop_night_light_temperature"),
+                "gammastep",
+                "redshift",
+                "wlsunset",
+            ),
+            sessionKeywords = listOf("fullscreen", "theme", "idle"),
+            desktopKeywords = listOf(
+                "icons",
+                "hidden",
+                ".lnk",
+                ".desktop",
+                "folders",
+            ),
+            portalKeywords = listOf(
+                t.t("desktop_perm_camera"),
+                t.t("desktop_perm_microphone"),
+                "camera",
+                "microphone",
+                "portal",
+            ),
+            opsecKeywords = listOf(
+                t.t("desktop_opsec_secure_clipboard"),
+                t.t("desktop_opsec_clipboard_title"),
+                t.t("desktop_opsec_audit_title"),
+            ),
+        )
+    }
+    val visibleIds = remember(searchQuery, indexEntries) {
+        HelixSettingsIndex.filterIds(indexEntries, searchQuery)
+    }
+    fun show(id: String): Boolean = searchQuery.isBlank() || id in visibleIds
     androidx.compose.runtime.LaunchedEffect(Unit) {
         runCatching {
             val opsec = com.telos.desktop.vault.PhantomVault.engine.opsec
@@ -84,8 +146,22 @@ fun LinuxDesktopSettingsPanel(
         Modifier.fillMaxSize().background(TelosColors.surface).padding(16.dp).verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-        Text(com.telos.desktop.i18n.TelosI18n.t("telos_desktop_settings"), color = TelosColors.secondary, fontSize = 22.sp)
-        HelixSettingsCard("Session") {
+        Text(t.t("telos_desktop_settings"), color = TelosColors.secondary, fontSize = 22.sp)
+        OutlinedTextField(
+            value = searchQuery,
+            onValueChange = { searchQuery = it },
+            modifier = Modifier.fillMaxWidth(),
+            singleLine = true,
+            label = { Text(t.t("desktop_settings_search_hint")) },
+        )
+        if (searchQuery.isNotBlank() && visibleIds.isEmpty()) {
+            Text(
+                t.t("desktop_settings_search_empty"),
+                fontSize = 12.sp,
+                color = TelosColors.onSurface.copy(0.7f),
+            )
+        }
+        if (show("session")) HelixSettingsCard(t.t("desktop_settings_session")) {
             Toggle("Start fullscreen", settings.startFullscreen) {
                 settings.startFullscreen = it
                 settings.save()
@@ -142,8 +218,8 @@ fun LinuxDesktopSettingsPanel(
                 )
             }
         }
-        if (filter.showDisplayResolution) {
-            HelixSettingsCard("Display") {
+        if (filter.showDisplayResolution && show("display")) {
+            HelixSettingsCard(t.t("desktop_settings_display")) {
                 outputs.forEach { out ->
                     Text(out.name + " " + (out.current?.label ?: ""), color = TelosColors.onSurface)
                     out.modes.take(12).forEach { mode ->
@@ -163,8 +239,64 @@ fun LinuxDesktopSettingsPanel(
                 }
             }
         }
-        if (filter.showDesktopSurfaceFilters) {
-            HelixSettingsCard("Desktop") {
+        if (show("night_light")) {
+            HelixSettingsCard(t.t("desktop_night_light_title")) {
+                Text(t.t("desktop_night_light_hint"), fontSize = 11.sp, color = TelosColors.onSurface.copy(0.7f))
+                Toggle(t.t("desktop_night_light_enable"), nightEnabled) { on ->
+                    nightEnabled = on
+                    settings.nightLightEnabled = on
+                    settings.nightLightTemperatureK = NightLightController.clampTemp(nightTemp.toInt())
+                    settings.save()
+                    val status = NightLightController.apply(on, settings.nightLightTemperatureK)
+                    nightStatus = NightLightController.snapshot(on, settings.nightLightTemperatureK).copy(status = status)
+                }
+                Text(
+                    t.t("desktop_night_light_temperature", NightLightController.clampTemp(nightTemp.toInt())),
+                    fontSize = 12.sp,
+                    color = TelosColors.onSurface,
+                )
+                Slider(
+                    value = ((nightTemp - NightLightController.MIN_TEMP_K) /
+                        (NightLightController.MAX_TEMP_K - NightLightController.MIN_TEMP_K).toFloat())
+                        .coerceIn(0f, 1f),
+                    onValueChange = {
+                        nightTemp = NightLightController.MIN_TEMP_K +
+                            it * (NightLightController.MAX_TEMP_K - NightLightController.MIN_TEMP_K)
+                    },
+                    onValueChangeFinished = {
+                        val kelvin = NightLightController.clampTemp(nightTemp.toInt())
+                        nightTemp = kelvin.toFloat()
+                        settings.nightLightTemperatureK = kelvin
+                        settings.save()
+                        if (nightEnabled) {
+                            val status = NightLightController.apply(true, kelvin)
+                            nightStatus = NightLightController.snapshot(true, kelvin).copy(status = status)
+                        } else {
+                            nightStatus = NightLightController.snapshot(false, kelvin)
+                        }
+                    },
+                )
+                Text(
+                    when (nightStatus.status) {
+                        NightLightController.ApplyStatus.PreferenceOnly ->
+                            t.t("desktop_night_light_pref_only")
+                        NightLightController.ApplyStatus.Failed ->
+                            t.t("desktop_night_light_failed")
+                        NightLightController.ApplyStatus.Applied ->
+                            t.t(
+                                "desktop_night_light_applied",
+                                nightStatus.backend.name.lowercase(),
+                            )
+                        NightLightController.ApplyStatus.Cleared ->
+                            t.t("desktop_night_light_cleared")
+                    },
+                    fontSize = 11.sp,
+                    color = TelosColors.secondary,
+                )
+            }
+        }
+        if (filter.showDesktopSurfaceFilters && show("desktop")) {
+            HelixSettingsCard(t.t("desktop_settings_desktop")) {
                 Toggle("Show desktop icons", settings.showDesktopIcons) { settings.showDesktopIcons = it; settings.save() }
                 Toggle("Show hidden files", settings.showHiddenFiles) { settings.showHiddenFiles = it; settings.save() }
                 Toggle("Show .lnk files", settings.showLnkFiles) { settings.showLnkFiles = it; settings.save() }
@@ -172,8 +304,8 @@ fun LinuxDesktopSettingsPanel(
                 Toggle("Show standard folders", settings.showStandardFolders) { settings.showStandardFolders = it; settings.save() }
             }
         }
-        if (filter.showLinuxIconThemeSelector) {
-            HelixSettingsCard(com.telos.desktop.i18n.TelosI18n.t("desktop_icons_title")) {
+        if (filter.showLinuxIconThemeSelector && show("icons")) {
+            HelixSettingsCard(t.t("desktop_icons_title")) {
                 Text(
                     com.telos.desktop.i18n.TelosI18n.t("desktop_icons_freedesktop_note"),
                     fontSize = 11.sp,
@@ -320,8 +452,8 @@ fun LinuxDesktopSettingsPanel(
                 }
             }
         }
-        if (filter.showKlassyWindowManager) {
-            HelixSettingsCard("Windows") {
+        if (filter.showKlassyWindowManager && show("windows")) {
+            HelixSettingsCard(t.t("desktop_settings_windows")) {
                 WindowButtonStyle.entries.forEach { style ->
                     TextButton(onClick = { settings.windowButtonStyle = style.name; settings.save() }) {
                         Text(style.name + if (settings.windowButtonStyle == style.name) " ✓" else "")
@@ -330,8 +462,8 @@ fun LinuxDesktopSettingsPanel(
                 Toggle("Buttons on left", settings.buttonsOnLeft) { settings.buttonsOnLeft = it; settings.save() }
             }
         }
-        if (filter.showSweetCursor) {
-            HelixSettingsCard(com.telos.desktop.i18n.TelosI18n.t("desktop_cursor_title")) {
+        if (filter.showSweetCursor && show("cursor")) {
+            HelixSettingsCard(t.t("desktop_cursor_title")) {
                 var themeOpen by remember { mutableStateOf(false) }
                 var downloadMsg by remember { mutableStateOf<String?>(null) }
                 Text(com.telos.desktop.i18n.TelosI18n.t("desktop_cursor_theme"), fontSize = 12.sp, color = TelosColors.onSurface)
@@ -431,23 +563,27 @@ fun LinuxDesktopSettingsPanel(
                 }
             }
         }
-        HelixSettingsCard(com.telos.desktop.i18n.TelosI18n.t("desktop_vos_profiles_title")) {
-            com.telos.desktop.vault.VaultProfileSwitchPanel(
-                vaultConfigDir = runCatching { com.telos.desktop.vault.PhantomVault.engine.configDir }.getOrNull(),
-                compact = true,
-            )
-        }
-        if (filter.showPortableDesktopShell) {
-            HelixSettingsCard("Portable") {
-                Text(com.telos.desktop.i18n.TelosI18n.t("desktop_helix_portable_note"), fontSize = 12.sp)
-                Text(
-                    com.telos.desktop.vault.PortableTraceGuard.dataRoot().absolutePath,
-                    fontSize = 11.sp,
-                    color = TelosColors.onSurface.copy(0.7f),
+        if (show("profiles")) {
+            HelixSettingsCard(t.t("desktop_vos_profiles_title")) {
+                com.telos.desktop.vault.VaultProfileSwitchPanel(
+                    vaultConfigDir = runCatching { com.telos.desktop.vault.PhantomVault.engine.configDir }.getOrNull(),
+                    compact = true,
                 )
             }
-            if (WindowsShellIntegration.isWindows) {
-                HelixSettingsCard(com.telos.desktop.i18n.TelosI18n.t("desktop_windows_shell_title")) {
+        }
+        if (filter.showPortableDesktopShell) {
+            if (show("portable")) {
+                HelixSettingsCard(t.t("desktop_settings_portable")) {
+                    Text(t.t("desktop_helix_portable_note"), fontSize = 12.sp)
+                    Text(
+                        com.telos.desktop.vault.PortableTraceGuard.dataRoot().absolutePath,
+                        fontSize = 11.sp,
+                        color = TelosColors.onSurface.copy(0.7f),
+                    )
+                }
+            }
+            if (WindowsShellIntegration.isWindows && show("windows_shell")) {
+                HelixSettingsCard(t.t("desktop_windows_shell_title")) {
                     Text(
                         com.telos.desktop.i18n.TelosI18n.t("desktop_windows_shell_risk"),
                         fontSize = 12.sp,
@@ -462,13 +598,15 @@ fun LinuxDesktopSettingsPanel(
                     }
                 }
             }
-            HelixSettingsCard(com.telos.desktop.i18n.TelosI18n.t("desktop_session_sync_title")) {
-                Text(com.telos.desktop.i18n.TelosI18n.t("desktop_session_sync_pass", DesktopSessionSync.DEFAULT_KEEPASS_ENTRY), fontSize = 12.sp)
-                Text(
-                    File(com.telos.desktop.network.DesktopNetworkController.configHome(), "sync").absolutePath,
-                    fontSize = 11.sp,
-                    color = TelosColors.onSurface.copy(0.7f),
-                )
+            if (show("session_sync")) {
+                HelixSettingsCard(t.t("desktop_session_sync_title")) {
+                    Text(t.t("desktop_session_sync_pass", DesktopSessionSync.DEFAULT_KEEPASS_ENTRY), fontSize = 12.sp)
+                    Text(
+                        File(com.telos.desktop.network.DesktopNetworkController.configHome(), "sync").absolutePath,
+                        fontSize = 11.sp,
+                        color = TelosColors.onSurface.copy(0.7f),
+                    )
+                }
             }
             HelixSettingsCard(com.telos.desktop.i18n.TelosI18n.t("desktop_lan_pair_title")) {
                 var pairStatus by remember {
@@ -517,9 +655,9 @@ fun LinuxDesktopSettingsPanel(
                 }
             }
         }
-        Vos5RestoreAndUpdateCard(settings)
-        if (filter.showLuksVault) {
-            HelixSettingsCard("Vault") {
+        Vos5RestoreAndUpdateCard(settings, show = { id -> show(id) })
+        if (filter.showLuksVault && show("vault")) {
+            HelixSettingsCard(t.t("desktop_settings_vault")) {
                 Text("Configurations are stored only inside ~/.local/share/telos/vault_mnt after unlock.", fontSize = 12.sp)
                 Text(com.telos.desktop.vault.HardwareCryptoAccelerator.probe().label, fontSize = 12.sp, color = TelosColors.secondary)
                 TextButton(onClick = { runCatching { com.telos.desktop.vault.PhantomVault.engine.expandManual() } }) { Text("Expand vault +128MB") }
@@ -532,76 +670,78 @@ fun LinuxDesktopSettingsPanel(
             }
         }
 
-        HelixSettingsCard(com.telos.desktop.i18n.TelosI18n.t("desktop_portal_device_title")) {
-            val scope = rememberCoroutineScope()
-            var camera by remember {
-                mutableStateOf(
-                    com.telos.desktop.session.PortalDeviceAccess.readRequested(
-                        com.telos.desktop.session.PortalDeviceKind.Camera,
-                    ),
-                )
-            }
-            var mic by remember {
-                mutableStateOf(
-                    com.telos.desktop.session.PortalDeviceAccess.readRequested(
-                        com.telos.desktop.session.PortalDeviceKind.Microphone,
-                    ),
-                )
-            }
-            var portalStatus by remember { mutableStateOf<String?>(null) }
-            Text(
-                com.telos.desktop.i18n.TelosI18n.t("desktop_portal_device_hint"),
-                fontSize = 12.sp,
-                color = TelosColors.onSurface.copy(0.75f),
-            )
-            if (!com.telos.desktop.session.PortalDeviceAccess.available()) {
-                Text(
-                    com.telos.desktop.i18n.TelosI18n.t("desktop_portal_device_pref_only"),
-                    fontSize = 12.sp,
-                    color = TelosColors.secondary,
-                )
-            }
-            fun portalLabel(result: com.telos.desktop.session.PortalDeviceAskResult): String = when (result) {
-                com.telos.desktop.session.PortalDeviceAskResult.Requested ->
-                    com.telos.desktop.i18n.TelosI18n.t("desktop_portal_device_requested")
-                com.telos.desktop.session.PortalDeviceAskResult.PreferenceOnly ->
-                    com.telos.desktop.i18n.TelosI18n.t("desktop_portal_device_pref_only")
-                com.telos.desktop.session.PortalDeviceAskResult.Unavailable ->
-                    com.telos.desktop.i18n.TelosI18n.t("desktop_portal_device_unavailable")
-                com.telos.desktop.session.PortalDeviceAskResult.Failed,
-                com.telos.desktop.session.PortalDeviceAskResult.Invalid,
-                -> com.telos.desktop.i18n.TelosI18n.t("desktop_portal_device_failed")
-            }
-            Toggle(com.telos.desktop.i18n.TelosI18n.t("desktop_perm_camera"), camera) {
-                camera = it
-                scope.launch {
-                    val result = withContext(Dispatchers.IO) {
-                        com.telos.desktop.session.PortalDeviceAccess.setRequested(
+        if (show("portal_device")) {
+            HelixSettingsCard(com.telos.desktop.i18n.TelosI18n.t("desktop_portal_device_title")) {
+                val scope = rememberCoroutineScope()
+                var camera by remember {
+                    mutableStateOf(
+                        com.telos.desktop.session.PortalDeviceAccess.readRequested(
                             com.telos.desktop.session.PortalDeviceKind.Camera,
-                            it,
-                        )
-                    }
-                    portalStatus = portalLabel(result)
+                        ),
+                    )
                 }
-            }
-            Toggle(com.telos.desktop.i18n.TelosI18n.t("desktop_perm_microphone"), mic) {
-                mic = it
-                scope.launch {
-                    val result = withContext(Dispatchers.IO) {
-                        com.telos.desktop.session.PortalDeviceAccess.setRequested(
+                var mic by remember {
+                    mutableStateOf(
+                        com.telos.desktop.session.PortalDeviceAccess.readRequested(
                             com.telos.desktop.session.PortalDeviceKind.Microphone,
-                            it,
-                        )
-                    }
-                    portalStatus = portalLabel(result)
+                        ),
+                    )
                 }
-            }
-            portalStatus?.let {
-                Text(it, fontSize = 11.sp, color = TelosColors.secondary)
+                var portalStatus by remember { mutableStateOf<String?>(null) }
+                Text(
+                    com.telos.desktop.i18n.TelosI18n.t("desktop_portal_device_hint"),
+                    fontSize = 12.sp,
+                    color = TelosColors.onSurface.copy(0.75f),
+                )
+                if (!com.telos.desktop.session.PortalDeviceAccess.available()) {
+                    Text(
+                        com.telos.desktop.i18n.TelosI18n.t("desktop_portal_device_pref_only"),
+                        fontSize = 12.sp,
+                        color = TelosColors.secondary,
+                    )
+                }
+                fun portalLabel(result: com.telos.desktop.session.PortalDeviceAskResult): String = when (result) {
+                    com.telos.desktop.session.PortalDeviceAskResult.Requested ->
+                        com.telos.desktop.i18n.TelosI18n.t("desktop_portal_device_requested")
+                    com.telos.desktop.session.PortalDeviceAskResult.PreferenceOnly ->
+                        com.telos.desktop.i18n.TelosI18n.t("desktop_portal_device_pref_only")
+                    com.telos.desktop.session.PortalDeviceAskResult.Unavailable ->
+                        com.telos.desktop.i18n.TelosI18n.t("desktop_portal_device_unavailable")
+                    com.telos.desktop.session.PortalDeviceAskResult.Failed,
+                    com.telos.desktop.session.PortalDeviceAskResult.Invalid,
+                    -> com.telos.desktop.i18n.TelosI18n.t("desktop_portal_device_failed")
+                }
+                Toggle(com.telos.desktop.i18n.TelosI18n.t("desktop_perm_camera"), camera) {
+                    camera = it
+                    scope.launch {
+                        val result = withContext(Dispatchers.IO) {
+                            com.telos.desktop.session.PortalDeviceAccess.setRequested(
+                                com.telos.desktop.session.PortalDeviceKind.Camera,
+                                it,
+                            )
+                        }
+                        portalStatus = portalLabel(result)
+                    }
+                }
+                Toggle(com.telos.desktop.i18n.TelosI18n.t("desktop_perm_microphone"), mic) {
+                    mic = it
+                    scope.launch {
+                        val result = withContext(Dispatchers.IO) {
+                            com.telos.desktop.session.PortalDeviceAccess.setRequested(
+                                com.telos.desktop.session.PortalDeviceKind.Microphone,
+                                it,
+                            )
+                        }
+                        portalStatus = portalLabel(result)
+                    }
+                }
+                portalStatus?.let {
+                    Text(it, fontSize = 11.sp, color = TelosColors.secondary)
+                }
             }
         }
 
-        HelixSettingsCard(com.telos.desktop.i18n.TelosI18n.t("desktop_opsec_title")) {
+        if (show("opsec")) HelixSettingsCard(t.t("desktop_opsec_title")) {
             val opsec = runCatching { com.telos.desktop.vault.PhantomVault.engine.opsec }.getOrNull()
             var secure by remember {
                 mutableStateOf(settings.secureClipboard)
@@ -740,8 +880,52 @@ private fun reapplyCursor(settings: TelosDesktopSettings) {
     )
 }
 
+private fun helixSettingsIndexEntries(
+    sessionTitle: String,
+    displayTitle: String,
+    nightTitle: String,
+    desktopTitle: String,
+    iconsTitle: String,
+    windowsTitle: String,
+    cursorTitle: String,
+    profilesTitle: String,
+    portableTitle: String,
+    shellTitle: String,
+    syncTitle: String,
+    vaultTitle: String,
+    portalTitle: String,
+    opsecTitle: String,
+    restoreTitle: String,
+    updateTitle: String,
+    nightKeywords: List<String>,
+    sessionKeywords: List<String>,
+    desktopKeywords: List<String>,
+    portalKeywords: List<String>,
+    opsecKeywords: List<String>,
+): List<HelixSettingsIndexEntry> = listOf(
+    HelixSettingsIndexEntry("session", sessionTitle, sessionKeywords),
+    HelixSettingsIndexEntry("display", displayTitle, listOf("resolution", "scale", "refresh")),
+    HelixSettingsIndexEntry("night_light", nightTitle, nightKeywords),
+    HelixSettingsIndexEntry("desktop", desktopTitle, desktopKeywords),
+    HelixSettingsIndexEntry("icons", iconsTitle, listOf("theme", "papirus", "tela", "candy")),
+    HelixSettingsIndexEntry("windows", windowsTitle, listOf("klassy", "buttons")),
+    HelixSettingsIndexEntry("cursor", cursorTitle, listOf("xcursor", "size", "breeze")),
+    HelixSettingsIndexEntry("profiles", profilesTitle, listOf("vault", "profile", "portable")),
+    HelixSettingsIndexEntry("portable", portableTitle, listOf("portable", "data")),
+    HelixSettingsIndexEntry("windows_shell", shellTitle, listOf("explorer", "shell")),
+    HelixSettingsIndexEntry("session_sync", syncTitle, listOf("sync", "keepass")),
+    HelixSettingsIndexEntry("vault", vaultTitle, listOf("luks", "expand", "compact")),
+    HelixSettingsIndexEntry("portal_device", portalTitle, portalKeywords),
+    HelixSettingsIndexEntry("opsec", opsecTitle, opsecKeywords),
+    HelixSettingsIndexEntry("vault_restore", restoreTitle, listOf("restore", "backup")),
+    HelixSettingsIndexEntry("update", updateTitle, listOf("update", "signed", "manifest")),
+)
+
 @Composable
-private fun Vos5RestoreAndUpdateCard(settings: TelosDesktopSettings) {
+private fun Vos5RestoreAndUpdateCard(
+    settings: TelosDesktopSettings,
+    show: (String) -> Boolean,
+) {
     val scope = rememberCoroutineScope()
     var restorePass by remember { mutableStateOf("") }
     var restoreMsg by remember { mutableStateOf<String?>(null) }
@@ -759,7 +943,7 @@ private fun Vos5RestoreAndUpdateCard(settings: TelosDesktopSettings) {
     var luksMsg by remember { mutableStateOf<String?>(null) }
     var luksPreview by remember { mutableStateOf<DesktopLuksImageRestore.Preview?>(null) }
 
-    HelixSettingsCard(com.telos.desktop.i18n.TelosI18n.t("desktop_vault_restore_title")) {
+    if (show("vault_restore")) HelixSettingsCard(com.telos.desktop.i18n.TelosI18n.t("desktop_vault_restore_title")) {
         Text(com.telos.desktop.i18n.TelosI18n.t("desktop_vault_restore_hint"), fontSize = 12.sp)
         OutlinedTextField(
             restorePass,
@@ -907,7 +1091,7 @@ private fun Vos5RestoreAndUpdateCard(settings: TelosDesktopSettings) {
         luksMsg?.let { Text(it, fontSize = 11.sp, color = TelosColors.primary) }
     }
 
-    HelixSettingsCard(com.telos.desktop.i18n.TelosI18n.t("desktop_update_title")) {
+    if (show("update")) HelixSettingsCard(com.telos.desktop.i18n.TelosI18n.t("desktop_update_title")) {
         Text(com.telos.desktop.i18n.TelosI18n.t("desktop_update_hint"), fontSize = 12.sp)
         Text(
             com.telos.desktop.i18n.TelosI18n.t(

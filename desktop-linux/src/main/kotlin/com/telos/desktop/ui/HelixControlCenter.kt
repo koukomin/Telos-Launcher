@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.telos.desktop.display.NightLightController
 import com.telos.desktop.i18n.TelosI18n.t
 import com.telos.desktop.overlay.TelosNotificationCenter
 import com.telos.desktop.panel.AudioControlManager
@@ -30,6 +31,7 @@ import com.telos.desktop.settings.TelosDesktopSettings
 import com.telos.desktop.wm.SnapLayout
 import com.telos.desktop.wm.TelosWindowManager
 import com.telos.desktop.wm.WindowMode
+import java.io.File
 
 @Composable
 fun HelixControlCenter(
@@ -42,8 +44,21 @@ fun HelixControlCenter(
     val net = ConnectivityManager.snapshot()
     val power = LaptopPowerManager.snapshot()
     val shape = RoundedCornerShape(16.dp)
-    var windowMode by remember(settings?.windowMode) {
-        mutableStateOf(WindowMode.parse(settings?.windowMode).propertyValue)
+    val settingsStore = remember(settings) {
+        settings ?: runCatching {
+            val dir = com.telos.desktop.vault.PhantomVault.engine.configDir
+            TelosDesktopSettings(dir).also { it.load() }
+        }.getOrElse {
+            TelosDesktopSettings(File(System.getProperty("java.io.tmpdir"), "telos-cc-settings")).also { it.load() }
+        }
+    }
+    var windowMode by remember(settingsStore.windowMode) {
+        mutableStateOf(WindowMode.parse(settingsStore.windowMode).propertyValue)
+    }
+    var nightOn by remember { mutableStateOf(settingsStore.nightLightEnabled) }
+    var nightTemp by remember { mutableStateOf(settingsStore.nightLightTemperatureK.toFloat()) }
+    var nightSnap by remember {
+        mutableStateOf(NightLightController.snapshot(settingsStore.nightLightEnabled, settingsStore.nightLightTemperatureK))
     }
     Column(
         Modifier
@@ -72,6 +87,55 @@ fun HelixControlCenter(
         Text("Brightness ${power.screenBrightness}%", color = TelosColors.onSurface, fontSize = 12.sp)
         Slider(power.screenBrightness / 100f, { LaptopPowerManager.setScreenBrightness((it * 100).toInt()) })
         Text(
+            t("desktop_night_light_title") + ": " +
+                if (nightOn) t("desktop_night_light_on") else t("desktop_night_light_off"),
+            color = TelosColors.primary,
+            modifier = Modifier.clickable {
+                nightOn = !nightOn
+                settingsStore.nightLightEnabled = nightOn
+                settingsStore.nightLightTemperatureK = NightLightController.clampTemp(nightTemp.toInt())
+                settingsStore.save()
+                val status = NightLightController.apply(nightOn, settingsStore.nightLightTemperatureK)
+                nightSnap = NightLightController.snapshot(nightOn, settingsStore.nightLightTemperatureK)
+                    .copy(status = status)
+            },
+        )
+        Text(
+            t("desktop_night_light_temperature", NightLightController.clampTemp(nightTemp.toInt())),
+            color = TelosColors.onSurface,
+            fontSize = 12.sp,
+        )
+        Slider(
+            value = ((nightTemp - NightLightController.MIN_TEMP_K) /
+                (NightLightController.MAX_TEMP_K - NightLightController.MIN_TEMP_K).toFloat())
+                .coerceIn(0f, 1f),
+            onValueChange = {
+                nightTemp = NightLightController.MIN_TEMP_K +
+                    it * (NightLightController.MAX_TEMP_K - NightLightController.MIN_TEMP_K)
+            },
+            onValueChangeFinished = {
+                val kelvin = NightLightController.clampTemp(nightTemp.toInt())
+                nightTemp = kelvin.toFloat()
+                settingsStore.nightLightTemperatureK = kelvin
+                settingsStore.save()
+                if (nightOn) {
+                    val status = NightLightController.apply(true, kelvin)
+                    nightSnap = NightLightController.snapshot(true, kelvin).copy(status = status)
+                }
+            },
+        )
+        Text(
+            when (nightSnap.status) {
+                NightLightController.ApplyStatus.PreferenceOnly -> t("desktop_night_light_pref_only")
+                NightLightController.ApplyStatus.Failed -> t("desktop_night_light_failed")
+                NightLightController.ApplyStatus.Applied ->
+                    t("desktop_night_light_applied", nightSnap.backend.name.lowercase())
+                NightLightController.ApplyStatus.Cleared -> t("desktop_night_light_cleared")
+            },
+            fontSize = 11.sp,
+            color = TelosColors.onSurface.copy(0.75f),
+        )
+        Text(
             if (TelosNotificationCenter.dnd.value) "Do Not Disturb: On" else "Do Not Disturb: Off",
             color = TelosColors.primary,
             modifier = Modifier.clickable { TelosNotificationCenter.dnd.value = !TelosNotificationCenter.dnd.value },
@@ -95,30 +159,28 @@ fun HelixControlCenter(
             }
         }
 
-        if (settings != null) {
-            Text(t("desktop_helix_window_mode"), color = TelosColors.secondary, fontSize = 13.sp)
-            Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                HelixTechPill(
-                    t("desktop_helix_tiling"),
-                    selected = windowMode == WindowMode.Tiling.propertyValue,
-                    accent = TelosColors.secondary,
-                ) {
-                    windowMode = WindowMode.Tiling.propertyValue
-                    settings.windowMode = windowMode
-                    settings.save()
-                }
-                HelixTechPill(
-                    t("desktop_helix_stacking"),
-                    selected = windowMode == WindowMode.Stacking.propertyValue,
-                    accent = TelosColors.primary,
-                ) {
-                    windowMode = WindowMode.Stacking.propertyValue
-                    settings.windowMode = windowMode
-                    settings.save()
-                }
+        Text(t("desktop_helix_window_mode"), color = TelosColors.secondary, fontSize = 13.sp)
+        Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+            HelixTechPill(
+                t("desktop_helix_tiling"),
+                selected = windowMode == WindowMode.Tiling.propertyValue,
+                accent = TelosColors.secondary,
+            ) {
+                windowMode = WindowMode.Tiling.propertyValue
+                settingsStore.windowMode = windowMode
+                settingsStore.save()
             }
-            Text(t("desktop_helix_window_mode_hint"), color = TelosColors.onSurface.copy(0.7f), fontSize = 11.sp)
+            HelixTechPill(
+                t("desktop_helix_stacking"),
+                selected = windowMode == WindowMode.Stacking.propertyValue,
+                accent = TelosColors.primary,
+            ) {
+                windowMode = WindowMode.Stacking.propertyValue
+                settingsStore.windowMode = windowMode
+                settingsStore.save()
+            }
         }
+        Text(t("desktop_helix_window_mode_hint"), color = TelosColors.onSurface.copy(0.7f), fontSize = 11.sp)
 
         Text(
             t("settings"),

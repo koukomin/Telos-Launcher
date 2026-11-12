@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_night_light_title">夜間模式</string>
+    <string name="desktop_night_light_hint">透過主機工具（gammastep、redshift 或 wlsunset）暖化螢幕。不使用定位服務，也不會向網路傳送任何內容。沒有工具時僅儲存偏好。</string>
+    <string name="desktop_night_light_enable">啟用夜間模式</string>
+    <string name="desktop_night_light_temperature">色溫：%1$d K</string>
+    <string name="desktop_night_light_on">開</string>
+    <string name="desktop_night_light_off">關</string>
+    <string name="desktop_night_light_pref_only">已儲存偏好；請安裝 gammastep、redshift 或 wlsunset 以在本機套用</string>
+    <string name="desktop_night_light_failed">主機工具未能變更螢幕色溫</string>
+    <string name="desktop_night_light_applied">已透過 %1$s 套用</string>
+    <string name="desktop_night_light_cleared">已關閉夜間模式</string>
+    <string name="desktop_settings_search_hint">搜尋設定</string>
+    <string name="desktop_settings_search_empty">沒有符合此搜尋的設定</string>
+    <string name="desktop_settings_session">工作階段</string>
+    <string name="desktop_settings_display">顯示</string>
+    <string name="desktop_settings_desktop">桌面</string>
+    <string name="desktop_settings_windows">視窗</string>
+    <string name="desktop_settings_portable">可攜式</string>
+    <string name="desktop_settings_vault">保險庫</string>
+</resources>

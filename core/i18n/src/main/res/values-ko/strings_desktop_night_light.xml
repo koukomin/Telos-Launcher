@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_night_light_title">야간 조명</string>
+    <string name="desktop_night_light_hint">호스트 도구(gammastep, redshift 또는 wlsunset)로 화면을 따뜻하게 합니다. 위치 서비스를 쓰지 않으며 네트워크로 아무것도 보내지 않습니다. 도구가 없으면 환경설정만 저장됩니다.</string>
+    <string name="desktop_night_light_enable">야간 조명 사용</string>
+    <string name="desktop_night_light_temperature">색온도: %1$d K</string>
+    <string name="desktop_night_light_on">켜짐</string>
+    <string name="desktop_night_light_off">꺼짐</string>
+    <string name="desktop_night_light_pref_only">환경설정이 저장되었습니다. 이 호스트에 적용하려면 gammastep, redshift 또는 wlsunset을 설치하세요</string>
+    <string name="desktop_night_light_failed">호스트 도구가 화면 색온도를 바꾸지 못했습니다</string>
+    <string name="desktop_night_light_applied">%1$s(으)로 적용됨</string>
+    <string name="desktop_night_light_cleared">야간 조명 해제됨</string>
+    <string name="desktop_settings_search_hint">설정 검색</string>
+    <string name="desktop_settings_search_empty">이 검색과 일치하는 설정이 없습니다</string>
+    <string name="desktop_settings_session">세션</string>
+    <string name="desktop_settings_display">디스플레이</string>
+    <string name="desktop_settings_desktop">데스크톱</string>
+    <string name="desktop_settings_windows">창</string>
+    <string name="desktop_settings_portable">휴대용</string>
+    <string name="desktop_settings_vault">금고</string>
+</resources>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_night_light_title">Ánh sáng ban đêm</string>
+    <string name="desktop_night_light_hint">Làm ấm màn hình bằng công cụ máy chủ (gammastep, redshift hoặc wlsunset). Không dùng dịch vụ định vị và không gửi gì qua mạng. Không có công cụ thì chỉ lưu tùy chọn.</string>
+    <string name="desktop_night_light_enable">Bật ánh sáng ban đêm</string>
+    <string name="desktop_night_light_temperature">Nhiệt độ màu: %1$d K</string>
+    <string name="desktop_night_light_on">Bật</string>
+    <string name="desktop_night_light_off">Tắt</string>
+    <string name="desktop_night_light_pref_only">Đã lưu tùy chọn; cài gammastep, redshift hoặc wlsunset để áp dụng trên máy này</string>
+    <string name="desktop_night_light_failed">Công cụ máy chủ không đổi được nhiệt độ màn hình</string>
+    <string name="desktop_night_light_applied">Đã áp dụng bằng %1$s</string>
+    <string name="desktop_night_light_cleared">Đã tắt ánh sáng ban đêm</string>
+    <string name="desktop_settings_search_hint">Tìm cài đặt</string>
+    <string name="desktop_settings_search_empty">Không có cài đặt nào khớp tìm kiếm này</string>
+    <string name="desktop_settings_session">Phiên</string>
+    <string name="desktop_settings_display">Màn hình</string>
+    <string name="desktop_settings_desktop">Máy tính để bàn</string>
+    <string name="desktop_settings_windows">Cửa sổ</string>
+    <string name="desktop_settings_portable">Di động</string>
+    <string name="desktop_settings_vault">Kho</string>
+</resources>

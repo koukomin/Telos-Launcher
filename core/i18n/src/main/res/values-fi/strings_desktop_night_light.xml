@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_night_light_title">Yövalo</string>
+    <string name="desktop_night_light_hint">Lämmittää näytön isäntätyökalulla (gammastep, redshift tai wlsunset). Ei sijaintipalveluja eikä mitään lähetetä verkkoon. Ilman työkalua tallennetaan vain asetus.</string>
+    <string name="desktop_night_light_enable">Ota yövalo käyttöön</string>
+    <string name="desktop_night_light_temperature">Värilämpötila: %1$d K</string>
+    <string name="desktop_night_light_on">Päällä</string>
+    <string name="desktop_night_light_off">Pois</string>
+    <string name="desktop_night_light_pref_only">Asetus tallennettu; asenna gammastep, redshift tai wlsunset käyttääksesi tällä koneella</string>
+    <string name="desktop_night_light_failed">Isäntätyökalu ei voinut muuttaa näytön lämpötilaa</string>
+    <string name="desktop_night_light_applied">Käytössä: %1$s</string>
+    <string name="desktop_night_light_cleared">Yövalo poistettu</string>
+    <string name="desktop_settings_search_hint">Hae asetuksista</string>
+    <string name="desktop_settings_search_empty">Mikään asetus ei vastaa tätä hakua</string>
+    <string name="desktop_settings_session">Istunto</string>
+    <string name="desktop_settings_display">Näyttö</string>
+    <string name="desktop_settings_desktop">Työpöytä</string>
+    <string name="desktop_settings_windows">Ikkunat</string>
+    <string name="desktop_settings_portable">Kannettava</string>
+    <string name="desktop_settings_vault">Holvi</string>
+</resources>

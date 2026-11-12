@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_night_light_title">Nakties šviesa</string>
+    <string name="desktop_night_light_hint">Sušildo ekraną šeimininko įrankiu (gammastep, redshift arba wlsunset). Be vietos nustatymo paslaugų ir nieko nesiunčiama tinklu. Be įrankio išsaugoma tik nuostata.</string>
+    <string name="desktop_night_light_enable">Įjungti nakties šviesą</string>
+    <string name="desktop_night_light_temperature">Spalvos temperatūra: %1$d K</string>
+    <string name="desktop_night_light_on">Įjungta</string>
+    <string name="desktop_night_light_off">Išjungta</string>
+    <string name="desktop_night_light_pref_only">Nuostata išsaugota; įdiekite gammastep, redshift arba wlsunset, kad pritaikytumėte šiame kompiuteryje</string>
+    <string name="desktop_night_light_failed">Šeimininko įrankis nepakeitė ekrano temperatūros</string>
+    <string name="desktop_night_light_applied">Pritaikyta su %1$s</string>
+    <string name="desktop_night_light_cleared">Nakties šviesa išjungta</string>
+    <string name="desktop_settings_search_hint">Ieškoti nustatymuose</string>
+    <string name="desktop_settings_search_empty">Jokie nustatymai neatitinka šios paieškos</string>
+    <string name="desktop_settings_session">Seansas</string>
+    <string name="desktop_settings_display">Ekranas</string>
+    <string name="desktop_settings_desktop">Darbalaukis</string>
+    <string name="desktop_settings_windows">Langai</string>
+    <string name="desktop_settings_portable">Nešiojamas</string>
+    <string name="desktop_settings_vault">Saugykla</string>
+</resources>
