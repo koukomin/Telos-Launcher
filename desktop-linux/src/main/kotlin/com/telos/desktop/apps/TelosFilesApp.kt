@@ -70,6 +70,13 @@ fun TelosFilesApp(
         TelosFilesNav.path = path
         onPathChange(path)
     }
+    androidx.compose.runtime.LaunchedEffect(query) {
+        if (com.telos.desktop.search.VaultFileNameIndex.enabled && query.trim().length >= 2) {
+            withContext(Dispatchers.IO) {
+                com.telos.desktop.search.VaultFileNameIndex.maybeRescan()
+            }
+        }
+    }
     var zipPrefix by remember { mutableStateOf("") }
     var archiveSecret by remember { mutableStateOf("") }
     var needPassword by remember { mutableStateOf(false) }
@@ -138,7 +145,24 @@ fun TelosFilesApp(
                 }
                 ?: emptyList()
         }
-        if (query.isBlank()) list else list.filter { it.name.contains(query, true) }
+        if (query.isBlank()) {
+            list
+        } else {
+            val local = list.filter { it.name.contains(query, true) }
+            if (!com.telos.desktop.search.VaultFileNameIndex.enabled || inZip || query.trim().length < 2) {
+                local
+            } else {
+                val seen = local.mapNotNull { it.disk?.absolutePath }.toHashSet()
+                val indexed = com.telos.desktop.search.VaultFileNameIndex.query(query, limit = 40)
+                    .mapNotNull { hit ->
+                        if (!seen.add(hit.absolutePath)) return@mapNotNull null
+                        val f = hit.file
+                        if (!f.exists()) return@mapNotNull null
+                        FilesRow(hit.fileName, f.isDirectory || ZipArchives.isArchive(f), f, null, if (f.isFile) f.length() else 0)
+                    }
+                local + indexed
+            }
+        }
     }
     val xdg = remember { XdgUserDirsManager.resolve() }
     val shortcuts = remember(xdg) {

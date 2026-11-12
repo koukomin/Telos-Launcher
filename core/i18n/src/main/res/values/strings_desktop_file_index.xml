@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_file_index_title">File name index</string>
+    <string name="desktop_file_index_enable">On-device file name index</string>
+    <string name="desktop_file_index_hint">Opt-in. Indexes file names only under the vault HOME or Portable Data root (never the host profile unless Host Home). Stored encrypted under .cache/telos/file-index with owner-only permissions. No file contents and no cloud upload.</string>
+</resources>

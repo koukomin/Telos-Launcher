@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_file_index_title">Ευρετήριο ονομάτων αρχείων</string>
+    <string name="desktop_file_index_enable">Ευρετήριο ονομάτων αρχείων στη συσκευή</string>
+    <string name="desktop_file_index_hint">Προαιρετικό. Ευρετηριάζει μόνο ονόματα αρχείων κάτω από το HOME του vault ή τη ρίζα Portable Data (ποτέ το προφίλ host εκτός αν Host Home). Αποθηκεύεται κρυπτογραφημένο στο .cache/telos/file-index με δικαιώματα μόνο για τον κάτοχο. Χωρίς περιεχόμενο αρχείων και χωρίς αποστολή στο cloud.</string>
+</resources>

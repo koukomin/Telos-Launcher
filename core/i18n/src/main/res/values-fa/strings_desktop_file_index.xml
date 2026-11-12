@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_file_index_title">نمایه نام پرونده</string>
+    <string name="desktop_file_index_enable">نمایه نام پرونده روی دستگاه</string>
+    <string name="desktop_file_index_hint">اختیاری. فقط نام پرونده‌ها را زیر HOME خزانه یا ریشه Portable Data نمایه می‌کند (هرگز نمایه میزبان مگر Host Home). رمزنگاری‌شده در .cache/telos/file-index با دسترسی فقط مالک ذخیره می‌شود. بدون محتوای پرونده و بدون بارگذاری ابری.</string>
+</resources>

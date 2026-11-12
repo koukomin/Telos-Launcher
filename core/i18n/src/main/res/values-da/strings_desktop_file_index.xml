@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_file_index_title">Filnavnsindeks</string>
+    <string name="desktop_file_index_enable">Filnavnsindeks på enheden</string>
+    <string name="desktop_file_index_hint">Valgfrit. Indekserer kun filnavne under vault-HOME eller Portable Data-roden (aldrig værtsprofilen, medmindre Host Home). Gemt krypteret under .cache/telos/file-index med kun-ejer-rettigheder. Intet filindhold og ingen cloud-upload.</string>
+</resources>

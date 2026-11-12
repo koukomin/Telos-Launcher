@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_file_index_title">ফাইল নাম সূচক</string>
+    <string name="desktop_file_index_enable">ডিভাইসে ফাইল নাম সূচক</string>
+    <string name="desktop_file_index_hint">ঐচ্ছিক। শুধুমাত্র ভল্ট HOME বা Portable Data রুটের অধীনে ফাইল নাম সূচীভুক্ত করে (Host Home ছাড়া কখনও হোস্ট প্রোফাইল নয়)। .cache/telos/file-index-এ শুধু মালিকের অনুমতিসহ এনক্রিপ্টেড সংরক্ষিত। কোনো ফাইল বিষয়বস্তু নেই এবং ক্লাউড আপলোড নেই।</string>
+</resources>

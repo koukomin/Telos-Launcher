@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_file_index_title">Dateinamen-Index</string>
+    <string name="desktop_file_index_enable">Lokaler Dateinamen-Index</string>
+    <string name="desktop_file_index_hint">Optional. Indexiert nur Dateinamen unter dem Vault-HOME oder dem Portable-Data-Stamm (nie das Host-Profil, außer bei Host Home). Verschlüsselt unter .cache/telos/file-index mit Nur-Besitzer-Rechten. Keine Dateiinhalte und kein Cloud-Upload.</string>
+</resources>

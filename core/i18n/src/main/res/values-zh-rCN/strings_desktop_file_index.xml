@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_file_index_title">文件名索引</string>
+    <string name="desktop_file_index_enable">设备本地文件名索引</string>
+    <string name="desktop_file_index_hint">可选。仅索引保险库 HOME 或 Portable Data 根目录下的文件名（除非 Host Home，否则绝不索引主机配置）。以仅所有者权限加密存储在 .cache/telos/file-index。不含文件内容，也不上传到云端。</string>
+</resources>

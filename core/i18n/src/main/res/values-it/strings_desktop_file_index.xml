@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_file_index_title">Indice dei nomi file</string>
+    <string name="desktop_file_index_enable">Indice dei nomi file sul dispositivo</string>
+    <string name="desktop_file_index_hint">Opzionale. Indicizza solo i nomi file sotto la HOME del vault o la radice Portable Data (mai il profilo host salvo Host Home). Salvato cifrato in .cache/telos/file-index con permessi solo del proprietario. Nessun contenuto dei file e nessun caricamento cloud.</string>
+</resources>

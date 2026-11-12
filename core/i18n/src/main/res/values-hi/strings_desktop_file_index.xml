@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_file_index_title">फ़ाइल नाम अनुक्रमणिका</string>
+    <string name="desktop_file_index_enable">डिवाइस पर फ़ाइल नाम अनुक्रमणिका</string>
+    <string name="desktop_file_index_hint">वैकल्पिक। केवल वॉल्ट HOME या Portable Data रूट के अंतर्गत फ़ाइल नाम अनुक्रमित करता है (Host Home के अलावा होस्ट प्रोफ़ाइल कभी नहीं)। .cache/telos/file-index में केवल स्वामी अनुमति के साथ एन्क्रिप्टेड संग्रहीत। कोई फ़ाइल सामग्री नहीं और कोई क्लाउड अपलोड नहीं।</string>
+</resources>

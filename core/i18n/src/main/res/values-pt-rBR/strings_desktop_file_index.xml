@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_file_index_title">Índice de nomes de arquivos</string>
+    <string name="desktop_file_index_enable">Índice de nomes de arquivos no dispositivo</string>
+    <string name="desktop_file_index_hint">Opcional. Indexa apenas nomes de arquivos sob o HOME do vault ou a raiz Portable Data (nunca o perfil do host, exceto Host Home). Armazenado criptografado em .cache/telos/file-index com permissões só do proprietário. Sem conteúdo de arquivos e sem envio para a nuvem.</string>
+</resources>

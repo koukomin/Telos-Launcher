@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_file_index_title">Dosiernoma indekso</string>
+    <string name="desktop_file_index_enable">Dosiernoma indekso sur la aparato</string>
+    <string name="desktop_file_index_hint">Laŭvola. Indeksas nur dosiernomojn sub la vault HOME aŭ Portable Data-radiko (neniam la gastigantan profilon krom Host Home). Konservita ĉifrite sub .cache/telos/file-index kun nur-posedantaj permesoj. Neniu dosierenhavo kaj neniu nuba alŝuto.</string>
+</resources>

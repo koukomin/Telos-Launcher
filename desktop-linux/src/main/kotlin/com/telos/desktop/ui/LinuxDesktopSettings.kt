@@ -449,6 +449,7 @@ fun LinuxDesktopSettingsPanel(
                 mutableStateOf(settings.secureClipboard)
             }
             var clearSecs by remember { mutableStateOf(settings.clipboardClearSeconds) }
+            var fileIndex by remember { mutableStateOf(settings.fileNameIndexEnabled) }
             var auditLines by remember {
                 mutableStateOf(com.telos.desktop.vault.TelosSessionAuditLog.readTail(24))
             }
@@ -458,6 +459,34 @@ fun LinuxDesktopSettingsPanel(
                 opsec?.secureClipboardEnabled = it
                 settings.save()
             }
+            Text(
+                com.telos.desktop.i18n.TelosI18n.t("desktop_file_index_title"),
+                color = TelosColors.secondary,
+                fontSize = 13.sp,
+            )
+            Toggle(com.telos.desktop.i18n.TelosI18n.t("desktop_file_index_enable"), fileIndex) {
+                fileIndex = it
+                settings.fileNameIndexEnabled = it
+                com.telos.desktop.search.VaultFileNameIndex.enabled = it
+                settings.save()
+                if (it) {
+                    iconScope.launch(Dispatchers.IO) {
+                        com.telos.desktop.search.VaultFileNameIndex.maybeRescan(force = true)
+                    }
+                } else {
+                    com.telos.desktop.search.VaultFileNameIndex.clearMemory()
+                }
+            }
+            Text(
+                com.telos.desktop.i18n.TelosI18n.t("desktop_file_index_hint"),
+                fontSize = 12.sp,
+                color = TelosColors.onSurface.copy(0.75f),
+            )
+            Text(
+                com.telos.desktop.search.VaultFileNameIndex.indexDir().absolutePath,
+                fontSize = 10.sp,
+                color = TelosColors.onSurface.copy(0.55f),
+            )
             Text(
                 com.telos.desktop.i18n.TelosI18n.t("desktop_opsec_clipboard_timer", clearSecs),
                 fontSize = 12.sp,

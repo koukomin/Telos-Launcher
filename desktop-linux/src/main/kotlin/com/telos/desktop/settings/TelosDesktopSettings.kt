@@ -38,6 +38,8 @@ class TelosDesktopSettings(private val vaultConfigDir: File) {
     var idleSeconds: Int = 300
     var secureClipboard: Boolean = true
     var clipboardClearSeconds: Int = 45
+    /** Opt-in vault-local file name index (disabled by default; privacy-first). */
+    var fileNameIndexEnabled: Boolean = false
 
     private val file: File get() = File(vaultConfigDir, "desktop.properties")
 
@@ -80,6 +82,7 @@ class TelosDesktopSettings(private val vaultConfigDir: File) {
         idleSeconds = p.getProperty("idleSeconds")?.toIntOrNull()?.coerceIn(30, 3600) ?: 300
         secureClipboard = p.getProperty("opsec.secureClipboard", "true").toBoolean()
         clipboardClearSeconds = p.getProperty("opsec.clipboardClearSeconds")?.toIntOrNull()?.coerceIn(0, 600) ?: 45
+        fileNameIndexEnabled = p.getProperty("privacy.fileNameIndex", "false").toBoolean()
         outputPrefs.clear()
         p.stringPropertyNames().forEach { key ->
             if (key.startsWith("output.")) {
@@ -125,6 +128,7 @@ class TelosDesktopSettings(private val vaultConfigDir: File) {
         p["idleSeconds"] = idleSeconds.toString()
         p["opsec.secureClipboard"] = secureClipboard.toString()
         p["opsec.clipboardClearSeconds"] = clipboardClearSeconds.toString()
+        p["privacy.fileNameIndex"] = fileNameIndexEnabled.toString()
         outputPrefs.forEach { (name, spec) -> p["output.$name"] = spec }
         file.outputStream().use { p.store(it, "Telos Linux Desktop") }
     }

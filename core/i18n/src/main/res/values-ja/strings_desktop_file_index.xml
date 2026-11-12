@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_file_index_title">ファイル名インデックス</string>
+    <string name="desktop_file_index_enable">端末内ファイル名インデックス</string>
+    <string name="desktop_file_index_hint">任意。vault の HOME または Portable Data ルート配下のファイル名のみを索引します（Host Home 以外ではホストプロファイルは対象外）。.cache/telos/file-index に所有者専用権限で暗号化保存。ファイル内容は含めず、クラウドへは送信しません。</string>
+</resources>
