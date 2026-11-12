@@ -136,7 +136,7 @@
     <string name="au3_launcher3_drag_handle">끌어서 순서 변경</string>
     <string name="au3_launcher3_add_shortcut">바로가기 추가</string>
     <string name="au3_launcher3_widgets_none_found">일치하는 위젯이 없습니다</string>
-    <string name="au3_launcher3_tutorial_add_text">검색창 옆 메뉴 또는 홈 화면을 길게 눌러 열리는 메뉴에서 \'위젯 추가\'를 선택하여 새 위젯을 배치하세요.</string>
+    <string name="au3_launcher3_tutorial_add_text">검색창 옆 메뉴 또는 홈 화면을 길게 눌러 열리는 메뉴에서 \u0027위젯 추가\u0027를 선택하여 새 위젯을 배치하세요.</string>
     <string name="au3_launcher4b_collapse">접기</string>
     <string name="au3_launcher4b_edit_favorites">즐겨찾기 편집</string>
     <string name="au3_searchset_intent_query">쿼리</string>

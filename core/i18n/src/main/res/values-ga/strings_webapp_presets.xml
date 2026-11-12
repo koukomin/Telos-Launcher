@@ -11,7 +11,7 @@
     <string name="web_app_preset_add">@string/hc_add</string>
     <string name="web_app_preset_dialog_title">Cuir %1$s leis</string>
     <string name="web_app_preset_dialog_summary">Roghnaigh na haipeanna gréasáin le cur leis. Sábháiltear iad cosúil le haon aip ghréasáin a chruthaíonn tú féin.</string>
-    <string name="web_app_preset_exists">Ann cheana i d\'aipeanna gréasáin, athúsáidfear é</string>
+    <string name="web_app_preset_exists">Ann cheana i d\u0027aipeanna gréasáin, athúsáidfear é</string>
     <string name="web_app_preset_confirm">Cuir na cinn roghnaithe leis</string>
     <string name="web_app_preset_added">Cuireadh %1$s leis</string>
     <string name="web_app_groups_title">Fillteáin</string>

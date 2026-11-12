@@ -48,13 +48,13 @@
     <string name="au14_videoui_empty_text">I video su questo dispositivo appariranno qui</string>
     <string name="au15_tvbg_menu_playback">Riproduzione</string>
     <string name="au15_tvbg_title">Continua la riproduzione in background</string>
-    <string name="au15_tvbg_summary">Il canale continua a essere riprodotto a schermo spento o quando esci dall\'app. Viene mostrata una notifica con i controlli.</string>
+    <string name="au15_tvbg_summary">Il canale continua a essere riprodotto a schermo spento o quando esci dall\u0027app. Viene mostrata una notifica con i controlli.</string>
     <string name="au15_tvbg_live">TV in diretta</string>
     <string name="au15_tvbg_channel_name">Riproduzione TV</string>
     <string name="au15_tvbg_stop">Interrompi</string>
     <string name="au16_reconnect_label">Riconnessione…</string>
     <string name="au16_reconnect_waiting">In attesa della connessione…</string>
-    <string name="au17_dock_save_failed">Impossibile aggiungere questo elemento al dock. L\'elemento precedente è stato mantenuto.</string>
+    <string name="au17_dock_save_failed">Impossibile aggiungere questo elemento al dock. L\u0027elemento precedente è stato mantenuto.</string>
 
     
     

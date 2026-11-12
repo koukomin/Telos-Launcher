@@ -34,12 +34,12 @@
     <string name="au4_webapps2_user_agent_custom_title">User agent saincheaptha</string>
     <string name="au4_webapps2_user_agent_custom_hint">Teaghrán user agent</string>
     <string name="au4_webapps2_cookies">Glac le fianáin</string>
-    <string name="au4_webapps2_cookies_summary">Is féidir le suíomhanna gréasáin in aipeanna gréasáin fianáin a stóráil. Múch chun gach fianán a bhac; b\'fhéidir nach mbeidh tú in ann fanacht logáilte isteach.</string>
+    <string name="au4_webapps2_cookies_summary">Is féidir le suíomhanna gréasáin in aipeanna gréasáin fianáin a stóráil. Múch chun gach fianán a bhac; b\u0027fhéidir nach mbeidh tú in ann fanacht logáilte isteach.</string>
     <string name="au4_webapps2_third_party_cookies">Glac le fianáin tríú páirtí</string>
-    <string name="au4_webapps2_third_party_cookies_summary">Lig d\'ábhar leabaithe ó shuíomhanna eile fianáin a shocrú. Díchumasaithe de réir réamhshocraithe ar mhaithe le príobháideacht.</string>
+    <string name="au4_webapps2_third_party_cookies_summary">Lig d\u0027ábhar leabaithe ó shuíomhanna eile fianáin a shocrú. Díchumasaithe de réir réamhshocraithe ar mhaithe le príobháideacht.</string>
     <string name="au4_webapps2_clear_cookies">Glan fianáin agus sonraí suímh</string>
     <string name="au4_webapps2_clear_cookies_summary">Logálann tú amach as gach aip ghréasáin agus bainfidh sé sonraí suímh i dtaisce</string>
-    <string name="au4_webapps2_clear_cookies_confirm">Bain gach fianán agus sonraí suímh d\'aipeanna gréasáin?</string>
+    <string name="au4_webapps2_clear_cookies_confirm">Bain gach fianán agus sonraí suímh d\u0027aipeanna gréasáin?</string>
     <string name="au4_webapps2_clear_cookies_done">Glanadh fianáin agus sonraí suímh</string>
     <string name="au4_webapps2_clear_cookies_action">Glan</string>
 

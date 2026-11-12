@@ -9,7 +9,7 @@
     <string name="camera_mode_pro">Pro</string>
     <string name="camera_mode_pano">Pano</string>
     <string name="camera_mode_discreet">Discret</string>
-    <string name="camera_flip">Changer d\'appareil</string>
+    <string name="camera_flip">Changer d\u0027appareil</string>
     <string name="camera_format">Format</string>
     <string name="camera_raw">Enregistrer DNG RAW</string>
     <string name="camera_exif">Conserver EXIF</string>

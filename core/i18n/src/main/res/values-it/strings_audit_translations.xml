@@ -58,7 +58,7 @@
     <string name="au_files_connected_items">Connesso, %1$d elementi nella cartella iniziale</string>
     <string name="au_files_connect_failed">Impossibile connettersi: %1$s</string>
     <string name="au_files_cloud_default_name">Cloud</string>
-    <string name="au_files_oauth_waiting">In attesa dell\'accesso nel browser…</string>
+    <string name="au_files_oauth_waiting">In attesa dell\u0027accesso nel browser…</string>
     <string name="au_files_oauth_browser_failed">Impossibile aprire il browser</string>
     <string name="au_files_oauth_signed_in">Accesso effettuato. Salva la connessione.</string>
     <string name="au_files_oauth_failed">Accesso non riuscito: %1$s</string>
@@ -78,7 +78,7 @@
     <string name="au_messages_scheduled_fill_fields">Inserisci un numero e un messaggio per programmarlo.</string>
     <string name="au_messages_scheduled_past">Scegli un orario futuro.</string>
     <string name="au_messages_scheduled_saved">Messaggio programmato</string>
-    <string name="au_messages_scheduled_permission">Telos ha bisogno dell\'autorizzazione per inviare SMS all\'ora programmata.</string>
+    <string name="au_messages_scheduled_permission">Telos ha bisogno dell\u0027autorizzazione per inviare SMS all\u0027ora programmata.</string>
     <string name="au_music_title">Musica</string>
     <string name="au_music_tab_songs">Brani</string>
     <string name="au_music_tab_artists">Artisti</string>
@@ -93,7 +93,7 @@
     <string name="au_music_field_title">Titolo</string>
     <string name="au_music_field_artist">Artista</string>
     <string name="au_music_field_album">Album</string>
-    <string name="au_music_field_album_artist">Artista dell\'album</string>
+    <string name="au_music_field_album_artist">Artista dell\u0027album</string>
     <string name="au_music_field_genre">Genere</string>
     <string name="au_music_field_year">Anno</string>
     <string name="au_music_field_track">Numero traccia</string>
@@ -119,10 +119,10 @@
     <string name="au_phonea_recents">Recenti</string>
     <string name="au_phonea_dialer">Tastiera</string>
     <string name="au_phonea_unlock_phone">Sblocca telefono</string>
-    <string name="au_phonea_sip_not_connected">L\'account SIP non è connesso</string>
+    <string name="au_phonea_sip_not_connected">L\u0027account SIP non è connesso</string>
     <string name="au_phonea_backspace">Elimina cifra</string>
     <string name="au_phonea_toggle_grid">Cambia layout dei contatti</string>
-    <string name="au_phonea_history_empty_hint">La cronologia chiamate resta vuota finché Telos non è l\'app Telefono predefinita o finché non viene concesso il permesso per il registro chiamate.</string>
+    <string name="au_phonea_history_empty_hint">La cronologia chiamate resta vuota finché Telos non è l\u0027app Telefono predefinita o finché non viene concesso il permesso per il registro chiamate.</string>
     <string name="au_phonea_export_subject">Cronologia chiamate</string>
     <string name="au_phonea_grant_calllog">Concedi il permesso per il registro chiamate</string>
     <string name="au_phonea_untitled_group">Senza titolo</string>
@@ -147,7 +147,7 @@
     <string name="au_phoneb_bluetooth">Bluetooth</string>
     <string name="au_phoneb_record">Registra</string>
     <string name="au_phoneb_recording_short">REC</string>
-    <string name="au_phoneb_mic_needed">Per registrare le chiamate serve l\'autorizzazione per il microfono</string>
+    <string name="au_phoneb_mic_needed">Per registrare le chiamate serve l\u0027autorizzazione per il microfono</string>
     <string name="au_phoneb_record_failed">Impossibile avviare la registrazione</string>
     <string name="au_phoneb_decline">Rifiuta</string>
     <string name="au_phoneb_confirm_call">Conferma chiamata</string>
@@ -155,7 +155,7 @@
     <string name="au_phoneb_call_title_fallback">Chiamata</string>
     <string name="au_phoneb_ongoing_call">Chiamata in corso</string>
     <string name="au_phoneb_sip_channel_status">Account SIP</string>
-    <string name="au_phoneb_sip_channel_status_desc">Indica che l\'account SIP è registrato, così da poter ricevere chiamate</string>
+    <string name="au_phoneb_sip_channel_status_desc">Indica che l\u0027account SIP è registrato, così da poter ricevere chiamate</string>
     <string name="au_phoneb_sip_channel_calls">Chiamate SIP</string>
     <string name="au_phoneb_sip_starting">Avvio in corso…</string>
     <string name="au_phoneb_sip_in_call_with">In chiamata con %1$s</string>
@@ -165,11 +165,11 @@
     <string name="au_phoneb_sip_reg_failed">Registrazione non riuscita: %1$s</string>
     <string name="au_phoneb_sip_offline">Offline</string>
     <string name="au_phoneb_sip_missed">Chiamata SIP persa</string>
-    <string name="au_phoneb_sip_err_mic">Per le chiamate SIP serve l\'autorizzazione per il microfono</string>
+    <string name="au_phoneb_sip_err_mic">Per le chiamate SIP serve l\u0027autorizzazione per il microfono</string>
     <string name="au_phoneb_sip_err_busy">Una chiamata SIP è già in corso</string>
-    <string name="au_phoneb_sip_err_not_connected">L\'account SIP non è connesso</string>
-    <string name="au_phoneb_sip_err_bad_server">L\'indirizzo del server SIP non è valido</string>
-    <string name="au_phoneb_sip_err_account">Impossibile creare l\'account SIP</string>
+    <string name="au_phoneb_sip_err_not_connected">L\u0027account SIP non è connesso</string>
+    <string name="au_phoneb_sip_err_bad_server">L\u0027indirizzo del server SIP non è valido</string>
+    <string name="au_phoneb_sip_err_account">Impossibile creare l\u0027account SIP</string>
     <string name="au_phoneb_reminder_channel">Promemoria chiamate</string>
     <string name="au_phoneb_reminder_title">Richiama %1$s</string>
     <string name="au_phoneb_fake_incoming_number">Chiamata in arrivo (%1$s)</string>
@@ -177,7 +177,7 @@
     <string name="au_phoneb_preset_mom">Mamma</string>
     <string name="au_phoneb_preset_doctor">Dottore</string>
     <string name="au_phoneb_delete_recording">Eliminare questa registrazione?</string>
-    <string name="au_planner_delete_series_title">Eliminare l\'evento ricorrente?</string>
+    <string name="au_planner_delete_series_title">Eliminare l\u0027evento ricorrente?</string>
     <string name="au_planner_delete_series_message">Questo evento si ripete. Eliminandolo vengono rimosse tutte le sue occorrenze dal calendario.</string>
     <string name="au_planner_open_settings">Apri impostazioni</string>
     <string name="au_planner_archived">Nota archiviata</string>
@@ -204,7 +204,7 @@
     <string name="au_radio_restore_failed">Impossibile leggere il backup</string>
     <string name="au_store_msg_link_unreadable">Impossibile leggere questo link</string>
     <string name="au_store_msg_app_added">App aggiunta</string>
-    <string name="au_store_msg_already_listed">Già presente nell\'elenco</string>
+    <string name="au_store_msg_already_listed">Già presente nell\u0027elenco</string>
     <string name="au_store_msg_unsupported">Questa app non è supportata</string>
     <string name="au_store_msg_updates_available">Aggiornamenti disponibili: %1$d</string>
     <string name="au_store_msg_up_to_date_unreachable">Aggiornato. Fonti non raggiungibili: %1$d</string>
@@ -242,7 +242,7 @@
     <string name="au_video_watchlist_added">Aggiunto alla tua watchlist di Trakt</string>
     <string name="au_video_watchlist_failed">Impossibile aggiungere alla watchlist</string>
     <string name="au_video_other_folder">Altro</string>
-    <string name="au_video_open_settings">Apri impostazioni dell\'app</string>
+    <string name="au_video_open_settings">Apri impostazioni dell\u0027app</string>
     <string name="au_video_opening">Apertura…</string>
     <string name="au_video_finding_peers">Ricerca di peer…</string>
     <string name="au_video_torrent_failed">Impossibile aprire il torrent</string>

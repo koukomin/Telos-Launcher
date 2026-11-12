@@ -9,7 +9,7 @@
     <string name="au22_stremio_add_addon">Add add-on</string>
     <string name="au22_stremio_addon_address">Add-on address</string>
     <string name="au22_stremio_addon_address_hint">https://…/manifest.json or stremio://…</string>
-    <string name="au22_stremio_add_cinemeta">Add Cinemeta (Stremio\'s metadata add-on)</string>
+    <string name="au22_stremio_add_cinemeta">Add Cinemeta (Stremio\u0027s metadata add-on)</string>
     <string name="au22_stremio_empty">There are no add-ons yet. Add one to see its catalogs and streams. Telos does not include any.</string>
     <string name="au22_stremio_home">Home</string>
     <string name="au22_stremio_library">Library</string>
@@ -28,7 +28,7 @@
     <string name="au22_stremio_unsupported">This kind of stream is not supported</string>
     <string name="au22_stremio_refresh">Refresh</string>
     <string name="au22_stremio_account">Stremio account</string>
-    <string name="au22_stremio_account_intro">Sign in with your Stremio account to keep your add-ons, library and continue watching in step with it. Your password is sent only to Stremio (api.strem.io) and is not stored. This uses Stremio\'s account service, which Stremio can change or block at any time. Telos is not affiliated with Stremio.</string>
+    <string name="au22_stremio_account_intro">Sign in with your Stremio account to keep your add-ons, library and continue watching in step with it. Your password is sent only to Stremio (api.strem.io) and is not stored. This uses Stremio\u0027s account service, which Stremio can change or block at any time. Telos is not affiliated with Stremio.</string>
     <string name="au22_stremio_email">Email</string>
     <string name="au22_stremio_password">Password</string>
     <string name="au22_stremio_sign_in">Sign in</string>
@@ -37,7 +37,7 @@
     <string name="au22_stremio_sign_out">Sign out</string>
     <string name="au22_stremio_synced">Synced</string>
     <string name="au22_stremio_directory">Browse add-ons</string>
-    <string name="au22_stremio_directory_hint">Add-ons listed by your installed add-ons and by Stremio\'s public list. They are made by others and are not checked by Telos or Stremio.</string>
+    <string name="au22_stremio_directory_hint">Add-ons listed by your installed add-ons and by Stremio\u0027s public list. They are made by others and are not checked by Telos or Stremio.</string>
     <string name="au22_stremio_directory_empty">No add-ons found</string>
     <string name="au22_stremio_fork_intro">Stremio Fork brings your Stremio account into Telos Media: browse catalogs, movies and series, use your add-ons and library, and see watched marks from Stremio and your connected Trakt account. This is an independent, unofficial client and is not affiliated with Stremio. Sign in below to get started.</string>
     <string name="au22_stremio_watched_sources">✓ Watched · %s</string>

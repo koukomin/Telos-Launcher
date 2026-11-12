@@ -78,7 +78,7 @@
     <string name="au_messages_scheduled_fill_fields">Angiv et nummer og en besked for at planlægge den.</string>
     <string name="au_messages_scheduled_past">Vælg et tidspunkt i fremtiden.</string>
     <string name="au_messages_scheduled_saved">Besked planlagt</string>
-    <string name="au_messages_scheduled_permission">Telos skal have tilladelse til at sende sms\'er på det planlagte tidspunkt.</string>
+    <string name="au_messages_scheduled_permission">Telos skal have tilladelse til at sende sms\u0027er på det planlagte tidspunkt.</string>
     <string name="au_music_title">Musik</string>
     <string name="au_music_tab_songs">Sange</string>
     <string name="au_music_tab_artists">Kunstnere</string>

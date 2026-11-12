@@ -23,7 +23,7 @@
     <string name="hc_allow_access_to_your_music_to_build_the">Tillad adgang til din musik for at opbygge biblioteket</string>
     <string name="hc_allow_access_to_your_photos">Tillad adgang til dine billeder</string>
     <string name="hc_allow_access_to_your_videos_to_build_the">Tillad adgang til dine videoer for at opbygge biblioteket</string>
-    <string name="hc_allow_telos_to_read_and_send_text_messag">Tillad Telos at læse og sende sms\'er, så du kan se og besvare dem her.</string>
+    <string name="hc_allow_telos_to_read_and_send_text_messag">Tillad Telos at læse og sende sms\u0027er, så du kan se og besvare dem her.</string>
     <string name="hc_always_use_this_sim_for_this_number">Brug altid dette SIM-kort til dette nummer</string>
     <string name="hc_answer_incoming_calls_by_lifting_the_pho">Besvar indgående opkald ved at løfte telefonen til øret</string>
     <string name="hc_answer_style">Besvarelsesmåde</string>
@@ -45,7 +45,7 @@
     <string name="hc_biometric_before_placing_a_call">Biometri før et opkald foretages</string>
     <string name="hc_block_hidden_numbers">Bloker skjulte numre</string>
     <string name="hc_block_international">Bloker internationale opkald</string>
-    <string name="hc_block_numbers_you_have_added_to_the_telo">Bloker numre, du har føjet til Telos\' blokeringsliste</string>
+    <string name="hc_block_numbers_you_have_added_to_the_telo">Bloker numre, du har føjet til Telos\u0027 blokeringsliste</string>
     <string name="hc_block_screenshots_and_hide_the_call_scre">Bloker skærmbilleder og skjul opkaldsskærmen i oversigten over seneste apps</string>
     <string name="hc_block_unknown_callers">Bloker ukendte opkaldere</string>
     <string name="hc_blocked_numbers">Blokerede numre</string>
@@ -281,7 +281,7 @@
     <string name="hc_pocket_mode">Lommetilstand</string>
     <string name="hc_popup_after_every_call">Popup efter hvert opkald</string>
     <string name="hc_posters_and_descriptions">Plakater og beskrivelser</string>
-    <string name="hc_posters_work_without_a_key_from_wikipedi">Plakater virker uden nøgle (fra Wikipedia). En gratis TMDB API-nøgle (themoviedb.org, Settings, API) finder flere og tilføjer vurderinger. Dette produkt bruger TMDB API\'et, men er ikke godkendt eller certificeret af TMDB.</string>
+    <string name="hc_posters_work_without_a_key_from_wikipedi">Plakater virker uden nøgle (fra Wikipedia). En gratis TMDB API-nøgle (themoviedb.org, Settings, API) finder flere og tilføjer vurderinger. Dette produkt bruger TMDB API\u0027et, men er ikke godkendt eller certificeret af TMDB.</string>
     <string name="hc_preferred_mode">Foretrukken tilstand</string>
     <string name="hc_prefix">Præfiks</string>
     <string name="hc_previous">Forrige</string>
@@ -300,7 +300,7 @@
     <string name="hc_refresh">Opdater</string>
     <string name="hc_reject_numbers_that_are_not_in_your_cont">Afvis numre, der ikke er i dine kontakter</string>
     <string name="hc_reject_numbers_that_start_with_or_00">Afvis numre, der starter med + eller 00</string>
-    <string name="hc_reject_private_restricted_and_unknown_ca">Afvis private, begrænsede og ukendte opkalds-id\'er</string>
+    <string name="hc_reject_private_restricted_and_unknown_ca">Afvis private, begrænsede og ukendte opkalds-id\u0027er</string>
     <string name="hc_reject_sms">Afvis + sms</string>
     <string name="hc_reject_with_sms">Afvis med sms</string>
     <string name="hc_remember_dialpad_digits">Husk cifre på opkaldstastaturet</string>
@@ -398,7 +398,7 @@
     <string name="hc_telos_files">Telos Files</string>
     <string name="hc_telos_files_will_ask_for_superuser_acces">Telos Files vil bede om superbrugeradgang, så du kan se og ændre filer, som apps normalt ikke kan nå, f.eks. /system, /data og /vendor.</string>
     <string name="hc_test">Test</string>
-    <string name="hc_the_apps_that_are_part_of_telos_installi">De apps, der er en del af Telos. Når du installerer en, vises dens ikon i app-gitteret og i søgning, og når du fjerner den, skjules ikonet igen. Intet downloades: Apps\'ene forbliver i Telos.</string>
+    <string name="hc_the_apps_that_are_part_of_telos_installi">De apps, der er en del af Telos. Når du installerer en, vises dens ikon i app-gitteret og i søgning, og når du fjerner den, skjules ikonet igen. Intet downloades: Apps\u0027ene forbliver i Telos.</string>
     <string name="hc_the_file_is_longer_only_the_first_2_mb_a">Filen er længere, kun de første 2 MB vises. Den kan ikke redigeres her, så intet overskrives.</string>
     <string name="hc_the_message_could_not_be_sent">Beskeden kunne ikke sendes.</string>
     <string name="hc_this_can_take_a_minute">Det kan tage et minut.</string>

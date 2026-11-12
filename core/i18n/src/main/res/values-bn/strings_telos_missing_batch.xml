@@ -309,7 +309,7 @@
     <string name="websearch_dialog_query_encoding_none">কোনোটিই নয়</string>
     <string name="websearch_dialog_query_encoding_url">পার্সেন্ট এনকোডিং</string>
     <string name="websearch_dialog_replace_icon">আইকন পরিবর্তন</string>
-    <string name="websearch_dialog_url_error">এই লিংকে স্থানধারক \'${1}\' অনুপস্থিত</string>
+    <string name="websearch_dialog_url_error">এই লিংকে স্থানধারক \u0027${1}\u0027 অনুপস্থিত</string>
     <string name="widget_action_remove">সরান</string>
     <string name="widget_action_replace">প্রতিস্থাপন করুন</string>
     <string name="widget_add_widget">উইজেট যোগ করুন</string>

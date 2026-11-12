@@ -6,7 +6,7 @@
     <string name="au3_searchset_intent_extra_key">Extra key</string>
     <string name="au3_searchset_intent_data_template">Data template</string>
     <string name="au3_searchset_intent_extra_template">String extra template</string>
-    <string name="au3_searchset_intent_data_template_hint">The URI template that is used to construct the intent\'s data URI. Use ‘${1}’ as a placeholder for the actual search term</string>
+    <string name="au3_searchset_intent_data_template_hint">The URI template that is used to construct the intent\u0027s data URI. Use ‘${1}’ as a placeholder for the actual search term</string>
     <string name="au3_searchset_intent_extra_template_hint">The template that is used to construct the string that is passed to the intent as a string extra. Use ‘${1}’ as a placeholder for the actual search term</string>
     <string name="au3_searchset_intent_base">Base intent</string>
     <string name="au3_searchset_intent_action">Action</string>

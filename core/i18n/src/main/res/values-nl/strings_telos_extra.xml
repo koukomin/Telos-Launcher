@@ -60,5 +60,5 @@
     <string name="aether_broadcast_unavailable">Uitzending niet beschikbaar</string>
     <string name="aether_attached_media">Bijgevoegd medium: %1$s</string>
     <string name="aether_dm_unavailable_title">Directe berichten niet beschikbaar</string>
-    <string name="aether_dm_unavailable_summary">Versleutelde DM\'s vereisen een actieve Nostr-sessie. Deze build houdt gesprekken alleen lokaal.</string>
+    <string name="aether_dm_unavailable_summary">Versleutelde DM\u0027s vereisen een actieve Nostr-sessie. Deze build houdt gesprekken alleen lokaal.</string>
 </resources>

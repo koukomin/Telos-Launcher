@@ -3,9 +3,9 @@
     <string name="art_optimizer_title">Оптимізатор ART (Dex2Oat)</string>
     <string name="art_optimizer_summary">Попередня компіляція байт-коду програм у нативний код через Shizuku</string>
     <string name="art_optimizer_master_toggle">Увімкнути оптимізатор ART</string>
-    <string name="art_optimizer_warning_title">Баланс швидкості та пам\'яті</string>
+    <string name="art_optimizer_warning_title">Баланс швидкості та пам\u0027яті</string>
     <string name="art_optimizer_warning_pros">Плюси (Швидкість): Швидкий холодний запуск, нуль затримок JIT і плавне прокручування.</string>
-    <string name="art_optimizer_warning_cons">Мінуси (Пам\'ять і нагрів): Розмір програм може подвоїтися (+15–30 ГБ+), тимчасово зростає навантаження на ЦП.</string>
+    <string name="art_optimizer_warning_cons">Мінуси (Пам\u0027ять і нагрів): Розмір програм може подвоїтися (+15–30 ГБ+), тимчасово зростає навантаження на ЦП.</string>
     <string name="art_optimizer_profile_title">Профіль компіляції</string>
     <string name="art_optimizer_profile_speed_profile">Speed Profile (Рекомендовано — гарячі методи)</string>
     <string name="art_optimizer_profile_speed">Speed (Макс. продуктивність — повний AOT)</string>

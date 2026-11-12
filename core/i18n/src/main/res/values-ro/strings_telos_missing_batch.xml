@@ -526,7 +526,7 @@
     <string name="websearch_dialog_query_encoding_none">Niciuna</string>
     <string name="websearch_dialog_query_encoding_url">Codificare URL</string>
     <string name="websearch_dialog_replace_icon">Înlocuire pictogramă</string>
-    <string name="websearch_dialog_url_error">Substituentul \'${1}\' lipsește din această adresă URL</string>
+    <string name="websearch_dialog_url_error">Substituentul \u0027${1}\u0027 lipsește din această adresă URL</string>
     <string name="widget_action_remove">Eliminați</string>
     <string name="widget_action_replace">Înlocuiți</string>
     <string name="widget_add_widget">Adaugă widget</string>

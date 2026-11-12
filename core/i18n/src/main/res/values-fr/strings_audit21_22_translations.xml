@@ -2,9 +2,9 @@
 <resources>
     <string name="au21_arch_wrong_password">Mot de passe incorrect</string>
     <string name="au21_arch_password_needed">Cette archive est protégée par un mot de passe</string>
-    <string name="au21_arch_failed">Impossible d\'ouvrir l\'archive</string>
+    <string name="au21_arch_failed">Impossible d\u0027ouvrir l\u0027archive</string>
     <string name="au21_arch_pw_title">Mot de passe requis</string>
-    <string name="au21_arch_pw_info">%1$s est protégé par un mot de passe. Saisissez-le pour l\'ouvrir ou l\'extraire. Le mot de passe n\'est conservé en mémoire que tant que vous êtes dans l\'archive et n\'est jamais enregistré.</string>
+    <string name="au21_arch_pw_info">%1$s est protégé par un mot de passe. Saisissez-le pour l\u0027ouvrir ou l\u0027extraire. Le mot de passe n\u0027est conservé en mémoire que tant que vous êtes dans l\u0027archive et n\u0027est jamais enregistré.</string>
     <string name="au21_arch_ok">@android:string/ok</string>
     <string name="au21_arch_checking">Vérification…</string>
     <string name="au21_arch_show">Afficher</string>
@@ -17,10 +17,10 @@
     <string name="au21_arch_pw_optional">Mot de passe (AES-256, facultatif)</string>
     <string name="au21_arch_pw_repeat">Répéter le mot de passe</string>
     <string name="au21_arch_pw_mismatch">Les mots de passe ne correspondent pas</string>
-    <string name="au21_arch_zip_note">Avec un mot de passe, les fichiers sont chiffrés en AES-256. Les noms de fichiers restent visibles. Telos n\'utilise jamais le chiffrement ZipCrypto, jugé faible. Le mot de passe est irrécupérable, conservez-le donc précieusement.</string>
+    <string name="au21_arch_zip_note">Avec un mot de passe, les fichiers sont chiffrés en AES-256. Les noms de fichiers restent visibles. Telos n\u0027utilise jamais le chiffrement ZipCrypto, jugé faible. Le mot de passe est irrécupérable, conservez-le donc précieusement.</string>
     <string name="au21_arch_no_pw_note">Les archives 7z et tar.gz sont créées sans mot de passe.</string>
     <string name="au22_files_open_as_archive">Ouvrir comme archive</string>
-    <string name="au22_files_view_mode">Mode d\'affichage</string>
+    <string name="au22_files_view_mode">Mode d\u0027affichage</string>
     <string name="au22_files_view_list">Liste</string>
     <string name="au22_files_view_grid_medium">Grille, aperçus moyens</string>
     <string name="au22_files_view_grid_large">Grille, grands aperçus</string>

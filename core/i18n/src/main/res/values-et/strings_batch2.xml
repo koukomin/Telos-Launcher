@@ -3,7 +3,7 @@
     <string name="hc_accessibility_service">Juurdepääsuteenus</string>
     <string name="hc_account">Konto</string>
     <string name="hc_add">Lisa</string>
-    <string name="hc_add_a_nextcloud_owncloud_webdav_sftp_smb">Lisa Nextcloudi, ownCloudi, WebDAVi, SFTP, SMB või FTP server, Dropboxi, Google Drive\'i või OneDrive\'i konto või telefoni pilverakendus (see kasutab telefoni kontot). Need kuvatakse Telose failides.</string>
+    <string name="hc_add_a_nextcloud_owncloud_webdav_sftp_smb">Lisa Nextcloudi, ownCloudi, WebDAVi, SFTP, SMB või FTP server, Dropboxi, Google Drive\u0027i või OneDrive\u0027i konto või telefoni pilverakendus (see kasutab telefoni kontot). Need kuvatakse Telose failides.</string>
     <string name="hc_add_an_app">Lisa rakendus</string>
     <string name="hc_add_app">Lisa rakendus</string>
     <string name="hc_add_contacts_from_a_vcf_file">Lisa kontaktid .vcf-failist</string>
@@ -368,7 +368,7 @@
     <string name="hc_skip_this_version">Jäta see versioon vahele</string>
     <string name="hc_sleep_timer">Uinumistaimer</string>
     <string name="hc_small">Väike</string>
-    <string name="hc_smart_freeze_dashboard">Smart Freeze\'i juhtpaneel</string>
+    <string name="hc_smart_freeze_dashboard">Smart Freeze\u0027i juhtpaneel</string>
     <string name="hc_sort_by">Sorteeri</string>
     <string name="hc_sort_by_2">Sorteeri…</string>
     <string name="hc_sounds_vibrations">Helid ja vibratsioon</string>
@@ -388,7 +388,7 @@
     <string name="hc_switch_to_speaker_when_the_phone_is_away">Lülitu valjuhääldile, kui telefon on kõrva juurest eemal</string>
     <string name="hc_switched_off_automatically_because_it_cr">Lülitati automaatselt välja, kuna see jooksis korduvalt kokku.</string>
     <string name="hc_sync_now">Sünkrooni kohe</string>
-    <string name="hc_system_and_google_contact_groups">Süsteemi ja Google\'i kontaktirühmad</string>
+    <string name="hc_system_and_google_contact_groups">Süsteemi ja Google\u0027i kontaktirühmad</string>
     <string name="hc_system_files_changes_here_can_break_the">Süsteemifailid. Muudatused siin võivad telefoni rikkuda.</string>
     <string name="hc_t9_language_alphabet">T9 keele tähestik</string>
     <string name="hc_t9_search_settings">T9 otsingu sätted</string>

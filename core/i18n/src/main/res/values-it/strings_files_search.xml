@@ -6,7 +6,7 @@
     <string name="telos_files_search_after">Modificato dal (AAAA-MM-GG)</string>
     <string name="telos_files_search_before">Modificato fino al (AAAA-MM-GG)</string>
     <string name="telos_files_search_recursive">Includi sottocartelle</string>
-    <string name="telos_files_search_scope">La ricerca locale conserva i metadati per un minuto e non segue i collegamenti simbolici. I filtri di rete, archivi e casseforti si applicano alla cartella attuale. Aggiorna per ricostruire l\'indice locale.</string>
+    <string name="telos_files_search_scope">La ricerca locale conserva i metadati per un minuto e non segue i collegamenti simbolici. I filtri di rete, archivi e casseforti si applicano alla cartella attuale. Aggiorna per ricostruire l\u0027indice locale.</string>
     <string name="telos_files_search_invalid">Inserisci dimensioni e date valide, con il valore minimo prima del massimo.</string>
     <string name="telos_files_search_reset">Reimposta filtri</string>
     <string name="telos_files_search_limited">Risultati parziali: al massimo 300 corrispondenze e 50.000 voci indicizzate. Alcune cartelle potrebbero non essere leggibili.</string>

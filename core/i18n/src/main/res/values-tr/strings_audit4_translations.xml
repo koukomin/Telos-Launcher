@@ -25,8 +25,8 @@
     <string name="au4_settingsnew1_crash_enable_summary">Çökme raporlarını ve kaydedilen hataları bu cihaza kaydeder. Kapalıyken hiçbir şey kaydedilmez; uygulama normal çalışmaya devam eder.</string>
     <string name="au4_settingsnew1_crash_delete_all">Tüm raporları sil</string>
     <string name="au4_settingsnew1_crash_delete_all_summary">Kaydedilen tüm çökme raporlarını ve hata günlüklerini kaldır</string>
-    <string name="au4_torrentproxy_note_http">Torrent\'ler eşler, izleyiciler ve ana bilgisayar adı sorguları için proxy kullanır. HTTP proxy UDP trafiğini taşıyamaz; bu nedenle DHT ve uTP kapatılır, proxy açıkken yerel keşif, UPnP ve NAT-PMP de kapatılır.</string>
-    <string name="au4_torrentproxy_note_socks">Torrent\'ler eşler, izleyiciler ve ana bilgisayar adı sorguları için proxy kullanır. Proxy açıkken yerel keşif, UPnP ve NAT-PMP kapatılır. DHT ve uTP yalnızca SOCKS5 proxy\'niz UDP\'yi destekliyorsa çalışır.</string>
+    <string name="au4_torrentproxy_note_http">Torrent\u0027ler eşler, izleyiciler ve ana bilgisayar adı sorguları için proxy kullanır. HTTP proxy UDP trafiğini taşıyamaz; bu nedenle DHT ve uTP kapatılır, proxy açıkken yerel keşif, UPnP ve NAT-PMP de kapatılır.</string>
+    <string name="au4_torrentproxy_note_socks">Torrent\u0027ler eşler, izleyiciler ve ana bilgisayar adı sorguları için proxy kullanır. Proxy açıkken yerel keşif, UPnP ve NAT-PMP kapatılır. DHT ve uTP yalnızca SOCKS5 proxy\u0027niz UDP\u0027yi destekliyorsa çalışır.</string>
     <string name="au4_webapps2_user_agent">Kullanıcı aracısı (user agent)</string>
     <string name="au4_webapps2_user_agent_default">Varsayılan (mobil)</string>
     <string name="au4_webapps2_user_agent_desktop">Masaüstü</string>

@@ -23,7 +23,7 @@
     <string name="au12_lastfmweb_no_browser">Ingen browser fundet til at åbne last.fm</string>
     <string name="au12_lastfmweb_not_pending">Der blev ikke startet noget Last.fm-login i appen, svaret blev ignoreret</string>
     <string name="au12_lastfmweb_expired">Login tog mere end 10 minutter. Prøv igen</string>
-    <string name="au12_lastfmweb_failed">Last.fm-login mislykkedes. Kontrollér API-nøglen, den delte hemmelighed og callback-URL\'en</string>
+    <string name="au12_lastfmweb_failed">Last.fm-login mislykkedes. Kontrollér API-nøglen, den delte hemmelighed og callback-URL\u0027en</string>
     <string name="au12_lastfmweb_limit_note">Last.fm sender ingen bekræftelsesværdi tilbage, så svaret accepteres kun i 10 minutter efter, at du trykkede på knappen, og kun én gang.</string>
     <string name="au12_tvsearch_pref_title">TV-kanaler</string>
     <string name="au12_tvsearch_pref_summary">Vis dine favorit-, egne og senest sete TV-kanaler, der matcher søgningen. Et tryk starter kanalen i Telos Media.</string>

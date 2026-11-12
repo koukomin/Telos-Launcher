@@ -25,7 +25,7 @@
     <string name="au4_settingsnew1_crash_enable_summary">Αποθήκευση αναφορών σφαλμάτων και καταγεγραμμένων σφαλμάτων σε αυτή τη συσκευή. Όταν είναι απενεργοποιημένο, δεν καταγράφεται τίποτα· η εφαρμογή συνεχίζει να λειτουργεί κανονικά.</string>
     <string name="au4_settingsnew1_crash_delete_all">Διαγραφή όλων των αναφορών</string>
     <string name="au4_settingsnew1_crash_delete_all_summary">Κατάργηση κάθε αποθηκευμένης αναφοράς σφάλματος και αρχείου καταγραφής σφαλμάτων</string>
-    <string name="au4_torrentproxy_note_http">Τα torrents χρησιμοποιούν το διαμεσολαβητή για peers, trackers και αναζητήσεις ονομάτων υπολογιστή. Ένας διαμεσολαβητής HTTP δεν μπορεί να μεταφέρει κίνηση UDP, γι\' αυτό τα DHT και uTP απενεργοποιούνται, ενώ η τοπική ανακάλυψη, το UPnP και το NAT-PMP απενεργοποιούνται όσο είναι ενεργός ένας διαμεσολαβητής.</string>
+    <string name="au4_torrentproxy_note_http">Τα torrents χρησιμοποιούν το διαμεσολαβητή για peers, trackers και αναζητήσεις ονομάτων υπολογιστή. Ένας διαμεσολαβητής HTTP δεν μπορεί να μεταφέρει κίνηση UDP, γι\u0027 αυτό τα DHT και uTP απενεργοποιούνται, ενώ η τοπική ανακάλυψη, το UPnP και το NAT-PMP απενεργοποιούνται όσο είναι ενεργός ένας διαμεσολαβητής.</string>
     <string name="au4_torrentproxy_note_socks">Τα torrents χρησιμοποιούν το διαμεσολαβητή για peers, trackers και αναζητήσεις ονομάτων υπολογιστή. Η τοπική ανακάλυψη, το UPnP και το NAT-PMP απενεργοποιούνται όσο είναι ενεργός ένας διαμεσολαβητής. Τα DHT και uTP λειτουργούν μόνο αν ο διαμεσολαβητής SOCKS5 υποστηρίζει UDP.</string>
     <string name="au4_webapps2_user_agent">User agent</string>
     <string name="au4_webapps2_user_agent_default">Προεπιλογή (κινητό)</string>

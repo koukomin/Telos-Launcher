@@ -136,7 +136,7 @@
     <string name="au3_launcher3_drag_handle">क्रम बदलने के लिए खींचें</string>
     <string name="au3_launcher3_add_shortcut">शॉर्टकट जोड़ें</string>
     <string name="au3_launcher3_widgets_none_found">कोई मिलता-जुलता विजेट नहीं</string>
-    <string name="au3_launcher3_tutorial_add_text">खोज बार के पास के मेनू से, या होम स्क्रीन पर देर तक दबाने पर खुलने वाले मेनू से \'विजेट जोड़ें\' चुनें और नया विजेट रखें।</string>
+    <string name="au3_launcher3_tutorial_add_text">खोज बार के पास के मेनू से, या होम स्क्रीन पर देर तक दबाने पर खुलने वाले मेनू से \u0027विजेट जोड़ें\u0027 चुनें और नया विजेट रखें।</string>
     <string name="au3_launcher4b_collapse">संक्षिप्त करें</string>
     <string name="au3_launcher4b_edit_favorites">पसंदीदा संपादित करें</string>
     <string name="au3_searchset_intent_query">क्वेरी</string>

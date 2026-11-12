@@ -7,7 +7,7 @@
     <string name="vn_source_os_com">OpenSubtitles.com (ваш обліковий запис)</string>
     <string name="vn_move_up">Вгору</string>
     <string name="vn_move_down">Вниз</string>
-    <string name="vn_os_user_agent">User-Agent OpenSubtitles (необов\'язково)</string>
+    <string name="vn_os_user_agent">User-Agent OpenSubtitles (необов\u0027язково)</string>
     <string name="vn_os_user_agent_help">Якщо порожньо, використовується загальний тестовий агент. Безкоштовний зареєстрований агент з opensubtitles.org надійніший.</string>
     <string name="vn_search_all_sources">Шукати в усіх джерелах</string>
     <string name="vn_source_label">Джерело: %1$s</string>
@@ -40,7 +40,7 @@
     <string name="vn_delete_confirm">%1$s буде видалено з вашого телефона.</string>
     <string name="vn_delete_failed">Не вдалося видалити відео</string>
     <string name="vn_network_folders">Мережеві теки</string>
-    <string name="vn_network_folders_help">Відео з тек ваших сховищ Telos Files (SMB, FTP, SFTP, WebDAV, Nextcloud, хмарний застосунок) з\'являються в медіатеці та відтворюються без повного завантаження.</string>
+    <string name="vn_network_folders_help">Відео з тек ваших сховищ Telos Files (SMB, FTP, SFTP, WebDAV, Nextcloud, хмарний застосунок) з\u0027являються в медіатеці та відтворюються без повного завантаження.</string>
     <string name="vn_add_folder">Додати теку</string>
     <string name="vn_use_this_folder">Використати цю теку</string>
     <string name="vn_rescan">Сканувати знову</string>
@@ -60,7 +60,7 @@
     <string name="blocklists_web_title">Списки блокування</string>
     <string name="blocklists_torrent_title">Списки блокування пірів</string>
     <string name="blocklists_web_info">Списки доменів, які додаються до вбудованого списку реклами й трекерів вебзастосунків. Нічого не завантажується, доки ви не ввімкнете список. Кожен ввімкнений список завантажується напряму за вказаною під ним адресою; інші сервери не використовуються, і нічого про вас не надсилається.</string>
-    <string name="blocklists_torrent_info">Діапазони IP-адрес, до яких потокова передача торентів відмовляється підключатися. Нічого не завантажується, доки ви не ввімкнете список. Кожен ввімкнений список завантажується напряму за вказаною під ним адресою; інші сервери не використовуються, і нічого про вас не надсилається. Список блокування зменшує кількість небажаних з\'єднань, але не забезпечує анонімності.</string>
+    <string name="blocklists_torrent_info">Діапазони IP-адрес, до яких потокова передача торентів відмовляється підключатися. Нічого не завантажується, доки ви не ввімкнете список. Кожен ввімкнений список завантажується напряму за вказаною під ним адресою; інші сервери не використовуються, і нічого про вас не надсилається. Список блокування зменшує кількість небажаних з\u0027єднань, але не забезпечує анонімності.</string>
     <string name="blocklists_downloaded_from">Завантажено з %1$s</string>
     <string name="blocklists_license">Ліцензія: %1$s</string>
     <string name="blocklists_never">Ще не завантажено</string>

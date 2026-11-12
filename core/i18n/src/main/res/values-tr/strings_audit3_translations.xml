@@ -136,7 +136,7 @@
     <string name="au3_launcher3_drag_handle">Sıralamak için sürükleyin</string>
     <string name="au3_launcher3_add_shortcut">Kısayol ekle</string>
     <string name="au3_launcher3_widgets_none_found">Eşleşen widget yok</string>
-    <string name="au3_launcher3_tutorial_add_text">Yeni bir widget yerleştirmek için arama çubuğunun yanındaki menüden veya ana ekrana uzun bastığınızda açılan menüden \'Widget ekle\'yi seçin.</string>
+    <string name="au3_launcher3_tutorial_add_text">Yeni bir widget yerleştirmek için arama çubuğunun yanındaki menüden veya ana ekrana uzun bastığınızda açılan menüden \u0027Widget ekle\u0027yi seçin.</string>
     <string name="au3_launcher4b_collapse">Daralt</string>
     <string name="au3_launcher4b_edit_favorites">Favorileri düzenle</string>
     <string name="au3_searchset_intent_query">Sorgu</string>
@@ -145,8 +145,8 @@
     <string name="au3_searchset_intent_extra_key">Ekstra anahtarı</string>
     <string name="au3_searchset_intent_data_template">Veri şablonu</string>
     <string name="au3_searchset_intent_extra_template">Dize ekstrası şablonu</string>
-    <string name="au3_searchset_intent_data_template_hint">Intent\'in veri URI\'sini oluşturmak için kullanılan URI şablonu. Gerçek arama terimi için yer tutucu olarak ‘${1}’ kullanın</string>
-    <string name="au3_searchset_intent_extra_template_hint">Intent\'e dize ekstrası olarak iletilen dizeyi oluşturmak için kullanılan şablon. Gerçek arama terimi için yer tutucu olarak ‘${1}’ kullanın</string>
+    <string name="au3_searchset_intent_data_template_hint">Intent\u0027in veri URI\u0027sini oluşturmak için kullanılan URI şablonu. Gerçek arama terimi için yer tutucu olarak ‘${1}’ kullanın</string>
+    <string name="au3_searchset_intent_extra_template_hint">Intent\u0027e dize ekstrası olarak iletilen dizeyi oluşturmak için kullanılan şablon. Gerçek arama terimi için yer tutucu olarak ‘${1}’ kullanın</string>
     <string name="au3_searchset_intent_base">Temel Intent</string>
     <string name="au3_searchset_intent_action">Eylem</string>
     <string name="au3_searchset_intent_category">Kategori</string>
@@ -178,7 +178,7 @@
     <string name="au3_sysb_crash_type_crash">Çökme</string>
     <string name="au3_sysb_crash_device_info">Cihaz bilgileri</string>
     <string name="au3_sysb_crash_share_via">Şununla paylaş</string>
-    <string name="au3_sysb_crash_create_issue">GitHub\'da bildir</string>
+    <string name="au3_sysb_crash_create_issue">GitHub\u0027da bildir</string>
     <string name="au3_sysb_crash_show_exceptions">İstisnaları göster</string>
     <string name="au3_sysb_crash_show_crashes">Çökmeleri göster</string>
     <string name="au3_sysb_crash_empty">Son 7 güne ait rapor yok</string>

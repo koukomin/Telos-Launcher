@@ -9,12 +9,12 @@
     <string name="nsp_selected_server">Magħżul: %1$s</string>
     <string name="nsp_run">Ibda t-test</string>
     <string name="nsp_cancel">Ħassar it-test</string>
-    <string name="nsp_invalid_url">"Daħħal indirizz HTTPS validu ta' LibreSpeed."</string>
-    <string name="nsp_error">"It-test falla. Iċċekkja s-server u l-konnessjoni u erġa' pprova."</string>
+    <string name="nsp_invalid_url">"Daħħal indirizz HTTPS validu ta\u0027 LibreSpeed."</string>
+    <string name="nsp_error">"It-test falla. Iċċekkja s-server u l-konnessjoni u erġa\u0027 pprova."</string>
     <string name="nsp_ping">"Ping"</string>
     <string name="nsp_jitter">"Jitter"</string>
     <string name="nsp_download">"Niżżel"</string>
-    <string name="nsp_upload">"Tella'"</string>
+    <string name="nsp_upload">"Tella\u0027"</string>
 
     
     

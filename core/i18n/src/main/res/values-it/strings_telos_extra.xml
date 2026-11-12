@@ -53,10 +53,10 @@
     <string name="fit_food_search_title">Cerca cibo</string>
     <string name="fit_food_search_hint">Cibo, marca o codice a barre</string>
     <string name="sync_preview_title">Anteprima Sync</string>
-    <string name="sync_preview_summary">Le liste di cartelle e dispositivi sono dati di esempio. L\'abbinamento e la sincronizzazione live non sono ancora disponibili.</string>
+    <string name="sync_preview_summary">Le liste di cartelle e dispositivi sono dati di esempio. L\u0027abbinamento e la sincronizzazione live non sono ancora disponibili.</string>
     <string name="aether_compose_title">Componi nota</string>
     <string name="aether_compose_hint">Scrivi una nota locale. I relay non sono ancora collegati.</string>
-    <string name="aether_preview_summary">Aether è un\'anteprima locale. La trasmissione ai relay Nostr non è ancora disponibile.</string>
+    <string name="aether_preview_summary">Aether è un\u0027anteprima locale. La trasmissione ai relay Nostr non è ancora disponibile.</string>
     <string name="aether_broadcast_unavailable">Trasmissione non disponibile</string>
     <string name="aether_attached_media">Media allegato: %1$s</string>
     <string name="aether_dm_unavailable_title">Messaggi diretti non disponibili</string>

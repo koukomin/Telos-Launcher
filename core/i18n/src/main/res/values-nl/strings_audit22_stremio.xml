@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="au22_stremio_notice_title">Over add-ons</string>
-    <string name="au22_stremio_notice_text">Deze ruimte is een onofficiële client voor Stremio-add-ons. Add-ons zijn kleine webservices van onafhankelijke ontwikkelaars. Telos toont alleen wat een add-on aanbiedt en speelt het af: het bevat geen add-ons, host geen video\'s en controleert niet wat een add-on levert. Jij bent verantwoordelijk voor wat je toevoegt en bekijkt, en voor het recht om het te bekijken waar je woont. Sommige add-ons gebruiken BitTorrent, waardoor je IP-adres zichtbaar is voor andere gebruikers. Telos is niet verbonden aan Stremio.</string>
+    <string name="au22_stremio_notice_text">Deze ruimte is een onofficiële client voor Stremio-add-ons. Add-ons zijn kleine webservices van onafhankelijke ontwikkelaars. Telos toont alleen wat een add-on aanbiedt en speelt het af: het bevat geen add-ons, host geen video\u0027s en controleert niet wat een add-on levert. Jij bent verantwoordelijk voor wat je toevoegt en bekijkt, en voor het recht om het te bekijken waar je woont. Sommige add-ons gebruiken BitTorrent, waardoor je IP-adres zichtbaar is voor andere gebruikers. Telos is niet verbonden aan Stremio.</string>
     <string name="au22_stremio_notice_accept">Begrepen</string>
     <string name="au22_stremio_addons">Add-ons</string>
     <string name="au22_stremio_add_addon">Add-on toevoegen</string>

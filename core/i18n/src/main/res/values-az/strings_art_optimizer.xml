@@ -80,7 +80,7 @@
     <string name="art_optimizer_benchmark_slower_fmt">Soğuk Başlatma: %1$dms → %2$dms</string>
     <string name="art_optimizer_benchmark_err_frozen">Hız testi öncesi bu uygulamanın dondurulmasını kaldırın.</string>
     <string name="art_optimizer_benchmark_err_no_activity">Bu paketin başlatılabilir bir ana etkinliği yok.</string>
-    <string name="art_optimizer_benchmark_err_failed">Ölçüm tamamlanamadı. Shizuku\'nun çalıştığından emin olun.</string>
+    <string name="art_optimizer_benchmark_err_failed">Ölçüm tamamlanamadı. Shizuku\u0027nun çalıştığından emin olun.</string>
     <string name="art_optimizer_app_btn_optimize_selected">Derle (%1$s)</string>
     <string name="art_optimizer_app_btn_optimize_speed">Tam Speed Derle (AOT)</string>
     <string name="art_optimizer_app_btn_reset">Sıfırla (--reset)</string>

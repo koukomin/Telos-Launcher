@@ -9,7 +9,7 @@
     <string name="net_hub_summary_off">Bu cihazdaki bağlantıları ve DNS sorgularını filtrelemek için açın.</string>
     <string name="net_hub_summary_on">Bağlantılar ve DNS sorguları filtreleniyor.</string>
     <string name="net_hub_summary_starting">VPN kuruluyor…</string>
-    <string name="net_hub_summary_permission">Android\'in VPN kurması için onayınız gerekiyor.</string>
+    <string name="net_hub_summary_permission">Android\u0027in VPN kurması için onayınız gerekiyor.</string>
     <string name="net_hub_safety">Telos Network durursa veya hata verirse internetiniz normale döner. Açılışta başlat seçeneğini açmadıkça kendiliğinden asla başlamaz.</string>
     <string name="net_hub_early">Telos Network yenidir ve henüz birçok cihazda denenmedi. İstediğiniz zaman kapatabilirsiniz.</string>
     <string name="net_hub_turn_on">Aç</string>
@@ -46,7 +46,7 @@
     <string name="net_settings_title">Ağ ayarları</string>
     <string name="net_settings_cat_start">Başlatma</string>
     <string name="net_settings_boot">Açılışta başlat</string>
-    <string name="net_settings_boot_sum">Cihaz yeniden başladıktan sonra Telos Network\'ü açar. VPN izni daha önce verilmiş olmalıdır.</string>
+    <string name="net_settings_boot_sum">Cihaz yeniden başladıktan sonra Telos Network\u0027ü açar. VPN izni daha önce verilmiş olmalıdır.</string>
     <string name="net_settings_cat_network">Ağ</string>
     <string name="net_settings_ip_mode">IP sürümü</string>
     <string name="net_settings_ip_v4">Yalnızca IPv4</string>
@@ -54,18 +54,18 @@
     <string name="net_settings_ip_v46">IPv4 ve IPv6</string>
     <string name="net_settings_lan">Yerel ağı filtrele</string>
     <string name="net_settings_lan_sum">Yerel ağınıza giden trafiği de Telos Network üzerinden gönderir; böylece LAN kuralları geçerli olur.</string>
-    <string name="net_settings_exclude_self">Telos\'u hariç tut</string>
-    <string name="net_settings_exclude_self_sum">Telos\'un kendi trafiğini tünelin dışında tutar. Önerilir.</string>
-    <string name="net_settings_bypass">Uygulamaların VPN\'i atlamasına izin ver</string>
+    <string name="net_settings_exclude_self">Telos\u0027u hariç tut</string>
+    <string name="net_settings_exclude_self_sum">Telos\u0027un kendi trafiğini tünelin dışında tutar. Önerilir.</string>
+    <string name="net_settings_bypass">Uygulamaların VPN\u0027i atlamasına izin ver</string>
     <string name="net_settings_bypass_sum">Uygulamalar doğrudan başka ağları kullanabilir. Bazı uygulamalar buna ihtiyaç duyar.</string>
-    <string name="net_settings_metered">VPN\'i kotalı olarak işaretle</string>
-    <string name="net_settings_metered_sum">Android\'e bağlantının veri miktarının sınırlı olduğunu bildirir.</string>
+    <string name="net_settings_metered">VPN\u0027i kotalı olarak işaretle</string>
+    <string name="net_settings_metered_sum">Android\u0027e bağlantının veri miktarının sınırlı olduğunu bildirir.</string>
     <string name="net_settings_stall">Ağ yokken trafiği beklet</string>
     <string name="net_settings_stall_sum">Ağ yokken, bir ağ gelene kadar trafik engellenir. Kapalı: trafik kendiliğinden devam eder.</string>
     <string name="net_settings_mtu">MTU</string>
     <string name="net_settings_mtu_auto">Otomatik</string>
     <string name="net_settings_apply">Şimdi yeniden başlat</string>
-    <string name="net_settings_apply_sum">Ağ ayarları Telos Network\'ün bir sonraki başlatılışında uygulanır. Hemen uygulamak için yeniden başlatın.</string>
+    <string name="net_settings_apply_sum">Ağ ayarları Telos Network\u0027ün bir sonraki başlatılışında uygulanır. Hemen uygulamak için yeniden başlatın.</string>
     <string name="net_settings_cat_notif">Bildirim</string>
     <string name="net_settings_notif_detail">Bildirim ayrıntıları</string>
     <string name="net_settings_notif_minimal">En az</string>
@@ -82,15 +82,15 @@
     <string name="net_settings_log_days_limit">Sınıra ulaşılana kadar</string>
     <string name="net_settings_cat_android">Android</string>
     <string name="net_settings_always_on">Her zaman açık VPN</string>
-    <string name="net_settings_always_on_sum">Telos Network\'ü her zaman açık yapmak için Android VPN ayarlarını açar. Telos bunu asla kendiliğinden yapmaz. Telos Network durduğunda internetin çalışmaya devam etmesini istiyorsanız kilitlemeyi kapalı bırakın.</string>
+    <string name="net_settings_always_on_sum">Telos Network\u0027ü her zaman açık yapmak için Android VPN ayarlarını açar. Telos bunu asla kendiliğinden yapmaz. Telos Network durduğunda internetin çalışmaya devam etmesini istiyorsanız kilitlemeyi kapalı bırakın.</string>
     <string name="net_settings_battery">Pil optimizasyonu</string>
-    <string name="net_settings_battery_sum">Android Telos Network\'ü arka planda durduruyorsa pil optimizasyonundan hariç tutun.</string>
-    <string name="net_settings_not_title">Telos Network\'ün yapmadıkları</string>
+    <string name="net_settings_battery_sum">Android Telos Network\u0027ü arka planda durduruyorsa pil optimizasyonundan hariç tutun.</string>
+    <string name="net_settings_not_title">Telos Network\u0027ün yapmadıkları</string>
     <string name="net_settings_not_1">Abonelik ve RPN yok: ücretli proxy hizmeti, hesap veya bize ait sunucu yoktur.</string>
     <string name="net_settings_not_2">Deneysel özellik yok: Rethink motorunun yalnızca kararlı kısımları kullanılır.</string>
     <string name="net_settings_not_3">Şifreli bağlantıların içini göremez. Uygulama, adres ve alan adına göre filtreler.</string>
     <string name="net_settings_not_4">Sizi anonim yapmaz. Güvendiğiniz bir WireGuard tüneli kullanmadıkça siteler IP adresinizi görmeye devam eder.</string>
-    <string name="net_settings_not_5">Android aynı anda tek VPN\'e izin verir. Telos Network çalışırken başka bir VPN\'in yerini alır; bunun yerine Telos Network içinde WireGuard kullanın.</string>
+    <string name="net_settings_not_5">Android aynı anda tek VPN\u0027e izin verir. Telos Network çalışırken başka bir VPN\u0027in yerini alır; bunun yerine Telos Network içinde WireGuard kullanın.</string>
     <string name="net_settings_not_6">Yenidir ve henüz birçok cihazda denenmedi.</string>
 
     

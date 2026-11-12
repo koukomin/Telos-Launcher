@@ -8,5 +8,5 @@
     <string name="au3_launcher3_drag_handle">Drag to reorder</string>
     <string name="au3_launcher3_add_shortcut">Add shortcut</string>
     <string name="au3_launcher3_widgets_none_found">No matching widgets</string>
-    <string name="au3_launcher3_tutorial_add_text">Choose \'Add widget\' from the menu next to the search bar, or from the menu that opens when you long-press the home screen, to place a new widget.</string>
+    <string name="au3_launcher3_tutorial_add_text">Choose \u0027Add widget\u0027 from the menu next to the search bar, or from the menu that opens when you long-press the home screen, to place a new widget.</string>
 </resources>

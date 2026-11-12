@@ -267,7 +267,7 @@
     <string name="dl_m_use_cookies">Kasuta imporditud küpsiseid (sisselogimist nõudvad saidid)</string>
     <string name="dl_m_cookies_import">Impordi cookies.txt</string>
     <string name="dl_m_cookies_imported">%1$d küpsist imporditud</string>
-    <string name="dl_m_cookies_invalid">See pole cookies.txt-fail (Netscape\'i vorming)</string>
+    <string name="dl_m_cookies_invalid">See pole cookies.txt-fail (Netscape\u0027i vorming)</string>
     <string name="dl_m_cookies_clear">Kustuta küpsised</string>
     <string name="dl_m_cookies_browser">Võta selle saidi jaoks Telose brauseri küpsised</string>
     <string name="dl_m_cookies_browser_done">%1$d küpsist üle võetud</string>

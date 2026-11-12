@@ -45,7 +45,7 @@
     <string name="aether_broadcast_unavailable">Udsendelse utilgængelig</string>
     <string name="aether_attached_media">Vedhæftet medie: %1$s</string>
     <string name="aether_dm_unavailable_title">Direkte beskeder utilgængelige</string>
-    <string name="aether_dm_unavailable_summary">Krypterede DM\'er kræver en aktiv Nostr-session. Denne version holder samtaler kun lokalt.</string>
+    <string name="aether_dm_unavailable_summary">Krypterede DM\u0027er kræver en aktiv Nostr-session. Denne version holder samtaler kun lokalt.</string>
     <string name="keepass_db_password">Databaseadgangskode</string>
     <string name="keepass_lock">Lås boks</string>
     <string name="keepass_open_kdbx">Åbn KDBX</string>

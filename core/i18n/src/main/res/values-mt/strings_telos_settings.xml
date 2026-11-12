@@ -14,7 +14,7 @@
     <string name="tweaks_disable_safe_volume">Itfi l-protezzjoni tas-smigħ f’volum għoli</string>
     <string name="tweaks_disable_safe_volume_sum">Jaħbi t-twissija tas-sigurtà ta’ volum għoli</string>
     <string name="tweaks_call_vibrate">Ivibra meta telefonata tiġi konnessa</string>
-    <string name="tweaks_call_vibrate_sum">Jivibra meta telefonata \'l barra titwieġeb</string>
+    <string name="tweaks_call_vibrate_sum">Jivibra meta telefonata \u0027l barra titwieġeb</string>
     <string name="tweaks_flash_pulse">Polz tal-torch fuq twissija ta’ telefonata</string>
     <string name="tweaks_mobile_data_always">Żomm id-data mobbli dejjem mixgħula</string>
     <string name="tweaks_mobile_data_always_sum">Iżomm id-data mobbli lesta fl-isfond waqt Wi‑Fi għal qlib aktar mgħaġġel</string>

@@ -3,7 +3,7 @@
     <string name="au2_callsec_sip_verify">Επαλήθευση του πιστοποιητικού του διακομιστή</string>
     <string name="au2_callsec_sip_verify_hint">Ένα FRITZ!Box με δικό του (αυτο-υπογεγραμμένο) πιστοποιητικό συνήθως απαιτεί να είναι απενεργοποιημένο.</string>
     <string name="au2_callsec_sip_err_tls">Δεν ήταν δυνατή η επαλήθευση του πιστοποιητικού του διακομιστή. Ελέγξτε τη διεύθυνση του διακομιστή ή απενεργοποιήστε την «Επαλήθευση του πιστοποιητικού του διακομιστή» για ένα FRITZ!Box με αυτο-υπογεγραμμένο πιστοποιητικό.</string>
-    <string name="au2_callsec_cannot_confirm">Το μήνυμα επιβεβαίωσης δεν μπορεί να εμφανιστεί εδώ, γι\' αυτό η κλήση δεν πραγματοποιήθηκε.</string>
+    <string name="au2_callsec_cannot_confirm">Το μήνυμα επιβεβαίωσης δεν μπορεί να εμφανιστεί εδώ, γι\u0027 αυτό η κλήση δεν πραγματοποιήθηκε.</string>
     <string name="au2_callsec_block_international_summary">Απόρριψη κλήσεων από άλλες χώρες εκτός της χώρας σας</string>
     <string name="au2_callsec_home_country">Χώρα προέλευσης</string>
     <string name="au2_callsec_home_country_auto">Αυτόματα (SIM, δίκτυο, γλώσσα)</string>

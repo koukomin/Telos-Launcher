@@ -55,7 +55,7 @@
     <string name="net_settings_lan">Filtrer det lokale nettverket</string>
     <string name="net_settings_lan_sum">Sender også trafikk til det lokale nettverket gjennom Telos Network slik at LAN-regler gjelder.</string>
     <string name="net_settings_exclude_self">Utelat Telos</string>
-    <string name="net_settings_exclude_self_sum">Holder Telos\' egen trafikk utenfor tunnelen. Anbefalt.</string>
+    <string name="net_settings_exclude_self_sum">Holder Telos\u0027 egen trafikk utenfor tunnelen. Anbefalt.</string>
     <string name="net_settings_bypass">La apper omgå VPN</string>
     <string name="net_settings_bypass_sum">Apper kan bruke andre nettverk direkte. Noen apper trenger det.</string>
     <string name="net_settings_metered">Merk VPN som med datagrense</string>

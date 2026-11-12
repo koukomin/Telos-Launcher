@@ -153,7 +153,7 @@
     <string name="au3_searchset_intent_type">Type</string>
     <string name="au3_searchset_intent_package">Pakket</string>
     <string name="au3_searchset_intent_class_name">Klassenaam</string>
-    <string name="au3_searchset_intent_extras">Extra\'s</string>
+    <string name="au3_searchset_intent_extras">Extra\u0027s</string>
     <string name="au3_searchset_intent_key">Sleutel</string>
     <string name="au3_searchset_icon_monochrome">Monochroom</string>
     <string name="au3_searchset_type_string">String</string>

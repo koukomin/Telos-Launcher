@@ -71,7 +71,7 @@
     <string name="art_optimizer_yes">Sì</string>
     <string name="art_optimizer_no">No</string>
     <string name="art_optimizer_benchmark_title">Benchmark avvio a freddo</string>
-    <string name="art_optimizer_benchmark_desc">Arresta l\'app (force-stop) e misura TotalTime e WaitTime reali tramite am start -W.</string>
+    <string name="art_optimizer_benchmark_desc">Arresta l\u0027app (force-stop) e misura TotalTime e WaitTime reali tramite am start -W.</string>
     <string name="art_optimizer_benchmark_btn_run">Misura velocità di avvio</string>
     <string name="art_optimizer_benchmark_btn_reset">Cancella punteggio</string>
     <string name="art_optimizer_benchmark_running">Misurazione avvio a freddo…</string>
@@ -79,7 +79,7 @@
     <string name="art_optimizer_benchmark_comparison_fmt">Avvio a freddo: %1$dms → %2$dms (%3$d%% più veloce!)</string>
     <string name="art_optimizer_benchmark_slower_fmt">Avvio a freddo: %1$dms → %2$dms</string>
     <string name="art_optimizer_benchmark_err_frozen">Scongela questa app prima di eseguire il benchmark di avvio.</string>
-    <string name="art_optimizer_benchmark_err_no_activity">Questo pacchetto non espone un\'attività principale avviabile.</string>
+    <string name="art_optimizer_benchmark_err_no_activity">Questo pacchetto non espone un\u0027attività principale avviabile.</string>
     <string name="art_optimizer_benchmark_err_failed">Impossibile completare il benchmark. Verifica che Shizuku sia attivo.</string>
     <string name="art_optimizer_app_btn_optimize_selected">Compila (%1$s)</string>
     <string name="art_optimizer_app_btn_optimize_speed">Compila Speed completo (AOT)</string>

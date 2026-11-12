@@ -56,7 +56,7 @@
     <string name="net_settings_lan_sum">Seolann sé tráchta chuig do líonra áitiúil trí Telos Network freisin ionas go mbeidh rialacha LAN i bhfeidhm.</string>
     <string name="net_settings_exclude_self">Eisigh Telos</string>
     <string name="net_settings_exclude_self_sum">Coinníonn sé tráchta Telos féin lasmuigh den tollán. Molta.</string>
-    <string name="net_settings_bypass">Lig d\'aipeanna an VPN a sheachaint</string>
+    <string name="net_settings_bypass">Lig d\u0027aipeanna an VPN a sheachaint</string>
     <string name="net_settings_bypass_sum">Is féidir le haipeanna líonraí eile a úsáid go díreach. Teastaíonn sé ó chuid acu.</string>
     <string name="net_settings_metered">Marcáil an VPN mar mheitreáilte</string>
     <string name="net_settings_metered_sum">Insíonn sé do Android go bhfuil sonraí teoranta ag an nasc.</string>
@@ -87,7 +87,7 @@
     <string name="net_settings_battery_sum">Má stopann Android Telos Network sa chúlra, eisigh é ón mbarrfheabhsú ceallraí.</string>
     <string name="net_settings_not_title">Na rudaí nach ndéanann Telos Network</string>
     <string name="net_settings_not_1">Gan síntiús agus gan RPN: níl seirbhís seachfhreastalaí íoctha, cuntas ná freastalaí dár gcuid ann.</string>
-    <string name="net_settings_not_2">Gan gnéithe turgnamhacha: ní úsáidtear ach codanna cobhsaí d\'inneall Rethink.</string>
+    <string name="net_settings_not_2">Gan gnéithe turgnamhacha: ní úsáidtear ach codanna cobhsaí d\u0027inneall Rethink.</string>
     <string name="net_settings_not_3">Ní féidir leis breathnú taobh istigh de naisc chriptithe. Scagann sé de réir aipe, seolta agus fearainn.</string>
     <string name="net_settings_not_4">Ní dhéanann sé gan ainm thú. Feiceann suíomhanna gréasáin do sheoladh IP fós, mura n-úsáideann tú tollán WireGuard a bhfuil muinín agat as.</string>
     <string name="net_settings_not_5">Ceadaíonn Android VPN amháin ag an am. Cuireann Telos Network VPN eile ina áit fad a bhíonn sé ag rith; úsáid WireGuard laistigh de Telos Network ina ionad.</string>

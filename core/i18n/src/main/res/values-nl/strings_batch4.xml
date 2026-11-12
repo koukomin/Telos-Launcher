@@ -28,7 +28,7 @@
     <string name="dl_category_audio">Audio</string>
     <string name="dl_category_documents">Documenten</string>
     <string name="dl_category_archives">Archieven</string>
-    <string name="dl_category_programs">Programma\'s</string>
+    <string name="dl_category_programs">Programma\u0027s</string>
     <string name="dl_category_other">Overig</string>
     <string name="dl_connections_default">Verbindingen: standaard (%1$d)</string>
     <string name="dl_connections_count">Verbindingen: %1$d</string>

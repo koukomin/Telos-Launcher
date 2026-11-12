@@ -40,12 +40,12 @@
     <string name="vn_delete_confirm">%1$s wordt van je telefoon verwijderd.</string>
     <string name="vn_delete_failed">De video kon niet worden verwijderd</string>
     <string name="vn_network_folders">Netwerkmappen</string>
-    <string name="vn_network_folders_help">Video\'s in mappen van je Telos Files-opslag (SMB, FTP, SFTP, WebDAV, Nextcloud, cloud-app) verschijnen in de bibliotheek en worden afgespeeld zonder volledige download.</string>
+    <string name="vn_network_folders_help">Video\u0027s in mappen van je Telos Files-opslag (SMB, FTP, SFTP, WebDAV, Nextcloud, cloud-app) verschijnen in de bibliotheek en worden afgespeeld zonder volledige download.</string>
     <string name="vn_add_folder">Map toevoegen</string>
     <string name="vn_use_this_folder">Deze map gebruiken</string>
     <string name="vn_rescan">Opnieuw scannen</string>
     <string name="vn_scanning">Scannen…</string>
-    <string name="vn_scan_done">%1$d video\'s gevonden</string>
+    <string name="vn_scan_done">%1$d video\u0027s gevonden</string>
     <string name="vn_no_connections">Er is geen netwerkopslag ingesteld. Voeg er een toe via Instellingen &gt; Integraties &gt; Cloud- en netwerkopslag.</string>
     <string name="vn_remove">Verwijderen</string>
     <string name="vn_choose_storage">Kies een opslag</string>

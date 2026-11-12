@@ -144,7 +144,7 @@
     <string name="pdft_compress_low">Let</string>
     <string name="pdft_compress_medium">Afbalanceret</string>
     <string name="pdft_compress_high">Kraftig</string>
-    <string name="pdft_compress_hint">Kun billederne i PDF\'en komprimeres igen. Tekst og vektorgrafik forbliver skarpt og kan markeres.</string>
+    <string name="pdft_compress_hint">Kun billederne i PDF\u0027en komprimeres igen. Tekst og vektorgrafik forbliver skarpt og kan markeres.</string>
     <string name="pdft_quality">Kvalitet</string>
     <string name="pdft_quality_standard">Standard</string>
     <string name="pdft_quality_high">Høj</string>

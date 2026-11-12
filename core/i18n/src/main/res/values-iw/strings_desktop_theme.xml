@@ -9,7 +9,7 @@
     <string name="desktop_unlock_theatre_title">Telos Phantom Vault</string>
     <string name="desktop_unlock_theatre_quiet_ops">Quiet Ops — בטלו נעילה כדי לחשוף את הטפט</string>
     <string name="desktop_unlock_theatre_hint">אתחול נעול נשאר ב-Quiet Ops עם גליף הכספת בלבד. לאחר ביטול הנעילה Telos מבצע מעבר צולב לטפט הכספת ולעוצמה שנבחרה — בלי חלקיקים.</string>
-    <string name="desktop_sandbox_tint_hint">צבע טבעת ההדגשה הוא OpSec חזותי בלבד (Host = כתום זהירות, Net-isolated = ציאן, Vault FS = ירוק, Standard = מג\'נטה).</string>
+    <string name="desktop_sandbox_tint_hint">צבע טבעת ההדגשה הוא OpSec חזותי בלבד (Host = כתום זהירות, Net-isolated = ציאן, Vault FS = ירוק, Standard = מג\u0027נטה).</string>
     <string name="desktop_matched_packs_title">חבילות סמלים + סמן מותאמות</string>
     <string name="desktop_matched_packs_hint">לחיצה אחת מגדירה זוג GPL מתועד (Papirus↔BreezeX, candy-icons↔Bibata; CandyCyber נשאר גליף chrome מובנה). ההורדות נשארות בתיקיית הסמלים של הכספת או הנייד.</string>
     <string name="desktop_matched_packs_apply">התאם זוג: %1$s</string>

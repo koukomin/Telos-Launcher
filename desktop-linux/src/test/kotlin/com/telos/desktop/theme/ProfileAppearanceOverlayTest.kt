@@ -135,6 +135,10 @@ class ProfileAppearanceOverlayTest {
     @Test
     fun overlayWriteStaysUnderProfilesRootNotHostHome() {
         val tmp = File(System.getProperty("java.io.tmpdir"), "telos-appear-portable-${System.nanoTime()}")
+        // Capture the real JVM home *before* redirecting user.home — on Windows,
+        // preferPortableConfig() routes profiles under PortableTraceGuard.dataRoot(),
+        // not under the redirected user.home, which is the OpSec guarantee under test.
+        val realHostHome = previousHome?.let(::File) ?: File(System.getProperty("user.home"))
         System.setProperty("user.home", tmp.absolutePath)
         DesktopNetworkController.clearConfigHomeCache()
         try {
@@ -148,13 +152,39 @@ class ProfileAppearanceOverlayTest {
             val overlay = ProfileAppearanceOverlay.overlayFile("MuteGhost")
             assertTrue(overlay.isFile)
             assertTrue(overlay.absolutePath.contains("${File.separator}profiles${File.separator}MuteGhost"))
-            // Canonical File/Path compare — Windows may use 8.3 short paths in absolutePath.
-            val overlayCanon = overlay.canonicalFile
-            val tmpCanon = tmp.canonicalFile
+
+            val overlayPath = overlay.canonicalFile.toPath().toAbsolutePath().normalize()
+            val profilesRootPath =
+                DesktopProfiles.profilesRoot().canonicalFile.toPath().toAbsolutePath().normalize()
             assertTrue(
-                overlayCanon == tmpCanon ||
-                    overlayCanon.toPath().startsWith(tmpCanon.toPath()),
+                "overlay must stay under profilesRoot (portable session on Windows): " +
+                    "overlay=$overlayPath profilesRoot=$profilesRootPath",
+                overlayPath.startsWith(profilesRootPath),
             )
+
+            val hostPath = realHostHome.canonicalFile.toPath().toAbsolutePath().normalize()
+            val tmpPath = tmp.canonicalFile.toPath().toAbsolutePath().normalize()
+            val portablePath = runCatching {
+                com.telos.desktop.vault.PortableTraceGuard.dataRoot()
+                    .canonicalFile.toPath().toAbsolutePath().normalize()
+            }.getOrNull()
+            val underFakeHome = overlayPath.startsWith(tmpPath)
+            val underPortable = portablePath != null && overlayPath.startsWith(portablePath)
+            val underRealHost = overlayPath.startsWith(hostPath)
+            // Allowed: redirected test home (Linux) or portable data root (Windows).
+            // Forbidden: spilling into the real host profile home outside those roots.
+            assertTrue(
+                "overlay must land under fake home or portable data root, not raw host home: " +
+                    "overlay=$overlayPath host=$hostPath tmp=$tmpPath portable=$portablePath",
+                underFakeHome || underPortable || !underRealHost,
+            )
+            if (underRealHost && !underFakeHome) {
+                assertTrue(
+                    "when overlay is under host home it must still be inside portable data",
+                    underPortable,
+                )
+            }
+
             val p = Properties()
             overlay.inputStream().use { p.load(it) }
             assertEquals("quiet", p.getProperty("theme.intensity"))

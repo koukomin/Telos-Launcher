@@ -17,13 +17,13 @@
     <string name="hc_aes_256_gcm_file_of_notes_block_list_and">AES-256-GCM-bestand met notities, blokkeerlijst en telefooninstellingen</string>
     <string name="hc_albums">Albums</string>
     <string name="hc_all_contact_call_notes">Alle belnotities van contacten</string>
-    <string name="hc_all_videos">Alle video\'s</string>
+    <string name="hc_all_videos">Alle video\u0027s</string>
     <string name="hc_allow">Toestaan</string>
     <string name="hc_allow_access">Toegang toestaan</string>
     <string name="hc_allow_access_to_your_music_to_build_the">Geef toegang tot je muziek om de bibliotheek op te bouwen</string>
-    <string name="hc_allow_access_to_your_photos">Geef toegang tot je foto\'s</string>
-    <string name="hc_allow_access_to_your_videos_to_build_the">Geef toegang tot je video\'s om de bibliotheek op te bouwen</string>
-    <string name="hc_allow_telos_to_read_and_send_text_messag">Sta Telos toe om sms\'jes te lezen en te versturen, zodat je ze hier kunt bekijken en beantwoorden.</string>
+    <string name="hc_allow_access_to_your_photos">Geef toegang tot je foto\u0027s</string>
+    <string name="hc_allow_access_to_your_videos_to_build_the">Geef toegang tot je video\u0027s om de bibliotheek op te bouwen</string>
+    <string name="hc_allow_telos_to_read_and_send_text_messag">Sta Telos toe om sms\u0027jes te lezen en te versturen, zodat je ze hier kunt bekijken en beantwoorden.</string>
     <string name="hc_always_use_this_sim_for_this_number">Gebruik altijd deze sim voor dit nummer</string>
     <string name="hc_answer_incoming_calls_by_lifting_the_pho">Beantwoord inkomende gesprekken door de telefoon naar je oor te tillen</string>
     <string name="hc_answer_style">Beantwoordstijl</string>
@@ -139,7 +139,7 @@
     <string name="hc_elevated_surface">Verhoogd oppervlak</string>
     <string name="hc_encrypted_backup">Versleutelde back-up</string>
     <string name="hc_exact_time">Exacte tijd</string>
-    <string name="hc_experimental_a_crash_of_the_player_then">Experimenteel. Een crash van de speler sluit de launcher dan niet af. Video\'s die vanuit andere apps worden geopend gebruiken altijd de normale speler.</string>
+    <string name="hc_experimental_a_crash_of_the_player_then">Experimenteel. Een crash van de speler sluit de launcher dan niet af. Video\u0027s die vanuit andere apps worden geopend gebruiken altijd de normale speler.</string>
     <string name="hc_export">Exporteren</string>
     <string name="hc_export_backup">Back-up exporteren</string>
     <string name="hc_export_failed">Exporteren mislukt</string>
@@ -183,7 +183,7 @@
     <string name="hc_hide_from_recents">Verbergen in recent</string>
     <string name="hc_hide_this_menu_after_pin_is_set">Dit menu verbergen nadat de pincode is ingesteld</string>
     <string name="hc_hide_your_number_on_outgoing_calls">Verberg je nummer bij uitgaande gesprekken</string>
-    <string name="hc_i_understand_the_risks">Ik begrijp de risico\'s</string>
+    <string name="hc_i_understand_the_risks">Ik begrijp de risico\u0027s</string>
     <string name="hc_identify_callers_from_fritz_box">Bellers herkennen via FRITZ!Box</string>
     <string name="hc_ignore_taps_on_incoming_calls_when_the_p">Negeer tikken bij inkomende gesprekken als de nabijheidssensor is afgedekt</string>
     <string name="hc_import_backup">Back-up importeren</string>
@@ -210,9 +210,9 @@
     <string name="hc_lock_phone_app">Telefoon-app vergrendelen</string>
     <string name="hc_lock_vault">Kluis vergrendelen</string>
     <string name="hc_look_inside_the_archive_or_unpack_it_int">In het archief kijken, of het uitpakken in een map ernaast?</string>
-    <string name="hc_make_telos_your_sms_app_to_receive_messa">Maak Telos je sms-app om hier berichten te ontvangen, foto\'s te versturen en verborgen contacten uit het zicht te houden.</string>
+    <string name="hc_make_telos_your_sms_app_to_receive_messa">Maak Telos je sms-app om hier berichten te ontvangen, foto\u0027s te versturen en verborgen contacten uit het zicht te houden.</string>
     <string name="hc_manage_frozen_apps_and_shizuku_status">Beheer bevroren apps en de Shizuku-status</string>
-    <string name="hc_manage_numbers_that_are_blocked_from_cal">Beheer nummers die je niet mogen bellen of sms\'en</string>
+    <string name="hc_manage_numbers_that_are_blocked_from_cal">Beheer nummers die je niet mogen bellen of sms\u0027en</string>
     <string name="hc_mask_name_on_incoming_calls">Naam maskeren bij inkomende gesprekken</string>
     <string name="hc_medium">Middel</string>
     <string name="hc_menu">Menu</string>
@@ -239,7 +239,7 @@
     <string name="hc_no_recordings_yet">Nog geen opnames.</string>
     <string name="hc_no_stations_found">Geen zenders gevonden</string>
     <string name="hc_no_stations_yet_search_for_a_station_add">Nog geen zenders. Zoek een zender, voeg er een toe met het adres of importeer een afspeellijst.</string>
-    <string name="hc_no_videos_found_on_this_device">Geen video\'s gevonden op dit apparaat</string>
+    <string name="hc_no_videos_found_on_this_device">Geen video\u0027s gevonden op dit apparaat</string>
     <string name="hc_not_now">Niet nu</string>
     <string name="hc_note">Notitie</string>
     <string name="hc_notes">Notities</string>
@@ -265,7 +265,7 @@
     <string name="hc_paste">Plakken</string>
     <string name="hc_phone_is_locked">Telefoon is vergrendeld</string>
     <string name="hc_phone_number">Telefoonnummer</string>
-    <string name="hc_photos">Foto\'s</string>
+    <string name="hc_photos">Foto\u0027s</string>
     <string name="hc_pick_time_and_save">Tijd kiezen en opslaan</string>
     <string name="hc_picture">Afbeelding</string>
     <string name="hc_place_call">Bellen</string>
@@ -335,7 +335,7 @@
     <string name="hc_schedule_a_simulated_incoming_call">Een gesimuleerd inkomend gesprek plannen</string>
     <string name="hc_schedule_fake_call">Nepgesprek plannen</string>
     <string name="hc_scheduled_sms">Geplande sms</string>
-    <string name="hc_scrobbles_what_you_watch_marks_watched_v">Scrobbelt wat je kijkt, markeert bekeken video\'s en voegt titels toe aan je kijklijst. Maak een applicatie aan op trakt.tv/oauth/applications (redirect-adres urn:ietf:wg:oauth:2.0:oob) en voer de client-ID en het geheim in.</string>
+    <string name="hc_scrobbles_what_you_watch_marks_watched_v">Scrobbelt wat je kijkt, markeert bekeken video\u0027s en voegt titels toe aan je kijklijst. Maak een applicatie aan op trakt.tv/oauth/applications (redirect-adres urn:ietf:wg:oauth:2.0:oob) en voer de client-ID en het geheim in.</string>
     <string name="hc_scrobbling">Scrobbelen</string>
     <string name="hc_search">Zoeken</string>
     <string name="hc_search_in_this_folder">Zoeken in deze map</string>

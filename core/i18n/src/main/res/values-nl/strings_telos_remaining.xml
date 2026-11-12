@@ -100,7 +100,7 @@
     <string name="telos_media_listen">Luisteren</string>
     <string name="telos_media_watch">Kijken</string>
     <string name="telos_media_live">Live</string>
-    <string name="telos_media_store_description">Luister naar lokale muziek, radio en YouTube Music, bekijk lokale video\'s of YouTube en ontdek TV en Stremio Fork.</string>
+    <string name="telos_media_store_description">Luister naar lokale muziek, radio en YouTube Music, bekijk lokale video\u0027s of YouTube en ontdek TV en Stremio Fork.</string>
     <string name="telos_store_auto_enable">Inschakelen en bijwerken</string>
     <string name="telos_store_auto_explanation">Automatische updates inschakelen voor de geselecteerde apps? Toekomstige updates worden automatisch geïnstalleerd als Shizuku of root stille installatie toestaat. Anders ontvang je een updatemelding. Je kunt dit voor elke app wijzigen in de instellingen.</string>
     <string name="telos_store_auto_title">Automatische updates</string>
@@ -140,7 +140,7 @@
     <string name="telos_youtube_browser_native_limit">Deze aanmelding geldt voor de websites in de browser. Afspelen in Telos blijft zonder account werken; je abonnementen, afspeellijsten en aanbevelingen worden niet met Telos gesynchroniseerd.</string>
     <string name="telos_youtube_browser_unavailable">Er is geen compatibele browser beschikbaar. Installeer of schakel een browser in die Custom Tabs ondersteunt.</string>
     <string name="telos_youtube_browser_video">YouTube openen</string>
-    <string name="telos_youtube_intro">Ontdek video\'s en muziek of plak een YouTube-link. Het afspelen gaat door op de achtergrond.</string>
+    <string name="telos_youtube_intro">Ontdek video\u0027s en muziek of plak een YouTube-link. Het afspelen gaat door op de achtergrond.</string>
     <string name="telos_youtube_label">YouTube</string>
     <string name="telos_youtube_music_label">YouTube Music</string>
     <string name="telos_youtube_play_failed">Deze stream kon niet worden afgespeeld. Probeer opnieuw of kies een andere video.</string>
@@ -149,7 +149,7 @@
     <string name="telos_youtube_search">Zoek op YouTube of plak een videolink</string>
     <string name="telos_youtube_search_failed">Zoeken op YouTube is mislukt. Controleer je verbinding en probeer opnieuw.</string>
     <string name="telos_youtube_searching">Zoeken…</string>
-    <string name="telos_youtube_store_description">Zoek op YouTube en speel video\'s of muziek direct af in Telos Media. Een account is niet nodig.</string>
+    <string name="telos_youtube_store_description">Zoek op YouTube en speel video\u0027s of muziek direct af in Telos Media. Een account is niet nodig.</string>
     <string name="telos_youtube_store_features">Afspelen op de achtergrond · Gedeelde audio-/videospeler · Videolinks</string>
 
     

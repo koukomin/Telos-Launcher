@@ -89,7 +89,7 @@
     <string name="default_websearch_2_url">https://www.youtube.com/results\?search_query=${1}</string>
     <string name="default_websearch_3_name">Sklep Play</string>
     <string name="default_websearch_3_url">https://play.google.com/store/search\?q=${1}</string>
-    <string name="websearch_dialog_url_error">W tym adresie URL brakuje wyrazu \'${1}\'</string>
+    <string name="websearch_dialog_url_error">W tym adresie URL brakuje wyrazu \u0027${1}\u0027</string>
     <string name="websearch_dialog_replace_icon">Zastąp ikonkę</string>
     <string name="websearch_dialog_delete_icon">Usuń ikonkę</string>
     <string name="websearch_dialog_custom_icon">Niestandardowa ikonka</string>
@@ -247,7 +247,7 @@
     <string name="preference_location_managed">Zarządzane przez wtyczkę</string>
     <string name="preference_location_managed_summary">Lokalizacja tego dostawcy jest zarządzana przez wtyczkę</string>
     <string name="preference_location">Lokalizacja</string>
-    <string name="preference_imperial_units_summary">Użyj stopni Fahrenheit\'a oraz mil na godzinę</string>
+    <string name="preference_imperial_units_summary">Użyj stopni Fahrenheit\u0027a oraz mil na godzinę</string>
     <string name="preference_imperial_units">Jednostki imperialne</string>
     <string name="widget_config_weather_compact">Tryb kompaktowy</string>
     <string name="preference_category_debug">Debug</string>
@@ -514,7 +514,7 @@
     <string name="search_action_label">Nazwa</string>
     <string name="search_action_app">Aplikacja</string>
     <string name="search_action_websearch_url">Wzorzec URL</string>
-    <string name="search_action_websearch_url_hint">Wzorzec URL, który jest używany do konstruowania adresu URL wyszukiwania w sieci. Użyj \'${1}\' jako placeholder dla rzeczywistego terminu wyszukiwania, np. https://google.com/search?q=${1}.</string>
+    <string name="search_action_websearch_url_hint">Wzorzec URL, który jest używany do konstruowania adresu URL wyszukiwania w sieci. Użyj \u0027${1}\u0027 jako placeholder dla rzeczywistego terminu wyszukiwania, np. https://google.com/search?q=${1}.</string>
     <string name="more_information">Więcej informacji</string>
     <string name="experimental_feature">Eksperymentalne</string>
     <string name="tag_exists_error">Tag o tej nazwie już istnieje.</string>

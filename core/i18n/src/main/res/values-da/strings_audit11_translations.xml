@@ -5,7 +5,7 @@
     <string name="au10_music_quick_picks">Hurtige valg</string>
     <string name="au10_music_recent">Afspillet for nylig</string>
     <string name="au10_music_decades">Årtier</string>
-    <string name="au10_music_decade_format">%1$d\'erne</string>
+    <string name="au10_music_decade_format">%1$d\u0027erne</string>
     <string name="au10_music_up_next">Næste</string>
     <string name="au10_music_lyrics">Sangtekst</string>
     <string name="au10_music_related">Relateret</string>

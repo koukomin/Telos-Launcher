@@ -5,7 +5,7 @@
     <string name="art_optimizer_master_toggle">Cumasaigh Optamaitheoir ART</string>
     <string name="art_optimizer_warning_title">Luas vs. Stóras</string>
     <string name="art_optimizer_warning_pros">Buntáistí (Luas): Tosú fuar i bhfad níos tapúla, gan moill JIT agus scrollú mín.</string>
-    <string name="art_optimizer_warning_cons">Míbhuntáistí (Spás &amp; Teas): D\'fhéadfadh méid aipeanna a dhúbailt (+15–30 GB+) agus ualach LAP a ardú go sealadach.</string>
+    <string name="art_optimizer_warning_cons">Míbhuntáistí (Spás &amp; Teas): D\u0027fhéadfadh méid aipeanna a dhúbailt (+15–30 GB+) agus ualach LAP a ardú go sealadach.</string>
     <string name="art_optimizer_profile_title">Próifíl Tiomsaithe</string>
     <string name="art_optimizer_profile_speed_profile">Speed Profile (Molta - Modhanna coitianta)</string>
     <string name="art_optimizer_profile_speed">Speed (Feidhmíocht Uasta - AOT Iomlán)</string>
@@ -42,7 +42,7 @@
     <string name="art_optimizer_frozen_category">Comhoibriú le hAipeanna Reoite</string>
     <string name="art_optimizer_frozen_toggle">Scipeáil &amp; Glan Aipeanna Reoite</string>
     <string name="art_optimizer_frozen_toggle_summary">Fág MÚCHTA má osclaíonn tú aipeanna reoite ón lainseálaí le haghaidh tosú láithreach. Cas AIR AMHÁIN chun spás a shábháil (--reset).</string>
-    <string name="art_optimizer_frozen_mode_title">Gníomh d\'Aipeanna Reoite</string>
+    <string name="art_optimizer_frozen_mode_title">Gníomh d\u0027Aipeanna Reoite</string>
     <string name="art_optimizer_frozen_mode_skip">Scipeáil aipeanna reoite le linn mór-optamaithe</string>
     <string name="art_optimizer_frozen_mode_strip">Glan agus athshocraigh aipeanna reoite (--reset) chun spás a shaoradh</string>
     <string name="art_optimizer_btn_strip_frozen_now">Glan Aipeanna Reoite Anois (--reset)</string>

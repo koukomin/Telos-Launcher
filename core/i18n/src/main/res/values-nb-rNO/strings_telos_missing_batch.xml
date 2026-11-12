@@ -672,7 +672,7 @@
     <string name="websearch_dialog_query_encoding_none">Ingen</string>
     <string name="websearch_dialog_query_encoding_url">Prosent-enkoding</string>
     <string name="websearch_dialog_replace_icon">Erstatt ikon</string>
-    <string name="websearch_dialog_url_error">Stedsfortrederen \'${1}\' mangler i URLen</string>
+    <string name="websearch_dialog_url_error">Stedsfortrederen \u0027${1}\u0027 mangler i URLen</string>
     <string name="widget_action_remove">Fjern</string>
     <string name="widget_action_replace">Erstatt</string>
     <string name="widget_add_widget">Legg til widget</string>

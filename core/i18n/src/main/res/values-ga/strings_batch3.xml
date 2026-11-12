@@ -53,13 +53,13 @@
     <string name="vn_subtitle_loaded">Luchtaíodh fotheideal: %1$s</string>
     <string name="vn_network_scan_title">Fillteáin líonra sa leabharlann</string>
     <string name="vn_close">Dún</string>
-    <string name="vn_network_slow_seek">D\'fhéadfadh sé a bheith mall léim i bhfad ar aghaidh ar stóras líonra.</string>
+    <string name="vn_network_slow_seek">D\u0027fhéadfadh sé a bheith mall léim i bhfad ar aghaidh ar stóras líonra.</string>
     <string name="vn_searching">Ag cuardach…</string>
     <string name="vn_downloading">Ag íoslódáil…</string>
     <string name="vn_no_subtitles_found">Níor aimsíodh fotheidil do \"%1$s\"</string>
     <string name="blocklists_web_title">Liostaí blocála</string>
     <string name="blocklists_torrent_title">Liostaí blocála piaraí</string>
-    <string name="blocklists_web_info">Liostaí fearainn a chuirtear leis an liosta ionsuite fógraí agus rianaitheoirí d\'aipeanna gréasáin. Ní dhéantar aon rud a íoslódáil go dtí go gcasann tú liosta air. Faightear gach liosta cumasaithe go díreach ón seoladh a thaispeántar faoi; ní dhéantar teagmháil le haon fhreastalaí eile agus ní sheoltar faic fút.</string>
+    <string name="blocklists_web_info">Liostaí fearainn a chuirtear leis an liosta ionsuite fógraí agus rianaitheoirí d\u0027aipeanna gréasáin. Ní dhéantar aon rud a íoslódáil go dtí go gcasann tú liosta air. Faightear gach liosta cumasaithe go díreach ón seoladh a thaispeántar faoi; ní dhéantar teagmháil le haon fhreastalaí eile agus ní sheoltar faic fút.</string>
     <string name="blocklists_torrent_info">Raonta seoltaí IP a dhiúltaíonn sruthú torrent nasc a dhéanamh leo. Ní dhéantar aon rud a íoslódáil go dtí go gcasann tú liosta air. Faightear gach liosta cumasaithe go díreach ón seoladh a thaispeántar faoi; ní dhéantar teagmháil le haon fhreastalaí eile agus ní sheoltar faic fút. Laghdaíonn liosta blocála naisc nach dteastaíonn, ach ní ainmneacht neamhspriocúil é.</string>
     <string name="blocklists_downloaded_from">Íoslódáilte ó %1$s</string>
     <string name="blocklists_license">Ceadúnas: %1$s</string>
