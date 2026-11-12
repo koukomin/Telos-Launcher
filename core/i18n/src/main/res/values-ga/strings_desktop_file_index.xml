@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_file_index_title">Innéacs ainmneacha comhad</string>
+    <string name="desktop_file_index_enable">Innéacs ainmneacha comhad ar an ngléas</string>
+    <string name="desktop_file_index_hint">Roghnach. Innéacsann ainmneacha comhad amháin faoi HOME an vault nó fréamh Portable Data (ní próifíl an ósta riamh ach amháin Host Home). Stóráilte criptithe faoi .cache/telos/file-index le ceadanna úinéara amháin. Gan ábhar comhad agus gan uaslódáil néil.</string>
+</resources>

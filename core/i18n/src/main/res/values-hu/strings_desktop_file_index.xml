@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_file_index_title">Fájlnév-index</string>
+    <string name="desktop_file_index_enable">Eszközön lévő fájlnév-index</string>
+    <string name="desktop_file_index_hint">Opcionális. Csak a vault HOME vagy a Portable Data gyökér alatti fájlneveket indexeli (soha a gazdagép profilját, kivéve Host Home). Titkosítva tárolva a .cache/telos/file-index alatt, csak tulajdonosi jogosultságokkal. Nincs fájltartalom és nincs felhőfeltöltés.</string>
+</resources>

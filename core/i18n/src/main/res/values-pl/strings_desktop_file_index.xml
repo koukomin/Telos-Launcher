@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_file_index_title">Indeks nazw plików</string>
+    <string name="desktop_file_index_enable">Indeks nazw plików na urządzeniu</string>
+    <string name="desktop_file_index_hint">Opcjonalnie. Indeksuje tylko nazwy plików w HOME sejfu lub korzeniu Portable Data (nigdy profil hosta, chyba że Host Home). Przechowywane zaszyfrowane w .cache/telos/file-index z uprawnieniami tylko właściciela. Bez treści plików i bez wysyłki do chmury.</string>
+</resources>

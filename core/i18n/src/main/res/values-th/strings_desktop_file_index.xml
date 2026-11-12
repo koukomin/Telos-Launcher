@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_file_index_title">ดัชนีชื่อไฟล์</string>
+    <string name="desktop_file_index_enable">ดัชนีชื่อไฟล์บนอุปกรณ์</string>
+    <string name="desktop_file_index_hint">ไม่บังคับ จัดทำดัชนีเฉพาะชื่อไฟล์ภายใต้ HOME ของ vault หรือราก Portable Data (ไม่เคยโปรไฟล์โฮสต์ ยกเว้น Host Home) เก็บแบบเข้ารหัสภายใต้ .cache/telos/file-index ด้วยสิทธิ์เจ้าของเท่านั้น ไม่มีเนื้อหาไฟล์และไม่อัปโหลดสู่คลาวด์</string>
+</resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_file_index_title">Indeks nama fail</string>
+    <string name="desktop_file_index_enable">Indeks nama fail pada peranti</string>
+    <string name="desktop_file_index_hint">Pilihan. Mengindeks hanya nama fail di bawah HOME vault atau akar Portable Data (tidak pernah profil hos kecuali Host Home). Disimpan disulitkan di bawah .cache/telos/file-index dengan kebenaran pemilik sahaja. Tiada kandungan fail dan tiada muat naik awan.</string>
+</resources>

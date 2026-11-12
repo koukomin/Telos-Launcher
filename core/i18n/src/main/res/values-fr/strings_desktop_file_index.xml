@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_file_index_title">Index des noms de fichiers</string>
+    <string name="desktop_file_index_enable">Index des noms de fichiers sur l’appareil</string>
+    <string name="desktop_file_index_hint">Optionnel. Indexe uniquement les noms de fichiers sous le HOME du coffre ou la racine Portable Data (jamais le profil hôte sauf Host Home). Stocké chiffré sous .cache/telos/file-index avec des permissions réservées au propriétaire. Aucun contenu de fichier ni envoi cloud.</string>
+</resources>

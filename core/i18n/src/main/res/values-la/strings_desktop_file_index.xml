@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_file_index_title">Index nominum fasciculorum</string>
+    <string name="desktop_file_index_enable">Index nominum fasciculorum in instrumento</string>
+    <string name="desktop_file_index_hint">Optativum. Nomina fasciculorum tantum sub HOME cellae vel radice Portable Data indicizat (numquam profilum hospitis nisi Host Home). Servatur cryptatum sub .cache/telos/file-index cum permissionibus domini solius. Sine contento fasciculorum et sine oneratione nubis.</string>
+</resources>

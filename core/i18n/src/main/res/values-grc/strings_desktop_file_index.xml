@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_file_index_title">Εὐρετήριον ὀνομάτων ἀρχείων</string>
+    <string name="desktop_file_index_enable">Εὐρετήριον ὀνομάτων ἀρχείων ἐν τῇ συσκευῇ</string>
+    <string name="desktop_file_index_hint">Προαιρετικόν. Εὐρετηριάζει μόνον ὀνόματα ἀρχείων ὑπὸ τὸ HOME τοῦ θησαυροφυλακίου ἢ τὴν ῥίζαν Portable Data (οὐδέποτε τὸ προφὶλ τοῦ host πλὴν Host Home). Ἀποθηκεύεται κεκρυπτογραφημένον ἐν .cache/telos/file-index μετὰ δικαιωμάτων μόνον τοῦ κυρίου. Ἄνευ περιεχομένου ἀρχείων καὶ ἄνευ ἀποστολῆς εἰς τὸ νέφος.</string>
+</resources>

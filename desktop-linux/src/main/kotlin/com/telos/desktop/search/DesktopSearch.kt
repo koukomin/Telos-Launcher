@@ -64,7 +64,26 @@ object DesktopSearch {
         }
         if (q.length >= 2) {
             val seen = HashSet<String>()
-            for (root in filesRoot) {
+            val allowed = VaultFileNameIndex.allowedRoots()
+            val roots = filesRoot.filter { VaultFileNameIndex.isUnderAllowedRoot(it, allowed) }
+            if (VaultFileNameIndex.enabled) {
+                VaultFileNameIndex.maybeRescan(roots = allowed.ifEmpty { roots })
+                for (hit in VaultFileNameIndex.query(q, limit = 80)) {
+                    if (!seen.add(hit.absolutePath)) continue
+                    val score = rank(q, hit.fileName, hit.extension)
+                    if (score > 0) {
+                        out += SearchHit(
+                            "file:${hit.absolutePath}",
+                            hit.fileName,
+                            hit.file.parent ?: "",
+                            SearchKind.File,
+                            score,
+                            file = hit.file,
+                        )
+                    }
+                }
+            }
+            for (root in roots) {
                 walkFiles(root, maxDepth = 2, maxHits = 80) { file ->
                     if (!seen.add(file.absolutePath)) return@walkFiles
                     val score = rank(q, file.name)
@@ -100,9 +119,24 @@ object DesktopSearch {
 
     fun defaultFileRoots(): List<File> {
         val dirs = XdgUserDirsManager.resolve()
-        return listOf(dirs.desktop, dirs.download, dirs.documents, dirs.music, dirs.pictures, dirs.videos, dirs.home)
-            .distinctBy { it.absolutePath }
-            .filter { it.isDirectory }
+        val candidates = listOf(
+            dirs.desktop,
+            dirs.download,
+            dirs.documents,
+            dirs.music,
+            dirs.pictures,
+            dirs.videos,
+            dirs.home,
+        )
+        val allowed = VaultFileNameIndex.allowedRoots()
+        return if (allowed.isEmpty()) {
+            // Privacy-first: without vault/portable/Host Home, do not walk the host profile.
+            emptyList()
+        } else {
+            candidates
+                .distinctBy { it.absolutePath }
+                .filter { it.isDirectory && VaultFileNameIndex.isUnderAllowedRoot(it, allowed) }
+        }
     }
 
     private fun walkFiles(root: File, maxDepth: Int, maxHits: Int, visit: (File) -> Unit) {

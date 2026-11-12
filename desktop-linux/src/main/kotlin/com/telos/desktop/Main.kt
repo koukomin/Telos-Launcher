@@ -123,6 +123,15 @@ fun main(args: Array<String>) {
                 androidx.compose.runtime.LaunchedEffect(settings) {
                     vault.opsec.secureClipboardEnabled = settings.secureClipboard
                     vault.opsec.clipboardClearSeconds = settings.clipboardClearSeconds
+                    com.telos.desktop.search.VaultFileNameIndex.enabled = settings.fileNameIndexEnabled
+                    if (settings.fileNameIndexEnabled) {
+                        kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+                            com.telos.desktop.search.VaultFileNameIndex.loadFromDisk()
+                            com.telos.desktop.search.VaultFileNameIndex.maybeRescan()
+                        }
+                    } else {
+                        com.telos.desktop.search.VaultFileNameIndex.clearMemory()
+                    }
                 }
                 LaunchedEffect(Unit) {
                     kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {

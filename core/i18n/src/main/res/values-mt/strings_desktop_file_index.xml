@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_file_index_title">Indiċi tal-ismijiet tal-fajls</string>
+    <string name="desktop_file_index_enable">Indiċi tal-ismijiet tal-fajls fuq l-apparat</string>
+    <string name="desktop_file_index_hint">Fakultattiv. Jindiċizza biss ismijiet tal-fajls taħt il-HOME tal-vault jew l-għerq Portable Data (qatt il-profil tal-host ħlief Host Home). Maħżun encrypted taħt .cache/telos/file-index b’permessi tas-sid biss. Bla kontenut tal-fajls u bla upload fis-sħaba.</string>
+</resources>

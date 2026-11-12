@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_file_index_title">Indeks nama berkas</string>
+    <string name="desktop_file_index_enable">Indeks nama berkas di perangkat</string>
+    <string name="desktop_file_index_hint">Opsional. Mengindeks hanya nama berkas di bawah HOME vault atau akar Portable Data (tidak pernah profil host kecuali Host Home). Disimpan terenkripsi di .cache/telos/file-index dengan izin hanya pemilik. Tanpa isi berkas dan tanpa unggah awan.</string>
+</resources>

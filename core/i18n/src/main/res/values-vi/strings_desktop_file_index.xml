@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_file_index_title">Chỉ mục tên tệp</string>
+    <string name="desktop_file_index_enable">Chỉ mục tên tệp trên thiết bị</string>
+    <string name="desktop_file_index_hint">Tùy chọn. Chỉ lập chỉ mục tên tệp dưới HOME của vault hoặc gốc Portable Data (không bao giờ hồ sơ máy chủ trừ Host Home). Lưu mã hóa dưới .cache/telos/file-index với quyền chỉ dành cho chủ sở hữu. Không có nội dung tệp và không tải lên đám mây.</string>
+</resources>

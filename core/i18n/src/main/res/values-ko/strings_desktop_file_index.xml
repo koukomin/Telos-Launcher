@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_file_index_title">파일 이름 색인</string>
+    <string name="desktop_file_index_enable">기기 내 파일 이름 색인</string>
+    <string name="desktop_file_index_hint">선택 사항. vault HOME 또는 Portable Data 루트 아래의 파일 이름만 색인합니다(Host Home이 아니면 호스트 프로필은 절대 포함하지 않음). .cache/telos/file-index에 소유자 전용 권한으로 암호화 저장. 파일 내용은 포함하지 않으며 클라우드로 업로드하지 않습니다.</string>
+</resources>
