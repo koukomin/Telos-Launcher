@@ -494,6 +494,7 @@ fun handleDesktopKeys(
     ev: androidx.compose.ui.input.key.KeyEvent,
     wm: TelosWindowManager,
     telemetry: LinuxSystemTelemetryEngine,
+    settings: com.telos.desktop.settings.TelosDesktopSettings? = null,
 ): Boolean {
     if (TelosQuake.onGlobalKey(ev)) return true
     val down = ev.type == KeyEventType.KeyDown
@@ -502,6 +503,11 @@ fun handleDesktopKeys(
     val ctrl = ev.isCtrlPressed
     val shift = ev.isShiftPressed
     val alt = ev.isAltPressed
+    // Panic mute: Super+Shift+P — Quiet Ops + hide neon chrome; never touches nftables.
+    if (ev.isMetaPressed && shift && key == Key.P && !ctrl && !alt) {
+        com.telos.desktop.theme.PanicMuteController.toggle(settings, persist = true)
+        return true
+    }
     // === TELOS_PENDING_REVIEW_START: telos_de_final_polish ===
     if (key == Key.F11) {
         DesktopChrome.toggleFullscreen()

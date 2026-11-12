@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_appearance_title">Uiterlijk</string>
+    <string name="desktop_appearance_hint">Quiet Ops- of Vault Neon-intensiteit, neonaccent en paniekdemping. Profieloverlays kunnen dit overschrijven zonder naar host-HOME te schrijven in Portable Data.</string>
+    <string name="desktop_theme_intensity_label">Thema-intensiteit</string>
+    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
+    <string name="desktop_theme_intensity_neon">Vault Neon</string>
+    <string name="desktop_theme_accent_label">Accent</string>
+    <string name="desktop_panic_mute_toggle">Paniekdemping</string>
+    <string name="desktop_panic_mute_on">Paniekdemping: Aan</string>
+    <string name="desktop_panic_mute_off">Paniekdemping: Uit</string>
+    <string name="desktop_panic_mute_hint">Forceert Quiet Ops en verbergt neonranden en meters. Alleen visueel — verandert firewall of kill-switch niet. Sneltoets: Super+Shift+P.</string>
+    <string name="desktop_vos_profiles_appearance_hint">Elk benoemd profiel kan een eigen desktop.properties-overlay bewaren voor intensiteit, accent, pictogrammen en cursor. Wisselen herlaadt het uiterlijk uit de profieloverlay, daarna globale kluisprops.</string>
+</resources>

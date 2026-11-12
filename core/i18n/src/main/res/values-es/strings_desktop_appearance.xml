@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_appearance_title">Apariencia</string>
+    <string name="desktop_appearance_hint">Intensidad Quiet Ops o Vault Neon, acento neón y silencio de pánico. Los overlays de perfil pueden anularlos sin escribir en el HOME del host en Portable Data.</string>
+    <string name="desktop_theme_intensity_label">Intensidad del tema</string>
+    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
+    <string name="desktop_theme_intensity_neon">Vault Neon</string>
+    <string name="desktop_theme_accent_label">Acento</string>
+    <string name="desktop_panic_mute_toggle">Silencio de pánico</string>
+    <string name="desktop_panic_mute_on">Silencio de pánico: Activado</string>
+    <string name="desktop_panic_mute_off">Silencio de pánico: Desactivado</string>
+    <string name="desktop_panic_mute_hint">Fuerza Quiet Ops y oculta bordes y medidores neón. Solo visual: no cambia el cortafuegos ni el kill-switch. Atajo: Super+Shift+P.</string>
+    <string name="desktop_vos_profiles_appearance_hint">Cada perfil con nombre puede guardar su propio overlay desktop.properties para intensidad, acento, iconos y cursor. Al cambiar se recarga la apariencia desde el overlay del perfil y luego las propiedades globales de la bóveda.</string>
+</resources>

@@ -90,6 +90,7 @@ fun LinuxDesktopSettingsPanel(
     val indexEntries = remember {
         helixSettingsIndexEntries(
             sessionTitle = t.t("desktop_settings_session"),
+            appearanceTitle = t.t("desktop_appearance_title"),
             displayTitle = t.t("desktop_settings_display"),
             wallpaperTonalTitle = t.t("desktop_wallpaper_tonal_title"),
             nightTitle = t.t("desktop_night_light_title"),
@@ -106,6 +107,14 @@ fun LinuxDesktopSettingsPanel(
             opsecTitle = t.t("desktop_opsec_title"),
             restoreTitle = t.t("desktop_vault_restore_title"),
             updateTitle = t.t("desktop_update_title"),
+            appearanceKeywords = listOf(
+                t.t("desktop_theme_intensity_quiet"),
+                t.t("desktop_theme_intensity_neon"),
+                t.t("desktop_panic_mute_toggle"),
+                "accent",
+                "quiet",
+                "neon",
+            ),
             wallpaperTonalKeywords = listOf(
                 t.t("desktop_wallpaper_tonal_enable"),
                 t.t("desktop_wallpaper_tonal_hint"),
@@ -617,10 +626,68 @@ fun LinuxDesktopSettingsPanel(
         }
         if (show("profiles")) {
             HelixSettingsCard(t.t("desktop_vos_profiles_title")) {
+                Text(
+                    t.t("desktop_vos_profiles_appearance_hint"),
+                    fontSize = 11.sp,
+                    color = TelosColors.onSurface.copy(0.7f),
+                )
                 com.telos.desktop.vault.VaultProfileSwitchPanel(
                     vaultConfigDir = runCatching { com.telos.desktop.vault.PhantomVault.engine.configDir }.getOrNull(),
                     compact = true,
+                    onChanged = {
+                        // Lock-gated or plain switch: reload appearance from profile overlay then global.
+                        settings.reloadAppearanceFromProfile()
+                    },
                 )
+            }
+        }
+        if (show("appearance")) {
+            HelixSettingsCard(t.t("desktop_appearance_title")) {
+                Text(t.t("desktop_appearance_hint"), fontSize = 11.sp, color = TelosColors.onSurface.copy(0.7f))
+                Text(t.t("desktop_theme_intensity_label"), fontSize = 12.sp)
+                Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                    HelixTechPill(
+                        t.t("desktop_theme_intensity_quiet"),
+                        selected = settings.themeIntensity == com.telos.desktop.theme.ThemeIntensity.Quiet.propertyValue,
+                        accent = TelosColors.secondary,
+                    ) {
+                        settings.themeIntensity = com.telos.desktop.theme.ThemeIntensity.Quiet.propertyValue
+                        settings.save()
+                    }
+                    HelixTechPill(
+                        t.t("desktop_theme_intensity_neon"),
+                        selected = settings.themeIntensity == com.telos.desktop.theme.ThemeIntensity.Neon.propertyValue,
+                        accent = TelosColors.primary,
+                    ) {
+                        settings.themeIntensity = com.telos.desktop.theme.ThemeIntensity.Neon.propertyValue
+                        settings.save()
+                    }
+                }
+                Text(t.t("desktop_theme_accent_label"), fontSize = 12.sp)
+                Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                    listOf(
+                        com.telos.desktop.theme.ThemeAccent.Green,
+                        com.telos.desktop.theme.ThemeAccent.Cyan,
+                        com.telos.desktop.theme.ThemeAccent.Magenta,
+                        com.telos.desktop.theme.ThemeAccent.Orange,
+                    ).forEach { accent ->
+                        HelixTechPill(
+                            accent.propertyValue.removePrefix("neon-"),
+                            selected = com.telos.desktop.theme.ThemeAccent.parse(settings.themeAccent) == accent &&
+                                !settings.themeAccent.equals("wallpaper", ignoreCase = true),
+                            accent = accent.color,
+                        ) {
+                            settings.themeAccent = accent.propertyValue
+                            settings.wallpaperTonal = false
+                            settings.save()
+                            DesktopChrome.bumpAccentEpoch()
+                        }
+                    }
+                }
+                Toggle(t.t("desktop_panic_mute_toggle"), settings.panicMute || com.telos.desktop.theme.PanicMuteController.sessionMuted) {
+                    com.telos.desktop.theme.PanicMuteController.setMuted(it, settings, persist = true)
+                }
+                Text(t.t("desktop_panic_mute_hint"), fontSize = 11.sp, color = TelosColors.onSurface.copy(0.7f))
             }
         }
         if (filter.showPortableDesktopShell) {
@@ -934,6 +1001,7 @@ private fun reapplyCursor(settings: TelosDesktopSettings) {
 
 private fun helixSettingsIndexEntries(
     sessionTitle: String,
+    appearanceTitle: String,
     displayTitle: String,
     wallpaperTonalTitle: String,
     nightTitle: String,
@@ -950,6 +1018,7 @@ private fun helixSettingsIndexEntries(
     opsecTitle: String,
     restoreTitle: String,
     updateTitle: String,
+    appearanceKeywords: List<String>,
     wallpaperTonalKeywords: List<String>,
     nightKeywords: List<String>,
     sessionKeywords: List<String>,
@@ -958,6 +1027,7 @@ private fun helixSettingsIndexEntries(
     opsecKeywords: List<String>,
 ): List<HelixSettingsIndexEntry> = listOf(
     HelixSettingsIndexEntry("session", sessionTitle, sessionKeywords),
+    HelixSettingsIndexEntry("appearance", appearanceTitle, appearanceKeywords),
     HelixSettingsIndexEntry("display", displayTitle, listOf("resolution", "scale", "refresh")),
     HelixSettingsIndexEntry("wallpaper_tonal", wallpaperTonalTitle, wallpaperTonalKeywords),
     HelixSettingsIndexEntry("night_light", nightTitle, nightKeywords),
@@ -965,7 +1035,7 @@ private fun helixSettingsIndexEntries(
     HelixSettingsIndexEntry("icons", iconsTitle, listOf("theme", "papirus", "tela", "candy")),
     HelixSettingsIndexEntry("windows", windowsTitle, listOf("klassy", "buttons")),
     HelixSettingsIndexEntry("cursor", cursorTitle, listOf("xcursor", "size", "breeze")),
-    HelixSettingsIndexEntry("profiles", profilesTitle, listOf("vault", "profile", "portable")),
+    HelixSettingsIndexEntry("profiles", profilesTitle, listOf("vault", "profile", "portable", "appearance")),
     HelixSettingsIndexEntry("portable", portableTitle, listOf("portable", "data")),
     HelixSettingsIndexEntry("windows_shell", shellTitle, listOf("explorer", "shell")),
     HelixSettingsIndexEntry("session_sync", syncTitle, listOf("sync", "keepass")),

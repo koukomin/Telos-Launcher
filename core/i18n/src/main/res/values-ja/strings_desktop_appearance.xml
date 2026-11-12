@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_appearance_title">外観</string>
+    <string name="desktop_appearance_hint">Quiet Ops / Vault Neon の強さ、ネオンアクセント、パニックミュート。プロファイルのオーバーレイで上書きでき、Portable Data ではホスト HOME に書き込みません。</string>
+    <string name="desktop_theme_intensity_label">テーマの強さ</string>
+    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
+    <string name="desktop_theme_intensity_neon">Vault Neon</string>
+    <string name="desktop_theme_accent_label">アクセント</string>
+    <string name="desktop_panic_mute_toggle">パニックミュート</string>
+    <string name="desktop_panic_mute_on">パニックミュート: オン</string>
+    <string name="desktop_panic_mute_off">パニックミュート: オフ</string>
+    <string name="desktop_panic_mute_hint">Quiet Ops を強制し、ネオン枠とゲージを隠します。見た目のみ — ファイアウォールやキルスイッチは変えません。ショートカット: Super+Shift+P。</string>
+    <string name="desktop_vos_profiles_appearance_hint">名前付きプロファイルごとに、強さ・アクセント・アイコン・カーソル用の desktop.properties オーバーレイを持てます。切り替え時はプロファイルのオーバーレイ、次にグローバルな保管庫プロパティから外観を再読み込みします。</string>
+</resources>

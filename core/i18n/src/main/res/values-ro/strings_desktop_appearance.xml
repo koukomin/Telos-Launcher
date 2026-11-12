@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_appearance_title">Aspect</string>
+    <string name="desktop_appearance_hint">Intensitate Quiet Ops sau Vault Neon, accent neon și mutare de panică. Overlay-urile de profil le pot suprascrie fără a scrie în HOME-ul gazdei în Portable Data.</string>
+    <string name="desktop_theme_intensity_label">Intensitatea temei</string>
+    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
+    <string name="desktop_theme_intensity_neon">Vault Neon</string>
+    <string name="desktop_theme_accent_label">Accent</string>
+    <string name="desktop_panic_mute_toggle">Mutare de panică</string>
+    <string name="desktop_panic_mute_on">Mutare de panică: Pornit</string>
+    <string name="desktop_panic_mute_off">Mutare de panică: Oprit</string>
+    <string name="desktop_panic_mute_hint">Forțează Quiet Ops și ascunde bordurile și indicatorii neon. Doar vizual — nu modifică firewall-ul sau kill-switch. Scurtătură: Super+Shift+P.</string>
+    <string name="desktop_vos_profiles_appearance_hint">Fiecare profil denumit poate păstra propriul overlay desktop.properties pentru intensitate, accent, pictograme și cursor. Comutarea reîncarcă aspectul din overlay-ul profilului, apoi din proprietățile globale ale seifului.</string>
+</resources>

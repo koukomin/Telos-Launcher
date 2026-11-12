@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_appearance_title">Itxura</string>
+    <string name="desktop_appearance_hint">Quiet Ops edo Vault Neon intentsitatea, neon azentuа eta ikara isiltzea. Profil-geruzek horiek gainidatzi ditzakete Portable Data-n ostalariaren HOME-ean idatzi gabe.</string>
+    <string name="desktop_theme_intensity_label">Gaiaren intentsitatea</string>
+    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
+    <string name="desktop_theme_intensity_neon">Vault Neon</string>
+    <string name="desktop_theme_accent_label">Azentua</string>
+    <string name="desktop_panic_mute_toggle">Ikara isiltzea</string>
+    <string name="desktop_panic_mute_on">Ikara isiltzea: Piztuta</string>
+    <string name="desktop_panic_mute_off">Ikara isiltzea: Itzalita</string>
+    <string name="desktop_panic_mute_hint">Quiet Ops behartzen du eta neon ertzak eta neurketa-gailuak ezkutatzen ditu. Ikusizkoa soilik — ez du suebaki edo kill-switch aldatzen. Lasterbidea: Super+Shift+P.</string>
+    <string name="desktop_vos_profiles_appearance_hint">Izena duen profil bakoitzak intentsitate, azentu, ikono eta kurtsorerako bere desktop.properties geruza gorde dezake. Aldatzean itxura profil-geruzatik eta ondoren kutxa globalaren propietateetatik berriro kargatzen da.</string>
+</resources>

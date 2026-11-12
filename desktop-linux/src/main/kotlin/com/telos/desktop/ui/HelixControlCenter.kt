@@ -28,6 +28,7 @@ import com.telos.desktop.panel.AudioControlManager
 import com.telos.desktop.panel.ConnectivityManager
 import com.telos.desktop.panel.LaptopPowerManager
 import com.telos.desktop.settings.TelosDesktopSettings
+import com.telos.desktop.theme.PanicMuteController
 import com.telos.desktop.wm.SnapLayout
 import com.telos.desktop.wm.TelosWindowManager
 import com.telos.desktop.wm.WindowMode
@@ -60,6 +61,9 @@ fun HelixControlCenter(
     var nightTemp by remember { mutableStateOf(settingsStore.nightLightTemperatureK.toFloat()) }
     var nightSnap by remember {
         mutableStateOf(NightLightController.snapshot(settingsStore.nightLightEnabled, settingsStore.nightLightTemperatureK))
+    }
+    var panicMuted by remember {
+        mutableStateOf(PanicMuteController.isMuted(settingsStore))
     }
     Column(
         Modifier
@@ -140,6 +144,18 @@ fun HelixControlCenter(
             if (TelosNotificationCenter.dnd.value) "Do Not Disturb: On" else "Do Not Disturb: Off",
             color = TelosColors.primary,
             modifier = Modifier.clickable { TelosNotificationCenter.dnd.value = !TelosNotificationCenter.dnd.value },
+        )
+        Text(
+            if (panicMuted) t("desktop_panic_mute_on") else t("desktop_panic_mute_off"),
+            color = TelosColors.primary,
+            modifier = Modifier.clickable {
+                panicMuted = PanicMuteController.toggle(settingsStore, persist = true)
+            },
+        )
+        Text(
+            t("desktop_panic_mute_hint"),
+            color = TelosColors.onSurface.copy(0.7f),
+            fontSize = 11.sp,
         )
         Text(
             "Vault +128 MB",

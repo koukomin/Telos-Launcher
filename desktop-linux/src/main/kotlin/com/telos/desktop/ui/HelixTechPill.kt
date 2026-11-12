@@ -12,6 +12,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.telos.desktop.theme.PanicMuteController
 import de.mm20.launcher2.uikmp.TelosSurfaceTokens
 
 /** Desktop Cyber-Tech pill (opaque [TelosSurfaceTokens.techPill]; neon accent when selected). */
@@ -23,10 +24,23 @@ fun HelixTechPill(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
 ) {
+    val techBorders = PanicMuteController.showTechBorders()
     val shape = RoundedCornerShape(999.dp)
-    val bg = if (selected) accent.copy(alpha = 0.22f) else TelosSurfaceTokens.techPill
-    val border = if (selected) accent else TelosColors.outline
-    val fg = if (selected) accent else TelosColors.onSurface
+    val bg = when {
+        !techBorders -> TelosSurfaceTokens.techPill
+        selected -> accent.copy(alpha = 0.22f)
+        else -> TelosSurfaceTokens.techPill
+    }
+    val borderColor = when {
+        !techBorders -> TelosColors.outline.copy(alpha = 0.35f)
+        selected -> accent
+        else -> TelosColors.outline
+    }
+    val fg = when {
+        !techBorders -> TelosColors.onSurface
+        selected -> accent
+        else -> TelosColors.onSurface
+    }
     Text(
         text,
         color = fg,
@@ -35,7 +49,7 @@ fun HelixTechPill(
         modifier = modifier
             .clip(shape)
             .background(bg)
-            .border(1.2.dp, border, shape)
+            .border(if (techBorders) 1.2.dp else 1.dp, borderColor, shape)
             .clickable(onClick = onClick)
             .padding(horizontal = 12.dp, vertical = 7.dp),
     )

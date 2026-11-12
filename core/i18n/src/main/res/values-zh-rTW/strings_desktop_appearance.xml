@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_appearance_title">外觀</string>
+    <string name="desktop_appearance_hint">Quiet Ops 或 Vault Neon 強度、霓虹強調色與緊急靜音。設定檔疊加可覆寫這些項目，且在可攜資料模式下不會寫入主機 HOME。</string>
+    <string name="desktop_theme_intensity_label">主題強度</string>
+    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
+    <string name="desktop_theme_intensity_neon">Vault Neon</string>
+    <string name="desktop_theme_accent_label">強調色</string>
+    <string name="desktop_panic_mute_toggle">緊急靜音</string>
+    <string name="desktop_panic_mute_on">緊急靜音：開</string>
+    <string name="desktop_panic_mute_off">緊急靜音：關</string>
+    <string name="desktop_panic_mute_hint">強制 Quiet Ops 並隱藏霓虹邊框與儀表。僅視覺效果——不變更防火牆或 kill-switch。快速鍵：Super+Shift+P。</string>
+    <string name="desktop_vos_profiles_appearance_hint">每個具名設定檔可保留自己的 desktop.properties 疊加，用於強度、強調色、圖示與游標。切換時先從設定檔疊加再從全域保險庫屬性重新載入外觀。</string>
+</resources>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_appearance_title">Videz</string>
+    <string name="desktop_appearance_hint">Jakost Quiet Ops ali Vault Neon, neonski poudarek in panično utišanje. Prekrivanja profila jih lahko prepišejo brez pisanja v gostiteljev HOME v Portable Data.</string>
+    <string name="desktop_theme_intensity_label">Jakost teme</string>
+    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
+    <string name="desktop_theme_intensity_neon">Vault Neon</string>
+    <string name="desktop_theme_accent_label">Poudarek</string>
+    <string name="desktop_panic_mute_toggle">Panično utišanje</string>
+    <string name="desktop_panic_mute_on">Panično utišanje: Vklopljeno</string>
+    <string name="desktop_panic_mute_off">Panično utišanje: Izključeno</string>
+    <string name="desktop_panic_mute_hint">Vsili Quiet Ops in skrije neonske robove ter merilnike. Samo vizualno — ne spremeni požarnega zidu ali kill-switch. Bližnjica: Super+Shift+P.</string>
+    <string name="desktop_vos_profiles_appearance_hint">Vsak poimenovan profil lahko hrani lastno prekrivanje desktop.properties za jakost, poudarek, ikone in kazalec. Preklop znova naloži videz iz prekrivanja profila, nato iz globalnih lastnosti trezorja.</string>
+</resources>

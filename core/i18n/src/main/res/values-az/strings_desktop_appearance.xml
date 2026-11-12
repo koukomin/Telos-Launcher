@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_appearance_title">Görünüş</string>
+    <string name="desktop_appearance_hint">Quiet Ops və ya Vault Neon intensivliyi, neon vurğu və panik səssizliyi. Profil örtükləri Portable Data-da host HOME-a yazmadan bunları əvəz edə bilər.</string>
+    <string name="desktop_theme_intensity_label">Mövzu intensivliyi</string>
+    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
+    <string name="desktop_theme_intensity_neon">Vault Neon</string>
+    <string name="desktop_theme_accent_label">Vurğu</string>
+    <string name="desktop_panic_mute_toggle">Panik səssizliyi</string>
+    <string name="desktop_panic_mute_on">Panik səssizliyi: Açiq</string>
+    <string name="desktop_panic_mute_off">Panik səssizliyi: Bağlı</string>
+    <string name="desktop_panic_mute_hint">Quiet Ops məcbur edir və neon kənarlarla göstəriciləri gizlədir. Yalnız vizual — firewall və ya kill-switch dəyişmir. Qısayol: Super+Shift+P.</string>
+    <string name="desktop_vos_profiles_appearance_hint">Hər adlı profil intensivlik, vurğu, nişanlar və kursor üçün öz desktop.properties örtüyünü saxlaya bilər. Keçid görünüşü profil örtüyündən, sonra qlobal seyfin xüsusiyyətlərindən yenidən yükləyir.</string>
+</resources>

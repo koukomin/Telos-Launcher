@@ -39,6 +39,14 @@ human label) for multi-host awareness text — no secrets. `VaultProfileSwitchPa
 switches profiles and portable vault roots in pre-boot and Helix Settings. On Windows Portable
 Data, profile config stays under the portable session home so the host profile is not written.
 Selecting a portable root rejects the host home / `.config` / `.cache` / `.local`.
+**Profile-scoped appearance:** when profile folders exist, `profiles/<name>/desktop.properties`
+may override `theme.intensity`, `theme.accent`, `icons.theme`, and `cursor.theme` via
+`ProfileAppearanceOverlay` (overlay wins; missing keys fall back to global vault props). Paths use
+`DesktopProfiles.profilesRoot()` so Portable Data never writes host HOME. After a profile switch,
+`TelosDesktopSettings.reloadAppearanceFromProfile()` reloads overlay then global.
+**Panic mute:** session flag + optional persist `theme.panicMute` (`PanicMuteController`);
+Super+Shift+P or Control Center / Settings Appearance forces Quiet Ops and hides neon tech borders
+and gauges. Visual only — does not touch nftables or the kill-switch.
 **Lock-gated switch (enforced while unlocked):** re-auth via password callback →
 `PhantomVaultEngine.lock()` → switch profile name or portable root; the UI tells the user to
 unlock again. Telos does **not** automatically remount a different LUKS image without a password.
