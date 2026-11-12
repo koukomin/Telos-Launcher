@@ -5,7 +5,7 @@ import org.junit.Test
 
 class TelosAppKeywordsTest {
     @Test fun everyCatalogFeatureRetainsTelosAndItsEnglishNameAsAliases() {
-        val domains = listOf("phone", "messages", "media", "radio", "music", "video", "youtube", "youtube_music", "viewer", "files", "calculator", "notes", "calendar", "downloads", "network", "voice_recorder", "screen_recorder", "screenshot", "store")
+        val domains = listOf("phone", "messages", "media", "radio", "music", "video", "tv", "youtube", "youtube_music", "viewer", "files", "calculator", "notes", "calendar", "downloads", "network", "voice_recorder", "screen_recorder", "screenshot", "store")
         for (domain in domains) {
             val aliases = TelosAppKeywords.forDomain("telos_${domain}_app").map { it.lowercase() }
             assertTrue(domain, "telos" in aliases)
@@ -18,6 +18,15 @@ class TelosAppKeywordsTest {
         assertTrue("μηνύματα" in TelosAppKeywords.forDomain("telos_messages_app"))
         assertTrue("αρχεία" in TelosAppKeywords.forDomain("telos_files_app"))
         assertTrue("μουσική" in TelosAppKeywords.forDomain("telos_music_app"))
+    }
+    @Test fun tvIsSearchableInEnglishGreekAndGreeklishNotMedia() {
+        val tv = TelosAppKeywords.forDomain("telos_tv_app")
+        for (name in listOf("tv", "television", "τηλεόραση", "τηλεοραση", "tileorasi", "tileorash", "kanalia"))
+            assertTrue(name, name in tv)
+        val media = TelosAppKeywords.forDomain("telos_media_app")
+        assertFalse("tv" in media)
+        assertFalse("τηλεόραση" in media)
+        assertFalse("tileorasi" in media)
     }
     @Test fun futureVirtualAppsRetainTheTelosAliasWithoutCatalogRegistration() {
         val aliases = TelosAppKeywords.forKey("telos_future_feature_app://home")

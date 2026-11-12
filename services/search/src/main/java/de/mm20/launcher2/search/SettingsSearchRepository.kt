@@ -132,6 +132,7 @@ class SettingsSearchRepository(private val context: Context) {
             appSetting(SettingsDeepLinkContract.ROUTE_RADIO, "telos_radio_app", listOf("fm", "radio")),
             appSetting(SettingsDeepLinkContract.ROUTE_MUSIC, "telos_music_app", listOf("songs")),
             appSetting(SettingsDeepLinkContract.ROUTE_VIDEO, "telos_video_app", listOf("movies")),
+            appSetting(SettingsDeepLinkContract.ROUTE_TV, "telos_tv_app", listOf("tv", "television", "tileorasi", "τηλεόραση")),
             appSetting(SettingsDeepLinkContract.ROUTE_PHOTOS, "telos_photos_app", listOf("gallery")),
             appSetting(SettingsDeepLinkContract.ROUTE_VIEWER, "telos_viewer_app", listOf("pdf", "documents")),
             appSetting(SettingsDeepLinkContract.ROUTE_FILES, "telos_files_app", listOf("files", "storage")),

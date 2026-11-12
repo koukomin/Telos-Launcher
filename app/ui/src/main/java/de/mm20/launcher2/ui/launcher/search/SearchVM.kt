@@ -300,7 +300,7 @@ class SearchVM : ViewModel(), KoinComponent {
                 combine(
                     searchUiSettings.tvChannelsInSearch,
                     commsSettings.disabledVirtualApps,
-                ) { enabled, disabled -> enabled && "telos_media_app://media" !in disabled }
+                ) { enabled, disabled -> enabled && "telos_tv_app://tv" !in disabled }
                     .distinctUntilChanged()
                     .collectLatest { active ->
                         if (!active) {

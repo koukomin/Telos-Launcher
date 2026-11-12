@@ -13,11 +13,11 @@ object TelosAppKeywords {
         "telos_phone_app" to listOf("dialer", "calls", "call", "contacts", "τηλέφωνο", "κλήσεις", "επαφές"),
         "telos_messages_app" to listOf("sms", "mms", "text", "chat", "μηνύματα"),
         "telos_media_app" to listOf(
-            "media", "hub", "music", "radio", "video", "player", "audio", "movies", "films", "songs", "stations", "mousiki", "tainies", "radiofono", "vinteo", "stremio", "stremio fork", "addons", "series", "tv", "tileorasi", "tileorash",
-            "μέσα", "πολυμέσα", "μουσική", "ραδιόφωνο", "βίντεο", "ταινίες", "τηλεόραση", "τηλεοραση", "κανάλια", "καναλια"
+            "media", "hub", "music", "radio", "video", "player", "audio", "movies", "films", "songs", "stations", "mousiki", "tainies", "radiofono", "vinteo", "stremio", "stremio fork", "addons", "series",
+            "μέσα", "πολυμέσα", "μουσική", "ραδιόφωνο", "βίντεο", "ταινίες"
         ),
         "telos_tv_app" to listOf(
-            "tv", "television", "tileorasi", "tileorash", "iptv", "live tv", "kanalia", "stream",
+            "tv", "television", "tileorasi", "tileorash", "tileoras", "thleorasi", "iptv", "live tv", "kanalia", "stream", "channels",
             "τηλεόραση", "τηλεοραση", "κανάλια", "καναλια", "live"
         ),
         "telos_radio_app" to listOf("fm", "stations", "ραδιόφωνο", "ραδιοφωνικοί σταθμοί"),
