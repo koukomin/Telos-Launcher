@@ -86,7 +86,8 @@ Telos has two parts. **The launcher** is search, home screen, widgets, icons and
 Kvaesitso and extended by Telos. **The built-in apps** are *virtual apps*: they are not separate APKs, their
 code is part of the launcher and runs inside the launcher process (the video player can optionally run in
 its own process). Each app has an icon in the app grid, shows up in search, and can be switched on and off
-from Telos Store.
+from Telos Store. Virtual-app chrome uses a shared **Cyber-Tech** kit (neon borders, tech pills, dot-matrix
+status HUDs and gauges) on opaque Material containers over the single frosted wallpaper root — not a second blur.
 
 | Part | What it is | Docs |
 | --- | --- | --- |

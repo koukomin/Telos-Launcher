@@ -24,6 +24,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -40,6 +41,7 @@ import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
@@ -86,6 +88,11 @@ import de.mm20.launcher2.preferences.comms.CommsSettings
 import de.mm20.launcher2.preferences.ui.UiSettings
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.comms.ContactQrImage
+import de.mm20.launcher2.ui.component.TelosCyber
+import de.mm20.launcher2.ui.component.TelosCyberAppBarTitle
+import de.mm20.launcher2.ui.component.TelosCyberSectionLabel
+import de.mm20.launcher2.ui.component.TelosTechPill
+import de.mm20.launcher2.ui.component.telosTechSurface
 import de.mm20.launcher2.ui.locals.LocalBackStack
 import de.mm20.launcher2.ui.theme.transparency.transparency
 import kotlinx.coroutines.Dispatchers
@@ -196,38 +203,49 @@ fun SystemDashboardScreen(initialTab: String = "") {
                         Icon(painterResource(BaseR.drawable.arrow_back_24px), stringResource(I18nR.string.hc_back))
                     }
                 }
-                Text(stringResource(I18nR.string.telos_system_label), style = MaterialTheme.typography.titleLarge, modifier = Modifier.weight(1f).padding(start = if (backStack.size > 1) 0.dp else 8.dp))
+                TelosCyberAppBarTitle(
+                    title = stringResource(I18nR.string.telos_system_label),
+                    status = stringResource(I18nR.string.net_hub_status),
+                    statusColor = TelosCyber.NeonCyan,
+                    modifier = Modifier.weight(1f).padding(start = if (backStack.size > 1) 0.dp else 8.dp),
+                )
             }
-            androidx.compose.material3.ScrollableTabRow(
-                selectedTabIndex = currentTab,
-                containerColor = Color.Transparent,
-                edgePadding = 8.dp,
-                modifier = Modifier.fillMaxWidth(),
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 8.dp, vertical = 4.dp)
+                    .horizontalScroll(androidx.compose.foundation.rememberScrollState()),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
-                androidx.compose.material3.Tab(
-                    selected = currentTab == 0,
+                TelosTechPill(
+                    text = stringResource(I18nR.string.telos_system_label),
+                    isSelected = currentTab == 0,
                     onClick = { currentTab = 0 },
-                    text = { Text(stringResource(I18nR.string.telos_system_label)) }
+                    accentColor = TelosCyber.NeonCyan,
                 )
-                androidx.compose.material3.Tab(
-                    selected = currentTab == 1,
+                TelosTechPill(
+                    text = stringResource(I18nR.string.hc_apps),
+                    isSelected = currentTab == 1,
                     onClick = { currentTab = 1 },
-                    text = { Text(stringResource(I18nR.string.hc_apps)) }
+                    accentColor = TelosCyber.NeonGreen,
                 )
-                androidx.compose.material3.Tab(
-                    selected = currentTab == 2,
+                TelosTechPill(
+                    text = stringResource(I18nR.string.preference_screen_tweaks),
+                    isSelected = currentTab == 2,
                     onClick = { currentTab = 2 },
-                    text = { Text(stringResource(I18nR.string.preference_screen_tweaks)) }
+                    accentColor = TelosCyber.NeonOrange,
                 )
-                androidx.compose.material3.Tab(
-                    selected = currentTab == 3,
+                TelosTechPill(
+                    text = stringResource(I18nR.string.security_hub_tab_title),
+                    isSelected = currentTab == 3,
                     onClick = { currentTab = 3 },
-                    text = { Text(stringResource(I18nR.string.security_hub_tab_title)) }
+                    accentColor = TelosCyber.NeonMagenta,
                 )
-                androidx.compose.material3.Tab(
-                    selected = currentTab == 4,
+                TelosTechPill(
+                    text = stringResource(I18nR.string.telos_shizuku_title),
+                    isSelected = currentTab == 4,
                     onClick = { currentTab = 4 },
-                    text = { Text(stringResource(I18nR.string.telos_shizuku_title)) }
+                    accentColor = TelosCyber.NeonCyan,
                 )
             }
             if (currentTab == 1) {
@@ -312,10 +330,10 @@ fun SystemDashboardScreen(initialTab: String = "") {
                             title = stringResource(I18nR.string.telos_system_cpu),
                             value = cpuUsage,
                             valueText = "${(cpuUsage * 100).toInt()}%",
-                            subtitle = if (cpu != null) "OCTA-CORE CORE" else stringResource(I18nR.string.virtual_telemetry_unavailable),
+                            subtitle = if (cpu != null) stringResource(I18nR.string.telos_system_cpu) else stringResource(I18nR.string.virtual_telemetry_unavailable),
                             modifier = Modifier.weight(1f),
-                            primaryColor = Color(0xFF00F2FE),
-                            accentColor = Color(0xFFFF007F),
+                            primaryColor = TelosCyber.NeonCyan,
+                            accentColor = TelosCyber.NeonMagenta,
                         )
 
                         val ramF = if (ramTotal == 0L) 0f else ramUsed.toFloat() / ramTotal
@@ -325,8 +343,8 @@ fun SystemDashboardScreen(initialTab: String = "") {
                             valueText = "${(ramF * 100).toInt()}%",
                             subtitle = "${Formatter.formatFileSize(context, ramUsed)} / ${Formatter.formatFileSize(context, ramTotal)}",
                             modifier = Modifier.weight(1f),
-                            primaryColor = Color(0xFF8A2BE2),
-                            accentColor = Color(0xFF00F2FE),
+                            primaryColor = TelosCyber.NeonGreen,
+                            accentColor = TelosCyber.NeonCyan,
                         )
                     }
                 }
@@ -379,7 +397,7 @@ fun SystemDashboardScreen(initialTab: String = "") {
                         }
                     }
                 }
-                item { Text(stringResource(I18nR.string.telos_system_processes), style = MaterialTheme.typography.titleMedium) }
+                item { TelosCyberSectionLabel(stringResource(I18nR.string.telos_system_processes), accent = TelosCyber.NeonOrange) }
                 items(processes.take(40), key = { it.pid }) { p ->
                     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                         Text("${p.pid}  ${p.name}", modifier = Modifier.weight(1f), maxLines = 1)
@@ -395,12 +413,13 @@ fun SystemDashboardScreen(initialTab: String = "") {
 
 @Composable
 private fun GlassCard(content: @Composable () -> Unit) {
-    de.mm20.launcher2.ui.component.LauncherCard(shape = MaterialTheme.shapes.medium) {
-        Column(
-            Modifier.fillMaxWidth().padding(de.mm20.launcher2.ui.layout.UiSpacing.Content),
-            verticalArrangement = Arrangement.spacedBy(6.dp),
-        ) { content() }
-    }
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .telosTechSurface(borderColor = TelosCyber.NeonCyan, shape = MaterialTheme.shapes.medium)
+            .padding(de.mm20.launcher2.ui.layout.UiSpacing.Content),
+        verticalArrangement = Arrangement.spacedBy(6.dp),
+    ) { content() }
 }
 
 private fun formatUptime(ms: Long): String {

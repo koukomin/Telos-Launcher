@@ -42,6 +42,22 @@ Telos video wallpaper glass samples only the service’s own rendered surface wi
 The home clock, transparent resting search bar and dock page dots have no automatic rectangular contrast backing. Wallpaper-aware foreground selection still runs, while the search bar keeps its explicitly selected style and active surface. Other widget/app glass panels and their contrast policy are unchanged. This also removes the extra backing that appeared when wallpaper sampling was unavailable on Android 13 and newer.
 
 
+## Cyber-Tech chrome (virtual apps)
+
+Shared kit in `app/ui/.../component/TelosCyber.kt` and `TelosTechBorder.kt`:
+`TelosCyber` neon accents (`#00E676` / `#00F0FF` / `#FF007F` / `#FF9100`),
+`telosTechSurface` / `telosTechCard` glowing borders on opaque
+`surfaceContainerLow`, `TelosTechPill` for tabs/filters, `TelosDotMatrixText`
+and gauges for HUD/telemetry, plus `TelosCyberAppBarTitle` /
+`TelosCyberHubTile` / `TelosCyberStatChip` for hub chrome.
+
+Apply Cyber-Tech to virtual-app headers, status HUDs, hub tiles, filter pills
+and mini-players. Prefer opaque Material containers under neon borders — do not
+use transparent root `surface` as card fill or icon foreground. Do **not** wrap
+full-bleed camera/video viewfinders, Ermis mail bodies, or dense Files list rows
+in neon cards; keep chrome on toolbars/tabs and leave content planes readable.
+Popups over glass still use `virtualAppPopup()`.
+
 ## Readable overlays, controls and search
 
 Keep `surface`/`background` clear for root scaffolds, but preserve opaque

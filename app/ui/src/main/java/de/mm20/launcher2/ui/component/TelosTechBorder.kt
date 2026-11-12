@@ -27,11 +27,11 @@ import androidx.compose.ui.unit.sp
  * Modifier for Morphe-style fine glowing borders with dark translucent glass container backgrounds.
  */
 fun Modifier.telosTechCard(
-    borderColor: Color = Color(0xFFE91E63),
+    borderColor: Color = Color(0xFF00E676),
     shape: Shape = RoundedCornerShape(18.dp),
     borderWidth: Dp = 1.2.dp,
-    alpha: Float = 0.45f,
-    backgroundColor: Color = Color(0xFF0D0E15).copy(alpha = 0.88f)
+    alpha: Float = 0.85f,
+    backgroundColor: Color = Color(0xFF0D0E15).copy(alpha = 0.92f)
 ): Modifier = this
     .clip(shape)
     .border(borderWidth, borderColor.copy(alpha = alpha), shape)
@@ -47,9 +47,9 @@ fun TelosTechPill(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     icon: Painter? = null,
-    accentColor: Color = Color(0xFFE91E63)
+    accentColor: Color = Color(0xFF00E676)
 ) {
-    val bg = if (isSelected) accentColor.copy(alpha = 0.22f) else Color(0xFF161822).copy(alpha = 0.6f)
+    val bg = if (isSelected) accentColor.copy(alpha = 0.22f) else MaterialTheme.colorScheme.surfaceContainerLow
     val borderCol = if (isSelected) accentColor else MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.35f)
     val textCol = if (isSelected) accentColor else MaterialTheme.colorScheme.onSurfaceVariant
 
@@ -92,11 +92,15 @@ fun TelosTelemetryCard(
     value: String,
     bars: List<Float>, // Values 0.0f to 1.0f
     modifier: Modifier = Modifier,
-    accentColor: Color = Color(0xFFE91E63)
+    accentColor: Color = Color(0xFF00E676)
 ) {
     Column(
         modifier = modifier
-            .telosTechCard(borderColor = accentColor, shape = RoundedCornerShape(16.dp))
+            .telosTechCard(
+                borderColor = accentColor,
+                shape = RoundedCornerShape(16.dp),
+                backgroundColor = MaterialTheme.colorScheme.surfaceContainerLow,
+            )
             .padding(12.dp),
         verticalArrangement = Arrangement.SpaceBetween
     ) {
