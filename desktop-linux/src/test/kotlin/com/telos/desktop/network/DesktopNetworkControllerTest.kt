@@ -116,4 +116,43 @@ class DesktopNetworkControllerTest {
             DesktopNetworkController.parseAppRoutingLines(text.lines()),
         )
     }
+
+    @Test
+    fun parsesDnsDomainBlockAndAllowLines() {
+        val domains = DesktopNetworkController.parseDnsDomainLines(
+            listOf(
+                "# ads",
+                "ADS.Example.COM",
+                "https://tracker.example/path",
+                "*.blocked.test",
+                "bad host",
+                "evil/path",
+                "ok-allow.example",
+            ),
+        )
+        assertEquals(
+            listOf("ads.example.com", "tracker.example", "*.blocked.test", "ok-allow.example"),
+            domains,
+        )
+    }
+
+    @Test
+    fun validatesNextDnsConfigIdAndDotHost() {
+        assertTrue(DesktopNetworkController.isValidNextDnsConfigId("abc123"))
+        assertTrue(DesktopNetworkController.isValidNextDnsConfigId("AbCdEf12"))
+        assertFalse(DesktopNetworkController.isValidNextDnsConfigId("ab"))
+        assertFalse(DesktopNetworkController.isValidNextDnsConfigId("not valid"))
+        assertEquals(
+            "tls://abc123.dns.nextdns.io",
+            DesktopNetworkController.nextDnsDotPreferenceLine("abc123"),
+        )
+    }
+
+    @Test
+    fun dnsRedirectNftRulesTargetStubPort() {
+        val rules = DesktopNetworkController.dnsRedirectNftRules(5353)
+        assertTrue(rules.contains("table inet telos_dns"))
+        assertTrue(rules.contains("redirect to :5353"))
+        assertTrue(rules.contains("th dport 53"))
+    }
 }

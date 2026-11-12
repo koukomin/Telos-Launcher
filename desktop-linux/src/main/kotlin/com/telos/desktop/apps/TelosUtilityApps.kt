@@ -118,6 +118,12 @@ fun TelosNetworkApp() {
     var wgStatus by remember { mutableStateOf(DesktopNetworkController.wireGuardStatus()) }
     var torStatus by remember { mutableStateOf(DesktopNetworkController.torStatus()) }
     var dnsText by remember { mutableStateOf(DesktopNetworkController.readDnsPreference()) }
+    var dnsBlockText by remember { mutableStateOf(DesktopNetworkController.readDnsBlocklistText()) }
+    var dnsAllowText by remember { mutableStateOf(DesktopNetworkController.readDnsAllowlistText()) }
+    var nextDnsId by remember {
+        mutableStateOf(DesktopNetworkController.readNextDnsConfigId().orEmpty())
+    }
+    var dnsFilterStatus by remember { mutableStateOf(DesktopNetworkController.dnsFilterStatus()) }
     var allowText by remember { mutableStateOf(DesktopNetworkController.readAllowlistText()) }
     var appRoutingText by remember { mutableStateOf(DesktopNetworkController.readAppRoutingText()) }
     var wgConfDraft by remember {
@@ -219,13 +225,28 @@ fun TelosNetworkApp() {
             NetworkTab.Dns -> NetworkDnsPane(
                 dnsText = dnsText,
                 onDnsText = { dnsText = it },
+                dnsBlockText = dnsBlockText,
+                onDnsBlockText = { dnsBlockText = it },
+                dnsAllowDomainsText = dnsAllowText,
+                onDnsAllowDomainsText = { dnsAllowText = it },
+                nextDnsId = nextDnsId,
+                onNextDnsId = { nextDnsId = it },
                 dnsApply = dnsApply,
+                dnsFilterStatus = dnsFilterStatus,
                 cardShape = cardShape,
                 neon = neon,
                 onSave = {
                     scope.launch(Dispatchers.IO) {
                         DesktopNetworkController.writeDnsPreference(dnsText)
+                        DesktopNetworkController.writeDnsBlocklistText(dnsBlockText)
+                        DesktopNetworkController.writeDnsAllowlistText(dnsAllowText)
+                        DesktopNetworkController.writeNextDnsConfigId(nextDnsId)
                         dnsApply = DesktopNetworkController.applyDnsPreference()
+                        dnsFilterStatus = DesktopNetworkController.applyDnsFilters()
+                        dnsText = DesktopNetworkController.readDnsPreference()
+                        dnsBlockText = DesktopNetworkController.readDnsBlocklistText()
+                        dnsAllowText = DesktopNetworkController.readDnsAllowlistText()
+                        nextDnsId = DesktopNetworkController.readNextDnsConfigId().orEmpty()
                     }
                 },
             )
@@ -586,23 +607,69 @@ private fun NetworkStatusPane(
 private fun NetworkDnsPane(
     dnsText: String,
     onDnsText: (String) -> Unit,
+    dnsBlockText: String,
+    onDnsBlockText: (String) -> Unit,
+    dnsAllowDomainsText: String,
+    onDnsAllowDomainsText: (String) -> Unit,
+    nextDnsId: String,
+    onNextDnsId: (String) -> Unit,
     dnsApply: DesktopNetworkController.DnsApplyResult,
+    dnsFilterStatus: DesktopNetworkController.DnsFilterStatus,
     cardShape: RoundedCornerShape,
     neon: androidx.compose.ui.graphics.Color,
     onSave: () -> Unit,
 ) {
-    Column(Modifier.fillMaxSize()) {
+    Column(
+        Modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState()),
+        verticalArrangement = Arrangement.spacedBy(6.dp),
+    ) {
         Text(t("net_dns_title"), color = neon, fontSize = 18.sp)
         Text(t("desktop_net_dns_pref_hint"), color = TelosColors.onSurface.copy(alpha = 0.85f), fontSize = 12.sp)
         OutlinedTextField(
             dnsText,
             onDnsText,
-            modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
+            modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
             label = { Text(t("net_hub_dns")) },
-            minLines = 3,
+            minLines = 2,
         )
         Text(dnsApplyLabel(dnsApply), color = neon, fontSize = 12.sp)
+
+        Text(t("desktop_net_dns_filters_title"), color = neon, fontSize = 16.sp)
+        Text(
+            t("desktop_net_dns_filters_hint"),
+            color = TelosColors.onSurface.copy(alpha = 0.85f),
+            fontSize = 12.sp,
+        )
+        OutlinedTextField(
+            nextDnsId,
+            onNextDnsId,
+            modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
+            label = { Text(t("desktop_net_nextdns_id")) },
+            singleLine = true,
+        )
+        OutlinedTextField(
+            dnsBlockText,
+            onDnsBlockText,
+            modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
+            label = { Text(t("desktop_net_dns_blocklist")) },
+            minLines = 5,
+        )
+        OutlinedTextField(
+            dnsAllowDomainsText,
+            onDnsAllowDomainsText,
+            modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
+            label = { Text(t("desktop_net_dns_allowlist")) },
+            minLines = 4,
+        )
+        Text(
+            "${t("desktop_net_dns_filter_status")}: ${dnsFilterStatusLabel(dnsFilterStatus)}",
+            color = neon,
+            fontSize = 12.sp,
+        )
         neonButton(t("net_dns_save"), onSave)
+        Spacer(Modifier.height(8.dp))
     }
 }
 
@@ -784,6 +851,14 @@ private fun killSwitchLabel(status: DesktopNetworkController.KillSwitchStatus): 
     DesktopNetworkController.KillSwitchStatus.PreferenceOnly -> TelosI18n.t("desktop_net_kill_switch_pref_only")
     DesktopNetworkController.KillSwitchStatus.Enforced -> TelosI18n.t("desktop_net_kill_switch_enforced")
     DesktopNetworkController.KillSwitchStatus.Failed -> TelosI18n.t("desktop_net_kill_switch_failed")
+}
+
+private fun dnsFilterStatusLabel(status: DesktopNetworkController.DnsFilterStatus): String = when (status) {
+    DesktopNetworkController.DnsFilterStatus.Disabled -> TelosI18n.t("net_hub_state_off")
+    DesktopNetworkController.DnsFilterStatus.PreferenceOnly -> TelosI18n.t("desktop_net_dns_filter_pref_only")
+    DesktopNetworkController.DnsFilterStatus.Enforced -> TelosI18n.t("desktop_net_dns_filter_enforced")
+    DesktopNetworkController.DnsFilterStatus.Failed -> TelosI18n.t("desktop_net_dns_filter_failed")
+    DesktopNetworkController.DnsFilterStatus.Invalid -> TelosI18n.t("desktop_net_nextdns_id_invalid")
 }
 
 @Composable

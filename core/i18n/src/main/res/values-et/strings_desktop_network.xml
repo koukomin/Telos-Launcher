@@ -14,4 +14,14 @@
     <string name="desktop_net_apps_title">Marsruutimine rakenduse kaupa</string>
     <string name="desktop_net_apps_hint">Üks desktop-id või pakett real koos allow, deny või vpn. Salvestatakse faili ~/.config/telos/app-routing.txt. Protsessitasemel jõustamist veel pole; kill-switch viskab Linuxis lubamatud väljuvad ühendused endiselt ära.</string>
     <string name="desktop_net_apps_file">Marsruutimistabel</string>
+    <string name="desktop_net_dns_filters_title">DNS-filtrid</string>
+    <string name="desktop_net_dns_filters_hint">Blokeerimis- ja lubamisloendid on vaultis ~/.config/telos/ (dns-block.txt, dns-allow.txt). NextDNS-i konfiguratsiooni-ID rakendab DoT-i resolvectl kaudu Linuxis, kui see on saadaval. Ainult kohalikud loendid jäävad eelistuseks, kui dns-stub.port pole seatud ja nftables ei saa DNS-i sellele stubile suunata. Windows ja macOS salvestavad ainult eelistusi.</string>
+    <string name="desktop_net_nextdns_id">NextDNS-i konfiguratsiooni-ID</string>
+    <string name="desktop_net_nextdns_id_invalid">Vigane NextDNS-i konfiguratsiooni-ID (kasutage 4–12 tähte või numbrit)</string>
+    <string name="desktop_net_dns_blocklist">DNS-i blokeerimisloend</string>
+    <string name="desktop_net_dns_allowlist">DNS-i lubamisloend</string>
+    <string name="desktop_net_dns_filter_status">Filtri olek</string>
+    <string name="desktop_net_dns_filter_enforced">Rakendatud (NextDNS DoT ja/või kohaliku DNS-stubi ümbersuunamine)</string>
+    <string name="desktop_net_dns_filter_pref_only">Eelistus salvestatud; filtreerimist sellel teel ei rakendata</string>
+    <string name="desktop_net_dns_filter_failed">Seadistatud, kuid resolvectl/nftables ei saanud filtreerimist rakendada</string>
 </resources>

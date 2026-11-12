@@ -14,4 +14,14 @@
     <string name="desktop_net_apps_title">Ruting per app</string>
     <string name="desktop_net_apps_hint">Én desktop-id eller pakke per linje med allow, deny eller vpn. Lagres under ~/.config/telos/app-routing.txt. Prosessnivå mangler ennå; kill-switch dropper fortsatt ikke-tillatt utgående trafikk på Linux.</string>
     <string name="desktop_net_apps_file">Rutingtabell</string>
+    <string name="desktop_net_dns_filters_title">DNS-filtre</string>
+    <string name="desktop_net_dns_filters_hint">Blokkerings- og tillatelseslister lagres i vault ~/.config/telos/ (dns-block.txt, dns-allow.txt). En NextDNS-konfigurasjons-ID bruker DoT via resolvectl på Linux når tilgjengelig. Lokale lister alene forblir bare preferanse med mindre dns-stub.port er satt og nftables kan omdirigere DNS til den stubben. Windows og macOS lagrer bare preferanser.</string>
+    <string name="desktop_net_nextdns_id">NextDNS-konfigurasjons-ID</string>
+    <string name="desktop_net_nextdns_id_invalid">Ugyldig NextDNS-konfigurasjons-ID (bruk 4–12 bokstaver eller sifre)</string>
+    <string name="desktop_net_dns_blocklist">DNS-blokkeringsliste</string>
+    <string name="desktop_net_dns_allowlist">DNS-tillatelsesliste</string>
+    <string name="desktop_net_dns_filter_status">Filterstatus</string>
+    <string name="desktop_net_dns_filter_enforced">Håndhevet (NextDNS-DoT og/eller lokal DNS-stub-omdirigering)</string>
+    <string name="desktop_net_dns_filter_pref_only">Preferanse lagret; filtrering brukes ikke på denne stien</string>
+    <string name="desktop_net_dns_filter_failed">Konfigurert, men resolvectl/nftables kunne ikke bruke filtrering</string>
 </resources>

@@ -14,4 +14,14 @@
     <string name="desktop_net_apps_title">Uygulama başına yönlendirme</string>
     <string name="desktop_net_apps_hint">Satır başına bir desktop-id veya paket; allow, deny veya vpn. ~/.config/telos/app-routing.txt altında saklanır. Süreç düzeyinde uygulama henüz yok; kill-switch Linux’ta izin listesinde olmayan çıkışı düşürmeye devam eder.</string>
     <string name="desktop_net_apps_file">Yönlendirme tablosu</string>
+    <string name="desktop_net_dns_filters_title">DNS filtreleri</string>
+    <string name="desktop_net_dns_filters_hint">Engelleme ve izin listeleri vault ~/.config/telos/ altında saklanır (dns-block.txt, dns-allow.txt). Bir NextDNS yapılandırma kimliği, kullanılabilir olduğunda Linux’ta resolvectl ile DoT uygular. Yerel listeler tek başına yalnızca tercih olarak kalır; dns-stub.port ayarlanıp nftables DNS’i bu stub’a yönlendirmedikçe. Windows ve macOS yalnızca tercihleri saklar.</string>
+    <string name="desktop_net_nextdns_id">NextDNS yapılandırma kimliği</string>
+    <string name="desktop_net_nextdns_id_invalid">Geçersiz NextDNS yapılandırma kimliği (4–12 harf veya rakam kullanın)</string>
+    <string name="desktop_net_dns_blocklist">DNS engelleme listesi</string>
+    <string name="desktop_net_dns_allowlist">DNS izin listesi</string>
+    <string name="desktop_net_dns_filter_status">Filtre durumu</string>
+    <string name="desktop_net_dns_filter_enforced">Uygulanıyor (NextDNS DoT ve/veya yerel DNS stub yönlendirmesi)</string>
+    <string name="desktop_net_dns_filter_pref_only">Tercih kaydedildi; bu yolda filtreleme uygulanmıyor</string>
+    <string name="desktop_net_dns_filter_failed">Yapılandırıldı ancak resolvectl/nftables filtrelemeyi uygulayamadı</string>
 </resources>

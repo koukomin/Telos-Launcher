@@ -14,4 +14,14 @@
     <string name="desktop_net_apps_title">توجيه لكل تطبيق</string>
     <string name="desktop_net_apps_hint">معرّف سطح مكتب أو حزمة في كل سطر مع allow أو deny أو vpn. يُحفظ في ~/.config/telos/app-routing.txt. فرض على مستوى العملية غير متاح بعد؛ مفتاح القطع ما زال يُسقط الخروج غير المسموح على Linux.</string>
     <string name="desktop_net_apps_file">جدول التوجيه</string>
+    <string name="desktop_net_dns_filters_title">مرشحات DNS</string>
+    <string name="desktop_net_dns_filters_hint">تُخزَّن قوائم الحظر والسماح ضمن vault ~/.config/telos/ (dns-block.txt وdns-allow.txt). يطبّق معرّف إعداد NextDNS تقنية DoT عبر resolvectl على Linux عند التوفر. القوائم المحلية وحدها تبقى تفضيلاً ما لم يُضبط dns-stub.port ويتمكن nftables من إعادة توجيه DNS إلى ذلك الـ stub. يخزّن Windows وmacOS التفضيلات فقط.</string>
+    <string name="desktop_net_nextdns_id">معرّف إعداد NextDNS</string>
+    <string name="desktop_net_nextdns_id_invalid">معرّف إعداد NextDNS غير صالح (استخدم 4–12 حرفًا أو رقمًا)</string>
+    <string name="desktop_net_dns_blocklist">قائمة حظر DNS</string>
+    <string name="desktop_net_dns_allowlist">قائمة سماح DNS</string>
+    <string name="desktop_net_dns_filter_status">حالة المرشح</string>
+    <string name="desktop_net_dns_filter_enforced">مُطبَّق (DoT لـ NextDNS و/أو إعادة توجيه إلى stub DNS محلي)</string>
+    <string name="desktop_net_dns_filter_pref_only">تم حفظ التفضيل؛ لا يُطبَّق التصفية على هذا المسار</string>
+    <string name="desktop_net_dns_filter_failed">مُعدّ، لكن resolvectl/nftables تعذّر عليه تطبيق التصفية</string>
 </resources>

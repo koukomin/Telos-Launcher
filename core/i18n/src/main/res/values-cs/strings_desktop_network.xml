@@ -14,4 +14,14 @@
     <string name="desktop_net_apps_title">Směrování podle aplikace</string>
     <string name="desktop_net_apps_hint">Jeden desktop-id nebo balíček na řádek s allow, deny nebo vpn. Uloženo v ~/.config/telos/app-routing.txt. Vynucení na úrovni procesu zatím není; kill-switch stále zahazuje nepovolený odchozí provoz na Linuxu.</string>
     <string name="desktop_net_apps_file">Směrovací tabulka</string>
+    <string name="desktop_net_dns_filters_title">Filtry DNS</string>
+    <string name="desktop_net_dns_filters_hint">Blokovací a povolovací seznamy jsou ve vault ~/.config/telos/ (dns-block.txt, dns-allow.txt). ID konfigurace NextDNS použije DoT přes resolvectl na Linuxu, pokud je k dispozici. Samotné místní seznamy zůstávají jen preferencí, pokud není nastaven dns-stub.port a nftables nemůže přesměrovat DNS na tento stub. Windows a macOS ukládají jen preference.</string>
+    <string name="desktop_net_nextdns_id">ID konfigurace NextDNS</string>
+    <string name="desktop_net_nextdns_id_invalid">Neplatné ID konfigurace NextDNS (použijte 4–12 písmen nebo číslic)</string>
+    <string name="desktop_net_dns_blocklist">Blokovací seznam DNS</string>
+    <string name="desktop_net_dns_allowlist">Povolovací seznam DNS</string>
+    <string name="desktop_net_dns_filter_status">Stav filtru</string>
+    <string name="desktop_net_dns_filter_enforced">Vynuceno (DoT NextDNS a/nebo přesměrování místního DNS stubu)</string>
+    <string name="desktop_net_dns_filter_pref_only">Preference uložena; filtrování se na této cestě nepoužívá</string>
+    <string name="desktop_net_dns_filter_failed">Nakonfigurováno, ale resolvectl/nftables nemohl filtrování použít</string>
 </resources>

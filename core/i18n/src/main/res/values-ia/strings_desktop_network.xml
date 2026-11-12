@@ -14,4 +14,14 @@
     <string name="desktop_net_apps_title">Routing per application</string>
     <string name="desktop_net_apps_hint">Un desktop-id o pacchetto per linea con allow, deny o vpn. Salvate in ~/.config/telos/app-routing.txt. Le application al nivello de processo ancora manca; le kill-switch continua a abandonar le exito non autorisate sur Linux.</string>
     <string name="desktop_net_apps_file">Tabella de routing</string>
+    <string name="desktop_net_dns_filters_title">DNS filters</string>
+    <string name="desktop_net_dns_filters_hint">Block and allow lists are stored under vault ~/.config/telos/ (dns-block.txt, dns-allow.txt). A NextDNS configuration ID applies DoT via resolvectl on Linux when available. Local lists alone stay preference-only unless dns-stub.port is set and nftables can redirect DNS to that stub. Windows and macOS store preferences only.</string>
+    <string name="desktop_net_nextdns_id">NextDNS configuration ID</string>
+    <string name="desktop_net_nextdns_id_invalid">Invalid NextDNS configuration ID (use 4–12 letters or digits)</string>
+    <string name="desktop_net_dns_blocklist">DNS blocklist</string>
+    <string name="desktop_net_dns_allowlist">DNS allowlist</string>
+    <string name="desktop_net_dns_filter_status">Filter status</string>
+    <string name="desktop_net_dns_filter_enforced">Enforced (NextDNS DoT and/or local DNS stub redirect)</string>
+    <string name="desktop_net_dns_filter_pref_only">Preference saved; filtering is not applied on this path</string>
+    <string name="desktop_net_dns_filter_failed">Configured, but resolvectl/nftables could not apply filtering</string>
 </resources>

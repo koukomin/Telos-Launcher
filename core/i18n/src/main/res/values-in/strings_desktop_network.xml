@@ -14,4 +14,14 @@
     <string name="desktop_net_apps_title">Perutean per aplikasi</string>
     <string name="desktop_net_apps_hint">Satu desktop-id atau paket per baris dengan allow, deny, atau vpn. Disimpan di ~/.config/telos/app-routing.txt. Penegakan tingkat proses belum ada; kill-switch tetap membuang keluar yang tidak diizinkan di Linux.</string>
     <string name="desktop_net_apps_file">Tabel perutean</string>
+    <string name="desktop_net_dns_filters_title">Filter DNS</string>
+    <string name="desktop_net_dns_filters_hint">Daftar blokir dan izinkan disimpan di vault ~/.config/telos/ (dns-block.txt, dns-allow.txt). ID konfigurasi NextDNS menerapkan DoT melalui resolvectl di Linux jika tersedia. Daftar lokal saja tetap preferensi kecuali dns-stub.port diatur dan nftables dapat mengalihkan DNS ke stub itu. Windows dan macOS hanya menyimpan preferensi.</string>
+    <string name="desktop_net_nextdns_id">ID konfigurasi NextDNS</string>
+    <string name="desktop_net_nextdns_id_invalid">ID konfigurasi NextDNS tidak valid (gunakan 4–12 huruf atau angka)</string>
+    <string name="desktop_net_dns_blocklist">Daftar blokir DNS</string>
+    <string name="desktop_net_dns_allowlist">Daftar izinkan DNS</string>
+    <string name="desktop_net_dns_filter_status">Status filter</string>
+    <string name="desktop_net_dns_filter_enforced">Diterapkan (DoT NextDNS dan/atau pengalihan stub DNS lokal)</string>
+    <string name="desktop_net_dns_filter_pref_only">Preferensi disimpan; penyaringan tidak diterapkan pada jalur ini</string>
+    <string name="desktop_net_dns_filter_failed">Dikonfigurasi, tetapi resolvectl/nftables tidak dapat menerapkan penyaringan</string>
 </resources>

@@ -14,4 +14,14 @@
     <string name="desktop_net_apps_title">Bealachú de réir aipe</string>
     <string name="desktop_net_apps_hint">Desktop-id nó pacáiste amháin in aghaidh na líne le allow, deny nó vpn. Stóráilte faoi ~/.config/telos/app-routing.txt. Níl forfheidhmiú ag leibhéal an phróisis fós; scaoileann an kill-switch egress neamhcheadaithe fós ar Linux.</string>
     <string name="desktop_net_apps_file">Tábla bealachaithe</string>
+    <string name="desktop_net_dns_filters_title">Scagairí DNS</string>
+    <string name="desktop_net_dns_filters_hint">Stóráiltear liostaí bac agus ceadaithe faoin vault ~/.config/telos/ (dns-block.txt, dns-allow.txt). Cuireann ID cumraíochta NextDNS DoT i bhfeidhm trí resolvectl ar Linux nuair atá sé ar fáil. Fanann liostaí áitiúla amháin mar rogha mura bhfuil dns-stub.port socraithe agus mura féidir le nftables DNS a atreorú chuig an stub sin. Ní stórálann Windows agus macOS ach roghanna.</string>
+    <string name="desktop_net_nextdns_id">ID cumraíochta NextDNS</string>
+    <string name="desktop_net_nextdns_id_invalid">ID cumraíochta NextDNS neamhbhailí (úsáid 4–12 litir nó digit)</string>
+    <string name="desktop_net_dns_blocklist">Liosta bac DNS</string>
+    <string name="desktop_net_dns_allowlist">Liosta ceadaithe DNS</string>
+    <string name="desktop_net_dns_filter_status">Stádas an scagaire</string>
+    <string name="desktop_net_dns_filter_enforced">Curtha i bhfeidhm (DoT NextDNS agus/nó atreorú stub DNS áitiúil)</string>
+    <string name="desktop_net_dns_filter_pref_only">Rogha sábháilte; ní chuirtear scagadh i bhfeidhm ar an gcosán seo</string>
+    <string name="desktop_net_dns_filter_failed">Cumraithe, ach níorbh fhéidir le resolvectl/nftables scagadh a chur i bhfeidhm</string>
 </resources>

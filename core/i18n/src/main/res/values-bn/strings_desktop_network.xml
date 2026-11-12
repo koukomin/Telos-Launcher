@@ -14,4 +14,14 @@
     <string name="desktop_net_apps_title">অ্যাপ অনুযায়ী রাউটিং</string>
     <string name="desktop_net_apps_hint">প্রতি লাইনে একটি desktop-id বা প্যাকেজ এবং allow, deny বা vpn। ~/.config/telos/app-routing.txt-এ সংরক্ষিত। প্রক্রিয়া-স্তরের প্রয়োগ এখনো নেই; Linux-এ কিল-সুইচ এখনো অননুমোদিত আউটবাউন্ড বাদ দেয়।</string>
     <string name="desktop_net_apps_file">রাউটিং টেবিল</string>
+    <string name="desktop_net_dns_filters_title">DNS ফিল্টার</string>
+    <string name="desktop_net_dns_filters_hint">ব্লক ও অনুমতি তালিকা vault ~/.config/telos/ এ সংরক্ষিত (dns-block.txt, dns-allow.txt)। NextDNS কনফিগারেশন ID লিনাক্সে resolvectl দিয়ে DoT প্রয়োগ করে যখন উপলব্ধ। শুধু স্থানীয় তালিকা পছন্দ হিসেবে থাকে যদি dns-stub.port সেট না থাকে এবং nftables সেই stub-এ DNS রিডাইরেক্ট করতে না পারে। Windows ও macOS শুধু পছন্দ সংরক্ষণ করে।</string>
+    <string name="desktop_net_nextdns_id">NextDNS কনফিগারেশন ID</string>
+    <string name="desktop_net_nextdns_id_invalid">অবৈধ NextDNS কনফিগারেশন ID (৪–১২ অক্ষর বা সংখ্যা ব্যবহার করুন)</string>
+    <string name="desktop_net_dns_blocklist">DNS ব্লকলিস্ট</string>
+    <string name="desktop_net_dns_allowlist">DNS অনুমতি তালিকা</string>
+    <string name="desktop_net_dns_filter_status">ফিল্টার অবস্থা</string>
+    <string name="desktop_net_dns_filter_enforced">প্রয়োগকৃত (NextDNS DoT এবং/অথবা স্থানীয় DNS stub রিডাইরেক্ট)</string>
+    <string name="desktop_net_dns_filter_pref_only">পছন্দ সংরক্ষিত; এই পথে ফিল্টারিং প্রয়োগ হয় না</string>
+    <string name="desktop_net_dns_filter_failed">কনফিগার করা হয়েছে, কিন্তু resolvectl/nftables ফিল্টারিং প্রয়োগ করতে পারেনি</string>
 </resources>
