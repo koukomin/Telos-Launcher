@@ -190,6 +190,10 @@ fun main(args: Array<String>) {
                         )
                     }
                 }
+                androidx.compose.runtime.LaunchedEffect(settings) {
+                    // Day/night palette tick on Default/IO — never blocks first frame.
+                    com.telos.desktop.theme.DayNightThemeScheduler.start(scope, settings)
+                }
                 LaunchedEffect(Unit) {
                     kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
                         // Prefer vaulted sync/session key — no KeePass master-password prompt.

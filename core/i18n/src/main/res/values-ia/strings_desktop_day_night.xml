@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_day_night_title">Thema die / nocte</string>
+    <string name="desktop_day_night_hint">Paper Ops (light) by day and Quiet Ops (dark) by night when Auto is selected. Boundaries use your chosen timezone. Default is manual timezone — the network is never contacted for location unless you opt in below.</string>
+    <string name="desktop_day_night_mode">Day / night mode</string>
+    <string name="desktop_day_night_off">Inactive</string>
+    <string name="desktop_day_night_auto">Auto</string>
+    <string name="desktop_day_night_light">Light</string>
+    <string name="desktop_day_night_dark">Dark</string>
+    <string name="desktop_day_night_timezone">Fuso horari</string>
+    <string name="desktop_day_night_timezone_hint">IANA timezone for local day/night (JVM default until you pick one). Manual selection never phones home.</string>
+    <string name="desktop_day_night_timezone_search">Search timezones</string>
+    <string name="desktop_day_night_timezone_current">Current timezone: %1$s</string>
+    <string name="desktop_day_night_network_assist">Network country / timezone assist</string>
+    <string name="desktop_day_night_network_assist_warning">Opt-in only. When enabled, Telos makes a one-shot request to a public IP→geo endpoint to learn timezone and country code. Only those values (and optional coordinates for sunrise/sunset) are stored in vault desktop.properties. Your IP is not logged, there is no continuous tracking, and themes are not synced to the cloud. If the network fails, kill-switch is on, or you are offline, Telos keeps your manual timezone and shows Preference only or Failed honestly.</string>
+    <string name="desktop_day_night_assist_pref_only">Preference only — network assist off, blocked, or not requested; using manual timezone</string>
+    <string name="desktop_day_night_assist_failed">Failed — could not reach the geo endpoint; keeping manual timezone</string>
+    <string name="desktop_day_night_assist_applied">Applied — timezone %1$s, country %2$s (stored locally only)</string>
+    <string name="desktop_day_night_country">Country code: %1$s</string>
+</resources>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_day_night_title">Thème jour / nuit</string>
+    <string name="desktop_day_night_hint">Paper Ops (clair) le jour et Quiet Ops (sombre) la nuit en mode Auto. Les seuils utilisent votre fuseau. Par défaut le fuseau est manuel — aucun contact réseau pour la localisation sauf activation explicite ci-dessous.</string>
+    <string name="desktop_day_night_mode">Mode jour / nuit</string>
+    <string name="desktop_day_night_off">Désactivé</string>
+    <string name="desktop_day_night_auto">Auto</string>
+    <string name="desktop_day_night_light">Clair</string>
+    <string name="desktop_day_night_dark">Sombre</string>
+    <string name="desktop_day_night_timezone">Fuseau horaire</string>
+    <string name="desktop_day_night_timezone_hint">Fuseau IANA pour le jour/nuit local (défaut JVM jusqu’à choix). Le choix manuel n’appelle aucun serveur.</string>
+    <string name="desktop_day_night_timezone_search">Rechercher des fuseaux</string>
+    <string name="desktop_day_night_timezone_current">Fuseau actuel : %1$s</string>
+    <string name="desktop_day_night_network_assist">Aide réseau pays / fuseau</string>
+    <string name="desktop_day_night_network_assist_warning">Uniquement sur consentement. Activé, Telos envoie une requête unique à un endpoint public IP→géo pour le fuseau et le code pays. Seules ces valeurs (et coordonnées optionnelles pour lever/coucher du soleil) sont stockées dans vault desktop.properties. L’IP n’est pas journalisée, pas de suivi continu, pas de sync cloud des thèmes. Si le réseau échoue, le kill-switch est actif ou vous êtes hors ligne, le fuseau manuel est conservé ; Preference only ou Failed s’affiche honnêtement.</string>
+    <string name="desktop_day_night_assist_pref_only">Préférence seule — aide réseau off, bloquée ou non demandée ; fuseau manuel</string>
+    <string name="desktop_day_night_assist_failed">Échec — endpoint géo injoignable ; conservation du fuseau manuel</string>
+    <string name="desktop_day_night_assist_applied">Appliqué — fuseau %1$s, pays %2$s (stockage local uniquement)</string>
+    <string name="desktop_day_night_country">Code pays : %1$s</string>
+</resources>

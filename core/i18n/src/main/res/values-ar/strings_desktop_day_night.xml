@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_day_night_title">سمة النهار / الليل</string>
+    <string name="desktop_day_night_hint">Paper Ops (فاتح) نهارًا و Quiet Ops (داكن) ليلًا في الوضع التلقائي. تستخدم الحدود منطقتك الزمنية. الافتراضي يدوي — لا يُتصل بالشبكة للموقع إلا إذا فعّلت الخيار أدناه صراحة.</string>
+    <string name="desktop_day_night_mode">وضع النهار / الليل</string>
+    <string name="desktop_day_night_off">إيقاف</string>
+    <string name="desktop_day_night_auto">تلقائي</string>
+    <string name="desktop_day_night_light">فاتح</string>
+    <string name="desktop_day_night_dark">داكن</string>
+    <string name="desktop_day_night_timezone">المنطقة الزمنية</string>
+    <string name="desktop_day_night_timezone_hint">منطقة IANA للنهار/الليل المحلي (JVM حتى تختار). الاختيار اليدوي لا يتصل بالخوادم.</string>
+    <string name="desktop_day_night_timezone_search">البحث عن مناطق زمنية</string>
+    <string name="desktop_day_night_timezone_current">المنطقة الحالية: %1$s</string>
+    <string name="desktop_day_night_network_assist">مساعدة الشبكة للبلد / المنطقة الزمنية</string>
+    <string name="desktop_day_night_network_assist_warning">بموافقة فقط. عند التفعيل يُرسل Telos طلبًا واحدًا إلى نقطة IP→جغرافيا عامة للمنطقة ورمز البلد. تُخزَّن هذه القيم فقط (وإحداثيات اختيارية للشروق/الغروب) في vault desktop.properties. لا يُسجَّل عنوان IP، ولا تتبّع مستمر، ولا مزامنة سحابية للسمات. عند فشل الشبكة أو مفتاح القطع أو عدم الاتصال تُبقى المنطقة اليدوية ويُعرض Preference only أو Failed بصدق.</string>
+    <string name="desktop_day_night_assist_pref_only">تفضيل فقط — مساعدة الشبكة متوقفة أو محظورة أو غير مطلوبة؛ المنطقة اليدوية</string>
+    <string name="desktop_day_night_assist_failed">فشل — تعذّر الوصول إلى نقطة الجغرافيا؛ الإبقاء على المنطقة اليدوية</string>
+    <string name="desktop_day_night_assist_applied">طُبّق — المنطقة %1$s، البلد %2$s (محلي فقط)</string>
+    <string name="desktop_day_night_country">رمز البلد: %1$s</string>
+</resources>

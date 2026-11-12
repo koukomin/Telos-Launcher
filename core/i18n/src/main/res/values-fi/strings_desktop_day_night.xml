@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_day_night_title">Päivä-/yöteema</string>
+    <string name="desktop_day_night_hint">Paper Ops (vaalea) päivällä ja Quiet Ops (tumma) yöllä Auto-tilassa. Rajat käyttävät valitsemaasi aikavyöhykettä. Oletus on manuaalinen vyöhyke — verkkoa ei käytetä sijaintiin ilman lupaa alla.</string>
+    <string name="desktop_day_night_mode">Päivä-/yötila</string>
+    <string name="desktop_day_night_off">Pois</string>
+    <string name="desktop_day_night_auto">Auto</string>
+    <string name="desktop_day_night_light">Vaalea</string>
+    <string name="desktop_day_night_dark">Tumma</string>
+    <string name="desktop_day_night_timezone">Aikavyöhyke</string>
+    <string name="desktop_day_night_timezone_hint">IANA-vyöhyke paikalliselle päivälle/yölle (JVM kunnes valitset). Manuaalinen valinta ei ota yhteyttä palvelimiin.</string>
+    <string name="desktop_day_night_timezone_search">Hae aikavyöhykkeitä</string>
+    <string name="desktop_day_night_timezone_current">Nykyinen vyöhyke: %1$s</string>
+    <string name="desktop_day_night_network_assist">Verkkoapu maa / aikavyöhyke</string>
+    <string name="desktop_day_night_network_assist_warning">Vain suostumuksella. Kun päällä, Telos tekee yhden pyynnön julkiseen IP→geo-päätepisteeseen vyöhykkeestä ja maakoodista. Vain nämä (ja valinnaiset auringonnousu/-lasku -koordinaatit) tallennetaan vault desktop.properties -tiedostoon. IP:tä ei lokiteta, ei jatkuvaa seurantaa, ei teeman pilvisynkronointia. Verkkovirheessä, kill-switchissä tai offline-tilassa manuaalinen vyöhyke säilyy; Preference only tai Failed näytetään rehellisesti.</string>
+    <string name="desktop_day_night_assist_pref_only">Vain asetus — verkkoapu pois, estetty tai ei pyydetty; manuaalinen vyöhyke</string>
+    <string name="desktop_day_night_assist_failed">Epäonnistui — geo-päätepiste ei tavoitettavissa; manuaalinen vyöhyke säilytetty</string>
+    <string name="desktop_day_night_assist_applied">Käytössä — vyöhyke %1$s, maa %2$s (vain paikallisesti)</string>
+    <string name="desktop_day_night_country">Maakoodi: %1$s</string>
+</resources>

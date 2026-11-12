@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_day_night_title">Tema dan / noć</string>
+    <string name="desktop_day_night_hint">Paper Ops (svijetla) danju i Quiet Ops (tamna) noću u Auto. Granice koriste odabranu zonu. Zadano je ručna zona — mreža se ne koristi za lokaciju bez pristanka ispod.</string>
+    <string name="desktop_day_night_mode">Način dan / noć</string>
+    <string name="desktop_day_night_off">Isključeno</string>
+    <string name="desktop_day_night_auto">Auto</string>
+    <string name="desktop_day_night_light">Svijetla</string>
+    <string name="desktop_day_night_dark">Tamna</string>
+    <string name="desktop_day_night_timezone">Vremenska zona</string>
+    <string name="desktop_day_night_timezone_hint">IANA zona za lokalni dan/noć (JVM do odabira). Ručni odabir ne kontaktira poslužitelje.</string>
+    <string name="desktop_day_night_timezone_search">Traži zone</string>
+    <string name="desktop_day_night_timezone_current">Trenutačna zona: %1$s</string>
+    <string name="desktop_day_night_network_assist">Mrežna pomoć država / zona</string>
+    <string name="desktop_day_night_network_assist_warning">Samo uz pristanak. Uključeno, Telos jednom pita javni endpoint IP→geo za zonu i kod države. Samo te vrijednosti (i opcionalne koordinate za izlazak/zalazak) spremaju se u vault desktop.properties. IP se ne bilježi, nema kontinuiranog praćenja ni cloud sinkronizacije tema. Pri kvaru mreže, kill-switchu ili offline ostaje ručna zona; Preference only ili Failed prikazuju se pošteno.</string>
+    <string name="desktop_day_night_assist_pref_only">Samo postavka — mrežna pomoć off, blokirana ili nije zatražena; ručna zona</string>
+    <string name="desktop_day_night_assist_failed">Neuspjeh — geo endpoint nedostupan; ručna zona zadržana</string>
+    <string name="desktop_day_night_assist_applied">Primijenjeno — zona %1$s, država %2$s (samo lokalno)</string>
+    <string name="desktop_day_night_country">Kod države: %1$s</string>
+</resources>

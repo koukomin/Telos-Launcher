@@ -1,6 +1,8 @@
 package com.telos.desktop.settings
 
 import com.telos.desktop.theme.AppearanceKeys
+import com.telos.desktop.theme.DayNightMode
+import com.telos.desktop.theme.DayNightThemeEngine
 import com.telos.desktop.theme.DesktopThemeChrome
 import com.telos.desktop.theme.PanicMuteController
 import com.telos.desktop.theme.PanelIconContrast
@@ -12,6 +14,7 @@ import com.telos.desktop.theme.ThemeIntensity
 import com.telos.desktop.theme.WorkspaceTintStrips
 import com.telos.desktop.vault.DesktopProfiles
 import java.io.File
+import java.time.ZoneId
 import java.util.Properties
 
 class TelosDesktopSettings(private val vaultConfigDir: File) {
@@ -111,6 +114,32 @@ class TelosDesktopSettings(private val vaultConfigDir: File) {
      * (locked-boot always paints Quiet Ops).
      */
     var wallpaperPath: String = ""
+    /**
+     * Day/night chrome: `theme.dayNight` = off|auto|light|dark.
+     * Default off — never flips without an explicit choice.
+     */
+    var themeDayNight: String = DayNightMode.Off.propertyValue
+    /**
+     * IANA timezone id for day/night boundaries (`theme.timezone`).
+     * Default: JVM / system zone — never discovered from the network unless opted in.
+     */
+    var themeTimezone: String = runCatching { ZoneId.systemDefault().id }.getOrDefault("UTC")
+    /**
+     * Opt-in: allow one-shot public IP→geo for timezone/country (`theme.autoTimezone`).
+     * Must also have [locationNetworkAssist]; both default false.
+     */
+    var themeAutoTimezone: Boolean = false
+    /**
+     * Opt-in network location assist (`location.networkAssist`). Contacts a public
+     * IP→geo endpoint once when enabled; stores only timezone / country / optional
+     * lat/lon in vault props. No continuous tracking, no IP logging, no cloud theme sync.
+     */
+    var locationNetworkAssist: Boolean = false
+    /** ISO country code from opt-in geo (`location.countryCode`); never an IP. */
+    var locationCountryCode: String? = null
+    /** Optional coords for sunrise/sunset (`theme.latitude` / `theme.longitude`). */
+    var themeLatitude: Double? = null
+    var themeLongitude: Double? = null
 
     private val file: File get() = File(vaultConfigDir, "desktop.properties")
 
@@ -221,6 +250,17 @@ class TelosDesktopSettings(private val vaultConfigDir: File) {
             ?: p.getProperty("wallpaperPath", wallpaperPath)
         themeQuietOps = WorkspaceTintStrips.parseQuietOps(p) ||
             ThemeIntensity.parse(themeIntensity) == ThemeIntensity.QuietOps
+        themeDayNight = DayNightMode.parse(p.getProperty("theme.dayNight")).propertyValue
+        themeTimezone = DayNightThemeEngine.parseZoneId(
+            p.getProperty("theme.timezone") ?: p.getProperty("timezone"),
+        ).id
+        themeAutoTimezone = p.getProperty("theme.autoTimezone", "false").toBoolean()
+        locationNetworkAssist = p.getProperty("location.networkAssist", "false").toBoolean()
+        locationCountryCode = p.getProperty("location.countryCode")?.trim()?.takeIf { it.isNotEmpty() }
+        themeLatitude = p.getProperty("theme.latitude")?.toDoubleOrNull()
+            ?: p.getProperty("location.latitude")?.toDoubleOrNull()
+        themeLongitude = p.getProperty("theme.longitude")?.toDoubleOrNull()
+            ?: p.getProperty("location.longitude")?.toDoubleOrNull()
         outputPrefs.clear()
         p.stringPropertyNames().forEach { key ->
             if (key.startsWith("output.")) {
@@ -297,6 +337,16 @@ class TelosDesktopSettings(private val vaultConfigDir: File) {
             p.remove("wallpaper.path")
             p.remove("wallpaperPath")
         }
+        p["theme.dayNight"] = DayNightMode.parse(themeDayNight).propertyValue
+        p["theme.timezone"] = DayNightThemeEngine.parseZoneId(themeTimezone).id
+        p["theme.autoTimezone"] = themeAutoTimezone.toString()
+        p["location.networkAssist"] = locationNetworkAssist.toString()
+        locationCountryCode?.let { p["location.countryCode"] = it }
+            ?: p.remove("location.countryCode")
+        themeLatitude?.let { p["theme.latitude"] = it.toString() }
+            ?: p.remove("theme.latitude")
+        themeLongitude?.let { p["theme.longitude"] = it.toString() }
+            ?: p.remove("theme.longitude")
         outputPrefs.forEach { (name, spec) -> p["output.$name"] = spec }
         file.outputStream().use { p.store(it, "Telos Linux Desktop") }
         // When a VOS-1 profile is active, also mirror appearance keys into the

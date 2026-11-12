@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_day_night_title">Tema siang / malam</string>
+    <string name="desktop_day_night_hint">Paper Ops (light) by day and Quiet Ops (dark) by night when Auto is selected. Boundaries use your chosen timezone. Default is manual timezone — the network is never contacted for location unless you opt in below.</string>
+    <string name="desktop_day_night_mode">Day / night mode</string>
+    <string name="desktop_day_night_off">Mati</string>
+    <string name="desktop_day_night_auto">Otomatis</string>
+    <string name="desktop_day_night_light">Terang</string>
+    <string name="desktop_day_night_dark">Gelap</string>
+    <string name="desktop_day_night_timezone">Zona waktu</string>
+    <string name="desktop_day_night_timezone_hint">IANA timezone for local day/night (JVM default until you pick one). Manual selection never phones home.</string>
+    <string name="desktop_day_night_timezone_search">Search timezones</string>
+    <string name="desktop_day_night_timezone_current">Current timezone: %1$s</string>
+    <string name="desktop_day_night_network_assist">Bantuan jaringan negara / zona waktu</string>
+    <string name="desktop_day_night_network_assist_warning">Hanya dengan persetujuan. Saat diaktifkan, Telos membuat satu permintaan ke endpoint publik IP→geo untuk zona waktu dan kode negara. Hanya nilai itu (dan koordinat opsional matahari terbit/terbenam) disimpan di vault desktop.properties. IP tidak dicatat, tanpa pelacakan berkelanjutan, tanpa sinkron tema ke cloud. Jika jaringan gagal, kill-switch aktif, atau offline, zona manual dipertahankan; Preference only atau Failed ditampilkan jujur.</string>
+    <string name="desktop_day_night_assist_pref_only">Hanya preferensi — bantuan jaringan mati, diblokir, atau tidak diminta; zona manual</string>
+    <string name="desktop_day_night_assist_failed">Gagal — endpoint geo tidak terjangkau; zona manual dipertahankan</string>
+    <string name="desktop_day_night_assist_applied">Diterapkan — zona %1$s, negara %2$s (hanya lokal)</string>
+    <string name="desktop_day_night_country">Kode negara: %1$s</string>
+</resources>
