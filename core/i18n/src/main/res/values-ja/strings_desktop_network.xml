@@ -3,4 +3,15 @@
     <string name="desktop_net_dns_pref_hint">ボルトに保存されます。Linux では、利用可能な場合 Telos は resolvectl 経由で DoT を適用し、DoH は設定のみです。</string>
     <string name="desktop_net_profiles_sum">~/.config/telos/profiles/ 配下のボルトプロファイルフォルダー</string>
     <string name="desktop_net_allowlist_path">許可リストファイル</string>
+    <string name="desktop_net_kill_switch">キルスイッチ</string>
+    <string name="desktop_net_kill_switch_enable">キルスイッチを有効にする</string>
+    <string name="desktop_net_kill_switch_disable">キルスイッチを無効にする</string>
+    <string name="desktop_net_kill_switch_enforced">適用中: 許可リスト外の送信は破棄されます（nftables inet telos_session）</string>
+    <string name="desktop_net_kill_switch_pref_only">設定は保存済み。このプラットフォームでは未適用</string>
+    <string name="desktop_net_kill_switch_failed">オンですが nftables を適用できません — 通信は遮断されていません</string>
+    <string name="desktop_net_kill_switch_clear_blocked">キルスイッチがオンの間はセッションファイアウォールを解除できません</string>
+    <string name="desktop_net_apps_tab">アプリ</string>
+    <string name="desktop_net_apps_title">アプリ別ルーティング</string>
+    <string name="desktop_net_apps_hint">1行に desktop-id またはパッケージと allow / deny / vpn。~/.config/telos/app-routing.txt に保存。プロセス単位の適用は未実装。Linux ではキルスイッチが許可リスト外の送信を破棄します。</string>
+    <string name="desktop_net_apps_file">ルーティング表</string>
 </resources>

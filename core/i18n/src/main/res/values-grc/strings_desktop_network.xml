@@ -3,4 +3,15 @@
     <string name="desktop_net_dns_pref_hint">Ἐν τῷ θησαυροφυλακίῳ σώζεται. Ἐν Linux τὸ Telos DoT διὰ resolvectl ἐφαρμόζει ὅταν πάρεστι· τὸ DoH μόνον προτίμησις μένει.</string>
     <string name="desktop_net_profiles_sum">Φάκελοι προφίλ θησαυροφυλακίου ἐν ~/.config/telos/profiles/</string>
     <string name="desktop_net_allowlist_path">Ἀρχεῖον καταλόγου ἐπιτρεπομένων</string>
+    <string name="desktop_net_kill_switch">Θανατηφόρος διακόπτης</string>
+    <string name="desktop_net_kill_switch_enable">Ἐνεργοποίησον τὸν θανατηφόρον διακόπτην</string>
+    <string name="desktop_net_kill_switch_disable">Ἀπενεργοποίησον τὸν θανατηφόρον διακόπτην</string>
+    <string name="desktop_net_kill_switch_enforced">Ἐφαρμόζεται· ἡ μὴ ἐπιτρεπομένη ἔξοδος ἀπορρίπτεται (nftables inet telos_session)</string>
+    <string name="desktop_net_kill_switch_pref_only">Ἡ προτίμησις ἐσώθη· ἐν ταύτῃ τῇ πλατφόρμᾳ οὐκ ἐφαρμόζεται</string>
+    <string name="desktop_net_kill_switch_failed">Ἐνεργός, ἀλλὰ τὰ nftables οὐκ ἐφηρμόσθησαν — ἡ κίνησις οὐ κωλύεται</string>
+    <string name="desktop_net_kill_switch_clear_blocked">Ἡ ἐκκαθάρισις τοῦ τείχους πυρός τῆς συνεδρίας κεκώλυται ἕως ὁ διακόπτης ἐνεργός ἐστιν</string>
+    <string name="desktop_net_apps_tab">Ἐφαρμογαί</string>
+    <string name="desktop_net_apps_title">Δρομολόγησις καθ’ ἐφαρμογήν</string>
+    <string name="desktop_net_apps_hint">Ἓν desktop-id ἢ δέμα καθ’ ἑκάστην γραμμὴν μετὰ allow, deny ἢ vpn. Σῴζεται ἐν ~/.config/telos/app-routing.txt. Ἡ κατὰ διεργασίαν ἐπιβολή οὔπω πάρεστι· ὁ διακόπτης ἔτι ἀπορρίπτει τὴν μὴ ἐπιτρεπομένην ἔξοδον ἐν Linux.</string>
+    <string name="desktop_net_apps_file">Πίναξ δρομολογήσεως</string>
 </resources>

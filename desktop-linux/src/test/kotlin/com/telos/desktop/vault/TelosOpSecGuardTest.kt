@@ -26,6 +26,8 @@ class TelosOpSecGuardTest {
 
     @Test
     fun hostIntegritySnapshotIncludesPortableAndPlatform() {
+        PortableTraceGuard.clearSelectedRoot()
+        System.clearProperty("telos.portable.active")
         val snap = TelosOpSecGuard().hostIntegritySnapshot()
         assertTrue(snap.containsKey("os"))
         assertTrue(snap.containsKey("compositor"))
@@ -52,8 +54,9 @@ class TelosOpSecGuardTest {
                     setOf(PosixFilePermission.OWNER_READ, PosixFilePermission.OWNER_WRITE),
                     perms,
                 )
+                // Windows File.canExecute() stays true for normal files; only assert on POSIX.
+                assertFalse(file.canExecute())
             }
-            assertFalse(file.canExecute())
         } finally {
             PortableEnvironmentIsolator.clear()
         }

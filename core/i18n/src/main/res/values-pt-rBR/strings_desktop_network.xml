@@ -3,4 +3,15 @@
     <string name="desktop_net_dns_pref_hint">Salvo no vault. No Linux, o Telos aplica DoT pelo resolvectl quando disponível; o DoH fica só como preferência.</string>
     <string name="desktop_net_profiles_sum">Pastas de perfil do vault em ~/.config/telos/profiles/</string>
     <string name="desktop_net_allowlist_path">Arquivo de allowlist</string>
+    <string name="desktop_net_kill_switch">Kill-switch</string>
+    <string name="desktop_net_kill_switch_enable">Ativar kill-switch</string>
+    <string name="desktop_net_kill_switch_disable">Desativar kill-switch</string>
+    <string name="desktop_net_kill_switch_enforced">Aplicado: o tráfego de saída não permitido é descartado (nftables inet telos_session)</string>
+    <string name="desktop_net_kill_switch_pref_only">Preferência salva; não aplicada nesta plataforma</string>
+    <string name="desktop_net_kill_switch_failed">Ligado, mas nftables não pôde ser aplicado — o tráfego não está bloqueado</string>
+    <string name="desktop_net_kill_switch_clear_blocked">Limpar o firewall da sessão fica bloqueado enquanto o kill-switch estiver ligado</string>
+    <string name="desktop_net_apps_tab">Apps</string>
+    <string name="desktop_net_apps_title">Roteamento por app</string>
+    <string name="desktop_net_apps_hint">Um desktop-id ou pacote por linha com allow, deny ou vpn. Salvo em ~/.config/telos/app-routing.txt. A aplicação em nível de processo ainda não existe; o kill-switch continua descartando a saída não permitida no Linux.</string>
+    <string name="desktop_net_apps_file">Tabela de roteamento</string>
 </resources>

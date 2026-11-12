@@ -24,6 +24,7 @@ object PortableTraceGuard {
     /** Clears an explicit portable root selection (tests / exit portable mode). */
     fun clearSelectedRoot() {
         selectedRoot = null
+        System.clearProperty("telos.portable.active")
     }
 
     fun ensurePortableDataRoot(): File =

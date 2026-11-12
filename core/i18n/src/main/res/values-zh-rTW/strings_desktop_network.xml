@@ -3,4 +3,15 @@
     <string name="desktop_net_dns_pref_hint">儲存在保險庫中。在 Linux 上，若可用，Telos 會透過 resolvectl 套用 DoT；DoH 僅作為偏好設定。</string>
     <string name="desktop_net_profiles_sum">保險庫設定檔資料夾位於 ~/.config/telos/profiles/</string>
     <string name="desktop_net_allowlist_path">允許清單檔案</string>
+    <string name="desktop_net_kill_switch">網路熔斷</string>
+    <string name="desktop_net_kill_switch_enable">啟用網路熔斷</string>
+    <string name="desktop_net_kill_switch_disable">關閉網路熔斷</string>
+    <string name="desktop_net_kill_switch_enforced">已生效：未列入允許清單的傳出流量會被丟棄（nftables inet telos_session）</string>
+    <string name="desktop_net_kill_switch_pref_only">偏好已儲存；此平台未實際套用</string>
+    <string name="desktop_net_kill_switch_failed">已開啟，但無法套用 nftables — 流量未被封鎖</string>
+    <string name="desktop_net_kill_switch_clear_blocked">網路熔斷開啟時無法清除工作階段防火牆</string>
+    <string name="desktop_net_apps_tab">應用程式</string>
+    <string name="desktop_net_apps_title">依應用程式路由</string>
+    <string name="desktop_net_apps_hint">每行一個 desktop-id 或套件，取值 allow、deny 或 vpn。儲存在 ~/.config/telos/app-routing.txt。尚未依程序強制執行；Linux 上網路熔斷仍會丟棄未允許的傳出流量。</string>
+    <string name="desktop_net_apps_file">路由表</string>
 </resources>

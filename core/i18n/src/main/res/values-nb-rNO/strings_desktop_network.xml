@@ -3,4 +3,15 @@
     <string name="desktop_net_dns_pref_hint">Lagres i hvelvet. På Linux bruker Telos DoT via resolvectl når det er tilgjengelig; DoH forblir bare en preferanse.</string>
     <string name="desktop_net_profiles_sum">Hvelvprofilmapper under ~/.config/telos/profiles/</string>
     <string name="desktop_net_allowlist_path">Allowlist-fil</string>
+    <string name="desktop_net_kill_switch">Kill-switch</string>
+    <string name="desktop_net_kill_switch_enable">Slå på kill-switch</string>
+    <string name="desktop_net_kill_switch_disable">Slå av kill-switch</string>
+    <string name="desktop_net_kill_switch_enforced">Håndhevet: ikke-tillatt utgående trafikk droppes (nftables inet telos_session)</string>
+    <string name="desktop_net_kill_switch_pref_only">Innstilling lagret; ikke brukt på denne plattformen</string>
+    <string name="desktop_net_kill_switch_failed">På, men nftables kunne ikke brukes — trafikken blokkeres ikke</string>
+    <string name="desktop_net_kill_switch_clear_blocked">Tømming av øktbrannmuren er blokkert mens kill-switch er på</string>
+    <string name="desktop_net_apps_tab">Apper</string>
+    <string name="desktop_net_apps_title">Ruting per app</string>
+    <string name="desktop_net_apps_hint">Én desktop-id eller pakke per linje med allow, deny eller vpn. Lagres under ~/.config/telos/app-routing.txt. Prosessnivå mangler ennå; kill-switch dropper fortsatt ikke-tillatt utgående trafikk på Linux.</string>
+    <string name="desktop_net_apps_file">Rutingtabell</string>
 </resources>

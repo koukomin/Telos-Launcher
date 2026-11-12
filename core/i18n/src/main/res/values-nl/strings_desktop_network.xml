@@ -3,4 +3,15 @@
     <string name="desktop_net_dns_pref_hint">Opgeslagen in de kluis. Op Linux past Telos DoT toe via resolvectl indien beschikbaar; DoH blijft alleen een voorkeur.</string>
     <string name="desktop_net_profiles_sum">Kluisprofielmappen onder ~/.config/telos/profiles/</string>
     <string name="desktop_net_allowlist_path">Allowlist-bestand</string>
+    <string name="desktop_net_kill_switch">Kill-switch</string>
+    <string name="desktop_net_kill_switch_enable">Kill-switch inschakelen</string>
+    <string name="desktop_net_kill_switch_disable">Kill-switch uitschakelen</string>
+    <string name="desktop_net_kill_switch_enforced">Afgedwongen: niet-toegestane uitgaande verkeer wordt gedropt (nftables inet telos_session)</string>
+    <string name="desktop_net_kill_switch_pref_only">Voorkeur opgeslagen; niet toegepast op dit platform</string>
+    <string name="desktop_net_kill_switch_failed">Aan, maar nftables kon niet worden toegepast — verkeer wordt niet geblokkeerd</string>
+    <string name="desktop_net_kill_switch_clear_blocked">Sessie-firewall wissen is geblokkeerd zolang de kill-switch aan staat</string>
+    <string name="desktop_net_apps_tab">Apps</string>
+    <string name="desktop_net_apps_title">Routing per app</string>
+    <string name="desktop_net_apps_hint">Eén desktop-id of pakket per regel met allow, deny of vpn. Opgeslagen onder ~/.config/telos/app-routing.txt. Procesafdwinging ontbreekt nog; de kill-switch dropt nog steeds niet-toegestane egress op Linux.</string>
+    <string name="desktop_net_apps_file">Routingtabel</string>
 </resources>

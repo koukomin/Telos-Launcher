@@ -3,4 +3,15 @@
     <string name="desktop_net_dns_pref_hint">يُحفظ في الخزنة. على لينكس يطبّق Telos بروتوكول DoT عبر resolvectl عند توافره؛ ويبقى DoH تفضيلاً فقط.</string>
     <string name="desktop_net_profiles_sum">مجلدات ملفات تعريف الخزنة ضمن ~/.config/telos/profiles/</string>
     <string name="desktop_net_allowlist_path">ملف قائمة السماح</string>
+    <string name="desktop_net_kill_switch">مفتاح القطع</string>
+    <string name="desktop_net_kill_switch_enable">تفعيل مفتاح القطع</string>
+    <string name="desktop_net_kill_switch_disable">إيقاف مفتاح القطع</string>
+    <string name="desktop_net_kill_switch_enforced">مُطبَّق: يُسقَط الخروج غير المدرج في القائمة (nftables inet telos_session)</string>
+    <string name="desktop_net_kill_switch_pref_only">تم حفظ التفضيل؛ غير مُطبَّق على هذه المنصة</string>
+    <string name="desktop_net_kill_switch_failed">مفعّل، لكن تعذّر تطبيق nftables — المرور غير محظور</string>
+    <string name="desktop_net_kill_switch_clear_blocked">مسح جدار ناري الجلسة محظور طالما مفتاح القطع مفعّل</string>
+    <string name="desktop_net_apps_tab">التطبيقات</string>
+    <string name="desktop_net_apps_title">توجيه لكل تطبيق</string>
+    <string name="desktop_net_apps_hint">معرّف سطح مكتب أو حزمة في كل سطر مع allow أو deny أو vpn. يُحفظ في ~/.config/telos/app-routing.txt. فرض على مستوى العملية غير متاح بعد؛ مفتاح القطع ما زال يُسقط الخروج غير المسموح على Linux.</string>
+    <string name="desktop_net_apps_file">جدول التوجيه</string>
 </resources>

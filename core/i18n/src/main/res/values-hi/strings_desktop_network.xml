@@ -3,4 +3,15 @@
     <string name="desktop_net_dns_pref_hint">वॉल्ट में सहेजा जाता है। Linux पर, उपलब्ध होने पर Telos resolvectl से DoT लागू करता है; DoH केवल वरीयता रहता है।</string>
     <string name="desktop_net_profiles_sum">~/.config/telos/profiles/ के अंतर्गत वॉल्ट प्रोफ़ाइल फ़ोल्डर</string>
     <string name="desktop_net_allowlist_path">अनुमति-सूची फ़ाइल</string>
+    <string name="desktop_net_kill_switch">किल-स्विच</string>
+    <string name="desktop_net_kill_switch_enable">किल-स्विच चालू करें</string>
+    <string name="desktop_net_kill_switch_disable">किल-स्विच बंद करें</string>
+    <string name="desktop_net_kill_switch_enforced">लागू: अनुमति-सूची के बाहर का आउटबाउंड छोड़ दिया जाता है (nftables inet telos_session)</string>
+    <string name="desktop_net_kill_switch_pref_only">वरीयता सहेजी गई; इस प्लेटफ़ॉर्म पर लागू नहीं</string>
+    <string name="desktop_net_kill_switch_failed">चालू है, लेकिन nftables लागू नहीं हो सका — ट्रैफ़िक अवरुद्ध नहीं है</string>
+    <string name="desktop_net_kill_switch_clear_blocked">किल-स्विच चालू होने पर सत्र फ़ायरवॉल साफ़ करना अवरुद्ध है</string>
+    <string name="desktop_net_apps_tab">ऐप्स</string>
+    <string name="desktop_net_apps_title">प्रति-ऐप रूटिंग</string>
+    <string name="desktop_net_apps_hint">प्रत्येक पंक्ति में एक desktop-id या पैकेज तथा allow, deny या vpn। ~/.config/telos/app-routing.txt में संग्रहीत। प्रक्रिया-स्तरीय प्रवर्तन अभी नहीं; Linux पर किल-स्विच अभी भी अस्वीकृत आउटबाउंड छोड़ता है।</string>
+    <string name="desktop_net_apps_file">रूटिंग तालिका</string>
 </resources>

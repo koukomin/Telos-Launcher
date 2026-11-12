@@ -93,15 +93,18 @@ class StegoShardArrayManagerTest {
             System.setProperty("telos.portable.data", root.absolutePath)
             PortableTraceGuard.selectDataRoot(root)
             val carriers = PortableStegoFs.ensureCarriersRoot()
-            assertTrue(carriers.absolutePath.startsWith(root.absolutePath))
-            assertFalse(
-                carriers.canonicalPath.startsWith(host.canonicalPath + File.separator) ||
-                    carriers.canonicalPath == host.canonicalPath,
+            assertTrue(
+                carriers.canonicalFile.path.startsWith(root.canonicalFile.path + File.separator) ||
+                    carriers.canonicalFile == File(root.canonicalFile, PortableStegoFs.CARRIERS_DIR),
             )
+            // May live under the host profile tree (e.g. Windows %TEMP%), but must not
+            // equal host home or replace XDG folders — same contract as production.
+            assertFalse(carriers.canonicalFile == host)
             PortableTraceGuard.assertNoHostWrites(root)
         } finally {
             if (previous == null) System.clearProperty("telos.portable.data")
             else System.setProperty("telos.portable.data", previous)
+            System.clearProperty("telos.portable.active")
             PortableTraceGuard.clearSelectedRoot()
             root.deleteRecursively()
         }

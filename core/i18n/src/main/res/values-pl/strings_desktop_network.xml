@@ -3,4 +3,15 @@
     <string name="desktop_net_dns_pref_hint">Zapisywane w sejfie. W Linuxie Telos stosuje DoT przez resolvectl, gdy jest dostępny; DoH pozostaje tylko preferencją.</string>
     <string name="desktop_net_profiles_sum">Foldery profili sejfu w ~/.config/telos/profiles/</string>
     <string name="desktop_net_allowlist_path">Plik listy dozwolonych</string>
+    <string name="desktop_net_kill_switch">Kill-switch</string>
+    <string name="desktop_net_kill_switch_enable">Włącz kill-switch</string>
+    <string name="desktop_net_kill_switch_disable">Wyłącz kill-switch</string>
+    <string name="desktop_net_kill_switch_enforced">Wymuszone: niedozwolony ruch wychodzący jest odrzucany (nftables inet telos_session)</string>
+    <string name="desktop_net_kill_switch_pref_only">Preferencja zapisana; nie stosowana na tej platformie</string>
+    <string name="desktop_net_kill_switch_failed">Włączone, ale nie udało się zastosować nftables — ruch nie jest blokowany</string>
+    <string name="desktop_net_kill_switch_clear_blocked">Czyszczenie zapory sesji jest zablokowane, gdy kill-switch jest włączony</string>
+    <string name="desktop_net_apps_tab">Aplikacje</string>
+    <string name="desktop_net_apps_title">Routing per aplikacja</string>
+    <string name="desktop_net_apps_hint">Jeden desktop-id lub pakiet w wierszu z allow, deny lub vpn. Zapisywane w ~/.config/telos/app-routing.txt. Egzekwowanie na poziomie procesów jeszcze nie działa; kill-switch nadal odrzuca niedozwolony ruch wychodzący w Linuxie.</string>
+    <string name="desktop_net_apps_file">Tabela routingu</string>
 </resources>

@@ -3,4 +3,15 @@
     <string name="desktop_net_dns_pref_hint">Išsaugoma seife. „Linux“ sistemoje Telos taiko DoT per resolvectl, jei jis prieinamas; DoH lieka tik nuostata.</string>
     <string name="desktop_net_profiles_sum">Seifo profilių aplankai ~/.config/telos/profiles/</string>
     <string name="desktop_net_allowlist_path">Leidinių sąrašo failas</string>
+    <string name="desktop_net_kill_switch">Kill-switch</string>
+    <string name="desktop_net_kill_switch_enable">Įjungti kill-switch</string>
+    <string name="desktop_net_kill_switch_disable">Išjungti kill-switch</string>
+    <string name="desktop_net_kill_switch_enforced">Taikoma: neleidžiama išeinanti srautas atmetamas (nftables inet telos_session)</string>
+    <string name="desktop_net_kill_switch_pref_only">Nuostata išsaugota; šioje platformoje netaikoma</string>
+    <string name="desktop_net_kill_switch_failed">Įjungta, bet nftables nepavyko pritaikyti — srautas neblokuojamas</string>
+    <string name="desktop_net_kill_switch_clear_blocked">Seanso ugniasienės valymas blokuojamas, kol kill-switch įjungtas</string>
+    <string name="desktop_net_apps_tab">Programos</string>
+    <string name="desktop_net_apps_title">Maršrutizavimas pagal programą</string>
+    <string name="desktop_net_apps_hint">Vienas desktop-id arba paketas eilutėje su allow, deny arba vpn. Saugoma ~/.config/telos/app-routing.txt. Proceso lygmens vykdymo dar nėra; kill-switch vis dar atmeta neleidžiamą išeinantį srautą Linux.</string>
+    <string name="desktop_net_apps_file">Maršrutizavimo lentelė</string>
 </resources>

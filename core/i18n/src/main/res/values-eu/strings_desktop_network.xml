@@ -3,4 +3,15 @@
     <string name="desktop_net_dns_pref_hint">Kutxan gordetzen da. Linuxen, Telosek DoT aplikatzen du resolvectl bidez eskuragarri dagoenean; DoH hobespen gisa soilik geratzen da.</string>
     <string name="desktop_net_profiles_sum">Kutxaren profil-karpetak ~/.config/telos/profiles/ -n</string>
     <string name="desktop_net_allowlist_path">Baimen-zerrendaren fitxategia</string>
+    <string name="desktop_net_kill_switch">Kill-switch</string>
+    <string name="desktop_net_kill_switch_enable">Gaitu kill-switch</string>
+    <string name="desktop_net_kill_switch_disable">Desgaitu kill-switch</string>
+    <string name="desktop_net_kill_switch_enforced">Aplikatuta: baimendu gabeko irteerako trafikoa baztertzen da (nftables inet telos_session)</string>
+    <string name="desktop_net_kill_switch_pref_only">Hobespena gordeta; plataforma honetan ez da aplikatzen</string>
+    <string name="desktop_net_kill_switch_failed">Piztuta, baina nftables ezin izan da aplikatu — trafikoa ez dago blokeatuta</string>
+    <string name="desktop_net_kill_switch_clear_blocked">Saioaren suebakia garbitzea blokeatuta dago kill-switch piztuta dagoen bitartean</string>
+    <string name="desktop_net_apps_tab">Aplikazioak</string>
+    <string name="desktop_net_apps_title">Aplikazioz aplikazioko bideratzea</string>
+    <string name="desktop_net_apps_hint">Lerroko desktop-id edo pakete bat allow, deny edo vpn-ekin. ~/.config/telos/app-routing.txt-n gordetzen da. Prozesu-mailako aplikaziorik ez dago oraindik; kill-switch-ek Linuxen baimendu gabeko irteera baztertzen jarraitzen du.</string>
+    <string name="desktop_net_apps_file">Bideratze-taula</string>
 </resources>

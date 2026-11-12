@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_vault_restore_title">Πλήρης επαναφορά vault</string>
+    <string name="desktop_vault_restore_hint">Επαναφορά desktop.properties και ~/.config/telos από αντίγραφο ασφαλείας συνεδρίας AES. Τα ιδιωτικά κλειδιά WireGuard δεν γράφονται ποτέ σε αρχεία καταγραφής. Απαιτείται επιβεβαίωση.</string>
+    <string name="desktop_vault_restore_preview_btn">Προεπισκόπηση επαναφοράς</string>
+    <string name="desktop_vault_restore_preview">Έτοιμο για επαναφορά %1$s αρχείων ρυθμίσεων Telos (desktop.properties: %2$s). Επιβεβαιώστε για εφαρμογή.</string>
+    <string name="desktop_vault_restore_confirm">Επιβεβαίωση επαναφοράς</string>
+    <string name="desktop_vault_restore_cancel">Ακύρωση επαναφοράς</string>
+    <string name="desktop_vault_restore_done">Οι ρυθμίσεις συνεδρίας vault επαναφέρθηκαν</string>
+    <string name="desktop_vault_restore_need_confirm">Απαιτείται επιβεβαίωση επαναφοράς</string>
+    <string name="desktop_update_title">Υπογεγραμμένη ενημέρωση desktop</string>
+    <string name="desktop_update_hint">Έλεγχος τοπικής διαδρομής file:// ή HTTPS manifest υπογεγραμμένου με το κλειδί Ed25519 του Telos. Οι ενημερώσεις σταθμεύουν στο portable/vault temp και δεν εγκαθίστανται αυτόματα.</string>
+    <string name="desktop_update_url_label">Manifest ενημέρωσης (διαδρομή, file:// ή https://)</string>
+    <string name="desktop_update_save_url">Αποθήκευση URL ενημέρωσης</string>
+    <string name="desktop_update_url_saved">Το URL του manifest ενημέρωσης αποθηκεύτηκε</string>
+    <string name="desktop_update_check">Έλεγχος υπογεγραμμένης ενημέρωσης</string>
+    <string name="desktop_update_ready">Η υπογεγραμμένη ενημέρωση %1$s επαληθεύτηκε — επιβεβαιώστε για σταδιακή εγκατάσταση</string>
+    <string name="desktop_update_install_confirm">Επιβεβαίωση σταδιακής εγκατάστασης</string>
+    <string name="desktop_update_install_cancel">Ακύρωση ενημέρωσης</string>
+    <string name="desktop_update_installed">Η ενημέρωση σταθμεύτηκε ως %1$s (επανεκκινήστε χειροκίνητα για χρήση)</string>
+    <string name="desktop_update_sig_fail">Η επαλήθευση υπογραφής ενημέρωσης απέτυχε</string>
+    <string name="desktop_update_no_url">Ορίστε πρώτα URL manifest ενημέρωσης file:// ή HTTPS</string>
+</resources>

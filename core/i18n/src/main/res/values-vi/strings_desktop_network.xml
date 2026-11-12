@@ -3,4 +3,15 @@
     <string name="desktop_net_dns_pref_hint">Được lưu trong vault. Trên Linux, Telos áp dụng DoT qua resolvectl khi có sẵn; DoH chỉ còn là tùy chọn.</string>
     <string name="desktop_net_profiles_sum">Thư mục hồ sơ vault tại ~/.config/telos/profiles/</string>
     <string name="desktop_net_allowlist_path">Tệp danh sách cho phép</string>
+    <string name="desktop_net_kill_switch">Kill-switch</string>
+    <string name="desktop_net_kill_switch_enable">Bật kill-switch</string>
+    <string name="desktop_net_kill_switch_disable">Tắt kill-switch</string>
+    <string name="desktop_net_kill_switch_enforced">Đã áp dụng: lưu lượng đi ra không được phép sẽ bị loại (nftables inet telos_session)</string>
+    <string name="desktop_net_kill_switch_pref_only">Đã lưu tùy chọn; không áp dụng trên nền tảng này</string>
+    <string name="desktop_net_kill_switch_failed">Đang bật nhưng không áp dụng được nftables — lưu lượng không bị chặn</string>
+    <string name="desktop_net_kill_switch_clear_blocked">Xóa tường lửa phiên bị chặn khi kill-switch đang bật</string>
+    <string name="desktop_net_apps_tab">Ứng dụng</string>
+    <string name="desktop_net_apps_title">Định tuyến theo ứng dụng</string>
+    <string name="desktop_net_apps_hint">Mỗi dòng một desktop-id hoặc gói với allow, deny hoặc vpn. Lưu tại ~/.config/telos/app-routing.txt. Chưa có thực thi cấp tiến trình; kill-switch vẫn loại lưu lượng đi ra không được phép trên Linux.</string>
+    <string name="desktop_net_apps_file">Bảng định tuyến</string>
 </resources>

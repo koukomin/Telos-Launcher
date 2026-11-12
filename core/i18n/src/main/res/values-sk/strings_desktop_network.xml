@@ -3,4 +3,15 @@
     <string name="desktop_net_dns_pref_hint">Ukladá sa do trezoru. Na Linuxe Telos použije DoT cez resolvectl, ak je dostupný; DoH ostáva len ako preferencia.</string>
     <string name="desktop_net_profiles_sum">Priečinky profilov trezoru v ~/.config/telos/profiles/</string>
     <string name="desktop_net_allowlist_path">Súbor zoznamu povolených</string>
+    <string name="desktop_net_kill_switch">Kill-switch</string>
+    <string name="desktop_net_kill_switch_enable">Zapnúť kill-switch</string>
+    <string name="desktop_net_kill_switch_disable">Vypnúť kill-switch</string>
+    <string name="desktop_net_kill_switch_enforced">Vynútené: nepovolený odchádzajúci prevádzka sa zahodí (nftables inet telos_session)</string>
+    <string name="desktop_net_kill_switch_pref_only">Predvoľba uložená; na tejto platforme sa nepoužíva</string>
+    <string name="desktop_net_kill_switch_failed">Zapnuté, ale nftables sa nepodarilo použiť — prevádzka nie je blokovaná</string>
+    <string name="desktop_net_kill_switch_clear_blocked">Vymazanie session firewallu je zablokované, kým je kill-switch zapnutý</string>
+    <string name="desktop_net_apps_tab">Aplikácie</string>
+    <string name="desktop_net_apps_title">Smerovanie podľa aplikácie</string>
+    <string name="desktop_net_apps_hint">Jeden desktop-id alebo balík na riadok s allow, deny alebo vpn. Uložené v ~/.config/telos/app-routing.txt. Vynútenie na úrovni procesu zatiaľ nie je; kill-switch stále zahodí nepovolený odchádzajúci prevádzku na Linuxe.</string>
+    <string name="desktop_net_apps_file">Smerovacia tabuľka</string>
 </resources>

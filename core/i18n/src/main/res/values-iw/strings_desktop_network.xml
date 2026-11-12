@@ -3,4 +3,15 @@
     <string name="desktop_net_dns_pref_hint">נשמר בכספת. בלינוקס Telos מפעיל DoT דרך resolvectl כשהוא זמין; DoH נשאר העדפה בלבד.</string>
     <string name="desktop_net_profiles_sum">תיקיות פרופיל הכספת תחת ~/.config/telos/profiles/</string>
     <string name="desktop_net_allowlist_path">קובץ רשימת התרות</string>
+    <string name="desktop_net_kill_switch">מתג ניתוק</string>
+    <string name="desktop_net_kill_switch_enable">הפעלת מתג ניתוק</string>
+    <string name="desktop_net_kill_switch_disable">כיבוי מתג ניתוק</string>
+    <string name="desktop_net_kill_switch_enforced">מיושם: תעבורת יציאה שאינה ברשימת ההיתרים נזרקת (nftables inet telos_session)</string>
+    <string name="desktop_net_kill_switch_pref_only">ההעדפה נשמרה; אינה מיושמת בפלטפורמה זו</string>
+    <string name="desktop_net_kill_switch_failed">פועל, אך לא ניתן ליישם nftables — התעבורה אינה חסומה</string>
+    <string name="desktop_net_kill_switch_clear_blocked">ניקוי חומת האש של ההפעלה חסום כל עוד מתג הניתוק פעיל</string>
+    <string name="desktop_net_apps_tab">אפליקציות</string>
+    <string name="desktop_net_apps_title">ניתוב לפי אפליקציה</string>
+    <string name="desktop_net_apps_hint">מזהה שולחן עבודה או חבילה בכל שורה עם allow, deny או vpn. נשמר ב־~/.config/telos/app-routing.txt. אכיפה ברמת תהליך עדיין אין; מתג הניתוק ממשיך לזרוק יציאה לא מורשית בלינוקס.</string>
+    <string name="desktop_net_apps_file">טבלת ניתוב</string>
 </resources>

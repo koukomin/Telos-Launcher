@@ -28,7 +28,8 @@ class TelosDeepLinkTest {
 
         val open = TelosDeepLinkParser.parse("telos://files?path=%2Ftmp%2Fdemo")
         assertTrue(open is TelosDeepLink.OpenFiles)
-        assertEquals("/tmp/demo", (open as TelosDeepLink.OpenFiles).path?.path)
+        // File.path uses the platform separator (\ on Windows).
+        assertEquals(java.io.File("/tmp/demo").path, (open as TelosDeepLink.OpenFiles).path?.path)
     }
 
     @Test

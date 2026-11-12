@@ -3,4 +3,15 @@
     <string name="desktop_net_dns_pref_hint">Αποθηκεύεται στο vault. Στο Linux, το Telos εφαρμόζει DoT μέσω resolvectl όταν είναι διαθέσιμο· το DoH μένει μόνο ως προτίμηση.</string>
     <string name="desktop_net_profiles_sum">Φάκελοι προφίλ vault στο ~/.config/telos/profiles/</string>
     <string name="desktop_net_allowlist_path">Αρχείο allowlist</string>
+    <string name="desktop_net_kill_switch">Kill-switch</string>
+    <string name="desktop_net_kill_switch_enable">Ενεργοποίηση kill-switch</string>
+    <string name="desktop_net_kill_switch_disable">Απενεργοποίηση kill-switch</string>
+    <string name="desktop_net_kill_switch_enforced">Εφαρμόζεται: η μη επιτρεπόμενη έξοδος απορρίπτεται (nftables inet telos_session)</string>
+    <string name="desktop_net_kill_switch_pref_only">Η προτίμηση αποθηκεύτηκε· δεν εφαρμόζεται σε αυτή την πλατφόρμα</string>
+    <string name="desktop_net_kill_switch_failed">Ενεργό, αλλά τα nftables δεν εφαρμόστηκαν — η κίνηση δεν μπλοκάρεται</string>
+    <string name="desktop_net_kill_switch_clear_blocked">Η εκκαθάριση του session firewall αποκλείεται όσο το kill-switch είναι ενεργό</string>
+    <string name="desktop_net_apps_tab">Εφαρμογές</string>
+    <string name="desktop_net_apps_title">Δρομολόγηση ανά εφαρμογή</string>
+    <string name="desktop_net_apps_hint">Ένα desktop-id ή πακέτο ανά γραμμή με allow, deny ή vpn. Αποθηκεύεται στο ~/.config/telos/app-routing.txt. Η επιβολή ανά διεργασία δεν εφαρμόζεται ακόμη· το kill-switch εξακολουθεί να απορρίπτει μη επιτρεπόμενη έξοδο στο Linux.</string>
+    <string name="desktop_net_apps_file">Πίνακας δρομολόγησης</string>
 </resources>

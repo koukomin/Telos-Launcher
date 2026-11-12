@@ -3,4 +3,15 @@
     <string name="desktop_net_dns_pref_hint">Shranjeno v trezorju. V Linuxu Telos uporabi DoT prek resolvectl, če je na voljo; DoH ostane le nastavitev.</string>
     <string name="desktop_net_profiles_sum">Mape profilov trezorja v ~/.config/telos/profiles/</string>
     <string name="desktop_net_allowlist_path">Datoteka dovoljenega seznama</string>
+    <string name="desktop_net_kill_switch">Kill-switch</string>
+    <string name="desktop_net_kill_switch_enable">Omogoči kill-switch</string>
+    <string name="desktop_net_kill_switch_disable">Onemogoči kill-switch</string>
+    <string name="desktop_net_kill_switch_enforced">Uveljavljeno: nedovoljen odhodni promet se zavrže (nftables inet telos_session)</string>
+    <string name="desktop_net_kill_switch_pref_only">Nastavitev shranjena; na tej platformi ni uveljavljena</string>
+    <string name="desktop_net_kill_switch_failed">Vklopljeno, vendar nftables ni bilo mogoče uporabiti — promet ni blokiran</string>
+    <string name="desktop_net_kill_switch_clear_blocked">Brisanje sejne požarne pregrade je blokirano, dokler je kill-switch vklopljen</string>
+    <string name="desktop_net_apps_tab">Aplikacije</string>
+    <string name="desktop_net_apps_title">Usmerjanje po aplikaciji</string>
+    <string name="desktop_net_apps_hint">En desktop-id ali paket na vrstico z allow, deny ali vpn. Shranjeno v ~/.config/telos/app-routing.txt. Uveljavitev na ravni procesa še ni; kill-switch še vedno zavrže nedovoljen odhodni promet na Linuxu.</string>
+    <string name="desktop_net_apps_file">Usmeritvena tabela</string>
 </resources>

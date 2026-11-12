@@ -3,4 +3,15 @@
     <string name="desktop_net_dns_pref_hint">Saglabāts seifā. Linuxā Telos lieto DoT ar resolvectl, ja tas ir pieejams; DoH paliek tikai kā preferences.</string>
     <string name="desktop_net_profiles_sum">Seifa profilu mapes vietā ~/.config/telos/profiles/</string>
     <string name="desktop_net_allowlist_path">Atļauju saraksta fails</string>
+    <string name="desktop_net_kill_switch">Kill-switch</string>
+    <string name="desktop_net_kill_switch_enable">Ieslēgt kill-switch</string>
+    <string name="desktop_net_kill_switch_disable">Izslēgt kill-switch</string>
+    <string name="desktop_net_kill_switch_enforced">Piemērots: neatļautā izejošā plūsma tiek atmesta (nftables inet telos_session)</string>
+    <string name="desktop_net_kill_switch_pref_only">Iestatījums saglabāts; šajā platformā netiek piemērots</string>
+    <string name="desktop_net_kill_switch_failed">Ieslēgts, bet nftables nevarēja piemērot — plūsma netiek bloķēta</string>
+    <string name="desktop_net_kill_switch_clear_blocked">Sesijas ugunsmūra notīrīšana ir bloķēta, kamēr kill-switch ir ieslēgts</string>
+    <string name="desktop_net_apps_tab">Lietotnes</string>
+    <string name="desktop_net_apps_title">Maršrutēšana pēc lietotnes</string>
+    <string name="desktop_net_apps_hint">Viens desktop-id vai pakotne rindā ar allow, deny vai vpn. Saglabāts ~/.config/telos/app-routing.txt. Procesu līmeņa piemērošana vēl nav; kill-switch joprojām atmet neatļauto izejošo plūsmu Linux sistēmā.</string>
+    <string name="desktop_net_apps_file">Maršrutēšanas tabula</string>
 </resources>
