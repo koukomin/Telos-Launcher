@@ -58,9 +58,10 @@ fun TelosPreBootScreen(
     var error by remember { mutableStateOf<String?>(null) }
     var busy by remember { mutableStateOf(false) }
     var picker by remember { mutableStateOf(false) }
+    // Path-only defaults: do not mkdir carriers / flip portable-active until unlock or create.
     var carrier by remember {
         mutableStateOf<File?>(
-            if (portableShell) PortableStegoFs.ensureCarriersRoot() else null,
+            if (portableShell) PortableStegoFs.carriersRoot() else null,
         )
     }
     var cloudRemote by remember { mutableStateOf("") }

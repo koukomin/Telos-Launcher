@@ -29,6 +29,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.telos.desktop.cursor.CursorPreset
 import com.telos.desktop.display.LinuxDisplayManager
+import com.telos.desktop.cursor.XCursorThemeInfo
+import com.telos.desktop.icons.IconThemeInfo
 import com.telos.desktop.icons.IconThemeSource
 import com.telos.desktop.icons.LinuxIconThemeResolver
 import com.telos.desktop.icons.TelosIconPackCatalog
@@ -54,7 +56,9 @@ fun LinuxDesktopSettingsPanel(
     onClose: () -> Unit,
 ) {
     val filter = PlatformEnvironment.settings
-    var themes by remember { mutableStateOf(icons.listInstalledThemes()) }
+    // Theme scans stay off the first composition frame — load on IO when Settings opens.
+    var themes by remember { mutableStateOf(emptyList<IconThemeInfo>()) }
+    var cursorThemes by remember { mutableStateOf(emptyList<XCursorThemeInfo>()) }
     val outputs = remember { display.queryOutputs() }
     val iconScope = rememberCoroutineScope()
     var iconBusyId by remember { mutableStateOf<String?>(null) }
@@ -64,6 +68,10 @@ fun LinuxDesktopSettingsPanel(
             val opsec = com.telos.desktop.vault.PhantomVault.engine.opsec
             opsec.secureClipboardEnabled = settings.secureClipboard
             opsec.clipboardClearSeconds = settings.clipboardClearSeconds
+        }
+        withContext(Dispatchers.IO) {
+            themes = icons.listInstalledThemes()
+            cursorThemes = com.telos.desktop.cursor.XCursorThemeDiscovery.listInstalled()
         }
     }
     Column(
@@ -164,7 +172,9 @@ fun LinuxDesktopSettingsPanel(
                 } ?: settings.iconTheme
                 TextButton(onClick = {
                     icons.invalidate()
+                    com.telos.desktop.cursor.XCursorThemeDiscovery.invalidate()
                     themes = icons.listInstalledThemes()
+                    cursorThemes = com.telos.desktop.cursor.XCursorThemeDiscovery.listInstalled()
                     open = true
                 }) { Text(selectedLabel) }
                 DropdownMenu(
@@ -239,7 +249,9 @@ fun LinuxDesktopSettingsPanel(
                                             TelosIconPackInstaller.install(pack)
                                         }
                                         icons.invalidate()
+                                        com.telos.desktop.cursor.XCursorThemeDiscovery.invalidate()
                                         themes = icons.listInstalledThemes()
+                                        cursorThemes = com.telos.desktop.cursor.XCursorThemeDiscovery.listInstalled()
                                         iconBusyId = null
                                         iconStatus = if (result.ok) {
                                             val applyName = result.themeNames.firstOrNull()
@@ -286,9 +298,6 @@ fun LinuxDesktopSettingsPanel(
         }
         if (filter.showSweetCursor) {
             HelixSettingsCard(com.telos.desktop.i18n.TelosI18n.t("desktop_cursor_title")) {
-                val cursorThemes = remember {
-                    com.telos.desktop.cursor.XCursorThemeDiscovery.listInstalled()
-                }
                 var themeOpen by remember { mutableStateOf(false) }
                 var downloadMsg by remember { mutableStateOf<String?>(null) }
                 Text(com.telos.desktop.i18n.TelosI18n.t("desktop_cursor_theme"), fontSize = 12.sp, color = TelosColors.onSurface)

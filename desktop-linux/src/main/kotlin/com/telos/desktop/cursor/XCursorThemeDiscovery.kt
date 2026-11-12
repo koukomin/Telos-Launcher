@@ -17,9 +17,28 @@ data class XCursorThemeInfo(
  *
  * A directory counts as a cursor theme when it has a `cursors/` folder and/or an
  * `index.theme` with a `[Cursor Theme]` section (KDE/Plasma) or `Directories=cursors`.
+ *
+ * Theme listing is cached after the first scan so cold start and pointer updates
+ * do not re-walk icon roots until [invalidate].
  */
 object XCursorThemeDiscovery {
+    @Volatile
+    private var cachedIncludeHost: Boolean? = null
+    @Volatile
+    private var cachedThemes: List<XCursorThemeInfo>? = null
+
+    fun invalidate() {
+        cachedThemes = null
+        cachedIncludeHost = null
+    }
+
+    /** True after the first [listInstalled] for the current cache key. */
+    fun isCached(includeHostSystem: Boolean = true): Boolean =
+        cachedThemes != null && cachedIncludeHost == includeHostSystem
+
     fun listInstalled(includeHostSystem: Boolean = true): List<XCursorThemeInfo> {
+        val hit = cachedThemes
+        if (hit != null && cachedIncludeHost == includeHostSystem) return hit
         val out = ArrayList<XCursorThemeInfo>()
         for (root in FreedesktopThemeRoots.searchRoots(includeHostSystem)) {
             val children = root.listFiles() ?: continue
@@ -28,7 +47,10 @@ object XCursorThemeDiscovery {
                 parseTheme(dir)?.let { out += it }
             }
         }
-        return out.distinctBy { it.name.lowercase() }.sortedBy { it.displayName.lowercase() }
+        val sorted = out.distinctBy { it.name.lowercase() }.sortedBy { it.displayName.lowercase() }
+        cachedThemes = sorted
+        cachedIncludeHost = includeHostSystem
+        return sorted
     }
 
     fun find(name: String, includeHostSystem: Boolean = true): XCursorThemeInfo? {

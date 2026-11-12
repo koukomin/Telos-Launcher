@@ -128,8 +128,9 @@ fun main(args: Array<String>) {
                     kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
                         // Prefer vaulted sync/session key — no KeePass master-password prompt.
                         // When none is stored, maybeAutoImport is a no-op (never invents credentials).
+                        // configHome(create=false): do not mkdir on cold start when no vaulted sync exists.
                         val kdbx = java.io.File(
-                            com.telos.desktop.network.DesktopNetworkController.configHome(),
+                            com.telos.desktop.network.DesktopNetworkController.configHome(create = false),
                             "sync/keepass.kdbx",
                         ).takeIf { it.isFile }
                         com.telos.desktop.sync.DesktopSessionSync.maybeAutoImport(
@@ -157,6 +158,8 @@ fun main(args: Array<String>) {
                         } else {
                             hostTheme.cursorSize ?: 24
                         }
+                        // apply() publishes XCURSOR_* only; theme scan + frame decode stay deferred
+                        // until DesktopWorkspace first needs a pointer cursor.
                         com.telos.desktop.cursor.CursorThemeApplier.apply(
                             themeName = settings.cursorTheme.ifBlank { null },
                             size = size,

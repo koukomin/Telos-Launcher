@@ -19,10 +19,12 @@ class PhantomVaultEngine(
     private val hostHome: Path = TelosSessionHome.hostHome,
 ) {
     val luks = LuksVaultManager(hostHome)
-    val shards = StegoShardArrayManager()
+    /** Stego shard manager — constructed lightly; assemble/open only on unlock. */
+    val shards by lazy { StegoShardArrayManager() }
     val cloud = VaultCloudSyncManager()
     val opsec = TelosOpSecGuard()
-    val hw = HardwareCryptoAccelerator.probe()
+    /** /proc crypto capability label — probed once on first read. */
+    val hw by lazy { HardwareCryptoAccelerator.probe() }
     var expander: ElasticVaultExpander? = null
     var bootMode: BootMode = BootMode.UnlockExisting
     var lastRole: VolumeRole = VolumeRole.Unknown

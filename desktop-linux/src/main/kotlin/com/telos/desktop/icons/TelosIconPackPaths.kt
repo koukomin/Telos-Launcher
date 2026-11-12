@@ -16,35 +16,56 @@ import java.io.File
 object TelosIconPackPaths {
     const val BUILTIN_CANDY = "CandyCyber"
 
-    fun iconsRoot(): File {
+    /**
+     * @param create when true, creates the icons directory (install / download paths).
+     * Discovery and cold-start only need [create]=false so Main does not mkdir on boot.
+     */
+    fun iconsRoot(create: Boolean = true): File {
+        val root = resolveIconsRoot(create = create)
+        if (create) root.mkdirs()
+        return root
+    }
+
+    private fun resolveIconsRoot(create: Boolean): File {
         if (usePortableIcons()) {
-            val root = File(PortableTraceGuard.ensurePortableDataRoot(), "icons")
-            PortableTraceGuard.assertNoHostWrites(root.parentFile ?: root)
-            return root.apply { mkdirs() }
+            // Discovery (create=false) must not mkdir or flip the portable-active flag.
+            val base = when {
+                PortableTraceGuard.isPortable() -> PortableTraceGuard.dataRoot()
+                create -> PortableTraceGuard.ensurePortableDataRoot()
+                else -> PortableTraceGuard.dataRoot()
+            }
+            val root = File(base, "icons")
+            if (create || PortableTraceGuard.isPortable()) {
+                PortableTraceGuard.assertNoHostWrites(root.parentFile ?: root)
+            }
+            return root
         }
         val vaultMount = runCatching { PhantomVault.engine.mountPoint.takeIf { it.exists() } }.getOrNull()
         if (vaultMount != null) {
-            return File(vaultMount, "icons").apply { mkdirs() }
+            return File(vaultMount, "icons")
         }
         val configParent = runCatching { PhantomVault.engine.configDir.parentFile }.getOrNull()
         if (configParent != null) {
-            return File(configParent, "icons").apply { mkdirs() }
+            return File(configParent, "icons")
         }
         if (PortableTraceGuard.isPortable()) {
-            return File(PortableTraceGuard.dataRoot(), "icons").apply { mkdirs() }
+            return File(PortableTraceGuard.dataRoot(), "icons")
         }
         val home = System.getProperty("user.home")
-        return File(home, ".local/share/telos/icons").apply { mkdirs() }
+        return File(home, ".local/share/telos/icons")
     }
 
-    fun downloadsDir(): File = File(iconsRoot(), ".downloads").apply { mkdirs() }
+    fun downloadsDir(): File = File(iconsRoot(create = true), ".downloads").apply { mkdirs() }
 
-    fun stagingDir(): File = File(iconsRoot(), ".staging").apply { mkdirs() }
+    fun stagingDir(): File = File(iconsRoot(create = true), ".staging").apply { mkdirs() }
 
     fun usePortableIcons(): Boolean =
         PortableTraceGuard.isPortable() ||
             PlatformEnvironment.settings.showPortableDesktopShell
 
-    /** Extra theme roots Telos owns (downloaded packs). */
-    fun managedThemeRoots(): List<File> = listOf(iconsRoot())
+    /**
+     * Extra theme roots Telos owns (downloaded packs). Discovery-only: no mkdir.
+     * Installers call [iconsRoot] with create=true before writing.
+     */
+    fun managedThemeRoots(): List<File> = listOf(iconsRoot(create = false))
 }

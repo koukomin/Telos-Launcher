@@ -3,13 +3,12 @@ package com.telos.desktop.cursor
 import com.telos.desktop.icons.FreedesktopThemeRoots
 import com.telos.desktop.platform.PlatformEnvironment
 import com.telos.desktop.platform.TelosRuntimePlatform
-import com.telos.desktop.vault.PortableEnvironmentIsolator
-import com.telos.desktop.vault.PortableTraceGuard
 import java.awt.Cursor
 import java.awt.Point
 import java.awt.Toolkit
 import java.awt.Window
 import java.io.File
+import java.util.concurrent.ConcurrentHashMap
 
 enum class CursorApplyMode {
     /** Compose-drawn Sweet/Breeze overlay (no XCursor). */
@@ -35,6 +34,10 @@ data class CursorApplyResult(
  * decode an XCursor `left_ptr` frame into an AWT custom cursor for the Compose
  * window. Windows / macOS: maps pointer states to stock AWT cursors; XCursor
  * packs are not pushed into the native OS pointer.
+ *
+ * Cold start: [apply] only resolves the theme name and publishes env / default
+ * index. XCursor theme scans and frame decode run on first [cursorForState]
+ * (or [ensureDecoded]) so Main's unlock path stays light.
  */
 object CursorThemeApplier {
     @Volatile
@@ -46,6 +49,11 @@ object CursorThemeApplier {
     @Volatile
     var lastResult: CursorApplyResult? = null
         private set
+
+    @Volatile
+    private var decodePending: Boolean = false
+
+    private val awtByState = ConcurrentHashMap<CursorState, Cursor>()
 
     private val shapeAliases = mapOf(
         CursorState.DEFAULT_ARROW to listOf("left_ptr", "default", "arrow"),
@@ -78,6 +86,8 @@ object CursorThemeApplier {
             else -> null
         }
         activeTheme = resolvedName
+        awtByState.clear()
+        decodePending = false
 
         val platform = PlatformEnvironment.current
         if (platform == TelosRuntimePlatform.WindowsDesktop || platform == TelosRuntimePlatform.MacDesktop) {
@@ -107,57 +117,91 @@ object CursorThemeApplier {
             )
         }
 
-        val themes = XCursorThemeDiscovery.listInstalled().associateBy { it.name }
-        val theme = XCursorThemeDiscovery.find(resolvedName)
-        if (theme == null) {
-            publishEnv(resolvedName, kdeSize)
-            return finish(
-                CursorApplyResult(
-                    CursorApplyMode.ComposePreset,
-                    resolvedName,
-                    kdeSize,
-                    null,
-                    "Theme \"$resolvedName\" not found under icon roots; Compose overlay used. XCURSOR_* still exported for children.",
-                ),
-            )
-        }
-
-        val file = shapeAliases[CursorState.DEFAULT_ARROW]
-            ?.firstNotNullOfOrNull { XCursorThemeDiscovery.resolveCursorFile(theme, it, themes) }
-        val frame = file?.let { XCursorReader.loadBestFrame(it, kdeSize) }
-        val awt = if (frame != null) {
-            runCatching {
-                Toolkit.getDefaultToolkit().createCustomCursor(
-                    frame.image,
-                    Point(frame.xHot.coerceIn(0, frame.width - 1), frame.yHot.coerceIn(0, frame.height - 1)),
-                    resolvedName,
-                )
-            }.getOrNull()
-        } else null
-
+        // Defer icon-root scan, default/index write, and XCursor decode until first pointer use.
         publishEnv(resolvedName, kdeSize)
-        maybeWriteDefaultIndex(resolvedName)
-        if (awt != null) {
-            applyToAwtWindows(awt)
-            return finish(
-                CursorApplyResult(
-                    CursorApplyMode.XCursorAwt,
-                    resolvedName,
-                    kdeSize,
-                    awt,
-                    "Loaded XCursor frame into AWT cursor; child processes get XCURSOR_THEME/SIZE.",
-                ),
-            )
-        }
+        decodePending = true
         return finish(
             CursorApplyResult(
                 CursorApplyMode.ComposePreset,
                 resolvedName,
                 kdeSize,
                 null,
-                "Could not decode XCursor frames for AWT; Compose overlay used. XCURSOR_* exported for children.",
+                "XCursor env published; theme scan/decode deferred until first pointer use.",
             ),
         )
+    }
+
+    /** Whether an XCursor decode is still outstanding after [apply]. */
+    fun isDecodePending(): Boolean = decodePending
+
+    /**
+     * Completes deferred XCursor discovery/decode. Safe to call repeatedly;
+     * no-op when nothing is pending. Runs disk I/O — call from Dispatchers.IO
+     * when on a UI path.
+     */
+    fun ensureDecoded(): CursorApplyResult? {
+        if (!decodePending) return lastResult
+        synchronized(this) {
+            if (!decodePending) return lastResult
+            val resolvedName = activeTheme
+            val kdeSize = activeSize
+            if (resolvedName.isNullOrBlank()) {
+                decodePending = false
+                return lastResult
+            }
+            maybeWriteDefaultIndex(resolvedName)
+            val themes = XCursorThemeDiscovery.listInstalled().associateBy { it.name }
+            val theme = XCursorThemeDiscovery.find(resolvedName)
+            if (theme == null) {
+                decodePending = false
+                return finish(
+                    CursorApplyResult(
+                        CursorApplyMode.ComposePreset,
+                        resolvedName,
+                        kdeSize,
+                        null,
+                        "Theme \"$resolvedName\" not found under icon roots; Compose overlay used. XCURSOR_* still exported for children.",
+                    ),
+                )
+            }
+
+            val file = shapeAliases[CursorState.DEFAULT_ARROW]
+                ?.firstNotNullOfOrNull { XCursorThemeDiscovery.resolveCursorFile(theme, it, themes) }
+            val frame = file?.let { XCursorReader.loadBestFrame(it, kdeSize) }
+            val awt = if (frame != null) {
+                runCatching {
+                    Toolkit.getDefaultToolkit().createCustomCursor(
+                        frame.image,
+                        Point(frame.xHot.coerceIn(0, frame.width - 1), frame.yHot.coerceIn(0, frame.height - 1)),
+                        resolvedName,
+                    )
+                }.getOrNull()
+            } else null
+
+            decodePending = false
+            if (awt != null) {
+                awtByState[CursorState.DEFAULT_ARROW] = awt
+                applyToAwtWindows(awt)
+                return finish(
+                    CursorApplyResult(
+                        CursorApplyMode.XCursorAwt,
+                        resolvedName,
+                        kdeSize,
+                        awt,
+                        "Loaded XCursor frame into AWT cursor; child processes get XCURSOR_THEME/SIZE.",
+                    ),
+                )
+            }
+            return finish(
+                CursorApplyResult(
+                    CursorApplyMode.ComposePreset,
+                    resolvedName,
+                    kdeSize,
+                    null,
+                    "Could not decode XCursor frames for AWT; Compose overlay used. XCURSOR_* exported for children.",
+                ),
+            )
+        }
     }
 
     private fun finish(result: CursorApplyResult): CursorApplyResult {
@@ -167,6 +211,8 @@ object CursorThemeApplier {
     }
 
     fun cursorForState(state: CursorState): Cursor {
+        ensureDecoded()
+        awtByState[state]?.let { return it }
         val last = lastResult
         if (last?.mode == CursorApplyMode.XCursorAwt && state == CursorState.DEFAULT_ARROW && last.awtCursor != null) {
             return last.awtCursor
@@ -179,13 +225,15 @@ object CursorThemeApplier {
                 ?.firstNotNullOfOrNull { XCursorThemeDiscovery.resolveCursorFile(theme, it, themes) }
                 ?: return stockFor(state)
             val frame = XCursorReader.loadBestFrame(file, last.size) ?: return stockFor(state)
-            return runCatching {
+            val cursor = runCatching {
                 Toolkit.getDefaultToolkit().createCustomCursor(
                     frame.image,
                     Point(frame.xHot.coerceIn(0, frame.width - 1), frame.yHot.coerceIn(0, frame.height - 1)),
                     "$themeName-$state",
                 )
             }.getOrDefault(stockFor(state))
+            awtByState[state] = cursor
+            return cursor
         }
         return stockFor(state)
     }
@@ -212,6 +260,7 @@ object CursorThemeApplier {
     }
 
     fun usesComposeOverlay(): Boolean {
+        if (decodePending) return true
         val mode = lastResult?.mode ?: return true
         return mode == CursorApplyMode.ComposePreset
     }

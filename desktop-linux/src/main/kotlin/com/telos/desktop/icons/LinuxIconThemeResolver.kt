@@ -44,6 +44,9 @@ class LinuxIconThemeResolver(
         cachedThemes = null
     }
 
+    /** True after the first disk scan; used by cold-start tests. */
+    fun hasCachedThemes(): Boolean = cachedThemes != null
+
     private val themeRoots: List<File>
         get() {
             val roots = LinkedHashSet<File>()
