@@ -39,16 +39,19 @@ class PhantomVaultEngine(
     fun unlock(password: String, carrier: File?, initialize: Boolean): LuksVaultManager.UnlockResult {
         opsec.enableCoreDumpBlock()
         when (bootMode) {
-            BootMode.PortableData -> return unlockPortableData()
-            BootMode.PortableVault -> return unlockPortableVault(password, initialize)
+            BootMode.PortableData -> return unlockPortableData().also { if (it.ok) opsec.onUnlocked("portable_data") }
+            BootMode.PortableVault -> return unlockPortableVault(password, initialize).also {
+                if (it.ok) opsec.onUnlocked("portable_vault")
+            }
             BootMode.HostHome -> {
                 PortableEnvironmentIsolator.clear()
                 luks.clearPortableSessionRoot()
                 luks.mountPoint.mkdirs()
                 luks.unlock(password, initializeIfMissing = false)
+                opsec.onUnlocked("host_home")
                 return LuksVaultManager.UnlockResult.Unlocked
             }
-            BootMode.EphemeralGhost -> return ephemeral()
+            BootMode.EphemeralGhost -> return ephemeral().also { if (it.ok) opsec.onUnlocked("ephemeral") }
             else -> Unit
         }
         val pool = resolveCarrierPool(carrier)
@@ -140,6 +143,7 @@ class PhantomVaultEngine(
     }
 
     fun panicUnmount() {
+        opsec.onPanic()
         shards.wipeInnerHeaders(shards.shards.toList())
         lock(syncCloud = false)
         Sys.run("labwc", "--exit", timeoutSec = 5)
@@ -157,7 +161,7 @@ class PhantomVaultEngine(
         expander?.autoGrowEnabled = autoGrow
         expander?.start(scope)
         opsec.panic = { panicUnmount() }
-        opsec.startUsbDeadMan(scope)
+        opsec.startSessionGuards(scope)
     }
 
     fun createElastic(passwordOuter: String, passwordInner: String, passwordDuress: String, pool: File): LuksVaultManager.UnlockResult {
@@ -253,6 +257,7 @@ class PhantomVaultEngine(
         if (isolateHome) PortableEnvironmentIsolator.apply(mountPoint, fullSessionHome = TelosSessionHome.full)
         luks.ensureLayout()
         luks.unlocked = true
+        opsec.onUnlocked(if (decoy) "outer_decoy" else lastRole.name.lowercase())
         return LuksVaultManager.UnlockResult.Unlocked
     }
 
@@ -431,6 +436,7 @@ class PhantomVaultEngine(
         File(mountPoint, "db").mkdirs()
         if (isolateHome) PortableEnvironmentIsolator.apply(mountPoint, fullSessionHome = TelosSessionHome.full)
         luks.unlocked = true
+        opsec.onUnlocked("attach_mounted")
         return true
     }
 

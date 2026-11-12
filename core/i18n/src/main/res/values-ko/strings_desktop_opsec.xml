@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_opsec_title">OpSec</string>
+    <string name="desktop_opsec_secure_clipboard">보안 클립보드</string>
+    <string name="desktop_opsec_clipboard_title">클립보드</string>
+    <string name="desktop_opsec_clipboard_hint">민감한 텍스트는 이 세션에만 보관되며 다른 앱이 붙여넣지 못하도록 시스템 클립보드에서 지워집니다.</string>
+    <string name="desktop_opsec_clipboard_clear_now">지금 클립보드 지우기</string>
+    <string name="desktop_opsec_clipboard_timer">%1$d초 후 자동 지우기</string>
+    <string name="desktop_opsec_clipboard_timer_off">끔</string>
+    <string name="desktop_opsec_attestation_run">호스트 무결성 스냅샷 기록</string>
+    <string name="desktop_opsec_audit_title">세션 감사 로그</string>
+    <string name="desktop_opsec_audit_refresh">감사 로그 새로고침</string>
+    <string name="desktop_opsec_audit_empty">아직 감사 이벤트가 없습니다</string>
+</resources>

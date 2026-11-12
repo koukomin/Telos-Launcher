@@ -109,6 +109,10 @@ fun main(args: Array<String>) {
                 val settings = remember {
                     TelosDesktopSettings(vault.configDir).also { it.load() }
                 }
+                androidx.compose.runtime.LaunchedEffect(settings) {
+                    vault.opsec.secureClipboardEnabled = settings.secureClipboard
+                    vault.opsec.clipboardClearSeconds = settings.clipboardClearSeconds
+                }
                 LaunchedEffect(Unit) {
                     kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
                         // Prefer vaulted sync/session key — no KeePass master-password prompt.

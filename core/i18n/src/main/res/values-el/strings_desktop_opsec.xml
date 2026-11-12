@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_opsec_title">OpSec</string>
+    <string name="desktop_opsec_secure_clipboard">Ασφαλές πρόχειρο</string>
+    <string name="desktop_opsec_clipboard_title">Πρόχειρο</string>
+    <string name="desktop_opsec_clipboard_hint">Το ευαίσθητο κείμενο φυλάσσεται στη συνεδρία και καθαρίζεται από το πρόχειρο συστήματος ώστε άλλες εφαρμογές να μην μπορούν να το επικολλήσουν.</string>
+    <string name="desktop_opsec_clipboard_clear_now">Καθαρισμός προχείρου τώρα</string>
+    <string name="desktop_opsec_clipboard_timer">Αυτόματος καθαρισμός μετά από %1$d δευτερόλεπτα</string>
+    <string name="desktop_opsec_clipboard_timer_off">Ανενεργό</string>
+    <string name="desktop_opsec_attestation_run">Καταγραφή στιγμιότυπου ακεραιότητας host</string>
+    <string name="desktop_opsec_audit_title">Ημερολόγιο ελέγχου συνεδρίας</string>
+    <string name="desktop_opsec_audit_refresh">Ανανέωση ημερολογίου</string>
+    <string name="desktop_opsec_audit_empty">Δεν υπάρχουν ακόμη συμβάντα</string>
+</resources>

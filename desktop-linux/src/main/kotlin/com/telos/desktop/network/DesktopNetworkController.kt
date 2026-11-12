@@ -7,6 +7,7 @@ import com.telos.desktop.platform.PlatformEnvironment
 import com.telos.desktop.platform.TelosRuntimePlatform
 import com.telos.desktop.session.SessionNetGuard
 import com.telos.desktop.vault.PortableEnvironmentIsolator
+import com.telos.desktop.vault.TelosSessionAuditLog
 import java.io.File
 import java.util.Properties
 
@@ -77,12 +78,18 @@ object DesktopNetworkController {
 
     fun writeAllowlistText(text: String) {
         firewallAllowlistPath().apply { parentFile?.mkdirs() }.writeText(text)
+        TelosSessionAuditLog.append("network_policy", "allowlist_updated")
     }
 
-    fun applySessionFirewall(): Boolean = SessionNetGuard.apply()
+    fun applySessionFirewall(): Boolean {
+        val ok = SessionNetGuard.apply()
+        TelosSessionAuditLog.append("network_policy", if (ok) "firewall_applied" else "firewall_apply_failed")
+        return ok
+    }
 
     fun clearSessionFirewall() {
         SessionNetGuard.clear()
+        TelosSessionAuditLog.append("network_policy", "firewall_cleared")
     }
 
     fun sessionFirewallActive(): Boolean {
@@ -111,7 +118,9 @@ object DesktopNetworkController {
         return when (backend) {
             WireGuardBackend.WgQuick -> {
                 val quick = Sys.which("wg-quick") ?: return false
-                Sys.run(quick, "up", conf.absolutePath, timeoutSec = 30).ok
+                val ok = Sys.run(quick, "up", conf.absolutePath, timeoutSec = 30).ok
+                TelosSessionAuditLog.append("network_policy", if (ok) "wireguard_start" else "wireguard_start_failed")
+                ok
             }
             WireGuardBackend.Wg -> {
                 val iface = interfaceNameFromConf(conf.readText())
@@ -120,12 +129,21 @@ object DesktopNetworkController {
                 }
                 val okConf = Sys.run("wg", "setconf", iface, conf.absolutePath, timeoutSec = 15).ok
                 val up = Sys.run("ip", "link", "set", "up", "dev", iface, timeoutSec = 8).ok
-                okConf && up
+                val ok = okConf && up
+                TelosSessionAuditLog.append("network_policy", if (ok) "wireguard_start" else "wireguard_start_failed")
+                ok
             }
         }
     }
 
     fun stopWireGuard(): Boolean {
+        if (!isLinux) return false
+        val result = stopWireGuardInner()
+        TelosSessionAuditLog.append("network_policy", if (result) "wireguard_stop" else "wireguard_stop_failed")
+        return result
+    }
+
+    private fun stopWireGuardInner(): Boolean {
         if (!isLinux) return false
         val conf = wireguardConfFile()
         val backend = detectWireGuardBackend() ?: return false
@@ -177,7 +195,9 @@ object DesktopNetworkController {
             val pid = torPidFile().readText().trim().toIntOrNull()
             if (pid != null && processAlive(pid)) return true
         }
-        return Sys.runBg(tor, "-f", torrc.absolutePath)
+        val ok = Sys.runBg(tor, "-f", torrc.absolutePath)
+        TelosSessionAuditLog.append("network_policy", if (ok) "tor_start" else "tor_start_failed")
+        return ok
     }
 
     fun stopTor(): Boolean {
@@ -186,11 +206,13 @@ object DesktopNetworkController {
         if (pid != null) {
             Sys.run("kill", pid.toString(), timeoutSec = 4)
             torPidFile().delete()
+            TelosSessionAuditLog.append("network_policy", "tor_stop")
             return true
         }
         val marker = torConfigFile().absolutePath
         Sys.run("pkill", "-f", marker, timeoutSec = 4)
         torPidFile().delete()
+        TelosSessionAuditLog.append("network_policy", "tor_stop")
         return true
     }
 
@@ -207,6 +229,7 @@ object DesktopNetworkController {
 
     fun writeDnsPreference(text: String) {
         dnsPreferenceFile().writeText(text.trim() + "\n")
+        TelosSessionAuditLog.append("network_policy", "dns_preference_updated")
     }
 
     fun applyDnsPreference(): DnsApplyResult {

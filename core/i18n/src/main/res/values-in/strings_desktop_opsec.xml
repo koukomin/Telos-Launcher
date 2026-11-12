@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_opsec_title">OpSec</string>
+    <string name="desktop_opsec_secure_clipboard">Papan klip aman</string>
+    <string name="desktop_opsec_clipboard_title">Papan klip</string>
+    <string name="desktop_opsec_clipboard_hint">Teks sensitif disimpan di sesi ini dan dihapus dari papan klip sistem agar aplikasi lain tidak dapat menempelkannya.</string>
+    <string name="desktop_opsec_clipboard_clear_now">Hapus papan klip sekarang</string>
+    <string name="desktop_opsec_clipboard_timer">Hapus otomatis setelah %1$d detik</string>
+    <string name="desktop_opsec_clipboard_timer_off">Mati</string>
+    <string name="desktop_opsec_attestation_run">Catat snapshot integritas host</string>
+    <string name="desktop_opsec_audit_title">Log audit sesi</string>
+    <string name="desktop_opsec_audit_refresh">Segarkan log audit</string>
+    <string name="desktop_opsec_audit_empty">Belum ada peristiwa audit</string>
+</resources>

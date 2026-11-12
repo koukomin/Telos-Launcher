@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_opsec_title">OpSec</string>
+    <string name="desktop_opsec_secure_clipboard">Säker urklipp</string>
+    <string name="desktop_opsec_clipboard_title">Urklipp</string>
+    <string name="desktop_opsec_clipboard_hint">Känslig text sparas i den här sessionen och rensas från systemets urklipp så att andra appar inte kan klistra in den.</string>
+    <string name="desktop_opsec_clipboard_clear_now">Rensa urklipp nu</string>
+    <string name="desktop_opsec_clipboard_timer">Rensa automatiskt efter %1$d sekunder</string>
+    <string name="desktop_opsec_clipboard_timer_off">Av</string>
+    <string name="desktop_opsec_attestation_run">Registrera värdintegritetsögonblicksbild</string>
+    <string name="desktop_opsec_audit_title">Sessionsgranskningslogg</string>
+    <string name="desktop_opsec_audit_refresh">Uppdatera granskningsloggen</string>
+    <string name="desktop_opsec_audit_empty">Inga granskningshändelser ännu</string>
+</resources>

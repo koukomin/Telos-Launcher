@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_opsec_title">OpSec</string>
+    <string name="desktop_opsec_secure_clipboard">सुरक्षित क्लिपबोर्ड</string>
+    <string name="desktop_opsec_clipboard_title">क्लिपबोर्ड</string>
+    <string name="desktop_opsec_clipboard_hint">संवेदनशील पाठ इस सत्र में रखा जाता है और सिस्टम क्लिपबोर्ड से साफ़ किया जाता है ताकि अन्य ऐप उसे पेस्ट न कर सकें।</string>
+    <string name="desktop_opsec_clipboard_clear_now">अभी क्लिपबोर्ड साफ़ करें</string>
+    <string name="desktop_opsec_clipboard_timer">%1$d सेकंड बाद स्वतः साफ़ करें</string>
+    <string name="desktop_opsec_clipboard_timer_off">बंद</string>
+    <string name="desktop_opsec_attestation_run">होस्ट अखंडता स्नैपशॉट रिकॉर्ड करें</string>
+    <string name="desktop_opsec_audit_title">सत्र ऑडिट लॉग</string>
+    <string name="desktop_opsec_audit_refresh">ऑडिट लॉग ताज़ा करें</string>
+    <string name="desktop_opsec_audit_empty">अभी कोई ऑडिट इवेंट नहीं</string>
+</resources>

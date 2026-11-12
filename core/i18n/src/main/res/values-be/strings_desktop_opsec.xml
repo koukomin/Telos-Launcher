@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_opsec_title">OpSec</string>
+    <string name="desktop_opsec_secure_clipboard">Абаронены буфер абмену</string>
+    <string name="desktop_opsec_clipboard_title">Буфер абмену</string>
+    <string name="desktop_opsec_clipboard_hint">Адчувальны тэкст захоўваецца ў сеансе і ачышчаецца з сістэмнага буфера, каб іншыя праграмы не маглі яго ўставіць.</string>
+    <string name="desktop_opsec_clipboard_clear_now">Ачысціць буфер зараз</string>
+    <string name="desktop_opsec_clipboard_timer">Аўтаачыстка праз %1$d с</string>
+    <string name="desktop_opsec_clipboard_timer_off">Выкл.</string>
+    <string name="desktop_opsec_attestation_run">Запісаць здымак цэласнасці хоста</string>
+    <string name="desktop_opsec_audit_title">Журнал аўдыту сеанса</string>
+    <string name="desktop_opsec_audit_refresh">Абнавіць журнал</string>
+    <string name="desktop_opsec_audit_empty">Пакуль няма падзей аўдыту</string>
+</resources>

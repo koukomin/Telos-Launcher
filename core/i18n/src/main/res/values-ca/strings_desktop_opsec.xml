@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_opsec_title">OpSec</string>
+    <string name="desktop_opsec_secure_clipboard">Porta-retalls segur</string>
+    <string name="desktop_opsec_clipboard_title">Porta-retalls</string>
+    <string name="desktop_opsec_clipboard_hint">El text sensible es guarda en aquesta sessió i s’esborra del porta-retalls del sistema perquè altres aplicacions no el puguin enganxar.</string>
+    <string name="desktop_opsec_clipboard_clear_now">Buida el porta-retalls ara</string>
+    <string name="desktop_opsec_clipboard_timer">Esborra automàticament després de %1$d segons</string>
+    <string name="desktop_opsec_clipboard_timer_off">Desactivat</string>
+    <string name="desktop_opsec_attestation_run">Desa la instantània d’integritat de l’amfitrió</string>
+    <string name="desktop_opsec_audit_title">Registre d’auditoria de la sessió</string>
+    <string name="desktop_opsec_audit_refresh">Actualitza el registre</string>
+    <string name="desktop_opsec_audit_empty">Encara no hi ha esdeveniments d’auditoria</string>
+</resources>

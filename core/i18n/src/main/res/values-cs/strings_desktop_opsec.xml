@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_opsec_title">OpSec</string>
+    <string name="desktop_opsec_secure_clipboard">Bezpečná schránka</string>
+    <string name="desktop_opsec_clipboard_title">Schránka</string>
+    <string name="desktop_opsec_clipboard_hint">Citlivý text zůstává v této relaci a je vymazán ze systémové schránky, aby jej ostatní aplikace nemohly vložit.</string>
+    <string name="desktop_opsec_clipboard_clear_now">Vymazat schránku nyní</string>
+    <string name="desktop_opsec_clipboard_timer">Automaticky vymazat po %1$d s</string>
+    <string name="desktop_opsec_clipboard_timer_off">Vypnuto</string>
+    <string name="desktop_opsec_attestation_run">Zaznamenat snímek integrity hostitele</string>
+    <string name="desktop_opsec_audit_title">Auditní protokol relace</string>
+    <string name="desktop_opsec_audit_refresh">Obnovit protokol</string>
+    <string name="desktop_opsec_audit_empty">Zatím žádné auditní události</string>
+</resources>

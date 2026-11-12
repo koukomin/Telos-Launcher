@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_opsec_title">OpSec</string>
+    <string name="desktop_opsec_secure_clipboard">Portapapeles seguro</string>
+    <string name="desktop_opsec_clipboard_title">Portapapeles</string>
+    <string name="desktop_opsec_clipboard_hint">El texto sensible se guarda en esta sesión y se borra del portapapeles del sistema para que otras aplicaciones no puedan pegarlo.</string>
+    <string name="desktop_opsec_clipboard_clear_now">Vaciar portapapeles ahora</string>
+    <string name="desktop_opsec_clipboard_timer">Borrar automáticamente tras %1$d segundos</string>
+    <string name="desktop_opsec_clipboard_timer_off">Desactivado</string>
+    <string name="desktop_opsec_attestation_run">Registrar instantánea de integridad del host</string>
+    <string name="desktop_opsec_audit_title">Registro de auditoría de sesión</string>
+    <string name="desktop_opsec_audit_refresh">Actualizar registro</string>
+    <string name="desktop_opsec_audit_empty">Aún no hay eventos de auditoría</string>
+</resources>

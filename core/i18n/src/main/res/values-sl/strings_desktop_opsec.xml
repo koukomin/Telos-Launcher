@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_opsec_title">OpSec</string>
+    <string name="desktop_opsec_secure_clipboard">Varna odložišče</string>
+    <string name="desktop_opsec_clipboard_title">Odložišče</string>
+    <string name="desktop_opsec_clipboard_hint">Občutljivo besedilo ostane v tej seji in se počisti iz sistemskega odložišča, da ga druge aplikacije ne morejo prilepiti.</string>
+    <string name="desktop_opsec_clipboard_clear_now">Počisti odložišče zdaj</string>
+    <string name="desktop_opsec_clipboard_timer">Samodejno počisti po %1$d s</string>
+    <string name="desktop_opsec_clipboard_timer_off">Izklopljeno</string>
+    <string name="desktop_opsec_attestation_run">Zabeleži posnetek celovitosti gostitelja</string>
+    <string name="desktop_opsec_audit_title">Revizijski dnevnik seje</string>
+    <string name="desktop_opsec_audit_refresh">Osveži dnevnik</string>
+    <string name="desktop_opsec_audit_empty">Še ni revizijskih dogodkov</string>
+</resources>

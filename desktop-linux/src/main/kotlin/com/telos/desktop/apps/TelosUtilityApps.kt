@@ -362,12 +362,36 @@ private fun NetworkStatusPane(
                         t("preference_screen_context_profiles"),
                         activeProfile ?: "—",
                     )
-                    profiles.take(6).forEach {
-                        Text("· ${it.name}", color = TelosColors.onSurface, fontSize = 12.sp)
+                    profiles.take(6).forEach { folder ->
+                        Text(
+                            "· ${folder.name}",
+                            color = TelosColors.onSurface,
+                            fontSize = 12.sp,
+                            modifier = Modifier.clickable {
+                                DesktopProfiles.setActiveProfile(folder.name)
+                            },
+                        )
                     }
                     Text(t("desktop_net_profiles_sum"), color = TelosColors.onSurface.copy(alpha = 0.7f), fontSize = 11.sp)
                 }
-                statusCard(cardShape, neon, t("desktop_session_sync_title"), t("backup_group_keepass"))
+                var auditLines by remember {
+                    mutableStateOf(com.telos.desktop.vault.TelosSessionAuditLog.readTail(8))
+                }
+                statusCard(
+                    cardShape,
+                    neon,
+                    t("desktop_opsec_audit_title"),
+                    if (auditLines.isEmpty()) t("desktop_opsec_audit_empty") else auditLines.last(),
+                )
+                TextButton(onClick = {
+                    auditLines = com.telos.desktop.vault.TelosSessionAuditLog.readTail(8)
+                }) {
+                    Text(t("desktop_opsec_audit_refresh"), fontSize = 11.sp)
+                }
+                auditLines.takeLast(5).forEach { line ->
+                    Text(line, color = TelosColors.onSurface.copy(alpha = 0.75f), fontSize = 10.sp)
+                }
+                                statusCard(cardShape, neon, t("desktop_session_sync_title"), t("backup_group_keepass"))
                 OutlinedTextField(
                     syncPass,
                     onValueChange = { syncPass = it },

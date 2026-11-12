@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_opsec_title">OpSec</string>
+    <string name="desktop_opsec_secure_clipboard">Veilig klembord</string>
+    <string name="desktop_opsec_clipboard_title">Klembord</string>
+    <string name="desktop_opsec_clipboard_hint">Gevoelige tekst blijft in deze sessie en wordt van het systeemklembord gewist zodat andere apps het niet kunnen plakken.</string>
+    <string name="desktop_opsec_clipboard_clear_now">Klembord nu wissen</string>
+    <string name="desktop_opsec_clipboard_timer">Automatisch wissen na %1$d seconden</string>
+    <string name="desktop_opsec_clipboard_timer_off">Uit</string>
+    <string name="desktop_opsec_attestation_run">Host-integriteitsmomentopname vastleggen</string>
+    <string name="desktop_opsec_audit_title">Sessie-auditlogboek</string>
+    <string name="desktop_opsec_audit_refresh">Auditlogboek vernieuwen</string>
+    <string name="desktop_opsec_audit_empty">Nog geen auditgebeurtenissen</string>
+</resources>

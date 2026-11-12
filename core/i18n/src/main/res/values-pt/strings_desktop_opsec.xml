@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_opsec_title">OpSec</string>
+    <string name="desktop_opsec_secure_clipboard">Área de transferência segura</string>
+    <string name="desktop_opsec_clipboard_title">Área de transferência</string>
+    <string name="desktop_opsec_clipboard_hint">Texto sensível fica na sessão e é limpo da área de transferência do sistema para outras apps não poderem colar.</string>
+    <string name="desktop_opsec_clipboard_clear_now">Limpar área de transferência agora</string>
+    <string name="desktop_opsec_clipboard_timer">Limpar automaticamente após %1$d segundos</string>
+    <string name="desktop_opsec_clipboard_timer_off">Desligado</string>
+    <string name="desktop_opsec_attestation_run">Registar instantâneo de integridade do anfitrião</string>
+    <string name="desktop_opsec_audit_title">Registo de auditoria da sessão</string>
+    <string name="desktop_opsec_audit_refresh">Atualizar registo</string>
+    <string name="desktop_opsec_audit_empty">Ainda sem eventos de auditoria</string>
+</resources>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_opsec_title">OpSec</string>
+    <string name="desktop_opsec_secure_clipboard">Clipboard securizat</string>
+    <string name="desktop_opsec_clipboard_title">Clipboard</string>
+    <string name="desktop_opsec_clipboard_hint">Textul sensibil este păstrat în această sesiune și șters din clipboard-ul sistemului ca alte aplicații să nu îl poată lipi.</string>
+    <string name="desktop_opsec_clipboard_clear_now">Golește clipboard-ul acum</string>
+    <string name="desktop_opsec_clipboard_timer">Ștergere automată după %1$d secunde</string>
+    <string name="desktop_opsec_clipboard_timer_off">Oprit</string>
+    <string name="desktop_opsec_attestation_run">Înregistrează instantaneul de integritate al gazdei</string>
+    <string name="desktop_opsec_audit_title">Jurnal de audit al sesiunii</string>
+    <string name="desktop_opsec_audit_refresh">Reîmprospătează jurnalul</string>
+    <string name="desktop_opsec_audit_empty">Încă nu există evenimente de audit</string>
+</resources>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_opsec_title">OpSec</string>
+    <string name="desktop_opsec_secure_clipboard">کلیپ‌بورد امن</string>
+    <string name="desktop_opsec_clipboard_title">کلیپ‌بورد</string>
+    <string name="desktop_opsec_clipboard_hint">متن حساس در این نشست نگه داشته می‌شود و از کلیپ‌بورد سیستم پاک می‌شود تا برنامه‌های دیگر نتوانند آن را جای‌گذاری کنند.</string>
+    <string name="desktop_opsec_clipboard_clear_now">پاک‌کردن کلیپ‌بورد اکنون</string>
+    <string name="desktop_opsec_clipboard_timer">پاک‌سازی خودکار پس از %1$d ثانیه</string>
+    <string name="desktop_opsec_clipboard_timer_off">خاموش</string>
+    <string name="desktop_opsec_attestation_run">ثبت نمای یکپارچگی میزبان</string>
+    <string name="desktop_opsec_audit_title">گزارش ممیزی نشست</string>
+    <string name="desktop_opsec_audit_refresh">بازخوانی گزارش</string>
+    <string name="desktop_opsec_audit_empty">هنوز رویدادی در ممیزی نیست</string>
+</resources>

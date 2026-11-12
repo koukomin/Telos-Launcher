@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_opsec_title">OpSec</string>
+    <string name="desktop_opsec_secure_clipboard">Appunti sicuri</string>
+    <string name="desktop_opsec_clipboard_title">Appunti</string>
+    <string name="desktop_opsec_clipboard_hint">Il testo sensibile viene custodito in questa sessione e cancellato dagli appunti di sistema così altre app non possono incollarlo.</string>
+    <string name="desktop_opsec_clipboard_clear_now">Svuota appunti ora</string>
+    <string name="desktop_opsec_clipboard_timer">Cancellazione automatica dopo %1$d secondi</string>
+    <string name="desktop_opsec_clipboard_timer_off">Disattivato</string>
+    <string name="desktop_opsec_attestation_run">Registra snapshot di integrità host</string>
+    <string name="desktop_opsec_audit_title">Registro di audit della sessione</string>
+    <string name="desktop_opsec_audit_refresh">Aggiorna registro</string>
+    <string name="desktop_opsec_audit_empty">Nessun evento di audit ancora</string>
+</resources>
