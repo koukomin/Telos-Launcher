@@ -137,7 +137,7 @@ private enum class MediaSpace(
     Music("music", "telos_music_app://music", BaseR.drawable.headphones_24px, I18nR.string.au9_mediahub_space_music),
     Radio("radio", "telos_radio_app://radio", BaseR.drawable.ic_glyph_radio, I18nR.string.au9_mediahub_space_radio),
     Video("video", "telos_video_app://video", BaseR.drawable.video_library_24px, I18nR.string.au9_mediahub_space_video),
-    Tv("tv", "telos_tv_app://tv", BaseR.drawable.ic_app_tv_fg, I18nR.string.au12_tvui_space_tv),
+    Tv("tv", "telos_tv_app://tv", BaseR.drawable.ic_glyph_tv, I18nR.string.au12_tvui_space_tv),
     YouTube("youtube", "telos_youtube_app://youtube", de.mm20.launcher2.base.R.drawable.ic_app_youtube_fg, I18nR.string.telos_youtube_label),
     YouTubeMusic("youtube_music", "telos_youtube_music_app://youtube_music", de.mm20.launcher2.base.R.drawable.ic_app_youtube_music_fg, I18nR.string.telos_youtube_music_label),
     Stremio("stremio", "telos_media_app://stremio", BaseR.drawable.theaters_24px, I18nR.string.au22_stremio_label),
@@ -181,7 +181,12 @@ fun MediaHubScreen(initialSpace: String = "") {
     }
 
     var space by rememberSaveable { mutableStateOf(initialSpace) }
-    LaunchedEffect(Unit) {
+    // Deep links / search must apply a new space even when rememberSaveable already has a prior value.
+    LaunchedEffect(initialSpace) {
+        if (initialSpace.isNotBlank() && MediaSpace.entries.any { it.id == initialSpace }) {
+            if (space != initialSpace) space = initialSpace
+            return@LaunchedEffect
+        }
         if (MediaSpace.entries.none { it.id == space }) {
             val saved = settings.mediaHubSpace.first()
             space = MediaSpace.entries.firstOrNull { it.id == saved }?.id ?: MediaSpace.Music.id

@@ -80,7 +80,7 @@ The TV space plays live channels from the open [iptv-org](https://github.com/ipt
 
 ## Telos Media destinations
 
-The compact bar has Music, Radio, YouTube Music and Watch on the listen side, and Listen, Video, YouTube, TV and Stremio on the watch side. Each destination opens that space. Source chips in the toolbar still choose Music, YouTube Music, Video, YouTube, Stremio Fork, Radio or TV. Hiding the older Telos Music or Radio icons in the Store only removes those chips.
+The compact bar has Music, Radio, YouTube Music and Watch on the listen side, and Listen, Video, YouTube, TV and Stremio on the watch side. Each destination opens that space. Source chips in the toolbar still choose Music, YouTube Music, Video, YouTube, Stremio Fork, Radio or TV. Searching **TV**, **τηλεόραση** or Greeklish such as **tileorasi** opens Telos TV (the TV space), not Radio or the last Media space. Hiding the older Telos Music, Radio, Video or TV icons in the Store only removes those chips.
 
 ## Notification controls
 

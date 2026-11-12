@@ -106,8 +106,8 @@ object TelosApps {
         TelosApp(
             key = "telos_media_app://media",
             name = "Media",
-            description = "Music, radio and video in one app: three spaces that you switch with a pill at the top, and one mini player for music and radio. Telos Music, Telos Radio and Telos Video also open here.",
-            features = listOf("Music, Radio and Video spaces", "Remembers the last space", "Shared mini player for music and radio", "Needs no extra permission of its own"),
+            description = "Music, radio, video and TV in one app: spaces that you switch with a pill at the top, and one mini player for music and radio. Telos Music, Telos Radio, Telos Video and Telos TV also open here.",
+            features = listOf("Music, Radio, Video and TV spaces", "Remembers the last space", "Shared mini player for music and radio", "Needs no extra permission of its own"),
             iconRes = de.mm20.launcher2.base.R.drawable.ic_app_media_full,
             route = SettingsDeepLinkContract.ROUTE_MEDIA,
         ),
@@ -153,6 +153,16 @@ object TelosApps {
             ),
             iconRes = de.mm20.launcher2.base.R.drawable.ic_app_video_full,
             route = SettingsDeepLinkContract.ROUTE_VIDEO,
+        ),
+        TelosApp(
+            key = "telos_tv_app://tv",
+            name = "TV",
+            description = "Live TV channels inside Telos Media, with favorites, custom streams and a programme guide.",
+            features = listOf(
+                "iptv-org channel list", "Favorites and custom channels", "Programme guide", "Opens the TV space in Telos Media",
+            ),
+            iconRes = de.mm20.launcher2.base.R.drawable.ic_app_tv_full,
+            route = SettingsDeepLinkContract.ROUTE_TV,
         ),
         TelosApp(
             key = "telos_viewer_app://viewer",

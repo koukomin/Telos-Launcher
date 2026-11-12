@@ -22,9 +22,11 @@ object SettingsDeepLinkContract {
     const val ROUTE_YOUTUBE = "settings/youtube"
     const val ROUTE_YOUTUBE_MUSIC = "settings/youtube_music"
     const val ROUTE_VIDEO = "settings/video"
-    /** Telos Media: music, radio and video spaces in one app */
+    /** Telos TV space inside Telos Media */
+    const val ROUTE_TV = "settings/tv"
+    /** Telos Media: music, radio, video and TV spaces in one app */
     const val ROUTE_MEDIA = "settings/media_hub"
-    /** Space to open in Telos Media: music, radio or video (default: the last used one) */
+    /** Space to open in Telos Media: music, radio, video or tv (default: the last used one) */
     const val EXTRA_MEDIA_SPACE = "de.mm20.launcher2.settings.MEDIA_SPACE"
     /** Optional: id of a TV channel that Telos Media should show in the TV player (space "tv"); playback is already started by the sender */
     const val EXTRA_MEDIA_CHANNEL = "de.mm20.launcher2.settings.MEDIA_CHANNEL"
@@ -66,7 +68,7 @@ object SettingsDeepLinkContract {
     /** Stable identity for one Recents task per built-in app, independent of launch payload. */
     fun virtualAppTaskId(route: String?, commsTab: String? = null): String? = when (route) {
         ROUTE_COMMS -> if (commsTab == "messages") "messages" else "phone"
-        ROUTE_MEDIA, ROUTE_MUSIC, ROUTE_RADIO, ROUTE_VIDEO, ROUTE_YOUTUBE, ROUTE_YOUTUBE_MUSIC -> "media"
+        ROUTE_MEDIA, ROUTE_MUSIC, ROUTE_RADIO, ROUTE_VIDEO, ROUTE_TV, ROUTE_YOUTUBE, ROUTE_YOUTUBE_MUSIC -> "media"
         ROUTE_PHOTOS, ROUTE_VIEWER -> "viewer"
         ROUTE_FILES -> "files"
         ROUTE_STORE -> "store"

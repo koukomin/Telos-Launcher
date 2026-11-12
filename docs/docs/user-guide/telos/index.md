@@ -64,9 +64,10 @@ gallery, music, video and radio players, an app store and an app freezer.
 | Telos Downloads | Download manager for links with resume and a queue | [Downloads](./downloads/) |
 | Telos Calculator | Standard and scientific calculator, VAT, converters | [Calculator](./calculator/) |
 | Telos Viewer | Photos, immersive viewer, PDF highlight, comics, SVG/PSD/AI/CDR, Office edit | [Viewer](./photos/) |
-| Telos Media | Music, radio and video in one app | [Media](./media/) |
+| Telos Media | Music, radio, video and TV in one app | [Media](./media/) |
 | Telos Music | Player for the music on the phone | [Music](./music/) |
 | Telos Video | Video library and player, streams and torrents | [Video](./video/) |
+| Telos TV | Live TV channels (opens the TV space in Telos Media) | [Media / TV](./media/#tv) |
 | Telos Radio | Internet radio | [Radio](./radio/) |
 | Telos Network | Firewall and DNS filter through the VPN service, blocklists, WireGuard, logs (early version) | [Network](./network/) |
 | Telos Store | Obtainium-like app installer and updater, manages the Telos apps | [Store](./store/) |

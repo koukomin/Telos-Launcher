@@ -819,6 +819,7 @@ open class SettingsActivity : BaseActivity() {
             ROUTE_MUSIC -> "telos_music_app"
             ROUTE_RADIO -> "telos_radio_app"
             ROUTE_VIDEO -> "telos_video_app"
+            SettingsDeepLinkContract.ROUTE_TV -> "telos_tv_app"
             SettingsDeepLinkContract.ROUTE_YOUTUBE -> "telos_youtube_app"
             SettingsDeepLinkContract.ROUTE_YOUTUBE_MUSIC -> "telos_youtube_music_app"
             ROUTE_PHOTOS, SettingsDeepLinkContract.ROUTE_VIEWER -> "telos_viewer_app"
@@ -935,7 +936,7 @@ open class SettingsActivity : BaseActivity() {
             SettingsDeepLinkContract.ROUTE_YOUTUBE -> de.mm20.launcher2.ui.media.hub.MediaHubRoute("youtube")
             SettingsDeepLinkContract.ROUTE_YOUTUBE_MUSIC -> de.mm20.launcher2.ui.media.hub.MediaHubRoute("youtube_music")
             ROUTE_VIDEO -> de.mm20.launcher2.ui.media.hub.MediaHubRoute("video")
-            "settings/tv" -> de.mm20.launcher2.ui.media.hub.MediaHubRoute("tv")
+            SettingsDeepLinkContract.ROUTE_TV -> de.mm20.launcher2.ui.media.hub.MediaHubRoute("tv")
             "settings/stremio" -> de.mm20.launcher2.ui.media.hub.MediaHubRoute("stremio")
             ROUTE_MEDIA -> de.mm20.launcher2.ui.media.hub.MediaHubRoute(
                 intent.getStringExtra(SettingsDeepLinkContract.EXTRA_MEDIA_SPACE).orEmpty()
