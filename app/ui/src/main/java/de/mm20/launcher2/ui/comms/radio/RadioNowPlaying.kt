@@ -80,6 +80,8 @@ import de.mm20.launcher2.comms.radio.RadioRecorder
 import de.mm20.launcher2.preferences.ui.PerformanceSettings
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.comms.RadioViewModel
+import de.mm20.launcher2.ui.component.TelosCyber
+import de.mm20.launcher2.ui.component.telosTechSurface
 import org.koin.compose.koinInject
 
 /** Click / long click with a spring press scale (0.97). No animation when [reduce]. */
@@ -162,11 +164,16 @@ fun RadioNowPlayingBar(stations: List<RadioStation>, onOpen: () -> Unit, modifie
         exit = if (reduce) fadeOut(tween(0)) else slideOutVertically { it } + fadeOut(),
         modifier = modifier,
     ) {
+        val barShape = RoundedCornerShape(24.dp)
         Row(
             Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 12.dp, vertical = 8.dp)
-                .clip(RoundedCornerShape(24.dp))
+                .telosTechSurface(
+                    borderColor = if (isPlaying) TelosCyber.NeonGreen else TelosCyber.NeonCyan,
+                    shape = barShape,
+                )
+                .clip(barShape)
                 .background(Brush.horizontalGradient(listOf(logoColor.copy(alpha = 0.08f).compositeOver(surface), surface)))
                 .pressScale(reduce, onOpen)
                 .padding(10.dp),

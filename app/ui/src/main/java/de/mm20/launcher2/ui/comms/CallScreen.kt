@@ -8,6 +8,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.widget.Toast
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.draggable
 import androidx.compose.foundation.layout.*
@@ -45,6 +46,10 @@ import de.mm20.launcher2.comms.telephony.TelosCallSession
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.preferences.comms.CommsSettings
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.component.TelosCyber
+import de.mm20.launcher2.ui.component.TelosCyberAppBarTitle
+import de.mm20.launcher2.ui.component.telosTechSurface
+import de.mm20.launcher2.ui.component.virtualAppPopup
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
@@ -243,6 +248,7 @@ fun CallScreen(
             }
             AlertDialog(
                 onDismissRequest = { showNotes = false },
+                containerColor = virtualAppPopup(),
                 title = { Text(stringResource(I18nR.string.hc_call_note)) },
                 text = {
                     OutlinedTextField(
@@ -280,16 +286,27 @@ internal fun CallScreenContent(
     BoxWithConstraints(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.surfaceContainerLowest)
         .windowInsetsPadding(WindowInsets.safeDrawing).testTag("call-scene")) {
         val sideBySide = maxWidth >= 560.dp && maxWidth > maxHeight
+        val statusAccent = when {
+            state.incoming -> TelosCyber.NeonGreen
+            state.onHold -> TelosCyber.NeonOrange
+            state.connecting -> TelosCyber.NeonMagenta
+            else -> TelosCyber.NeonCyan
+        }
         val identity: @Composable ColumnScope.() -> Unit = {
             Column(Modifier.weight(1f).fillMaxWidth().verticalScroll(rememberScrollState())
                 .padding(16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(displayName, style = MaterialTheme.typography.headlineLarge, fontWeight = FontWeight.SemiBold,
-                    color = MaterialTheme.colorScheme.onSurface)
+                TelosCyberAppBarTitle(
+                    title = displayName,
+                    status = status.takeIf { it.isNotBlank() },
+                    statusColor = statusAccent,
+                )
                 if (state.number.isNotBlank() && state.number != displayName) {
-                    Text(state.number, style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text(state.number, style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.padding(top = 4.dp, bottom = 12.dp))
+                } else {
+                    Spacer(Modifier.height(12.dp))
                 }
-                Text(status, style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.padding(top = 8.dp, bottom = 12.dp))
+                // Large contact photo stays free of neon card borders so prominence is preserved.
                 CallerPhoto(displayName, state.photoUri, Modifier.fillMaxWidth().aspectRatio(if (sideBySide) 1.2f else 0.95f))
                 if (state.likelySpam) Text(stringResource(I18nR.string.caller_likely_spam), color = MaterialTheme.colorScheme.error,
                     modifier = Modifier.padding(top = 8.dp))
@@ -301,14 +318,29 @@ internal fun CallScreenContent(
                 }
             }
         }
+        val controlsShape = RoundedCornerShape(32.dp)
         val actions: @Composable ColumnScope.() -> Unit = {
             if (!state.incoming) {
-                Column(Modifier.weight(1f).fillMaxWidth().verticalScroll(rememberScrollState()).padding(16.dp)) {
+                Column(
+                    Modifier
+                        .weight(1f)
+                        .fillMaxWidth()
+                        .verticalScroll(rememberScrollState())
+                        .padding(16.dp)
+                        .telosTechSurface(borderColor = TelosCyber.NeonCyan, shape = RoundedCornerShape(24.dp))
+                        .padding(12.dp),
+                ) {
                     activeControls()
                 }
             } else Spacer(Modifier.weight(0.001f))
-            Surface(color = MaterialTheme.colorScheme.surfaceContainerHigh,
-                shape = RoundedCornerShape(32.dp), modifier = Modifier.fillMaxWidth().padding(8.dp)) {
+            Surface(
+                color = Color.Transparent,
+                shape = controlsShape,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp)
+                    .telosTechSurface(borderColor = TelosCyber.NeonMagenta, shape = controlsShape),
+            ) {
                 Column(Modifier.fillMaxWidth().padding(12.dp), horizontalAlignment = Alignment.CenterHorizontally) {
                     if (state.incoming) incomingActions() else {
                         FloatingActionButton(onClick = onHangup, containerColor = RdRedCall, contentColor = Color.White,
@@ -327,8 +359,14 @@ internal fun CallScreenContent(
             Column(Modifier.weight(if (state.incoming) 1f else 0.52f).fillMaxWidth(), content = identity)
             if (state.incoming) {
                 // Incoming critical actions grow naturally rather than occupying a weighted, clipped pane.
-                Surface(color = MaterialTheme.colorScheme.surfaceContainerHigh, shape = RoundedCornerShape(32.dp),
-                    modifier = Modifier.fillMaxWidth().padding(8.dp)) {
+                Surface(
+                    color = Color.Transparent,
+                    shape = controlsShape,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp)
+                        .telosTechSurface(borderColor = TelosCyber.NeonGreen, shape = controlsShape),
+                ) {
                     Column(Modifier.padding(12.dp), horizontalAlignment = Alignment.CenterHorizontally) { incomingActions() }
                 }
             } else Column(Modifier.weight(0.48f).fillMaxWidth(), content = actions)
@@ -437,17 +475,21 @@ private fun CallControl(icon: Int, label: String, selected: Boolean, onClick: ()
     Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
         Surface(
             shape = CircleShape,
-            color = if (selected) MaterialTheme.colorScheme.primaryContainer
+            color = if (selected) TelosCyber.NeonCyan.copy(alpha = 0.22f)
             else MaterialTheme.colorScheme.surfaceContainer,
             modifier = Modifier
                 .size(56.dp)
+                .then(
+                    if (selected) Modifier.border(1.2.dp, TelosCyber.NeonCyan, CircleShape)
+                    else Modifier
+                )
                 .clickable(onClick = onClick),
         ) {
             Box(contentAlignment = Alignment.Center) {
                 Icon(
                     painterResource(icon),
                     contentDescription = label,
-                    tint = if (selected) MaterialTheme.colorScheme.onPrimaryContainer
+                    tint = if (selected) TelosCyber.NeonCyan
                     else MaterialTheme.colorScheme.onSurface,
                 )
             }

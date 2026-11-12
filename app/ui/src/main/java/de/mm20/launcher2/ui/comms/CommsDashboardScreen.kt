@@ -39,9 +39,15 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.preferences.comms.CommsSettings
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.component.TelosCyber
+import de.mm20.launcher2.ui.component.TelosCyberAppBarTitle
 import de.mm20.launcher2.ui.component.TelosSearchBar
+import de.mm20.launcher2.ui.component.TelosTechPill
+import de.mm20.launcher2.ui.component.virtualAppPopup
 import de.mm20.launcher2.ui.locals.LocalBackStack
 import de.mm20.launcher2.ui.theme.transparency.transparency
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.rememberScrollState
 import de.mm20.launcher2.ui.settings.comms.CommsSettingsRoute
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -285,11 +291,12 @@ fun CommsDashboardScreen(
                                 Icon(painterResource(BaseR.drawable.arrow_back_24px), contentDescription = stringResource(I18nR.string.hc_back))
                             }
                         }
-                        Text(
-                            text = stringResource(
+                        TelosCyberAppBarTitle(
+                            title = stringResource(
                                 if (inSubScreen) selectedTab.label else I18nR.string.au_phonea_dialer
                             ),
-                            style = MaterialTheme.typography.titleLarge,
+                            status = stringResource(I18nR.string.au_phonea_dialer),
+                            statusColor = TelosCyber.NeonCyan,
                             modifier = Modifier.weight(1f).padding(start = if (inSubScreen) 8.dp else 0.dp),
                         )
                         IconButton(onClick = { coroutineScope.launch { drawerState.open() } }) {
@@ -297,6 +304,52 @@ fun CommsDashboardScreen(
                         }
                     }
                     if (!inSubScreen) {
+                        TelosCyberAppBarTitle(
+                            title = stringResource(I18nR.string.au_phonea_dialer),
+                            status = stringResource(selectedTab.label),
+                            statusColor = when (selectedTab) {
+                                CommsTab.Recents -> TelosCyber.NeonCyan
+                                CommsTab.Contacts -> TelosCyber.NeonGreen
+                                CommsTab.Messages -> TelosCyber.NeonMagenta
+                                CommsTab.Recordings -> TelosCyber.NeonOrange
+                                else -> TelosCyber.NeonCyan
+                            },
+                            modifier = Modifier.padding(start = 20.dp, end = 12.dp, top = 4.dp, bottom = 2.dp),
+                        )
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .horizontalScroll(rememberScrollState())
+                                .padding(horizontal = 12.dp, vertical = 4.dp),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        ) {
+                            TelosTechPill(
+                                text = stringResource(CommsTab.Recents.label),
+                                isSelected = selectedTab == CommsTab.Recents,
+                                onClick = { selectedTab = CommsTab.Recents },
+                                accentColor = TelosCyber.NeonCyan,
+                            )
+                            TelosTechPill(
+                                text = stringResource(CommsTab.Contacts.label),
+                                isSelected = selectedTab == CommsTab.Contacts,
+                                onClick = { selectedTab = CommsTab.Contacts },
+                                accentColor = TelosCyber.NeonGreen,
+                            )
+                            if (showSmsTab) {
+                                TelosTechPill(
+                                    text = stringResource(CommsTab.Messages.label),
+                                    isSelected = selectedTab == CommsTab.Messages,
+                                    onClick = { selectedTab = CommsTab.Messages },
+                                    accentColor = TelosCyber.NeonMagenta,
+                                )
+                            }
+                            TelosTechPill(
+                                text = stringResource(CommsTab.Keypad.label),
+                                isSelected = selectedTab == CommsTab.Keypad,
+                                onClick = { selectedTab = CommsTab.Keypad },
+                                accentColor = TelosCyber.NeonOrange,
+                            )
+                        }
                         TelosSearchBar(
                             value = searchQuery,
                             onValueChange = { searchQuery = it },
@@ -319,7 +372,7 @@ fun CommsDashboardScreen(
                                         Icon(
                                             painterResource(BaseR.drawable.filter_alt_24px),
                                             contentDescription = stringResource(I18nR.string.hc_filter),
-                                            tint = if (showFilters) MaterialTheme.colorScheme.primary
+                                            tint = if (showFilters) TelosCyber.NeonCyan
                                             else MaterialTheme.colorScheme.onSurfaceVariant,
                                         )
                                     }
@@ -436,6 +489,7 @@ fun CommsDashboardScreen(
         var selectedInterval by remember { mutableStateOf("All time") }
         AlertDialog(
             onDismissRequest = { showClearHistoryDialog = false },
+            containerColor = virtualAppPopup(),
             title = { Text("Clear Call History") },
             text = {
                 Column {

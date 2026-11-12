@@ -89,6 +89,9 @@ import androidx.compose.ui.Alignment
 import de.mm20.launcher2.ui.component.frostedGlass
 import de.mm20.launcher2.ui.component.AdaptiveNavigationBar
 import de.mm20.launcher2.ui.component.AdaptiveNavigationItem
+import de.mm20.launcher2.ui.component.TelosCyber
+import de.mm20.launcher2.ui.component.TelosTechPill
+import de.mm20.launcher2.ui.component.telosTechSurface
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalConfiguration
@@ -362,8 +365,11 @@ private fun HubToolbar(
     val glass = MaterialTheme.colorScheme.surface.copy(alpha = t.elevatedSurface)
     Column(Modifier.fillMaxWidth().hubGlass(haze, blurRadius, glass)) {
         MediaToolbarHeader(
-            title = stringResource(current.label), onBack = onBack,
-            onOpenSources = { menu = true }, actions = actions,
+            title = stringResource(current.label),
+            status = stringResource(current.groupLabel),
+            onBack = onBack,
+            onOpenSources = { menu = true },
+            actions = actions,
             sourceMenu = {
                 androidx.compose.material3.DropdownMenu(expanded = menu, onDismissRequest = { menu = false }) {
                     available.forEach { source ->
@@ -376,6 +382,23 @@ private fun HubToolbar(
                 }
             },
         )
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .horizontalScroll(rememberScrollState())
+                .padding(horizontal = 12.dp, vertical = 4.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            available.forEachIndexed { index, source ->
+                TelosTechPill(
+                    text = stringResource(source.label),
+                    isSelected = source == current,
+                    onClick = { onSelect(source) },
+                    accentColor = TelosCyber.accentFor(index),
+                    icon = painterResource(source.icon),
+                )
+            }
+        }
     }
 }
 
@@ -609,17 +632,21 @@ private fun HubMiniPlayer(
         val cardShape = RoundedCornerShape(8.dp)
         val haptic = LocalHapticFeedback.current
         val duration = musicNow?.durationMs ?: 0L
+        val miniAccent = when {
+            isMusic -> TelosCyber.NeonCyan
+            isTv -> TelosCyber.NeonMagenta
+            else -> TelosCyber.NeonGreen
+        }
+        val miniShape = RoundedCornerShape(24.dp)
 
         Surface(
-            shape = RoundedCornerShape(24.dp),
-            color = scheme.surfaceContainerHigh.copy(alpha = 0.94f),
+            shape = miniShape,
+            color = Color.Transparent,
             contentColor = scheme.onSurface,
-            tonalElevation = 2.dp,
-            shadowElevation = 8.dp,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 12.dp, vertical = 6.dp)
-                .clip(RoundedCornerShape(24.dp)),
+                .telosTechSurface(borderColor = miniAccent, shape = miniShape),
         ) {
             Box {
             Row(

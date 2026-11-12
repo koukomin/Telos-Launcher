@@ -34,6 +34,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.component.TelosCyber
+import de.mm20.launcher2.ui.component.TelosCyberAppBarTitle
 
 /**
  * Animated Laser-stroked linear icon header bar for Telos Media.
@@ -46,6 +48,7 @@ internal fun MediaToolbarHeader(
     onOpenSources: () -> Unit,
     actions: @Composable RowScope.() -> Unit,
     sourceMenu: @Composable () -> Unit = {},
+    status: String? = null,
 ) {
     CompositionLocalProvider(LocalContentColor provides MaterialTheme.colorScheme.onSurface) {
         BoxWithConstraints(Modifier.fillMaxWidth()) {
@@ -72,7 +75,14 @@ internal fun MediaToolbarHeader(
                     sourceMenu()
                 }
 
-                Spacer(Modifier.weight(1f))
+                TelosCyberAppBarTitle(
+                    title = title,
+                    status = status,
+                    statusColor = TelosCyber.NeonCyan,
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(start = 10.dp, end = 8.dp),
+                )
 
                 // Action buttons for current tab (Search, Add, Settings)
                 Row(

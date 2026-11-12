@@ -20,10 +20,12 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
@@ -53,7 +55,13 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.common.share.ShareActions
+import de.mm20.launcher2.ui.component.TelosCyber
+import de.mm20.launcher2.ui.component.TelosCyberAppBarTitle
+import de.mm20.launcher2.ui.component.TelosCyberSectionLabel
+import de.mm20.launcher2.ui.component.TelosTechPill
+import de.mm20.launcher2.ui.component.telosTechSurface
 import de.mm20.launcher2.ui.component.virtualAppGlass
+import de.mm20.launcher2.ui.component.virtualAppPopup
 import de.mm20.launcher2.ui.theme.transparency.transparency
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -353,13 +361,32 @@ fun ViewerScreen() {
     val blur = de.mm20.launcher2.ui.component.rememberVirtualAppBlur()
     val bar = de.mm20.launcher2.ui.component.virtualAppElevated()
     Column(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.surface.copy(alpha = MaterialTheme.transparency.background)).statusBarsPadding()) {
-        androidx.compose.material3.TabRow(
-            selectedTabIndex = tab,
-            containerColor = Color.Transparent,
-            modifier = Modifier.virtualAppGlass(blur, bar),
-        ) {
-            androidx.compose.material3.Tab(selected = tab == 0, onClick = { select(0) }, text = { Text(stringResource(I18nR.string.hc_photos)) })
-            androidx.compose.material3.Tab(selected = tab == 1, onClick = { select(1) }, text = { Text(stringResource(I18nR.string.au20_viewer_cat_documents)) })
+        Column(Modifier.fillMaxWidth().virtualAppGlass(blur, bar).padding(horizontal = 12.dp, vertical = 8.dp)) {
+            TelosCyberAppBarTitle(
+                title = stringResource(I18nR.string.au20_viewer_title),
+                status = stringResource(if (tab == 0) I18nR.string.hc_photos else I18nR.string.au20_viewer_cat_documents),
+                statusColor = if (tab == 0) TelosCyber.NeonCyan else TelosCyber.NeonMagenta,
+            )
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 8.dp)
+                    .horizontalScroll(rememberScrollState()),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                TelosTechPill(
+                    text = stringResource(I18nR.string.hc_photos),
+                    isSelected = tab == 0,
+                    onClick = { select(0) },
+                    accentColor = TelosCyber.NeonCyan,
+                )
+                TelosTechPill(
+                    text = stringResource(I18nR.string.au20_viewer_cat_documents),
+                    isSelected = tab == 1,
+                    onClick = { select(1) },
+                    accentColor = TelosCyber.NeonMagenta,
+                )
+            }
         }
         Box(Modifier.weight(1f).fillMaxWidth()) {
             if (tab == 0) de.mm20.launcher2.ui.media.photos.PhotosScreen(embedded = true) else DocumentsScreen(embedded = true)
@@ -463,16 +490,16 @@ internal fun DocumentsScreen(embedded: Boolean = false) {
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Column(Modifier.weight(1f)) {
-                    if (!embedded) Text(
-                        stringResource(I18nR.string.au20_viewer_title),
-                        style = MaterialTheme.typography.headlineMedium,
-                        fontWeight = FontWeight.SemiBold,
-                    )
-                    if (files != null) {
-                        Text(
-                            stringResource(I18nR.string.au20_viewer_count, shown.size),
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    if (!embedded) {
+                        TelosCyberAppBarTitle(
+                            title = stringResource(I18nR.string.au20_viewer_title),
+                            status = files?.let { stringResource(I18nR.string.au20_viewer_count, shown.size) },
+                            statusColor = TelosCyber.NeonMagenta,
+                        )
+                    } else if (files != null) {
+                        TelosCyberSectionLabel(
+                            text = stringResource(I18nR.string.au20_viewer_count, shown.size),
+                            accent = TelosCyber.NeonMagenta,
                         )
                     }
                 }
@@ -525,15 +552,15 @@ internal fun DocumentsScreen(embedded: Boolean = false) {
                     }
                 },
                 filters = {
-                    DocCategory.values().forEach { c ->
-                        FilterChip(
-                            selected = category == c,
+                    DocCategory.values().forEachIndexed { index, c ->
+                        TelosTechPill(
+                            text = stringResource(c.labelRes),
+                            isSelected = category == c,
                             onClick = {
                                 if (category != c) haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
                                 category = c
                             },
-                            label = { Text(stringResource(c.labelRes)) },
-                            shape = CircleShape,
+                            accentColor = TelosCyber.accentFor(index),
                         )
                     }
                 },
@@ -564,10 +591,9 @@ internal fun DocumentsScreen(embedded: Boolean = false) {
                 if (showRecents) {
                     item(key = "recent_title") {
                         Row(Modifier.fillMaxWidth().padding(top = 4.dp), verticalAlignment = Alignment.CenterVertically) {
-                            Text(
-                                stringResource(I18nR.string.au20_viewer_recent),
-                                style = MaterialTheme.typography.titleLarge,
-                                fontWeight = FontWeight.SemiBold,
+                            TelosCyberSectionLabel(
+                                text = stringResource(I18nR.string.au20_viewer_recent),
+                                accent = TelosCyber.NeonCyan,
                                 modifier = Modifier.weight(1f).padding(start = 4.dp),
                             )
                             TextButton(onClick = { vm.clearRecents(context) }) { Text(stringResource(I18nR.string.au20_viewer_clear_recent)) }
@@ -592,10 +618,9 @@ internal fun DocumentsScreen(embedded: Boolean = false) {
                         }
                     }
                     item(key = "all_title") {
-                        Text(
-                            stringResource(I18nR.string.au20_viewer_cat_all),
-                            style = MaterialTheme.typography.titleLarge,
-                            fontWeight = FontWeight.SemiBold,
+                        TelosCyberSectionLabel(
+                            text = stringResource(I18nR.string.au20_viewer_cat_all),
+                            accent = TelosCyber.NeonGreen,
                             modifier = Modifier.padding(start = 4.dp, top = 16.dp),
                         )
                     }
@@ -658,6 +683,7 @@ internal fun DocumentsScreen(embedded: Boolean = false) {
     info?.let { t ->
         AlertDialog(
             onDismissRequest = { info = null },
+            containerColor = virtualAppPopup(),
             confirmButton = { TextButton(onClick = { info = null }) { Text(stringResource(android.R.string.ok)) } },
             title = { Text(t.name, maxLines = 2, overflow = TextOverflow.Ellipsis) },
             text = {
@@ -686,8 +712,10 @@ private fun InfoLine(label: String, value: String) {
 private fun AccessCard(onAllow: () -> Unit) {
     Surface(
         shape = RoundedCornerShape(24.dp),
-        color = MaterialTheme.colorScheme.surfaceContainerHigh,
-        modifier = Modifier.fillMaxWidth(),
+        color = Color.Transparent,
+        modifier = Modifier
+            .fillMaxWidth()
+            .telosTechSurface(borderColor = TelosCyber.NeonOrange, shape = RoundedCornerShape(24.dp)),
     ) {
         Column(Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
             Icon(
@@ -725,11 +753,18 @@ private fun DocRow(
     Box {
         Surface(
             shape = RoundedCornerShape(20.dp),
-            color = MaterialTheme.colorScheme.surfaceContainerLow,
-            modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(20.dp)).combinedClickable(
-                onClick = onOpen,
-                onLongClick = { haptic.performHapticFeedback(HapticFeedbackType.LongPress); menu = true },
-            ),
+            color = Color.Transparent,
+            modifier = Modifier
+                .fillMaxWidth()
+                .telosTechSurface(
+                    borderColor = if (selected) TelosCyber.NeonCyan else TelosCyber.NeonMagenta.copy(alpha = 0.55f),
+                    shape = RoundedCornerShape(20.dp),
+                )
+                .clip(RoundedCornerShape(20.dp))
+                .combinedClickable(
+                    onClick = onOpen,
+                    onLongClick = { haptic.performHapticFeedback(HapticFeedbackType.LongPress); menu = true },
+                ),
         ) {
             Row(Modifier.padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
                 Checkbox(selected, { onSelect() })
@@ -775,11 +810,15 @@ private fun RecentCard(
     Box {
         Surface(
             shape = RoundedCornerShape(20.dp),
-            color = MaterialTheme.colorScheme.surfaceContainerHigh,
-            modifier = Modifier.width(164.dp).clip(RoundedCornerShape(20.dp)).combinedClickable(
-                onClick = onOpen,
-                onLongClick = { haptic.performHapticFeedback(HapticFeedbackType.LongPress); menu = true },
-            ),
+            color = Color.Transparent,
+            modifier = Modifier
+                .width(164.dp)
+                .telosTechSurface(borderColor = TelosCyber.NeonCyan, shape = RoundedCornerShape(20.dp))
+                .clip(RoundedCornerShape(20.dp))
+                .combinedClickable(
+                    onClick = onOpen,
+                    onLongClick = { haptic.performHapticFeedback(HapticFeedbackType.LongPress); menu = true },
+                ),
         ) {
             Column(Modifier.padding(12.dp)) {
                 ViewerThumbnail(t.uri, t.name, t.date, Modifier.fillMaxWidth().height(96.dp).clip(RoundedCornerShape(12.dp))) { TypeTile(DocumentTypes.ext(t.name), 44.dp) }
