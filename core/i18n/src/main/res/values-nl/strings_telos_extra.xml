@@ -14,11 +14,26 @@
     
 
 
-    <string name="settings_keyboard">Keyboard</string>
+    <string name="settings_keyboard">Toetsenbord</string>
     <string name="keepass_title">KeePassTL</string>
     <string name="aether_title">Telos Aether</string>
-    <string name="backup_group_keepass">KeePassTL Vault</string>
-    <string name="backup_group_keepass_summary">Saved passwords and credentials</string>
+    <string name="backup_group_keepass">KeePassTL-kluis</string>
+    <string name="backup_group_keepass_summary">Opgeslagen wachtwoorden en inloggegevens</string>
     <string name="backup_group_aether">Telos Aether Nostr</string>
     <string name="backup_group_aether_summary">Nostr keys and relay configurations</string>
+    <string name="keepass_db_password">Database-wachtwoord</string>
+    <string name="keepass_wrong_password">Onjuist wachtwoord of ongeldig bestand</string>
+    <string name="keepass_open_kdbx">KDBX openen</string>
+    <string name="keepass_open_stego">Openen vanuit afbeelding (steganografie)</string>
+    <string name="keepass_lock">Kluis vergrendelen</string>
+    <string name="keepass_encrypted_val">Versleuteld</string>
+    <string name="keepass_unnamed">Naamloos</string>
+    <string name="backup_group_app_data">App-gegevens (Root/Shizuku)</string>
+    <string name="backup_group_app_data_summary">Applicatiegegevens en instellingen</string>
+    <string name="backup_group_apps">Applicaties (APK &amp; Splits)</string>
+    <string name="backup_group_apps_summary">Installatiepakketten voor geselecteerde apps</string>
+    <string name="backup_group_system_data">Systeemgegevens</string>
+    <string name="backup_group_system_data_summary">Sms, oproeplogboeken, wifi-netwerken</string>
+    <string name="backup_group_virtual_apps">Telos Virtuele Apps</string>
+    <string name="backup_group_virtual_apps_summary">Configuraties voor Telos Sync, Viewer, Rekenmachine enz.</string>
 </resources>

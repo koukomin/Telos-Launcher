@@ -43,12 +43,9 @@ fun GraphicsApiPreferenceCategory() {
         liveRenderer = withContext(Dispatchers.IO) { HwuiRenderer.current() }
         privileged = HwuiRenderer.privilegedAvailable()
     }
-    if (explainRestart) androidx.compose.material3.AlertDialog(
-        onDismissRequest = { explainRestart = false },
-        title = { androidx.compose.material3.Text(stringResource(I18nR.string.hc_graphics_api)) },
-        text = { androidx.compose.material3.Text(stringResource(I18nR.string.app_polish_renderer_restart)) },
-        confirmButton = { androidx.compose.material3.TextButton(onClick = { explainRestart = false }) { androidx.compose.material3.Text(stringResource(android.R.string.ok)) } },
-    )
+    if (explainRestart) {
+        RestartNoticeDialog(onDismiss = { explainRestart = false })
+    }
     PreferenceCategory(title = stringResource(I18nR.string.hc_graphics_api)) {
         Preference(
             title = stringResource(I18nR.string.hc_graphics_api_about),
@@ -129,4 +126,23 @@ fun GraphicsApiPreferenceCategory() {
             },
         )
     }
+}
+
+
+@Composable
+private fun RestartNoticeDialog(onDismiss: () -> Unit) {
+    androidx.compose.material3.AlertDialog(
+        onDismissRequest = onDismiss,
+        title = {
+            androidx.compose.material3.Text(text = stringResource(I18nR.string.hc_graphics_api))
+        },
+        text = {
+            androidx.compose.material3.Text(text = stringResource(I18nR.string.app_polish_renderer_restart))
+        },
+        confirmButton = {
+            androidx.compose.material3.TextButton(onClick = onDismiss) {
+                androidx.compose.material3.Text(text = stringResource(android.R.string.ok))
+            }
+        },
+    )
 }

@@ -16,11 +16,26 @@
     
 
 
-    <string name="settings_keyboard">Keyboard</string>
+    <string name="settings_keyboard">Papan ketik</string>
     <string name="keepass_title">KeePassTL</string>
     <string name="aether_title">Telos Aether</string>
-    <string name="backup_group_keepass">KeePassTL Vault</string>
-    <string name="backup_group_keepass_summary">Saved passwords and credentials</string>
+    <string name="backup_group_keepass">Brankas KeePassTL</string>
+    <string name="backup_group_keepass_summary">Kata sandi dan kredensial tersimpan</string>
     <string name="backup_group_aether">Telos Aether Nostr</string>
     <string name="backup_group_aether_summary">Nostr keys and relay configurations</string>
+    <string name="keepass_db_password">Kata sandi database</string>
+    <string name="keepass_wrong_password">Kata sandi salah atau berkas tidak valid</string>
+    <string name="keepass_open_kdbx">Buka KDBX</string>
+    <string name="keepass_open_stego">Buka dari gambar (Steganografi)</string>
+    <string name="keepass_lock">Kunci brankas</string>
+    <string name="keepass_encrypted_val">Terenkripsi</string>
+    <string name="keepass_unnamed">Tanpa nama</string>
+    <string name="backup_group_app_data">Data aplikasi (Root/Shizuku)</string>
+    <string name="backup_group_app_data_summary">Data dan preferensi aplikasi</string>
+    <string name="backup_group_apps">Aplikasi (APK &amp; Splits)</string>
+    <string name="backup_group_apps_summary">Paket instalasi untuk aplikasi yang dipilih</string>
+    <string name="backup_group_system_data">Data sistem</string>
+    <string name="backup_group_system_data_summary">SMS, log panggilan, jaringan Wi-Fi</string>
+    <string name="backup_group_virtual_apps">Aplikasi Virtual Telos</string>
+    <string name="backup_group_virtual_apps_summary">Konfigurasi untuk Telos Sync, Penampil, Kalkulator, dll.</string>
 </resources>

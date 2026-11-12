@@ -14,11 +14,26 @@
     
 
 
-    <string name="settings_keyboard">Keyboard</string>
+    <string name="settings_keyboard">键盘</string>
     <string name="keepass_title">KeePassTL</string>
     <string name="aether_title">Telos Aether</string>
-    <string name="backup_group_keepass">KeePassTL Vault</string>
-    <string name="backup_group_keepass_summary">Saved passwords and credentials</string>
+    <string name="backup_group_keepass">KeePassTL 保险库</string>
+    <string name="backup_group_keepass_summary">已保存的密码与凭据</string>
     <string name="backup_group_aether">Telos Aether Nostr</string>
     <string name="backup_group_aether_summary">Nostr keys and relay configurations</string>
+    <string name="keepass_db_password">数据库密码</string>
+    <string name="keepass_wrong_password">密码错误或无效文件</string>
+    <string name="keepass_open_kdbx">打开 KDBX</string>
+    <string name="keepass_open_stego">从图片中打开 (隐写术)</string>
+    <string name="keepass_lock">锁定保险库</string>
+    <string name="keepass_encrypted_val">已加密</string>
+    <string name="keepass_unnamed">未命名</string>
+    <string name="backup_group_app_data">应用数据 (Root/Shizuku)</string>
+    <string name="backup_group_app_data_summary">应用数据与用户偏好</string>
+    <string name="backup_group_apps">应用程序 (APK &amp; Splits)</string>
+    <string name="backup_group_apps_summary">选定应用程序的安装包</string>
+    <string name="backup_group_system_data">系统数据</string>
+    <string name="backup_group_system_data_summary">短信、通话记录、Wi-Fi 网络</string>
+    <string name="backup_group_virtual_apps">Telos 虚拟应用</string>
+    <string name="backup_group_virtual_apps_summary">Telos Sync、查看器、计算器等应用配置</string>
 </resources>

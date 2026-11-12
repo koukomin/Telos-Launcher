@@ -14,11 +14,26 @@
     
 
 
-    <string name="settings_keyboard">Keyboard</string>
+    <string name="settings_keyboard">Klávesnice</string>
     <string name="keepass_title">KeePassTL</string>
     <string name="aether_title">Telos Aether</string>
-    <string name="backup_group_keepass">KeePassTL Vault</string>
-    <string name="backup_group_keepass_summary">Saved passwords and credentials</string>
+    <string name="backup_group_keepass">Trezor KeePassTL</string>
+    <string name="backup_group_keepass_summary">Uložená hesla a přihlašovací údaje</string>
     <string name="backup_group_aether">Telos Aether Nostr</string>
     <string name="backup_group_aether_summary">Nostr keys and relay configurations</string>
+    <string name="keepass_db_password">Heslo databáze</string>
+    <string name="keepass_wrong_password">Nesprávné heslo nebo neplatný soubor</string>
+    <string name="keepass_open_kdbx">Otevřít KDBX</string>
+    <string name="keepass_open_stego">Otevřít z obrázku (steganografie)</string>
+    <string name="keepass_lock">Zamknout trezor</string>
+    <string name="keepass_encrypted_val">Šifrováno</string>
+    <string name="keepass_unnamed">Bez názvu</string>
+    <string name="backup_group_app_data">Data aplikací (Root/Shizuku)</string>
+    <string name="backup_group_app_data_summary">Data aplikací a předvolby</string>
+    <string name="backup_group_apps">Aplikace (APK &amp; Splits)</string>
+    <string name="backup_group_apps_summary">Instalační balíčky vybraných aplikací</string>
+    <string name="backup_group_system_data">Systémová data</string>
+    <string name="backup_group_system_data_summary">SMS, historie hovorů, Wi-Fi sítě</string>
+    <string name="backup_group_virtual_apps">Virtuální aplikace Telos</string>
+    <string name="backup_group_virtual_apps_summary">Nastavení pro Telos Sync, Prohlížeč, Kalkulačku atd.</string>
 </resources>

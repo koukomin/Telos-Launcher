@@ -16,11 +16,26 @@
     
 
 
-    <string name="settings_keyboard">Keyboard</string>
+    <string name="settings_keyboard">Bàn phím</string>
     <string name="keepass_title">KeePassTL</string>
     <string name="aether_title">Telos Aether</string>
-    <string name="backup_group_keepass">KeePassTL Vault</string>
-    <string name="backup_group_keepass_summary">Saved passwords and credentials</string>
+    <string name="backup_group_keepass">Kho lưu trữ KeePassTL</string>
+    <string name="backup_group_keepass_summary">Mật khẩu và thông tin xác thực đã lưu</string>
     <string name="backup_group_aether">Telos Aether Nostr</string>
     <string name="backup_group_aether_summary">Nostr keys and relay configurations</string>
+    <string name="keepass_db_password">Mật khẩu cơ sở dữ liệu</string>
+    <string name="keepass_wrong_password">Sai mật khẩu hoặc tệp không hợp lệ</string>
+    <string name="keepass_open_kdbx">Mở KDBX</string>
+    <string name="keepass_open_stego">Mở từ hình ảnh (Giấu tin)</string>
+    <string name="keepass_lock">Khóa kho lưu trữ</string>
+    <string name="keepass_encrypted_val">Đã mã hóa</string>
+    <string name="keepass_unnamed">Chưa đặt tên</string>
+    <string name="backup_group_app_data">Dữ liệu ứng dụng (Root/Shizuku)</string>
+    <string name="backup_group_app_data_summary">Dữ liệu và tùy chọn ứng dụng</string>
+    <string name="backup_group_apps">Ứng dụng (APK &amp; Gói phân chia)</string>
+    <string name="backup_group_apps_summary">Gói cài đặt cho các ứng dụng đã chọn</string>
+    <string name="backup_group_system_data">Dữ liệu hệ thống</string>
+    <string name="backup_group_system_data_summary">Tin nhắn SMS, nhật ký cuộc gọi, mạng Wi-Fi</string>
+    <string name="backup_group_virtual_apps">Ứng dụng ảo Telos</string>
+    <string name="backup_group_virtual_apps_summary">Cấu hình cho Telos Sync, Trình xem, Máy tính, v.v.</string>
 </resources>

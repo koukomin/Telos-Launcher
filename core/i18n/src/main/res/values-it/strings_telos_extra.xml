@@ -17,8 +17,23 @@
     <string name="settings_keyboard">Tastiera</string>
     <string name="keepass_title">KeePassTL</string>
     <string name="aether_title">Telos Aether</string>
-    <string name="backup_group_keepass">Caveau KeePassTL</string>
+    <string name="backup_group_keepass">Cassaforte KeePassTL</string>
     <string name="backup_group_keepass_summary">Password e credenziali salvate</string>
     <string name="backup_group_aether">Telos Aether Nostr</string>
     <string name="backup_group_aether_summary">Chiavi Nostr e configurazioni relay</string>
+    <string name="keepass_db_password">Password del database</string>
+    <string name="keepass_wrong_password">Password errata o file non valido</string>
+    <string name="keepass_open_kdbx">Apri KDBX</string>
+    <string name="keepass_open_stego">Apri da immagine (Steganografia)</string>
+    <string name="keepass_lock">Blocca cassaforte</string>
+    <string name="keepass_encrypted_val">Crittografato</string>
+    <string name="keepass_unnamed">Senza nome</string>
+    <string name="backup_group_app_data">Dati delle app (Root/Shizuku)</string>
+    <string name="backup_group_app_data_summary">Dati e preferenze delle applicazioni</string>
+    <string name="backup_group_apps">Applicazioni (APK &amp; Splits)</string>
+    <string name="backup_group_apps_summary">Pacchetti installabili per le app selezionate</string>
+    <string name="backup_group_system_data">Dati di sistema</string>
+    <string name="backup_group_system_data_summary">SMS, registro chiamate, reti Wi-Fi</string>
+    <string name="backup_group_virtual_apps">App virtuali Telos</string>
+    <string name="backup_group_virtual_apps_summary">Configurazioni per Telos Sync, Visualizzatore, Calcolatrice, ecc.</string>
 </resources>

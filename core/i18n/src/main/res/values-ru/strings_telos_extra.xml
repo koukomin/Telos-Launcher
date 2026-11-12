@@ -17,8 +17,23 @@
     <string name="settings_keyboard">Клавиатура</string>
     <string name="keepass_title">KeePassTL</string>
     <string name="aether_title">Telos Aether</string>
-    <string name="backup_group_keepass">Сейф KeePassTL</string>
+    <string name="backup_group_keepass">Хранилище KeePassTL</string>
     <string name="backup_group_keepass_summary">Сохраненные пароли и учетные данные</string>
     <string name="backup_group_aether">Telos Aether Nostr</string>
     <string name="backup_group_aether_summary">Ключи Nostr и конфигурации реле</string>
+    <string name="keepass_db_password">Пароль базы данных</string>
+    <string name="keepass_wrong_password">Неверный пароль или поврежденный файл</string>
+    <string name="keepass_open_kdbx">Открыть KDBX</string>
+    <string name="keepass_open_stego">Открыть из изображения (стеганография)</string>
+    <string name="keepass_lock">Заблокировать хранилище</string>
+    <string name="keepass_encrypted_val">Зашифровано</string>
+    <string name="keepass_unnamed">Без имени</string>
+    <string name="backup_group_app_data">Данные приложений (Root/Shizuku)</string>
+    <string name="backup_group_app_data_summary">Данные приложений и пользовательские настройки</string>
+    <string name="backup_group_apps">Приложения (APK и сплиты)</string>
+    <string name="backup_group_apps_summary">Установочные пакеты для выбранных приложений</string>
+    <string name="backup_group_system_data">Системные данные</string>
+    <string name="backup_group_system_data_summary">SMS, журнал вызовов, сети Wi-Fi</string>
+    <string name="backup_group_virtual_apps">Виртуальные приложения Telos</string>
+    <string name="backup_group_virtual_apps_summary">Настройки для Telos Sync, просмотрщика, калькулятора и др.</string>
 </resources>
