@@ -129,7 +129,27 @@ fun TelosTopPanel(
                 Box(Modifier.clickable { DesktopChrome.toggleControlCenter() }.padding(2.dp)) { CandyCyberIcon(CandyIcon.Volume, 18.dp) }
                 Box(Modifier.clickable { DesktopChrome.toggleControlCenter() }.padding(2.dp)) { CandyCyberIcon(CandyIcon.Network, 18.dp) }
                 Box(Modifier.clickable { DesktopChrome.toggleControlCenter() }.padding(2.dp)) { CandyCyberIcon(CandyIcon.Battery, 18.dp) }
+                // IME / keyboard layout chip (Plasma-style). Host fcitx5/ibus still own the engines.
+                val imeLabel = SystemTrayManager.keyboardManager.activeLayout.uppercase()
+                Text(
+                    imeLabel,
+                    fontSize = 11.sp,
+                    color = TelosColors.secondary,
+                    modifier = Modifier
+                        .clickable { SystemTrayManager.keyboardManager.toggleNextLayout() }
+                        .padding(horizontal = 4.dp, vertical = 2.dp),
+                )
                 Box(Modifier.clickable { popup = PanelPopup.Tray }.padding(2.dp)) { CandyCyberIcon(CandyIcon.Tray, 18.dp) }
+                // Live SNI titles inline when few; full list still in tray popup.
+                tray.filter { it.id.startsWith("sni:") }.take(3).forEach { item ->
+                    Text(
+                        item.name.take(10),
+                        fontSize = 10.sp,
+                        color = TelosColors.onSurface.copy(alpha = 0.85f),
+                        maxLines = 1,
+                        modifier = Modifier.clickable { SystemTrayManager.launch(item) }.padding(horizontal = 2.dp),
+                    )
+                }
                 Box(Modifier.clickable { TelosClipboardManager.popup = !TelosClipboardManager.popup }.padding(2.dp)) { CandyCyberIcon(CandyIcon.Clip, 18.dp) }
                 Box(Modifier.clickable { TelosNotificationCenter.open.value = !TelosNotificationCenter.open.value }.padding(2.dp)) { CandyCyberIcon(CandyIcon.Bell, 18.dp) }
                 Box(Modifier.clickable { TelosCaptureTool.fullscreen() }.padding(2.dp)) { CandyCyberIcon(CandyIcon.Shot, 18.dp) }
