@@ -31,11 +31,11 @@ These sit **on top of** P0–W3 (still in tree). They describe the Telos Desktop
 
 | Phase | Status | Scope |
 | --- | --- | --- |
-| **VOS-1** | Scaffolding | Vault profile folders under `~/.config/telos/profiles/`; active name from `profile.active` in vault `desktop.properties` (no secrets in properties). Multi-vault switch and export remain future work. |
+| **VOS-1** | **Partial (in tree)** | Vault profile folders under `~/.config/telos/profiles/`; active name from `profile.active` in vault `desktop.properties` (no secrets in properties). **PortableData / PortableVault** boot paths on Windows/macOS with `PortableEnvironmentIsolator` + `PortableTraceGuard` (TMPDIR, XDG_*, no host profile writes). Multi-vault switch UI remains future work. |
 | **VOS-2** | **Partial (in tree)** | **Network MVP:** `DesktopNetworkController` + multi-tab Telos Network app (Status, DNS, session nftables allowlist, WireGuard via host `wg-quick`/`wg`, Tor SOCKS 9050, encrypted DNS preference + Linux `resolvectl` when available). Windows/macOS portable: preference + connectivity snapshot only (no crash). Kill-switch / per-app routing / NextDNS-class filters: not yet. |
 | **VOS-3** | Planned | App runtime: Flatpak permissions, sandbox tiers, `telos://` deep links. |
-| **VOS-4** | Planned | Continuity with Android Telos (encrypted sync, LAN pairing). |
-| **VOS-5** | Planned | Signed desktop updates, backup/restore of vault + network configs. |
+| **VOS-4** | **Partial (in tree)** | `DesktopSessionSync` encrypted zip of `desktop.properties` + `~/.config/telos` (no WG private keys in logs); optional KeePassTL entry **Telos Sync** via kotpass on desktop. LAN pairing with Android: not yet. |
+| **VOS-5** | **Partial (in tree)** | Session backup/export in Network + Settings; signed desktop updates and full vault restore remain future work. **Windows HKCU shell** (`WindowsShellIntegration`, `tools/windows/install-telos-shell.ps1`) optional. |
 | **VOS-6** | Planned | OpSec: attestation light, secure clipboard, audit log. |
 
 Constraints that stay in force: no `:app:app` dependency on `:desktop-linux`; i18n keys from `:core:i18n` only; labwc is a **host package**, not bundled.

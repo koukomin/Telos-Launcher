@@ -26,6 +26,7 @@ import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -43,8 +44,11 @@ import com.telos.desktop.network.DesktopNetworkController
 import com.telos.desktop.panel.ConnectivityManager
 import com.telos.desktop.panel.ConnectivityState
 import com.telos.desktop.ui.TelosColors
+import com.telos.desktop.sync.DesktopSessionSync
 import com.telos.desktop.vault.DesktopProfiles
+import com.telos.desktop.settings.TelosDesktopSettings
 import com.telos.desktop.vault.PhantomVault
+import java.io.File
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -306,6 +310,22 @@ private fun NetworkStatusPane(
     onClearFw: () -> Unit,
     onRefreshFw: () -> Unit,
 ) {
+    var syncPass by remember { mutableStateOf("") }
+    var kdbxPath by remember {
+        mutableStateOf(
+            File(DesktopNetworkController.configHome(), "sync/keepass.kdbx").absolutePath,
+        )
+    }
+    var autoImport by remember {
+        mutableStateOf(
+            File(DesktopNetworkController.configHome(), DesktopSessionSync.AUTO_IMPORT_FLAG)
+                .takeIf { it.isFile }
+                ?.readText()
+                ?.trim() == "true",
+        )
+    }
+    var syncMsg by remember { mutableStateOf<String?>(null) }
+    val scope = rememberCoroutineScope()
     BoxWithConstraints(Modifier.fillMaxSize()) {
         val tall = maxHeight >= 520.dp
         val statusCol: @Composable () -> Unit = {
@@ -347,6 +367,58 @@ private fun NetworkStatusPane(
                     }
                     Text(t("desktop_net_profiles_sum"), color = TelosColors.onSurface.copy(alpha = 0.7f), fontSize = 11.sp)
                 }
+                statusCard(cardShape, neon, t("desktop_session_sync_title"), t("backup_group_keepass"))
+                OutlinedTextField(
+                    syncPass,
+                    onValueChange = { syncPass = it },
+                    label = { Text(t("desktop_session_sync_pass", DesktopSessionSync.DEFAULT_KEEPASS_ENTRY)) },
+                    modifier = Modifier.fillMaxWidth(),
+                )
+                OutlinedTextField(
+                    kdbxPath,
+                    onValueChange = { kdbxPath = it },
+                    label = { Text(t("desktop_session_sync_keepass")) },
+                    modifier = Modifier.fillMaxWidth(),
+                )
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    neonButton(t("desktop_session_sync_export"), onClick = {
+                        scope.launch(Dispatchers.IO) {
+                            val pass = syncPass.toCharArray()
+                            if (pass.isEmpty()) {
+                                syncMsg = "passphrase required"
+                                return@launch
+                            }
+                            val dest = File(DesktopSessionSync.defaultExportPath(), DesktopSessionSync.BUNDLE_NAME)
+                            val settings = TelosDesktopSettings(PhantomVault.engine.configDir).also { it.load() }
+                            val r = DesktopSessionSync.exportBundle(dest, pass, settings)
+                            syncMsg = if (r.isSuccess) dest.name else r.exceptionOrNull()?.message
+                        }
+                    })
+                    neonButton(
+                        t("desktop_session_sync_import"),
+                        onClick = {
+                            scope.launch(Dispatchers.IO) {
+                                val pass = syncPass.toCharArray()
+                                val bundle = File(DesktopSessionSync.defaultExportPath(), DesktopSessionSync.BUNDLE_NAME)
+                                val settings = TelosDesktopSettings(PhantomVault.engine.configDir).also { it.load() }
+                                val r = DesktopSessionSync.importBundle(bundle, pass, settings)
+                                syncMsg = if (r.isSuccess) "imported" else r.exceptionOrNull()?.message
+                            }
+                        },
+                        filled = false,
+                    )
+                }
+                TextButton(onClick = {
+                    val flag = File(DesktopNetworkController.configHome(), DesktopSessionSync.AUTO_IMPORT_FLAG)
+                    flag.parentFile.mkdirs()
+                    autoImport = !autoImport
+                    flag.writeText(autoImport.toString())
+                }) {
+                    Text(
+                        t("desktop_session_sync_auto") + ": " + if (autoImport) t("net_hub_state_on") else t("net_hub_state_off"),
+                    )
+                }
+                syncMsg?.let { Text(it, color = TelosColors.primary, fontSize = 11.sp) }
             }
         }
         val actionsCol: @Composable () -> Unit = {

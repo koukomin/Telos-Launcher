@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_portable_data_root">Φάκελος φορητών δεδομένων (μόνο ρυθμίσεις, cache, temp εδώ)</string>
+    <string name="desktop_host_home_trace_warning">Το Host Home γράφει ρυθμίσεις και cache σε αυτόν τον υπολογιστή. Επιλέξτε Portable Data για μηδενικά ίχνη στον host.</string>
+    <string name="desktop_boot_portable_data">Portable Data — χωρίς ίχνη host (config/cache/temp κάτω από φορητή ρίζα)</string>
+    <string name="desktop_boot_portable_vault">Portable Vault — κρυπτογραφημένα δεδομένα κάτω από φορητή ρίζα</string>
+    <string name="desktop_boot_host_home">Host Home (μπορεί να αφήσει ίχνη σε αυτόν τον PC)</string>
+    <string name="desktop_boot_unlock_existing">Ξεκλείδωμα υπάρχοντος θησαυροφυλακίου (αρχείο ή stego φάκελος)</string>
+    <string name="desktop_boot_create_wizard">Δημιουργία νέου elastic / stego / deniable vault</string>
+    <string name="desktop_boot_ephemeral">Εφήμερη RAM-only ghost συνεδρία (tmpfs)</string>
+    <string name="desktop_session_sync_title">Συγχρονισμός συνεδρίας</string>
+    <string name="desktop_session_sync_export">Εξαγωγή κρυπτογραφημένου πακέτου</string>
+    <string name="desktop_session_sync_import">Εισαγωγή κρυπτογραφημένου πακέτου</string>
+    <string name="desktop_session_sync_auto">Αυτόματη εισαγωγή στην εκκίνηση όταν το KeePass είναι ξεκλείδωτο</string>
+    <string name="desktop_session_sync_pass">Συνθηματικό sync (ή καταχώρηση KeePass %1$s)</string>
+    <string name="desktop_session_sync_keepass">Διαδρομή βάσης KeePass (.kdbx)</string>
+    <string name="desktop_windows_shell_title">Αντικατάσταση Windows shell</string>
+    <string name="desktop_windows_shell_enable">Ορισμός Telos ως shell σύνδεσης (HKCU)</string>
+    <string name="desktop_windows_shell_revert">Επαναφορά shell explorer.exe</string>
+    <string name="desktop_windows_shell_risk">Αντικαθιστά το shell χρήστη στην επόμενη σύνδεση. Κρατήστε δρόμο ανάκτησης πριν την ενεργοποίηση.</string>
+    <string name="desktop_helix_portable_note">Το chrome παραθύρων Helix σχεδιάζεται στο Compose σε όλες τις πλατφόρμες· οι εγγενείς διακοσμήσεις Win32 μπορεί να φαίνονται μέχρι αντικατάστασης shell.</string>
+</resources>

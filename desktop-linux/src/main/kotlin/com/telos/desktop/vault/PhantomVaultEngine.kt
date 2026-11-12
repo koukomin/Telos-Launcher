@@ -37,13 +37,19 @@ class PhantomVaultEngine(
 
     fun unlock(password: String, carrier: File?, initialize: Boolean): LuksVaultManager.UnlockResult {
         opsec.enableCoreDumpBlock()
-        if (bootMode == BootMode.HostHome) {
-            PortableEnvironmentIsolator.clear()
-            luks.mountPoint.mkdirs()
-            luks.unlock(password, initializeIfMissing = false)
-            return LuksVaultManager.UnlockResult.Unlocked
+        when (bootMode) {
+            BootMode.PortableData -> return unlockPortableData()
+            BootMode.PortableVault -> return unlockPortableVault(password, initialize)
+            BootMode.HostHome -> {
+                PortableEnvironmentIsolator.clear()
+                luks.clearPortableSessionRoot()
+                luks.mountPoint.mkdirs()
+                luks.unlock(password, initializeIfMissing = false)
+                return LuksVaultManager.UnlockResult.Unlocked
+            }
+            BootMode.EphemeralGhost -> return ephemeral()
+            else -> Unit
         }
-        if (bootMode == BootMode.EphemeralGhost) return ephemeral()
         val files = when {
             carrier == null -> listOf(luks.vaultImage)
             else -> shards.listCarriers(carrier).ifEmpty { listOf(carrier) }
@@ -189,6 +195,32 @@ class PhantomVaultEngine(
         File(mountPoint, "home/Desktop").mkdirs()
         File(mountPoint, "home/Documents").mkdirs()
         File(mountPoint, "home/Documents/notes.txt").writeText("Shopping list\n- milk\n- bread\n")
+    }
+
+    private fun unlockPortableData(): LuksVaultManager.UnlockResult {
+        val root = PortableTraceGuard.ensurePortableDataRoot()
+        PortableTraceGuard.assertNoHostWrites(root)
+        val session = File(root, "session").apply { mkdirs() }
+        luks.bindPortableSessionRoot(session)
+        File(session, "config").mkdirs()
+        File(session, "state").mkdirs()
+        File(session, "db").mkdirs()
+        PortableEnvironmentIsolator.apply(session, fullSessionHome = false)
+        luks.unlocked = true
+        return LuksVaultManager.UnlockResult.Unlocked
+    }
+
+    private fun unlockPortableVault(password: String, initialize: Boolean): LuksVaultManager.UnlockResult {
+        val root = PortableTraceGuard.ensurePortableDataRoot()
+        PortableTraceGuard.assertNoHostWrites(root)
+        val session = File(root, "session").apply { mkdirs() }
+        luks.bindPortableSessionRoot(session)
+        luks.ensureLayout()
+        val result = luks.unlock(password, initializeIfMissing = initialize)
+        if (result.ok) {
+            PortableEnvironmentIsolator.apply(session, fullSessionHome = false)
+        }
+        return result
     }
 
     private fun ephemeral(): LuksVaultManager.UnlockResult {

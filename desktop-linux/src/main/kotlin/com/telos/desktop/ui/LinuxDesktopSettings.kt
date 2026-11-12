@@ -29,8 +29,11 @@ import com.telos.desktop.cursor.CursorPreset
 import com.telos.desktop.display.LinuxDisplayManager
 import com.telos.desktop.icons.LinuxIconThemeResolver
 import com.telos.desktop.platform.PlatformEnvironment
+import com.telos.desktop.platform.WindowsShellIntegration
+import com.telos.desktop.sync.DesktopSessionSync
 import com.telos.desktop.settings.TelosDesktopSettings
 import com.telos.desktop.wm.WindowButtonStyle
+import java.io.File
 
 @Composable
 fun LinuxDesktopSettingsPanel(
@@ -146,6 +149,40 @@ fun LinuxDesktopSettingsPanel(
                         Text(preset.name + if (settings.cursorPreset == preset.name) " ✓" else "")
                     }
                 }
+            }
+        }
+        if (filter.showPortableDesktopShell) {
+            HelixSettingsCard("Portable") {
+                Text(com.telos.desktop.i18n.TelosI18n.t("desktop_helix_portable_note"), fontSize = 12.sp)
+                Text(
+                    com.telos.desktop.vault.PortableTraceGuard.dataRoot().absolutePath,
+                    fontSize = 11.sp,
+                    color = TelosColors.onSurface.copy(0.7f),
+                )
+            }
+            if (WindowsShellIntegration.isWindows) {
+                HelixSettingsCard(com.telos.desktop.i18n.TelosI18n.t("desktop_windows_shell_title")) {
+                    Text(
+                        com.telos.desktop.i18n.TelosI18n.t("desktop_windows_shell_risk"),
+                        fontSize = 12.sp,
+                        color = TelosColors.primary,
+                    )
+                    val active = WindowsShellIntegration.isTelosShellActive()
+                    TextButton(onClick = { WindowsShellIntegration.installTelosShell() }) {
+                        Text(com.telos.desktop.i18n.TelosI18n.t("desktop_windows_shell_enable") + if (active) " ✓" else "")
+                    }
+                    TextButton(onClick = { WindowsShellIntegration.restoreExplorerShell() }) {
+                        Text(com.telos.desktop.i18n.TelosI18n.t("desktop_windows_shell_revert"))
+                    }
+                }
+            }
+            HelixSettingsCard(com.telos.desktop.i18n.TelosI18n.t("desktop_session_sync_title")) {
+                Text(com.telos.desktop.i18n.TelosI18n.t("desktop_session_sync_pass", DesktopSessionSync.DEFAULT_KEEPASS_ENTRY), fontSize = 12.sp)
+                Text(
+                    File(com.telos.desktop.network.DesktopNetworkController.configHome(), "sync").absolutePath,
+                    fontSize = 11.sp,
+                    color = TelosColors.onSurface.copy(0.7f),
+                )
             }
         }
         if (filter.showLuksVault) {

@@ -1,8 +1,11 @@
 [Desktop Entry]
-Name=Telos (niri)
-Comment=Telos encrypted Linux session (niri)
-Exec=env TELOS_COMPOSITOR=niri telos-session
-TryExec=niri
+Name=Telos Desktop (niri)
+Name[el]=Telos Desktop (niri)
+Comment=Encrypted Telos session (niri) / Κρυπτογραφημένη συνεδρία Telos (niri)
+Comment[el]=Κρυπτογραφημένη συνεδρία Telos (niri)
+Exec=env TELOS_COMPOSITOR=niri /usr/local/bin/telos-session
+TryExec=/usr/local/bin/telos-session
 Type=Application
 DesktopNames=Telos
 X-GDM-SessionRegisters=true
+X-LightDM-SessionRegisters=true

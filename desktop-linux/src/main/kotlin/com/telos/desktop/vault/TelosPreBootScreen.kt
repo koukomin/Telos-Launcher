@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.telos.desktop.i18n.TelosI18n.t
 import com.telos.desktop.ui.TelosColors
 import java.io.File
 
@@ -32,8 +33,23 @@ fun TelosPreBootScreen(
     val portableShell = remember {
         com.telos.desktop.platform.PlatformEnvironment.settings.showPortableDesktopShell
     }
+    val bootModes = remember(portableShell) {
+        if (portableShell) {
+            listOf(
+                BootMode.PortableData,
+                BootMode.PortableVault,
+                BootMode.UnlockExisting,
+                BootMode.CreateWizard,
+                BootMode.HostHome,
+            )
+        } else {
+            BootMode.entries.toList()
+        }
+    }
     var mode by remember {
-        mutableStateOf(if (portableShell) BootMode.HostHome else BootMode.UnlockExisting)
+        mutableStateOf(
+            if (portableShell) BootMode.PortableData else BootMode.UnlockExisting,
+        )
     }
     var password by remember { mutableStateOf("") }
     var outer by remember { mutableStateOf("") }
@@ -45,25 +61,27 @@ fun TelosPreBootScreen(
     var carrier by remember { mutableStateOf<File?>(null) }
     var cloudRemote by remember { mutableStateOf("") }
     val hw = remember { HardwareCryptoAccelerator.probe() }
+    val portableRoot = remember { PortableTraceGuard.dataRoot().absolutePath }
 
     Box(Modifier.fillMaxSize().background(TelosColors.background), contentAlignment = Alignment.Center) {
         Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(10.dp), modifier = Modifier.padding(24.dp)) {
             Text("Telos Phantom Vault", color = TelosColors.secondary, fontSize = 28.sp)
             Text(hw.label, color = TelosColors.primary, fontSize = 13.sp)
+            if (portableShell) {
+                Text(t("desktop_portable_data_root"), color = TelosColors.onSurface.copy(0.75f), fontSize = 11.sp)
+                Text(portableRoot, color = TelosColors.onSurface.copy(0.6f), fontSize = 10.sp)
+            }
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                BootMode.entries.forEach { m ->
-                    Button(onClick = { mode = m; engine.bootMode = m }) { Text(if (mode == m) "• ${m.name}" else m.name, fontSize = 11.sp) }
+                bootModes.forEach { m ->
+                    Button(onClick = { mode = m; engine.bootMode = m }) {
+                        Text(if (mode == m) "• ${m.name}" else m.name, fontSize = 11.sp)
+                    }
                 }
             }
-            Text(
-                when (mode) {
-                    BootMode.HostHome -> "Host Home Folder (Standard)"
-                    BootMode.UnlockExisting -> "Unlock Existing Vault (file or stego folder)"
-                    BootMode.CreateWizard -> "Create New Elastic / Stego / Deniable Vault"
-                    BootMode.EphemeralGhost -> "Ephemeral RAM-Only Ghost Session (tmpfs)"
-                },
-                color = TelosColors.onSurface,
-            )
+            Text(bootModeDescription(mode), color = TelosColors.onSurface)
+            if (mode == BootMode.HostHome && portableShell) {
+                Text(t("desktop_host_home_trace_warning"), color = TelosColors.primary, fontSize = 12.sp)
+            }
             if (mode == BootMode.UnlockExisting || mode == BootMode.CreateWizard) {
                 Button(onClick = { picker = true }) { Text(carrier?.absolutePath ?: "Select carrier file or folder") }
                 Button(onClick = {
@@ -79,7 +97,7 @@ fun TelosPreBootScreen(
                 OutlinedTextField(outer, { outer = it }, label = { Text("Outer decoy password") }, visualTransformation = PasswordVisualTransformation(), modifier = Modifier.width(360.dp))
                 OutlinedTextField(inner, { inner = it }, label = { Text("Inner shadow password") }, visualTransformation = PasswordVisualTransformation(), modifier = Modifier.width(360.dp))
                 OutlinedTextField(duress, { duress = it }, label = { Text("Duress / panic password") }, visualTransformation = PasswordVisualTransformation(), modifier = Modifier.width(360.dp))
-            } else if (mode != BootMode.HostHome) {
+            } else if (mode.needsVaultPassword()) {
                 OutlinedTextField(password, { password = it }, label = { Text("Vault password") }, visualTransformation = PasswordVisualTransformation(), modifier = Modifier.width(360.dp), singleLine = true)
             }
             error?.let { Text(it, color = TelosColors.primary) }
@@ -91,6 +109,8 @@ fun TelosPreBootScreen(
                     val result = when (mode) {
                         BootMode.CreateWizard -> engine.createElastic(outer, inner, duress, carrier ?: File(System.getProperty("user.home"), "Music"))
                         BootMode.HostHome -> engine.unlock("host", null, false)
+                        BootMode.PortableData -> engine.unlock("", null, false)
+                        BootMode.PortableVault -> engine.unlock(password, null, true)
                         else -> engine.unlock(password, carrier, true)
                     }
                     busy = false
@@ -109,4 +129,19 @@ fun TelosPreBootScreen(
             }
         }
     }
+}
+
+private fun BootMode.needsVaultPassword(): Boolean =
+    this == BootMode.UnlockExisting ||
+        this == BootMode.PortableVault ||
+        this == BootMode.EphemeralGhost
+
+@Composable
+private fun bootModeDescription(mode: BootMode): String = when (mode) {
+    BootMode.PortableData -> t("desktop_boot_portable_data")
+    BootMode.PortableVault -> t("desktop_boot_portable_vault")
+    BootMode.HostHome -> t("desktop_boot_host_home")
+    BootMode.UnlockExisting -> t("desktop_boot_unlock_existing")
+    BootMode.CreateWizard -> t("desktop_boot_create_wizard")
+    BootMode.EphemeralGhost -> t("desktop_boot_ephemeral")
 }

@@ -54,6 +54,10 @@ Wallpaper is the stage. Menus stay opaque. Motion is 120–160 ms, no bounce.
 - Settings: `desktop-linux/.../ui/LinuxDesktopSettings.kt`
 - Surface: `HelixMotion.kt`, `HelixToast.kt`, `HelixControlCenter.kt`, `HelixOverview.kt`
 
+## Portable Windows / macOS chrome
+
+Helix tokens (`TelosColors`, `HelixSettingsCard`, Klassy titlebars) are the same on the portable JVM shell as on the Linux labwc session. Compose draws Telos window chrome inside the Skiko window; native Win32 decorations may still appear outside that frame until optional per-user shell replacement (`WindowsShellIntegration`). Do not fork a separate portable palette.
+
 ## Resume prompt
 
 Helix H0–H6, Surface S0–S4, and Wayland W0–W3 are in tree. Push `origin/main`. Never merge/release. Never `:app:app` → `:desktop-linux`.

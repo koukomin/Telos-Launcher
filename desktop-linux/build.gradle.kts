@@ -64,6 +64,7 @@ dependencies {
     implementation(libs.commons.compress)
     implementation(libs.tukaani.xz)
     implementation(libs.zip4j)
+    implementation(libs.kotpass)
     testImplementation("junit:junit:4.13.2")
 }
 

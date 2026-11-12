@@ -130,32 +130,32 @@ polkit.addRule(function(action, subject) {
 });
 EOF
 
-echo "[+] Display manager session..."
+ICON_LINE=""
+for icon in /opt/telos-desktop/telos-desktop.png /usr/share/icons/hicolor/512x512/apps/telos-desktop.png; do
+    if [ -f "$icon" ]; then
+        ICON_LINE="Icon=$icon"
+        break
+    fi
+done
+
+echo "[+] Display manager session (wayland-sessions)..."
 sudo mkdir -p /usr/share/wayland-sessions
-sudo tee /usr/share/wayland-sessions/telos.desktop >/dev/null << 'EOF'
-[Desktop Entry]
-Name=Telos
-Comment=Telos encrypted Linux session (labwc)
-Exec=/usr/local/bin/telos-session
-TryExec=/usr/local/bin/telos-session
-Type=Application
-DesktopNames=Telos
-X-GDM-SessionRegisters=true
-EOF
-sudo tee /usr/share/wayland-sessions/telos-niri.desktop >/dev/null << 'EOF'
-[Desktop Entry]
-Name=Telos (niri)
-Comment=Telos encrypted Linux session (niri)
-Exec=env TELOS_COMPOSITOR=niri /usr/local/bin/telos-session
-TryExec=niri
-Type=Application
-DesktopNames=Telos
-X-GDM-SessionRegisters=true
-EOF
+sudo cp -f "$PROJECT_DIR/desktop-linux/session/telos.desktop" /usr/share/wayland-sessions/telos.desktop
+sudo cp -f "$PROJECT_DIR/desktop-linux/session/telos-niri.desktop" /usr/share/wayland-sessions/telos-niri.desktop
+if [ -n "$ICON_LINE" ]; then
+    echo "$ICON_LINE" | sudo tee -a /usr/share/wayland-sessions/telos.desktop >/dev/null
+    echo "$ICON_LINE" | sudo tee -a /usr/share/wayland-sessions/telos-niri.desktop >/dev/null
+fi
+sudo sed -i 's|^Exec=.*|Exec=/usr/local/bin/telos-session|' /usr/share/wayland-sessions/telos.desktop
+sudo sed -i 's|^TryExec=.*|TryExec=/usr/local/bin/telos-session|' /usr/share/wayland-sessions/telos.desktop
+sudo sed -i 's|^Exec=.*|Exec=env TELOS_COMPOSITOR=niri /usr/local/bin/telos-session|' /usr/share/wayland-sessions/telos-niri.desktop
+sudo sed -i 's|^TryExec=.*|TryExec=/usr/local/bin/telos-session|' /usr/share/wayland-sessions/telos-niri.desktop
 
 echo "=========================================================="
-echo " [✓] Installed labwc session (vault HOME, nft default-drop); niri is optional"
+echo " [✓] Installed Telos Desktop session (vault HOME, nft default-drop)"
+echo " • SDDM / GDM / LightDM: pick \"Telos Desktop\" or \"Telos Desktop (niri)\" at login"
+echo " • Wayland entries: /usr/share/wayland-sessions/telos{,-niri}.desktop"
 echo " • Test window on current DE:  telos-desktop-test"
 echo " • Rebuild + deploy:           update-telos"
-echo " • Full session:               logout → Telos"
+echo " • Full session:               logout → Telos Desktop"
 echo "=========================================================="

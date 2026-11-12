@@ -109,6 +109,15 @@ fun main(args: Array<String>) {
                 val settings = remember {
                     TelosDesktopSettings(vault.configDir).also { it.load() }
                 }
+                LaunchedEffect(Unit) {
+                    kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+                        val kdbx = java.io.File(
+                            com.telos.desktop.network.DesktopNetworkController.configHome(),
+                            "sync/keepass.kdbx",
+                        ).takeIf { it.isFile }
+                        com.telos.desktop.sync.DesktopSessionSync.maybeAutoImport(kdbx, null, settings)
+                    }
+                }
                 LaunchedEffect(settings.startFullscreen) {
                     if (!TelosSessionHome.session) {
                         DesktopChrome.fullscreen = settings.startFullscreen

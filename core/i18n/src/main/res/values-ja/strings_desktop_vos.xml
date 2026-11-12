@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_portable_data_root">Portable data folder (config, cache, temp only here)</string>
+    <string name="desktop_host_home_trace_warning">Host Home writes settings and cache on this PC. Choose Portable Data to leave no host traces.</string>
+    <string name="desktop_boot_portable_data">Portable Data — no host traces (config/cache/temp under portable root)</string>
+    <string name="desktop_boot_portable_vault">Portable Vault — encrypted data under portable root</string>
+    <string name="desktop_boot_host_home">Host Home (may leave traces on this PC)</string>
+    <string name="desktop_boot_unlock_existing">Unlock existing vault (file or stego folder)</string>
+    <string name="desktop_boot_create_wizard">Create new elastic / stego / deniable vault</string>
+    <string name="desktop_boot_ephemeral">Ephemeral RAM-only ghost session (tmpfs)</string>
+    <string name="desktop_session_sync_title">Session sync</string>
+    <string name="desktop_session_sync_export">Export encrypted bundle</string>
+    <string name="desktop_session_sync_import">Import encrypted bundle</string>
+    <string name="desktop_session_sync_auto">Auto-import on boot when KeePass is unlocked</string>
+    <string name="desktop_session_sync_pass">Sync passphrase (or KeePass entry %1$s)</string>
+    <string name="desktop_session_sync_keepass">KeePass database path (.kdbx)</string>
+    <string name="desktop_windows_shell_title">Windows shell replacement</string>
+    <string name="desktop_windows_shell_enable">Set Telos as login shell (HKCU)</string>
+    <string name="desktop_windows_shell_revert">Restore explorer.exe shell</string>
+    <string name="desktop_windows_shell_risk">Replaces your user shell at next sign-in. Keep a recovery path before enabling.</string>
+    <string name="desktop_helix_portable_note">Helix window chrome is drawn in Compose on all platforms; native Win32 decorations may show until shell replacement.</string>
+</resources>
