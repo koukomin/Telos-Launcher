@@ -21,4 +21,9 @@
     <string name="backup_group_keepass_summary">Saved passwords and credentials</string>
     <string name="backup_group_aether">Telos Aether Nostr</string>
     <string name="backup_group_aether_summary">Nostr keys and relay configurations</string>
+    <string name="keyboard_enable_title">Aktivovať Telos Keyboard</string>
+    <string name="keyboard_enable_summary">Zapnite Telos Keyboard v nastaveniach vstupu Androidu a vyberte ho ako predvolenú metódu zadávania.</string>
+    <string name="keyboard_enable_action">Otvoriť nastavenia vstupu</string>
+    <string name="keyboard_settings_category">Nastavenia klávesnice</string>
+    <string name="keyboard_incognito_title">Režim inkognito</string>
 </resources>

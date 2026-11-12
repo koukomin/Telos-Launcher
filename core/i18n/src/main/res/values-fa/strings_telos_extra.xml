@@ -23,4 +23,9 @@
     <string name="backup_group_keepass_summary">Saved passwords and credentials</string>
     <string name="backup_group_aether">Telos Aether Nostr</string>
     <string name="backup_group_aether_summary">Nostr keys and relay configurations</string>
+    <string name="keyboard_enable_title">فعال‌سازی Telos Keyboard</string>
+    <string name="keyboard_enable_summary">Telos Keyboard را در تنظیمات ورودی اندروید روشن کنید و آن را به‌عنوان روش ورودی پیش‌فرض انتخاب کنید.</string>
+    <string name="keyboard_enable_action">باز کردن تنظیمات ورودی</string>
+    <string name="keyboard_settings_category">تنظیمات صفحه‌کلید</string>
+    <string name="keyboard_incognito_title">حالت ناشناس</string>
 </resources>

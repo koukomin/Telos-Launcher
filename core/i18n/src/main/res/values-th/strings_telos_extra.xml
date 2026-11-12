@@ -23,4 +23,9 @@
     <string name="backup_group_keepass_summary">Saved passwords and credentials</string>
     <string name="backup_group_aether">Telos Aether Nostr</string>
     <string name="backup_group_aether_summary">Nostr keys and relay configurations</string>
+    <string name="keyboard_enable_title">เปิดใช้ Telos Keyboard</string>
+    <string name="keyboard_enable_summary">เปิด Telos Keyboard ในการตั้งค่าการป้อนข้อมูลของ Android แล้วเลือกเป็นวิธีป้อนข้อมูลเริ่มต้น</string>
+    <string name="keyboard_enable_action">เปิดการตั้งค่าการป้อนข้อมูล</string>
+    <string name="keyboard_settings_category">การตั้งค่าแป้นพิมพ์</string>
+    <string name="keyboard_incognito_title">โหมดไม่ระบุตัวตน</string>
 </resources>

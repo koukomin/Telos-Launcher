@@ -36,4 +36,9 @@
     <string name="backup_group_system_data_summary">SMS, Anruflisten, WLAN-Netzwerke</string>
     <string name="backup_group_virtual_apps">Virtuelle Telos-Apps</string>
     <string name="backup_group_virtual_apps_summary">Einstellungen für Telos Sync, Viewer, Taschenrechner usw.</string>
+    <string name="keyboard_enable_title">Telos-Tastatur aktivieren</string>
+    <string name="keyboard_enable_summary">Aktivieren Sie die Telos-Tastatur in den Android-Eingabeeinstellungen und wählen Sie sie als Standard-Eingabemethode.</string>
+    <string name="keyboard_enable_action">Eingabeeinstellungen öffnen</string>
+    <string name="keyboard_settings_category">Tastatureinstellungen</string>
+    <string name="keyboard_incognito_title">Inkognito-Modus</string>
 </resources>

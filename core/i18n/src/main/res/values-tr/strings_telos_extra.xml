@@ -36,4 +36,9 @@
     <string name="backup_group_system_data_summary">SMS, arama geçmişi, Wi-Fi ağları</string>
     <string name="backup_group_virtual_apps">Telos Sanal Uygulamaları</string>
     <string name="backup_group_virtual_apps_summary">Telos Sync, Görüntüleyici, Hesap Makinesi vb. yapılandırmaları</string>
+    <string name="keyboard_enable_title">Telos Keyboard’ı etkinleştir</string>
+    <string name="keyboard_enable_summary">Android giriş ayarlarında Telos Keyboard’ı açın ve varsayılan giriş yöntemi olarak seçin.</string>
+    <string name="keyboard_enable_action">Giriş ayarlarını aç</string>
+    <string name="keyboard_settings_category">Klavye ayarları</string>
+    <string name="keyboard_incognito_title">Gizli mod</string>
 </resources>

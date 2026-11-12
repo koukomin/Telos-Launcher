@@ -21,4 +21,9 @@
     <string name="backup_group_keepass_summary">Saved passwords and credentials</string>
     <string name="backup_group_aether">Telos Aether Nostr</string>
     <string name="backup_group_aether_summary">Nostr keys and relay configurations</string>
+    <string name="keyboard_enable_title">Telos Keyboard सक्षम करें</string>
+    <string name="keyboard_enable_summary">Android इनपुट सेटिंग में Telos Keyboard चालू करें और इसे अपनी डिफ़ॉल्ट इनपुट विधि चुनें।</string>
+    <string name="keyboard_enable_action">इनपुट सेटिंग खोलें</string>
+    <string name="keyboard_settings_category">कीबोर्ड सेटिंग</string>
+    <string name="keyboard_incognito_title">गुप्त मोड</string>
 </resources>

@@ -38,4 +38,9 @@
     <string name="backup_group_system_data_summary">Tin nhắn SMS, nhật ký cuộc gọi, mạng Wi-Fi</string>
     <string name="backup_group_virtual_apps">Ứng dụng ảo Telos</string>
     <string name="backup_group_virtual_apps_summary">Cấu hình cho Telos Sync, Trình xem, Máy tính, v.v.</string>
+    <string name="keyboard_enable_title">Bật Telos Keyboard</string>
+    <string name="keyboard_enable_summary">Bật Telos Keyboard trong cài đặt nhập liệu Android và chọn làm phương thức nhập mặc định.</string>
+    <string name="keyboard_enable_action">Mở cài đặt nhập liệu</string>
+    <string name="keyboard_settings_category">Cài đặt bàn phím</string>
+    <string name="keyboard_incognito_title">Chế độ ẩn danh</string>
 </resources>

@@ -36,4 +36,9 @@
     <string name="backup_group_system_data_summary">SMS, historie hovorů, Wi-Fi sítě</string>
     <string name="backup_group_virtual_apps">Virtuální aplikace Telos</string>
     <string name="backup_group_virtual_apps_summary">Nastavení pro Telos Sync, Prohlížeč, Kalkulačku atd.</string>
+    <string name="keyboard_enable_title">Aktivovat Telos Keyboard</string>
+    <string name="keyboard_enable_summary">Zapněte Telos Keyboard v nastavení vstupu Androidu a zvolte jej jako výchozí metodu zadávání.</string>
+    <string name="keyboard_enable_action">Otevřít nastavení vstupu</string>
+    <string name="keyboard_settings_category">Nastavení klávesnice</string>
+    <string name="keyboard_incognito_title">Anonymní režim</string>
 </resources>

@@ -23,4 +23,9 @@
     <string name="backup_group_keepass_summary">Saved passwords and credentials</string>
     <string name="backup_group_aether">Telos Aether Nostr</string>
     <string name="backup_group_aether_summary">Nostr keys and relay configurations</string>
+    <string name="keyboard_enable_title">Gaitu Telos Keyboard</string>
+    <string name="keyboard_enable_summary">Aktibatu Telos Keyboard Android-en sarrera-ezarpenetan eta hautatu sarrera-metodo lehenetsi gisa.</string>
+    <string name="keyboard_enable_action">Ireki sarrera-ezarpenak</string>
+    <string name="keyboard_settings_category">Teklatuaren ezarpenak</string>
+    <string name="keyboard_incognito_title">Isilpeko modua</string>
 </resources>

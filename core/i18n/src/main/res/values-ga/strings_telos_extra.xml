@@ -21,4 +21,9 @@
     <string name="backup_group_keepass_summary">Saved passwords and credentials</string>
     <string name="backup_group_aether">Telos Aether Nostr</string>
     <string name="backup_group_aether_summary">Nostr keys and relay configurations</string>
+    <string name="keyboard_enable_title">Cumasaigh Telos Keyboard</string>
+    <string name="keyboard_enable_summary">Cas Telos Keyboard air i socruithe ionchuir Android agus roghnaigh é mar mhodh ionchuir réamhshocraithe.</string>
+    <string name="keyboard_enable_action">Oscail socruithe ionchuir</string>
+    <string name="keyboard_settings_category">Socruithe méarchláir</string>
+    <string name="keyboard_incognito_title">Mód gan ainm</string>
 </resources>

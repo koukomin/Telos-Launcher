@@ -2,9 +2,21 @@ package de.mm20.launcher2.ui.keyboard
 
 import android.content.Intent
 import android.provider.Settings
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -34,38 +46,64 @@ fun TelosKeyboardSettingsScreen() {
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = androidx.compose.ui.Alignment.CenterVertically) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
                 if (backStack.size > 1) {
                     IconButton(onClick = { backStack.removeLastOrNull() }) {
-                        Icon(painterResource(BaseR.drawable.arrow_back_24px), contentDescription = stringResource(I18nR.string.hc_back))
+                        Icon(
+                            painterResource(BaseR.drawable.arrow_back_24px),
+                            contentDescription = stringResource(I18nR.string.hc_back),
+                        )
                     }
                 }
-                Text("Telos Keyboard", style = MaterialTheme.typography.titleLarge, modifier = Modifier.weight(1f))
+                Text(
+                    text = stringResource(I18nR.string.settings_keyboard),
+                    style = MaterialTheme.typography.titleLarge,
+                    modifier = Modifier.weight(1f),
+                )
             }
 
             Card(
-                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
-                modifier = Modifier.fillMaxWidth()
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.surfaceContainerLow,
+                ),
+                modifier = Modifier.fillMaxWidth(),
             ) {
-                Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    Text("🎹 Ενεργοποίηση Telos Keyboard", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onPrimaryContainer)
-                    Text("Ενεργοποιήστε το Telos Keyboard στις ρυθμίσεις πληκτρολογίου του Android και επιλέξτε το ως προεπιλεγμένη μέθοδο εισαγωγής.", style = MaterialTheme.typography.bodyMedium)
-                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        Button(onClick = {
-                            context.startActivity(Intent(Settings.ACTION_INPUT_METHOD_SETTINGS).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
-                        }) {
-                            Text("1. Ενεργοποίηση IME")
-                        }
+                Column(
+                    modifier = Modifier.padding(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    Text(
+                        text = stringResource(I18nR.string.keyboard_enable_title),
+                        style = MaterialTheme.typography.titleMedium,
+                        color = MaterialTheme.colorScheme.onSurface,
+                    )
+                    Text(
+                        text = stringResource(I18nR.string.keyboard_enable_summary),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                    Button(
+                        onClick = {
+                            context.startActivity(
+                                Intent(Settings.ACTION_INPUT_METHOD_SETTINGS)
+                                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
+                            )
+                        },
+                    ) {
+                        Text(stringResource(I18nR.string.keyboard_enable_action))
                     }
                 }
             }
 
-            PreferenceCategory(title = "Ρυθμίσεις Πληκτρολογίου") {
+            PreferenceCategory(title = stringResource(I18nR.string.keyboard_settings_category)) {
                 SwitchPreference(
-                    title = "Incognito / Privacy Mode",
-                    summary = "Μηδενική καταγραφή λέξεων σε πεδία κωδικών & ιδιωτικής περιήγησης",
+                    title = stringResource(I18nR.string.keyboard_incognito_title),
+                    summary = stringResource(I18nR.string.preference_private_keyboard_summary),
                     value = TelosKeyboardState.isIncognitoMode,
-                    onValueChanged = { TelosKeyboardState.isIncognitoMode = it }
+                    onValueChanged = { TelosKeyboardState.isIncognitoMode = it },
                 )
             }
         }

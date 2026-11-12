@@ -411,6 +411,30 @@
             android:exported="false"
             android:label="@string/preference_backup"
             android:icon="@drawable/ic_app_backup_full" />
+        <activity-alias
+            android:name=".settings.TelosApp_keyboard"
+            android:targetActivity=".settings.TelosAppActivity"
+            android:exported="false"
+            android:label="@string/settings_keyboard"
+            android:icon="@drawable/ic_app_keyboard_full" />
+        <activity-alias
+            android:name=".settings.TelosApp_keepass"
+            android:targetActivity=".settings.TelosAppActivity"
+            android:exported="false"
+            android:label="@string/keepass_title"
+            android:icon="@drawable/ic_app_keepass_full" />
+        <activity-alias
+            android:name=".settings.TelosApp_aether"
+            android:targetActivity=".settings.TelosAppActivity"
+            android:exported="false"
+            android:label="@string/aether_title"
+            android:icon="@drawable/ic_app_aether_full" />
+        <activity-alias
+            android:name=".settings.TelosApp_fit"
+            android:targetActivity=".settings.TelosAppActivity"
+            android:exported="false"
+            android:label="@string/fit_title"
+            android:icon="@drawable/ic_app_fit_full" />
 
         <activity
             android:name=".settings.SettingsActivity"

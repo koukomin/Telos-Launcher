@@ -23,4 +23,9 @@
     <string name="backup_group_keepass_summary">Saved passwords and credentials</string>
     <string name="backup_group_aether">Telos Aether Nostr</string>
     <string name="backup_group_aether_summary">Nostr keys and relay configurations</string>
+    <string name="keyboard_enable_title">Telos Keyboard-u aktiv et</string>
+    <string name="keyboard_enable_summary">Android daxiletmə ayarlarında Telos Keyboard-u yandırın və onu susmaya görə daxiletmə metodu seçin.</string>
+    <string name="keyboard_enable_action">Daxiletmə ayarlarını aç</string>
+    <string name="keyboard_settings_category">Klaviatura ayarları</string>
+    <string name="keyboard_incognito_title">Inkognito rejimi</string>
 </resources>

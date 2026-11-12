@@ -21,4 +21,9 @@
     <string name="backup_group_keepass_summary">Saved passwords and credentials</string>
     <string name="backup_group_aether">Telos Aether Nostr</string>
     <string name="backup_group_aether_summary">Nostr keys and relay configurations</string>
+    <string name="keyboard_enable_title">Iespējot Telos Keyboard</string>
+    <string name="keyboard_enable_summary">Ieslēdziet Telos Keyboard Android ievades iestatījumos un izvēlieties to kā noklusējuma ievades metodi.</string>
+    <string name="keyboard_enable_action">Atvērt ievades iestatījumus</string>
+    <string name="keyboard_settings_category">Tastatūras iestatījumi</string>
+    <string name="keyboard_incognito_title">Inkognito režīms</string>
 </resources>

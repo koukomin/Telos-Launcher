@@ -21,4 +21,9 @@
     <string name="backup_group_keepass_summary">Saved passwords and credentials</string>
     <string name="backup_group_aether">Telos Aether Nostr</string>
     <string name="backup_group_aether_summary">Nostr keys and relay configurations</string>
+    <string name="keyboard_enable_title">Telos Keyboard চালু করুন</string>
+    <string name="keyboard_enable_summary">Android ইনপুট সেটিংসে Telos Keyboard চালু করে ডিফল্ট ইনপুট পদ্ধতি হিসেবে বেছে নিন।</string>
+    <string name="keyboard_enable_action">ইনপুট সেটিং খুলুন</string>
+    <string name="keyboard_settings_category">কীবোর্ড সেটিংস</string>
+    <string name="keyboard_incognito_title">ইনকগনিটো মোড</string>
 </resources>

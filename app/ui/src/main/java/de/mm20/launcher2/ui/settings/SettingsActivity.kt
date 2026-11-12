@@ -537,6 +537,9 @@ open class SettingsActivity : BaseActivity() {
             entry<de.mm20.launcher2.ui.aether.AetherDashboardRoute> {
                 de.mm20.launcher2.ui.aether.AetherDashboardScreen()
             }
+            entry<de.mm20.launcher2.ui.sync.SyncRoute> {
+                de.mm20.launcher2.ui.sync.SyncScreen()
+            }
             entry<WikipediaSettingsRoute> {
                 WikipediaSettingsScreen()
             }
@@ -842,6 +845,9 @@ open class SettingsActivity : BaseActivity() {
             "settings/magnifier" -> "telos_magnifier_app"
             "settings/flashlight" -> "telos_flashlight_app"
             SettingsDeepLinkContract.ROUTE_FIT -> "telos_fit_app"
+            SettingsDeepLinkContract.ROUTE_KEYBOARD -> "telos_keyboard_app"
+            SettingsDeepLinkContract.ROUTE_KEEPASS -> "telos_keepass_app"
+            SettingsDeepLinkContract.ROUTE_AETHER -> "telos_aether_app"
             else -> return
         }
         de.mm20.launcher2.search.VirtualAppAppearance.applyRecents(this, domain)
@@ -960,6 +966,7 @@ open class SettingsActivity : BaseActivity() {
                 sharedMediaUri = (intent.getParcelableExtra(Intent.EXTRA_STREAM) as? android.net.Uri)?.toString()
             )
             SettingsDeepLinkContract.ROUTE_BACKUP -> de.mm20.launcher2.ui.backup.BackupRoute
+            SettingsDeepLinkContract.ROUTE_SYNC -> de.mm20.launcher2.ui.sync.SyncRoute
             SettingsDeepLinkContract.ROUTE_FIT -> de.mm20.launcher2.ui.fit.FitDashboardRoute
             ROUTE_SCREEN_RECORDER -> de.mm20.launcher2.ui.screenrec.ScreenRecorderRoute
             ROUTE_SCREENSHOT -> de.mm20.launcher2.ui.screenshot.ScreenshotRoute

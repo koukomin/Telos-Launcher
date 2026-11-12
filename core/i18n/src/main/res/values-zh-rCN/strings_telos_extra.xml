@@ -36,4 +36,9 @@
     <string name="backup_group_system_data_summary">短信、通话记录、Wi-Fi 网络</string>
     <string name="backup_group_virtual_apps">Telos 虚拟应用</string>
     <string name="backup_group_virtual_apps_summary">Telos Sync、查看器、计算器等应用配置</string>
+    <string name="keyboard_enable_title">启用 Telos Keyboard</string>
+    <string name="keyboard_enable_summary">在 Android 输入设置中启用 Telos Keyboard，并将其设为默认输入法。</string>
+    <string name="keyboard_enable_action">打开输入设置</string>
+    <string name="keyboard_settings_category">键盘设置</string>
+    <string name="keyboard_incognito_title">无痕模式</string>
 </resources>

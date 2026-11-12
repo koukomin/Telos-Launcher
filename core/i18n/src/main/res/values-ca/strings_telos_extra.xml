@@ -23,4 +23,9 @@
     <string name="backup_group_keepass_summary">Saved passwords and credentials</string>
     <string name="backup_group_aether">Telos Aether Nostr</string>
     <string name="backup_group_aether_summary">Nostr keys and relay configurations</string>
+    <string name="keyboard_enable_title">Activa Telos Keyboard</string>
+    <string name="keyboard_enable_summary">Activeu Telos Keyboard a la configuració d’entrada d’Android i trieu-lo com a mètode d’entrada predeterminat.</string>
+    <string name="keyboard_enable_action">Obre la configuració d’entrada</string>
+    <string name="keyboard_settings_category">Configuració del teclat</string>
+    <string name="keyboard_incognito_title">Mode d’incògnit</string>
 </resources>

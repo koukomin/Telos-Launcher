@@ -23,4 +23,9 @@
     <string name="backup_group_keepass_summary">Saved passwords and credentials</string>
     <string name="backup_group_aether">Telos Aether Nostr</string>
     <string name="backup_group_aether_summary">Nostr keys and relay configurations</string>
+    <string name="keyboard_enable_title">Dayakan Telos Keyboard</string>
+    <string name="keyboard_enable_summary">Hidupkan Telos Keyboard dalam tetapan input Android dan pilihnya sebagai kaedah input lalai.</string>
+    <string name="keyboard_enable_action">Buka tetapan input</string>
+    <string name="keyboard_settings_category">Tetapan papan kekunci</string>
+    <string name="keyboard_incognito_title">Mod inkognito</string>
 </resources>

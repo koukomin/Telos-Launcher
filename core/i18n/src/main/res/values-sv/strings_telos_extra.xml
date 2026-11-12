@@ -21,4 +21,9 @@
     <string name="backup_group_keepass_summary">Saved passwords and credentials</string>
     <string name="backup_group_aether">Telos Aether Nostr</string>
     <string name="backup_group_aether_summary">Nostr keys and relay configurations</string>
+    <string name="keyboard_enable_title">Aktivera Telos Keyboard</string>
+    <string name="keyboard_enable_summary">Aktivera Telos Keyboard i Androids inmatningsinställningar och välj det som standardinmatningsmetod.</string>
+    <string name="keyboard_enable_action">Öppna inmatningsinställningar</string>
+    <string name="keyboard_settings_category">Tangentbordsinställningar</string>
+    <string name="keyboard_incognito_title">Inkognitoläge</string>
 </resources>

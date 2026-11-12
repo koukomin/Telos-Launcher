@@ -36,4 +36,9 @@
     <string name="backup_group_system_data_summary">SMS、通話履歴、Wi-Fi ネットワーク</string>
     <string name="backup_group_virtual_apps">Telos 仮想アプリ</string>
     <string name="backup_group_virtual_apps_summary">Telos Sync、ビューア、電卓などの設定</string>
+    <string name="keyboard_enable_title">Telos Keyboard を有効にする</string>
+    <string name="keyboard_enable_summary">Android の入力設定で Telos Keyboard を有効にし、デフォルトの入力方法として選択してください。</string>
+    <string name="keyboard_enable_action">入力設定を開く</string>
+    <string name="keyboard_settings_category">キーボード設定</string>
+    <string name="keyboard_incognito_title">シークレットモード</string>
 </resources>

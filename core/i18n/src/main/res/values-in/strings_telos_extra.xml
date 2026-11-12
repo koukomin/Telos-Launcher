@@ -38,4 +38,9 @@
     <string name="backup_group_system_data_summary">SMS, log panggilan, jaringan Wi-Fi</string>
     <string name="backup_group_virtual_apps">Aplikasi Virtual Telos</string>
     <string name="backup_group_virtual_apps_summary">Konfigurasi untuk Telos Sync, Penampil, Kalkulator, dll.</string>
+    <string name="keyboard_enable_title">Aktifkan Telos Keyboard</string>
+    <string name="keyboard_enable_summary">Aktifkan Telos Keyboard di pengaturan input Android dan pilih sebagai metode input bawaan.</string>
+    <string name="keyboard_enable_action">Buka pengaturan input</string>
+    <string name="keyboard_settings_category">Pengaturan keyboard</string>
+    <string name="keyboard_incognito_title">Mode penyamaran</string>
 </resources>

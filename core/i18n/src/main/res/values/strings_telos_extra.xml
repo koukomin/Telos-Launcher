@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="settings_keyboard">Keyboard</string>
+    <string name="keyboard_enable_title">Enable Telos Keyboard</string>
+    <string name="keyboard_enable_summary">Turn on Telos Keyboard in Android input settings and choose it as your default input method.</string>
+    <string name="keyboard_enable_action">Open input settings</string>
+    <string name="keyboard_settings_category">Keyboard settings</string>
+    <string name="keyboard_incognito_title">Incognito mode</string>
     <string name="keepass_title">KeePassTL</string>
     <string name="aether_title">Telos Aether</string>
     <string name="backup_group_keepass">KeePassTL Vault</string>

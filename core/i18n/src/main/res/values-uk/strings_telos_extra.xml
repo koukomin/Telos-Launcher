@@ -36,4 +36,9 @@
     <string name="backup_group_system_data_summary">SMS, журнал викликів, мережі Wi-Fi</string>
     <string name="backup_group_virtual_apps">Віртуальні програми Telos</string>
     <string name="backup_group_virtual_apps_summary">Налаштування для Telos Sync, Переглядача, Калькулятора тощо</string>
+    <string name="keyboard_enable_title">Увімкнути Telos Keyboard</string>
+    <string name="keyboard_enable_summary">Увімкніть Telos Keyboard у налаштуваннях введення Android і виберіть його методом введення за замовчуванням.</string>
+    <string name="keyboard_enable_action">Відкрити налаштування введення</string>
+    <string name="keyboard_settings_category">Налаштування клавіатури</string>
+    <string name="keyboard_incognito_title">Режим інкогніто</string>
 </resources>
