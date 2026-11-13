@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_panel_surface">Surface del pannello</string>
+    <string name="desktop_theme_panel_surface_hint">Transparente o confusate affecta solmente le radice del pannello; le menus resta opac. Confusate conserva panelBlur pro frost; le confusation del fundo del hospite es best-effort si non disponibile.</string>
+    <string name="desktop_theme_panel_transparent">Transparente</string>
+    <string name="desktop_theme_panel_blurred">Confusate</string>
+    <string name="desktop_theme_panel_solid">Solide</string>
+    <string name="desktop_theme_panel_opacity">Opacitate del pannello: %1$d%%</string>
+    <string name="desktop_theme_panel_blur">Confusation de vitro: %1$d</string>
+    <string name="desktop_theme_panel_blur_unavailable">Le confusation del fundo del hospite non es disponibile; Telos usa un placa frost translucide e conserva tu preferentia de confusation.</string>
+</resources>

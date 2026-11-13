@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_studio_title">थीम स्टूडियो</string>
+    <string name="desktop_theme_studio_hint">Quiet Ops डिफ़ॉल्ट है। Vault Neon Cyber-Tech बॉर्डर और HUD गेज को मजबूत करता है। Paper Ops दिन के लिए हल्का विकल्प है। पॉपअप अपारदर्शी रहते हैं; दूसरी धुंध नहीं है।</string>
+    <string name="desktop_theme_intensity">तीव्रता</string>
+    <string name="desktop_theme_quiet_ops">Quiet Ops</string>
+    <string name="desktop_theme_vault_neon">Vault Neon</string>
+    <string name="desktop_theme_paper_ops">Paper Ops</string>
+    <string name="desktop_theme_accent">एक्सेंट</string>
+    <string name="desktop_theme_from_wallpaper">वॉलपेपर से एक्सेंट</string>
+    <string name="desktop_theme_from_wallpaper_hint">वॉल्ट या पोर्टेबल वॉलपेपर से स्थानीय रूप से Material टोनल सीड बनाता है। कुछ भी अपलोड नहीं होता।</string>
+    <string name="desktop_theme_density">घनत्व</string>
+    <string name="desktop_theme_density_compact">सघन</string>
+    <string name="desktop_theme_density_comfort">आराम</string>
+    <string name="desktop_theme_density_touch">टच</string>
+    <string name="desktop_theme_panel_height">पैनल ऊँचाई: %1$d dp</string>
+    <string name="desktop_theme_panel_icon">पैनल आइकन: %1$d dp</string>
+    </resources>

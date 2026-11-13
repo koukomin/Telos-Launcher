@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_workspace_tints">Barvni trakovi delovnih prostorov</string>
+    <string name="desktop_theme_workspace_tints_hint">Diskretni neonski poudarki pod številkami 1–4 na plošči. Skriti pri panic mute. Izklop: theme.workspaceTints=false.</string>
+</resources>

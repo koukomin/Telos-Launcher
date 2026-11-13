@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_workspace_tints">Workspace tint strips</string>
+    <string name="desktop_theme_workspace_tints_hint">Subtle neon accents under panel workspace digits 1–4. Hidden during panic mute. Off by preference: theme.workspaceTints=false.</string>
+</resources>

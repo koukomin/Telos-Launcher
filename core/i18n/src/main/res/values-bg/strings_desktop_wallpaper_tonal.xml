@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_wallpaper_tonal_title">Акцент от тапета</string>
+    <string name="desktop_wallpaper_tonal_enable">Акцент от тапета</string>
+    <string name="desktop_wallpaper_tonal_hint">Взема проба от vault или portable тапет на това устройство и локално извежда Material тонален seed. Пикселите никога не се качват. При неуспех chrome използва неоново синьо-зелено.</string>
+    <string name="desktop_wallpaper_tonal_accent_wallpaper">theme.accent=wallpaper — локален seed активен</string>
+</resources>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_opsec_title">OpSec</string>
+    <string name="desktop_opsec_secure_clipboard">Абаронены буфер абмену</string>
+    <string name="desktop_opsec_clipboard_title">Буфер абмену</string>
+    <string name="desktop_opsec_clipboard_hint">Адчувальны тэкст (ключы, IBAN, WireGuard) выдаляецца з гісторыі, захоўваецца толькі ў гэтай сесіі і ачышчаецца з сістэмнага буфера. Гісторыя застаецца ў vault — без воблачнай сінхранізацыі.</string>
+    <string name="desktop_opsec_clipboard_clear_now">Ачысціць буфер зараз</string>
+    <string name="desktop_opsec_clipboard_clear_all">Ачысціць усё</string>
+    <string name="desktop_opsec_clipboard_history_meta">Да 20 запісаў · сканчаецца праз 5 хвілін · замацаваць да блакавання · Super+V</string>
+    <string name="desktop_opsec_clipboard_history_empty">Гісторыі буфера яшчэ няма</string>
+    <string name="desktop_opsec_clipboard_pin_until_lock">Замацаваць</string>
+    <string name="desktop_opsec_clipboard_unpin">Адмацаваць</string>
+    <string name="desktop_opsec_clipboard_recall_vaulted">Вярнуць адчувальны кліп з vault</string>
+    <string name="desktop_opsec_clipboard_timer">Аўтаачыстка праз %1$d с</string>
+    <string name="desktop_opsec_clipboard_timer_off">Выкл.</string>
+    <string name="desktop_opsec_attestation_run">Запісаць здымак цэласнасці хоста</string>
+    <string name="desktop_opsec_audit_title">Журнал аўдыту сеанса</string>
+    <string name="desktop_opsec_audit_refresh">Абнавіць журнал</string>
+    <string name="desktop_opsec_audit_empty">Пакуль няма падзей аўдыту</string>
+    <string name="desktop_opsec_tpm_status">Статус TPM: %1$s</string>
+    <string name="desktop_opsec_tpm_unknown">яшчэ не вымерана</string>
+    <string name="desktop_opsec_tpm_hint">Лакальнае рэзюмэ digest PCR 0/7 праз tpm2-tools пры наяўнасці. Гэта не аддаленая атэстацыя (RAP).</string>
+</resources>

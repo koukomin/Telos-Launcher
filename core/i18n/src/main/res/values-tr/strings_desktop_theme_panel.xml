@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_panel_surface">Panel yüzeyi</string>
+    <string name="desktop_theme_panel_surface_hint">Saydam veya bulanık yalnızca panel kökünü etkiler; menüler opak kalır. Bulanık, frost için panelBlur saklar; ana makine duvar kâğıdı bulanıklığı yoksa best-effort.</string>
+    <string name="desktop_theme_panel_transparent">Saydam</string>
+    <string name="desktop_theme_panel_blurred">Bulanık</string>
+    <string name="desktop_theme_panel_solid">Katı</string>
+    <string name="desktop_theme_panel_opacity">Panel opaklığı: %1$d%%</string>
+    <string name="desktop_theme_panel_blur">Cam bulanıklığı: %1$d</string>
+    <string name="desktop_theme_panel_blur_unavailable">Ana makine duvar kâğıdı bulanıklığı yok; Telos yarı saydam frost plaka kullanır ve bulanıklık tercihinizi saklar.</string>
+</resources>

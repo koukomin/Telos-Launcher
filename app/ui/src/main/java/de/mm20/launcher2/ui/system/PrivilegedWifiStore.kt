@@ -51,11 +51,13 @@ internal object PrivilegedWifiStore {
 
     private fun hiddenInvoke(clazz: Class<*>, target: Any?, method: String, vararg args: Any?): Any? {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) return null
-        return hiddenInvoke(clazz, target, method, *args)
+        return runCatching { HiddenApiBypass.invoke(clazz, target, method, *args) }.getOrNull()
     }
 
     fun shizukuInstalled(context: Context): Boolean =
-        runCatching { context.packageManager.getPackageInfo(SHIZUKU_PACKAGE, 0); true }.getOrDefault(false)
+        runCatching { context.packageManager.getPackageInfo(SHIZUKU_PACKAGE, 0); true }.getOrDefault(false) ||
+            // Telos embeds the Shizuku server; binder presence counts as installed.
+            shizukuRunning()
 
     fun shizukuRunning(): Boolean = runCatching { Shizuku.pingBinder() }.getOrDefault(false)
 
@@ -66,9 +68,10 @@ internal object PrivilegedWifiStore {
         val root = PrivilegedShell.rootAvailable()
         val running = shizukuRunning()
         val authorized = shizukuAuthorized()
+        // Prefer Telos/Shizuku binder IWifiManager when authorized; root is XML/shell fallback.
         val privilege = when {
-            root -> WifiPrivilege.Root
             authorized -> WifiPrivilege.Shizuku
+            root -> WifiPrivilege.Root
             else -> WifiPrivilege.None
         }
         WifiPrivilegeState(privilege, shizukuInstalled(context), running, authorized, root)
@@ -101,9 +104,27 @@ internal object PrivilegedWifiStore {
             context.startActivity(launch.addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK))
             return
         }
-        context.startActivity(
-            android.content.Intent(android.content.Intent.ACTION_VIEW, android.net.Uri.parse("https://shizuku.rikka.app/")).addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK)
-        )
+        // Built-in Telos System → Shizuku (no separate moe.shizuku.privileged.api APK).
+        runCatching {
+            context.startActivity(
+                android.content.Intent().apply {
+                    setClassName(context.packageName, de.mm20.launcher2.applock.SettingsDeepLinkContract.ACTIVITY_CLASS_NAME)
+                    putExtra(
+                        de.mm20.launcher2.applock.SettingsDeepLinkContract.EXTRA_ROUTE,
+                        de.mm20.launcher2.applock.SettingsDeepLinkContract.ROUTE_SYSTEM,
+                    )
+                    putExtra(de.mm20.launcher2.applock.SettingsDeepLinkContract.EXTRA_SYSTEM_TAB, "shizuku")
+                    addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK)
+                },
+            )
+        }.onFailure {
+            context.startActivity(
+                android.content.Intent(
+                    android.content.Intent.ACTION_VIEW,
+                    android.net.Uri.parse("https://shizuku.rikka.app/"),
+                ).addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK),
+            )
+        }
     }
 
     fun notes(context: Context): android.content.SharedPreferences =

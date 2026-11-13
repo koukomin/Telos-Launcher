@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_lan_pair_title">LAN uparivanje s Androida</string>
+    <string name="desktop_lan_pair_hint">Pokreće kratkotrajni poslužitelj uparivanja na LAN-u. Skenirajte ili unesite kod u Telos Sync. Kodovi i tokeni nikad se ne zapisuju u zapisnike.</string>
+    <string name="desktop_lan_pair_start">Pokreni LAN uparivanje</string>
+    <string name="desktop_lan_pair_stop">Zaustavi LAN uparivanje</string>
+    <string name="desktop_lan_pair_running">Poslužitelj uparivanja sluša na LAN-u</string>
+    <string name="desktop_lan_pair_code">Kod uparivanja</string>
+    <string name="desktop_lan_pair_qr_uri">URI uparivanja (QR / zalijepi)</string>
+    <string name="desktop_lan_pair_stopped">LAN uparivanje zaustavljeno</string>
+    <string name="desktop_lan_pair_bind_reject">Ne može se vezati javna adresa — koristite privatni LAN IP</string>
+    <string name="desktop_lan_pair_android_title">Telos Desktop LAN uparivanje</string>
+    <string name="desktop_lan_pair_host">Host radne površine (LAN IP)</string>
+    <string name="desktop_lan_pair_port">Port radne površine</string>
+    <string name="desktop_lan_pair_connect">Upari s radnom površinom</string>
+    <string name="desktop_lan_pair_paired">Upareno s radnom površinom</string>
+    <string name="desktop_lan_pair_fetch_bundle">Dohvati paket sesije radne površine</string>
+    <string name="desktop_lan_pair_fetch_ok">Šifrirani paket sesije spremljen</string>
+    <string name="desktop_lan_pair_send_bundle">Pošalji šifrirani paket</string>
+    <string name="desktop_lan_pair_failed">LAN uparivanje nije uspjelo</string>
+    <string name="desktop_lan_pair_scan_hint">Na Androidu otvorite Sync → Postavke i zalijepite URI ili unesite host, port i kod.</string>
+</resources>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_opsec_title">OpSec</string>
+    <string name="desktop_opsec_secure_clipboard">Sichere Zwischenablage</string>
+    <string name="desktop_opsec_clipboard_title">Zwischenablage</string>
+    <string name="desktop_opsec_clipboard_hint">Sensibler Text (Schlüssel, IBAN, WireGuard) wird aus der Historie entfernt, nur in dieser Sitzung verwahrt und aus der System-Zwischenablage gelöscht. Historie bleibt vault-lokal — kein Cloud-Sync.</string>
+    <string name="desktop_opsec_clipboard_clear_now">Zwischenablage jetzt leeren</string>
+    <string name="desktop_opsec_clipboard_clear_all">Alles leeren</string>
+    <string name="desktop_opsec_clipboard_history_meta">Bis 20 Einträge · Ablauf nach 5 Minuten · anheften bis Sperre · Super+V</string>
+    <string name="desktop_opsec_clipboard_history_empty">Noch keine Zwischenablage-Historie</string>
+    <string name="desktop_opsec_clipboard_pin_until_lock">Anheften</string>
+    <string name="desktop_opsec_clipboard_unpin">Lösen</string>
+    <string name="desktop_opsec_clipboard_recall_vaulted">Verwahrten sensiblen Clip abrufen</string>
+    <string name="desktop_opsec_clipboard_timer">Automatisch nach %1$d Sekunden leeren</string>
+    <string name="desktop_opsec_clipboard_timer_off">Aus</string>
+    <string name="desktop_opsec_attestation_run">Host-Integritäts-Schnappschuss speichern</string>
+    <string name="desktop_opsec_audit_title">Sitzungs-Auditprotokoll</string>
+    <string name="desktop_opsec_audit_refresh">Auditprotokoll aktualisieren</string>
+    <string name="desktop_opsec_audit_empty">Noch keine Audit-Ereignisse</string>
+    <string name="desktop_opsec_tpm_status">TPM-Status: %1$s</string>
+    <string name="desktop_opsec_tpm_unknown">noch nicht gemessen</string>
+    <string name="desktop_opsec_tpm_hint">Lokale PCR-0/7-Digest-Zusammenfassung über tpm2-tools, falls vorhanden. Keine Remote-Attestierung (RAP).</string>
+</resources>

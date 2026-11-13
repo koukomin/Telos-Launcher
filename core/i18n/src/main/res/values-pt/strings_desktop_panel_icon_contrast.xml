@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_panel_icon_contrast">Contraste dos ícones do painel</string>
+    <string name="desktop_panel_icon_contrast_auto">Automático</string>
+    <string name="desktop_panel_icon_contrast_light">Ícones claros</string>
+    <string name="desktop_panel_icon_contrast_dark">Ícones escuros</string>
+    <string name="desktop_panel_icon_contrast_hint">O Automático amostra a faixa do fundo atrás do painel superior neste dispositivo e escolhe glifos claros ou escuros para os ícones Helix e as etiquetas StatusNotifier do Compose. Os píxeis ficam locais. Os pixmaps SNI do telos-sni não são recoloridos. Preferência: panel.iconContrast=auto|light|dark.</string>
+</resources>

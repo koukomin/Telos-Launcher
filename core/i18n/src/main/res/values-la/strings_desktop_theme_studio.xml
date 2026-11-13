@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_studio_title">Thematis atelier</string>
+    <string name="desktop_theme_studio_hint">Quiet Ops est praedefinitum. Vault Neon margines Cyber-Tech et indices HUD firmat. Paper Ops est optio clara diurna. Fenestrae emergentes opacae manent; secunda offuscatio non est.</string>
+    <string name="desktop_theme_intensity">Intensitas</string>
+    <string name="desktop_theme_quiet_ops">Quiet Ops</string>
+    <string name="desktop_theme_vault_neon">Vault Neon</string>
+    <string name="desktop_theme_paper_ops">Paper Ops</string>
+    <string name="desktop_theme_accent">Accentus</string>
+    <string name="desktop_theme_from_wallpaper">Accentus e tapete</string>
+    <string name="desktop_theme_from_wallpaper_hint">Loco e tapete vault vel datorum portabilium semen tonale Material sumit. Nihil ascenditur.</string>
+    <string name="desktop_theme_density">Densitas</string>
+    <string name="desktop_theme_density_compact">Compactum</string>
+    <string name="desktop_theme_density_comfort">Commodum</string>
+    <string name="desktop_theme_density_touch">Tactus</string>
+    <string name="desktop_theme_panel_height">Altitudo tabulae: %1$d dp</string>
+    <string name="desktop_theme_panel_icon">Icones tabulae: %1$d dp</string>
+    </resources>

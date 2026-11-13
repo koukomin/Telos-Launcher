@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_appearance_title">外觀</string>
+    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
+    <string name="desktop_theme_intensity_neon">Vault Neon</string>
+    <string name="desktop_theme_intensity_paper">Paper Ops</string>
+    <string name="desktop_wallpaper_path">桌布（保險庫路徑）</string>
+    <string name="desktop_wallpaper_path_hint">相對於保險庫掛載點（例如 Pictures/wall.jpg）。絕不會顯示在鎖定的預開機畫面。</string>
+    <string name="desktop_unlock_theatre_title">Telos Phantom Vault</string>
+    <string name="desktop_unlock_theatre_quiet_ops">Quiet Ops — 解鎖以顯示桌布</string>
+    <string name="desktop_unlock_theatre_hint">鎖定開機僅保留 Quiet Ops 與保險庫字形。解鎖後，Telos 交叉淡入保險庫桌布與所選強度 — 無粒子效果。</string>
+    <string name="desktop_sandbox_tint_hint">強調環顏色僅作視覺 OpSec（Host = 橙色警示，Net-isolated = 青色，Vault FS = 綠色，Standard = 洋紅）。</string>
+    <string name="desktop_matched_packs_title">配對的圖示 + 游標套件</string>
+    <string name="desktop_matched_packs_hint">一鍵設定已文件化的 GPL 配對（Papirus↔BreezeX，candy-icons↔Bibata；CandyCyber 仍為內建 chrome 字形）。下載保留在保險庫或可攜圖示資料夾。</string>
+    <string name="desktop_matched_packs_apply">配對組合：%1$s</string>
+    <string name="desktop_matched_packs_one_click">配對組合</string>
+    <string name="desktop_matched_packs_working">正在配對套件…</string>
+    <string name="desktop_matched_packs_ok">已套用配對套件 %1$s</string>
+    <string name="desktop_matched_packs_fail">無法配對套件：%1$s</string>
+</resources>

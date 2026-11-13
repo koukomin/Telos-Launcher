@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_day_night_title">Nappali / éjszakai téma</string>
+    <string name="desktop_day_night_hint">Auto módban nappal Paper Ops (világos), éjjel Quiet Ops (sötét). A határok a választott időzónát használják. Alapértelmezés: kézi zóna — hálózat helymeghatározásra csak lent engedélyezve.</string>
+    <string name="desktop_day_night_mode">Nappali / éjszakai mód</string>
+    <string name="desktop_day_night_off">Ki</string>
+    <string name="desktop_day_night_auto">Auto</string>
+    <string name="desktop_day_night_light">Világos</string>
+    <string name="desktop_day_night_dark">Sötét</string>
+    <string name="desktop_day_night_timezone">Időzóna</string>
+    <string name="desktop_day_night_timezone_hint">IANA zóna a helyi nappal/éjjelhez (JVM a választásig). A kézi választás nem hív szervert.</string>
+    <string name="desktop_day_night_timezone_search">Időzónák keresése</string>
+    <string name="desktop_day_night_timezone_current">Jelenlegi zóna: %1$s</string>
+    <string name="desktop_day_night_network_assist">Hálózati segítség ország / zóna</string>
+    <string name="desktop_day_night_network_assist_warning">Csak beleegyezéssel. Bekapcsolva a Telos egyszer lekér egy nyilvános IP→geo végpontot zónáért és országkódért. Csak ezek (és opcionális napkelte/-nyugta koordináták) kerülnek a vault desktop.properties-be. Az IP nincs naplózva, nincs folyamatos követés, nincs felhős témaszinkron. Hálózati hiba, kill-switch vagy offline esetén a kézi zóna marad; a Preference only vagy Failed őszintén megjelenik.</string>
+    <string name="desktop_day_night_assist_pref_only">Csak beállítás — hálózati segítség ki, tiltva vagy nem kérve; kézi zóna</string>
+    <string name="desktop_day_night_assist_failed">Sikertelen — geo végpont elérhetetlen; kézi zóna megtartva</string>
+    <string name="desktop_day_night_assist_applied">Alkalmazva — zóna %1$s, ország %2$s (csak helyi)</string>
+    <string name="desktop_day_night_country">Országkód: %1$s</string>
+</resources>

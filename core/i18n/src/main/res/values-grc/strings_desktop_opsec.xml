@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_opsec_title">OpSec</string>
+    <string name="desktop_opsec_secure_clipboard">Ἀσφαλὲς πρόχειρον</string>
+    <string name="desktop_opsec_clipboard_title">Πρόχειρον</string>
+    <string name="desktop_opsec_clipboard_hint">Τὸ εὐαίσθητον κείμενον (κλεῖδες, IBAN, WireGuard) ἐκ τῆς ἱστορίας ἀφαιρεῖται, μόνον ἐν τῇδε τῇ συνόδῳ φυλάσσεται, καὶ ἐκ τοῦ συστήματος καθαίρεται. Ἡ ἱστορία ἐν τῷ vault μένει — ἄνευ νεφοσυγχρονισμοῦ.</string>
+    <string name="desktop_opsec_clipboard_clear_now">Καθαρισμὸς προχείρου νῦν</string>
+    <string name="desktop_opsec_clipboard_clear_all">Πάντα καθᾶραι</string>
+    <string name="desktop_opsec_clipboard_history_meta">Μέχρι κʹ · λήγει μετὰ πέντε λεπτά · πῆξις μέχρι κλειδώματος · Super+V</string>
+    <string name="desktop_opsec_clipboard_history_empty">Οὔπω ἱστορία προχείρου</string>
+    <string name="desktop_opsec_clipboard_pin_until_lock">Πῆξαι</string>
+    <string name="desktop_opsec_clipboard_unpin">Λῦσαι</string>
+    <string name="desktop_opsec_clipboard_recall_vaulted">Ἀνακαλέσασθαι τὸ εὐαίσθητον ἐκ τοῦ vault</string>
+    <string name="desktop_opsec_clipboard_timer">Αὐτόματος καθαρισμὸς μετὰ %1$d δευτερόλεπτα</string>
+    <string name="desktop_opsec_clipboard_timer_off">Ἀνενεργόν</string>
+    <string name="desktop_opsec_attestation_run">Καταγραφὴ στιγμιοτύπου ἀκεραιότητος ξενιστοῦ</string>
+    <string name="desktop_opsec_audit_title">Ἡμερολόγιον ἐλέγχου συνεδρίας</string>
+    <string name="desktop_opsec_audit_refresh">Ἀνανέωσις ἡμερολογίου</string>
+    <string name="desktop_opsec_audit_empty">Οὔπω ὑπάρχουσι συμβάντα ἐλέγχου</string>
+    <string name="desktop_opsec_tpm_status">Κατάστασις TPM: %1$s</string>
+    <string name="desktop_opsec_tpm_unknown">οὔπω μετρηθέν</string>
+    <string name="desktop_opsec_tpm_hint">Τοπικὴ σύνοψις digest PCR 0/7 διὰ tpm2-tools ἐὰν παρῇ. Οὐκ ἔστιν ἀπομεμακρυσμένη βεβαίωσις (RAP).</string>
+</resources>

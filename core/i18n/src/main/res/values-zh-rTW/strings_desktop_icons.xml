@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_icons_title">圖示</string>
+    <string name="desktop_icons_theme_label">圖示主題</string>
+    <string name="desktop_icons_download_section">從 Telos 下載</string>
+    <string name="desktop_icons_download">下載</string>
+    <string name="desktop_icons_installing">正在安裝…</string>
+    <string name="desktop_icons_installed">已安裝</string>
+    <string name="desktop_icons_apply">套用</string>
+    <string name="desktop_icons_source_system">系統</string>
+    <string name="desktop_icons_source_telos">Telos</string>
+    <string name="desktop_icons_source_builtin">內建</string>
+    <string name="desktop_icons_path">圖示包資料夾：%1$s</string>
+    <string name="desktop_icons_freedesktop_note">桌面 freedesktop 圖示主題（不是 Android ADW 圖示包）。</string>
+    <string name="desktop_icons_download_failed">下載失敗</string>
+    <string name="desktop_icons_download_ok">主題已安裝</string>
+    <string name="desktop_icons_license">授權：%1$s</string>
+    <string name="desktop_icons_portable_only">在 Portable Data 模式下，圖示包會留在可攜圖示資料夾（不會寫入主機設定檔）。</string>
+</resources>

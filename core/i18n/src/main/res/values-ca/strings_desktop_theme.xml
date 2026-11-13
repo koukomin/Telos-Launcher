@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_appearance_title">Aparença</string>
+    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
+    <string name="desktop_theme_intensity_neon">Vault Neon</string>
+    <string name="desktop_theme_intensity_paper">Paper Ops</string>
+    <string name="desktop_wallpaper_path">Fons de pantalla (camí del vault)</string>
+    <string name="desktop_wallpaper_path_hint">Relatiu al punt de muntatge del vault (p. ex. Pictures/wall.jpg). Mai es mostra a la pantalla de prearrencada bloquejada.</string>
+    <string name="desktop_unlock_theatre_title">Telos Phantom Vault</string>
+    <string name="desktop_unlock_theatre_quiet_ops">Quiet Ops — desbloqueja per revelar el fons</string>
+    <string name="desktop_unlock_theatre_hint">L’arrencada bloquejada roman en Quiet Ops només amb el glif del vault. Després del desbloqueig, Telos fa un crossfade al fons del vault i a la intensitat triada — sense partícules.</string>
+    <string name="desktop_sandbox_tint_hint">El color de l’anell d’accent és només OpSec visual (Host = taronja de precaució, Net-isolated = cian, Vault FS = verd, Standard = magenta).</string>
+    <string name="desktop_matched_packs_title">Paquets d’icones + cursor combinats</string>
+    <string name="desktop_matched_packs_hint">Un clic defineix un parell GPL documentat (Papirus↔BreezeX, candy-icons↔Bibata; CandyCyber roman el glif chrome integrat). Les baixades queden a la carpeta d’icones del vault o portable.</string>
+    <string name="desktop_matched_packs_apply">Combina el parell: %1$s</string>
+    <string name="desktop_matched_packs_one_click">Combina el parell</string>
+    <string name="desktop_matched_packs_working">S’estan combinant els paquets…</string>
+    <string name="desktop_matched_packs_ok">S’ha aplicat el paquet combinat %1$s</string>
+    <string name="desktop_matched_packs_fail">No s’han pogut combinar els paquets: %1$s</string>
+</resources>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_night_light_title">نور شب</string>
+    <string name="desktop_night_light_hint">نمایشگر را با ابزار میزبان (gammastep، redshift یا wlsunset) گرم می‌کند. بدون خدمات مکان و بدون ارسال در شبکه. بدون ابزار فقط ترجیح ذخیره می‌شود.</string>
+    <string name="desktop_night_light_enable">فعال‌سازی نور شب</string>
+    <string name="desktop_night_light_temperature">دمای رنگ: %1$d K</string>
+    <string name="desktop_night_light_on">روشن</string>
+    <string name="desktop_night_light_off">خاموش</string>
+    <string name="desktop_night_light_pref_only">ترجیح ذخیره شد؛ برای اعمال روی این میزبان gammastep، redshift یا wlsunset را نصب کنید</string>
+    <string name="desktop_night_light_failed">ابزار میزبان نتوانست دمای نمایشگر را تغییر دهد</string>
+    <string name="desktop_night_light_applied">با %1$s اعمال شد</string>
+    <string name="desktop_night_light_cleared">نور شب خاموش شد</string>
+    <string name="desktop_settings_search_hint">جستجوی تنظیمات</string>
+    <string name="desktop_settings_search_empty">هیچ تنظیمی با این جستجو مطابقت ندارد</string>
+    <string name="desktop_settings_session">نشست</string>
+    <string name="desktop_settings_display">نمایش</string>
+    <string name="desktop_settings_desktop">رومیزی</string>
+    <string name="desktop_settings_windows">پنجره‌ها</string>
+    <string name="desktop_settings_portable">قابل حمل</string>
+    <string name="desktop_settings_vault">خزانه</string>
+</resources>

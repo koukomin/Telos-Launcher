@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_helix_snap_title">โซนสแนป</string>
+    <string name="desktop_helix_snap_50_50">50 / 50</string>
+    <string name="desktop_helix_snap_two_thirds">2/3 · 1/3</string>
+    <string name="desktop_helix_snap_grid">ตาราง 2×2</string>
+    <string name="desktop_helix_snap_left">สแนปซ้าย</string>
+    <string name="desktop_helix_snap_right">สแนปขวา</string>
+    <string name="desktop_helix_snap_maximize">ขยายใหญ่สุด</string>
+    <string name="desktop_helix_window_mode">โหมดหน้าต่าง</string>
+    <string name="desktop_helix_tiling">ไทล์ (niri)</string>
+    <string name="desktop_helix_stacking">ซ้อน (labwc)</string>
+    <string name="desktop_helix_window_mode_hint">มีผลเมื่อเริ่มเซสชัน Telos ครั้งถัดไปหากไม่ได้ตั้ง TELOS_COMPOSITOR กด Super+ลูกศรเพื่อสแนปหน้าต่างที่โฟกัส</string>
+</resources>

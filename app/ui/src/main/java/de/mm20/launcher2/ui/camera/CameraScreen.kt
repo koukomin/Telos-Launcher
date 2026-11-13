@@ -21,6 +21,12 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
+import de.mm20.launcher2.ui.component.virtualAppPopup
+import de.mm20.launcher2.ui.component.TelosCyber
+import de.mm20.launcher2.ui.component.TelosCyberAppBarTitle
+import de.mm20.launcher2.ui.component.TelosTechPill
+import de.mm20.launcher2.ui.component.TelosDotMatrixText
+import androidx.compose.ui.unit.sp
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -198,7 +204,9 @@ fun CameraScreen() {
                 it.scheme?.lowercase(java.util.Locale.ROOT) in setOf("https", "http") && !it.host.isNullOrBlank()
             }
         }
-        AlertDialog(onDismissRequest = { detectedCode = null },
+        AlertDialog(
+            onDismissRequest = { detectedCode = null },
+            containerColor = de.mm20.launcher2.ui.component.virtualAppPopup(),
             title = { Text(stringResource(I18nR.string.camera_scan_code)) },
             text = { androidx.compose.foundation.text.selection.SelectionContainer {
                 Text(code.text, Modifier.heightIn(max = 280.dp).verticalScroll(rememberScrollState()))
@@ -217,7 +225,25 @@ fun CameraScreen() {
             } })
     }
     Scaffold(containerColor = Color.Black, contentColor = Color.White, topBar = {
-        TopAppBar(title = { Text("TELOS", color = Color.White) }, navigationIcon = {
+        TopAppBar(
+            title = {
+                Column {
+                    Text("TELOS", color = Color.White, fontWeight = androidx.compose.ui.text.font.FontWeight.SemiBold)
+                    TelosDotMatrixText(
+                        text = stringResource(
+                            when {
+                                recording -> I18nR.string.camera_native_record
+                                scanMode -> I18nR.string.camera_scan_pdf
+                                mode == NativeCamera.MODE_VIDEO -> I18nR.string.camera_mode_video
+                                else -> I18nR.string.camera_mode_photo
+                            }
+                        ).uppercase(),
+                        fontSize = 9.sp,
+                        color = if (recording) TelosCyber.NeonMagenta else TelosCyber.NeonCyan,
+                    )
+                }
+            },
+            navigationIcon = {
             if (backStack.size > 1) {
                 IconButton(onClick = { backStack.removeLastOrNull() }) { Icon(painterResource(BaseR.drawable.arrow_back_24px), stringResource(I18nR.string.hc_back), tint = Color.White) }
             }
@@ -278,8 +304,15 @@ fun CameraScreen() {
                             if (ExtensionMode.BOKEH in supported) add(ExtensionMode.BOKEH to I18nR.string.camera_mode_portrait)
                             if (ExtensionMode.NIGHT in supported) add(ExtensionMode.NIGHT to I18nR.string.camera_mode_night)
                         }
-                        FilterChip(selected = scanMode, onClick = { if (!recording && !busy) { scanMode = !scanMode; raw = false; panorama = false; mode = NativeCamera.MODE_PHOTO } }, label = { Text(stringResource(I18nR.string.camera_scan_pdf)) })
-                        modes.forEach { (value, label) -> FilterChip(selected = mode == value && !scanMode, onClick = { if (!recording && !busy) { message = null; scanMode = false; mode = value } }, label = { Text(stringResource(label)) }) }
+                        TelosTechPill(stringResource(I18nR.string.camera_scan_pdf), scanMode, { if (!recording && !busy) { scanMode = !scanMode; raw = false; panorama = false; mode = NativeCamera.MODE_PHOTO } }, accentColor = TelosCyber.NeonMagenta)
+                        modes.forEachIndexed { idx, (value, label) ->
+                            TelosTechPill(
+                                stringResource(label),
+                                mode == value && !scanMode,
+                                { if (!recording && !busy) { message = null; scanMode = false; mode = value } },
+                                accentColor = TelosCyber.accentFor(idx),
+                            )
+                        }
                     }
                     Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
                         Text("${"%.1f".format(zoom)}×", color = Color.White)

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_workspace_tints">Fasciae tincturae spatiorum</string>
+    <string name="desktop_theme_workspace_tints_hint">Accentus neon tenues sub digitis 1–4 tabulae. Absconduntur in panic mute. Exstingue: theme.workspaceTints=false.</string>
+</resources>

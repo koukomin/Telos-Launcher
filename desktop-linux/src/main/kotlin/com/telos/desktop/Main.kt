@@ -15,7 +15,9 @@ import com.telos.desktop.icons.LinuxIconThemeResolver
 import com.telos.desktop.monitor.LinuxSystemTelemetryEngine
 import com.telos.desktop.settings.TelosDesktopSettings
 import androidx.compose.runtime.rememberCoroutineScope
+import com.telos.desktop.theme.PanicMuteController
 import com.telos.desktop.theme.SystemThemeBridge
+import com.telos.desktop.theme.ThemeAccent
 import com.telos.desktop.ui.DesktopChrome
 import com.telos.desktop.ui.DesktopWorkspace
 import com.telos.desktop.ui.TelosDesktopTheme
@@ -48,6 +50,17 @@ fun main(args: Array<String>) {
         System.setProperty("telos.session", "1")
         DesktopChrome.fullscreen = true
     }
+    // VOS-3: queue telos:// / --open URI before the Compose shell starts.
+    com.telos.desktop.apps.TelosDeepLinkParser.parseArgs(args)?.let {
+        com.telos.desktop.apps.TelosDeepLinkBus.offer(it)
+    }
+    if (args.contains("--register-telos-protocol")) {
+        val ok = com.telos.desktop.apps.TelosDeepLinkRegistrar.ensureRegistered()
+        System.err.println(if (ok) "telos:// handler registered" else "telos:// handler registration failed")
+        if (args.none { it.startsWith("telos:", ignoreCase = true) || it == "--open" || it.startsWith("--open=") }) {
+            return
+        }
+    }
     if (TelosSessionHome.alreadyUnlocked) {
         val probe = PhantomVaultEngine()
         if (!probe.attachMounted()) {
@@ -72,6 +85,8 @@ fun main(args: Array<String>) {
     var unlocked by remember {
         mutableStateOf(vault.attachMounted() || TelosSessionHome.alreadyUnlocked)
     }
+    /** True when this process transitioned from the Quiet Ops pre-boot screen. */
+    var playUnlockReveal by remember { mutableStateOf(false) }
     val wm = remember { TelosWindowManager() }
     // === TELOS_PENDING_REVIEW_START: telos_kde_system_monitor ===
     val telemetry = remember { LinuxSystemTelemetryEngine() }
@@ -79,6 +94,8 @@ fun main(args: Array<String>) {
     // === TELOS_PENDING_REVIEW_START: telos_de_final_polish ===
     val windowState = rememberWindowState(width = 1440.dp, height = 900.dp, placement = WindowPlacement.Floating)
     val hostTheme = remember { SystemThemeBridge.load() }
+    var chromeAccent by remember { mutableStateOf(hostTheme.accent) }
+    var liveSettings by remember { mutableStateOf<TelosDesktopSettings?>(null) }
     LaunchedEffect(DesktopChrome.fullscreen) {
         windowState.placement = DesktopChrome.placement
     }
@@ -94,20 +111,105 @@ fun main(args: Array<String>) {
         title = "Telos Desktop",
         state = windowState,
         onPreviewKeyEvent = { ev ->
-            handleDesktopKeys(ev, wm, telemetry)
+            handleDesktopKeys(ev, wm, telemetry, liveSettings)
         },
     ) {
-        TelosDesktopTheme(accent = hostTheme.accent) {
+        // Theme Studio + local wallpaper tonal seed drive Helix chrome.
+        TelosDesktopTheme(accent = chromeAccent) {
             if (!unlocked) {
                 TelosPreBootScreen(vault) {
                     com.telos.desktop.session.SessionNetGuard.apply()
+                    playUnlockReveal = true
                     unlocked = true
                 }
             } else {
                 val scope = rememberCoroutineScope()
                 androidx.compose.runtime.LaunchedEffect(Unit) { vault.startDaemons(scope) }
                 val settings = remember {
-                    TelosDesktopSettings(vault.configDir).also { it.load() }
+                    TelosDesktopSettings(vault.configDir).also {
+                        it.load()
+                        it.syncThemeChrome()
+                    }
+                }
+                LaunchedEffect(settings) { liveSettings = settings }
+                LaunchedEffect(
+                    DesktopChrome.accentEpoch,
+                    PanicMuteController.appearanceGeneration,
+                    settings.themeAccent,
+                    settings.themeIntensity,
+                    settings.wallpaperTonal,
+                    settings.wallpaperPath,
+                    settings.followSystemTheme,
+                ) {
+                    chromeAccent = when {
+                        PanicMuteController.isMuted(settings) ->
+                            ThemeAccent.NeonCyan.color.copy(alpha = 0.85f)
+                        com.telos.desktop.theme.WallpaperTonalSeed.usesWallpaperAccent(
+                            settings.themeAccent,
+                            settings.wallpaperTonal,
+                        ) -> {
+                            val seeded = com.telos.desktop.theme.WallpaperTonalSeed.resolveAccent(
+                                themeAccent = settings.themeAccent,
+                                wallpaperTonal = settings.wallpaperTonal,
+                                wallpaperPath = settings.wallpaperPath.ifBlank { null },
+                                hostFallback = androidx.compose.ui.graphics.Color(
+                                    com.telos.desktop.theme.WallpaperTonalSeed.FALLBACK_SEED_ARGB,
+                                ),
+                            )
+                            com.telos.desktop.theme.DesktopThemeChrome.wallpaperSeedAccent = seeded
+                            seeded
+                        }
+                        else -> {
+                            com.telos.desktop.theme.DesktopThemeChrome.wallpaperSeedAccent = null
+                            com.telos.desktop.theme.DesktopThemeChrome.resolvedAccent
+                        }
+                    }
+                }
+                androidx.compose.runtime.LaunchedEffect(settings) {
+                    settings.syncThemeChrome()
+                    vault.opsec.secureClipboardEnabled = settings.secureClipboard
+                    vault.opsec.clipboardClearSeconds = settings.clipboardClearSeconds
+                    com.telos.desktop.search.VaultFileNameIndex.enabled = settings.fileNameIndexEnabled
+                    if (settings.fileNameIndexEnabled) {
+                        kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+                            com.telos.desktop.search.VaultFileNameIndex.loadFromDisk()
+                            com.telos.desktop.search.VaultFileNameIndex.maybeRescan()
+                        }
+                    } else {
+                        com.telos.desktop.search.VaultFileNameIndex.clearMemory()
+                    }
+                }
+                androidx.compose.runtime.LaunchedEffect(
+                    settings.nightLightEnabled,
+                    settings.nightLightTemperatureK,
+                ) {
+                    kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+                        com.telos.desktop.display.NightLightController.apply(
+                            settings.nightLightEnabled,
+                            settings.nightLightTemperatureK,
+                        )
+                    }
+                }
+                androidx.compose.runtime.LaunchedEffect(settings) {
+                    // Day/night palette tick on Default/IO — never blocks first frame.
+                    com.telos.desktop.theme.DayNightThemeScheduler.start(scope, settings)
+                }
+                LaunchedEffect(Unit) {
+                    kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+                        // Prefer vaulted sync/session key — no KeePass master-password prompt.
+                        // When none is stored, maybeAutoImport is a no-op (never invents credentials).
+                        // configHome(create=false): do not mkdir on cold start when no vaulted sync exists.
+                        val kdbx = java.io.File(
+                            com.telos.desktop.network.DesktopNetworkController.configHome(create = false),
+                            "sync/keepass.kdbx",
+                        ).takeIf { it.isFile }
+                        com.telos.desktop.sync.DesktopSessionSync.maybeAutoImport(
+                            kdbx = kdbx,
+                            masterPassword = null,
+                            vaultSettings = settings,
+                        )
+                        runCatching { com.telos.desktop.apps.TelosDeepLinkRegistrar.ensureRegistered() }
+                    }
                 }
                 LaunchedEffect(settings.startFullscreen) {
                     if (!TelosSessionHome.session) {
@@ -116,7 +218,25 @@ fun main(args: Array<String>) {
                 }
                 val icons = remember {
                     val themeName = if (settings.followSystemTheme) hostTheme.iconTheme ?: settings.iconTheme else settings.iconTheme
-                    LinuxIconThemeResolver(preferredTheme = themeName)
+                    LinuxIconThemeResolver.withManagedRoots(preferredTheme = themeName)
+                }
+                LaunchedEffect(settings.cursorTheme, settings.cursorSize, settings.followSystemTheme) {
+                    kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+                        val hostCursor = if (settings.followSystemTheme) hostTheme.cursorTheme else null
+                        val size = if (settings.cursorSize > 0) {
+                            settings.cursorSize
+                        } else {
+                            hostTheme.cursorSize ?: 24
+                        }
+                        // apply() publishes XCURSOR_* only; theme scan + frame decode stay deferred
+                        // until DesktopWorkspace first needs a pointer cursor.
+                        com.telos.desktop.cursor.CursorThemeApplier.apply(
+                            themeName = settings.cursorTheme.ifBlank { null },
+                            size = size,
+                            followSystemTheme = settings.followSystemTheme,
+                            hostTheme = hostCursor,
+                        )
+                    }
                 }
                 val display = remember { LinuxDisplayManager(settings) }
                 DesktopWorkspace(
@@ -130,7 +250,9 @@ fun main(args: Array<String>) {
                         vault.lock(syncCloud = true)
                         exitApplication()
                     },
-                    onKeyEvent = { handleDesktopKeys(it, wm, telemetry) },
+                    onKeyEvent = { handleDesktopKeys(it, wm, telemetry, settings) },
+                    playUnlockReveal = playUnlockReveal,
+                    onUnlockRevealFinished = { playUnlockReveal = false },
                 )
             }
         }

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_store_permissions">הרשאות</string>
+    <string name="desktop_store_sandbox_tier">רמת ארגז חול</string>
+    <string name="desktop_sandbox_tier_host">מארח</string>
+    <string name="desktop_sandbox_tier_vault_fs">מערכת קבצים של הכספת</string>
+    <string name="desktop_sandbox_tier_net_isolated">מבודד רשת</string>
+    <string name="desktop_sandbox_tier_standard">רגיל</string>
+    <string name="desktop_perm_filesystem_home">תיקיית בית</string>
+    <string name="desktop_perm_filesystem_host">מערכת קבצים של המארח</string>
+    <string name="desktop_perm_network">רשת</string>
+    <string name="desktop_perm_gpu">GPU (DRI)</string>
+    <string name="desktop_perm_wayland">Wayland</string>
+    <string name="desktop_perm_x11">X11</string>
+    <string name="desktop_perm_pulseaudio">שמע</string>
+    <string name="desktop_perm_notifications">התראות</string>
+    <string name="desktop_perm_camera">מצלמה</string>
+    <string name="desktop_perm_microphone">מיקרופון</string>
+    <string name="desktop_flatpak_unavailable">Flatpak אינו זמין; דריסות הרשאות אינן זמינות במערכת זו.</string>
+    <string name="desktop_flatpak_override_applied">דריסת Flatpak הוחלה</string>
+    <string name="desktop_flatpak_override_failed">לא ניתן להחיל דריסת Flatpak</string>
+    <string name="desktop_flatpak_reset_overrides">איפוס דריסות</string>
+    <string name="desktop_deeplink_handler_hint">telos:// פותח אפליקציות Telos וחיפוש Kickoff (נרשם בהפעלת שולחן העבודה).</string>
+    <string name="desktop_store_backends">מקורות חבילות</string>
+    <string name="desktop_store_backend_flatpak">Flatpak</string>
+    <string name="desktop_store_backend_winget">Winget</string>
+    <string name="desktop_store_backend_scoop">Scoop</string>
+    <string name="desktop_store_windows_pref_only">Winget/Scoop הם ל-Windows בלבד; מארח זה אינו מריץ פעולות חבילות Windows.</string>
+    <string name="desktop_store_windows_unavailable">לא נמצאו winget או scoop ב-PATH.</string>
+    <string name="desktop_store_windows_installed">חבילות Windows (מותקנות)</string>
+    <string name="desktop_store_windows_search">חבילות Windows (חיפוש)</string>
+    <string name="desktop_store_install_confirm_title">אישור התקנה</string>
+    <string name="desktop_store_install_confirm_body">להתקין את %1$s (%2$s) באמצעות %3$s?</string>
+    <string name="desktop_store_install_started">התקנת %1$s החלה</string>
+    <string name="desktop_store_install_failed">לא ניתן להתחיל התקנה של %1$s</string>
+    <string name="desktop_portal_device_title">מצלמה ומיקרופון (פורטל)</string>
+    <string name="desktop_portal_device_hint">שומר את הבקשה ושואל את xdg-desktop-portal כשפורטלי Device/Camera זמינים. בלי כלי פורטל נשארת העדפה בלבד.</string>
+    <string name="desktop_portal_device_requested">בוקש דיאלוג גישה של פורטל</string>
+    <string name="desktop_portal_device_pref_only">ההעדפה נשמרה; כלי פורטל אינם זמינים (העדפה בלבד).</string>
+    <string name="desktop_portal_device_unavailable">גישת התקן דרך פורטל אינה זמינה במערכת זו.</string>
+    <string name="desktop_portal_device_failed">לא ניתן לבקש גישת התקן מפורטל שולחן העבודה</string>
+    <string name="desktop_netns_cap_unshare">netns לכל אפליקציה: unshare --net זמין</string>
+    <string name="desktop_netns_cap_ip">netns לכל אפליקציה: ip netns זמין</string>
+    <string name="desktop_netns_cap_unavailable">חסרים כלי netns; הבידוד נשאר העדפה בלבד</string>
+    <string name="desktop_netns_flatpak_owned">Flatpak מבודד רשת משתמש ב-Flatpak --unshare=network (לא netns של המארח).</string>
+    <string name="desktop_netns_flatpak_no_tools">רמת בידוד רשת; חסרים unshare/ip netns — רק override של Flatpak כשהוא מוחל.</string>
+    <string name="desktop_netns_not_isolated">האפליקציה אינה מסומנת כמבודדת רשת.</string>
+</resources>

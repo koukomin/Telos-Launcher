@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_studio_title">สตูดิโอธีม</string>
+    <string name="desktop_theme_studio_hint">Quiet Ops เป็นค่าเริ่มต้น Vault Neon เสริมขอบ Cyber-Tech และเกจ HUD Paper Ops เป็นตัวเลือกสีอ่อนสำหรับกลางวัน ป๊อปอัปยังคงทึบ ไม่มีเบลอชั้นที่สอง</string>
+    <string name="desktop_theme_intensity">ความเข้ม</string>
+    <string name="desktop_theme_quiet_ops">Quiet Ops</string>
+    <string name="desktop_theme_vault_neon">Vault Neon</string>
+    <string name="desktop_theme_paper_ops">Paper Ops</string>
+    <string name="desktop_theme_accent">สีเน้น</string>
+    <string name="desktop_theme_from_wallpaper">สีเน้นจากวอลล์เปเปอร์</string>
+    <string name="desktop_theme_from_wallpaper_hint">สุ่มตัวอย่างวอลล์เปเปอร์ vault หรือพกพาในเครื่องเพื่อสร้าง Material tonal seed ไม่มีการอัปโหลด</string>
+    <string name="desktop_theme_density">ความหนาแน่น</string>
+    <string name="desktop_theme_density_compact">กะทัดรัด</string>
+    <string name="desktop_theme_density_comfort">สบาย</string>
+    <string name="desktop_theme_density_touch">สัมผัส</string>
+    <string name="desktop_theme_panel_height">ความสูงแผง: %1$d dp</string>
+    <string name="desktop_theme_panel_icon">ไอคอนแผง: %1$d dp</string>
+    </resources>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_helix_snap_title">Zonas de fixation</string>
+    <string name="desktop_helix_snap_50_50">50 / 50</string>
+    <string name="desktop_helix_snap_two_thirds">2/3 · 1/3</string>
+    <string name="desktop_helix_snap_grid">Grillia 2×2</string>
+    <string name="desktop_helix_snap_left">Fixar a sinistra</string>
+    <string name="desktop_helix_snap_right">Fixar a dextera</string>
+    <string name="desktop_helix_snap_maximize">Maximisar</string>
+    <string name="desktop_helix_window_mode">Modo de fenestras</string>
+    <string name="desktop_helix_tiling">Tesselation (niri)</string>
+    <string name="desktop_helix_stacking">Empilamento (labwc)</string>
+    <string name="desktop_helix_window_mode_hint">Se applica al proxime initio de session Telos quando TELOS_COMPOSITOR non es definite. Super+flecha fixa le fenestra focalisate.</string>
+</resources>

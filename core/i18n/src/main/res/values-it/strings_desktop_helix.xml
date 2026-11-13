@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_helix_palette_title">COMANDO HELIX</string>
+    <string name="desktop_helix_palette_placeholder">Cerca app, finestre, calcolatrice…</string>
+    <string name="desktop_helix_palette_hint">Super+Punto o Ctrl+Spazio</string>
+    <string name="desktop_helix_palette_privacy">Solo radici vault e portatili — non indicizza l’home host fuori sessione.</string>
+    <string name="desktop_helix_palette_open_files">Apri File</string>
+    <string name="desktop_helix_palette_open_settings">Apri Impostazioni</string>
+    <string name="desktop_helix_palette_open_network">Apri Rete</string>
+    <string name="desktop_helix_palette_kill_window">Chiudi finestra attiva</string>
+    <string name="desktop_helix_palette_paste_vault_clip">Incolla ultimo appunti vault</string>
+    <string name="desktop_helix_palette_window">Finestra</string>
+    <string name="desktop_helix_palette_calc">Calcolatrice</string>
+    <string name="desktop_helix_palette_command">Comando</string>
+    <string name="desktop_helix_palette_file">File</string>
+    <string name="desktop_helix_palette_no_results">Nessun risultato</string>
+</resources>

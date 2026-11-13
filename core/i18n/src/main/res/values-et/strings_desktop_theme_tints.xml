@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_workspace_tints">Tööalade tooniribad</string>
+    <string name="desktop_theme_workspace_tints_hint">Õrnad neoonrõhud paneeli numbrite 1–4 all. Peidetud panic mute’i ajal. Välja: theme.workspaceTints=false.</string>
+</resources>

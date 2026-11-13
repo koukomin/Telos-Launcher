@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_workspace_tints">कार्यक्षेत्र रंग पट्टियाँ</string>
+    <string name="desktop_theme_workspace_tints_hint">पैनल अंक 1–4 के नीचे हल्के नियॉन उच्चारण। पैनिक म्यूट पर छिपते हैं। बंद: theme.workspaceTints=false.</string>
+</resources>

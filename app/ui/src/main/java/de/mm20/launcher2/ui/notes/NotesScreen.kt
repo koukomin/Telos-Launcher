@@ -20,6 +20,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.*
+import de.mm20.launcher2.ui.component.virtualAppPopup
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -45,6 +46,10 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.SearchEmptyState
+import de.mm20.launcher2.ui.component.TelosCyber
+import de.mm20.launcher2.ui.component.TelosCyberAppBarTitle
+import de.mm20.launcher2.ui.component.TelosTechPill
+import de.mm20.launcher2.ui.component.telosTechSurface
 import de.mm20.launcher2.ui.component.TelosSearchTopBar
 import de.mm20.launcher2.ui.theme.transparency.transparency
 import kotlinx.coroutines.launch
@@ -128,9 +133,18 @@ fun NotesScreen() {
                     if (searching) {
                         TelosSearchTopBar(query, { vm.query.value = it }, stringResource(I18nR.string.tsp_search_notes), Modifier.weight(1f), autoFocus = true)
                     } else {
-                        Text(stringResource(when (filter) {
-                            NotesFilter.Notes -> I18nR.string.notes_title; NotesFilter.Archive -> I18nR.string.notes_archive; NotesFilter.Trash -> I18nR.string.notes_trash
-                        }), style = MaterialTheme.typography.headlineSmall, modifier = Modifier.weight(1f))
+                        TelosCyberAppBarTitle(
+                            title = stringResource(when (filter) {
+                                NotesFilter.Notes -> I18nR.string.notes_title; NotesFilter.Archive -> I18nR.string.notes_archive; NotesFilter.Trash -> I18nR.string.notes_trash
+                            }),
+                            status = stringResource(I18nR.string.notes_title),
+                            statusColor = when (filter) {
+                                NotesFilter.Notes -> TelosCyber.NeonCyan
+                                NotesFilter.Archive -> TelosCyber.NeonOrange
+                                NotesFilter.Trash -> TelosCyber.NeonMagenta
+                            },
+                            modifier = Modifier.weight(1f),
+                        )
                     }
                     var showFontDialog by remember { mutableStateOf(false) }
                     if (showFontDialog) {
@@ -148,7 +162,7 @@ fun NotesScreen() {
                     }
                     if (syncing) CircularProgressIndicator(Modifier.size(24.dp)) else Box {
                         IconButton(onClick = { menu = true }) { Icon(painterResource(BaseR.drawable.more_vert_24px), stringResource(I18nR.string.notes_title)) }
-                        DropdownMenu(menu, { menu = false }) {
+                        DropdownMenu(menu, { menu = false }, containerColor = de.mm20.launcher2.ui.component.virtualAppPopup()) {
                             DropdownMenuItem(text = { Text(stringResource(I18nR.string.notes_sync_now)) }, onClick = { menu = false; vm.syncNow() })
                             DropdownMenuItem(text = { Text(stringResource(I18nR.string.notes_sync_settings)) }, onClick = { menu = false; showSync = true })
                             DropdownMenuItem(text = { Text(stringResource(I18nR.string.notes_import)) }, onClick = { menu = false; importer.launch(arrayOf("*/*")) })
@@ -159,7 +173,14 @@ fun NotesScreen() {
                     }
                 }
                 if (labels.isNotEmpty()) LazyRow(Modifier.padding(horizontal = 12.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    items(labels) { l -> FilterChip(label == l, { vm.label.value = if (label == l) null else l }, { Text(l) }) }
+                    items(labels) { l ->
+                        TelosTechPill(
+                            text = l,
+                            isSelected = label == l,
+                            onClick = { vm.label.value = if (label == l) null else l },
+                            accentColor = TelosCyber.accentFor(l.hashCode()),
+                        )
+                    }
                 }
                 if (notes.isEmpty() && query.isNotBlank()) {
                     SearchEmptyState(query)
@@ -182,7 +203,7 @@ fun NotesScreen() {
                                 if (filter == NotesFilter.Trash) vm.delete(n) else cardMenu = true
                             },
                             trash = filter == NotesFilter.Trash)
-                        DropdownMenu(cardMenu, { cardMenu = false }) {
+                        DropdownMenu(cardMenu, { cardMenu = false }, containerColor = de.mm20.launcher2.ui.component.virtualAppPopup()) {
                             DropdownMenuItem(
                                 text = { Text(stringResource(if (n.archived) I18nR.string.au9_share_unarchive else I18nR.string.notes_archive)) },
                                 onClick = {
@@ -281,7 +302,7 @@ private fun NoteEditor(note: Note, labels: List<String>, onChange: (Note) -> Uni
             Box {
                 var shareMenu by remember { mutableStateOf(false) }
                 IconButton(onClick = { shareMenu = true }) { Icon(painterResource(BaseR.drawable.share_24px), stringResource(I18nR.string.notes_share), tint = fg) }
-                DropdownMenu(shareMenu, { shareMenu = false }) {
+                DropdownMenu(shareMenu, { shareMenu = false }, containerColor = de.mm20.launcher2.ui.component.virtualAppPopup()) {
                     NoteImageShareItem(note) { shareMenu = false }
                     DropdownMenuItem(text = { Text(stringResource(I18nR.string.au9_share_note_text)) }, onClick = {
                         shareMenu = false
@@ -320,6 +341,7 @@ private fun NoteEditor(note: Note, labels: List<String>, onChange: (Note) -> Uni
         var text by remember { mutableStateOf(note.labels.joinToString(", ")) }
         AlertDialog(
             onDismissRequest = { labelDialog = false },
+        containerColor = virtualAppPopup(),
             title = { Text(stringResource(I18nR.string.notes_labels)) },
             text = {
                 Column {
@@ -351,6 +373,7 @@ private fun SyncDialog(vm: NotesViewModel, onDismiss: () -> Unit) {
     }
     AlertDialog(
         onDismissRequest = onDismiss,
+        containerColor = virtualAppPopup(),
         title = { Text(stringResource(I18nR.string.notes_sync_settings)) },
         text = {
             Column(Modifier.verticalScrollCompat(), verticalArrangement = Arrangement.spacedBy(8.dp)) {

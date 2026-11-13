@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_lan_pair_title">Emparelhamento LAN com Android</string>
+    <string name="desktop_lan_pair_hint">Inicia um servidor de emparelhamento de curta duração na LAN. Digitalize ou introduza o código no Telos Sync. Códigos e tokens nunca são registados.</string>
+    <string name="desktop_lan_pair_start">Iniciar emparelhamento LAN</string>
+    <string name="desktop_lan_pair_stop">Parar emparelhamento LAN</string>
+    <string name="desktop_lan_pair_running">Servidor de emparelhamento a escutar na LAN</string>
+    <string name="desktop_lan_pair_code">Código de emparelhamento</string>
+    <string name="desktop_lan_pair_qr_uri">URI de emparelhamento (QR / colar)</string>
+    <string name="desktop_lan_pair_stopped">Emparelhamento LAN parado</string>
+    <string name="desktop_lan_pair_bind_reject">Não é possível associar um endereço público — use um IP LAN privado</string>
+    <string name="desktop_lan_pair_android_title">Emparelhamento LAN Telos Desktop</string>
+    <string name="desktop_lan_pair_host">Anfitrião do ambiente de trabalho (IP LAN)</string>
+    <string name="desktop_lan_pair_port">Porta do ambiente de trabalho</string>
+    <string name="desktop_lan_pair_connect">Emparelhar com o ambiente de trabalho</string>
+    <string name="desktop_lan_pair_paired">Emparelhado com o ambiente de trabalho</string>
+    <string name="desktop_lan_pair_fetch_bundle">Obter pacote de sessão do ambiente de trabalho</string>
+    <string name="desktop_lan_pair_fetch_ok">Pacote de sessão encriptado guardado</string>
+    <string name="desktop_lan_pair_send_bundle">Enviar pacote encriptado</string>
+    <string name="desktop_lan_pair_failed">Falha no emparelhamento LAN</string>
+    <string name="desktop_lan_pair_scan_hint">No Android abra Sync → Definições e cole o URI ou introduza anfitrião, porta e código.</string>
+</resources>

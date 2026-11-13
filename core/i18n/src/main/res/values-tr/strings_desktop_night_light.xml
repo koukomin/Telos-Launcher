@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_night_light_title">Gece Işığı</string>
+    <string name="desktop_night_light_hint">Ekranı bir sistem aracıyla (gammastep, redshift veya wlsunset) ısıtır. Konum hizmeti yok ve ağa hiçbir şey gönderilmez. Araç yoksa yalnızca tercih kaydedilir.</string>
+    <string name="desktop_night_light_enable">Gece Işığını etkinleştir</string>
+    <string name="desktop_night_light_temperature">Renk sıcaklığı: %1$d K</string>
+    <string name="desktop_night_light_on">Açık</string>
+    <string name="desktop_night_light_off">Kapalı</string>
+    <string name="desktop_night_light_pref_only">Tercih kaydedildi; bu makinede uygulamak için gammastep, redshift veya wlsunset kurun</string>
+    <string name="desktop_night_light_failed">Sistem aracı ekran sıcaklığını değiştiremedi</string>
+    <string name="desktop_night_light_applied">%1$s ile uygulandı</string>
+    <string name="desktop_night_light_cleared">Gece Işığı kapatıldı</string>
+    <string name="desktop_settings_search_hint">Ayarlarda ara</string>
+    <string name="desktop_settings_search_empty">Bu aramayla eşleşen ayar yok</string>
+    <string name="desktop_settings_session">Oturum</string>
+    <string name="desktop_settings_display">Görüntü</string>
+    <string name="desktop_settings_desktop">Masaüstü</string>
+    <string name="desktop_settings_windows">Pencereler</string>
+    <string name="desktop_settings_portable">Taşınabilir</string>
+    <string name="desktop_settings_vault">Kasa</string>
+</resources>

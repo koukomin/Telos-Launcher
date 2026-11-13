@@ -69,18 +69,22 @@ class TelosKeyboardService : InputMethodService(), LifecycleOwner, ViewModelStor
 
     override fun onCreate() {
         super.onCreate()
+        // Compose + SavedStateRegistry require attach before restore; skipping this
+        // crashes the IME the first time the system binds Telos Keyboard.
+        mSavedStateRegistryController.performAttach()
         mSavedStateRegistryController.performRestore(null)
         mLifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_CREATE)
     }
 
     override fun onCreateInputView(): View {
-        mLifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_START)
-        mLifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_RESUME)
-        composeView = ComposeView(this).apply {
-            setViewTreeLifecycleOwner(this@TelosKeyboardService)
-            setViewTreeViewModelStoreOwner(this@TelosKeyboardService)
-            setViewTreeSavedStateRegistryOwner(this@TelosKeyboardService)
-            setContent {
+        // onCreateInputView can be called again after a config change; LifecycleRegistry
+        // throws if START/RESUME are re-entered from an already-resumed state.
+        advanceLifecycleToResumed()
+        val view = composeView ?: ComposeView(this).also { host ->
+            host.setViewTreeLifecycleOwner(this)
+            host.setViewTreeViewModelStoreOwner(this)
+            host.setViewTreeSavedStateRegistryOwner(this)
+            host.setContent {
                 LauncherTheme {
                     TelosKeyboardView(
                         onKeyTap = ::handleKeyTap,
@@ -94,8 +98,33 @@ class TelosKeyboardService : InputMethodService(), LifecycleOwner, ViewModelStor
                     )
                 }
             }
+            composeView = host
         }
-        return composeView!!
+        return view
+    }
+
+    override fun onStartInputView(info: EditorInfo?, restarting: Boolean) {
+        super.onStartInputView(info, restarting)
+        advanceLifecycleToResumed()
+    }
+
+    override fun onFinishInputView(finishingInput: Boolean) {
+        super.onFinishInputView(finishingInput)
+        if (mLifecycleRegistry.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
+            mLifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_PAUSE)
+        }
+        if (mLifecycleRegistry.currentState.isAtLeast(Lifecycle.State.STARTED)) {
+            mLifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_STOP)
+        }
+    }
+
+    private fun advanceLifecycleToResumed() {
+        if (!mLifecycleRegistry.currentState.isAtLeast(Lifecycle.State.STARTED)) {
+            mLifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_START)
+        }
+        if (!mLifecycleRegistry.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
+            mLifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_RESUME)
+        }
     }
 
     override fun onStartInput(attribute: EditorInfo?, restarting: Boolean) {
@@ -201,9 +230,20 @@ class TelosKeyboardService : InputMethodService(), LifecycleOwner, ViewModelStor
     }
 
     override fun onDestroy() {
-        super.onDestroy()
-        mLifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+        composeView = null
+        if (mLifecycleRegistry.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
+            mLifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_PAUSE)
+        }
+        if (mLifecycleRegistry.currentState.isAtLeast(Lifecycle.State.STARTED)) {
+            mLifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_STOP)
+        }
+        if (mLifecycleRegistry.currentState != Lifecycle.State.INITIALIZED &&
+            mLifecycleRegistry.currentState != Lifecycle.State.DESTROYED
+        ) {
+            mLifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+        }
         mViewModelStore.clear()
+        super.onDestroy()
     }
 }
 

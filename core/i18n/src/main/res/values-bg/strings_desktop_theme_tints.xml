@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_workspace_tints">Цветни ленти на работните плотове</string>
+    <string name="desktop_theme_workspace_tints_hint">Дискретни неонови акценти под цифрите 1–4 на панела. Скрити при panic mute. Изкл.: theme.workspaceTints=false.</string>
+</resources>

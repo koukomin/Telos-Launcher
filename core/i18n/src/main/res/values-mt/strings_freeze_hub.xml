@@ -31,4 +31,8 @@
     
     
 
+    <string name="freeze_desk_title">Freeze Desk</string>
+    <string name="freeze_desk_filter_bloat">Bloat</string>
+    <string name="freeze_desk_open_summary">Iftaħ Sistema → Apps biex tiffriża, tfittex u tiffiltra pakketti installati.</string>
+    <string name="freeze_desk_rules_help">Ir-regoli tal-iffriżar awtomatiku u l-backends jibqgħu hawn. L-iffriżar tal-apps u AppOps jinsabu fi Freeze Desk.</string>
 </resources>

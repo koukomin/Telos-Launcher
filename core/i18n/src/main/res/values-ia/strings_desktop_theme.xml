@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_appearance_title">Apparentia</string>
+    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
+    <string name="desktop_theme_intensity_neon">Vault Neon</string>
+    <string name="desktop_theme_intensity_paper">Paper Ops</string>
+    <string name="desktop_wallpaper_path">Fondo de schermo (cammino del vault)</string>
+    <string name="desktop_wallpaper_path_hint">Relative al puncto de montar del vault (p.ex. Pictures/wall.jpg). Nunquam monstrate sur le schermo pre-boot blocate.</string>
+    <string name="desktop_unlock_theatre_title">Telos Phantom Vault</string>
+    <string name="desktop_unlock_theatre_quiet_ops">Quiet Ops — disbloca pro revelar tu fondo</string>
+    <string name="desktop_unlock_theatre_hint">Le boot blocate resta in Quiet Ops solmente con le glifo del vault. Post disblocar, Telos face un crossfade al fondo del vault e le intensitate eligite — sin particulas.</string>
+    <string name="desktop_sandbox_tint_hint">Le color del anello de accento es solmente OpSec visual (Host = orange caution, Net-isolated = cyan, Vault FS = verde, Standard = magenta).</string>
+    <string name="desktop_matched_packs_title">Pacchettos de icones + cursor combinate</string>
+    <string name="desktop_matched_packs_hint">Un clic define un par GPL documentate (Papirus↔BreezeX, candy-icons↔Bibata; CandyCyber resta le glifo chrome integrate). Le discargamentos resta in le dossier de icones del vault o portable.</string>
+    <string name="desktop_matched_packs_apply">Combinar le par: %1$s</string>
+    <string name="desktop_matched_packs_one_click">Combinar le par</string>
+    <string name="desktop_matched_packs_working">Combination de pacchettos…</string>
+    <string name="desktop_matched_packs_ok">Pacchetto combinate %1$s applicate</string>
+    <string name="desktop_matched_packs_fail">Non poteva combinar pacchettos: %1$s</string>
+</resources>

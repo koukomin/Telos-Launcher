@@ -537,6 +537,9 @@ open class SettingsActivity : BaseActivity() {
             entry<de.mm20.launcher2.ui.aether.AetherDashboardRoute> {
                 de.mm20.launcher2.ui.aether.AetherDashboardScreen()
             }
+            entry<de.mm20.launcher2.ui.sync.SyncRoute> {
+                de.mm20.launcher2.ui.sync.SyncScreen()
+            }
             entry<WikipediaSettingsRoute> {
                 WikipediaSettingsScreen()
             }
@@ -816,6 +819,7 @@ open class SettingsActivity : BaseActivity() {
             ROUTE_MUSIC -> "telos_music_app"
             ROUTE_RADIO -> "telos_radio_app"
             ROUTE_VIDEO -> "telos_video_app"
+            SettingsDeepLinkContract.ROUTE_TV -> "telos_tv_app"
             SettingsDeepLinkContract.ROUTE_YOUTUBE -> "telos_youtube_app"
             SettingsDeepLinkContract.ROUTE_YOUTUBE_MUSIC -> "telos_youtube_music_app"
             ROUTE_PHOTOS, SettingsDeepLinkContract.ROUTE_VIEWER -> "telos_viewer_app"
@@ -842,6 +846,9 @@ open class SettingsActivity : BaseActivity() {
             "settings/magnifier" -> "telos_magnifier_app"
             "settings/flashlight" -> "telos_flashlight_app"
             SettingsDeepLinkContract.ROUTE_FIT -> "telos_fit_app"
+            SettingsDeepLinkContract.ROUTE_KEYBOARD -> "telos_keyboard_app"
+            SettingsDeepLinkContract.ROUTE_KEEPASS -> "telos_keepass_app"
+            SettingsDeepLinkContract.ROUTE_AETHER -> "telos_aether_app"
             else -> return
         }
         de.mm20.launcher2.search.VirtualAppAppearance.applyRecents(this, domain)
@@ -929,7 +936,7 @@ open class SettingsActivity : BaseActivity() {
             SettingsDeepLinkContract.ROUTE_YOUTUBE -> de.mm20.launcher2.ui.media.hub.MediaHubRoute("youtube")
             SettingsDeepLinkContract.ROUTE_YOUTUBE_MUSIC -> de.mm20.launcher2.ui.media.hub.MediaHubRoute("youtube_music")
             ROUTE_VIDEO -> de.mm20.launcher2.ui.media.hub.MediaHubRoute("video")
-            "settings/tv" -> de.mm20.launcher2.ui.media.hub.MediaHubRoute("tv")
+            SettingsDeepLinkContract.ROUTE_TV -> de.mm20.launcher2.ui.media.hub.MediaHubRoute("tv")
             "settings/stremio" -> de.mm20.launcher2.ui.media.hub.MediaHubRoute("stremio")
             ROUTE_MEDIA -> de.mm20.launcher2.ui.media.hub.MediaHubRoute(
                 intent.getStringExtra(SettingsDeepLinkContract.EXTRA_MEDIA_SPACE).orEmpty()
@@ -960,6 +967,7 @@ open class SettingsActivity : BaseActivity() {
                 sharedMediaUri = (intent.getParcelableExtra(Intent.EXTRA_STREAM) as? android.net.Uri)?.toString()
             )
             SettingsDeepLinkContract.ROUTE_BACKUP -> de.mm20.launcher2.ui.backup.BackupRoute
+            SettingsDeepLinkContract.ROUTE_SYNC -> de.mm20.launcher2.ui.sync.SyncRoute
             SettingsDeepLinkContract.ROUTE_FIT -> de.mm20.launcher2.ui.fit.FitDashboardRoute
             ROUTE_SCREEN_RECORDER -> de.mm20.launcher2.ui.screenrec.ScreenRecorderRoute
             ROUTE_SCREENSHOT -> de.mm20.launcher2.ui.screenshot.ScreenshotRoute

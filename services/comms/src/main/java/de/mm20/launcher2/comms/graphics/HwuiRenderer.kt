@@ -5,9 +5,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 /**
- * System-wide Skia HWUI renderer: Vulkan (`skiavk`) or OpenGL (`opengl`).
+ * System-wide Skia HWUI renderer: Vulkan (`skiavk`) or OpenGL (`skiagl`).
  * Same `debug.hwui.renderer` property used by GAMA. Needs a privileged shell
  * (root, then Shizuku) or ADB. Android drops the property on reboot.
+ *
+ * Setting the property does not switch an already-running process: each process
+ * picks its pipeline once at HWUI init. Callers must explain an app restart.
  */
 object HwuiRenderer {
     const val MODE_DEFAULT = "default"
@@ -33,7 +36,7 @@ object HwuiRenderer {
     }
 
     suspend fun current(): String = withContext(Dispatchers.IO) {
-        val raw = privilegedShell("getprop $PROP")?.trim().orEmpty()
+        val raw = readProp().orEmpty()
         parse(raw)
     }
 
@@ -43,18 +46,25 @@ object HwuiRenderer {
             MODE_OPENGL -> VALUE_OPENGL
             else -> ""
         }
-        
-        val cmd = if (value.isEmpty()) {
-            "setprop $PROP \"\"; resetprop -n $PROP \"\""
+
+        // Run Magisk resetprop and setprop separately so a missing resetprop binary
+        // cannot fail the whole chain after a successful setprop.
+        if (value.isEmpty()) {
+            runProp("resetprop --delete $PROP")
+            runProp("resetprop -n $PROP \"\"")
+            runProp("setprop $PROP \"\"")
         } else {
-            "setprop $PROP $value; resetprop -n $PROP $value"
+            runProp("resetprop -n $PROP $value")
+            runProp("setprop $PROP $value")
         }
 
-        val res = privilegedShell(cmd)
-        val success = res != null || current() == mode
-        
+        val now = current()
+        val success = when (mode) {
+            MODE_DEFAULT -> now == MODE_DEFAULT
+            else -> now == mode
+        }
         if (!success) {
-            Log.w(TAG, "Could not set $PROP to $value")
+            Log.w(TAG, "Could not set $PROP to '$value' (live='$now')")
         }
         success
     }
@@ -70,10 +80,17 @@ object HwuiRenderer {
         de.mm20.launcher2.ktx.PrivilegedShell.available()
     }
 
-    private suspend fun privilegedShell(cmd: String): String? {
-        val result = de.mm20.launcher2.ktx.PrivilegedShell.run(cmd) ?: return null
-        if (result.exitCode != 0) return null
-        return result.output
+    private suspend fun readProp(): String? {
+        val result = de.mm20.launcher2.ktx.PrivilegedShell.run("getprop $PROP") ?: return null
+        // getprop prints empty string with exit 0 when unset; non-zero means shell failure.
+        if (result.exitCode != 0 && result.output.isBlank()) return null
+        return result.output.trim()
+    }
+
+    private suspend fun runProp(cmd: String): Boolean {
+        val result = de.mm20.launcher2.ktx.PrivilegedShell.run(cmd) ?: return false
+        // Some shells return non-zero for unknown resetprop while still printing nothing useful.
+        return result.exitCode == 0
     }
 
     private const val TAG = "HwuiRenderer"

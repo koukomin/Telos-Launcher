@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_store_permissions">Povolenia</string>
+    <string name="desktop_store_sandbox_tier">Úroveň sandboxu</string>
+    <string name="desktop_sandbox_tier_host">Hostiteľ</string>
+    <string name="desktop_sandbox_tier_vault_fs">Súborový systém trezoru</string>
+    <string name="desktop_sandbox_tier_net_isolated">Sieťovo izolované</string>
+    <string name="desktop_sandbox_tier_standard">Štandardné</string>
+    <string name="desktop_perm_filesystem_home">Domovský priečinok</string>
+    <string name="desktop_perm_filesystem_host">Súborový systém hostiteľa</string>
+    <string name="desktop_perm_network">Sieť</string>
+    <string name="desktop_perm_gpu">GPU (DRI)</string>
+    <string name="desktop_perm_wayland">Wayland</string>
+    <string name="desktop_perm_x11">X11</string>
+    <string name="desktop_perm_pulseaudio">Zvuk</string>
+    <string name="desktop_perm_notifications">Oznámenia</string>
+    <string name="desktop_perm_camera">Kamera</string>
+    <string name="desktop_perm_microphone">Mikrofón</string>
+    <string name="desktop_flatpak_unavailable">Flatpak nie je k dispozícii; prepisy povolení na tomto systéme nie sú dostupné.</string>
+    <string name="desktop_flatpak_override_applied">Prepis Flatpak použitý</string>
+    <string name="desktop_flatpak_override_failed">Prepísanie Flatpak sa nepodarilo použiť</string>
+    <string name="desktop_flatpak_reset_overrides">Obnoviť prepisy</string>
+    <string name="desktop_deeplink_handler_hint">telos:// otvára aplikácie Telos a vyhľadávanie Kickoff (registruje sa pri spustení plochy).</string>
+    <string name="desktop_store_backends">Źródła pakietów</string>
+    <string name="desktop_store_backend_flatpak">Flatpak</string>
+    <string name="desktop_store_backend_winget">Winget</string>
+    <string name="desktop_store_backend_scoop">Scoop</string>
+    <string name="desktop_store_windows_pref_only">Winget/Scoop działają tylko w Windows; ten host nie wykonuje akcji pakietów Windows.</string>
+    <string name="desktop_store_windows_unavailable">Nie znaleziono winget ani scoop w PATH.</string>
+    <string name="desktop_store_windows_installed">Pakiety Windows (zainstalowane)</string>
+    <string name="desktop_store_windows_search">Pakiety Windows (wyszukiwanie)</string>
+    <string name="desktop_store_install_confirm_title">Potwierdź instalację</string>
+    <string name="desktop_store_install_confirm_body">Zainstalować %1$s (%2$s) przez %3$s?</string>
+    <string name="desktop_store_install_started">Rozpoczęto instalację %1$s</string>
+    <string name="desktop_store_install_failed">Nie można rozpocząć instalacji %1$s</string>
+    <string name="desktop_portal_device_title">Kamera i mikrofon (portal)</string>
+    <string name="desktop_portal_device_hint">Zapisuje prośbę i pyta xdg-desktop-portal, gdy dostępne są portale Device/Camera. Bez narzędzi portalu pozostaje tylko preferencją.</string>
+    <string name="desktop_portal_device_requested">Zażądano okna dostępu portalu</string>
+    <string name="desktop_portal_device_pref_only">Preferencja zapisana; brak narzędzi portalu (tylko preferencja).</string>
+    <string name="desktop_portal_device_unavailable">Dostęp do urządzeń przez portal jest niedostępny w tym systemie.</string>
+    <string name="desktop_portal_device_failed">Nie można poprosić portalu pulpitu o dostęp do urządzenia</string>
+    <string name="desktop_netns_cap_unshare">netns per aplikacja: dostępne unshare --net</string>
+    <string name="desktop_netns_cap_ip">netns per aplikacja: dostępne ip netns</string>
+    <string name="desktop_netns_cap_unavailable">Brak narzędzi netns; izolacja pozostaje tylko preferencją</string>
+    <string name="desktop_netns_flatpak_owned">Flatpak izolowany sieciowo używa Flatpak --unshare=network (bez netns hosta).</string>
+    <string name="desktop_netns_flatpak_no_tools">Poziom izolacji sieci; brak unshare/ip netns — tylko override Flatpak, gdy Flatpak go stosuje.</string>
+    <string name="desktop_netns_not_isolated">Aplikacja nie jest oznaczona jako izolowana sieciowo.</string>
+</resources>

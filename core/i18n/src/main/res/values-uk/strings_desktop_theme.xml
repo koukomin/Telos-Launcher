@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_appearance_title">Вигляд</string>
+    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
+    <string name="desktop_theme_intensity_neon">Vault Neon</string>
+    <string name="desktop_theme_intensity_paper">Paper Ops</string>
+    <string name="desktop_wallpaper_path">Шпалери (шлях vault)</string>
+    <string name="desktop_wallpaper_path_hint">Відносно точки монтування vault (наприклад Pictures/wall.jpg). Ніколи не показується на заблокованому екрані перед завантаженням.</string>
+    <string name="desktop_unlock_theatre_title">Telos Phantom Vault</string>
+    <string name="desktop_unlock_theatre_quiet_ops">Quiet Ops — розблокуйте, щоб показати шпалери</string>
+    <string name="desktop_unlock_theatre_hint">Заблоковане завантаження лишається в Quiet Ops лише з гліфом vault. Після розблокування Telos робить плавний перехід до шпалер vault і обраної інтенсивності — без частинок.</string>
+    <string name="desktop_sandbox_tint_hint">Колір акцентного кільця — лише візуальний OpSec (Host = помаранчевий caution, Net-isolated = блакитний, Vault FS = зелений, Standard = пурпуровий).</string>
+    <string name="desktop_matched_packs_title">Узгоджені пакети піктограм + курсора</string>
+    <string name="desktop_matched_packs_hint">Один клік задає задокументовану GPL-пару (Papirus↔BreezeX, candy-icons↔Bibata; CandyCyber лишається вбудованим chrome-гліфом). Завантаження лишаються в теці піктограм vault або portable.</string>
+    <string name="desktop_matched_packs_apply">Узгодити пару: %1$s</string>
+    <string name="desktop_matched_packs_one_click">Узгодити пару</string>
+    <string name="desktop_matched_packs_working">Узгодження пакетів…</string>
+    <string name="desktop_matched_packs_ok">Застосовано узгоджений пакет %1$s</string>
+    <string name="desktop_matched_packs_fail">Не вдалося узгодити пакети: %1$s</string>
+</resources>

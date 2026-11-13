@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_workspace_tints">ワークスペースの色帯</string>
+    <string name="desktop_theme_workspace_tints_hint">パネルのワークスペース数字1–4の下に控えめなネオンアクセント。パニックミュート時は非表示。オフ: theme.workspaceTints=false。</string>
+</resources>

@@ -6,6 +6,7 @@ import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -18,16 +19,25 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import de.mm20.launcher2.ui.component.TelosCyber
+import de.mm20.launcher2.ui.component.TelosCyberAppBarTitle
+import de.mm20.launcher2.ui.component.TelosCyberSectionLabel
+import de.mm20.launcher2.ui.component.TelosTechPill
+import de.mm20.launcher2.ui.component.telosTechSurface
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.VirtualAppWindow
+import de.mm20.launcher2.ui.desktopsync.DesktopLanPairClient
+import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -55,16 +65,13 @@ fun SyncScreen() {
             topBar = {
                 TopAppBar(
                     title = {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            Icon(
-                                painter = painterResource(de.mm20.launcher2.base.R.drawable.ic_app_sync_fg),
-                                contentDescription = null,
-                                modifier = Modifier.size(28.dp),
-                                tint = MaterialTheme.colorScheme.primary
-                            )
-                            Spacer(Modifier.width(12.dp))
-                            Text(stringResource(I18nR.string.notes_sync_settings), fontWeight = FontWeight.Bold)
-                        }
+                        TelosCyberAppBarTitle(
+                            title = stringResource(I18nR.string.notes_sync_settings),
+                            status = stringResource(
+                                if (serviceRunning) I18nR.string.net_hub_state_on else I18nR.string.net_hub_state_off
+                            ),
+                            statusColor = if (serviceRunning) TelosCyber.NeonGreen else TelosCyber.NeonMagenta,
+                        )
                     },
                     actions = {
                         IconButton(onClick = { showFontDialog = true }) {
@@ -101,72 +108,59 @@ fun SyncScreen() {
                 }
             }
         ) { paddingValues ->
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues)
-            ) {
-                // Syncthing Service Power Banner
-                Surface(
-                    color = if (serviceRunning) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.errorContainer,
-                    shape = RoundedCornerShape(16.dp),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp, vertical = 8.dp)
-                ) {
-                    Row(
-                        modifier = Modifier.padding(16.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Column(Modifier.weight(1f)) {
-                            Text(
-                                text = if (serviceRunning) "Syncthing Service Active" else "Syncthing Service Stopped",
-                                style = MaterialTheme.typography.titleMedium,
-                                fontWeight = FontWeight.Bold
+            BoxWithConstraints(Modifier.fillMaxSize().padding(paddingValues)) {
+                val shortHeight = maxHeight < 480.dp
+                Column(Modifier.fillMaxSize()) {
+                    Column(
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp, vertical = 8.dp)
+                            .telosTechSurface(
+                                borderColor = if (serviceRunning) TelosCyber.NeonGreen else TelosCyber.NeonMagenta,
                             )
-                            Text(
-                                text = if (serviceRunning) "Synchronizing files in real-time" else "Tap to start background sync",
-                                style = MaterialTheme.typography.bodySmall
+                            .padding(16.dp),
+                    ) {
+                        TelosCyberSectionLabel(stringResource(I18nR.string.sync_preview_title), accent = TelosCyber.NeonCyan)
+                        Row(
+                            Modifier.fillMaxWidth().padding(top = 8.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                        ) {
+                            Column(Modifier.weight(1f)) {
+                                Text(stringResource(I18nR.string.sync_preview_title), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+                                Text(stringResource(I18nR.string.sync_preview_summary), style = MaterialTheme.typography.bodySmall)
+                            }
+                            Switch(checked = false, onCheckedChange = {}, enabled = false)
+                        }
+                    }
+                    Row(
+                        Modifier
+                            .fillMaxWidth()
+                            .horizontalScroll(rememberScrollState())
+                            .padding(horizontal = 16.dp, vertical = 8.dp),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    ) {
+                        TelosTechPill(stringResource(I18nR.string.telos_sync_folders, folders.size), selectedTab == 0, { selectedTab = 0 }, accentColor = TelosCyber.NeonGreen)
+                        TelosTechPill(stringResource(I18nR.string.telos_sync_devices, devices.size), selectedTab == 1, { selectedTab = 1 }, accentColor = TelosCyber.NeonCyan)
+                        TelosTechPill(stringResource(I18nR.string.hc_settings), selectedTab == 2, { selectedTab = 2 }, accentColor = TelosCyber.NeonMagenta)
+                    }
+                    Box(
+                        Modifier
+                            .weight(1f)
+                            .fillMaxWidth()
+                            .then(if (shortHeight && selectedTab == 2) Modifier.verticalScroll(rememberScrollState()) else Modifier),
+                    ) {
+                        when (selectedTab) {
+                            0 -> FoldersTab(folders, onTogglePause = { viewModel.toggleFolderPause(it) })
+                            1 -> DevicesTab(devices, onTogglePause = { viewModel.toggleDevicePause(it) })
+                            2 -> SettingsTab(
+                                viewModel = viewModel,
+                                wifiOnly = wifiOnly,
+                                chargingOnly = chargingOnly,
+                                onWifiChange = { viewModel.setWifiOnly(it) },
+                                onChargingChange = { viewModel.setChargingOnly(it) },
                             )
                         }
-                        Switch(
-                            checked = serviceRunning,
-                            onCheckedChange = { viewModel.toggleService() }
-                        )
-                    }
-                }
-
-                // Tabs
-                TabRow(selectedTabIndex = selectedTab) {
-                    Tab(
-                        selected = selectedTab == 0,
-                        onClick = { selectedTab = 0 },
-                        text = { Text(stringResource(I18nR.string.telos_sync_folders, folders.size)) }
-                    )
-                    Tab(
-                        selected = selectedTab == 1,
-                        onClick = { selectedTab = 1 },
-                        text = { Text(stringResource(I18nR.string.telos_sync_devices, devices.size)) }
-                    )
-                    Tab(
-                        selected = selectedTab == 2,
-                        onClick = { selectedTab = 2 },
-                        text = { Text(stringResource(I18nR.string.hc_settings)) }
-                    )
-                }
-
-                Box(Modifier.weight(1f).fillMaxWidth()) {
-                    when (selectedTab) {
-                        0 -> FoldersTab(folders, onTogglePause = { viewModel.toggleFolderPause(it) })
-                        1 -> DevicesTab(devices, onTogglePause = { viewModel.toggleDevicePause(it) })
-                        2 -> SettingsTab(
-                            viewModel = viewModel,
-                            wifiOnly = wifiOnly,
-                            chargingOnly = chargingOnly,
-                            onWifiChange = { viewModel.setWifiOnly(it) },
-                            onChargingChange = { viewModel.setChargingOnly(it) }
-                        )
                     }
                 }
             }
@@ -180,6 +174,7 @@ fun SyncScreen() {
 
         AlertDialog(
             onDismissRequest = { showAddFolderDialog = false },
+            containerColor = de.mm20.launcher2.ui.component.virtualAppPopup(),
             title = { Text(stringResource(I18nR.string.telos_sync_add_folder)) },
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -219,6 +214,7 @@ fun SyncScreen() {
 
         AlertDialog(
             onDismissRequest = { showAddDeviceDialog = false },
+            containerColor = de.mm20.launcher2.ui.component.virtualAppPopup(),
             title = { Text(stringResource(I18nR.string.telos_sync_add_device)) },
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -269,15 +265,13 @@ private fun FoldersTab(folders: List<SyncthingFolder>, onTogglePause: (String) -
         modifier = Modifier.fillMaxSize()
     ) {
         items(folders, key = { it.id }) { folder ->
-            Surface(
-                shape = RoundedCornerShape(16.dp),
-                color = MaterialTheme.colorScheme.surfaceContainerHigh,
-                modifier = Modifier.fillMaxWidth()
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .telosTechSurface(borderColor = TelosCyber.NeonGreen)
+                    .padding(16.dp),
+                verticalAlignment = Alignment.CenterVertically,
             ) {
-                Row(
-                    modifier = Modifier.padding(16.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
                     Icon(
                         painter = painterResource(BaseR.drawable.folder_24px),
                         contentDescription = null,
@@ -294,14 +288,13 @@ private fun FoldersTab(folders: List<SyncthingFolder>, onTogglePause: (String) -
                             Badge(containerColor = MaterialTheme.colorScheme.tertiaryContainer) { Text(folder.sizeFormatted) }
                         }
                     }
-                    IconButton(onClick = { onTogglePause(folder.id) }) {
+                    IconButton(onClick = { onTogglePause(folder.id) }, modifier = Modifier.heightIn(min = 48.dp)) {
                         Icon(
                             painter = painterResource(if (folder.isPaused) BaseR.drawable.play_arrow_24px else BaseR.drawable.pause_24px),
                             contentDescription = "Toggle Pause"
                         )
                     }
                 }
-            }
         }
     }
 }
@@ -314,15 +307,13 @@ private fun DevicesTab(devices: List<SyncthingDevice>, onTogglePause: (String) -
         modifier = Modifier.fillMaxSize()
     ) {
         items(devices, key = { it.id }) { device ->
-            Surface(
-                shape = RoundedCornerShape(16.dp),
-                color = MaterialTheme.colorScheme.surfaceContainerHigh,
-                modifier = Modifier.fillMaxWidth()
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .telosTechSurface(borderColor = TelosCyber.NeonCyan)
+                    .padding(16.dp),
+                verticalAlignment = Alignment.CenterVertically,
             ) {
-                Row(
-                    modifier = Modifier.padding(16.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
                     Icon(
                         painter = painterResource(BaseR.drawable.hard_disk_24px),
                         contentDescription = null,
@@ -336,19 +327,18 @@ private fun DevicesTab(devices: List<SyncthingDevice>, onTogglePause: (String) -
                         Spacer(Modifier.height(4.dp))
                         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                             Badge(containerColor = if (device.isConnected) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.errorContainer) {
-                                Text(if (device.isConnected) "Connected" else "Disconnected")
+                                Text(stringResource(if (device.isConnected) I18nR.string.au_music_connected else I18nR.string.au_music_not_connected))
                             }
                             Text("▲ ${device.downloadSpeed} · ▼ ${device.uploadSpeed}", style = MaterialTheme.typography.labelSmall)
                         }
                     }
-                    IconButton(onClick = { onTogglePause(device.id) }) {
+                    IconButton(onClick = { onTogglePause(device.id) }, modifier = Modifier.heightIn(min = 48.dp)) {
                         Icon(
                             painter = painterResource(if (device.isPaused) BaseR.drawable.play_arrow_24px else BaseR.drawable.pause_24px),
                             contentDescription = "Toggle Pause"
                         )
                     }
                 }
-            }
         }
     }
 }
@@ -361,12 +351,21 @@ private fun SettingsTab(
     onWifiChange: (Boolean) -> Unit,
     onChargingChange: (Boolean) -> Unit
 ) {
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
     val sleepSyncEnabled by viewModel.sleepSyncEnabled.collectAsStateWithLifecycle()
     val sleepSyncMode by viewModel.sleepSyncMode.collectAsStateWithLifecycle()
     val dndDuringSync by viewModel.dndDuringSync.collectAsStateWithLifecycle()
     val syncOnScreenOff by viewModel.syncOnScreenOff.collectAsStateWithLifecycle()
     
     var showModeDialog by remember { mutableStateOf(false) }
+    var pairUri by remember { mutableStateOf("") }
+    var pairHost by remember { mutableStateOf("") }
+    var pairPort by remember { mutableStateOf(DesktopLanPairClient.DEFAULT_PORT.toString()) }
+    var pairCode by remember { mutableStateOf("") }
+    var pairMsg by remember { mutableStateOf<String?>(null) }
+    var pairBusy by remember { mutableStateOf(false) }
+    var paired by remember { mutableStateOf(DesktopLanPairClient.storedToken(context) != null) }
 
     Column(
         modifier = Modifier
@@ -375,12 +374,113 @@ private fun SettingsTab(
             .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        Surface(
-            shape = RoundedCornerShape(16.dp),
-            color = MaterialTheme.colorScheme.surfaceContainerHigh,
-            modifier = Modifier.fillMaxWidth()
+        TelosCyberSectionLabel(stringResource(I18nR.string.desktop_lan_pair_android_title), accent = TelosCyber.NeonGreen)
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .telosTechSurface(borderColor = TelosCyber.NeonGreen)
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
-            Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
+            Text(
+                stringResource(I18nR.string.desktop_lan_pair_hint),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            OutlinedTextField(
+                value = pairUri,
+                onValueChange = {
+                    pairUri = it
+                    DesktopLanPairClient.parseUri(it)?.let { payload ->
+                        pairHost = payload.host
+                        pairPort = payload.port.toString()
+                        pairCode = payload.code
+                    }
+                },
+                label = { Text(stringResource(I18nR.string.desktop_lan_pair_qr_uri)) },
+                singleLine = true,
+                modifier = Modifier.fillMaxWidth(),
+            )
+            OutlinedTextField(
+                value = pairHost,
+                onValueChange = { pairHost = it },
+                label = { Text(stringResource(I18nR.string.desktop_lan_pair_host)) },
+                singleLine = true,
+                modifier = Modifier.fillMaxWidth(),
+            )
+            OutlinedTextField(
+                value = pairPort,
+                onValueChange = { pairPort = it.filter { ch -> ch.isDigit() }.take(5) },
+                label = { Text(stringResource(I18nR.string.desktop_lan_pair_port)) },
+                singleLine = true,
+                modifier = Modifier.fillMaxWidth(),
+            )
+            OutlinedTextField(
+                value = pairCode,
+                onValueChange = { pairCode = DesktopLanPairClient.normalizeCode(it) },
+                label = { Text(stringResource(I18nR.string.desktop_lan_pair_code)) },
+                singleLine = true,
+                modifier = Modifier.fillMaxWidth(),
+            )
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                Button(
+                    enabled = !pairBusy,
+                    onClick = {
+                        scope.launch {
+                            pairBusy = true
+                            pairMsg = null
+                            val payload = DesktopLanPairClient.parseUri(pairUri)
+                                ?: DesktopLanPairClient.PairPayload(
+                                    code = DesktopLanPairClient.normalizeCode(pairCode),
+                                    host = pairHost.trim(),
+                                    port = pairPort.toIntOrNull() ?: DesktopLanPairClient.DEFAULT_PORT,
+                                )
+                            val result = DesktopLanPairClient.pair(context, payload)
+                            if (result.isSuccess) {
+                                paired = true
+                                pairMsg = context.getString(I18nR.string.desktop_lan_pair_paired)
+                            } else {
+                                pairMsg = context.getString(I18nR.string.desktop_lan_pair_failed)
+                            }
+                            pairBusy = false
+                        }
+                    },
+                ) { Text(stringResource(I18nR.string.desktop_lan_pair_connect)) }
+                OutlinedButton(
+                    enabled = !pairBusy && paired,
+                    onClick = {
+                        scope.launch {
+                            pairBusy = true
+                            val result = DesktopLanPairClient.fetchDesktopBundle(context)
+                            pairMsg = if (result.isSuccess) {
+                                context.getString(I18nR.string.desktop_lan_pair_fetch_ok)
+                            } else {
+                                context.getString(I18nR.string.desktop_lan_pair_failed)
+                            }
+                            pairBusy = false
+                        }
+                    },
+                ) { Text(stringResource(I18nR.string.desktop_lan_pair_fetch_bundle)) }
+            }
+            if (paired) {
+                Text(
+                    stringResource(I18nR.string.desktop_lan_pair_paired),
+                    color = TelosCyber.NeonGreen,
+                    style = MaterialTheme.typography.labelMedium,
+                )
+            }
+            pairMsg?.let {
+                Text(it, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.primary)
+            }
+        }
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .telosTechSurface(borderColor = TelosCyber.NeonMagenta)
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+        ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
@@ -406,17 +506,17 @@ private fun SettingsTab(
                     }
                     Switch(checked = chargingOnly, onCheckedChange = onChargingChange)
                 }
-            }
         }
         
-        Text(stringResource(I18nR.string.telos_sync_sleep_title), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(top = 8.dp, start = 8.dp))
+        TelosCyberSectionLabel(stringResource(I18nR.string.telos_sync_sleep_title), accent = TelosCyber.NeonCyan, modifier = Modifier.padding(top = 8.dp, start = 8.dp))
         
-        Surface(
-            shape = RoundedCornerShape(16.dp),
-            color = MaterialTheme.colorScheme.surfaceContainerHigh,
-            modifier = Modifier.fillMaxWidth()
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .telosTechSurface(borderColor = TelosCyber.NeonCyan)
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
@@ -481,13 +581,13 @@ private fun SettingsTab(
                         Switch(checked = syncOnScreenOff, onCheckedChange = { viewModel.setSyncOnScreenOff(it) })
                     }
                 }
-            }
         }
     }
     
     if (showModeDialog) {
         AlertDialog(
             onDismissRequest = { showModeDialog = false },
+            containerColor = de.mm20.launcher2.ui.component.virtualAppPopup(),
             title = { Text(stringResource(I18nR.string.telos_sync_network_mode)) },
             text = {
                 Column {

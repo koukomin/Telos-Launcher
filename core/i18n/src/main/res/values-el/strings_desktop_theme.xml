@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_appearance_title">Εμφάνιση</string>
+    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
+    <string name="desktop_theme_intensity_neon">Vault Neon</string>
+    <string name="desktop_theme_intensity_paper">Paper Ops</string>
+    <string name="desktop_wallpaper_path">Ταπετσαρία (διαδρομή vault)</string>
+    <string name="desktop_wallpaper_path_hint">Σχετική με το σημείο προσάρτησης του vault (π.χ. Pictures/wall.jpg). Δεν εμφανίζεται ποτέ στην κλειδωμένη οθόνη προεκκίνησης.</string>
+    <string name="desktop_unlock_theatre_title">Telos Phantom Vault</string>
+    <string name="desktop_unlock_theatre_quiet_ops">Quiet Ops — ξεκλειδώστε για να εμφανιστεί η ταπετσαρία σας</string>
+    <string name="desktop_unlock_theatre_hint">Η κλειδωμένη εκκίνηση μένει σε Quiet Ops μόνο με το γλύφο του vault. Μετά το ξεκλείδωμα, το Telos κάνει crossfade στην ταπετσαρία του vault και στην επιλεγμένη ένταση — χωρίς εφέ σωματιδίων.</string>
+    <string name="desktop_sandbox_tint_hint">Το χρώμα του δακτυλίου έμφασης είναι μόνο οπτικό OpSec (Host = πορτοκαλί προσοχή, Net-isolated = κυανό, Vault FS = πράσινο, Standard = ματζέντα).</string>
+    <string name="desktop_matched_packs_title">Ταιριαστά πακέτα εικονιδίων + δρομέα</string>
+    <string name="desktop_matched_packs_hint">Με ένα κλικ ορίζεται τεκμηριωμένο ζεύγος GPL (Papirus↔BreezeX, candy-icons↔Bibata· το CandyCyber παραμένει ενσωματωμένο γλύφο chrome). Οι λήψεις μένουν στον φάκελο εικονιδίων του vault ή portable.</string>
+    <string name="desktop_matched_packs_apply">Ταίριασμα ζεύγους: %1$s</string>
+    <string name="desktop_matched_packs_one_click">Ταίριασμα ζεύγους</string>
+    <string name="desktop_matched_packs_working">Ταίριασμα πακέτων…</string>
+    <string name="desktop_matched_packs_ok">Εφαρμόστηκε το ταιριαστό πακέτο %1$s</string>
+    <string name="desktop_matched_packs_fail">Αποτυχία ταιριάσματος πακέτων: %1$s</string>
+</resources>

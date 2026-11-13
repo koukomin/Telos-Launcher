@@ -23,6 +23,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
+import androidx.compose.ui.platform.LocalDensity
+import de.mm20.launcher2.ui.component.TelosDotMatrixText
+import de.mm20.launcher2.ui.component.TelosTechPill
+import de.mm20.launcher2.ui.component.telosTechCard
+import de.mm20.launcher2.ui.component.virtualAppPopup
+import de.mm20.launcher2.ui.layout.AdaptiveLayoutPolicy
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -35,6 +41,7 @@ import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import androidx.navigation3.runtime.NavKey
@@ -104,8 +111,8 @@ fun MagnifierScreen() {
         ) {
             Surface(
                 shape = RoundedCornerShape(24.dp),
-                color = MaterialTheme.colorScheme.surfaceContainerHigh,
-                modifier = Modifier.padding(24.dp)
+                color = virtualAppPopup(),
+                modifier = Modifier.padding(24.dp).telosTechCard(borderColor = Color(0xFF00F0FF), alpha = 0.5f)
             ) {
                 Column(
                     modifier = Modifier.padding(24.dp),
@@ -113,7 +120,10 @@ fun MagnifierScreen() {
                 ) {
                     Text(stringResource(I18nR.string.virtual_magnifier_permission), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
                     Spacer(Modifier.height(16.dp))
-                    Button(onClick = { permissionLauncher.launch(Manifest.permission.CAMERA) }) {
+                    Button(
+                        onClick = { permissionLauncher.launch(Manifest.permission.CAMERA) },
+                        modifier = Modifier.heightIn(min = 48.dp),
+                    ) {
                         Text(stringResource(I18nR.string.hc_allow))
                     }
                 }
@@ -254,23 +264,32 @@ fun MagnifierScreen() {
             }
         )
 
-        // Google Apps 2026 Material 3 Expressive Floating Control Bar
-        Surface(
-            shape = RoundedCornerShape(32.dp),
-            color = MaterialTheme.colorScheme.surfaceContainerHigh.copy(alpha = 0.94f),
-            tonalElevation = 8.dp,
-            shadowElevation = 12.dp,
-            modifier = Modifier
-                .fillMaxWidth(0.92f)
+        val neonCyan = Color(0xFF00F0FF)
+        val neonMagenta = Color(0xFFFF007F)
+        val neonGreen = Color(0xFF00E676)
+
+        BoxWithConstraints(
+            Modifier
+                .fillMaxWidth()
                 .align(Alignment.BottomCenter)
-                .padding(bottom = 24.dp)
+                .padding(horizontal = 16.dp, vertical = 16.dp),
         ) {
+            val sideBySide = AdaptiveLayoutPolicy.sideBySide(maxWidth.value, maxHeight.value, LocalDensity.current.fontScale)
             Column(
-                modifier = Modifier.padding(16.dp),
+                modifier = Modifier
+                    .fillMaxWidth(if (sideBySide) 1f else 0.94f)
+                    .align(Alignment.BottomCenter)
+                    .telosTechCard(borderColor = neonCyan, alpha = 0.55f)
+                    .padding(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(12.dp)
+                verticalArrangement = Arrangement.spacedBy(12.dp),
             ) {
-                // Zoom Slider & Badge
+                TelosDotMatrixText(
+                    text = stringResource(I18nR.string.au_video_zoom),
+                    fontSize = 10.sp,
+                    color = neonCyan,
+                    modifier = Modifier.fillMaxWidth(),
+                )
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.fillMaxWidth().padding(horizontal = 4.dp)
@@ -321,97 +340,72 @@ fun MagnifierScreen() {
                     }
                 }
 
-                // Action Buttons (Filter, Torch, Freeze) - Google Apps 2026 Expressive Style
                 Row(
-                    horizontalArrangement = Arrangement.SpaceEvenly,
-                    modifier = Modifier.fillMaxWidth()
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    modifier = Modifier.fillMaxWidth(),
                 ) {
-                    // Filter Menu Pill
-                    Box {
-                        FilledTonalButton(
+                    Box(Modifier.weight(1f)) {
+                        TelosTechPill(
+                            text = currentFilter.label,
+                            isSelected = filterMenu,
                             onClick = { filterMenu = true },
-                            shape = RoundedCornerShape(20.dp)
-                        ) {
-                            Icon(
-                                painter = painterResource(BaseR.drawable.palette_24px),
-                                contentDescription = null,
-                                modifier = Modifier.size(18.dp)
-                            )
-                            Spacer(Modifier.width(6.dp))
-                            Text(currentFilter.label)
-                        }
+                            accentColor = neonMagenta,
+                            icon = painterResource(BaseR.drawable.palette_24px),
+                            modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp),
+                        )
                         DropdownMenu(
                             expanded = filterMenu,
                             onDismissRequest = { filterMenu = false },
-                            shape = RoundedCornerShape(20.dp)
+                            containerColor = virtualAppPopup(),
+                            shape = RoundedCornerShape(20.dp),
                         ) {
                             MagnifierFilter.entries.forEach { filter ->
                                 DropdownMenuItem(
                                     text = { Text(filter.label) },
-                                    onClick = { currentFilter = filter; filterMenu = false }
+                                    onClick = { currentFilter = filter; filterMenu = false },
+                                    modifier = Modifier.heightIn(min = 48.dp),
                                 )
                             }
                         }
                     }
-
-                    // Torch Button
-                    FilledTonalButton(
+                    TelosTechPill(
+                        text = stringResource(I18nR.string.telos_flashlight_app_label),
+                        isSelected = torchOn,
                         onClick = {
-                            val builder = previewRequestBuilder ?: return@FilledTonalButton
-                            val session = captureSession ?: return@FilledTonalButton
+                            val builder = previewRequestBuilder ?: return@TelosTechPill
+                            val session = captureSession ?: return@TelosTechPill
+                            if (!hasFlash || isFrozen || captureSession == null) return@TelosTechPill
                             try {
                                 builder.set(
                                     CaptureRequest.FLASH_MODE,
-                                    if (!torchOn) CaptureRequest.FLASH_MODE_TORCH else CaptureRequest.FLASH_MODE_OFF
+                                    if (!torchOn) CaptureRequest.FLASH_MODE_TORCH else CaptureRequest.FLASH_MODE_OFF,
                                 )
                                 session.setRepeatingRequest(builder.build(), null, null)
                                 torchOn = !torchOn
                             } catch (_: Exception) {}
                         },
-                        enabled = hasFlash && !isFrozen && captureSession != null,
-                        shape = RoundedCornerShape(20.dp),
-                        colors = ButtonDefaults.filledTonalButtonColors(
-                            containerColor = if (torchOn) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surfaceContainerHighest,
-                            contentColor = if (torchOn) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurface
-                        )
-                    ) {
-                        Icon(
-                            painter = painterResource(BaseR.drawable.light_mode_24px),
-                            contentDescription = stringResource(I18nR.string.telos_flashlight_app_label),
-                            modifier = Modifier.size(18.dp)
-                        )
-                        Spacer(Modifier.width(6.dp))
-                        Text(if (torchOn) "Flash On" else "Flash")
-                    }
-
-                    // Freeze Frame Button
-                    Button(
+                        accentColor = neonGreen,
+                        icon = painterResource(BaseR.drawable.light_mode_24px),
+                        modifier = Modifier.weight(1f).heightIn(min = 48.dp),
+                    )
+                    TelosTechPill(
+                        text = stringResource(if (isFrozen) I18nR.string.virtual_magnifier_resume else I18nR.string.virtual_magnifier_freeze),
+                        isSelected = isFrozen,
                         onClick = {
-                            val session = captureSession ?: return@Button
+                            val session = captureSession ?: return@TelosTechPill
                             try {
                                 if (!isFrozen) session.stopRepeating()
                                 else {
-                                    val builder = previewRequestBuilder ?: return@Button
+                                    val builder = previewRequestBuilder ?: return@TelosTechPill
                                     session.setRepeatingRequest(builder.build(), null, null)
                                 }
                                 isFrozen = !isFrozen
                             } catch (_: Exception) {}
                         },
-                        enabled = captureSession != null,
-                        shape = RoundedCornerShape(20.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = if (isFrozen) MaterialTheme.colorScheme.tertiary else MaterialTheme.colorScheme.secondary,
-                            contentColor = if (isFrozen) MaterialTheme.colorScheme.onTertiary else MaterialTheme.colorScheme.onSecondary
-                        )
-                    ) {
-                        Icon(
-                            painter = painterResource(if (isFrozen) BaseR.drawable.play_arrow_24px else BaseR.drawable.pause_24px),
-                            contentDescription = null,
-                            modifier = Modifier.size(18.dp)
-                        )
-                        Spacer(Modifier.width(6.dp))
-                        Text(if (isFrozen) "Resume" else "Freeze")
-                    }
+                        accentColor = neonCyan,
+                        icon = painterResource(if (isFrozen) BaseR.drawable.play_arrow_24px else BaseR.drawable.pause_24px),
+                        modifier = Modifier.weight(1f).heightIn(min = 48.dp),
+                    )
                 }
             }
         }

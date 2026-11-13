@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_appearance_title">Vzhled</string>
+    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
+    <string name="desktop_theme_intensity_neon">Vault Neon</string>
+    <string name="desktop_theme_intensity_paper">Paper Ops</string>
+    <string name="desktop_wallpaper_path">Tapeta (cesta vault)</string>
+    <string name="desktop_wallpaper_path_hint">Relativní k připojení vault (např. Pictures/wall.jpg). Nikdy se nezobrazí na uzamčené předbootovací obrazovce.</string>
+    <string name="desktop_unlock_theatre_title">Telos Phantom Vault</string>
+    <string name="desktop_unlock_theatre_quiet_ops">Quiet Ops — odemkněte pro zobrazení tapety</string>
+    <string name="desktop_unlock_theatre_hint">Uzamčený boot zůstává v Quiet Ops pouze s glyfem vault. Po odemčení Telos plynule přejde na tapetu vault a zvolenou intenzitu — bez částic.</string>
+    <string name="desktop_sandbox_tint_hint">Barva akcentového prstence je pouze vizuální OpSec (Host = oranžová opatrnost, Net-isolated = azurová, Vault FS = zelená, Standard = purpurová).</string>
+    <string name="desktop_matched_packs_title">Spárované balíčky ikon + kurzoru</string>
+    <string name="desktop_matched_packs_hint">Jedním kliknutím nastavíte dokumentovaný GPL pár (Papirus↔BreezeX, candy-icons↔Bibata; CandyCyber zůstává vestavěným chrome glyfem). Stažené soubory zůstávají ve složce ikon vault nebo portable.</string>
+    <string name="desktop_matched_packs_apply">Spárovat pár: %1$s</string>
+    <string name="desktop_matched_packs_one_click">Spárovat pár</string>
+    <string name="desktop_matched_packs_working">Spárování balíčků…</string>
+    <string name="desktop_matched_packs_ok">Spárovaný balíček %1$s použit</string>
+    <string name="desktop_matched_packs_fail">Nelze spárovat balíčky: %1$s</string>
+</resources>

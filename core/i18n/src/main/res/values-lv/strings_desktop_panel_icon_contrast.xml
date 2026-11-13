@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_panel_icon_contrast">Paneļa ikonu kontrasts</string>
+    <string name="desktop_panel_icon_contrast_auto">Automātiski</string>
+    <string name="desktop_panel_icon_contrast_light">Gaišas ikonas</string>
+    <string name="desktop_panel_icon_contrast_dark">Tumšas ikonas</string>
+    <string name="desktop_panel_icon_contrast_hint">Automātiski ņem tapetes joslas aiz augšējā paneļa paraugu šajā ierīcē un izvēlas gaišus vai tumšus glifus Helix paneļa ikonām un Compose StatusNotifier etiķetēm. Pikseļi paliek lokāli. telos-sni SNI pixmap netiek pārkrāsoti. Preference: panel.iconContrast=auto|light|dark.</string>
+</resources>

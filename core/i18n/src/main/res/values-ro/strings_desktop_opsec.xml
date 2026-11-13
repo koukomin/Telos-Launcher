@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_opsec_title">OpSec</string>
+    <string name="desktop_opsec_secure_clipboard">Clipboard securizat</string>
+    <string name="desktop_opsec_clipboard_title">Clipboard</string>
+    <string name="desktop_opsec_clipboard_hint">Textul sensibil (chei, IBAN, WireGuard) este scos din istoric, păstrat doar în această sesiune și șters din clipboard-ul de sistem. Istoricul rămâne în vault — fără sincronizare cloud.</string>
+    <string name="desktop_opsec_clipboard_clear_now">Golește clipboard-ul acum</string>
+    <string name="desktop_opsec_clipboard_clear_all">Șterge tot</string>
+    <string name="desktop_opsec_clipboard_history_meta">Până la 20 de elemente · expiră după 5 minute · fixează până la blocare · Super+V</string>
+    <string name="desktop_opsec_clipboard_history_empty">Încă nu există istoric clipboard</string>
+    <string name="desktop_opsec_clipboard_pin_until_lock">Fixează</string>
+    <string name="desktop_opsec_clipboard_unpin">Anulează</string>
+    <string name="desktop_opsec_clipboard_recall_vaulted">Reamintește clipul sensibil din vault</string>
+    <string name="desktop_opsec_clipboard_timer">Ștergere automată după %1$d secunde</string>
+    <string name="desktop_opsec_clipboard_timer_off">Oprit</string>
+    <string name="desktop_opsec_attestation_run">Înregistrează instantaneul de integritate al gazdei</string>
+    <string name="desktop_opsec_audit_title">Jurnal de audit al sesiunii</string>
+    <string name="desktop_opsec_audit_refresh">Reîmprospătează jurnalul</string>
+    <string name="desktop_opsec_audit_empty">Încă nu există evenimente de audit</string>
+    <string name="desktop_opsec_tpm_status">Stare TPM: %1$s</string>
+    <string name="desktop_opsec_tpm_unknown">încă nemăsurat</string>
+    <string name="desktop_opsec_tpm_hint">Rezumat local al digest-urilor PCR 0/7 prin tpm2-tools, dacă sunt prezente. Nu este atestare la distanță (RAP).</string>
+</resources>

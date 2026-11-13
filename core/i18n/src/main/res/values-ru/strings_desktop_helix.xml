@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_helix_palette_title">КОМАНДА HELIX</string>
+    <string name="desktop_helix_palette_placeholder">Поиск приложений, окон, калькулятора…</string>
+    <string name="desktop_helix_palette_hint">Super+Period или Ctrl+Space</string>
+    <string name="desktop_helix_palette_privacy">Только корни vault и portable — без индексации домашнего каталога хоста вне сессии.</string>
+    <string name="desktop_helix_palette_open_files">Открыть Файлы</string>
+    <string name="desktop_helix_palette_open_settings">Открыть Настройки</string>
+    <string name="desktop_helix_palette_open_network">Открыть Сеть</string>
+    <string name="desktop_helix_palette_kill_window">Закрыть активное окно</string>
+    <string name="desktop_helix_palette_paste_vault_clip">Вставить последний буфер vault</string>
+    <string name="desktop_helix_palette_window">Окно</string>
+    <string name="desktop_helix_palette_calc">Калькулятор</string>
+    <string name="desktop_helix_palette_command">Команда</string>
+    <string name="desktop_helix_palette_file">Файл</string>
+    <string name="desktop_helix_palette_no_results">Нет совпадений</string>
+</resources>

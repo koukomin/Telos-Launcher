@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_vault_restore_title">Khôi phục vault đầy đủ</string>
+    <string name="desktop_vault_restore_hint">Khôi phục desktop.properties và ~/.config/telos từ bản sao lưu phiên AES. Khóa riêng WireGuard không bao giờ được ghi vào nhật ký. Cần xác nhận.</string>
+    <string name="desktop_vault_restore_preview_btn">Xem trước khôi phục</string>
+    <string name="desktop_vault_restore_preview">Sẵn sàng khôi phục %1$s tệp cấu hình Telos (desktop.properties: %2$s). Xác nhận để áp dụng.</string>
+    <string name="desktop_vault_restore_confirm">Xác nhận khôi phục</string>
+    <string name="desktop_vault_restore_cancel">Hủy khôi phục</string>
+    <string name="desktop_vault_restore_done">Đã khôi phục cấu hình phiên vault</string>
+    <string name="desktop_vault_restore_need_confirm">Cần xác nhận khôi phục</string>
+    <string name="desktop_luks_restore_title">Khôi phục ảnh LUKS của vault</string>
+    <string name="desktop_luks_restore_hint">Sao chép bản sao lưu telos_vault.img vào đường dẫn ảnh portable/vault. Vault phải bị khóa. Không bao giờ gắn kết bằng mật khẩu — mở khóa riêng sau khi khôi phục. Cần xác nhận và kiểm tra SHA-256.</string>
+    <string name="desktop_luks_restore_path_label">Đường dẫn ảnh sao lưu (telos_vault.img)</string>
+    <string name="desktop_luks_restore_preview_btn">Xem trước khôi phục ảnh LUKS</string>
+    <string name="desktop_luks_restore_preview">Sẵn sàng khôi phục %1$s byte (sha256 %2$s…). Xác nhận để sao chép. Vault phải vẫn bị khóa.</string>
+    <string name="desktop_luks_restore_confirm">Xác nhận khôi phục ảnh LUKS</string>
+    <string name="desktop_luks_restore_cancel">Hủy khôi phục LUKS</string>
+    <string name="desktop_luks_restore_done">Đã khôi phục ảnh LUKS thành %1$s (vẫn khóa — mở khóa riêng)</string>
+    <string name="desktop_luks_restore_need_confirm">Cần xác nhận để khôi phục ảnh LUKS</string>
+    <string name="desktop_luks_restore_locked_required">Vault phải bị khóa trước khi khôi phục ảnh LUKS</string>
+    <string name="desktop_update_title">Cập nhật desktop đã ký</string>
+    <string name="desktop_update_hint">Kiểm tra đường dẫn file:// cục bộ hoặc manifesto HTTPS được ký bằng khóa Ed25519 của Telos. Bản cập nhật được chuẩn bị dưới portable/vault temp và không bao giờ tự cài. Kênh mặc định: tài nguyên GitHub Releases telos-desktop-update.manifest.</string>
+    <string name="desktop_update_releases_hint">Mặc định GitHub Releases: %1$s</string>
+    <string name="desktop_update_use_releases">Dùng URL GitHub Releases</string>
+    <string name="desktop_update_releases_filled">Đã điền URL manifesto GitHub Releases</string>
+    <string name="desktop_update_url_label">Manifest cập nhật (đường dẫn, file:// hoặc https://)</string>
+    <string name="desktop_update_save_url">Lưu URL cập nhật</string>
+    <string name="desktop_update_url_saved">Đã lưu URL manifest cập nhật</string>
+    <string name="desktop_update_check">Kiểm tra cập nhật đã ký</string>
+    <string name="desktop_update_ready">Cập nhật đã ký %1$s đã xác minh — xác nhận để chuẩn bị cài đặt</string>
+    <string name="desktop_update_install_confirm">Xác nhận cài đặt đã chuẩn bị</string>
+    <string name="desktop_update_install_cancel">Hủy cập nhật</string>
+    <string name="desktop_update_installed">Đã chuẩn bị bản cập nhật thành %1$s — xác nhận trợ lý khởi động lại (thay jar đang chạy là best-effort)</string>
+    <string name="desktop_update_sig_fail">Xác minh chữ ký cập nhật thất bại</string>
+    <string name="desktop_update_no_url">Hãy đặt URL manifest file:// hoặc HTTPS trước</string>
+    <string name="desktop_update_restart_hint">Trợ lý khởi động lại ghi marker cập nhật đang chờ và script thay thế tùy chọn rồi thoát. Thay jar JVM đang chạy là best-effort.</string>
+    <string name="desktop_update_restart_confirm">Xác nhận khởi động lại sau cập nhật</string>
+    <string name="desktop_update_restart_later">Khởi động lại sau</string>
+    <string name="desktop_update_restart_failed">Không thể chuẩn bị trợ lý khởi động lại cập nhật</string>
+</resources>

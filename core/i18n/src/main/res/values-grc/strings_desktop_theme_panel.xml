@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_panel_surface">Ἐπιφάνεια πίνακος</string>
+    <string name="desktop_theme_panel_surface_hint">Διαφανὴς ἢ ἀμαυρὸς καθαίρει μόνον τὴν ῥίζαν τοῦ πίνακος· τὰ μενού μένουσιν ἀδιαφανῆ. Ὁ ἀμαυρὸς φυλάττει τὸ panelBlur εἰς frost· ἡ ἀμαύρωσις τοῦ ὑποβάθρου τοῦ ξενιστοῦ ἐστὶν best-effort ὅταν οὐκ ἔστι.</string>
+    <string name="desktop_theme_panel_transparent">Διαφανής</string>
+    <string name="desktop_theme_panel_blurred">Ἀμαυρός</string>
+    <string name="desktop_theme_panel_solid">Στερεός</string>
+    <string name="desktop_theme_panel_opacity">Ἀδιαφάνεια πίνακος: %1$d%%</string>
+    <string name="desktop_theme_panel_blur">Ἀμαύρωσις ὑάλου: %1$d</string>
+    <string name="desktop_theme_panel_blur_unavailable">Ἡ ἀμαύρωσις τοῦ ὑποβάθρου τοῦ ξενιστοῦ οὐκ ἔστι· τὸ Telos χρῆται ἡμιδιαφανεῖ frost ἐπιφανείᾳ καὶ φυλάττει τὴν προτίμησιν ἀμαυρώσεως.</string>
+</resources>

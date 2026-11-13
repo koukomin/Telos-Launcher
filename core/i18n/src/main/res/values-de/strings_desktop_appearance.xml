@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<string name="desktop_appearance_hint">Quiet-Ops- oder Vault-Neon-Intensität, Neon-Akzent und Panik-Stummschaltung. Profil-Overlays können diese überschreiben, ohne bei Portable Data in das Host-HOME zu schreiben.</string>
+    <string name="desktop_theme_intensity_label">Themenintensität</string>
+    <string name="desktop_theme_accent_label">Akzent</string>
+    <string name="desktop_panic_mute_toggle">Panik-Stummschaltung</string>
+    <string name="desktop_panic_mute_on">Panik-Stummschaltung: An</string>
+    <string name="desktop_panic_mute_off">Panik-Stummschaltung: Aus</string>
+    <string name="desktop_panic_mute_hint">Erzwingt Quiet Ops und blendet Neon-Technikrahmen und Anzeigen aus. Nur optisch — Firewall und Kill-Switch bleiben unverändert. Tastenkürzel: Super+Shift+P.</string>
+    <string name="desktop_vos_profiles_appearance_hint">Jedes benannte Profil kann ein eigenes desktop.properties-Overlay für Themenintensität, Akzent, Symbole und Cursor behalten. Beim Wechseln wird das Erscheinungsbild zuerst aus dem Profil-Overlay, dann aus den globalen Vault-Eigenschaften geladen.</string>
+</resources>

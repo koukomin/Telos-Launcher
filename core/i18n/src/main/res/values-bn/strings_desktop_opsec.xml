@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_opsec_title">OpSec</string>
+    <string name="desktop_opsec_secure_clipboard">নিরাপদ ক্লিপবোর্ড</string>
+    <string name="desktop_opsec_clipboard_title">ক্লিপবোর্ড</string>
+    <string name="desktop_opsec_clipboard_hint">সংবেদনশীল লেখা (কী, IBAN, WireGuard) ইতিহাস থেকে সরিয়ে শুধু এই সেশনে রাখা হয় এবং সিস্টেম ক্লিপবোর্ড থেকে মুছে ফেলা হয়। ইতিহাস vault-স্থানীয় থাকে — কোনো ক্লাউড সিঙ্ক নেই।</string>
+    <string name="desktop_opsec_clipboard_clear_now">এখনই ক্লিপবোর্ড পরিষ্কার করুন</string>
+    <string name="desktop_opsec_clipboard_clear_all">সব মুছুন</string>
+    <string name="desktop_opsec_clipboard_history_meta">সর্বোচ্চ ২০টি · ৫ মিনিট পর মেয়াদ শেষ · লক পর্যন্ত পিন · Super+V</string>
+    <string name="desktop_opsec_clipboard_history_empty">এখনও কোনো ক্লিপবোর্ড ইতিহাস নেই</string>
+    <string name="desktop_opsec_clipboard_pin_until_lock">পিন</string>
+    <string name="desktop_opsec_clipboard_unpin">আনপিন</string>
+    <string name="desktop_opsec_clipboard_recall_vaulted">vault-এ রাখা সংবেদনশীল ক্লিপ ফেরান</string>
+    <string name="desktop_opsec_clipboard_timer">%1$d সেকেন্ড পর স্বয়ংক্রিয় পরিষ্কার</string>
+    <string name="desktop_opsec_clipboard_timer_off">বন্ধ</string>
+    <string name="desktop_opsec_attestation_run">হোস্ট অখণ্ডতার স্ন্যাপশট রেকর্ড করুন</string>
+    <string name="desktop_opsec_audit_title">সেশন অডিট লগ</string>
+    <string name="desktop_opsec_audit_refresh">অডিট লগ রিফ্রেশ</string>
+    <string name="desktop_opsec_audit_empty">এখনও কোনো অডিট ইভেন্ট নেই</string>
+    <string name="desktop_opsec_tpm_status">TPM অবস্থা: %1$s</string>
+    <string name="desktop_opsec_tpm_unknown">এখনও পরিমাপ হয়নি</string>
+    <string name="desktop_opsec_tpm_hint">tpm2-tools থাকলে স্থানীয় PCR 0/7 ডাইজেস্ট সারাংশ। এটি রিমোট অ্যাটেস্টেশন (RAP) নয়।</string>
+</resources>

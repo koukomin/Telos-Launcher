@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_panel_icon_contrast">Αντίθεση εικονιδίων πάνελ</string>
+    <string name="desktop_panel_icon_contrast_auto">Αυτόματο</string>
+    <string name="desktop_panel_icon_contrast_light">Ανοιχτά εικονίδια</string>
+    <string name="desktop_panel_icon_contrast_dark">Σκούρα εικονίδια</string>
+    <string name="desktop_panel_icon_contrast_hint">Το Αυτόματο δειγματοληπτεί τοπικά τη λωρίδα ταπετσαρίας πίσω από το πάνω πάνελ και επιλέγει ανοιχτά ή σκούρα γλυφές για τα εικονίδια Helix και τις ετικέτες StatusNotifier του Compose. Τα pixel μένουν στη συσκευή. Τα pixmap SNI του telos-sni δεν επαναχρωματίζονται. Προτίμηση: panel.iconContrast=auto|light|dark.</string>
+</resources>

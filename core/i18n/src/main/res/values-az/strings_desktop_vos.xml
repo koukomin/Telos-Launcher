@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_portable_data_root">Portable data folder (config, cache, temp only here)</string>
+    <string name="desktop_host_home_trace_warning">Host Home writes settings and cache on this PC. Choose Portable Data to leave no host traces.</string>
+    <string name="desktop_boot_portable_data">Portable Data — no host traces (config/cache/temp under portable root)</string>
+    <string name="desktop_boot_portable_vault">Portable Vault — encrypted data under portable root</string>
+    <string name="desktop_boot_host_home">Host Home (may leave traces on this PC)</string>
+    <string name="desktop_boot_unlock_existing">Unlock existing vault (file or stego folder)</string>
+    <string name="desktop_boot_create_wizard">Create new elastic / stego / deniable vault</string>
+    <string name="desktop_boot_ephemeral">Ephemeral RAM-only ghost session (tmpfs)</string>
+    <string name="desktop_session_sync_title">Session sync</string>
+    <string name="desktop_session_sync_export">Export encrypted bundle</string>
+    <string name="desktop_session_sync_import">Import encrypted bundle</string>
+    <string name="desktop_session_sync_auto">Saxlanmış sync açarı olanda yüklənmədə avtomatik idxal</string>
+    <string name="desktop_session_sync_pass">Sync passphrase (or KeePass entry %1$s)</string>
+    <string name="desktop_session_sync_keepass">KeePass database path (.kdbx)</string>
+    <string name="desktop_windows_shell_title">Windows shell replacement</string>
+    <string name="desktop_windows_shell_enable">Set Telos as login shell (HKCU)</string>
+    <string name="desktop_windows_shell_revert">Restore explorer.exe shell</string>
+    <string name="desktop_windows_shell_risk">Replaces your user shell at next sign-in. Keep a recovery path before enabling.</string>
+    <string name="desktop_helix_portable_note">Helix window chrome is drawn in Compose on all platforms; native Win32 decorations may show until shell replacement.</string>
+    <string name="desktop_session_sync_pass_required">Sync parol ifadəsi tələb olunur</string>
+    <string name="desktop_session_sync_imported">Sessiya sync paketi idxal edildi</string>
+    <string name="desktop_session_sync_key_stored">Sorğu olmadan yüklənmə idxalı üçün sync açarı saxlanıldı</string>
+    <string name="desktop_session_sync_key_missing">Avtomatik idxalı aktivləşdirməzdən əvvəl sync parol ifadəsi daxil edin</string>
+    <string name="desktop_vos_profiles_title">Seyf profilləri</string>
+    <string name="desktop_vos_profiles_summary">config profiles/ altında adlı profil qovluqları. desktop.properties-də yalnız aktiv ad — heç vaxt parollar.</string>
+    <string name="desktop_vos_profiles_active">Aktiv profil: %1$s</string>
+    <string name="desktop_vos_profiles_none">(yox)</string>
+    <string name="desktop_vos_profiles_empty">Hələ profil yoxdur. Seyf kimliklərini dəyişmək üçün birini yaradın.</string>
+    <string name="desktop_vos_profiles_kind_named">Adlı seyf profili</string>
+    <string name="desktop_vos_profiles_kind_portable">Portativ seyf kökü</string>
+    <string name="desktop_vos_profiles_switch">Dəyiş</string>
+    <string name="desktop_vos_profiles_use_portable">Bu portativ kökü istifadə et</string>
+    <string name="desktop_vos_profiles_new_name">Yeni profil adı</string>
+    <string name="desktop_vos_profiles_create">Yarat və dəyiş</string>
+    <string name="desktop_vos_profiles_created">Yaradıldı və %1$s-ə keçildi</string>
+    <string name="desktop_vos_profiles_switched">%1$s-ə keçildi</string>
+    <string name="desktop_vos_profiles_invalid_name">Hərf, rəqəm, nöqtə, altxətt və ya defis (maks. 64).</string>
+    <string name="desktop_vos_profiles_portable_hint">Portativ köklər config, keş və temp-i host profilindən kənarda saxlayır (Windows standartı: Portable Data).</string>
+    <string name="desktop_vos_profiles_portable_path">Portativ seyf qovluğu yolu</string>
+    <string name="desktop_vos_profiles_add_portable">Portativ seyf kökü əlavə et</string>
+    <string name="desktop_vos_profiles_portable_selected">Portativ kök: %1$s</string>
+    <string name="desktop_vos_profiles_portable_reject">Portativ kök host home və ya onun .config/.cache/.local ola bilməz.</string>
+</resources>

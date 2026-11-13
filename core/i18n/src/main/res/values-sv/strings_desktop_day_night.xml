@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_day_night_title">Dag-/nattema</string>
+    <string name="desktop_day_night_hint">Paper Ops (ljust) dagtid och Quiet Ops (mörkt) nattetid i Auto. Gränser använder din tidszon. Standard är manuell zon — nätverket används aldrig för plats utan uttryckligt medgivande nedan.</string>
+    <string name="desktop_day_night_mode">Dag-/nattläge</string>
+    <string name="desktop_day_night_off">Av</string>
+    <string name="desktop_day_night_auto">Auto</string>
+    <string name="desktop_day_night_light">Ljust</string>
+    <string name="desktop_day_night_dark">Mörkt</string>
+    <string name="desktop_day_night_timezone">Tidszon</string>
+    <string name="desktop_day_night_timezone_hint">IANA-zon för lokal dag/natt (JVM tills du väljer). Manuellt val kontaktar inga servrar.</string>
+    <string name="desktop_day_night_timezone_search">Sök tidszoner</string>
+    <string name="desktop_day_night_timezone_current">Aktuell zon: %1$s</string>
+    <string name="desktop_day_night_network_assist">Nätverkshjälp land / tidszon</string>
+    <string name="desktop_day_night_network_assist_warning">Endast med samtycke. När det är på gör Telos en engångsförfrågan till en publik IP→geo-endpoint för zon och landskod. Endast dessa värden (och valfria koordinater för soluppgång/-nedgång) lagras i vault desktop.properties. IP loggas inte, ingen kontinuerlig spårning, ingen molnsynk av teman. Vid nätfel, kill-switch eller offline behålls manuell zon; Preference only eller Failed visas ärligt.</string>
+    <string name="desktop_day_night_assist_pref_only">Endast preferens — nätverkshjälp av, blockerad eller ej begärd; manuell zon</string>
+    <string name="desktop_day_night_assist_failed">Misslyckades — geo-endpoint otillgänglig; manuell zon behållen</string>
+    <string name="desktop_day_night_assist_applied">Tillämpat — zon %1$s, land %2$s (endast lokalt)</string>
+    <string name="desktop_day_night_country">Landskod: %1$s</string>
+</resources>

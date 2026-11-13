@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_opsec_title">OpSec</string>
+    <string name="desktop_opsec_secure_clipboard">Turvaline lõikelaud</string>
+    <string name="desktop_opsec_clipboard_title">Lõikelaud</string>
+    <string name="desktop_opsec_clipboard_hint">Tundlik tekst (võtmed, IBAN, WireGuard) eemaldatakse ajaloost, hoitakse ainult selles seansis ja kustutatakse süsteemi lõikelaualt. Ajalugu jääb vaulti — pilvesünkroniseerimist pole.</string>
+    <string name="desktop_opsec_clipboard_clear_now">Tühjenda lõikelaud kohe</string>
+    <string name="desktop_opsec_clipboard_clear_all">Tühjenda kõik</string>
+    <string name="desktop_opsec_clipboard_history_meta">Kuni 20 kirjet · aegub 5 minuti pärast · kinnita lukustuseni · Super+V</string>
+    <string name="desktop_opsec_clipboard_history_empty">Lõikelaua ajalugu puudub</string>
+    <string name="desktop_opsec_clipboard_pin_until_lock">Kinnita</string>
+    <string name="desktop_opsec_clipboard_unpin">Vabasta</string>
+    <string name="desktop_opsec_clipboard_recall_vaulted">Too vaultitud tundlik klipp tagasi</string>
+    <string name="desktop_opsec_clipboard_timer">Automaatne tühjendus %1$d sekundi pärast</string>
+    <string name="desktop_opsec_clipboard_timer_off">Väljas</string>
+    <string name="desktop_opsec_attestation_run">Salvesta hosti terviklikkuse hetktõmmis</string>
+    <string name="desktop_opsec_audit_title">Seansi auditilogi</string>
+    <string name="desktop_opsec_audit_refresh">Värskenda logi</string>
+    <string name="desktop_opsec_audit_empty">Auditilogis pole veel sündmusi</string>
+    <string name="desktop_opsec_tpm_status">TPM olek: %1$s</string>
+    <string name="desktop_opsec_tpm_unknown">veel mõõtmata</string>
+    <string name="desktop_opsec_tpm_hint">Kohalik PCR 0/7 räsi kokkuvõte tpm2-tools abil, kui need on olemas. See ei ole kaugattesteerimine (RAP).</string>
+</resources>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_studio_title">استودیو پوسته</string>
+    <string name="desktop_theme_studio_hint">Quiet Ops پیش‌فرض است. Vault Neon لبه‌های Cyber-Tech و سنجه‌های HUD را تقویت می‌کند. Paper Ops گزینه روشن روزانه است. پنجره‌های بازشو مات می‌مانند؛ تاری دوم وجود ندارد.</string>
+    <string name="desktop_theme_intensity">شدت</string>
+    <string name="desktop_theme_quiet_ops">Quiet Ops</string>
+    <string name="desktop_theme_vault_neon">Vault Neon</string>
+    <string name="desktop_theme_paper_ops">Paper Ops</string>
+    <string name="desktop_theme_accent">تأکید</string>
+    <string name="desktop_theme_from_wallpaper">تأکید از کاغذدیواری</string>
+    <string name="desktop_theme_from_wallpaper_hint">از کاغذدیواری خزانه یا داده‌های قابل‌حمل به‌صورت محلی بذر تونال Material می‌سازد. چیزی بارگذاری نمی‌شود.</string>
+    <string name="desktop_theme_density">تراکم</string>
+    <string name="desktop_theme_density_compact">فشرده</string>
+    <string name="desktop_theme_density_comfort">راحت</string>
+    <string name="desktop_theme_density_touch">لمسی</string>
+    <string name="desktop_theme_panel_height">ارتفاع پنل: %1$d dp</string>
+    <string name="desktop_theme_panel_icon">آیکون‌های پنل: %1$d dp</string>
+    </resources>

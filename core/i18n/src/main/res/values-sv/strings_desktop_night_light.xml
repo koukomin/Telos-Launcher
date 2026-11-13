@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_night_light_title">Nattljus</string>
+    <string name="desktop_night_light_hint">Värmer skärmen med ett värdverktyg (gammastep, redshift eller wlsunset). Inga platstjänster och inget skickas över nätverket. Utan verktyg sparas bara inställningen.</string>
+    <string name="desktop_night_light_enable">Aktivera nattljus</string>
+    <string name="desktop_night_light_temperature">Färgtemperatur: %1$d K</string>
+    <string name="desktop_night_light_on">På</string>
+    <string name="desktop_night_light_off">Av</string>
+    <string name="desktop_night_light_pref_only">Inställning sparad; installera gammastep, redshift eller wlsunset för att tillämpa på den här värden</string>
+    <string name="desktop_night_light_failed">Värdverktyget kunde inte ändra skärmtemperaturen</string>
+    <string name="desktop_night_light_applied">Tillämpat med %1$s</string>
+    <string name="desktop_night_light_cleared">Nattljus avstängt</string>
+    <string name="desktop_settings_search_hint">Sök i inställningar</string>
+    <string name="desktop_settings_search_empty">Inga inställningar matchar den här sökningen</string>
+    <string name="desktop_settings_session">Session</string>
+    <string name="desktop_settings_display">Skärm</string>
+    <string name="desktop_settings_desktop">Skrivbord</string>
+    <string name="desktop_settings_windows">Fönster</string>
+    <string name="desktop_settings_portable">Portabel</string>
+    <string name="desktop_settings_vault">Valv</string>
+</resources>

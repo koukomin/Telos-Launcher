@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<string name="desktop_appearance_hint">Intensitas Quiet Ops vel Vault Neon, accentus neon et silentium pavoris. Superpositiones profili ea superscribere possunt sine scribendo in HOME hospitis in Portable Data.</string>
+    <string name="desktop_theme_intensity_label">Intensitas thematis</string>
+    <string name="desktop_theme_accent_label">Accentus</string>
+    <string name="desktop_panic_mute_toggle">Silentium pavoris</string>
+    <string name="desktop_panic_mute_on">Silentium pavoris: Accensum</string>
+    <string name="desktop_panic_mute_off">Silentium pavoris: Extinctum</string>
+    <string name="desktop_panic_mute_hint">Quiet Ops cogit et margines indicatoresque neon celat. Tantum visuale — murum ignis aut kill-switch non mutat. Compendiaria: Super+Shift+P.</string>
+    <string name="desktop_vos_profiles_appearance_hint">Quodque profilum nominatum superpositionem desktop.properties suam pro intensitate, accentu, iconibus et cursore servare potest. Mutatio speciem e superpositione profili, deinde e proprietatibus globalibus thesauri, denuo onerat.</string>
+</resources>

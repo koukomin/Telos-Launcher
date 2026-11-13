@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_keyboard">Πληκτρολόγιον</string>
+    <string name="keyboard_enable_title">Ἐνεργοποίησον τὸ Telos Keyboard</string>
+    <string name="keyboard_enable_summary">Ἐνεργοποίησον τὸ Telos Keyboard ἐν ταῖς τοῦ Android εἰσαγωγῆς ρυθμίσεσι καὶ ἐπίλεξον αὐτὸ ὡς προεπιλεγμένην μέθοδον εἰσαγωγῆς.</string>
+    <string name="keyboard_enable_action">Ἄνοιξον τὰς εἰσαγωγῆς ρυθμίσεις</string>
+    <string name="keyboard_settings_category">Πληκτρολογίου ρυθμίσεις</string>
+    <string name="keyboard_incognito_title">Κρυφὴ κατάστασις</string>
+    <string name="preference_private_keyboard_summary">Κωλύει τὸ πληκτρολόγιον ἐκ τοῦ μανθάνειν ἢ ἀποθηκεύειν κείμενον ἐν τῇ ἀναζητήσει καὶ ἐν τοῖς τῶν ἱστοσελίδων συντομεύσεσιν</string>
+</resources>

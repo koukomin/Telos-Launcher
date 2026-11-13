@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_panel_icon_contrast">تباين أيقونات اللوحة</string>
+    <string name="desktop_panel_icon_contrast_auto">تلقائي</string>
+    <string name="desktop_panel_icon_contrast_light">أيقونات فاتحة</string>
+    <string name="desktop_panel_icon_contrast_dark">أيقونات داكنة</string>
+    <string name="desktop_panel_icon_contrast_hint">يعيّن الوضع التلقائي عيّنة من شريط الخلفية خلف اللوحة العلوية على هذا الجهاز ويختار رموزاً فاتحة أو داكنة لأيقونات Helix وتسميات صينية StatusNotifier في Compose. تبقى البكسلات محلية. لا يُعاد تلوين صور SNI من telos-sni. التفضيل: panel.iconContrast=auto|light|dark.</string>
+</resources>

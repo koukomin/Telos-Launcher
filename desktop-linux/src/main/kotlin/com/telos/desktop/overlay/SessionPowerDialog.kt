@@ -23,6 +23,8 @@ object SessionPowerActions {
     fun lock() {
         SessionPower.locked.value = true
         SessionPower.open.value = false
+        // Pin-until-lock clipboard history ends on session lock.
+        runCatching { TelosClipboardManager.onSessionLock() }
         Sys.run("loginctl", "lock-session", timeoutSec = 4)
     }
 

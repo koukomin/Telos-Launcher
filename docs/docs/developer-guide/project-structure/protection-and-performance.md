@@ -83,7 +83,7 @@ interface between the processes.
 
 ## Stealth cloak and privileged daemon
 
-Code: `services/app-management/.../stealth/` (`TelosPrivilegedDaemon`, `TelosStealthBlacklist`, `TelosDevOptsCloak`), UI in Settings → Advanced → Stealth and banking cloak.
+Code: `services/app-management/.../stealth/` (`TelosPrivilegedDaemon`, `TelosStealthBlacklist`, `TelosDevOptsCloak`, `TelosDevOptsSnapshot`), UI in Settings → Advanced → Stealth and banking cloak.
 
 - `TelosPrivilegedDaemonService` is not exported. Binder callers must be the Telos UID (`Binder.getCallingUid() == Process.myUid()`).
 - The privileged **server** lives in `:libs:shizuku-next` (Shizuku-Next Apache-2.0 server,
@@ -96,6 +96,7 @@ Code: `services/app-management/.../stealth/` (`TelosPrivilegedDaemon`, `TelosSte
   can bring it back after reboot. `ShizukuCommandService` remains the UserService that the
   server spawns as UID 2000. The standalone manager APK is optional.
 - Before a protected app is launched from the launcher, `AppLaunchGate` cloaks `development_settings_enabled`, `adb_enabled` and `adb_wifi_enabled`. With `WRITE_SECURE_SETTINGS` this is a Java `Settings.Global.putInt`. Returning to the home screen restores the previous values unless permanent stealth is on.
+- `TelosDevOptsSnapshot` captures Developer Options–related Global/System keys (animator/transition/window scales, stay-awake, freeform/resizable flags, show-touches, ADB Wi‑Fi, and related debug keys) before cloak or when the master flag is on. A ContentObserver restores that snapshot when `development_settings_enabled` returns to 1, and cloak restore also re-applies the full snapshot so those settings are not lost when the master switch is cleared.
 - The seeded package list covers Greek banks/gov, common fintech, Play/GMS/Intune/Authenticator, and several anti-cheat titles. Heuristics match bank/wallet/pay/gov/intune/authenticator in the package name or label. Users can toggle any installed app from search.
 
 ## Shizuku manager and clipboard shield

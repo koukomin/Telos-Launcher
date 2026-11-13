@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_vault_restore_title">Vault の完全復元</string>
+    <string name="desktop_vault_restore_hint">AES セッションバックアップから desktop.properties と ~/.config/telos を復元します。WireGuard 秘密鍵はログに書き込まれません。確認が必要です。</string>
+    <string name="desktop_vault_restore_preview_btn">復元のプレビュー</string>
+    <string name="desktop_vault_restore_preview">Telos 設定ファイル %1$s 件を復元する準備ができました（desktop.properties: %2$s）。適用するには確認してください。</string>
+    <string name="desktop_vault_restore_confirm">復元を確認</string>
+    <string name="desktop_vault_restore_cancel">復元をキャンセル</string>
+    <string name="desktop_vault_restore_done">Vault セッション設定を復元しました</string>
+    <string name="desktop_vault_restore_need_confirm">復元の確認が必要です</string>
+    <string name="desktop_luks_restore_title">LUKS vault イメージの復元</string>
+    <string name="desktop_luks_restore_hint">telos_vault.img バックアップを portable/vault イメージ経路へコピーします。vault はロック必須。パスワードでは絶対にマウントしません — 復元後に別途ロック解除。確認と SHA-256 検査が必要です。</string>
+    <string name="desktop_luks_restore_path_label">バックアップイメージのパス (telos_vault.img)</string>
+    <string name="desktop_luks_restore_preview_btn">LUKS イメージ復元のプレビュー</string>
+    <string name="desktop_luks_restore_preview">%1$s バイトを復元する準備ができました（sha256 %2$s…）。コピーするには確認してください。vault はロックしたままにしてください。</string>
+    <string name="desktop_luks_restore_confirm">LUKS イメージ復元を確認</string>
+    <string name="desktop_luks_restore_cancel">LUKS 復元をキャンセル</string>
+    <string name="desktop_luks_restore_done">LUKS イメージを %1$s として復元しました（まだロック中 — 別途ロック解除）</string>
+    <string name="desktop_luks_restore_need_confirm">LUKS イメージ復元の確認が必要です</string>
+    <string name="desktop_luks_restore_locked_required">LUKS イメージを復元する前に vault をロックする必要があります</string>
+    <string name="desktop_update_title">署名付きデスクトップ更新</string>
+    <string name="desktop_update_hint">Telos Ed25519 鍵で署名されたローカル file:// パスまたは HTTPS マニフェストを確認します。更新は portable/vault 一時領域にステージされ、自動インストールはしません。既定チャネル: GitHub Releases アセット telos-desktop-update.manifest。</string>
+    <string name="desktop_update_releases_hint">GitHub Releases の既定: %1$s</string>
+    <string name="desktop_update_use_releases">GitHub Releases URL を使う</string>
+    <string name="desktop_update_releases_filled">GitHub Releases マニフェスト URL を入力しました</string>
+    <string name="desktop_update_url_label">更新マニフェスト（パス、file://、または https://）</string>
+    <string name="desktop_update_save_url">更新 URL を保存</string>
+    <string name="desktop_update_url_saved">更新マニフェスト URL を保存しました</string>
+    <string name="desktop_update_check">署名付き更新を確認</string>
+    <string name="desktop_update_ready">署名付き更新 %1$s を検証しました — ステージインストールを確認</string>
+    <string name="desktop_update_install_confirm">ステージインストールを確認</string>
+    <string name="desktop_update_install_cancel">更新をキャンセル</string>
+    <string name="desktop_update_installed">更新を %1$s としてステージしました — 再起動ヘルパーを確認（実行中 jar の差し替えはベストエフォート）</string>
+    <string name="desktop_update_sig_fail">更新署名の検証に失敗しました</string>
+    <string name="desktop_update_no_url">先に file:// または HTTPS の更新マニフェスト URL を設定してください</string>
+    <string name="desktop_update_restart_hint">再起動ヘルパーは保留更新マーカーと任意の置換スクリプトを書き込んで終了します。実行中の JVM jar の差し替えはベストエフォートです。</string>
+    <string name="desktop_update_restart_confirm">更新後の再起動を確認</string>
+    <string name="desktop_update_restart_later">後で再起動</string>
+    <string name="desktop_update_restart_failed">更新再起動ヘルパーを準備できませんでした</string>
+</resources>

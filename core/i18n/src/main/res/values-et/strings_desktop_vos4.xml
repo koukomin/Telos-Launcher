@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_lan_pair_title">LAN-sidumine Androidiga</string>
+    <string name="desktop_lan_pair_hint">Käivitab lühiajalise sidumisserveri LAN-is. Skaneeri või sisesta kood Telos Syncis. Koode ja žetoone ei logita kunagi.</string>
+    <string name="desktop_lan_pair_start">Käivita LAN-sidumine</string>
+    <string name="desktop_lan_pair_stop">Peata LAN-sidumine</string>
+    <string name="desktop_lan_pair_running">Sidumisserver kuulab LAN-is</string>
+    <string name="desktop_lan_pair_code">Sidumiskood</string>
+    <string name="desktop_lan_pair_qr_uri">Sidumise URI (QR / kleebi)</string>
+    <string name="desktop_lan_pair_stopped">LAN-sidumine peatatud</string>
+    <string name="desktop_lan_pair_bind_reject">Avalikku aadressi ei saa siduda — kasuta privaatset LAN IP-d</string>
+    <string name="desktop_lan_pair_android_title">Telos Desktopi LAN-sidumine</string>
+    <string name="desktop_lan_pair_host">Töölaua host (LAN IP)</string>
+    <string name="desktop_lan_pair_port">Töölaua port</string>
+    <string name="desktop_lan_pair_connect">Seo töölaudaga</string>
+    <string name="desktop_lan_pair_paired">Seotud töölaudaga</string>
+    <string name="desktop_lan_pair_fetch_bundle">Too töölauaseansi pakett</string>
+    <string name="desktop_lan_pair_fetch_ok">Krüpteeritud töölauaseansi pakett salvestatud</string>
+    <string name="desktop_lan_pair_send_bundle">Saada krüpteeritud pakett</string>
+    <string name="desktop_lan_pair_failed">LAN-sidumine ebaõnnestus</string>
+    <string name="desktop_lan_pair_scan_hint">Androidis ava Sync → Sätted ja kleebi URI või sisesta host, port ja kood.</string>
+</resources>

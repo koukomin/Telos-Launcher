@@ -31,4 +31,8 @@
     
     
 
+    <string name="freeze_desk_title">Freeze Desk</string>
+    <string name="freeze_desk_filter_bloat">Bloat</string>
+    <string name="freeze_desk_open_summary">Oscail Córas → Aipeanna chun pacáistí suiteáilte a reo, a chuardach agus a scagadh.</string>
+    <string name="freeze_desk_rules_help">Fanann rialacha uathreoite agus backends anseo. Tá reo aipe agus AppOps ar Freeze Desk.</string>
 </resources>

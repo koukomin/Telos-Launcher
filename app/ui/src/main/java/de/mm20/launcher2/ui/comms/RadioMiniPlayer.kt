@@ -27,8 +27,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import android.text.format.Formatter
 import android.widget.Toast
 import de.mm20.launcher2.comms.radio.RadioRecorder
-import androidx.compose.ui.graphics.Color
-import de.mm20.launcher2.ui.component.telosTechCard
+import de.mm20.launcher2.ui.component.TelosCyber
+import de.mm20.launcher2.ui.component.telosTechSurface
 import de.mm20.launcher2.ui.R
 
 @Composable
@@ -67,11 +67,12 @@ fun RadioMiniPlayer(modifier: Modifier = Modifier) {
     ) {
         Surface(
             shape = RoundedCornerShape(16.dp),
+            color = androidx.compose.ui.graphics.Color.Transparent,
             modifier = Modifier
                 .fillMaxWidth()
-                .telosTechCard(
-                    borderColor = Color(0xFF00E676),
-                    shape = RoundedCornerShape(16.dp)
+                .telosTechSurface(
+                    borderColor = if (isPlaying) TelosCyber.NeonGreen else TelosCyber.NeonCyan,
+                    shape = RoundedCornerShape(16.dp),
                 )
         ) {
             Row(

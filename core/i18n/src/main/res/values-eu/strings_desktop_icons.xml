@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_icons_title">Ikonoak</string>
+    <string name="desktop_icons_theme_label">Ikono-gaia</string>
+    <string name="desktop_icons_download_section">Deskargatu Telosetik</string>
+    <string name="desktop_icons_download">Deskargatu</string>
+    <string name="desktop_icons_installing">Instalatzen…</string>
+    <string name="desktop_icons_installed">Instalatuta</string>
+    <string name="desktop_icons_apply">Aplikatu</string>
+    <string name="desktop_icons_source_system">Sistema</string>
+    <string name="desktop_icons_source_telos">Telos</string>
+    <string name="desktop_icons_source_builtin">Integratua</string>
+    <string name="desktop_icons_path">Ikono-paketeen karpeta: %1$s</string>
+    <string name="desktop_icons_freedesktop_note">Mahaigaineko freedesktop ikono-gaiak (ez Android ADW paketeak).</string>
+    <string name="desktop_icons_download_failed">Deskargak huts egin du</string>
+    <string name="desktop_icons_download_ok">Gaia instalatu da</string>
+    <string name="desktop_icons_license">Lizentzia: %1$s</string>
+    <string name="desktop_icons_portable_only">Portable Data moduan, paketeak ikono-karpeta eramangarrian geratzen dira (ez ostalariaren profilean).</string>
+</resources>

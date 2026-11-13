@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_helix_palette_title">ΕΝΤΟΛΗ HELIX</string>
+    <string name="desktop_helix_palette_placeholder">Ζήτησις ἐφαρμογῶν, θυρίδων, λογιστικοῦ…</string>
+    <string name="desktop_helix_palette_hint">Super+Period ή Ctrl+Space</string>
+    <string name="desktop_helix_palette_privacy">Μόνο ρίζες vault και φορητές — δεν ευρετηριάζει το host home εκτός συνεδρίας.</string>
+    <string name="desktop_helix_palette_open_files">Ἄνοιξον Ἀρχεῖα</string>
+    <string name="desktop_helix_palette_open_settings">Ἄνοιξον Ρυθμίσεις</string>
+    <string name="desktop_helix_palette_open_network">Ἄνοιξον Δίκτυον</string>
+    <string name="desktop_helix_palette_kill_window">Κλεῖσον τὴν ἐστιασμένην θυρίδα</string>
+    <string name="desktop_helix_palette_paste_vault_clip">Επικόλληση τελευταίου πρόχειρου vault</string>
+    <string name="desktop_helix_palette_window">Παράθυρο</string>
+    <string name="desktop_helix_palette_calc">Αριθμομηχανή</string>
+    <string name="desktop_helix_palette_command">Εντολή</string>
+    <string name="desktop_helix_palette_file">Αρχείο</string>
+    <string name="desktop_helix_palette_no_results">Οὐδὲν ἀποτέλεσμα</string>
+</resources>

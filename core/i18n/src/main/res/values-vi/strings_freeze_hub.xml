@@ -31,4 +31,8 @@
     
     
 
+    <string name="freeze_desk_title">Freeze Desk</string>
+    <string name="freeze_desk_filter_bloat">Bloat</string>
+    <string name="freeze_desk_open_summary">Mở Hệ thống → Ứng dụng để đóng băng, tìm kiếm và lọc các gói đã cài.</string>
+    <string name="freeze_desk_rules_help">Quy tắc tự đóng băng và backends ở lại đây. Đóng băng theo ứng dụng và AppOps nằm trong Freeze Desk.</string>
 </resources>

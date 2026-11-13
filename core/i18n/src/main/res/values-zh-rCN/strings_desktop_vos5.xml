@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_vault_restore_title">完整 vault 恢复</string>
+    <string name="desktop_vault_restore_hint">从 AES 会话备份恢复 desktop.properties 与 ~/.config/telos。WireGuard 私钥绝不会写入日志。需要确认。</string>
+    <string name="desktop_vault_restore_preview_btn">预览恢复</string>
+    <string name="desktop_vault_restore_preview">准备恢复 %1$s 个 Telos 配置文件（desktop.properties：%2$s）。确认以应用。</string>
+    <string name="desktop_vault_restore_confirm">确认恢复</string>
+    <string name="desktop_vault_restore_cancel">取消恢复</string>
+    <string name="desktop_vault_restore_done">已恢复 vault 会话配置</string>
+    <string name="desktop_vault_restore_need_confirm">需要确认恢复</string>
+    <string name="desktop_luks_restore_title">恢复 LUKS vault 映像</string>
+    <string name="desktop_luks_restore_hint">将 telos_vault.img 备份复制到 portable/vault 映像路径。Vault 必须处于锁定状态。绝不会用密码挂载——恢复后请另行解锁。需要确认和 SHA-256 校验。</string>
+    <string name="desktop_luks_restore_path_label">备份映像路径 (telos_vault.img)</string>
+    <string name="desktop_luks_restore_preview_btn">预览 LUKS 映像恢复</string>
+    <string name="desktop_luks_restore_preview">准备恢复 %1$s 字节（sha256 %2$s…）。确认以复制。Vault 须保持锁定。</string>
+    <string name="desktop_luks_restore_confirm">确认 LUKS 映像恢复</string>
+    <string name="desktop_luks_restore_cancel">取消 LUKS 恢复</string>
+    <string name="desktop_luks_restore_done">LUKS 映像已恢复为 %1$s（仍锁定——请另行解锁）</string>
+    <string name="desktop_luks_restore_need_confirm">需要确认才能恢复 LUKS 映像</string>
+    <string name="desktop_luks_restore_locked_required">恢复 LUKS 映像前必须锁定 vault</string>
+    <string name="desktop_update_title">已签名的桌面更新</string>
+    <string name="desktop_update_hint">检查由 Telos Ed25519 密钥签名的本地 file:// 路径或 HTTPS 清单。更新暂存到 portable/vault 临时目录，永不自动安装。默认通道：GitHub Releases 资源 telos-desktop-update.manifest。</string>
+    <string name="desktop_update_releases_hint">GitHub Releases 默认：%1$s</string>
+    <string name="desktop_update_use_releases">使用 GitHub Releases URL</string>
+    <string name="desktop_update_releases_filled">已填入 GitHub Releases 清单 URL</string>
+    <string name="desktop_update_url_label">更新清单（路径、file:// 或 https://）</string>
+    <string name="desktop_update_save_url">保存更新 URL</string>
+    <string name="desktop_update_url_saved">已保存更新清单 URL</string>
+    <string name="desktop_update_check">检查已签名更新</string>
+    <string name="desktop_update_ready">已验证签名更新 %1$s — 确认以暂存安装</string>
+    <string name="desktop_update_install_confirm">确认暂存安装</string>
+    <string name="desktop_update_install_cancel">取消更新</string>
+    <string name="desktop_update_installed">更新已暂存为 %1$s — 请确认重启助手（替换正在运行的 jar 为尽力而为）</string>
+    <string name="desktop_update_sig_fail">更新签名验证失败</string>
+    <string name="desktop_update_no_url">请先设置 file:// 或 HTTPS 更新清单 URL</string>
+    <string name="desktop_update_restart_hint">重启助手写入待更新标记和可选替换脚本，然后退出。替换正在运行的 JVM jar 是尽力而为。</string>
+    <string name="desktop_update_restart_confirm">确认更新后重启</string>
+    <string name="desktop_update_restart_later">稍后重启</string>
+    <string name="desktop_update_restart_failed">无法准备更新重启助手</string>
+</resources>

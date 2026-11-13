@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_panel_surface">Površina panela</string>
+    <string name="desktop_theme_panel_surface_hint">Prozirno ili zamagljeno utječe samo na korijen panela; izbornici ostaju neprozirni. Zamagljeno sprema panelBlur za frost; zamućenje pozadine hosta je best-effort ako nije dostupno.</string>
+    <string name="desktop_theme_panel_transparent">Prozirno</string>
+    <string name="desktop_theme_panel_blurred">Zamagljeno</string>
+    <string name="desktop_theme_panel_solid">Puno</string>
+    <string name="desktop_theme_panel_opacity">Neprozirnost panela: %1$d%%</string>
+    <string name="desktop_theme_panel_blur">Zamućenje stakla: %1$d</string>
+    <string name="desktop_theme_panel_blur_unavailable">Zamućenje pozadine hosta nije dostupno; Telos koristi prozirnu frost ploču i čuva vašu postavku zamućenja.</string>
+</resources>

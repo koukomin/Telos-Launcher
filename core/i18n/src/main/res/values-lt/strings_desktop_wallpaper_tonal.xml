@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_wallpaper_tonal_title">Akcentas iš fono</string>
+    <string name="desktop_wallpaper_tonal_enable">Akcentas iš fono paveikslėlio</string>
+    <string name="desktop_wallpaper_tonal_hint">Imamas vault arba portable fono pavyzdys šiame įrenginyje ir vietoje išvedamas Material tonalinis seed. Pikseliai niekada neįkeliami. Nepavykus chrome naudoja neoninę žydrą.</string>
+    <string name="desktop_wallpaper_tonal_accent_wallpaper">theme.accent=wallpaper — vietinis seed aktyvus</string>
+</resources>

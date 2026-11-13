@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_store_permissions">Ἐξουσίαι</string>
+    <string name="desktop_store_sandbox_tier">Βαθμὶς κιβωτίου ἄμμου</string>
+    <string name="desktop_sandbox_tier_host">Ξενιστής</string>
+    <string name="desktop_sandbox_tier_vault_fs">Σύστημα ἀρχείων θησαυροφυλακίου</string>
+    <string name="desktop_sandbox_tier_net_isolated">Δίκτυον ἀποκεχωρισμένον</string>
+    <string name="desktop_sandbox_tier_standard">Κανονικόν</string>
+    <string name="desktop_perm_filesystem_home">Φάκελος οἴκου</string>
+    <string name="desktop_perm_filesystem_host">Σύστημα ἀρχείων ξενιστοῦ</string>
+    <string name="desktop_perm_network">Δίκτυον</string>
+    <string name="desktop_perm_gpu">GPU (DRI)</string>
+    <string name="desktop_perm_wayland">Wayland</string>
+    <string name="desktop_perm_x11">X11</string>
+    <string name="desktop_perm_pulseaudio">Ἦχος</string>
+    <string name="desktop_perm_notifications">Εἰδοποιήσεις</string>
+    <string name="desktop_perm_camera">Κάμερα</string>
+    <string name="desktop_perm_microphone">Μικρόφωνον</string>
+    <string name="desktop_flatpak_unavailable">Τὸ Flatpak οὐ πάρεστι· αἱ ὑπερβάσεις ἐξουσιῶν ἐν τῷδε τῷ συστήματι οὐ πάρεστι.</string>
+    <string name="desktop_flatpak_override_applied">Ὑπέρβασις Flatpak ἐφηρμόσθη</string>
+    <string name="desktop_flatpak_override_failed">Οὐκ ἐδυνήθη ἐφαρμοσθῆναι ἡ ὑπέρβασις Flatpak</string>
+    <string name="desktop_flatpak_reset_overrides">Ἐπαναφορὰ ὑπερβάσεων</string>
+    <string name="desktop_deeplink_handler_hint">τὸ telos:// ἀνοίγει ἐφαρμογὰς Telos καὶ ἀναζήτησιν Kickoff (ἐγγράφεται ἐν τῇ ἐκκινήσει τῆς ἐπιφανείας).</string>
+    <string name="desktop_store_backends">Πηγές πακέτων</string>
+    <string name="desktop_store_backend_flatpak">Flatpak</string>
+    <string name="desktop_store_backend_winget">Winget</string>
+    <string name="desktop_store_backend_scoop">Scoop</string>
+    <string name="desktop_store_windows_pref_only">Τα Winget/Scoop είναι μόνο για Windows· αυτός ο υπολογιστής δεν εκτελεί ενέργειες πακέτων Windows.</string>
+    <string name="desktop_store_windows_unavailable">Δεν βρέθηκε winget ούτε scoop στο PATH.</string>
+    <string name="desktop_store_windows_installed">Πακέτα Windows (εγκατεστημένα)</string>
+    <string name="desktop_store_windows_search">Πακέτα Windows (αναζήτηση)</string>
+    <string name="desktop_store_install_confirm_title">Επιβεβαίωση εγκατάστασης</string>
+    <string name="desktop_store_install_confirm_body">Εγκατάσταση %1$s (%2$s) μέσω %3$s;</string>
+    <string name="desktop_store_install_started">Ξεκίνησε η εγκατάσταση για %1$s</string>
+    <string name="desktop_store_install_failed">Αδυναμία έναρξης εγκατάστασης για %1$s</string>
+    <string name="desktop_portal_device_title">Κάμερα και μικρόφωνο (portal)</string>
+    <string name="desktop_portal_device_hint">Καταγράφει το αίτημά σας και ρωτά το xdg-desktop-portal όταν υπάρχουν τα portal Device/Camera. Χωρίς εργαλεία portal παραμένει μόνο προτίμηση.</string>
+    <string name="desktop_portal_device_requested">Ζητήθηκε διάλογος πρόσβασης portal</string>
+    <string name="desktop_portal_device_pref_only">Η προτίμηση αποθηκεύτηκε· τα εργαλεία portal δεν είναι διαθέσιμα (μόνο προτίμηση).</string>
+    <string name="desktop_portal_device_unavailable">Η πρόσβαση συσκευής portal δεν είναι διαθέσιμη σε αυτό το σύστημα.</string>
+    <string name="desktop_portal_device_failed">Αδυναμία αίτησης πρόσβασης συσκευής από το desktop portal</string>
+    <string name="desktop_netns_cap_unshare">Per-app netns: διαθέσιμο το unshare --net</string>
+    <string name="desktop_netns_cap_ip">Per-app netns: διαθέσιμο το ip netns</string>
+    <string name="desktop_netns_cap_unavailable">Λείπουν εργαλεία per-app netns· η απομόνωση μένει μόνο προτίμηση</string>
+    <string name="desktop_netns_flatpak_owned">Το απομονωμένο Flatpak χρησιμοποιεί Flatpak --unshare=network (όχι αξίωση host netns).</string>
+    <string name="desktop_netns_flatpak_no_tools">Ορίστηκε επίπεδο χωρίς δίκτυο· λείπουν unshare/ip netns — μόνο Flatpak override όταν εφαρμόζεται.</string>
+    <string name="desktop_netns_not_isolated">Η εφαρμογή δεν είναι σημειωμένη ως απομονωμένη δικτύου.</string>
+</resources>

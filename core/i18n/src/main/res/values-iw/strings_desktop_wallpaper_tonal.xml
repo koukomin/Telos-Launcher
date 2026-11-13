@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_wallpaper_tonal_title">מבטא משמפר</string>
+    <string name="desktop_wallpaper_tonal_enable">מבטא מרקע המסך</string>
+    <string name="desktop_wallpaper_tonal_hint">דוגם את רקע ה־vault או הנייד במכשיר זה וגוזר מקומית זרע טונאלי של Material. הפיקסלים לעולם לא מועלים. בכשלון הכרום חוזר לציאן ניאון.</string>
+    <string name="desktop_wallpaper_tonal_accent_wallpaper">theme.accent=wallpaper — זרע מקומי פעיל</string>
+</resources>

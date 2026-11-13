@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_day_night_title">Gündüz / gece teması</string>
+    <string name="desktop_day_night_hint">Auto seçiliyken gündüz Paper Ops (açık), gece Quiet Ops (koyu). Sınırlar seçtiğiniz saat dilimini kullanır. Varsayılan manuel dilimdir — konum için ağa yalnızca aşağıda açıkça izin verirseniz başvurulur.</string>
+    <string name="desktop_day_night_mode">Gündüz / gece modu</string>
+    <string name="desktop_day_night_off">Kapalı</string>
+    <string name="desktop_day_night_auto">Otomatik</string>
+    <string name="desktop_day_night_light">Açık</string>
+    <string name="desktop_day_night_dark">Koyu</string>
+    <string name="desktop_day_night_timezone">Saat dilimi</string>
+    <string name="desktop_day_night_timezone_hint">Yerel gündüz/gece için IANA dilimi (seçene kadar JVM). Manuel seçim sunucuya gitmez.</string>
+    <string name="desktop_day_night_timezone_search">Saat dilimi ara</string>
+    <string name="desktop_day_night_timezone_current">Geçerli dilim: %1$s</string>
+    <string name="desktop_day_night_network_assist">Ağ ile ülke / dilim yardımı</string>
+    <string name="desktop_day_night_network_assist_warning">Yalnızca onayla. Açıkken Telos, dilim ve ülke kodu için herkese açık bir IP→geo ucuna tek istek atar. Yalnızca bu değerler (ve isteğe bağlı gün doğumu/batımı koordinatları) vault desktop.properties içinde saklanır. IP günlüğe yazılmaz, sürekli izleme yoktur, tema buluta senkronlanmaz. Ağ başarısızsa, kill-switch açıksa veya çevrimdışıysanız manuel dilim kalır; Preference only veya Failed dürüstçe gösterilir.</string>
+    <string name="desktop_day_night_assist_pref_only">Yalnızca tercih — ağ yardımı kapalı, engelli veya istenmedi; manuel dilim</string>
+    <string name="desktop_day_night_assist_failed">Başarısız — geo ucuna ulaşılamadı; manuel dilim korundu</string>
+    <string name="desktop_day_night_assist_applied">Uygulandı — dilim %1$s, ülke %2$s (yalnızca yerel)</string>
+    <string name="desktop_day_night_country">Ülke kodu: %1$s</string>
+</resources>

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_workspace_tints">Darbvirsmu toņu joslas</string>
+    <string name="desktop_theme_workspace_tints_hint">Smalki neona akcenti zem paneļa cipariem 1–4. Paslēpti panic mute laikā. Izslēgt: theme.workspaceTints=false.</string>
+</resources>

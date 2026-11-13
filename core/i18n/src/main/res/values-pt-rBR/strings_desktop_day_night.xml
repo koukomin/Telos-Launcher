@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_day_night_title">Tema dia / noite</string>
+    <string name="desktop_day_night_hint">Paper Ops (claro) de dia e Quiet Ops (escuro) de noite no Auto. Os limites usam o fuso escolhido. Predefinição: fuso manual — a rede nunca é usada para localização salvo ativação abaixo.</string>
+    <string name="desktop_day_night_mode">Modo dia / noite</string>
+    <string name="desktop_day_night_off">Desligado</string>
+    <string name="desktop_day_night_auto">Auto</string>
+    <string name="desktop_day_night_light">Claro</string>
+    <string name="desktop_day_night_dark">Escuro</string>
+    <string name="desktop_day_night_timezone">Fuso horário</string>
+    <string name="desktop_day_night_timezone_hint">Fuso IANA para dia/noite local (JVM até você escolher). A escolha manual não contata servidores.</string>
+    <string name="desktop_day_night_timezone_search">Pesquisar fusos</string>
+    <string name="desktop_day_night_timezone_current">Fuso atual: %1$s</string>
+    <string name="desktop_day_night_network_assist">Assistência de rede país / fuso</string>
+    <string name="desktop_day_night_network_assist_warning">Somente com consentimento. Ativado, o Telos faz uma solicitação única a um endpoint público IP→geo para fuso e código do país. Só esses valores (e coordenadas opcionais para nascer/pôr do sol) ficam em vault desktop.properties. O IP não é registrado, sem rastreamento contínuo e sem sync de temas na nuvem. Se a rede falhar, o kill-switch estiver ativo ou você estiver offline, mantém-se o fuso manual; Preference only ou Failed são mostrados com honestidade.</string>
+    <string name="desktop_day_night_assist_pref_only">Só preferência — assistência de rede off, bloqueada ou não pedida; fuso manual</string>
+    <string name="desktop_day_night_assist_failed">Falhou — endpoint geo inacessível; fuso manual mantido</string>
+    <string name="desktop_day_night_assist_applied">Aplicado — fuso %1$s, país %2$s (apenas local)</string>
+    <string name="desktop_day_night_country">Código do país: %1$s</string>
+</resources>

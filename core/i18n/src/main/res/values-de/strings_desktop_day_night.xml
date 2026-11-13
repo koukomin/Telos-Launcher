@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_day_night_title">Tag-/Nacht-Thema</string>
+    <string name="desktop_day_night_hint">Paper Ops (hell) bei Tag und Quiet Ops (dunkel) bei Nacht im Modus Auto. Grenzen nutzen Ihre Zeitzone. Standard ist manuelle Zeitzone — das Netzwerk wird für Standort nie kontaktiert, außer Sie stimmen unten ausdrücklich zu.</string>
+    <string name="desktop_day_night_mode">Tag-/Nacht-Modus</string>
+    <string name="desktop_day_night_off">Aus</string>
+    <string name="desktop_day_night_auto">Auto</string>
+    <string name="desktop_day_night_light">Hell</string>
+    <string name="desktop_day_night_dark">Dunkel</string>
+    <string name="desktop_day_night_timezone">Zeitzone</string>
+    <string name="desktop_day_night_timezone_hint">IANA-Zeitzone für lokale Tag/Nacht-Grenzen (JVM-Standard, bis Sie eine wählen). Manuelle Auswahl sendet nichts.</string>
+    <string name="desktop_day_night_timezone_search">Zeitzonen suchen</string>
+    <string name="desktop_day_night_timezone_current">Aktuelle Zeitzone: %1$s</string>
+    <string name="desktop_day_night_network_assist">Netzwerk-Hilfe für Land / Zeitzone</string>
+    <string name="desktop_day_night_network_assist_warning">Nur mit Zustimmung. Wenn aktiv, stellt Telos eine einmalige Anfrage an einen öffentlichen IP→Geo-Endpunkt für Zeitzone und Ländercode. Nur diese Werte (und optionale Koordinaten für Sonnenauf-/untergang) werden in vault desktop.properties gespeichert. Ihre IP wird nicht protokolliert, es gibt kein fortlaufendes Tracking und Themen werden nicht in die Cloud synchronisiert. Bei Netzwerkfehler, Kill-Switch oder Offline bleibt die manuelle Zeitzone; Preference only oder Failed wird ehrlich angezeigt.</string>
+    <string name="desktop_day_night_assist_pref_only">Nur Einstellung — Netzhilfe aus, blockiert oder nicht angefordert; manuelle Zeitzone</string>
+    <string name="desktop_day_night_assist_failed">Fehlgeschlagen — Geo-Endpunkt nicht erreichbar; manuelle Zeitzone behalten</string>
+    <string name="desktop_day_night_assist_applied">Angewendet — Zeitzone %1$s, Land %2$s (nur lokal gespeichert)</string>
+    <string name="desktop_day_night_country">Ländercode: %1$s</string>
+</resources>

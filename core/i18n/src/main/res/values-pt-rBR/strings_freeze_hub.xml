@@ -31,4 +31,8 @@
     
     
 
+    <string name="freeze_desk_title">Freeze Desk</string>
+    <string name="freeze_desk_filter_bloat">Bloat</string>
+    <string name="freeze_desk_open_summary">Abra Sistema → Apps para congelar, pesquisar e filtrar pacotes instalados.</string>
+    <string name="freeze_desk_rules_help">As regras de congelamento automático e backends ficam aqui. O congelamento por app e AppOps estão no Freeze Desk.</string>
 </resources>

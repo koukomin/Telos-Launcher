@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_workspace_tints">Каляровыя палоскі працоўных сталоў</string>
+    <string name="desktop_theme_workspace_tints_hint">Тонкія неонавыя акцэнты пад лічбамі 1–4 на панэлі. Хаваюцца пры panic mute. Выключыць: theme.workspaceTints=false.</string>
+</resources>

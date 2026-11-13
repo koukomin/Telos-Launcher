@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_portable_data_root">Portable data folder (config, cache, temp only here)</string>
+    <string name="desktop_host_home_trace_warning">Host Home writes settings and cache on this PC. Choose Portable Data to leave no host traces.</string>
+    <string name="desktop_boot_portable_data">Portable Data — no host traces (config/cache/temp under portable root)</string>
+    <string name="desktop_boot_portable_vault">Portable Vault — encrypted data under portable root</string>
+    <string name="desktop_boot_host_home">Host Home (may leave traces on this PC)</string>
+    <string name="desktop_boot_unlock_existing">Unlock existing vault (file or stego folder)</string>
+    <string name="desktop_boot_create_wizard">Create new elastic / stego / deniable vault</string>
+    <string name="desktop_boot_ephemeral">Ephemeral RAM-only ghost session (tmpfs)</string>
+    <string name="desktop_session_sync_title">Session sync</string>
+    <string name="desktop_session_sync_export">Export encrypted bundle</string>
+    <string name="desktop_session_sync_import">Import encrypted bundle</string>
+    <string name="desktop_session_sync_auto">นำเข้าอัตโนมัติตอนบูตเมื่อมีคีย์ซิงค์เก็บไว้</string>
+    <string name="desktop_session_sync_pass">Sync passphrase (or KeePass entry %1$s)</string>
+    <string name="desktop_session_sync_keepass">KeePass database path (.kdbx)</string>
+    <string name="desktop_windows_shell_title">Windows shell replacement</string>
+    <string name="desktop_windows_shell_enable">Set Telos as login shell (HKCU)</string>
+    <string name="desktop_windows_shell_revert">Restore explorer.exe shell</string>
+    <string name="desktop_windows_shell_risk">Replaces your user shell at next sign-in. Keep a recovery path before enabling.</string>
+    <string name="desktop_helix_portable_note">Helix window chrome is drawn in Compose on all platforms; native Win32 decorations may show until shell replacement.</string>
+    <string name="desktop_session_sync_pass_required">ต้องมีรหัสผ่านซิงค์</string>
+    <string name="desktop_session_sync_imported">นำเข้าชุดซิงค์เซสชันแล้ว</string>
+    <string name="desktop_session_sync_key_stored">เก็บคีย์ซิงค์ไว้สำหรับนำเข้าตอนบูตโดยไม่ต้องถาม</string>
+    <string name="desktop_session_sync_key_missing">ป้อนรหัสผ่านซิงค์ก่อนเปิดการนำเข้าอัตโนมัติ</string>
+    <string name="desktop_vos_profiles_title">โปรไฟล์วอลต์</string>
+    <string name="desktop_vos_profiles_summary">โฟลเดอร์โปรไฟล์ที่มีชื่อภายใต้ config profiles/ เก็บเฉพาะชื่อที่ใช้งานใน desktop.properties — ไม่เก็บรหัสผ่าน</string>
+    <string name="desktop_vos_profiles_active">โปรไฟล์ที่ใช้งาน: %1$s</string>
+    <string name="desktop_vos_profiles_none">(ไม่มี)</string>
+    <string name="desktop_vos_profiles_empty">ยังไม่มีโปรไฟล์ สร้างหนึ่งรายการเพื่อสลับตัวตนวอลต์</string>
+    <string name="desktop_vos_profiles_kind_named">โปรไฟล์วอลต์ที่มีชื่อ</string>
+    <string name="desktop_vos_profiles_kind_portable">รากวอลต์พกพา</string>
+    <string name="desktop_vos_profiles_switch">สลับ</string>
+    <string name="desktop_vos_profiles_use_portable">ใช้รากพกพานี้</string>
+    <string name="desktop_vos_profiles_new_name">ชื่อโปรไฟล์ใหม่</string>
+    <string name="desktop_vos_profiles_create">สร้างและสลับ</string>
+    <string name="desktop_vos_profiles_created">สร้างและสลับเป็น %1$s แล้ว</string>
+    <string name="desktop_vos_profiles_switched">สลับเป็น %1$s แล้ว</string>
+    <string name="desktop_vos_profiles_invalid_name">ใช้ตัวอักษร ตัวเลข จุด ขีดล่าง หรือยัติภังค์ (สูงสุด 64)</string>
+    <string name="desktop_vos_profiles_portable_hint">รากพกพาเก็บ config แคช และ temp นอกโปรไฟล์โฮสต์ (ค่าเริ่มต้น Windows: Portable Data)</string>
+    <string name="desktop_vos_profiles_portable_path">พาธโฟลเดอร์วอลต์พกพา</string>
+    <string name="desktop_vos_profiles_add_portable">เพิ่มรากวอลต์พกพา</string>
+    <string name="desktop_vos_profiles_portable_selected">รากพกพา: %1$s</string>
+    <string name="desktop_vos_profiles_portable_reject">รากพกพาต้องไม่ใช่โฮมของโฮสต์หรือ .config/.cache/.local ของมัน</string>
+</resources>

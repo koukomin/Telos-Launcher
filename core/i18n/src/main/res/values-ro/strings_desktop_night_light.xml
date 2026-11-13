@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_night_light_title">Lumină de noapte</string>
+    <string name="desktop_night_light_hint">Încălzește ecranul cu un instrument gazdă (gammastep, redshift sau wlsunset). Fără servicii de localizare și fără trimitere pe rețea. Fără instrument, se salvează doar preferința.</string>
+    <string name="desktop_night_light_enable">Activează lumina de noapte</string>
+    <string name="desktop_night_light_temperature">Temperatura culorii: %1$d K</string>
+    <string name="desktop_night_light_on">Pornit</string>
+    <string name="desktop_night_light_off">Oprit</string>
+    <string name="desktop_night_light_pref_only">Preferință salvată; instalați gammastep, redshift sau wlsunset pentru aplicare pe această gazdă</string>
+    <string name="desktop_night_light_failed">Instrumentul gazdă nu a putut schimba temperatura ecranului</string>
+    <string name="desktop_night_light_applied">Aplicat cu %1$s</string>
+    <string name="desktop_night_light_cleared">Lumina de noapte a fost dezactivată</string>
+    <string name="desktop_settings_search_hint">Caută în setări</string>
+    <string name="desktop_settings_search_empty">Nicio setare nu corespunde acestei căutări</string>
+    <string name="desktop_settings_session">Sesiune</string>
+    <string name="desktop_settings_display">Afișaj</string>
+    <string name="desktop_settings_desktop">Desktop</string>
+    <string name="desktop_settings_windows">Ferestre</string>
+    <string name="desktop_settings_portable">Portabil</string>
+    <string name="desktop_settings_vault">Seif</string>
+</resources>

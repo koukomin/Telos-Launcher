@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_net_dns_pref_hint">ボルトに保存されます。Linux では、利用可能な場合 Telos は resolvectl 経由で DoT を適用し、DoH は設定のみです。</string>
+    <string name="desktop_net_profiles_sum">~/.config/telos/profiles/ 配下のボルトプロファイルフォルダー</string>
+    <string name="desktop_net_allowlist_path">許可リストファイル</string>
+    <string name="desktop_net_kill_switch">キルスイッチ</string>
+    <string name="desktop_net_kill_switch_enable">キルスイッチを有効にする</string>
+    <string name="desktop_net_kill_switch_disable">キルスイッチを無効にする</string>
+    <string name="desktop_net_kill_switch_enforced">適用中: 許可リスト外の送信は破棄されます（nftables inet telos_session）</string>
+    <string name="desktop_net_kill_switch_pref_only">設定は保存済み。このプラットフォームでは未適用</string>
+    <string name="desktop_net_kill_switch_failed">オンですが nftables を適用できません — 通信は遮断されていません</string>
+    <string name="desktop_net_kill_switch_clear_blocked">キルスイッチがオンの間はセッションファイアウォールを解除できません</string>
+    <string name="desktop_net_apps_tab">アプリ</string>
+    <string name="desktop_net_apps_title">アプリ別ルーティング</string>
+    <string name="desktop_net_apps_hint">1行に desktop-id またはパッケージと allow / deny / vpn。~/.config/telos/app-routing.txt に保存。Linux では deny が Telos ランチャーでの起動を阻止し、vpn は TELOS_APP_ROUTE=vpn を設定します（ベストエフォート、偽の netns なし）。プロセス単位の nftables owner/cgroup ルーティングは適用せず、セッション kill-switch を維持します。</string>
+    <string name="desktop_net_apps_file">ルーティング表</string>
+    <string name="desktop_net_dns_filters_title">DNS フィルター</string>
+    <string name="desktop_net_dns_filters_hint">ブロック／許可リストは vault ~/.config/telos/（dns-block.txt、dns-allow.txt）に保存。NextDNS 設定 ID は Linux で resolvectl による DoT を適用（利用可能な場合）。Telos DNS stub を有効化（または dns-stub.port を設定）すると 127.0.0.1 のローカル転送がブロック名に NXDOMAIN を返し、nftables で DNS をリダイレクトしてホストリストが Enforced になります。stub が bind できない、または nft が失敗すると Failed/PreferenceOnly のままです。Windows / macOS は設定のみ保存。</string>
+    <string name="desktop_net_nextdns_id">NextDNS 構成 ID</string>
+    <string name="desktop_net_nextdns_id_invalid">無効な NextDNS 構成 ID（4～12 文字の英数字）</string>
+    <string name="desktop_net_dns_blocklist">DNS ブロックリスト</string>
+    <string name="desktop_net_dns_allowlist">DNS 許可リスト</string>
+    <string name="desktop_net_dns_filter_status">フィルター状態</string>
+    <string name="desktop_net_dns_filter_enforced">適用中（NextDNS DoT および/または Telos DNS stub + nft リダイレクト）</string>
+    <string name="desktop_net_dns_filter_pref_only">設定を保存しました。この経路ではフィルタリングは適用されません</string>
+    <string name="desktop_net_dns_filter_failed">設定済みですが、DNS stub が bind できないか、resolvectl/nftables がフィルタを適用できませんでした</string>
+    <string name="desktop_net_apps_enforced">適用中: 起動ゲート有効（DesktopFileLauncher が deny 規則を参照）</string>
+    <string name="desktop_net_apps_pref_only">設定を保存済み。Linux に deny 規則がないか、このプラットフォームでは未適用</string>
+    <string name="desktop_net_dns_stub_enable">Telos DNS stub を有効化</string>
+    <string name="desktop_net_dns_stub_disable">Telos DNS stub を無効化</string>
+    <string name="desktop_net_dns_stub_hint">Telos DNS stub は 127.0.0.1（既定ポート 5353）で待ち受け、dns-block.txt に NXDOMAIN を返し（許可リスト優先）、他の問い合わせを転送します。特権適用が成功すると nftables inet telos_dns が出方向ポート 53 をリダイレクトします。</string>
+</resources>

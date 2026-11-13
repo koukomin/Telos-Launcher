@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_opsec_title">OpSec</string>
+    <string name="desktop_opsec_secure_clipboard">Clipboard sikur</string>
+    <string name="desktop_opsec_clipboard_title">Clipboard</string>
+    <string name="desktop_opsec_clipboard_hint">Test sensittiv (ċwievet, IBAN, WireGuard) jitneħħa mill-istorja, jinżamm biss f’din is-sessjoni u jithassar mill-clipboard tas-sistema. L-istorja tibqa’ fil-vault — bla sinkronizzazzjoni cloud.</string>
+    <string name="desktop_opsec_clipboard_clear_now">Naddaf il-clipboard issa</string>
+    <string name="desktop_opsec_clipboard_clear_all">Ħassar kollox</string>
+    <string name="desktop_opsec_clipboard_history_meta">Sa 20 oġġett · jiskadi wara 5 minuti · waħħal sal-lock · Super+V</string>
+    <string name="desktop_opsec_clipboard_history_empty">Għad m’hemmx storja tal-clipboard</string>
+    <string name="desktop_opsec_clipboard_pin_until_lock">Waħħal</string>
+    <string name="desktop_opsec_clipboard_unpin">Neħħi</string>
+    <string name="desktop_opsec_clipboard_recall_vaulted">Irkupra clip sensittiv mill-vault</string>
+    <string name="desktop_opsec_clipboard_timer">Naddaf awtomatikament wara %1$d sekondi</string>
+    <string name="desktop_opsec_clipboard_timer_off">Mitfi</string>
+    <string name="desktop_opsec_attestation_run">Irreġistra snapshot tal-integrità tal-host</string>
+    <string name="desktop_opsec_audit_title">Log tal-awditjar tas-sessjoni</string>
+    <string name="desktop_opsec_audit_refresh">Aġġorna l-log</string>
+    <string name="desktop_opsec_audit_empty">Għad m’hemmx avvenimenti ta’ awditjar</string>
+    <string name="desktop_opsec_tpm_status">Status tat-TPM: %1$s</string>
+    <string name="desktop_opsec_tpm_unknown">għadu mhux imkejjel</string>
+    <string name="desktop_opsec_tpm_hint">Sommarju lokali tad-digest PCR 0/7 permezz ta’ tpm2-tools jekk preżenti. Din mhix attestazzjoni remota (RAP).</string>
+</resources>

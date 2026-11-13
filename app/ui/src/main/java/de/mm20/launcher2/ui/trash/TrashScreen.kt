@@ -12,7 +12,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -33,6 +35,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
+import de.mm20.launcher2.ui.component.virtualAppPopup
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -46,6 +49,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
+import de.mm20.launcher2.ui.component.TelosDotMatrixText
+import de.mm20.launcher2.ui.component.telosTechCard
+import de.mm20.launcher2.ui.layout.AdaptiveLayoutPolicy
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -117,7 +124,16 @@ fun TrashScreen() {
             containerColor = Color.Transparent,
             topBar = {
                 TopAppBar(
-                    title = { Text(stringResource(I18nR.string.telos_trash_title)) },
+                    title = {
+                        Column {
+                            Text(stringResource(I18nR.string.telos_trash_title))
+                            TelosDotMatrixText(
+                                stringResource(if (junk.isNotEmpty()) I18nR.string.trash_hero_ready else I18nR.string.trash_hero_bin),
+                                fontSize = 9.sp,
+                                color = MaterialTheme.colorScheme.primary,
+                            )
+                        }
+                    },
                     navigationIcon = {
                         IconButton(onClick = { backStack.removeLastOrNull() }) {
                             Icon(painterResource(BaseR.drawable.arrow_back_24px), contentDescription = null)
@@ -132,59 +148,95 @@ fun TrashScreen() {
                 )
             },
         ) { pad ->
-            LazyColumn(
-                Modifier.fillMaxSize().padding(pad).padding(horizontal = 16.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp),
-            ) {
+            BoxWithConstraints(Modifier.fillMaxSize().padding(pad).padding(horizontal = 16.dp)) {
+                val sideBySide = AdaptiveLayoutPolicy.sideBySide(maxWidth.value, maxHeight.value, LocalDensity.current.fontScale)
+                LazyColumn(
+                    Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.spacedBy(12.dp),
+                ) {
                 item {
                     Spacer(Modifier.height(4.dp))
-                    HeroCard(
-                        card = card,
-                        readyBytes = if (junk.isEmpty()) bin.sumOf { it.entry.file.length() } else selectedBytes,
-                        readyCount = if (junk.isEmpty()) bin.size else selectedCount,
-                        binCount = bin.size,
-                        scanned = junk.isNotEmpty(),
+                    if (sideBySide) {
+                        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                            HeroCard(
+                                modifier = Modifier.weight(1f),
+                                readyBytes = if (junk.isEmpty()) bin.sumOf { it.entry.file.length() } else selectedBytes,
+                                readyCount = if (junk.isEmpty()) bin.size else selectedCount,
+                                binCount = bin.size,
+                                scanned = junk.isNotEmpty(),
+                            )
+                            TrashActionRow(
+                                modifier = Modifier.weight(1f),
+                                busy = busy,
+                                scanning = scanning,
+                                junkNotEmpty = junk.isNotEmpty(),
+                                selectedCount = selectedCount,
+                                status = status,
+                                onScan = {
+                                    scope.launch {
+                                        scanning = true
+                                        busy = true
+                                        status = ""
+                                        junk = withContext(Dispatchers.IO) { cleaner.scan() }
+                                        DiskCleaner.Kind.entries.forEach { selected[it] = true }
+                                        scanning = false
+                                        busy = false
+                                    }
+                                },
+                                onFill = {
+                                    scope.launch {
+                                        busy = true
+                                        val chosen = junk.filter { selected[it.kind] != false }
+                                        val r = withContext(Dispatchers.IO) { cleaner.fillTrash(trash, chosen) }
+                                        status = context.getString(I18nR.string.trash_clean_done, r.moved, r.deleted, r.bytes / 1024 / 1024)
+                                        junk = emptyList()
+                                        reloadBin()
+                                        busy = false
+                                    }
+                                },
+                            )
+                        }
+                    } else {
+                        HeroCard(
+                            readyBytes = if (junk.isEmpty()) bin.sumOf { it.entry.file.length() } else selectedBytes,
+                            readyCount = if (junk.isEmpty()) bin.size else selectedCount,
+                            binCount = bin.size,
+                            scanned = junk.isNotEmpty(),
+                        )
+                    }
+                }
+                if (!sideBySide) {
+                item {
+                    TrashActionRow(
+                        busy = busy,
+                        scanning = scanning,
+                        junkNotEmpty = junk.isNotEmpty(),
+                        selectedCount = selectedCount,
+                        status = status,
+                        onScan = {
+                            scope.launch {
+                                scanning = true
+                                busy = true
+                                status = ""
+                                junk = withContext(Dispatchers.IO) { cleaner.scan() }
+                                DiskCleaner.Kind.entries.forEach { selected[it] = true }
+                                scanning = false
+                                busy = false
+                            }
+                        },
+                        onFill = {
+                            scope.launch {
+                                busy = true
+                                val chosen = junk.filter { selected[it.kind] != false }
+                                val r = withContext(Dispatchers.IO) { cleaner.fillTrash(trash, chosen) }
+                                status = context.getString(I18nR.string.trash_clean_done, r.moved, r.deleted, r.bytes / 1024 / 1024)
+                                junk = emptyList()
+                                reloadBin()
+                                busy = false
+                            }
+                        },
                     )
                 }
-                item {
-                    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        FilledTonalButton(
-                            onClick = {
-                                scope.launch {
-                                    scanning = true
-                                    busy = true
-                                    status = ""
-                                    junk = withContext(Dispatchers.IO) { cleaner.scan() }
-                                    DiskCleaner.Kind.entries.forEach { selected[it] = true }
-                                    scanning = false
-                                    busy = false
-                                }
-                            },
-                            enabled = !busy,
-                            modifier = Modifier.weight(1f),
-                        ) { Text(stringResource(I18nR.string.trash_scan)) }
-                        Button(
-                            onClick = {
-                                scope.launch {
-                                    busy = true
-                                    val chosen = junk.filter { selected[it.kind] != false }
-                                    val r = withContext(Dispatchers.IO) { cleaner.fillTrash(trash, chosen) }
-                                    status = context.getString(I18nR.string.trash_clean_done, r.moved, r.deleted, r.bytes / 1024 / 1024)
-                                    junk = emptyList()
-                                    reloadBin()
-                                    busy = false
-                                }
-                            },
-                            enabled = !busy && junk.isNotEmpty() && selectedCount > 0,
-                            modifier = Modifier.weight(1f),
-                        ) { Text(stringResource(I18nR.string.trash_fill_bin)) }
-                    }
-                    AnimatedVisibility(scanning || busy) {
-                        LinearProgressIndicator(Modifier.fillMaxWidth().padding(top = 10.dp))
-                    }
-                    if (status.isNotBlank()) {
-                        Text(status, style = MaterialTheme.typography.bodySmall, modifier = Modifier.padding(top = 8.dp))
-                    }
                 }
                 if (groups.isNotEmpty()) {
                     item {
@@ -195,7 +247,7 @@ fun TrashScreen() {
                         Row(
                             Modifier
                                 .fillMaxWidth()
-                                .background(card, RoundedCornerShape(16.dp))
+                                .telosTechCard(borderColor = MaterialTheme.colorScheme.primary, alpha = 0.35f)
                                 .clickable { selected[kind] = !on }
                                 .padding(12.dp),
                             verticalAlignment = Alignment.CenterVertically,
@@ -287,7 +339,7 @@ fun TrashScreen() {
                     Column(
                         Modifier
                             .fillMaxWidth()
-                            .background(card, RoundedCornerShape(16.dp))
+                            .telosTechCard(borderColor = Color(0xFFFF007F), alpha = 0.35f)
                             .padding(14.dp),
                     ) {
                         Text(item.entry.name, fontWeight = FontWeight.Medium, maxLines = 1, overflow = TextOverflow.Ellipsis)
@@ -298,22 +350,24 @@ fun TrashScreen() {
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                         Row {
-                            TextButton(onClick = { scope.launch { trash.restore(item); reloadBin() } }) {
+                            TextButton(onClick = { scope.launch { trash.restore(item); reloadBin() } }, modifier = Modifier.heightIn(min = 48.dp)) {
                                 Text(stringResource(I18nR.string.telos_trash_restore))
                             }
-                            TextButton(onClick = { scope.launch { trash.deletePermanently(item); reloadBin() } }) {
+                            TextButton(onClick = { scope.launch { trash.deletePermanently(item); reloadBin() } }, modifier = Modifier.heightIn(min = 48.dp)) {
                                 Text(stringResource(I18nR.string.telos_trash_permanent), color = MaterialTheme.colorScheme.error)
                             }
                         }
                     }
                 }
                 item { Spacer(Modifier.height(24.dp)) }
+                }
             }
         }
     }
     if (warnPriv) {
         AlertDialog(
             onDismissRequest = { warnPriv = false },
+            containerColor = virtualAppPopup(),
             title = { Text(stringResource(I18nR.string.trash_clean_priv_warn_title)) },
             text = { Text(stringResource(I18nR.string.trash_clean_priv_warn_text)) },
             confirmButton = {
@@ -329,11 +383,50 @@ fun TrashScreen() {
 }
 
 @Composable
-private fun HeroCard(card: Color, readyBytes: Long, readyCount: Int, binCount: Int, scanned: Boolean) {
+private fun TrashActionRow(
+    busy: Boolean,
+    scanning: Boolean,
+    junkNotEmpty: Boolean,
+    selectedCount: Int,
+    status: String,
+    onScan: () -> Unit,
+    onFill: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+  Column(modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+      FilledTonalButton(
+        onClick = onScan,
+        enabled = !busy,
+        modifier = Modifier.weight(1f).heightIn(min = 48.dp),
+      ) { Text(stringResource(I18nR.string.trash_scan)) }
+      Button(
+        onClick = onFill,
+        enabled = !busy && junkNotEmpty && selectedCount > 0,
+        modifier = Modifier.weight(1f).heightIn(min = 48.dp),
+      ) { Text(stringResource(I18nR.string.trash_fill_bin)) }
+    }
+    AnimatedVisibility(scanning || busy) {
+      LinearProgressIndicator(Modifier.fillMaxWidth())
+    }
+    if (status.isNotBlank()) {
+      Text(status, style = MaterialTheme.typography.bodySmall)
+    }
+  }
+}
+
+@Composable
+private fun HeroCard(
+    readyBytes: Long,
+    readyCount: Int,
+    binCount: Int,
+    scanned: Boolean,
+    modifier: Modifier = Modifier,
+) {
     Column(
-        Modifier
+        modifier
             .fillMaxWidth()
-            .background(card, RoundedCornerShape(28.dp))
+            .telosTechCard(borderColor = Color(0xFF00F0FF), alpha = 0.5f)
             .padding(24.dp),
     ) {
         Text(

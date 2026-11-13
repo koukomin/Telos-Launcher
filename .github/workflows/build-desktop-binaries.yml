@@ -1,0 +1,131 @@
+# Telos Desktop binaries for GitHub (Linux + Windows first; macOS deferred).
+# Uploads ready-to-run UberJars. On tags / workflow_dispatch also builds Windows Exe when possible.
+
+name: Build Telos Desktop Binaries
+
+on:
+  push:
+    tags:
+      - 'v*'
+    branches:
+      - main
+    paths:
+      - 'desktop-linux/**'
+      - 'ui-kmp/**'
+      - '.github/workflows/build-desktop-binaries.yml'
+      - 'version.properties'
+  pull_request:
+    paths:
+      - 'desktop-linux/**'
+      - 'ui-kmp/**'
+      - '.github/workflows/build-desktop-binaries.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  linux-jar:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v6
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v4
+      - uses: gradle/actions/setup-gradle@v6
+        with:
+          cache-provider: basic
+      - name: Session scripts and unit tests
+        run: |
+          chmod +x gradlew desktop-linux/session/telos-session desktop-linux/session/labwc/autostart
+          sh -n desktop-linux/session/telos-session
+          ./gradlew :ui-kmp:test :desktop-linux:test --stacktrace
+      - name: Package Linux UberJar
+        if: github.event_name == 'workflow_dispatch' || startsWith(github.ref, 'refs/tags/v') || github.event_name == 'pull_request'
+        run: |
+          chmod +x gradlew
+          ./gradlew :desktop-linux:packageUberJarForCurrentOS -x externalNativeBuildDebug -x externalNativeBuildRelease --stacktrace
+      - name: Stage Linux artifact
+        if: github.event_name == 'workflow_dispatch' || startsWith(github.ref, 'refs/tags/v') || github.event_name == 'pull_request'
+        run: |
+          mkdir -p out
+          ARCH=$(uname -m)
+          case "$ARCH" in
+            x86_64|amd64) ARCH_TAG=x64 ;;
+            aarch64|arm64) ARCH_TAG=arm64 ;;
+            *) ARCH_TAG="$ARCH" ;;
+          esac
+          mapfile -t JARS < <(find desktop-linux/build/compose/jars -maxdepth 1 -name '*.jar')
+          test "${#JARS[@]}" -eq 1
+          VERSION=$(sed -n 's/^versionName=//p' version.properties)
+          cp "${JARS[0]}" "out/telos-desktop-linux-${ARCH_TAG}-${VERSION}.jar"
+          cp tools/start-telos-desktop.sh out/ 2>/dev/null || true
+          tar -czf "out/telos-desktop-linux-session-${ARCH_TAG}.tar.gz" -C desktop-linux session
+      - uses: actions/upload-artifact@v7
+        if: github.event_name == 'workflow_dispatch' || startsWith(github.ref, 'refs/tags/v') || github.event_name == 'pull_request'
+        with:
+          name: telos-desktop-linux-${{ matrix.os }}
+          path: out/*
+          if-no-files-found: error
+
+  windows-jar:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v6
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v4
+      - uses: gradle/actions/setup-gradle@v6
+        with:
+          cache-provider: basic
+      - name: Unit tests
+        shell: bash
+        run: ./gradlew :ui-kmp:test :desktop-linux:test --stacktrace
+      - name: Package Windows UberJar
+        if: github.event_name == 'workflow_dispatch' || startsWith(github.ref, 'refs/tags/v') || github.event_name == 'pull_request'
+        shell: bash
+        run: ./gradlew :desktop-linux:packageUberJarForCurrentOS -x externalNativeBuildDebug -x externalNativeBuildRelease --stacktrace
+      - name: Package Windows Exe (best effort)
+        if: github.event_name == 'workflow_dispatch' || startsWith(github.ref, 'refs/tags/v')
+        shell: bash
+        continue-on-error: true
+        run: ./gradlew :desktop-linux:packageExe -x externalNativeBuildDebug -x externalNativeBuildRelease --stacktrace
+      - name: Stage Windows artifacts
+        if: github.event_name == 'workflow_dispatch' || startsWith(github.ref, 'refs/tags/v') || github.event_name == 'pull_request'
+        shell: bash
+        run: |
+          mkdir -p out
+          VERSION=$(sed -n 's/^versionName=//p' version.properties)
+          mapfile -t JARS < <(find desktop-linux/build/compose/jars -maxdepth 1 -name '*.jar' 2>/dev/null || true)
+          test "${#JARS[@]}" -ge 1
+          cp "${JARS[0]}" "out/telos-desktop-windows-x64-${VERSION}.jar"
+          # jpackage / compose may emit exe under build/compose/binaries
+          find desktop-linux/build/compose -type f \( -name '*.exe' -o -name '*.msi' \) -print0 2>/dev/null \
+            | while IFS= read -r -d '' f; do cp "$f" "out/"; done || true
+          cat > out/README-WINDOWS.txt <<'EOF'
+          Telos Desktop (Windows)
+          -----------------------
+          Requires JDK 21+ on PATH (Temurin recommended).
+
+          Run the UberJar:
+            java -jar telos-desktop-windows-x64-*.jar
+
+          First launch defaults to Host Home (no LUKS). Labwc session, nftables
+          net-guard and Linux vault modes are Linux-only.
+
+          macOS Intel/ARM binaries ship after Linux + Windows play correctly.
+          EOF
+      - uses: actions/upload-artifact@v7
+        if: github.event_name == 'workflow_dispatch' || startsWith(github.ref, 'refs/tags/v') || github.event_name == 'pull_request'
+        with:
+          name: telos-desktop-windows-x64
+          path: out/*
+          if-no-files-found: error

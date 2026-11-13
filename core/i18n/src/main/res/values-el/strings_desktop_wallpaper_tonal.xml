@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_wallpaper_tonal_title">Τόνος από ταπετσαρία</string>
+    <string name="desktop_wallpaper_tonal_enable">Χρώμα έμφασης από την ταπετσαρία</string>
+    <string name="desktop_wallpaper_tonal_hint">Δειγματοληπτεί την ταπετσαρία του θησαυροφυλακίου ή της φορητής λειτουργίας σε αυτή τη συσκευή και παράγει τοπικά έναν τονικό σπόρο Material. Τα εικονοστοιχεία δεν ανεβαίνουν ποτέ στο δίκτυο. Αν αποτύχει η δειγματοληψία, το chrome επιστρέφει στο neon κυανό.</string>
+    <string name="desktop_wallpaper_tonal_accent_wallpaper">theme.accent=wallpaper — ενεργός τοπικός σπόρος</string>
+</resources>

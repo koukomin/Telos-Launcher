@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_appearance_title">Välimus</string>
+    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
+    <string name="desktop_theme_intensity_neon">Vault Neon</string>
+    <string name="desktop_theme_intensity_paper">Paper Ops</string>
+    <string name="desktop_wallpaper_path">Taustapilt (vaulti tee)</string>
+    <string name="desktop_wallpaper_path_hint">Suhteline vaulti kinnituspunkti suhtes (nt Pictures/wall.jpg). Kunagi ei kuvata lukustatud eellaadimise ekraanil.</string>
+    <string name="desktop_unlock_theatre_title">Telos Phantom Vault</string>
+    <string name="desktop_unlock_theatre_quiet_ops">Quiet Ops — ava lukustus, et taustapilt paljastada</string>
+    <string name="desktop_unlock_theatre_hint">Lukustatud boot jääb Quiet Opsisse vaid vaulti glüüfiga. Pärast avamist teeb Telos ülemineku vaulti taustale ja valitud intensiivsusele — ilma osakesteta.</string>
+    <string name="desktop_sandbox_tint_hint">Rõngasvärv on vaid visuaalne OpSec (Host = oranž ettevaatus, Net-isolated = tsüaan, Vault FS = roheline, Standard = magenta).</string>
+    <string name="desktop_matched_packs_title">Sobitatud ikooni- + kursoripaketid</string>
+    <string name="desktop_matched_packs_hint">Üks klõps seab dokumenteeritud GPL-paari (Papirus↔BreezeX, candy-icons↔Bibata; CandyCyber jääb sisseehitatud chrome-glüüfiks). Allalaadimised jäävad vaulti või portable ikoonikausta.</string>
+    <string name="desktop_matched_packs_apply">Sobita paar: %1$s</string>
+    <string name="desktop_matched_packs_one_click">Sobita paar</string>
+    <string name="desktop_matched_packs_working">Pakettide sobitamine…</string>
+    <string name="desktop_matched_packs_ok">Rakendatud sobitatud pakett %1$s</string>
+    <string name="desktop_matched_packs_fail">Pakette ei saanud sobitada: %1$s</string>
+</resources>

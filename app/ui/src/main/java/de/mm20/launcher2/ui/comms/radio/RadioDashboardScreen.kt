@@ -36,6 +36,10 @@ import de.mm20.launcher2.comms.model.RadioStation
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.comms.RadioViewModel
 import de.mm20.launcher2.ui.component.LauncherCard
+import de.mm20.launcher2.ui.component.TelosCyber
+import de.mm20.launcher2.ui.component.TelosCyberSectionLabel
+import de.mm20.launcher2.ui.component.telosTechSurface
+import de.mm20.launcher2.ui.component.virtualAppPopup
 import kotlinx.serialization.Serializable
 import java.text.DateFormat
 import java.util.Date
@@ -130,7 +134,9 @@ private fun RadioDashboardContent(
         return
     }
     pendingRestore?.let { uri ->
-        AlertDialog(onDismissRequest = { pendingRestore = null },
+        AlertDialog(
+            onDismissRequest = { pendingRestore = null },
+            containerColor = virtualAppPopup(),
             title = { Text(stringResource(I18nR.string.hc_restore_backup)) },
             text = { Text(stringResource(I18nR.string.radio_restore_replace_summary)) },
             confirmButton = { TextButton(onClick = { viewModel.restoreBackup(context, uri, replace = true); pendingRestore = null }) { Text(stringResource(I18nR.string.hc_restore_backup)) } },
@@ -218,8 +224,15 @@ private fun RadioDashboardContent(
     }) {
     Column(modifier = Modifier.fillMaxSize()) {
     Column(modifier = Modifier.weight(1f).fillMaxWidth()) {
-        de.mm20.launcher2.ui.media.AudioSpectrumVisualizer(isPlaying = isRadioPlaying, modifier = Modifier.padding(horizontal = 16.dp, vertical = 6.dp))
-
+        Box(
+            Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 6.dp)
+                .telosTechSurface(borderColor = if (isRadioPlaying) TelosCyber.NeonGreen else TelosCyber.NeonCyan, shape = RoundedCornerShape(16.dp))
+                .padding(horizontal = 8.dp, vertical = 6.dp),
+        ) {
+            de.mm20.launcher2.ui.media.AudioSpectrumVisualizer(isPlaying = isRadioPlaying, modifier = Modifier.fillMaxWidth())
+        }
 
         when (if (searchExpanded) 1 else selectedTabIndex) {
             0 -> {
@@ -240,6 +253,10 @@ private fun RadioDashboardContent(
                     modifier = Modifier.fillMaxSize(),
                     header = {
                         Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                            TelosCyberSectionLabel(
+                                text = stringResource(I18nR.string.hc_radio),
+                                accent = if (isRadioPlaying) TelosCyber.NeonGreen else TelosCyber.NeonCyan,
+                            )
                             if (shownFavorites.isEmpty() && favorites.isNotEmpty() && collectionQuery.isNotBlank()) {
                                 de.mm20.launcher2.ui.component.SearchEmptyState(collectionQuery)
                             }

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_panel_surface">Panel surface</string>
+    <string name="desktop_theme_panel_surface_hint">Transparent or blurred clear only the panel root; menus stay opaque. Blurred stores panelBlur for frost; host wallpaper backdrop blur is best-effort when unavailable.</string>
+    <string name="desktop_theme_panel_transparent">Transparent</string>
+    <string name="desktop_theme_panel_blurred">Blurred</string>
+    <string name="desktop_theme_panel_solid">Solid</string>
+    <string name="desktop_theme_panel_opacity">Panel opacity: %1$d%%</string>
+    <string name="desktop_theme_panel_blur">Glass blur: %1$d</string>
+    <string name="desktop_theme_panel_blur_unavailable">Host wallpaper blur is unavailable; Telos uses a translucent frost plate and keeps your blur preference.</string>
+</resources>

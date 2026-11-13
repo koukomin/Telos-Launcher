@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_helix_palette_title">فرمان HELIX</string>
+    <string name="desktop_helix_palette_placeholder">جستجوی برنامه‌ها، پنجره‌ها، ماشین‌حساب…</string>
+    <string name="desktop_helix_palette_hint">Super+نقطه یا Ctrl+فاصله</string>
+    <string name="desktop_helix_palette_privacy">فقط ریشه‌های vault و قابل‌حمل — خانه میزبان را خارج از نشست فهرست نمی‌کند.</string>
+    <string name="desktop_helix_palette_open_files">باز کردن فایل‌ها</string>
+    <string name="desktop_helix_palette_open_settings">باز کردن تنظیمات</string>
+    <string name="desktop_helix_palette_open_network">باز کردن شبکه</string>
+    <string name="desktop_helix_palette_kill_window">بستن پنجرهٔ متمرکز</string>
+    <string name="desktop_helix_palette_paste_vault_clip">جای‌گذاری آخرین کلیپ‌بورد vault</string>
+    <string name="desktop_helix_palette_window">پنجره</string>
+    <string name="desktop_helix_palette_calc">ماشین‌حساب</string>
+    <string name="desktop_helix_palette_command">فرمان</string>
+    <string name="desktop_helix_palette_file">فایل</string>
+    <string name="desktop_helix_palette_no_results">بدون نتیجه</string>
+</resources>

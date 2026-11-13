@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_lan_pair_title">اقتران الشبكة المحلية مع Android</string>
+    <string name="desktop_lan_pair_hint">يشغّل خادم اقتران قصير الأمد على الشبكة المحلية. امسح الرمز أو أدخله في Telos Sync. لا تُسجَّل الرموز أو الرموز المميزة أبدًا.</string>
+    <string name="desktop_lan_pair_start">بدء اقتران الشبكة المحلية</string>
+    <string name="desktop_lan_pair_stop">إيقاف اقتران الشبكة المحلية</string>
+    <string name="desktop_lan_pair_running">خادم الاقتران يستمع على الشبكة المحلية</string>
+    <string name="desktop_lan_pair_code">رمز الاقتران</string>
+    <string name="desktop_lan_pair_qr_uri">معرّف اقتران URI (QR / لصق)</string>
+    <string name="desktop_lan_pair_stopped">تم إيقاف اقتران الشبكة المحلية</string>
+    <string name="desktop_lan_pair_bind_reject">تعذّر الربط بعنوان عام — استخدم عنوان IP خاصًا للشبكة المحلية</string>
+    <string name="desktop_lan_pair_android_title">اقتران الشبكة المحلية لـ Telos Desktop</string>
+    <string name="desktop_lan_pair_host">مضيف سطح المكتب (IP الشبكة المحلية)</string>
+    <string name="desktop_lan_pair_port">منفذ سطح المكتب</string>
+    <string name="desktop_lan_pair_connect">الاقتران بسطح المكتب</string>
+    <string name="desktop_lan_pair_paired">مقترن بسطح المكتب</string>
+    <string name="desktop_lan_pair_fetch_bundle">جلب حزمة جلسة سطح المكتب</string>
+    <string name="desktop_lan_pair_fetch_ok">تم حفظ حزمة جلسة سطح المكتب المشفّرة</string>
+    <string name="desktop_lan_pair_send_bundle">إرسال الحزمة المشفّرة</string>
+    <string name="desktop_lan_pair_failed">فشل اقتران الشبكة المحلية</string>
+    <string name="desktop_lan_pair_scan_hint">على Android افتح Sync ← الإعدادات والصق المعرّف أو أدخل المضيف والمنفذ والرمز.</string>
+</resources>

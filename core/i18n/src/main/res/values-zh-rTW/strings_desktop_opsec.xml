@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_opsec_title">OpSec</string>
+    <string name="desktop_opsec_secure_clipboard">安全剪貼簿</string>
+    <string name="desktop_opsec_clipboard_title">剪貼簿</string>
+    <string name="desktop_opsec_clipboard_hint">敏感文字（金鑰、IBAN、WireGuard）會從歷程中清除，僅保存在本次工作階段，並從系統剪貼簿移除。歷程僅存於保險庫本機 — 不同步到雲端。</string>
+    <string name="desktop_opsec_clipboard_clear_now">立即清除剪貼簿</string>
+    <string name="desktop_opsec_clipboard_clear_all">全部清除</string>
+    <string name="desktop_opsec_clipboard_history_meta">最多 20 項 · 5 分鐘後過期 · 釘選至鎖定 · Super+V</string>
+    <string name="desktop_opsec_clipboard_history_empty">尚無剪貼簿歷程</string>
+    <string name="desktop_opsec_clipboard_pin_until_lock">釘選</string>
+    <string name="desktop_opsec_clipboard_unpin">取消釘選</string>
+    <string name="desktop_opsec_clipboard_recall_vaulted">取回保險庫中的敏感剪貼</string>
+    <string name="desktop_opsec_clipboard_timer">%1$d 秒後自動清除</string>
+    <string name="desktop_opsec_clipboard_timer_off">關閉</string>
+    <string name="desktop_opsec_attestation_run">記錄主機完整性快照</string>
+    <string name="desktop_opsec_audit_title">工作階段稽核紀錄</string>
+    <string name="desktop_opsec_audit_refresh">重新整理稽核紀錄</string>
+    <string name="desktop_opsec_audit_empty">尚無稽核事件</string>
+    <string name="desktop_opsec_tpm_status">TPM 狀態：%1$s</string>
+    <string name="desktop_opsec_tpm_unknown">尚未測量</string>
+    <string name="desktop_opsec_tpm_hint">若有 tpm2-tools，則在本機彙總 PCR 0/7 摘要。這不是遠端證明（RAP）。</string>
+</resources>

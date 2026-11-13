@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_panel_icon_contrast">Kuntrast tal-ikoni tal-pannell</string>
+    <string name="desktop_panel_icon_contrast_auto">Awtomatiku</string>
+    <string name="desktop_panel_icon_contrast_light">Ikoni ċari</string>
+    <string name="desktop_panel_icon_contrast_dark">Ikoni skuri</string>
+    <string name="desktop_panel_icon_contrast_hint">Awtomatiku jieħu kampjun tal-istrixxa tal-wallpaper wara l-pannell ta’ fuq fuq dan l-apparat u jagħżel glifi ċari jew skuri għall-ikoni Helix u t-tikketti StatusNotifier tal-Compose. Il-pixels jibqgħu lokali. Il-pixmaps SNI minn telos-sni ma jiġux rikolorati. Preference: panel.iconContrast=auto|light|dark.</string>
+</resources>

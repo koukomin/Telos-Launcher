@@ -8,7 +8,7 @@ gallery, music, video and radio players, an app store and an app freezer.
 ::: tip Two parts
 - [**The launcher**](./launcher/) is search, home screen, widgets, icons and themes (inherited from Kvaesitso).
 - **The Telos apps** are added on top. Each one has its own page below.
-- [**Linux Desktop**](./linux-desktop) is a separate JVM shell (`:desktop-linux`), not in the APK.
+- [**Telos Desktop**](./linux-desktop) is a separate JVM shell (`:desktop-linux`), not in the APK — Linux session + Windows portable jar (macOS later).
 :::
 
 ## ✨ Built-in apps
@@ -37,7 +37,7 @@ gallery, music, video and radio players, an app store and an app freezer.
 <a href="./system/"><b>⚙️ System</b><span>CPU, RAM, Wi-Fi, AppOps, built-in Shizuku server, pairing, ADB</span></a>
 <a href="./freeze/"><b>❄️ Smart Freeze</b><span>Freeze or hide apps through Shizuku, Dhizuku, root, Island or device owner</span></a>
 <a href="./media/"><b>🎬 Media</b><span>Listen / Watch / Live: music, radio, YouTube, TV, Stremio Fork</span></a>
-<a href="./linux-desktop"><b>🖥️ Linux Desktop</b><span>labwc session, vault as \$HOME</span></a>
+<a href="./linux-desktop"><b>🖥️ Telos Desktop</b><span>Linux session + Windows jar; vault as \$HOME on Linux</span></a>
 
 </div>
 
@@ -64,9 +64,10 @@ gallery, music, video and radio players, an app store and an app freezer.
 | Telos Downloads | Download manager for links with resume and a queue | [Downloads](./downloads/) |
 | Telos Calculator | Standard and scientific calculator, VAT, converters | [Calculator](./calculator/) |
 | Telos Viewer | Photos, immersive viewer, PDF highlight, comics, SVG/PSD/AI/CDR, Office edit | [Viewer](./photos/) |
-| Telos Media | Music, radio and video in one app | [Media](./media/) |
+| Telos Media | Music, radio, video and TV in one app | [Media](./media/) |
 | Telos Music | Player for the music on the phone | [Music](./music/) |
 | Telos Video | Video library and player, streams and torrents | [Video](./video/) |
+| Telos TV | Live TV channels (opens the TV space in Telos Media) | [Media / TV](./media/#tv) |
 | Telos Radio | Internet radio | [Radio](./radio/) |
 | Telos Network | Firewall and DNS filter through the VPN service, blocklists, WireGuard, logs (early version) | [Network](./network/) |
 | Telos Store | Obtainium-like app installer and updater, manages the Telos apps | [Store](./store/) |

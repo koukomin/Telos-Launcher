@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_lan_pair_title">Péireáil LAN le Android</string>
+    <string name="desktop_lan_pair_hint">Tosaíonn freastalaí péireála gearrshaolach ar an LAN. Scan nó cuir isteach an cód i Telos Sync. Ní logáiltear cóid ná comharthaí riamh.</string>
+    <string name="desktop_lan_pair_start">Tosaigh péireáil LAN</string>
+    <string name="desktop_lan_pair_stop">Stop péireáil LAN</string>
+    <string name="desktop_lan_pair_running">Freastalaí péireála ag éisteacht ar an LAN</string>
+    <string name="desktop_lan_pair_code">Cód péireála</string>
+    <string name="desktop_lan_pair_qr_uri">URI péireála (QR / greamaigh)</string>
+    <string name="desktop_lan_pair_stopped">Péireáil LAN stoptha</string>
+    <string name="desktop_lan_pair_bind_reject">Ní féidir seoladh poiblí a cheangal — úsáid IP LAN príobháideach</string>
+    <string name="desktop_lan_pair_android_title">Péireáil LAN Telos Desktop</string>
+    <string name="desktop_lan_pair_host">Óstach deisce (IP LAN)</string>
+    <string name="desktop_lan_pair_port">Port deisce</string>
+    <string name="desktop_lan_pair_connect">Péireáil leis an deasc</string>
+    <string name="desktop_lan_pair_paired">Péireáilte leis an deasc</string>
+    <string name="desktop_lan_pair_fetch_bundle">Faigh beart seisiúin deisce</string>
+    <string name="desktop_lan_pair_fetch_ok">Beart seisiúin criptithe sábháilte</string>
+    <string name="desktop_lan_pair_send_bundle">Seol beart criptithe</string>
+    <string name="desktop_lan_pair_failed">Theip ar phéireáil LAN</string>
+    <string name="desktop_lan_pair_scan_hint">Ar Android oscail Sync → Socruithe agus greamaigh an URI nó cuir isteach óstach, port agus cód.</string>
+</resources>

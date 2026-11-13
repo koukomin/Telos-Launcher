@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_vault_restore_title">Full vault restore</string>
+    <string name="desktop_vault_restore_hint">Restore desktop.properties and ~/.config/telos from an AES session backup. WireGuard private keys are never written to logs. Requires confirmation.</string>
+    <string name="desktop_vault_restore_preview_btn">Preview restore</string>
+    <string name="desktop_vault_restore_preview">Ready to restore %1$s Telos config files (desktop.properties: %2$s). Confirm to apply.</string>
+    <string name="desktop_vault_restore_confirm">Confirm restore</string>
+    <string name="desktop_vault_restore_cancel">Cancel restore</string>
+    <string name="desktop_vault_restore_done">Vault session config restored</string>
+    <string name="desktop_vault_restore_need_confirm">Restore confirmation required</string>
+    <string name="desktop_luks_restore_title">LUKS vault image restore</string>
+    <string name="desktop_luks_restore_hint">Copy a telos_vault.img backup into the portable/vault image path. Vault must be locked. Never mounts with a password — unlock separately after restore. Requires confirmation and SHA-256 check.</string>
+    <string name="desktop_luks_restore_path_label">Backup image path (telos_vault.img)</string>
+    <string name="desktop_luks_restore_preview_btn">Preview LUKS image restore</string>
+    <string name="desktop_luks_restore_preview">Ready to restore %1$s bytes (sha256 %2$s…). Confirm to copy. Vault must stay locked.</string>
+    <string name="desktop_luks_restore_confirm">Confirm LUKS image restore</string>
+    <string name="desktop_luks_restore_cancel">Cancel LUKS restore</string>
+    <string name="desktop_luks_restore_done">LUKS image restored as %1$s (still locked — unlock separately)</string>
+    <string name="desktop_luks_restore_need_confirm">LUKS image restore confirmation required</string>
+    <string name="desktop_luks_restore_locked_required">Vault must be locked before restoring the LUKS image</string>
+    <string name="desktop_update_title">Signed desktop update</string>
+    <string name="desktop_update_hint">Check a local file:// path or HTTPS manifest signed with the Telos Ed25519 key. Updates stage under portable/vault temp and never auto-install. Default channel: GitHub Releases asset telos-desktop-update.manifest.</string>
+    <string name="desktop_update_releases_hint">GitHub Releases default: %1$s</string>
+    <string name="desktop_update_use_releases">Use GitHub Releases URL</string>
+    <string name="desktop_update_releases_filled">GitHub Releases manifest URL filled</string>
+    <string name="desktop_update_url_label">Update manifest (file path, file://, or https://)</string>
+    <string name="desktop_update_save_url">Save update URL</string>
+    <string name="desktop_update_url_saved">Update manifest URL saved</string>
+    <string name="desktop_update_check">Check for signed update</string>
+    <string name="desktop_update_ready">Signed update %1$s verified — confirm to stage install</string>
+    <string name="desktop_update_install_confirm">Confirm stage install</string>
+    <string name="desktop_update_install_cancel">Cancel update</string>
+    <string name="desktop_update_installed">Update staged as %1$s — confirm restart helper (in-place jar swap is best-effort)</string>
+    <string name="desktop_update_sig_fail">Update signature verification failed</string>
+    <string name="desktop_update_no_url">Set a file:// or HTTPS update manifest URL first</string>
+    <string name="desktop_update_restart_hint">Restart helper writes a pending-update marker and optional replace script, then exits. Swapping a running JVM jar is best-effort.</string>
+    <string name="desktop_update_restart_confirm">Confirm restart after update</string>
+    <string name="desktop_update_restart_later">Restart later</string>
+    <string name="desktop_update_restart_failed">Could not prepare update restart helper</string>
+</resources>

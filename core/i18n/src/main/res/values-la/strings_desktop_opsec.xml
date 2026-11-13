@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_opsec_title">OpSec</string>
+    <string name="desktop_opsec_secure_clipboard">Tabula tuta</string>
+    <string name="desktop_opsec_clipboard_title">Tabula</string>
+    <string name="desktop_opsec_clipboard_hint">Textus sensitivus (claves, IBAN, WireGuard) ex historia removetur, in hac sessione tantum servatur, et e tabula systematis deletur. Historia in vault manet — sine synchronisatione nubis.</string>
+    <string name="desktop_opsec_clipboard_clear_now">Tabulam nunc purga</string>
+    <string name="desktop_opsec_clipboard_clear_all">Omnia dele</string>
+    <string name="desktop_opsec_clipboard_history_meta">Usque ad 20 · post 5 minuta cadit · usque ad seram figere · Super+V</string>
+    <string name="desktop_opsec_clipboard_history_empty">Nondum historia tabulae</string>
+    <string name="desktop_opsec_clipboard_pin_until_lock">Figere</string>
+    <string name="desktop_opsec_clipboard_unpin">Solvere</string>
+    <string name="desktop_opsec_clipboard_recall_vaulted">Clip sensitivum e vault revoca</string>
+    <string name="desktop_opsec_clipboard_timer">Automatice purga post %1$d secundas</string>
+    <string name="desktop_opsec_clipboard_timer_off">Exstinctum</string>
+    <string name="desktop_opsec_attestation_run">Integritatis hospitis imaginem nota</string>
+    <string name="desktop_opsec_audit_title">Commentarii auditionis sessionis</string>
+    <string name="desktop_opsec_audit_refresh">Commentarios renovare</string>
+    <string name="desktop_opsec_audit_empty">Nondum eventa auditionis</string>
+    <string name="desktop_opsec_tpm_status">Status TPM: %1$s</string>
+    <string name="desktop_opsec_tpm_unknown">nondum mensus</string>
+    <string name="desktop_opsec_tpm_hint">Summarium locale digestorum PCR 0/7 per tpm2-tools si adsunt. Haec non est attestatio remota (RAP).</string>
+</resources>

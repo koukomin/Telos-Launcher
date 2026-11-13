@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_day_night_title">Dag-/nattema</string>
+    <string name="desktop_day_night_hint">Paper Ops (lyst) på dagen og Quiet Ops (mørkt) om natten i Auto. Grenser bruker valgt tidssone. Standard er manuell sone — nettverket brukes aldri til sted uten samtykke nedenfor.</string>
+    <string name="desktop_day_night_mode">Dag-/nattmodus</string>
+    <string name="desktop_day_night_off">Av</string>
+    <string name="desktop_day_night_auto">Auto</string>
+    <string name="desktop_day_night_light">Lyst</string>
+    <string name="desktop_day_night_dark">Mørkt</string>
+    <string name="desktop_day_night_timezone">Tidssone</string>
+    <string name="desktop_day_night_timezone_hint">IANA-sone for lokal dag/natt (JVM til du velger). Manuelt valg kontakter ingen tjenere.</string>
+    <string name="desktop_day_night_timezone_search">Søk tidssoner</string>
+    <string name="desktop_day_night_timezone_current">Gjeldende sone: %1$s</string>
+    <string name="desktop_day_night_network_assist">Nettverkshjelp land / tidssone</string>
+    <string name="desktop_day_night_network_assist_warning">Kun med samtykke. Påslått gjør Telos én forespørsel til et offentlig IP→geo-endepunkt for sone og landskode. Kun disse verdiene (og valgfrie koordinater for soloppgang/-nedgang) lagres i vault desktop.properties. IP logges ikke, ingen kontinuerlig sporing, ingen sky-synk av temaer. Ved nettfeil, kill-switch eller frakoblet beholdes manuell sone; Preference only eller Failed vises ærlig.</string>
+    <string name="desktop_day_night_assist_pref_only">Kun preferanse — nettverkshjelp av, blokkert eller ikke bedt; manuell sone</string>
+    <string name="desktop_day_night_assist_failed">Mislyktes — geo-endepunkt utilgjengelig; manuell sone beholdt</string>
+    <string name="desktop_day_night_assist_applied">Brukt — sone %1$s, land %2$s (kun lokalt)</string>
+    <string name="desktop_day_night_country">Landskode: %1$s</string>
+</resources>

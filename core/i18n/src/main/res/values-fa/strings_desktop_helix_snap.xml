@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_helix_snap_title">مناطق چسباندن</string>
+    <string name="desktop_helix_snap_50_50">50 / 50</string>
+    <string name="desktop_helix_snap_two_thirds">2/3 · 1/3</string>
+    <string name="desktop_helix_snap_grid">شبکه ۲×۲</string>
+    <string name="desktop_helix_snap_left">چسباندن به چپ</string>
+    <string name="desktop_helix_snap_right">چسباندن به راست</string>
+    <string name="desktop_helix_snap_maximize">بیشینه</string>
+    <string name="desktop_helix_window_mode">حالت پنجره</string>
+    <string name="desktop_helix_tiling">کاشی‌کاری (niri)</string>
+    <string name="desktop_helix_stacking">پشته (labwc)</string>
+    <string name="desktop_helix_window_mode_hint">اگر TELOS_COMPOSITOR تنظیم نشده باشد، در شروع نشست بعدی Telos اعمال می‌شود. Super+پیکان پنجرهٔ فعال را می‌چسباند.</string>
+</resources>

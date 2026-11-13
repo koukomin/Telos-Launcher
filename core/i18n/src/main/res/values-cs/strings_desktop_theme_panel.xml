@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_panel_surface">Povrch panelu</string>
+    <string name="desktop_theme_panel_surface_hint">Průhledný nebo rozmazaný ovlivní jen kořen panelu; nabídky zůstávají neprůhledné. Rozmazaný ukládá panelBlur pro frost; rozostření tapety hostitele je best-effort, pokud není dostupné.</string>
+    <string name="desktop_theme_panel_transparent">Průhledný</string>
+    <string name="desktop_theme_panel_blurred">Rozmazaný</string>
+    <string name="desktop_theme_panel_solid">Plný</string>
+    <string name="desktop_theme_panel_opacity">Neprůhlednost panelu: %1$d%%</string>
+    <string name="desktop_theme_panel_blur">Rozostření skla: %1$d</string>
+    <string name="desktop_theme_panel_blur_unavailable">Rozostření tapety hostitele není dostupné; Telos používá průsvitnou frost desku a uchová vaši preferenci rozostření.</string>
+</resources>

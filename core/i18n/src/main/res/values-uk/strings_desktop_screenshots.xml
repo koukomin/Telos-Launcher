@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_shot_title">Знімок екрана</string>
+    <string name="desktop_shot_full">Весь екран</string>
+    <string name="desktop_shot_region">Прямокутна область</string>
+    <string name="desktop_shot_window">Вікно</string>
+    <string name="desktop_shot_clipboard">Копіювати в буфер обміну</string>
+    <string name="desktop_shot_clipboard_hint">Типово вимкнено. Також з TELOS_SHOT_CLIPBOARD=1.</string>
+    <string name="desktop_shot_redact">Замазати перед збереженням</string>
+    <string name="desktop_shot_redact_hint">Намалюйте прямокутник, щоб приховати приватний вміст, потім збережіть.</string>
+    <string name="desktop_shot_save">Зберегти</string>
+    <string name="desktop_shot_save_without_redact">Зберегти без замазування</string>
+    <string name="desktop_shot_saved">Знімок збережено</string>
+    <string name="desktop_shot_failed">Знімок не вдався</string>
+    <string name="desktop_shot_path_hint">Зберігає в Pictures/Screenshots сховища (або portable data), лише власник (0600).</string>
+</resources>

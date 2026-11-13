@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_workspace_tints">Laborareaj nuancostrioj</string>
+    <string name="desktop_theme_workspace_tints_hint">Subtilaj neonaj akcentoj sub panelciferoj 1–4. Kaŝitaj dum panic mute. Malŝalti: theme.workspaceTints=false.</string>
+</resources>

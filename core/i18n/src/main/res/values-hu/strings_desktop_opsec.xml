@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_opsec_title">OpSec</string>
+    <string name="desktop_opsec_secure_clipboard">Biztonságos vágólap</string>
+    <string name="desktop_opsec_clipboard_title">Vágólap</string>
+    <string name="desktop_opsec_clipboard_hint">Az érzékeny szöveg (kulcsok, IBAN, WireGuard) kikerül az előzményekből, csak ebben a munkamenetben tárolódik, és törlődik a rendszer vágólapjáról. Az előzmény a vaultban marad — nincs felhőszinkron.</string>
+    <string name="desktop_opsec_clipboard_clear_now">Vágólap törlése most</string>
+    <string name="desktop_opsec_clipboard_clear_all">Összes törlése</string>
+    <string name="desktop_opsec_clipboard_history_meta">Legfeljebb 20 elem · 5 perc után lejár · rögzítés zárolásig · Super+V</string>
+    <string name="desktop_opsec_clipboard_history_empty">Még nincs vágólap-előzmény</string>
+    <string name="desktop_opsec_clipboard_pin_until_lock">Rögzítés</string>
+    <string name="desktop_opsec_clipboard_unpin">Feloldás</string>
+    <string name="desktop_opsec_clipboard_recall_vaulted">Vaultolt érzékeny klip visszahívása</string>
+    <string name="desktop_opsec_clipboard_timer">Automatikus törlés %1$d másodperc után</string>
+    <string name="desktop_opsec_clipboard_timer_off">Ki</string>
+    <string name="desktop_opsec_attestation_run">Gazdagép-integritás pillanatkép rögzítése</string>
+    <string name="desktop_opsec_audit_title">Munkamenet-auditnapló</string>
+    <string name="desktop_opsec_audit_refresh">Napló frissítése</string>
+    <string name="desktop_opsec_audit_empty">Még nincsenek auditesemények</string>
+    <string name="desktop_opsec_tpm_status">TPM állapot: %1$s</string>
+    <string name="desktop_opsec_tpm_unknown">még nem mérve</string>
+    <string name="desktop_opsec_tpm_hint">Helyi PCR 0/7 kivonat-összefoglaló tpm2-tools segítségével, ha elérhető. Ez nem távoli tanúsítás (RAP).</string>
+</resources>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_appearance_title">Aspect</string>
+    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
+    <string name="desktop_theme_intensity_neon">Vault Neon</string>
+    <string name="desktop_theme_intensity_paper">Paper Ops</string>
+    <string name="desktop_wallpaper_path">Fundal (cale vault)</string>
+    <string name="desktop_wallpaper_path_hint">Relativ la punctul de montare al vault (de ex. Pictures/wall.jpg). Nu este afișat niciodată pe ecranul pre-boot blocat.</string>
+    <string name="desktop_unlock_theatre_title">Telos Phantom Vault</string>
+    <string name="desktop_unlock_theatre_quiet_ops">Quiet Ops — deblocați pentru a dezvălui fundalul</string>
+    <string name="desktop_unlock_theatre_hint">Boot-ul blocat rămâne în Quiet Ops doar cu gliful vault. După deblocare, Telos face crossfade către fundalul vault și intensitatea aleasă — fără particule.</string>
+    <string name="desktop_sandbox_tint_hint">Culoarea inelului de accent este doar OpSec vizual (Host = portocaliu atenție, Net-isolated = cyan, Vault FS = verde, Standard = magenta).</string>
+    <string name="desktop_matched_packs_title">Pachete asortate pictograme + cursor</string>
+    <string name="desktop_matched_packs_hint">Un clic setează o pereche GPL documentată (Papirus↔BreezeX, candy-icons↔Bibata; CandyCyber rămâne gliful chrome încorporat). Descărcările rămân în folderul de pictograme vault sau portable.</string>
+    <string name="desktop_matched_packs_apply">Asortează perechea: %1$s</string>
+    <string name="desktop_matched_packs_one_click">Asortează perechea</string>
+    <string name="desktop_matched_packs_working">Asortare pachete…</string>
+    <string name="desktop_matched_packs_ok">Pachetul asortat %1$s aplicat</string>
+    <string name="desktop_matched_packs_fail">Nu s-au putut asorta pachetele: %1$s</string>
+</resources>

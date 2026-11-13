@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_appearance_title">المظهر</string>
+    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
+    <string name="desktop_theme_intensity_neon">Vault Neon</string>
+    <string name="desktop_theme_intensity_paper">Paper Ops</string>
+    <string name="desktop_wallpaper_path">الخلفية (مسار الخزنة)</string>
+    <string name="desktop_wallpaper_path_hint">نسبيًا إلى نقطة تركيب الخزنة (مثل Pictures/wall.jpg). لا تُعرض أبدًا على شاشة ما قبل الإقلاع المقفلة.</string>
+    <string name="desktop_unlock_theatre_title">Telos Phantom Vault</string>
+    <string name="desktop_unlock_theatre_quiet_ops">Quiet Ops — افتح القفل لإظهار خلفيتك</string>
+    <string name="desktop_unlock_theatre_hint">يبقى الإقلاع المقفل على Quiet Ops مع رمز الخزنة فقط. بعد الفتح ينتقل Telos تدريجيًا إلى خلفية الخزنة والشدة المختارة — بلا جسيمات.</string>
+    <string name="desktop_sandbox_tint_hint">لون حلقة التمييز OpSec بصري فقط (Host = برتقالي حذر، Net-isolated = سماوي، Vault FS = أخضر، Standard = أرجواني).</string>
+    <string name="desktop_matched_packs_title">حزم أيقونات ومؤشر متطابقة</string>
+    <string name="desktop_matched_packs_hint">نقرة واحدة تضبط زوج GPL موثّق (Papirus↔BreezeX، candy-icons↔Bibata؛ يبقى CandyCyber رمز chrome المدمج). تبقى التنزيلات في مجلد أيقونات الخزنة أو المحمول.</string>
+    <string name="desktop_matched_packs_apply">طابق الزوج: %1$s</string>
+    <string name="desktop_matched_packs_one_click">طابق الزوج</string>
+    <string name="desktop_matched_packs_working">جارٍ مطابقة الحزم…</string>
+    <string name="desktop_matched_packs_ok">طُبّقت الحزمة المتطابقة %1$s</string>
+    <string name="desktop_matched_packs_fail">تعذّر مطابقة الحزم: %1$s</string>
+</resources>

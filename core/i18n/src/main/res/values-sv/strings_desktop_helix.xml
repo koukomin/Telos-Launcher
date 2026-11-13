@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_helix_palette_title">HELIX-KOMMANDO</string>
+    <string name="desktop_helix_palette_placeholder">Sök appar, fönster, kalkylator…</string>
+    <string name="desktop_helix_palette_hint">Super+Punkt eller Ctrl+Blanksteg</string>
+    <string name="desktop_helix_palette_privacy">Endast vault- och portabla rötter — indexerar inte host-home utanför sessionen.</string>
+    <string name="desktop_helix_palette_open_files">Öppna Filer</string>
+    <string name="desktop_helix_palette_open_settings">Öppna Inställningar</string>
+    <string name="desktop_helix_palette_open_network">Öppna Nätverk</string>
+    <string name="desktop_helix_palette_kill_window">Stäng fokuserat fönster</string>
+    <string name="desktop_helix_palette_paste_vault_clip">Klistra in senaste vault-urklipp</string>
+    <string name="desktop_helix_palette_window">Fönster</string>
+    <string name="desktop_helix_palette_calc">Kalkylator</string>
+    <string name="desktop_helix_palette_command">Kommando</string>
+    <string name="desktop_helix_palette_file">Fil</string>
+    <string name="desktop_helix_palette_no_results">Inga träffar</string>
+</resources>

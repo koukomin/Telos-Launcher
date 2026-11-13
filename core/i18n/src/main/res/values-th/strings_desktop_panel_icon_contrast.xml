@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_panel_icon_contrast">คอนทราสต์ไอคอนแผง</string>
+    <string name="desktop_panel_icon_contrast_auto">อัตโนมัติ</string>
+    <string name="desktop_panel_icon_contrast_light">ไอคอนสว่าง</string>
+    <string name="desktop_panel_icon_contrast_dark">ไอคอนมืด</string>
+    <string name="desktop_panel_icon_contrast_hint">โหมดอัตโนมัติสุ่มตัวอย่างแถบวอลเปเปอร์ด้านหลังแผงด้านบนบนอุปกรณ์นี้ และเลือกไกลฟ์สว่างหรือมืดสำหรับไอคอน Helix และป้าย StatusNotifier ของ Compose พิกเซลอยู่บนเครื่อง Pixmap SNI จาก telos-sni จะไม่ถูกเปลี่ยนสี การตั้งค่า: panel.iconContrast=auto|light|dark</string>
+</resources>

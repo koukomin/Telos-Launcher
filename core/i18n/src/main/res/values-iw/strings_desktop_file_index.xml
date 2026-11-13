@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_file_index_title">אינדקס שמות קבצים</string>
+    <string name="desktop_file_index_enable">אינדקס שמות קבצים במכשיר</string>
+    <string name="desktop_file_index_hint">אופציונלי. מאנדקס רק שמות קבצים תחת HOME של ה-vault או שורש Portable Data (לעולם לא פרופיל המארח אלא אם Host Home). נשמר מוצפן תחת .cache/telos/file-index עם הרשאות בעלים בלבד. ללא תוכן קבצים וללא העלאה לענן.</string>
+</resources>

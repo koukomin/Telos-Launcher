@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_panel_surface">पैनल सतह</string>
+    <string name="desktop_theme_panel_surface_hint">पारदर्शी या धुंधला केवल पैनल रूट पर लागू होता है; मेनू अपारदर्शी रहते हैं। धुंधला frost के लिए panelBlur सहेजता है; होस्ट वॉलपेपर ब्लर उपलब्ध न होने पर best-effort है।</string>
+    <string name="desktop_theme_panel_transparent">पारदर्शी</string>
+    <string name="desktop_theme_panel_blurred">धुंधला</string>
+    <string name="desktop_theme_panel_solid">ठोस</string>
+    <string name="desktop_theme_panel_opacity">पैनल अपारदर्शिता: %1$d%%</string>
+    <string name="desktop_theme_panel_blur">काँच धुंध: %1$d</string>
+    <string name="desktop_theme_panel_blur_unavailable">होस्ट वॉलपेपर ब्लर उपलब्ध नहीं; Telos अर्धपारदर्शी frost प्लेट उपयोग करता है और धुंध वरीयता रखता है।</string>
+</resources>

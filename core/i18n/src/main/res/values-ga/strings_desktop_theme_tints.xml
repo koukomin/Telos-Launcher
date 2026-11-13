@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_workspace_tints">Stríoca tint spásanna oibre</string>
+    <string name="desktop_theme_workspace_tints_hint">Aicsean neoin caol faoi dhigití 1–4 an phainéil. Folaithe le linn panic mute. Múch: theme.workspaceTints=false.</string>
+</resources>

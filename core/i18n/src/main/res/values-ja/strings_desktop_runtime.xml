@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_store_permissions">権限</string>
+    <string name="desktop_store_sandbox_tier">サンドボックス層</string>
+    <string name="desktop_sandbox_tier_host">ホスト</string>
+    <string name="desktop_sandbox_tier_vault_fs">保管庫ファイルシステム</string>
+    <string name="desktop_sandbox_tier_net_isolated">ネットワーク隔離</string>
+    <string name="desktop_sandbox_tier_standard">標準</string>
+    <string name="desktop_perm_filesystem_home">ホームフォルダー</string>
+    <string name="desktop_perm_filesystem_host">ホストファイルシステム</string>
+    <string name="desktop_perm_network">ネットワーク</string>
+    <string name="desktop_perm_gpu">GPU (DRI)</string>
+    <string name="desktop_perm_wayland">Wayland</string>
+    <string name="desktop_perm_x11">X11</string>
+    <string name="desktop_perm_pulseaudio">オーディオ</string>
+    <string name="desktop_perm_notifications">通知</string>
+    <string name="desktop_perm_camera">カメラ</string>
+    <string name="desktop_perm_microphone">マイク</string>
+    <string name="desktop_flatpak_unavailable">Flatpak を利用できないため、このシステムでは権限の上書きは利用できません。</string>
+    <string name="desktop_flatpak_override_applied">Flatpak の上書きを適用しました</string>
+    <string name="desktop_flatpak_override_failed">Flatpak の上書きを適用できませんでした</string>
+    <string name="desktop_flatpak_reset_overrides">上書きをリセット</string>
+    <string name="desktop_deeplink_handler_hint">telos:// は Telos アプリと Kickoff 検索を開きます（デスクトップ起動時に登録）。</string>
+    <string name="desktop_store_backends">パッケージ提供元</string>
+    <string name="desktop_store_backend_flatpak">Flatpak</string>
+    <string name="desktop_store_backend_winget">Winget</string>
+    <string name="desktop_store_backend_scoop">Scoop</string>
+    <string name="desktop_store_windows_pref_only">Winget/Scoop は Windows 専用です。このホストでは Windows パッケージ操作は行いません。</string>
+    <string name="desktop_store_windows_unavailable">PATH 上に winget も scoop も見つかりません。</string>
+    <string name="desktop_store_windows_installed">Windows パッケージ（インストール済み）</string>
+    <string name="desktop_store_windows_search">Windows パッケージ（検索）</string>
+    <string name="desktop_store_install_confirm_title">インストールの確認</string>
+    <string name="desktop_store_install_confirm_body">%3$s で %1$s（%2$s）をインストールしますか？</string>
+    <string name="desktop_store_install_started">%1$s のインストールを開始しました</string>
+    <string name="desktop_store_install_failed">%1$s のインストールを開始できませんでした</string>
+    <string name="desktop_portal_device_title">カメラとマイク（ポータル）</string>
+    <string name="desktop_portal_device_hint">要求を記録し、Device/Camera ポータルがある場合は xdg-desktop-portal に尋ねます。ポータルツールが無い場合は設定のみです。</string>
+    <string name="desktop_portal_device_requested">ポータルのアクセスダイアログを要求しました</string>
+    <string name="desktop_portal_device_pref_only">設定を保存しました。ポータルツールはありません（設定のみ）。</string>
+    <string name="desktop_portal_device_unavailable">このシステムではポータルのデバイスアクセスは利用できません。</string>
+    <string name="desktop_portal_device_failed">デスクトップポータルにデバイスアクセスを要求できませんでした</string>
+    <string name="desktop_netns_cap_unshare">アプリ別 netns: unshare --net 利用可</string>
+    <string name="desktop_netns_cap_ip">アプリ別 netns: ip netns 利用可</string>
+    <string name="desktop_netns_cap_unavailable">アプリ別 netns ツールがありません。分離は設定のみです</string>
+    <string name="desktop_netns_flatpak_owned">ネット隔離 Flatpak は Flatpak --unshare=network を使います（ホスト netns ではありません）。</string>
+    <string name="desktop_netns_flatpak_no_tools">ネット隔離ティア設定済み。unshare/ip netns 無し — Flatpak が適用する override のみ。</string>
+    <string name="desktop_netns_not_isolated">アプリはネット隔離としてマークされていません。</string>
+</resources>

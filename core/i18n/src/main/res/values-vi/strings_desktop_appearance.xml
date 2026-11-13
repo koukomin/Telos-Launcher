@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<string name="desktop_appearance_hint">Cường độ Quiet Ops hoặc Vault Neon, nhấn neon và tắt tiếng khẩn cấp. Lớp phủ hồ sơ có thể ghi đè mà không ghi vào HOME máy chủ trong Portable Data.</string>
+    <string name="desktop_theme_intensity_label">Cường độ chủ đề</string>
+    <string name="desktop_theme_accent_label">Nhấn màu</string>
+    <string name="desktop_panic_mute_toggle">Tắt tiếng khẩn cấp</string>
+    <string name="desktop_panic_mute_on">Tắt tiếng khẩn cấp: Bật</string>
+    <string name="desktop_panic_mute_off">Tắt tiếng khẩn cấp: Tắt</string>
+    <string name="desktop_panic_mute_hint">Ép Quiet Ops và ẩn viền cùng đồng hồ neon. Chỉ hình ảnh — không đổi tường lửa hay kill-switch. Phím tắt: Super+Shift+P.</string>
+    <string name="desktop_vos_profiles_appearance_hint">Mỗi hồ sơ có tên có thể giữ lớp phủ desktop.properties riêng cho cường độ, nhấn màu, biểu tượng và con trỏ. Chuyển đổi tải lại giao diện từ lớp phủ hồ sơ rồi thuộc tính két toàn cục.</string>
+</resources>

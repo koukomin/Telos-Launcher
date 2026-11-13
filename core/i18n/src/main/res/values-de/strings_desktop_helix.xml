@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_helix_palette_title">HELIX-BEFEHL</string>
+    <string name="desktop_helix_palette_placeholder">Apps, Fenster, Rechner suchen…</string>
+    <string name="desktop_helix_palette_hint">Super+Punkt oder Strg+Leertaste</string>
+    <string name="desktop_helix_palette_privacy">Nur Vault- und portable Wurzeln — indiziert kein Host-Home außerhalb der Sitzung.</string>
+    <string name="desktop_helix_palette_open_files">Dateien öffnen</string>
+    <string name="desktop_helix_palette_open_settings">Einstellungen öffnen</string>
+    <string name="desktop_helix_palette_open_network">Netzwerk öffnen</string>
+    <string name="desktop_helix_palette_kill_window">Fokussiertes Fenster schließen</string>
+    <string name="desktop_helix_palette_paste_vault_clip">Letzte Vault-Zwischenablage einfügen</string>
+    <string name="desktop_helix_palette_window">Fenster</string>
+    <string name="desktop_helix_palette_calc">Rechner</string>
+    <string name="desktop_helix_palette_command">Befehl</string>
+    <string name="desktop_helix_palette_file">Datei</string>
+    <string name="desktop_helix_palette_no_results">Keine Treffer</string>
+</resources>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_portable_data_root">Portable data folder (config, cache, temp only here)</string>
+    <string name="desktop_host_home_trace_warning">Host Home writes settings and cache on this PC. Choose Portable Data to leave no host traces.</string>
+    <string name="desktop_boot_portable_data">Portable Data — no host traces (config/cache/temp under portable root)</string>
+    <string name="desktop_boot_portable_vault">Portable Vault — encrypted data under portable root</string>
+    <string name="desktop_boot_host_home">Host Home (may leave traces on this PC)</string>
+    <string name="desktop_boot_unlock_existing">Unlock existing vault (file or stego folder)</string>
+    <string name="desktop_boot_create_wizard">Create new elastic / stego / deniable vault</string>
+    <string name="desktop_boot_ephemeral">Ephemeral RAM-only ghost session (tmpfs)</string>
+    <string name="desktop_session_sync_title">Session sync</string>
+    <string name="desktop_session_sync_export">Export encrypted bundle</string>
+    <string name="desktop_session_sync_import">Import encrypted bundle</string>
+    <string name="desktop_session_sync_auto">Automatický import pri štarte, keď je uložený sync kľúč</string>
+    <string name="desktop_session_sync_pass">Sync passphrase (or KeePass entry %1$s)</string>
+    <string name="desktop_session_sync_keepass">KeePass database path (.kdbx)</string>
+    <string name="desktop_windows_shell_title">Windows shell replacement</string>
+    <string name="desktop_windows_shell_enable">Set Telos as login shell (HKCU)</string>
+    <string name="desktop_windows_shell_revert">Restore explorer.exe shell</string>
+    <string name="desktop_windows_shell_risk">Replaces your user shell at next sign-in. Keep a recovery path before enabling.</string>
+    <string name="desktop_helix_portable_note">Helix window chrome is drawn in Compose on all platforms; native Win32 decorations may show until shell replacement.</string>
+    <string name="desktop_session_sync_pass_required">Vyžaduje sa sync prístupová fráza</string>
+    <string name="desktop_session_sync_imported">Balík sync relácie bol importovaný</string>
+    <string name="desktop_session_sync_key_stored">Sync kľúč uložený pre import pri štarte bez výzvy</string>
+    <string name="desktop_session_sync_key_missing">Pred zapnutím automatického importu zadajte sync prístupovú frázu</string>
+    <string name="desktop_vos_profiles_title">Profily trezoru</string>
+    <string name="desktop_vos_profiles_summary">Pomenované priečinky profilov v config profiles/. V desktop.properties len aktívny názov — nikdy heslá.</string>
+    <string name="desktop_vos_profiles_active">Aktívny profil: %1$s</string>
+    <string name="desktop_vos_profiles_none">(žiadny)</string>
+    <string name="desktop_vos_profiles_empty">Zatiaľ žiadne profily. Vytvorte jeden na prepínanie identít trezoru.</string>
+    <string name="desktop_vos_profiles_kind_named">Pomenovaný profil trezoru</string>
+    <string name="desktop_vos_profiles_kind_portable">Koreň prenosného trezoru</string>
+    <string name="desktop_vos_profiles_switch">Prepnúť</string>
+    <string name="desktop_vos_profiles_use_portable">Použiť tento prenosný koreň</string>
+    <string name="desktop_vos_profiles_new_name">Názov nového profilu</string>
+    <string name="desktop_vos_profiles_create">Vytvoriť a prepnúť</string>
+    <string name="desktop_vos_profiles_created">Vytvorené a prepnuté na %1$s</string>
+    <string name="desktop_vos_profiles_switched">Prepnuté na %1$s</string>
+    <string name="desktop_vos_profiles_invalid_name">Písmená, číslice, bodky, podčiarkovníky alebo pomlčky (max. 64).</string>
+    <string name="desktop_vos_profiles_portable_hint">Prenosné korene držia config, cache a temp mimo profilu hostiteľa (predvolené vo Windows: Portable Data).</string>
+    <string name="desktop_vos_profiles_portable_path">Cesta k priečinku prenosného trezoru</string>
+    <string name="desktop_vos_profiles_add_portable">Pridať koreň prenosného trezoru</string>
+    <string name="desktop_vos_profiles_portable_selected">Prenosný koreň: %1$s</string>
+    <string name="desktop_vos_profiles_portable_reject">Prenosný koreň nesmie byť domovský priečinok hostiteľa ani jeho .config/.cache/.local.</string>
+</resources>

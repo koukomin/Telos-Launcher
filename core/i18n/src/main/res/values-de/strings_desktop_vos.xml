@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_portable_data_root">Portable data folder (config, cache, temp only here)</string>
+    <string name="desktop_host_home_trace_warning">Host Home writes settings and cache on this PC. Choose Portable Data to leave no host traces.</string>
+    <string name="desktop_boot_portable_data">Portable Data — no host traces (config/cache/temp under portable root)</string>
+    <string name="desktop_boot_portable_vault">Portable Vault — encrypted data under portable root</string>
+    <string name="desktop_boot_host_home">Host Home (may leave traces on this PC)</string>
+    <string name="desktop_boot_unlock_existing">Unlock existing vault (file or stego folder)</string>
+    <string name="desktop_boot_create_wizard">Create new elastic / stego / deniable vault</string>
+    <string name="desktop_boot_ephemeral">Ephemeral RAM-only ghost session (tmpfs)</string>
+    <string name="desktop_session_sync_title">Session sync</string>
+    <string name="desktop_session_sync_export">Export encrypted bundle</string>
+    <string name="desktop_session_sync_import">Import encrypted bundle</string>
+    <string name="desktop_session_sync_auto">Automatischer Import beim Start, wenn ein Sync-Schlüssel gespeichert ist</string>
+    <string name="desktop_session_sync_pass">Sync passphrase (or KeePass entry %1$s)</string>
+    <string name="desktop_session_sync_keepass">KeePass database path (.kdbx)</string>
+    <string name="desktop_windows_shell_title">Windows shell replacement</string>
+    <string name="desktop_windows_shell_enable">Set Telos as login shell (HKCU)</string>
+    <string name="desktop_windows_shell_revert">Restore explorer.exe shell</string>
+    <string name="desktop_windows_shell_risk">Replaces your user shell at next sign-in. Keep a recovery path before enabling.</string>
+    <string name="desktop_helix_portable_note">Helix window chrome is drawn in Compose on all platforms; native Win32 decorations may show until shell replacement.</string>
+    <string name="desktop_session_sync_pass_required">Sync-Passphrase erforderlich</string>
+    <string name="desktop_session_sync_imported">Sitzungs-Sync-Paket importiert</string>
+    <string name="desktop_session_sync_key_stored">Sync-Schlüssel für promptfreien Startimport gespeichert</string>
+    <string name="desktop_session_sync_key_missing">Sync-Passphrase eingeben, bevor der Auto-Import aktiviert wird</string>
+    <string name="desktop_vos_profiles_title">Vault-Profile</string>
+    <string name="desktop_vos_profiles_summary">Benannte Profilordner unter config profiles/. Nur aktiver Name in desktop.properties — niemals Passwörter.</string>
+    <string name="desktop_vos_profiles_active">Aktives Profil: %1$s</string>
+    <string name="desktop_vos_profiles_none">(keines)</string>
+    <string name="desktop_vos_profiles_empty">Noch keine Profile. Erstellen Sie eines, um Vault-Identitäten zu wechseln.</string>
+    <string name="desktop_vos_profiles_kind_named">Benanntes Vault-Profil</string>
+    <string name="desktop_vos_profiles_kind_portable">Portable Vault-Wurzel</string>
+    <string name="desktop_vos_profiles_switch">Wechseln</string>
+    <string name="desktop_vos_profiles_use_portable">Diese portable Wurzel verwenden</string>
+    <string name="desktop_vos_profiles_new_name">Neuer Profilname</string>
+    <string name="desktop_vos_profiles_create">Erstellen und wechseln</string>
+    <string name="desktop_vos_profiles_created">Erstellt und gewechselt zu %1$s</string>
+    <string name="desktop_vos_profiles_switched">Gewechselt zu %1$s</string>
+    <string name="desktop_vos_profiles_invalid_name">Buchstaben, Ziffern, Punkte, Unterstriche oder Bindestriche (max. 64).</string>
+    <string name="desktop_vos_profiles_portable_hint">Portable Wurzeln halten Config, Cache und Temp vom Host-Profil fern (Windows-Standard: Portable Data).</string>
+    <string name="desktop_vos_profiles_portable_path">Pfad zum portablen Vault-Ordner</string>
+    <string name="desktop_vos_profiles_add_portable">Portable Vault-Wurzel hinzufügen</string>
+    <string name="desktop_vos_profiles_portable_selected">Portable Wurzel: %1$s</string>
+    <string name="desktop_vos_profiles_portable_reject">Portable Wurzel darf nicht das Host-Home oder dessen .config/.cache/.local sein.</string>
+</resources>

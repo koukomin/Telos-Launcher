@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_icons_title">Піктограми</string>
+    <string name="desktop_icons_theme_label">Тема піктограм</string>
+    <string name="desktop_icons_download_section">Завантажити з Telos</string>
+    <string name="desktop_icons_download">Завантажити</string>
+    <string name="desktop_icons_installing">Встановлення…</string>
+    <string name="desktop_icons_installed">Встановлено</string>
+    <string name="desktop_icons_apply">Застосувати</string>
+    <string name="desktop_icons_source_system">Система</string>
+    <string name="desktop_icons_source_telos">Telos</string>
+    <string name="desktop_icons_source_builtin">Вбудована</string>
+    <string name="desktop_icons_path">Тека пакетів піктограм: %1$s</string>
+    <string name="desktop_icons_freedesktop_note">Теми піктограм freedesktop для стільниці (не пакети Android ADW).</string>
+    <string name="desktop_icons_download_failed">Помилка завантаження</string>
+    <string name="desktop_icons_download_ok">Тему встановлено</string>
+    <string name="desktop_icons_license">Ліцензія: %1$s</string>
+    <string name="desktop_icons_portable_only">У режимі Portable Data пакети залишаються в портативній теці піктограм (не в профілі хоста).</string>
+</resources>

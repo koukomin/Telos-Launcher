@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_wallpaper_tonal_title">Poudarek iz ozadja</string>
+    <string name="desktop_wallpaper_tonal_enable">Poudarek iz ozadja</string>
+    <string name="desktop_wallpaper_tonal_hint">Vzame vzorec ozadja vault ali portable na tej napravi in lokalno izpelje Material tonalni seed. Piksli se nikoli ne naložijo. Ob napaki chrome uporabi neon cian.</string>
+    <string name="desktop_wallpaper_tonal_accent_wallpaper">theme.accent=wallpaper — lokalni seed aktiven</string>
+</resources>

@@ -6,6 +6,7 @@ import kotlinx.serialization.json.Json
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.net.URL
+import java.net.URLEncoder
 
 @Serializable
 data class FoodProduct(
@@ -38,13 +39,18 @@ object OpenFoodFactsApi {
     suspend fun search(query: String): List<FoodProduct> = withContext(Dispatchers.IO) {
         try {
             if (query.isBlank()) return@withContext emptyList()
-            val url = URL("https://world.openfoodfacts.org/cgi/search.pl?search_terms=$query&search_simple=1&action=process&json=1")
+            val encoded = URLEncoder.encode(query.trim(), "UTF-8")
+            val url = URL(
+                "https://world.openfoodfacts.org/cgi/search.pl?search_terms=$encoded&search_simple=1&action=process&json=1",
+            )
             val connection = url.openConnection() as java.net.HttpURLConnection
+            connection.connectTimeout = 8_000
+            connection.readTimeout = 8_000
             connection.setRequestProperty("User-Agent", "TelosLauncher - Android Launcher")
             val text = connection.inputStream.bufferedReader().use { it.readText() }
             val response = json.decodeFromString<SearchResponse>(text)
             response.products
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             emptyList()
         }
     }

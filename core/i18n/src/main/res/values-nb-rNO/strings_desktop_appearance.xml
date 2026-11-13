@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<string name="desktop_appearance_hint">Quiet Ops- eller Vault Neon-intensitet, neonaksent og panikkdemping. Profiloverlegg kan overstyre dem uten å skrive til vertens HOME i Portable Data.</string>
+    <string name="desktop_theme_intensity_label">Temaintensitet</string>
+    <string name="desktop_theme_accent_label">Aksent</string>
+    <string name="desktop_panic_mute_toggle">Panikkdemping</string>
+    <string name="desktop_panic_mute_on">Panikkdemping: På</string>
+    <string name="desktop_panic_mute_off">Panikkdemping: Av</string>
+    <string name="desktop_panic_mute_hint">Tvinger Quiet Ops og skjuler neonkanter og målere. Kun visuelt — endrer ikke brannmur eller kill-switch. Snarvei: Super+Shift+P.</string>
+    <string name="desktop_vos_profiles_appearance_hint">Hver navngitt profil kan ha sitt eget desktop.properties-overlegg for intensitet, aksent, ikoner og peker. Bytting leser inn utseendet fra profiloverlegget, deretter globale hvelvegenskaper.</string>
+</resources>

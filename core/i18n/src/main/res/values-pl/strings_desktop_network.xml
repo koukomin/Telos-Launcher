@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_net_dns_pref_hint">Zapisywane w sejfie. W Linuxie Telos stosuje DoT przez resolvectl, gdy jest dostępny; DoH pozostaje tylko preferencją.</string>
+    <string name="desktop_net_profiles_sum">Foldery profili sejfu w ~/.config/telos/profiles/</string>
+    <string name="desktop_net_allowlist_path">Plik listy dozwolonych</string>
+    <string name="desktop_net_kill_switch">Kill-switch</string>
+    <string name="desktop_net_kill_switch_enable">Włącz kill-switch</string>
+    <string name="desktop_net_kill_switch_disable">Wyłącz kill-switch</string>
+    <string name="desktop_net_kill_switch_enforced">Wymuszone: niedozwolony ruch wychodzący jest odrzucany (nftables inet telos_session)</string>
+    <string name="desktop_net_kill_switch_pref_only">Preferencja zapisana; nie stosowana na tej platformie</string>
+    <string name="desktop_net_kill_switch_failed">Włączone, ale nie udało się zastosować nftables — ruch nie jest blokowany</string>
+    <string name="desktop_net_kill_switch_clear_blocked">Czyszczenie zapory sesji jest zablokowane, gdy kill-switch jest włączony</string>
+    <string name="desktop_net_apps_tab">Aplikacje</string>
+    <string name="desktop_net_apps_title">Routing per aplikacja</string>
+    <string name="desktop_net_apps_hint">Eine Desktop-ID oder ein Paket pro Zeile mit allow, deny oder vpn. Gespeichert unter ~/.config/telos/app-routing.txt. Unter Linux blockiert deny den Start im Telos-Launcher und vpn setzt TELOS_APP_ROUTE=vpn (best effort, kein gefälschtes netns). Prozessbezogene nftables-Owner/Cgroup-Routing wird nicht angewendet, damit der Session-Kill-Switch intakt bleibt.</string>
+    <string name="desktop_net_apps_file">Tabela routingu</string>
+    <string name="desktop_net_dns_filters_title">Filtry DNS</string>
+    <string name="desktop_net_dns_filters_hint">Block- und Allow-Listen liegen im Vault unter ~/.config/telos/ (dns-block.txt, dns-allow.txt). Eine NextDNS-Konfigurations-ID wendet DoT über resolvectl unter Linux an, sofern verfügbar. Aktivieren Sie den Telos-DNS-Stub (oder setzen Sie dns-stub.port) für einen lokalen 127.0.0.1-Forwarder, der blockierte Hosts mit NXDOMAIN beantwortet und DNS per nftables umleitet — dann werden Host-Listen Enforced. Wenn der Stub nicht binden kann oder nft fehlschlägt, bleibt der Status Failed/PreferenceOnly. Windows und macOS speichern nur Einstellungen.</string>
+    <string name="desktop_net_nextdns_id">ID konfiguracji NextDNS</string>
+    <string name="desktop_net_nextdns_id_invalid">Nieprawidłowe ID konfiguracji NextDNS (użyj 4–12 liter lub cyfr)</string>
+    <string name="desktop_net_dns_blocklist">Lista blokad DNS</string>
+    <string name="desktop_net_dns_allowlist">Lista zezwoleń DNS</string>
+    <string name="desktop_net_dns_filter_status">Status filtra</string>
+    <string name="desktop_net_dns_filter_enforced">Erzwungen (NextDNS DoT und/oder Telos-DNS-Stub + nft-Umleitung)</string>
+    <string name="desktop_net_dns_filter_pref_only">Preferencja zapisana; filtrowanie nie jest stosowane na tej ścieżce</string>
+    <string name="desktop_net_dns_filter_failed">Konfiguriert, aber der DNS-Stub konnte nicht binden oder resolvectl/nftables konnte die Filterung nicht anwenden</string>
+    <string name="desktop_net_apps_enforced">Erzwungen: Start-Gate aktiv (Deny-Regeln werden von DesktopFileLauncher geprüft)</string>
+    <string name="desktop_net_apps_pref_only">Einstellung gespeichert; keine Deny-Regeln unter Linux oder auf dieser Plattform nicht angewendet</string>
+    <string name="desktop_net_dns_stub_enable">Telos-DNS-Stub aktivieren</string>
+    <string name="desktop_net_dns_stub_disable">Telos-DNS-Stub deaktivieren</string>
+    <string name="desktop_net_dns_stub_hint">Der Telos-DNS-Stub lauscht auf 127.0.0.1 (Standardport 5353), antwortet NXDOMAIN für dns-block.txt (Allowlist hat Vorrang) und leitet andere Anfragen weiter. nftables inet telos_dns leitet ausgehenden Port 53 um, wenn die privilegierte Anwendung gelingt.</string>
+</resources>

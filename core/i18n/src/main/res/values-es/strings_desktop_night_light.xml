@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_night_light_title">Luz nocturna</string>
+    <string name="desktop_night_light_hint">Calienta la pantalla con una herramienta del sistema (gammastep, redshift o wlsunset). Sin servicios de ubicación y sin enviar nada por la red. Sin herramienta, solo se guarda la preferencia.</string>
+    <string name="desktop_night_light_enable">Activar luz nocturna</string>
+    <string name="desktop_night_light_temperature">Temperatura de color: %1$d K</string>
+    <string name="desktop_night_light_on">Activada</string>
+    <string name="desktop_night_light_off">Desactivada</string>
+    <string name="desktop_night_light_pref_only">Preferencia guardada; instale gammastep, redshift o wlsunset para aplicarla en este equipo</string>
+    <string name="desktop_night_light_failed">La herramienta del sistema no pudo cambiar la temperatura de la pantalla</string>
+    <string name="desktop_night_light_applied">Aplicada con %1$s</string>
+    <string name="desktop_night_light_cleared">Luz nocturna desactivada</string>
+    <string name="desktop_settings_search_hint">Buscar ajustes</string>
+    <string name="desktop_settings_search_empty">Ningún ajuste coincide con esta búsqueda</string>
+    <string name="desktop_settings_session">Sesión</string>
+    <string name="desktop_settings_display">Pantalla</string>
+    <string name="desktop_settings_desktop">Escritorio</string>
+    <string name="desktop_settings_windows">Ventanas</string>
+    <string name="desktop_settings_portable">Portátil</string>
+    <string name="desktop_settings_vault">Bóveda</string>
+</resources>

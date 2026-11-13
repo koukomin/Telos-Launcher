@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_vault_restore_title">पूर्ण vault पुनर्स्थापना</string>
+    <string name="desktop_vault_restore_hint">AES सत्र बैकअप से desktop.properties और ~/.config/telos पुनर्स्थापित करता है। WireGuard निजी कुंजियाँ लॉग में कभी नहीं लिखी जातीं। पुष्टि आवश्यक है।</string>
+    <string name="desktop_vault_restore_preview_btn">पुनर्स्थापना पूर्वावलोकन</string>
+    <string name="desktop_vault_restore_preview">%1$s Telos कॉन्फ़िग फ़ाइलें पुनर्स्थापित करने के लिए तैयार (desktop.properties: %2$s)। लागू करने के लिए पुष्टि करें।</string>
+    <string name="desktop_vault_restore_confirm">पुनर्स्थापना की पुष्टि करें</string>
+    <string name="desktop_vault_restore_cancel">पुनर्स्थापना रद्द करें</string>
+    <string name="desktop_vault_restore_done">Vault सत्र कॉन्फ़िग पुनर्स्थापित</string>
+    <string name="desktop_vault_restore_need_confirm">पुनर्स्थापना पुष्टि आवश्यक</string>
+    <string name="desktop_luks_restore_title">LUKS वॉल्ट छवि पुनर्स्थापित करें</string>
+    <string name="desktop_luks_restore_hint">telos_vault.img बैकअप को portable/vault छवि पथ में कॉपी करता है। वॉल्ट लॉक होना चाहिए। पासवर्ड से कभी माउंट नहीं करता — पुनर्स्थापना के बाद अलग से अनलॉक करें। पुष्टि और SHA-256 जाँच आवश्यक।</string>
+    <string name="desktop_luks_restore_path_label">बैकअप छवि पथ (telos_vault.img)</string>
+    <string name="desktop_luks_restore_preview_btn">LUKS छवि पुनर्स्थापना पूर्वावलोकन</string>
+    <string name="desktop_luks_restore_preview">%1$s बाइट पुनर्स्थापित करने को तैयार (sha256 %2$s…). कॉपी के लिए पुष्टि करें। वॉल्ट लॉक रहना चाहिए।</string>
+    <string name="desktop_luks_restore_confirm">LUKS छवि पुनर्स्थापना की पुष्टि करें</string>
+    <string name="desktop_luks_restore_cancel">LUKS पुनर्स्थापना रद्द करें</string>
+    <string name="desktop_luks_restore_done">LUKS छवि %1$s के रूप में पुनर्स्थापित (अभी भी लॉक — अलग से अनलॉक करें)</string>
+    <string name="desktop_luks_restore_need_confirm">LUKS छवि पुनर्स्थापना के लिए पुष्टि आवश्यक</string>
+    <string name="desktop_luks_restore_locked_required">LUKS छवि पुनर्स्थापित करने से पहले वॉल्ट लॉक होना चाहिए</string>
+    <string name="desktop_update_title">हस्ताक्षरित डेस्कटॉप अपडेट</string>
+    <string name="desktop_update_hint">Telos Ed25519 कुंजी से हस्ताक्षरित स्थानीय file:// पथ या HTTPS मैनिफ़ेस्ट जाँचें। अपडेट portable/vault temp में स्टेज होते हैं और कभी स्वतः स्थापित नहीं होते। डिफ़ॉल्ट चैनल: GitHub Releases परिसंपत्ति telos-desktop-update.manifest।</string>
+    <string name="desktop_update_releases_hint">GitHub Releases डिफ़ॉल्ट: %1$s</string>
+    <string name="desktop_update_use_releases">GitHub Releases URL उपयोग करें</string>
+    <string name="desktop_update_releases_filled">GitHub Releases मैनिफ़ेस्ट URL भरा गया</string>
+    <string name="desktop_update_url_label">अपडेट मैनिफ़ेस्ट (पथ, file://, या https://)</string>
+    <string name="desktop_update_save_url">अपडेट URL सहेजें</string>
+    <string name="desktop_update_url_saved">अपडेट मैनिफ़ेस्ट URL सहेजा गया</string>
+    <string name="desktop_update_check">हस्ताक्षरित अपडेट जाँचें</string>
+    <string name="desktop_update_ready">हस्ताक्षरित अपडेट %1$s सत्यापित — स्टेज इंस्टॉल की पुष्टि करें</string>
+    <string name="desktop_update_install_confirm">स्टेज इंस्टॉल की पुष्टि करें</string>
+    <string name="desktop_update_install_cancel">अपडेट रद्द करें</string>
+    <string name="desktop_update_installed">अपडेट %1$s के रूप में स्टेज — पुनःप्रारंभ सहायक की पुष्टि करें (चल रहे jar का प्रतिस्थापन सर्वोत्तम प्रयास)</string>
+    <string name="desktop_update_sig_fail">अपडेट हस्ताक्षर सत्यापन विफल</string>
+    <string name="desktop_update_no_url">पहले file:// या HTTPS अपडेट मैनिफ़ेस्ट URL सेट करें</string>
+    <string name="desktop_update_restart_hint">पुनःप्रारंभ सहायक लंबित-अपडेट चिह्न और वैकल्पिक प्रतिस्थापन स्क्रिप्ट लिखकर बाहर निकलता है। चल रहे JVM jar का प्रतिस्थापन सर्वोत्तम प्रयास है।</string>
+    <string name="desktop_update_restart_confirm">अपडेट के बाद पुनःप्रारंभ की पुष्टि करें</string>
+    <string name="desktop_update_restart_later">बाद में पुनःप्रारंभ करें</string>
+    <string name="desktop_update_restart_failed">अपडेट पुनःप्रारंभ सहायक तैयार नहीं कर सके</string>
+</resources>

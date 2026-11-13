@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_workspace_tints">Barevné proužky ploch</string>
+    <string name="desktop_theme_workspace_tints_hint">Jemné neonové akcenty pod číslicemi 1–4 na panelu. Skryté při panic mute. Vypnout: theme.workspaceTints=false.</string>
+</resources>

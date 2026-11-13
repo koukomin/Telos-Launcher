@@ -46,6 +46,11 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.comms.ermis.*
+import de.mm20.launcher2.ui.component.TelosCyber
+import de.mm20.launcher2.ui.component.TelosCyberAppBarTitle
+import de.mm20.launcher2.ui.component.TelosCyberSectionLabel
+import de.mm20.launcher2.ui.component.TelosTechPill
+import de.mm20.launcher2.ui.component.telosTechSurface
 import de.mm20.launcher2.ui.R
 import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
@@ -136,15 +141,23 @@ private fun ErmisMailbox() {
     }
     Scaffold(containerColor = androidx.compose.ui.graphics.Color.Transparent,
         topBar = {
-            Surface(
-                modifier = Modifier.fillMaxWidth().statusBarsPadding().padding(horizontal = 16.dp, vertical = 8.dp),
-                shape = MaterialTheme.shapes.extraLarge,
-                color = MaterialTheme.colorScheme.surfaceContainerHigh.copy(alpha = 0.94f),
-                tonalElevation = 2.dp
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .statusBarsPadding()
+                    .padding(horizontal = 16.dp, vertical = 8.dp)
+                    .telosTechSurface(borderColor = TelosCyber.NeonCyan, shape = MaterialTheme.shapes.extraLarge)
+                    .padding(horizontal = 8.dp, vertical = 4.dp),
             ) {
+                TelosCyberAppBarTitle(
+                    title = stringResource(I18nR.string.ermis_title),
+                    status = mailboxId,
+                    statusColor = TelosCyber.NeonCyan,
+                    modifier = Modifier.padding(start = 12.dp, end = 12.dp, top = 4.dp),
+                )
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 8.dp)
+                    modifier = Modifier.fillMaxWidth().padding(horizontal = 4.dp, vertical = 4.dp)
                 ) {
                     IconButton(onClick = { backStack.removeLastOrNull() }) {
                         Icon(painterResource(BaseR.drawable.arrow_back_24px), stringResource(I18nR.string.hc_close))
@@ -177,9 +190,9 @@ private fun ErmisMailbox() {
         item {
             Column(Modifier.fillMaxWidth().padding(horizontal = 16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    FilterChip(!starred && !showingDrafts && mailboxId == "INBOX", onClick = { starred = false; showingDrafts = false; mailboxId = "INBOX"; serverResults = null; task { repository.sync(accountId) } }, label = { Text(stringResource(I18nR.string.ermis_inbox)) })
-                    FilterChip(starred && !showingDrafts, onClick = { starred = true; showingDrafts = false }, label = { Text(stringResource(I18nR.string.ermis_starred)) })
-                    FilterChip(showingDrafts, onClick = { showingDrafts = true }, label = { Text(stringResource(I18nR.string.ermis_drafts)) })
+                    TelosTechPill(stringResource(I18nR.string.ermis_inbox), !starred && !showingDrafts && mailboxId == "INBOX", { starred = false; showingDrafts = false; mailboxId = "INBOX"; serverResults = null; task { repository.sync(accountId) } }, accentColor = TelosCyber.NeonCyan)
+                    TelosTechPill(stringResource(I18nR.string.ermis_starred), starred && !showingDrafts, { starred = true; showingDrafts = false }, accentColor = TelosCyber.NeonOrange)
+                    TelosTechPill(stringResource(I18nR.string.ermis_drafts), showingDrafts, { showingDrafts = true }, accentColor = TelosCyber.NeonMagenta)
                     TextButton(onClick = { task { repository.sync(accountId, mailboxId); serverResults = null } }, enabled = !state.loading && state.accounts.isNotEmpty()) { Text(stringResource(I18nR.string.ermis_sync)) }
                 }
                 if (state.accounts.isNotEmpty()) {
@@ -226,7 +239,13 @@ private fun ErmisMailbox() {
         }
         if (!showingDrafts) items(conversations, key = { "${it.first().accountId}:${it.first().folder}:${it.first().uid}" }) { conversation ->
             val message = conversation.first()
-            Card(Modifier.fillMaxWidth().padding(horizontal = 12.dp), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer)) {
+            Card(
+                Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 12.dp)
+                    .telosTechSurface(borderColor = TelosCyber.accentFor(message.uid.hashCode()), shape = MaterialTheme.shapes.medium),
+                colors = CardDefaults.cardColors(containerColor = androidx.compose.ui.graphics.Color.Transparent),
+            ) {
                 Row(Modifier.fillMaxWidth().clickable {
                     selected = message
                     task { val loaded = repository.loadMessage(message.accountId, message.uid, message.folder) ?: message; if (selected?.accountId == message.accountId && selected?.folder == message.folder && selected?.uid == message.uid) selected = loaded; repository.loadFolders(message.accountId) }

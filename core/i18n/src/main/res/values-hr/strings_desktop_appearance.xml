@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<string name="desktop_appearance_hint">Intenzitet Quiet Ops ili Vault Neon, neonski naglasak i panično utišavanje. Profilni overlayi mogu to nadjačati bez pisanja u host HOME u Portable Data.</string>
+    <string name="desktop_theme_intensity_label">Intenzitet teme</string>
+    <string name="desktop_theme_accent_label">Naglasak</string>
+    <string name="desktop_panic_mute_toggle">Panično utišavanje</string>
+    <string name="desktop_panic_mute_on">Panično utišavanje: Uključeno</string>
+    <string name="desktop_panic_mute_off">Panično utišavanje: Isključeno</string>
+    <string name="desktop_panic_mute_hint">Forsira Quiet Ops i skriva neonske rubove i mjerila. Samo vizualno — ne mijenja vatrozid ni kill-switch. Prečac: Super+Shift+P.</string>
+    <string name="desktop_vos_profiles_appearance_hint">Svaki imenovani profil može imati vlastiti overlay desktop.properties za intenzitet, naglasak, ikone i pokazivač. Prebacivanje ponovno učitava izgled iz overlayja profila, zatim iz globalnih svojstava trezora.</string>
+</resources>

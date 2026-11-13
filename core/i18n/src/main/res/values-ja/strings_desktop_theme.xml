@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_appearance_title">外観</string>
+    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
+    <string name="desktop_theme_intensity_neon">Vault Neon</string>
+    <string name="desktop_theme_intensity_paper">Paper Ops</string>
+    <string name="desktop_wallpaper_path">壁紙（ボルトパス）</string>
+    <string name="desktop_wallpaper_path_hint">ボルトのマウント地点からの相対パス（例: Pictures/wall.jpg）。ロックされたプリブート画面では表示されません。</string>
+    <string name="desktop_unlock_theatre_title">Telos Phantom Vault</string>
+    <string name="desktop_unlock_theatre_quiet_ops">Quiet Ops — ロック解除で壁紙を表示</string>
+    <string name="desktop_unlock_theatre_hint">ロック起動はボルト字形のみの Quiet Ops のままです。解除後、Telos はボルト壁紙と選択した強度へクロスフェードします — パーティクルなし。</string>
+    <string name="desktop_sandbox_tint_hint">アクセントリングの色は視覚的 OpSec のみです（Host = オレンジ注意、Net-isolated = シアン、Vault FS = 緑、Standard = マゼンタ）。</string>
+    <string name="desktop_matched_packs_title">対応するアイコン + カーソルパック</string>
+    <string name="desktop_matched_packs_hint">ワンクリックで文書化された GPL ペアを設定（Papirus↔BreezeX、candy-icons↔Bibata；CandyCyber は内蔵 chrome 字形のまま）。ダウンロードはボルトまたはポータブルのアイコンフォルダに残ります。</string>
+    <string name="desktop_matched_packs_apply">ペアを合わせる: %1$s</string>
+    <string name="desktop_matched_packs_one_click">ペアを合わせる</string>
+    <string name="desktop_matched_packs_working">パックを合わせています…</string>
+    <string name="desktop_matched_packs_ok">合わせたパック %1$s を適用しました</string>
+    <string name="desktop_matched_packs_fail">パックを合わせられませんでした: %1$s</string>
+</resources>

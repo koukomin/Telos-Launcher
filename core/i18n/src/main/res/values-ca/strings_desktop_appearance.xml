@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<string name="desktop_appearance_hint">Intensitat Quiet Ops o Vault Neon, accent de neó i silenci de pànic. Els overlays de perfil poden substituir-los sense escriure a l’HOME de l’amfitrió en Portable Data.</string>
+    <string name="desktop_theme_intensity_label">Intensitat del tema</string>
+    <string name="desktop_theme_accent_label">Accent</string>
+    <string name="desktop_panic_mute_toggle">Silenci de pànic</string>
+    <string name="desktop_panic_mute_on">Silenci de pànic: Activat</string>
+    <string name="desktop_panic_mute_off">Silenci de pànic: Desactivat</string>
+    <string name="desktop_panic_mute_hint">Força Quiet Ops i amaga vores i indicadors de neó. Només visual — no canvia el tallafoc ni el kill-switch. Drecera: Super+Shift+P.</string>
+    <string name="desktop_vos_profiles_appearance_hint">Cada perfil amb nom pot conservar el seu overlay desktop.properties per a intensitat, accent, icones i cursor. El canvi torna a carregar l’aparença des de l’overlay del perfil i després de les propietats globals de la caixa forta.</string>
+</resources>

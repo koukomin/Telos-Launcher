@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_helix_palette_title">HELIX COMMAND</string>
+    <string name="desktop_helix_palette_placeholder">Search apps, windows, calculator…</string>
+    <string name="desktop_helix_palette_hint">Super+Period or Ctrl+Space</string>
+    <string name="desktop_helix_palette_privacy">Vault and portable roots only — never indexes host home outside the session.</string>
+    <string name="desktop_helix_palette_open_files">Open Files</string>
+    <string name="desktop_helix_palette_open_settings">Open Settings</string>
+    <string name="desktop_helix_palette_open_network">Open Network</string>
+    <string name="desktop_helix_palette_kill_window">Close focused window</string>
+    <string name="desktop_helix_palette_paste_vault_clip">Paste last vault clipboard</string>
+    <string name="desktop_helix_palette_window">Window</string>
+    <string name="desktop_helix_palette_calc">Calculator</string>
+    <string name="desktop_helix_palette_command">Command</string>
+    <string name="desktop_helix_palette_file">File</string>
+    <string name="desktop_helix_palette_no_results">No matches</string>
+</resources>

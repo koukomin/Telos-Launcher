@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_icons_title">Pictograme</string>
+    <string name="desktop_icons_theme_label">Temă de pictograme</string>
+    <string name="desktop_icons_download_section">Descarcă din Telos</string>
+    <string name="desktop_icons_download">Descarcă</string>
+    <string name="desktop_icons_installing">Se instalează…</string>
+    <string name="desktop_icons_installed">Instalat</string>
+    <string name="desktop_icons_apply">Aplică</string>
+    <string name="desktop_icons_source_system">Sistem</string>
+    <string name="desktop_icons_source_telos">Telos</string>
+    <string name="desktop_icons_source_builtin">Integrat</string>
+    <string name="desktop_icons_path">Dosar pachete pictograme: %1$s</string>
+    <string name="desktop_icons_freedesktop_note">Teme de pictograme freedesktop pentru desktop (nu pachete ADW Android).</string>
+    <string name="desktop_icons_download_failed">Descărcarea a eșuat</string>
+    <string name="desktop_icons_download_ok">Tema instalată</string>
+    <string name="desktop_icons_license">Licență: %1$s</string>
+    <string name="desktop_icons_portable_only">În modul Portable Data, pachetele rămân în dosarul portabil de pictograme (nu în profilul gazdei).</string>
+</resources>

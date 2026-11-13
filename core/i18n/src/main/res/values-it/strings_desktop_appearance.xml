@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<string name="desktop_appearance_hint">Intensità Quiet Ops o Vault Neon, accento neon e silenzio panico. Gli overlay del profilo possono sovrascriverli senza scrivere nella HOME host in Portable Data.</string>
+    <string name="desktop_theme_intensity_label">Intensità tema</string>
+    <string name="desktop_theme_accent_label">Accento</string>
+    <string name="desktop_panic_mute_toggle">Silenzio panico</string>
+    <string name="desktop_panic_mute_on">Silenzio panico: Attivo</string>
+    <string name="desktop_panic_mute_off">Silenzio panico: Disattivo</string>
+    <string name="desktop_panic_mute_hint">Forza Quiet Ops e nasconde bordi e indicatori neon. Solo visuale — non modifica firewall o kill-switch. Scorciatoia: Super+Shift+P.</string>
+    <string name="desktop_vos_profiles_appearance_hint">Ogni profilo con nome può mantenere un overlay desktop.properties per intensità, accento, icone e cursore. Il cambio ricarica l’aspetto dall’overlay del profilo, poi dalle proprietà globali del vault.</string>
+</resources>

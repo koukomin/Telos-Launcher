@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_lan_pair_title">LAN-parkoppling med Android</string>
+    <string name="desktop_lan_pair_hint">Startar en kortlivad parkopplingsserver på LAN. Skanna eller ange koden i Telos Sync. Koder och tokens loggas aldrig.</string>
+    <string name="desktop_lan_pair_start">Starta LAN-parkoppling</string>
+    <string name="desktop_lan_pair_stop">Stoppa LAN-parkoppling</string>
+    <string name="desktop_lan_pair_running">Parkopplingsservern lyssnar på LAN</string>
+    <string name="desktop_lan_pair_code">Parkopplingskod</string>
+    <string name="desktop_lan_pair_qr_uri">Parkopplings-URI (QR / klistra in)</string>
+    <string name="desktop_lan_pair_stopped">LAN-parkoppling stoppad</string>
+    <string name="desktop_lan_pair_bind_reject">Kan inte binda en offentlig adress — använd en privat LAN-IP</string>
+    <string name="desktop_lan_pair_android_title">Telos Desktop LAN-parkoppling</string>
+    <string name="desktop_lan_pair_host">Skrivbordets värd (LAN-IP)</string>
+    <string name="desktop_lan_pair_port">Skrivbordsport</string>
+    <string name="desktop_lan_pair_connect">Parkoppla med skrivbordet</string>
+    <string name="desktop_lan_pair_paired">Parkopplad med skrivbordet</string>
+    <string name="desktop_lan_pair_fetch_bundle">Hämta skrivbordssessionspaket</string>
+    <string name="desktop_lan_pair_fetch_ok">Krypterat skrivbordssessionspaket sparat</string>
+    <string name="desktop_lan_pair_send_bundle">Skicka krypterat paket</string>
+    <string name="desktop_lan_pair_failed">LAN-parkoppling misslyckades</string>
+    <string name="desktop_lan_pair_scan_hint">Öppna Sync → Inställningar på Android och klistra in URI eller ange värd, port och kod.</string>
+</resources>

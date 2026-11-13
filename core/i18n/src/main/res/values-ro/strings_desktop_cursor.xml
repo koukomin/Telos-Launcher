@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_cursor_title">Cursor</string>
+    <string name="desktop_cursor_theme">Temă cursor</string>
+    <string name="desktop_cursor_size">Dimensiune cursor</string>
+    <string name="desktop_cursor_system_default">Implicit sistem</string>
+    <string name="desktop_cursor_preset_style">Stil supraimpresiune Compose (când XCursor nu este disponibil)</string>
+    <string name="desktop_cursor_download_section">Descarcă teme de cursor (în icons portabil/seif)</string>
+    <string name="desktop_cursor_download_named">Descarcă %1$s (%2$s)</string>
+    <string name="desktop_cursor_download_ok">S-a instalat %1$s</string>
+    <string name="desktop_cursor_download_fail">Nu s-a putut descărca tema de cursor: %1$s</string>
+    <string name="desktop_cursor_limit_linux">Linux: aplicațiile copil primesc XCURSOR_THEME și XCURSOR_SIZE. Telos încarcă cadre XCursor într-un cursor AWT când e posibil; altfel desenează supraimpresiunea Compose Sweet/Breeze. Secvențele XCursor animate nu sunt redate.</string>
+    <string name="desktop_cursor_limit_windows">Windows: mapează la cursoarele de sistem AWT. Temele XCursor/Plasma nu se aplică indicatorului Win32.</string>
+    <string name="desktop_cursor_limit_macos">macOS: mapează la cursoarele de sistem AWT. Temele XCursor/Plasma nu se aplică indicatorului Cocoa.</string>
+</resources>

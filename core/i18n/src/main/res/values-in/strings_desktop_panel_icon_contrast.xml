@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_panel_icon_contrast">Kontras ikon panel</string>
+    <string name="desktop_panel_icon_contrast_auto">Otomatis</string>
+    <string name="desktop_panel_icon_contrast_light">Ikon terang</string>
+    <string name="desktop_panel_icon_contrast_dark">Ikon gelap</string>
+    <string name="desktop_panel_icon_contrast_hint">Otomatis mengambil sampel strip wallpaper di belakang panel atas pada perangkat ini dan memilih glif terang atau gelap untuk ikon panel Helix dan label StatusNotifier Compose. Piksel tetap lokal. Pixmap SNI dari telos-sni tidak diwarnai ulang. Preference: panel.iconContrast=auto|light|dark.</string>
+</resources>

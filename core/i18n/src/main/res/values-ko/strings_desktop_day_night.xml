@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_day_night_title">주간 / 야간 테마</string>
+    <string name="desktop_day_night_hint">자동이면 낮에는 Paper Ops(밝게), 밤에는 Quiet Ops(어둡게). 경계는 선택한 시간대를 씁니다. 기본은 수동 시간대이며, 아래에서 명시적으로 켜지 않는 한 위치를 위해 네트워크에 연락하지 않습니다.</string>
+    <string name="desktop_day_night_mode">주간 / 야간 모드</string>
+    <string name="desktop_day_night_off">끔</string>
+    <string name="desktop_day_night_auto">자동</string>
+    <string name="desktop_day_night_light">밝게</string>
+    <string name="desktop_day_night_dark">어둡게</string>
+    <string name="desktop_day_night_timezone">시간대</string>
+    <string name="desktop_day_night_timezone_hint">로컬 주야용 IANA 시간대(선택 전 JVM). 수동 선택은 서버에 연락하지 않습니다.</string>
+    <string name="desktop_day_night_timezone_search">시간대 검색</string>
+    <string name="desktop_day_night_timezone_current">현재 시간대: %1$s</string>
+    <string name="desktop_day_night_network_assist">네트워크 국가 / 시간대 지원</string>
+    <string name="desktop_day_night_network_assist_warning">동의 시에만. 켜면 Telos가 시간대와 국가 코드를 위해 공개 IP→지리 엔드포인트에 한 번만 요청합니다. 그 값(및 선택적 일출/일몰 좌표)만 vault desktop.properties에 저장됩니다. IP는 기록되지 않고, 지속 추적과 테마 클라우드 동기화도 없습니다. 네트워크 실패·킬 스위치·오프라인이면 수동 시간대를 유지하며 Preference only 또는 Failed를 정직하게 표시합니다.</string>
+    <string name="desktop_day_night_assist_pref_only">환경설정만 — 네트워크 지원 끔, 차단됨 또는 요청 없음; 수동 시간대 사용</string>
+    <string name="desktop_day_night_assist_failed">실패 — 지리 엔드포인트에 연결할 수 없음; 수동 시간대 유지</string>
+    <string name="desktop_day_night_assist_applied">적용됨 — 시간대 %1$s, 국가 %2$s (로컬만)</string>
+    <string name="desktop_day_night_country">국가 코드: %1$s</string>
+</resources>

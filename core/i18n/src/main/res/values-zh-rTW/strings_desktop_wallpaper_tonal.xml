@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_wallpaper_tonal_title">桌布強調色</string>
+    <string name="desktop_wallpaper_tonal_enable">從桌布提取強調色</string>
+    <string name="desktop_wallpaper_tonal_hint">在本機對保險庫或可攜桌布取樣，並本地推導 Material 色調種子。像素絕不會上傳。取樣失敗時介面回退到霓虹青。</string>
+    <string name="desktop_wallpaper_tonal_accent_wallpaper">theme.accent=wallpaper — 本地種子已啟用</string>
+</resources>

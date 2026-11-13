@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_panel_surface">سطح الشريط</string>
+    <string name="desktop_theme_panel_surface_hint">الشفاف أو الضبابي يؤثر فقط على جذر الشريط؛ القوائم تبقى غير شفافة. الضبابي يحفظ panelBlur للصقيع؛ تمويه خلفية المضيف أفضل جهد عند عدم التوفر.</string>
+    <string name="desktop_theme_panel_transparent">شفاف</string>
+    <string name="desktop_theme_panel_blurred">ضبابي</string>
+    <string name="desktop_theme_panel_solid">صلب</string>
+    <string name="desktop_theme_panel_opacity">عتامة الشريط: %1$d%%</string>
+    <string name="desktop_theme_panel_blur">تمويه الزجاج: %1$d</string>
+    <string name="desktop_theme_panel_blur_unavailable">تمويه خلفية المضيف غير متاح؛ يستخدم Telos لوحة صقيع شفافة جزئياً ويحتفظ بتفضيل التمويه.</string>
+</resources>

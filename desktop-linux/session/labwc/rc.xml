@@ -54,5 +54,22 @@
     <keybind key="W-Escape">
       <action name="Exit" />
     </keybind>
+    <!-- Helix snap zones (host stacking). Compose also handles Super+Arrow. -->
+    <keybind key="W-Left">
+      <action name="SnapToEdge" direction="left" />
+    </keybind>
+    <keybind key="W-Right">
+      <action name="SnapToEdge" direction="right" />
+    </keybind>
+    <keybind key="W-Up">
+      <action name="Maximize" />
+    </keybind>
+    <keybind key="W-Down">
+      <action name="UnMaximize" />
+    </keybind>
+    <!-- Super+V: Win+V-style clipboard history (Compose also binds Meta+V). -->
+    <keybind key="W-v">
+      <action name="Execute" command="python3 -c &quot;import os,socket;p=os.path.join(os.environ.get('XDG_RUNTIME_DIR','/tmp'),'telos-clipboard.sock');s=socket.socket(socket.AF_UNIX);s.connect(p);s.sendall(b'toggle\n')&quot;" />
+    </keybind>
   </keyboard>
 </labwc_config>

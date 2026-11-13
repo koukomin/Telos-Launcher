@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_appearance_title">ลักษณะ</string>
+    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
+    <string name="desktop_theme_intensity_neon">Vault Neon</string>
+    <string name="desktop_theme_intensity_paper">Paper Ops</string>
+    <string name="desktop_wallpaper_path">วอลเปเปอร์ (พาธ vault)</string>
+    <string name="desktop_wallpaper_path_hint">สัมพัทธ์กับจุดเมานต์ของ vault (เช่น Pictures/wall.jpg) ไม่เคยแสดงบนหน้าจอก่อนบูตที่ล็อก</string>
+    <string name="desktop_unlock_theatre_title">Telos Phantom Vault</string>
+    <string name="desktop_unlock_theatre_quiet_ops">Quiet Ops — ปลดล็อกเพื่อเผยวอลเปเปอร์</string>
+    <string name="desktop_unlock_theatre_hint">การบูตที่ล็อกยังคง Quiet Ops ด้วยสัญลักษณ์ vault เท่านั้น หลังปลดล็อก Telos จะครอสเฟดไปยังวอลเปเปอร์ vault และความเข้มที่เลือก — ไม่มีอนุภาค</string>
+    <string name="desktop_sandbox_tint_hint">สีวงแหวนเน้นเป็น OpSec เชิงภาพเท่านั้น (Host = ส้มเตือน, Net-isolated = ฟ้าอมเขียว, Vault FS = เขียว, Standard = ม่วงแดง)</string>
+    <string name="desktop_matched_packs_title">แพ็กไอคอน + เคอร์เซอร์ที่จับคู่</string>
+    <string name="desktop_matched_packs_hint">คลิกเดียวตั้งคู่ GPL ตามเอกสาร (Papirus↔BreezeX, candy-icons↔Bibata; CandyCyber ยังเป็นสัญลักษณ์ chrome ในตัว) การดาวน์โหลดอยู่ในโฟลเดอร์ไอคอน vault หรือ portable</string>
+    <string name="desktop_matched_packs_apply">จับคู่คู่: %1$s</string>
+    <string name="desktop_matched_packs_one_click">จับคู่คู่</string>
+    <string name="desktop_matched_packs_working">กำลังจับคู่แพ็ก…</string>
+    <string name="desktop_matched_packs_ok">ใช้แพ็กที่จับคู่ %1$s แล้ว</string>
+    <string name="desktop_matched_packs_fail">จับคู่แพ็กไม่ได้: %1$s</string>
+</resources>

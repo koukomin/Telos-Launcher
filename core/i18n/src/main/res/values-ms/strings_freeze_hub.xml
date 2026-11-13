@@ -31,4 +31,8 @@
     
     
 
+    <string name="freeze_desk_title">Freeze Desk</string>
+    <string name="freeze_desk_filter_bloat">Bloat</string>
+    <string name="freeze_desk_open_summary">Buka Sistem → Aplikasi untuk membekukan, mencari dan menapis pakej dipasang.</string>
+    <string name="freeze_desk_rules_help">Peraturan auto-beku dan backends kekal di sini. Pembekuan setiap aplikasi dan AppOps ada di Freeze Desk.</string>
 </resources>

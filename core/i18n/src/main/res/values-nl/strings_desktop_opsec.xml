@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_opsec_title">OpSec</string>
+    <string name="desktop_opsec_secure_clipboard">Veilig klembord</string>
+    <string name="desktop_opsec_clipboard_title">Klembord</string>
+    <string name="desktop_opsec_clipboard_hint">Gevoelige tekst (sleutels, IBAN, WireGuard) wordt uit de geschiedenis gehaald, alleen in deze sessie bewaard en uit het systeemklembord gewist. Geschiedenis blijft vault-lokaal — geen cloud-sync.</string>
+    <string name="desktop_opsec_clipboard_clear_now">Klembord nu wissen</string>
+    <string name="desktop_opsec_clipboard_clear_all">Alles wissen</string>
+    <string name="desktop_opsec_clipboard_history_meta">Max. 20 items · verloopt na 5 minuten · vastzetten tot vergrendeling · Super+V</string>
+    <string name="desktop_opsec_clipboard_history_empty">Nog geen klembordgeschiedenis</string>
+    <string name="desktop_opsec_clipboard_pin_until_lock">Vastzetten</string>
+    <string name="desktop_opsec_clipboard_unpin">Losmaken</string>
+    <string name="desktop_opsec_clipboard_recall_vaulted">Vaulted gevoelige clip ophalen</string>
+    <string name="desktop_opsec_clipboard_timer">Automatisch wissen na %1$d seconden</string>
+    <string name="desktop_opsec_clipboard_timer_off">Uit</string>
+    <string name="desktop_opsec_attestation_run">Host-integriteitsmomentopname vastleggen</string>
+    <string name="desktop_opsec_audit_title">Sessie-auditlogboek</string>
+    <string name="desktop_opsec_audit_refresh">Auditlogboek vernieuwen</string>
+    <string name="desktop_opsec_audit_empty">Nog geen auditgebeurtenissen</string>
+    <string name="desktop_opsec_tpm_status">TPM-status: %1$s</string>
+    <string name="desktop_opsec_tpm_unknown">nog niet gemeten</string>
+    <string name="desktop_opsec_tpm_hint">Lokale PCR 0/7-digestsamenvatting via tpm2-tools indien aanwezig. Dit is geen externe attestatie (RAP).</string>
+</resources>

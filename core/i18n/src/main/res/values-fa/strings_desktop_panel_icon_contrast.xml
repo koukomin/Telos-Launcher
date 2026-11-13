@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_panel_icon_contrast">کنتراست آیکن‌های پنل</string>
+    <string name="desktop_panel_icon_contrast_auto">خودکار</string>
+    <string name="desktop_panel_icon_contrast_light">آیکن‌های روشن</string>
+    <string name="desktop_panel_icon_contrast_dark">آیکن‌های تیره</string>
+    <string name="desktop_panel_icon_contrast_hint">حالت خودکار نوار کاغذدیواری پشت پنل بالا را روی این دستگاه نمونه‌برداری می‌کند و گلیف روشن یا تیره برای آیکن‌های Helix و برچسب‌های StatusNotifier در Compose برمی‌گزیند. پیکسل‌ها محلی می‌مانند. pixmapهای SNI از telos-sni دوباره رنگ نمی‌شوند. ترجیح: panel.iconContrast=auto|light|dark.</string>
+</resources>

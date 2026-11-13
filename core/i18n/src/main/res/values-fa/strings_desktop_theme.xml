@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_appearance_title">ظاهر</string>
+    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
+    <string name="desktop_theme_intensity_neon">Vault Neon</string>
+    <string name="desktop_theme_intensity_paper">Paper Ops</string>
+    <string name="desktop_wallpaper_path">کاغذدیواری (مسیر خزانه)</string>
+    <string name="desktop_wallpaper_path_hint">نسبی به نقطهٔ اتصال خزانه (مثلاً Pictures/wall.jpg). هرگز در صفحهٔ پیش‌راه‌اندازی قفل‌شده نشان داده نمی‌شود.</string>
+    <string name="desktop_unlock_theatre_title">Telos Phantom Vault</string>
+    <string name="desktop_unlock_theatre_quiet_ops">Quiet Ops — برای نمایش کاغذدیواری قفل را باز کنید</string>
+    <string name="desktop_unlock_theatre_hint">راه‌اندازی قفل‌شده فقط با گلیف خزانه در Quiet Ops می‌ماند. پس از بازشدن، Telos به کاغذدیواری خزانه و شدت انتخابی کراس‌فید می‌کند — بدون ذرات.</string>
+    <string name="desktop_sandbox_tint_hint">رنگ حلقهٔ تأکید فقط OpSec بصری است (Host = نارنجی احتیاط، Net-isolated = فیروزه‌ای، Vault FS = سبز، Standard = سرخابی).</string>
+    <string name="desktop_matched_packs_title">بسته‌های آیکون + نشانگر منطبق</string>
+    <string name="desktop_matched_packs_hint">یک کلیک یک جفت GPL مستند را تنظیم می‌کند (Papirus↔BreezeX، candy-icons↔Bibata؛ CandyCyber گلیف کروم داخلی می‌ماند). بارگیری‌ها در پوشهٔ آیکون خزانه یا قابل‌حمل می‌مانند.</string>
+    <string name="desktop_matched_packs_apply">جفت را منطبق کن: %1$s</string>
+    <string name="desktop_matched_packs_one_click">جفت را منطبق کن</string>
+    <string name="desktop_matched_packs_working">در حال انطباق بسته‌ها…</string>
+    <string name="desktop_matched_packs_ok">بستهٔ منطبق %1$s اعمال شد</string>
+    <string name="desktop_matched_packs_fail">نتوانست بسته‌ها را منطبق کند: %1$s</string>
+</resources>

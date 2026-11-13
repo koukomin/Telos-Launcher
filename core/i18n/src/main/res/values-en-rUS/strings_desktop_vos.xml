@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_portable_data_root">Portable data folder (config, cache, temp only here)</string>
+    <string name="desktop_host_home_trace_warning">Host Home writes settings and cache on this PC. Choose Portable Data to leave no host traces.</string>
+    <string name="desktop_boot_portable_data">Portable Data — no host traces (config/cache/temp under portable root)</string>
+    <string name="desktop_boot_portable_vault">Portable Vault — encrypted data under portable root</string>
+    <string name="desktop_boot_host_home">Host Home (may leave traces on this PC)</string>
+    <string name="desktop_boot_unlock_existing">Unlock existing vault (file or stego folder)</string>
+    <string name="desktop_boot_create_wizard">Create new elastic / stego / deniable vault</string>
+    <string name="desktop_boot_ephemeral">Ephemeral RAM-only ghost session (tmpfs)</string>
+    <string name="desktop_session_sync_title">Session sync</string>
+    <string name="desktop_session_sync_export">Export encrypted bundle</string>
+    <string name="desktop_session_sync_import">Import encrypted bundle</string>
+    <string name="desktop_session_sync_auto">Auto-import on boot when a sync key is stored</string>
+    <string name="desktop_session_sync_pass">Sync passphrase (or KeePass entry %1$s)</string>
+    <string name="desktop_session_sync_keepass">KeePass database path (.kdbx)</string>
+    <string name="desktop_windows_shell_title">Windows shell replacement</string>
+    <string name="desktop_windows_shell_enable">Set Telos as login shell (HKCU)</string>
+    <string name="desktop_windows_shell_revert">Restore explorer.exe shell</string>
+    <string name="desktop_windows_shell_risk">Replaces your user shell at next sign-in. Keep a recovery path before enabling.</string>
+    <string name="desktop_helix_portable_note">Helix window chrome is drawn in Compose on all platforms; native Win32 decorations may show until shell replacement.</string>
+    <string name="desktop_session_sync_pass_required">Sync passphrase required</string>
+    <string name="desktop_session_sync_imported">Session sync bundle imported</string>
+    <string name="desktop_session_sync_key_stored">Sync key stored for prompt-free boot import</string>
+    <string name="desktop_session_sync_key_missing">Enter a sync passphrase before enabling auto-import</string>
+    <string name="desktop_vos_profiles_title">Vault profiles</string>
+    <string name="desktop_vos_profiles_summary">Named profile folders under config profiles/. Active name only in desktop.properties — never passwords.</string>
+    <string name="desktop_vos_profiles_active">Active profile: %1$s</string>
+    <string name="desktop_vos_profiles_none">(none)</string>
+    <string name="desktop_vos_profiles_empty">No profiles yet. Create one to switch vault identities.</string>
+    <string name="desktop_vos_profiles_kind_named">Named vault profile</string>
+    <string name="desktop_vos_profiles_kind_portable">Portable vault root</string>
+    <string name="desktop_vos_profiles_switch">Switch</string>
+    <string name="desktop_vos_profiles_use_portable">Use this portable root</string>
+    <string name="desktop_vos_profiles_new_name">New profile name</string>
+    <string name="desktop_vos_profiles_create">Create and switch</string>
+    <string name="desktop_vos_profiles_created">Created and switched to %1$s</string>
+    <string name="desktop_vos_profiles_switched">Switched to %1$s</string>
+    <string name="desktop_vos_profiles_invalid_name">Use letters, numbers, dots, underscores or hyphens (max 64).</string>
+    <string name="desktop_vos_profiles_portable_hint">Portable roots keep config, cache and temp off the host profile (Windows default: Portable Data).</string>
+    <string name="desktop_vos_profiles_portable_path">Portable vault folder path</string>
+    <string name="desktop_vos_profiles_add_portable">Add portable vault root</string>
+    <string name="desktop_vos_profiles_portable_selected">Portable root: %1$s</string>
+    <string name="desktop_vos_profiles_portable_reject">Portable root must not be the host home or its .config/.cache/.local.</string>
+</resources>

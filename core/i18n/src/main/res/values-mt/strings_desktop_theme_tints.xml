@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_workspace_tints">Strixxi ta’ tint tal-ispazji</string>
+    <string name="desktop_theme_workspace_tints_hint">Aċċenti neon sottili taħt iċ-ċifri 1–4 tal-pannell. Moħbija waqt panic mute. Itfi: theme.workspaceTints=false.</string>
+</resources>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_appearance_title">Appearance</string>
+    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
+    <string name="desktop_theme_intensity_neon">Vault Neon</string>
+    <string name="desktop_theme_intensity_paper">Paper Ops</string>
+    <string name="desktop_wallpaper_path">Wallpaper (vault path)</string>
+    <string name="desktop_wallpaper_path_hint">Relative to the vault mount (for example Pictures/wall.jpg). Never shown on the locked pre-boot screen.</string>
+    <string name="desktop_unlock_theatre_title">Telos Phantom Vault</string>
+    <string name="desktop_unlock_theatre_quiet_ops">Quiet Ops — unlock to reveal your wallpaper</string>
+    <string name="desktop_unlock_theatre_hint">Locked boot stays Quiet Ops with the vault glyph only. After unlock, Telos crossfades to your vault wallpaper and chosen intensity — no particle effects.</string>
+    <string name="desktop_sandbox_tint_hint">Accent ring color is visual OpSec only (Host = orange caution, Net-isolated = cyan, Vault FS = green, Standard = magenta).</string>
+    <string name="desktop_matched_packs_title">Matched icon + cursor packs</string>
+    <string name="desktop_matched_packs_hint">One click sets a documented GPL pair (Papirus↔BreezeX, candy-icons↔Bibata; CandyCyber stays the built-in chrome glyph). Downloads stay under the vault or portable icons folder.</string>
+    <string name="desktop_matched_packs_apply">Match pair: %1$s</string>
+    <string name="desktop_matched_packs_one_click">Match pair</string>
+    <string name="desktop_matched_packs_working">Matching packs…</string>
+    <string name="desktop_matched_packs_ok">Applied matched pack %1$s</string>
+    <string name="desktop_matched_packs_fail">Could not match packs: %1$s</string>
+</resources>

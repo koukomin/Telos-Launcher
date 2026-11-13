@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_shot_title">स्क्रीनशॉट</string>
+    <string name="desktop_shot_full">पूरी स्क्रीन</string>
+    <string name="desktop_shot_region">आयताकार क्षेत्र</string>
+    <string name="desktop_shot_window">विंडो</string>
+    <string name="desktop_shot_clipboard">क्लिपबोर्ड पर कॉपी करें</string>
+    <string name="desktop_shot_clipboard_hint">डिफ़ॉल्ट रूप से बंद। TELOS_SHOT_CLIPBOARD=1 से भी चालू।</string>
+    <string name="desktop_shot_redact">सेव से पहले छिपाएँ</string>
+    <string name="desktop_shot_redact_hint">निजी सामग्री काली करने के लिए आयत खींचें, फिर सेव करें।</string>
+    <string name="desktop_shot_save">सेव करें</string>
+    <string name="desktop_shot_save_without_redact">बिना छिपाए सेव करें</string>
+    <string name="desktop_shot_saved">स्क्रीनशॉट सेव हो गया</string>
+    <string name="desktop_shot_failed">स्क्रीनशॉट विफल</string>
+    <string name="desktop_shot_path_hint">वॉल्ट (या पोर्टेबल डेटा) के Pictures/Screenshots में केवल मालिक (0600) के लिए सेव करता है।</string>
+</resources>

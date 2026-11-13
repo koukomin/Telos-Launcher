@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_opsec_title">OpSec</string>
+    <string name="desktop_opsec_secure_clipboard">Сигурен клипборд</string>
+    <string name="desktop_opsec_clipboard_title">Клипборд</string>
+    <string name="desktop_opsec_clipboard_hint">Чувствителният текст (ключове, IBAN, WireGuard) се премахва от историята, пази се само в тази сесия и се изчиства от системния клипборд. Историята остава във vault — без облачна синхронизация.</string>
+    <string name="desktop_opsec_clipboard_clear_now">Изчисти клипборда сега</string>
+    <string name="desktop_opsec_clipboard_clear_all">Изчисти всички</string>
+    <string name="desktop_opsec_clipboard_history_meta">До 20 елемента · изтича след 5 минути · закачи до заключване · Super+V</string>
+    <string name="desktop_opsec_clipboard_history_empty">Все още няма история на клипборда</string>
+    <string name="desktop_opsec_clipboard_pin_until_lock">Закачи</string>
+    <string name="desktop_opsec_clipboard_unpin">Откачи</string>
+    <string name="desktop_opsec_clipboard_recall_vaulted">Възстанови чувствителен клип от vault</string>
+    <string name="desktop_opsec_clipboard_timer">Автоматично изчистване след %1$d секунди</string>
+    <string name="desktop_opsec_clipboard_timer_off">Изкл.</string>
+    <string name="desktop_opsec_attestation_run">Запиши моментна снимка на целостта на хоста</string>
+    <string name="desktop_opsec_audit_title">Одитен дневник на сесията</string>
+    <string name="desktop_opsec_audit_refresh">Обнови дневника</string>
+    <string name="desktop_opsec_audit_empty">Все още няма одитни събития</string>
+    <string name="desktop_opsec_tpm_status">TPM статус: %1$s</string>
+    <string name="desktop_opsec_tpm_unknown">все още не е измерено</string>
+    <string name="desktop_opsec_tpm_hint">Локално резюме на digest за PCR 0/7 чрез tpm2-tools, ако са налични. Това не е отдалечена атестация (RAP).</string>
+</resources>

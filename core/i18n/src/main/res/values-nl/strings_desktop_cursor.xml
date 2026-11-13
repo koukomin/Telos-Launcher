@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_cursor_title">Cursor</string>
+    <string name="desktop_cursor_theme">Cursorthema</string>
+    <string name="desktop_cursor_size">Cursorgrootte</string>
+    <string name="desktop_cursor_system_default">Systeemstandaard</string>
+    <string name="desktop_cursor_preset_style">Compose-overlaystijl (als XCursor niet beschikbaar is)</string>
+    <string name="desktop_cursor_download_section">Cursorthema’s downloaden (naar portable/kluis-icons)</string>
+    <string name="desktop_cursor_download_named">%1$s downloaden (%2$s)</string>
+    <string name="desktop_cursor_download_ok">%1$s geïnstalleerd</string>
+    <string name="desktop_cursor_download_fail">Cursorthema kon niet worden gedownload: %1$s</string>
+    <string name="desktop_cursor_limit_linux">Linux: subapps krijgen XCURSOR_THEME en XCURSOR_SIZE. Telos laadt XCursor-frames in een AWT-cursor wanneer mogelijk; anders wordt de Compose Sweet/Breeze-overlay getekend. Geanimeerde XCursor-reeksen worden niet afgespeeld.</string>
+    <string name="desktop_cursor_limit_windows">Windows: koppelt aan AWT-systeemcursors. XCursor/Plasma-thema’s worden niet op de Win32-aanwijzer toegepast.</string>
+    <string name="desktop_cursor_limit_macos">macOS: koppelt aan AWT-systeemcursors. XCursor/Plasma-thema’s worden niet op de Cocoa-aanwijzer toegepast.</string>
+</resources>

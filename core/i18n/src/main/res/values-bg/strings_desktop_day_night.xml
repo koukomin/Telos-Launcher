@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_day_night_title">Тема ден / нощ</string>
+    <string name="desktop_day_night_hint">Paper Ops (светла) през деня и Quiet Ops (тъмна) през нощта при Auto. Границите ползват избраната зона. По подразбиране зоната е ръчна — мрежата не се ползва за местоположение без съгласие по-долу.</string>
+    <string name="desktop_day_night_mode">Режим ден / нощ</string>
+    <string name="desktop_day_night_off">Изкл.</string>
+    <string name="desktop_day_night_auto">Авто</string>
+    <string name="desktop_day_night_light">Светла</string>
+    <string name="desktop_day_night_dark">Тъмна</string>
+    <string name="desktop_day_night_timezone">Часова зона</string>
+    <string name="desktop_day_night_timezone_hint">IANA зона за местен ден/нощ (JVM до избор). Ръчният избор не търси сървъри.</string>
+    <string name="desktop_day_night_timezone_search">Търсене на зони</string>
+    <string name="desktop_day_night_timezone_current">Текуща зона: %1$s</string>
+    <string name="desktop_day_night_network_assist">Мрежова помощ държава / зона</string>
+    <string name="desktop_day_night_network_assist_warning">Само със съгласие. Включено, Telos прави една заявка към публичен endpoint IP→geo за зона и код на държава. Само тези стойности (и по желание координати за изгрев/залез) се пазят в vault desktop.properties. IP не се логва, няма непрекъснато проследяване и няма облачна синхронизация на теми. При мрежов сбой, kill-switch или офлайн остава ръчната зона; Preference only или Failed се показват честно.</string>
+    <string name="desktop_day_night_assist_pref_only">Само предпочитание — мрежовата помощ е изкл., блокирана или непоискана; ръчна зона</string>
+    <string name="desktop_day_night_assist_failed">Неуспех — geo endpoint недостъпен; ръчната зона е запазена</string>
+    <string name="desktop_day_night_assist_applied">Приложено — зона %1$s, държава %2$s (само локално)</string>
+    <string name="desktop_day_night_country">Код на държава: %1$s</string>
+</resources>

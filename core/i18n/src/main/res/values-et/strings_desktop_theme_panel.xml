@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_panel_surface">Paneeli pind</string>
+    <string name="desktop_theme_panel_surface_hint">Läbipaistev või hägustatud mõjutab ainult paneeli juurt; menüüd jäävad läbipaistmatuks. Hägustatud salvestab panelBlur frostiks; hosti tausta hägustus on best-effort, kui seda pole.</string>
+    <string name="desktop_theme_panel_transparent">Läbipaistev</string>
+    <string name="desktop_theme_panel_blurred">Hägustatud</string>
+    <string name="desktop_theme_panel_solid">Ühtlane</string>
+    <string name="desktop_theme_panel_opacity">Paneeli läbipaistmatus: %1$d%%</string>
+    <string name="desktop_theme_panel_blur">Klaasi hägustus: %1$d</string>
+    <string name="desktop_theme_panel_blur_unavailable">Hosti tausta hägustus pole saadaval; Telos kasutab poolläbipaistvat frost-plaati ja säilitab hägustuseelistuse.</string>
+</resources>

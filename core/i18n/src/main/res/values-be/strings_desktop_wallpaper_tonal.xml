@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_wallpaper_tonal_title">Акцэнт з шпалер</string>
+    <string name="desktop_wallpaper_tonal_enable">Акцэнт са шпалер</string>
+    <string name="desktop_wallpaper_tonal_hint">Бярэ ўзор шпалер vault або portable на гэтай прыладзе і лакальна выводзіць Material танальны seed. Пікселі ніколі не загружаюцца. Пры збоі chrome выкарыстоўвае неонавы цыян.</string>
+    <string name="desktop_wallpaper_tonal_accent_wallpaper">theme.accent=wallpaper — лакальны seed актыўны</string>
+</resources>

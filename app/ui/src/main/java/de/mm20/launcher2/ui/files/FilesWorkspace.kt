@@ -3,6 +3,7 @@ import de.mm20.launcher2.i18n.R as I18nR
 
 import android.app.Application
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.draganddrop.dragAndDropTarget
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
@@ -26,6 +27,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.ui.component.virtualAppElevated
+import de.mm20.launcher2.ui.component.TelosCyber
+import de.mm20.launcher2.ui.component.TelosCyberSectionLabel
+import de.mm20.launcher2.ui.component.telosTechSurface
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStore
@@ -207,11 +211,11 @@ private fun FilesWorkspaceChrome(workspace: FilesWorkspaceViewModel) {
         Modifier
             .fillMaxWidth()
             .padding(horizontal = 12.dp, vertical = 8.dp)
-            .clip(RoundedCornerShape(28.dp))
-            .background(virtualAppElevated())
+            .telosTechSurface(borderColor = TelosCyber.NeonCyan, shape = RoundedCornerShape(28.dp))
             .padding(6.dp),
         verticalArrangement = Arrangement.spacedBy(6.dp),
     ) {
+        TelosCyberSectionLabel(stringResource(I18nR.string.hc_telos_files), accent = TelosCyber.NeonCyan, modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp))
         Row(
             Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()),
             horizontalArrangement = Arrangement.spacedBy(4.dp),
@@ -219,10 +223,15 @@ private fun FilesWorkspaceChrome(workspace: FilesWorkspaceViewModel) {
         ) {
             workspace.tabs.forEachIndexed { index, tab ->
                 val selected = tab.id == if (workspace.activeRight && workspace.dual) workspace.right else workspace.left
+                val accent = TelosCyber.accentFor(index)
                 Row(
                     Modifier
                         .clip(RoundedCornerShape(20.dp))
-                        .background(if (selected) scheme.primary.copy(alpha = 0.92f) else Color.Transparent)
+                        .background(if (selected) accent.copy(alpha = 0.22f) else Color.Transparent)
+                        .then(
+                            if (selected) Modifier.border(1.2.dp, accent, RoundedCornerShape(20.dp))
+                            else Modifier
+                        )
                         .clickable { workspace.select(tab.id) }
                         .padding(start = 14.dp, end = if (workspace.tabs.size > 1) 4.dp else 14.dp, top = 8.dp, bottom = 8.dp),
                     verticalAlignment = Alignment.CenterVertically,
@@ -232,7 +241,7 @@ private fun FilesWorkspaceChrome(workspace: FilesWorkspaceViewModel) {
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                         modifier = Modifier.widthIn(max = 128.dp),
-                        color = if (selected) scheme.onPrimary else scheme.onSurface,
+                        color = if (selected) accent else scheme.onSurface,
                         style = MaterialTheme.typography.labelLarge,
                         fontWeight = if (selected) FontWeight.SemiBold else FontWeight.Medium,
                     )
@@ -240,7 +249,7 @@ private fun FilesWorkspaceChrome(workspace: FilesWorkspaceViewModel) {
                         Icon(
                             painterResource(WsIcons.close_24px),
                             contentDescription = stringResource(I18nR.string.telos_files_close_tab, index + 1),
-                            tint = if (selected) scheme.onPrimary else scheme.onSurfaceVariant,
+                            tint = if (selected) accent else scheme.onSurfaceVariant,
                             modifier = Modifier
                                 .padding(start = 2.dp)
                                 .size(28.dp)

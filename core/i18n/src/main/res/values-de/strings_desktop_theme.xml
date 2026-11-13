@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_appearance_title">Erscheinungsbild</string>
+    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
+    <string name="desktop_theme_intensity_neon">Vault Neon</string>
+    <string name="desktop_theme_intensity_paper">Paper Ops</string>
+    <string name="desktop_wallpaper_path">Hintergrundbild (Vault-Pfad)</string>
+    <string name="desktop_wallpaper_path_hint">Relativ zum Vault-Mount (z. B. Pictures/wall.jpg). Wird nie auf dem gesperrten Pre-Boot-Bildschirm gezeigt.</string>
+    <string name="desktop_unlock_theatre_title">Telos Phantom Vault</string>
+    <string name="desktop_unlock_theatre_quiet_ops">Quiet Ops — entsperren, um Ihr Hintergrundbild freizugeben</string>
+    <string name="desktop_unlock_theatre_hint">Gesperrter Boot bleibt bei Quiet Ops nur mit dem Vault-Glyphen. Nach dem Entsperren blendet Telos zu Ihrem Vault-Hintergrund und der gewählten Intensität — ohne Partikeleffekte.</string>
+    <string name="desktop_sandbox_tint_hint">Die Akzentringfarbe ist nur visuelles OpSec (Host = orangene Vorsicht, Net-isolated = cyan, Vault FS = grün, Standard = magenta).</string>
+    <string name="desktop_matched_packs_title">Abgestimmte Symbol- und Cursor-Pakete</string>
+    <string name="desktop_matched_packs_hint">Ein Klick setzt ein dokumentiertes GPL-Paar (Papirus↔BreezeX, candy-icons↔Bibata; CandyCyber bleibt das eingebaute Chrome-Glyphen). Downloads bleiben im Vault- oder Portable-Icons-Ordner.</string>
+    <string name="desktop_matched_packs_apply">Paar abstimmen: %1$s</string>
+    <string name="desktop_matched_packs_one_click">Paar abstimmen</string>
+    <string name="desktop_matched_packs_working">Pakete werden abgestimmt…</string>
+    <string name="desktop_matched_packs_ok">Abgestimmtes Paket %1$s angewendet</string>
+    <string name="desktop_matched_packs_fail">Pakete konnten nicht abgestimmt werden: %1$s</string>
+</resources>

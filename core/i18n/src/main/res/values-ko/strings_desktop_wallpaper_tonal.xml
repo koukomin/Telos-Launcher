@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_wallpaper_tonal_title">배경화면 강조색</string>
+    <string name="desktop_wallpaper_tonal_enable">배경화면에서 강조색 가져오기</string>
+    <string name="desktop_wallpaper_tonal_hint">이 기기의 vault/휴대용 배경화면을 샘플링하고 Material 토널 시드를 로컬에서 생성합니다. 픽셀은 업로드되지 않습니다. 실패 시 네온 시안으로 대체합니다.</string>
+    <string name="desktop_wallpaper_tonal_accent_wallpaper">theme.accent=wallpaper — 로컬 시드 활성</string>
+</resources>

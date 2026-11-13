@@ -31,4 +31,8 @@
     
     
 
+    <string name="freeze_desk_title">Freeze Desk</string>
+    <string name="freeze_desk_filter_bloat">Bloat</string>
+    <string name="freeze_desk_open_summary">Otvorte Systém → Aplikácie na zmrazenie, hľadanie a filtrovanie nainštalovaných balíkov.</string>
+    <string name="freeze_desk_rules_help">Pravidlá automatického zmrazenia a backends ostávajú tu. Zmrazenie aplikácií a AppOps sú vo Freeze Desk.</string>
 </resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_file_index_title">Index názvů souborů</string>
+    <string name="desktop_file_index_enable">Index názvů souborů v zařízení</string>
+    <string name="desktop_file_index_hint">Volitelné. Indexuje pouze názvy souborů pod HOME trezoru nebo kořenem Portable Data (nikdy profil hostitele, kromě Host Home). Uloženo šifrovaně v .cache/telos/file-index s oprávněními jen pro vlastníka. Bez obsahu souborů a bez odesílání do cloudu.</string>
+</resources>

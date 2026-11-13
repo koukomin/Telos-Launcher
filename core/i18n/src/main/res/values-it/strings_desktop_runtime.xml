@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_store_permissions">Autorizzazioni</string>
+    <string name="desktop_store_sandbox_tier">Livello sandbox</string>
+    <string name="desktop_sandbox_tier_host">Host</string>
+    <string name="desktop_sandbox_tier_vault_fs">Filesystem del vault</string>
+    <string name="desktop_sandbox_tier_net_isolated">Rete isolata</string>
+    <string name="desktop_sandbox_tier_standard">Standard</string>
+    <string name="desktop_perm_filesystem_home">Cartella home</string>
+    <string name="desktop_perm_filesystem_host">Filesystem host</string>
+    <string name="desktop_perm_network">Rete</string>
+    <string name="desktop_perm_gpu">GPU (DRI)</string>
+    <string name="desktop_perm_wayland">Wayland</string>
+    <string name="desktop_perm_x11">X11</string>
+    <string name="desktop_perm_pulseaudio">Audio</string>
+    <string name="desktop_perm_notifications">Notifiche</string>
+    <string name="desktop_perm_camera">Fotocamera</string>
+    <string name="desktop_perm_microphone">Microfono</string>
+    <string name="desktop_flatpak_unavailable">Flatpak non è disponibile; le sovrascritture dei permessi non sono disponibili su questo sistema.</string>
+    <string name="desktop_flatpak_override_applied">Sovrascrittura Flatpak applicata</string>
+    <string name="desktop_flatpak_override_failed">Impossibile applicare la sovrascrittura Flatpak</string>
+    <string name="desktop_flatpak_reset_overrides">Reimposta sovrascritture</string>
+    <string name="desktop_deeplink_handler_hint">telos:// apre le app Telos e la ricerca Kickoff (registrato all’avvio del desktop).</string>
+    <string name="desktop_store_backends">Origini pacchetti</string>
+    <string name="desktop_store_backend_flatpak">Flatpak</string>
+    <string name="desktop_store_backend_winget">Winget</string>
+    <string name="desktop_store_backend_scoop">Scoop</string>
+    <string name="desktop_store_windows_pref_only">Winget/Scoop sono solo per Windows; questo host non esegue azioni pacchetti Windows.</string>
+    <string name="desktop_store_windows_unavailable">Né winget né scoop trovati nel PATH.</string>
+    <string name="desktop_store_windows_installed">Pacchetti Windows (installati)</string>
+    <string name="desktop_store_windows_search">Pacchetti Windows (ricerca)</string>
+    <string name="desktop_store_install_confirm_title">Conferma installazione</string>
+    <string name="desktop_store_install_confirm_body">Installare %1$s (%2$s) tramite %3$s?</string>
+    <string name="desktop_store_install_started">Installazione avviata per %1$s</string>
+    <string name="desktop_store_install_failed">Impossibile avviare l’installazione di %1$s</string>
+    <string name="desktop_portal_device_title">Fotocamera e microfono (portal)</string>
+    <string name="desktop_portal_device_hint">Registra la richiesta e interroga xdg-desktop-portal quando i portal Device/Camera sono disponibili. Senza strumenti portal resta solo preferenza.</string>
+    <string name="desktop_portal_device_requested">Richiesta finestra di accesso portal</string>
+    <string name="desktop_portal_device_pref_only">Preferenza salvata; strumenti portal non disponibili (solo preferenza).</string>
+    <string name="desktop_portal_device_unavailable">Accesso dispositivo portal non disponibile su questo sistema.</string>
+    <string name="desktop_portal_device_failed">Impossibile chiedere l’accesso dispositivo al portal desktop</string>
+    <string name="desktop_netns_cap_unshare">netns per app: unshare --net disponibile</string>
+    <string name="desktop_netns_cap_ip">netns per app: ip netns disponibile</string>
+    <string name="desktop_netns_cap_unavailable">Strumenti netns per app mancanti; isolamento resta solo preferenza</string>
+    <string name="desktop_netns_flatpak_owned">Flatpak isolato in rete usa Flatpak --unshare=network (nessun netns host).</string>
+    <string name="desktop_netns_flatpak_no_tools">Livello isolato in rete; mancano unshare/ip netns — solo override Flatpak se applicato.</string>
+    <string name="desktop_netns_not_isolated">L’app non è contrassegnata come isolata in rete.</string>
+</resources>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_panel_surface">Επιφάνεια πάνελ</string>
+    <string name="desktop_theme_panel_surface_hint">Διαφανές ή θολό καθαρίζει μόνο τη ρίζα του πάνελ· τα μενού μένουν αδιαφανή. Το θολό αποθηκεύει το panelBlur για frost· το blur φόντου από το wallpaper του host είναι best-effort όταν δεν υπάρχει.</string>
+    <string name="desktop_theme_panel_transparent">Διαφανές</string>
+    <string name="desktop_theme_panel_blurred">Θολό</string>
+    <string name="desktop_theme_panel_solid">Συμπαγές</string>
+    <string name="desktop_theme_panel_opacity">Αδιαφάνεια πάνελ: %1$d%%</string>
+    <string name="desktop_theme_panel_blur">Θόλωση γυαλιού: %1$d</string>
+    <string name="desktop_theme_panel_blur_unavailable">Το blur wallpaper του host δεν είναι διαθέσιμο· το Telos χρησιμοποιεί ημιδιαφανή frost επιφάνεια και κρατά την προτίμηση blur.</string>
+</resources>

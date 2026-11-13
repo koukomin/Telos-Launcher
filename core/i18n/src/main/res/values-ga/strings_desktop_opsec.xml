@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_opsec_title">OpSec</string>
+    <string name="desktop_opsec_secure_clipboard">Gearrthaisce shlán</string>
+    <string name="desktop_opsec_clipboard_title">Gearrthaisce</string>
+    <string name="desktop_opsec_clipboard_hint">Baintear téacs íogair (eochracha, IBAN, WireGuard) as an stair, coimeádtar sa seisiún seo amháin é, agus glantar é ón ghearrthaisce córais. Fanann an stair sa vault — gan sync néil.</string>
+    <string name="desktop_opsec_clipboard_clear_now">Glan an ghearrthaisce anois</string>
+    <string name="desktop_opsec_clipboard_clear_all">Glan uile</string>
+    <string name="desktop_opsec_clipboard_history_meta">Suas le 20 mír · éagann tar éis 5 nóiméad · bioráin go dtí glas · Super+V</string>
+    <string name="desktop_opsec_clipboard_history_empty">Níl stair ghearrthaisce fós</string>
+    <string name="desktop_opsec_clipboard_pin_until_lock">Bioráin</string>
+    <string name="desktop_opsec_clipboard_unpin">Díbioráin</string>
+    <string name="desktop_opsec_clipboard_recall_vaulted">Athghairm gearrthóg íogair ón vault</string>
+    <string name="desktop_opsec_clipboard_timer">Glan go huathoibríoch tar éis %1$d soicind</string>
+    <string name="desktop_opsec_clipboard_timer_off">As</string>
+    <string name="desktop_opsec_attestation_run">Taifead snapshot ionracais an óstaigh</string>
+    <string name="desktop_opsec_audit_title">Log iniúchta an tseisiúin</string>
+    <string name="desktop_opsec_audit_refresh">Athnuaigh an log</string>
+    <string name="desktop_opsec_audit_empty">Níl aon teagmhais iniúchta fós</string>
+    <string name="desktop_opsec_tpm_status">Stádas TPM: %1$s</string>
+    <string name="desktop_opsec_tpm_unknown">gan tomhas fós</string>
+    <string name="desktop_opsec_tpm_hint">Achoimre áitiúil digest PCR 0/7 trí tpm2-tools más ann dóibh. Ní fianú cianda (RAP) é seo.</string>
+</resources>

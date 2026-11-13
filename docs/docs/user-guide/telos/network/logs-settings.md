@@ -28,6 +28,14 @@ DNS queries off.
 
 Network settings apply the next time Telos Network starts; **Restart now** applies them at once.
 
+## Saved Wi-Fi passwords
+
+Telos Network → Settings includes the saved Wi-Fi manager (reveal after device
+authentication, QR, notes, backup). It prefers the built-in Telos Shizuku
+session; if that is not running it opens System → Shizuku. Passwords are never
+logged or copied to telemetry, and revealed values clear when the screen goes to
+the background.
+
 ## App rules from a log entry
 
 Tap an installed application's icon in connection logs, DNS logs or app totals to open that package's full firewall editor. The editor opens expanded, including scoped IP/domain rules and temporary allowances (15 minutes, one hour or eight hours). Tapping the surrounding connection/DNS row retains its detail dialog and destination actions. Unknown/system entries without a resolvable package retain log details without an app-rule shortcut.

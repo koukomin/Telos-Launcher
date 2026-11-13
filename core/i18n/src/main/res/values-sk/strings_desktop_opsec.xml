@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_opsec_title">OpSec</string>
+    <string name="desktop_opsec_secure_clipboard">Bezpečná schránka</string>
+    <string name="desktop_opsec_clipboard_title">Schránka</string>
+    <string name="desktop_opsec_clipboard_hint">Citlivý text (kľúče, IBAN, WireGuard) sa z histórie odstráni, uloží len v tejto relácii a vymaže zo systémovej schránky. História zostáva vo vaulte — bez cloudovej synchronizácie.</string>
+    <string name="desktop_opsec_clipboard_clear_now">Vymazať schránku teraz</string>
+    <string name="desktop_opsec_clipboard_clear_all">Vymazať všetko</string>
+    <string name="desktop_opsec_clipboard_history_meta">Až 20 položiek · vyprší po 5 minútach · pripnúť do uzamknutia · Super+V</string>
+    <string name="desktop_opsec_clipboard_history_empty">Zatiaľ žiadna história schránky</string>
+    <string name="desktop_opsec_clipboard_pin_until_lock">Pripnúť</string>
+    <string name="desktop_opsec_clipboard_unpin">Odopnúť</string>
+    <string name="desktop_opsec_clipboard_recall_vaulted">Obnoviť citlivý klip z vaultu</string>
+    <string name="desktop_opsec_clipboard_timer">Automaticky vymazať po %1$d s</string>
+    <string name="desktop_opsec_clipboard_timer_off">Vypnuté</string>
+    <string name="desktop_opsec_attestation_run">Zaznamenať snímku integrity hostiteľa</string>
+    <string name="desktop_opsec_audit_title">Auditný denník relácie</string>
+    <string name="desktop_opsec_audit_refresh">Obnoviť denník</string>
+    <string name="desktop_opsec_audit_empty">Zatiaľ žiadne auditné udalosti</string>
+    <string name="desktop_opsec_tpm_status">Stav TPM: %1$s</string>
+    <string name="desktop_opsec_tpm_unknown">zatiaľ nemerané</string>
+    <string name="desktop_opsec_tpm_hint">Miestny súhrn digestov PCR 0/7 cez tpm2-tools, ak sú dostupné. Nie je to vzdialená atestácia (RAP).</string>
+</resources>

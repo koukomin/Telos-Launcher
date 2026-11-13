@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_icons_title">شمایل‌ها</string>
+    <string name="desktop_icons_theme_label">پوستهٔ شمایل</string>
+    <string name="desktop_icons_download_section">بارگیری از Telos</string>
+    <string name="desktop_icons_download">بارگیری</string>
+    <string name="desktop_icons_installing">در حال نصب…</string>
+    <string name="desktop_icons_installed">نصب‌شده</string>
+    <string name="desktop_icons_apply">اعمال</string>
+    <string name="desktop_icons_source_system">سامانه</string>
+    <string name="desktop_icons_source_telos">Telos</string>
+    <string name="desktop_icons_source_builtin">توکار</string>
+    <string name="desktop_icons_path">پوشهٔ بسته‌های شمایل: %1$s</string>
+    <string name="desktop_icons_freedesktop_note">پوسته‌های شمایل freedesktop رومیزی (نه بسته‌های ADW اندروید).</string>
+    <string name="desktop_icons_download_failed">بارگیری ناموفق بود</string>
+    <string name="desktop_icons_download_ok">پوسته نصب شد</string>
+    <string name="desktop_icons_license">پروانه: %1$s</string>
+    <string name="desktop_icons_portable_only">در حالت Portable Data بسته‌ها در پوشهٔ قابل‌حمل شمایل می‌مانند (نه نمایهٔ میزبان).</string>
+</resources>

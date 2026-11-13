@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_night_light_title">Нічне світло</string>
+    <string name="desktop_night_light_hint">Підігріває екран системною утилітою (gammastep, redshift або wlsunset). Без служб геолокації і без надсилання даних мережею. Без утиліти зберігається лише налаштування.</string>
+    <string name="desktop_night_light_enable">Увімкнути нічне світло</string>
+    <string name="desktop_night_light_temperature">Колірна температура: %1$d K</string>
+    <string name="desktop_night_light_on">Увімк.</string>
+    <string name="desktop_night_light_off">Вимк.</string>
+    <string name="desktop_night_light_pref_only">Налаштування збережено; встановіть gammastep, redshift або wlsunset, щоб застосувати на цьому хості</string>
+    <string name="desktop_night_light_failed">Системна утиліта не змогла змінити температуру екрана</string>
+    <string name="desktop_night_light_applied">Застосовано через %1$s</string>
+    <string name="desktop_night_light_cleared">Нічне світло вимкнено</string>
+    <string name="desktop_settings_search_hint">Пошук налаштувань</string>
+    <string name="desktop_settings_search_empty">Немає налаштувань, що відповідають цьому пошуку</string>
+    <string name="desktop_settings_session">Сеанс</string>
+    <string name="desktop_settings_display">Дисплей</string>
+    <string name="desktop_settings_desktop">Робочий стіл</string>
+    <string name="desktop_settings_windows">Вікна</string>
+    <string name="desktop_settings_portable">Портативний</string>
+    <string name="desktop_settings_vault">Сховище</string>
+</resources>

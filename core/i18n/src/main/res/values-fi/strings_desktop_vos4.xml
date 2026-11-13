@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_lan_pair_title">LAN-paritus Androidin kanssa</string>
+    <string name="desktop_lan_pair_hint">Käynnistää lyhytikäisen parituspalvelimen LAN-verkossa. Skannaa tai syötä koodi Telos Syncissä. Koodeja ja tunnuksia ei koskaan kirjata lokiin.</string>
+    <string name="desktop_lan_pair_start">Käynnistä LAN-paritus</string>
+    <string name="desktop_lan_pair_stop">Pysäytä LAN-paritus</string>
+    <string name="desktop_lan_pair_running">Parituspalvelin kuuntelee LAN-verkossa</string>
+    <string name="desktop_lan_pair_code">Parituskoodi</string>
+    <string name="desktop_lan_pair_qr_uri">Paritus-URI (QR / liitä)</string>
+    <string name="desktop_lan_pair_stopped">LAN-paritus pysäytetty</string>
+    <string name="desktop_lan_pair_bind_reject">Julkista osoitetta ei voi sitoa — käytä yksityistä LAN-IP:tä</string>
+    <string name="desktop_lan_pair_android_title">Telos Desktop LAN-paritus</string>
+    <string name="desktop_lan_pair_host">Työpöydän isäntä (LAN-IP)</string>
+    <string name="desktop_lan_pair_port">Työpöydän portti</string>
+    <string name="desktop_lan_pair_connect">Parita työpöydän kanssa</string>
+    <string name="desktop_lan_pair_paired">Paritettu työpöydän kanssa</string>
+    <string name="desktop_lan_pair_fetch_bundle">Nouda työpöytäistuntopaketti</string>
+    <string name="desktop_lan_pair_fetch_ok">Salatuttu työpöytäistuntopaketti tallennettu</string>
+    <string name="desktop_lan_pair_send_bundle">Lähetä salattu paketti</string>
+    <string name="desktop_lan_pair_failed">LAN-paritus epäonnistui</string>
+    <string name="desktop_lan_pair_scan_hint">Avaa Androidissa Sync → Asetukset ja liitä URI tai syötä isäntä, portti ja koodi.</string>
+</resources>

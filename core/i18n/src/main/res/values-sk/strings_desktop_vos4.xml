@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_lan_pair_title">Párovanie LAN s Androidom</string>
+    <string name="desktop_lan_pair_hint">Spustí krátkodobý párovací server v sieti LAN. Naskenujte alebo zadajte kód v Telos Sync. Kódy a tokeny sa nikdy nezapisujú do denníkov.</string>
+    <string name="desktop_lan_pair_start">Spustiť párovanie LAN</string>
+    <string name="desktop_lan_pair_stop">Zastaviť párovanie LAN</string>
+    <string name="desktop_lan_pair_running">Párovací server počúva v LAN</string>
+    <string name="desktop_lan_pair_code">Párovací kód</string>
+    <string name="desktop_lan_pair_qr_uri">URI párovania (QR / vložiť)</string>
+    <string name="desktop_lan_pair_stopped">Párovanie LAN zastavené</string>
+    <string name="desktop_lan_pair_bind_reject">Nedá sa viazať verejná adresa — použite súkromnú LAN IP</string>
+    <string name="desktop_lan_pair_android_title">Párovanie LAN Telos Desktop</string>
+    <string name="desktop_lan_pair_host">Hostiteľ plochy (LAN IP)</string>
+    <string name="desktop_lan_pair_port">Port plochy</string>
+    <string name="desktop_lan_pair_connect">Spárovať s plochou</string>
+    <string name="desktop_lan_pair_paired">Spárované s plochou</string>
+    <string name="desktop_lan_pair_fetch_bundle">Stiahnuť balík relácie plochy</string>
+    <string name="desktop_lan_pair_fetch_ok">Šifrovaný balík relácie plochy uložený</string>
+    <string name="desktop_lan_pair_send_bundle">Odoslať šifrovaný balík</string>
+    <string name="desktop_lan_pair_failed">Párovanie LAN zlyhalo</string>
+    <string name="desktop_lan_pair_scan_hint">V Androide otvorte Sync → Nastavenia a vložte URI alebo zadajte hostiteľa, port a kód.</string>
+</resources>

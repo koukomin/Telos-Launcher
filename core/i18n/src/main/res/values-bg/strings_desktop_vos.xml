@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_portable_data_root">Portable data folder (config, cache, temp only here)</string>
+    <string name="desktop_host_home_trace_warning">Host Home writes settings and cache on this PC. Choose Portable Data to leave no host traces.</string>
+    <string name="desktop_boot_portable_data">Portable Data — no host traces (config/cache/temp under portable root)</string>
+    <string name="desktop_boot_portable_vault">Portable Vault — encrypted data under portable root</string>
+    <string name="desktop_boot_host_home">Host Home (may leave traces on this PC)</string>
+    <string name="desktop_boot_unlock_existing">Unlock existing vault (file or stego folder)</string>
+    <string name="desktop_boot_create_wizard">Create new elastic / stego / deniable vault</string>
+    <string name="desktop_boot_ephemeral">Ephemeral RAM-only ghost session (tmpfs)</string>
+    <string name="desktop_session_sync_title">Session sync</string>
+    <string name="desktop_session_sync_export">Export encrypted bundle</string>
+    <string name="desktop_session_sync_import">Import encrypted bundle</string>
+    <string name="desktop_session_sync_auto">Автоматичен импорт при старт, когато е съхранен sync ключ</string>
+    <string name="desktop_session_sync_pass">Sync passphrase (or KeePass entry %1$s)</string>
+    <string name="desktop_session_sync_keepass">KeePass database path (.kdbx)</string>
+    <string name="desktop_windows_shell_title">Windows shell replacement</string>
+    <string name="desktop_windows_shell_enable">Set Telos as login shell (HKCU)</string>
+    <string name="desktop_windows_shell_revert">Restore explorer.exe shell</string>
+    <string name="desktop_windows_shell_risk">Replaces your user shell at next sign-in. Keep a recovery path before enabling.</string>
+    <string name="desktop_helix_portable_note">Helix window chrome is drawn in Compose on all platforms; native Win32 decorations may show until shell replacement.</string>
+    <string name="desktop_session_sync_pass_required">Изисква се sync паролна фраза</string>
+    <string name="desktop_session_sync_imported">Пакетът за sync на сесията е импортиран</string>
+    <string name="desktop_session_sync_key_stored">Sync ключът е съхранен за импорт при старт без подкана</string>
+    <string name="desktop_session_sync_key_missing">Въведете sync паролна фраза преди да включите автоматичния импорт</string>
+    <string name="desktop_vos_profiles_title">Профили на трезора</string>
+    <string name="desktop_vos_profiles_summary">Именувани папки на профили в config profiles/. В desktop.properties само активното име — никога пароли.</string>
+    <string name="desktop_vos_profiles_active">Активен профил: %1$s</string>
+    <string name="desktop_vos_profiles_none">(няма)</string>
+    <string name="desktop_vos_profiles_empty">Все още няма профили. Създайте един за превключване на самоличности на трезора.</string>
+    <string name="desktop_vos_profiles_kind_named">Именуван профил на трезора</string>
+    <string name="desktop_vos_profiles_kind_portable">Корен на преносим трезор</string>
+    <string name="desktop_vos_profiles_switch">Превключи</string>
+    <string name="desktop_vos_profiles_use_portable">Използвай този преносим корен</string>
+    <string name="desktop_vos_profiles_new_name">Име на нов профил</string>
+    <string name="desktop_vos_profiles_create">Създай и превключи</string>
+    <string name="desktop_vos_profiles_created">Създаден и превключен към %1$s</string>
+    <string name="desktop_vos_profiles_switched">Превключен към %1$s</string>
+    <string name="desktop_vos_profiles_invalid_name">Букви, цифри, точки, долни черти или тирета (макс. 64).</string>
+    <string name="desktop_vos_profiles_portable_hint">Преносимите корени държат config, cache и temp извън профила на хоста (по подразбиране в Windows: Portable Data).</string>
+    <string name="desktop_vos_profiles_portable_path">Път към папката на преносимия трезор</string>
+    <string name="desktop_vos_profiles_add_portable">Добави корен на преносим трезор</string>
+    <string name="desktop_vos_profiles_portable_selected">Преносим корен: %1$s</string>
+    <string name="desktop_vos_profiles_portable_reject">Преносимият корен не може да е home на хоста или неговите .config/.cache/.local.</string>
+</resources>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_panel_icon_contrast">ניגודיות סמלי לוח</string>
+    <string name="desktop_panel_icon_contrast_auto">אוטומטי</string>
+    <string name="desktop_panel_icon_contrast_light">סמלים בהירים</string>
+    <string name="desktop_panel_icon_contrast_dark">סמלים כהים</string>
+    <string name="desktop_panel_icon_contrast_hint">אוטומטי דוגם את רצועת הטפט מאחורי הלוח העליון במכשיר זה ובוחר גליפים בהירים או כהים לסמלי Helix ולתוויות StatusNotifier ב־Compose. הפיקסלים נשארים מקומיים. pixmap של SNI מ־telos-sni אינם נצבעים מחדש. העדפה: panel.iconContrast=auto|light|dark.</string>
+</resources>

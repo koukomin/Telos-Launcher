@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_panel_surface">Skydelio paviršius</string>
+    <string name="desktop_theme_panel_surface_hint">Permatomas arba sulietas veikia tik skydelio šaknį; meniu lieka nepermatomi. Sulietas saugo panelBlur frostui; šeimininko fono suliejimas yra best-effort, jei nepasiekiamas.</string>
+    <string name="desktop_theme_panel_transparent">Permatomas</string>
+    <string name="desktop_theme_panel_blurred">Sulietas</string>
+    <string name="desktop_theme_panel_solid">Vientisas</string>
+    <string name="desktop_theme_panel_opacity">Skydelio nepermatomumas: %1$d%%</string>
+    <string name="desktop_theme_panel_blur">Stiklo suliejimas: %1$d</string>
+    <string name="desktop_theme_panel_blur_unavailable">Šeimininko fono suliejimas nepasiekiamas; Telos naudoja permatomą frost plokštę ir išsaugo suliejimo nuostatą.</string>
+</resources>

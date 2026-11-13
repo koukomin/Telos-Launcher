@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_shot_title">Seat den scáileán</string>
+    <string name="desktop_shot_full">Scáileán iomlán</string>
+    <string name="desktop_shot_region">Réigiún dronuilleogach</string>
+    <string name="desktop_shot_window">Fuinneog</string>
+    <string name="desktop_shot_clipboard">Cóipeáil chuig an ghearrthaisce</string>
+    <string name="desktop_shot_clipboard_hint">As de réir réamhshocraithe. Freisin le TELOS_SHOT_CLIPBOARD=1.</string>
+    <string name="desktop_shot_redact">Dubhaigh roimh shábháil</string>
+    <string name="desktop_shot_redact_hint">Tarraing dronuilleog chun ábhar príobháideach a dhubhú, ansin sábháil.</string>
+    <string name="desktop_shot_save">Sábháil</string>
+    <string name="desktop_shot_save_without_redact">Sábháil gan dubhú</string>
+    <string name="desktop_shot_saved">Seat sábháilte</string>
+    <string name="desktop_shot_failed">Theip ar an seat</string>
+    <string name="desktop_shot_path_hint">Sábhálann faoi Pictures/Screenshots sa vault (nó sonraí iniompartha), úinéir amháin (0600).</string>
+</resources>

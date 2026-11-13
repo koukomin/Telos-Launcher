@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_lan_pair_title">Ghép nối LAN với Android</string>
+    <string name="desktop_lan_pair_hint">Khởi động máy chủ ghép nối ngắn hạn trên LAN. Quét hoặc nhập mã trong Telos Sync. Mã và token không bao giờ được ghi nhật ký.</string>
+    <string name="desktop_lan_pair_start">Bắt đầu ghép nối LAN</string>
+    <string name="desktop_lan_pair_stop">Dừng ghép nối LAN</string>
+    <string name="desktop_lan_pair_running">Máy chủ ghép nối đang lắng nghe trên LAN</string>
+    <string name="desktop_lan_pair_code">Mã ghép nối</string>
+    <string name="desktop_lan_pair_qr_uri">URI ghép nối (QR / dán)</string>
+    <string name="desktop_lan_pair_stopped">Đã dừng ghép nối LAN</string>
+    <string name="desktop_lan_pair_bind_reject">Không thể gắn địa chỉ công cộng — hãy dùng IP LAN riêng</string>
+    <string name="desktop_lan_pair_android_title">Ghép nối LAN Telos Desktop</string>
+    <string name="desktop_lan_pair_host">Máy chủ máy tính để bàn (IP LAN)</string>
+    <string name="desktop_lan_pair_port">Cổng máy tính để bàn</string>
+    <string name="desktop_lan_pair_connect">Ghép nối với máy tính để bàn</string>
+    <string name="desktop_lan_pair_paired">Đã ghép nối với máy tính để bàn</string>
+    <string name="desktop_lan_pair_fetch_bundle">Lấy gói phiên máy tính để bàn</string>
+    <string name="desktop_lan_pair_fetch_ok">Đã lưu gói phiên máy tính để bàn được mã hóa</string>
+    <string name="desktop_lan_pair_send_bundle">Gửi gói được mã hóa</string>
+    <string name="desktop_lan_pair_failed">Ghép nối LAN thất bại</string>
+    <string name="desktop_lan_pair_scan_hint">Trên Android mở Sync → Cài đặt và dán URI hoặc nhập máy chủ, cổng và mã.</string>
+</resources>

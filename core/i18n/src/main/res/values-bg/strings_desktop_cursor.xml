@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_cursor_title">Курсор</string>
+    <string name="desktop_cursor_theme">Тема на курсора</string>
+    <string name="desktop_cursor_size">Размер на курсора</string>
+    <string name="desktop_cursor_system_default">Системно по подразбиране</string>
+    <string name="desktop_cursor_preset_style">Стил на Compose наслагване (когато XCursor липсва)</string>
+    <string name="desktop_cursor_download_section">Изтегляне на теми за курсор (в portable/трезор icons)</string>
+    <string name="desktop_cursor_download_named">Изтегляне на %1$s (%2$s)</string>
+    <string name="desktop_cursor_download_ok">Инсталирано %1$s</string>
+    <string name="desktop_cursor_download_fail">Темата за курсор не можа да се изтегли: %1$s</string>
+    <string name="desktop_cursor_limit_linux">Linux: дъщерните приложения получават XCURSOR_THEME и XCURSOR_SIZE. Telos зарежда кадри XCursor в AWT курсор, когато е възможно; иначе рисува Compose Sweet/Breeze наслагване. Анимирани XCursor последователности не се възпроизвеждат.</string>
+    <string name="desktop_cursor_limit_windows">Windows: съответства на системни AWT курсори. Темите XCursor/Plasma не се прилагат към Win32 показалеца.</string>
+    <string name="desktop_cursor_limit_macos">macOS: съответства на системни AWT курсори. Темите XCursor/Plasma не се прилагат към Cocoa показалеца.</string>
+</resources>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_opsec_title">OpSec</string>
+    <string name="desktop_opsec_secure_clipboard">Bezpieczny schowek</string>
+    <string name="desktop_opsec_clipboard_title">Schowek</string>
+    <string name="desktop_opsec_clipboard_hint">Wrażliwy tekst (klucze, IBAN, WireGuard) jest usuwany z historii, przechowywany tylko w tej sesji i czyszczony z systemowego schowka. Historia zostaje w vault — bez synchronizacji w chmurze.</string>
+    <string name="desktop_opsec_clipboard_clear_now">Wyczyść schowek teraz</string>
+    <string name="desktop_opsec_clipboard_clear_all">Wyczyść wszystko</string>
+    <string name="desktop_opsec_clipboard_history_meta">Do 20 pozycji · wygasa po 5 minutach · przypnij do blokady · Super+V</string>
+    <string name="desktop_opsec_clipboard_history_empty">Brak historii schowka</string>
+    <string name="desktop_opsec_clipboard_pin_until_lock">Przypnij</string>
+    <string name="desktop_opsec_clipboard_unpin">Odepnij</string>
+    <string name="desktop_opsec_clipboard_recall_vaulted">Przywróć wrażliwy klip z vault</string>
+    <string name="desktop_opsec_clipboard_timer">Automatyczne czyszczenie po %1$d s</string>
+    <string name="desktop_opsec_clipboard_timer_off">Wył.</string>
+    <string name="desktop_opsec_attestation_run">Zapisz migawkę integralności hosta</string>
+    <string name="desktop_opsec_audit_title">Dziennik audytu sesji</string>
+    <string name="desktop_opsec_audit_refresh">Odśwież dziennik</string>
+    <string name="desktop_opsec_audit_empty">Brak zdarzeń audytu</string>
+    <string name="desktop_opsec_tpm_status">Status TPM: %1$s</string>
+    <string name="desktop_opsec_tpm_unknown">jeszcze nie zmierzono</string>
+    <string name="desktop_opsec_tpm_hint">Lokalne podsumowanie skrótów PCR 0/7 przez tpm2-tools, jeśli dostępne. To nie jest zdalne poświadczenie (RAP).</string>
+</resources>

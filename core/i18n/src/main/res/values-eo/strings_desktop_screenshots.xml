@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_shot_title">Ekrankopio</string>
+    <string name="desktop_shot_full">Plena ekrano</string>
+    <string name="desktop_shot_region">Rektangula regiono</string>
+    <string name="desktop_shot_window">Fenestro</string>
+    <string name="desktop_shot_clipboard">Kopii al tondujo</string>
+    <string name="desktop_shot_clipboard_hint">Defaŭlte malŝaltita. Ankaŭ per TELOS_SHOT_CLIPBOARD=1.</string>
+    <string name="desktop_shot_redact">Nigrigi antaŭ konservado</string>
+    <string name="desktop_shot_redact_hint">Desegnu rektangulon por nigrigi privatan enhavon, poste konservu.</string>
+    <string name="desktop_shot_save">Konservi</string>
+    <string name="desktop_shot_save_without_redact">Konservi sen nigrigo</string>
+    <string name="desktop_shot_saved">Ekrankopio konservita</string>
+    <string name="desktop_shot_failed">Ekrankopio malsukcesis</string>
+    <string name="desktop_shot_path_hint">Konservas sub Pictures/Screenshots de la trezorejo (aŭ portebla datumo), nur posedanto (0600).</string>
+</resources>

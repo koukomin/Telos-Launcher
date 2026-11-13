@@ -91,33 +91,51 @@ fun AetherDashboardScreen(route: AetherDashboardRoute = AetherDashboardRoute()) 
     if (showComposeDialog) {
         AlertDialog(
             onDismissRequest = { showComposeDialog = false },
-            title = { Text("New Aether Nostr Post", fontWeight = FontWeight.Bold, color = purple) },
+            containerColor = de.mm20.launcher2.ui.component.virtualAppPopup(),
+            title = {
+                Text(
+                    stringResource(I18nR.string.aether_compose_title),
+                    fontWeight = FontWeight.Bold,
+                    color = purple,
+                )
+            },
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Text(
+                        stringResource(I18nR.string.aether_preview_summary),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
                     OutlinedTextField(
                         value = postText,
                         onValueChange = { postText = it },
-                        placeholder = { Text("What's happening on Nostr?") },
-                        modifier = Modifier.fillMaxWidth().height(120.dp)
+                        placeholder = { Text(stringResource(I18nR.string.aether_compose_hint)) },
+                        enabled = false,
+                        modifier = Modifier.fillMaxWidth().height(120.dp),
                     )
                     if (!route.sharedMediaUri.isNullOrEmpty()) {
-                        Text("📎 Attached Media: ${route.sharedMediaUri}", fontSize = 11.sp, color = cyan)
+                        Text(
+                            stringResource(I18nR.string.aether_attached_media, route.sharedMediaUri.orEmpty()),
+                            fontSize = 11.sp,
+                            color = cyan,
+                        )
                     }
                 }
             },
             confirmButton = {
                 Button(
                     onClick = { showComposeDialog = false },
-                    colors = ButtonDefaults.buttonColors(containerColor = purple)
+                    enabled = false,
+                    colors = ButtonDefaults.buttonColors(containerColor = purple),
                 ) {
-                    Text("Broadcast Note")
+                    Text(stringResource(I18nR.string.aether_broadcast_unavailable))
                 }
             },
             dismissButton = {
                 TextButton(onClick = { showComposeDialog = false }) {
-                    Text("Cancel")
+                    Text(stringResource(I18nR.string.hc_cancel))
                 }
-            }
+            },
         )
     }
 
@@ -262,8 +280,17 @@ fun AetherDashboardScreen(route: AetherDashboardRoute = AetherDashboardRoute()) 
                             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                                 Icon(painterResource(BaseR.drawable.lock_24px), contentDescription = null, tint = pink, modifier = Modifier.size(48.dp))
                                 Spacer(Modifier.height(8.dp))
-                                Text("NIP-44 End-to-End Encrypted DMs", fontWeight = FontWeight.Bold, color = pink)
-                                Text("Protected via AES-CBC/ChaCha20", fontSize = 11.sp, fontFamily = FontFamily.Monospace, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                                Text(
+                                    stringResource(I18nR.string.aether_dm_unavailable_title),
+                                    fontWeight = FontWeight.Bold,
+                                    color = pink,
+                                )
+                                Text(
+                                    stringResource(I18nR.string.aether_dm_unavailable_summary),
+                                    fontSize = 11.sp,
+                                    fontFamily = FontFamily.Monospace,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                )
                             }
                         }
                     }

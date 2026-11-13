@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<string name="desktop_appearance_hint">Quiet Ops বা Vault Neon তীব্রতা, নিয়ন অ্যাকসেন্ট ও প্যানিক মিউট। প্রোফাইল ওভারলে Portable Data-তে হোস্ট HOME-এ না লিখে এগুলো ওভাররাইড করতে পারে।</string>
+    <string name="desktop_theme_intensity_label">থিম তীব্রতা</string>
+    <string name="desktop_theme_accent_label">অ্যাকসেন্ট</string>
+    <string name="desktop_panic_mute_toggle">প্যানিক মিউট</string>
+    <string name="desktop_panic_mute_on">প্যানিক মিউট: চালু</string>
+    <string name="desktop_panic_mute_off">প্যানিক মিউট: বন্ধ</string>
+    <string name="desktop_panic_mute_hint">Quiet Ops বাধ্য করে এবং নিয়ন বর্ডার ও গেজ লুকায়। শুধু দৃশ্যমান — ফায়ারওয়াল বা kill-switch বদলায় না। শর্টকাট: Super+Shift+P।</string>
+    <string name="desktop_vos_profiles_appearance_hint">প্রতিটি নামযুক্ত প্রোফাইল তীব্রতা, অ্যাকসেন্ট, আইকন ও কার্সরের জন্য নিজস্ব desktop.properties ওভারলে রাখতে পারে। সুইচ করলে চেহারা প্রোফাইল ওভারলে থেকে, তারপর গ্লোবাল ভল্ট বৈশিষ্ট্য থেকে আবার লোড হয়।</string>
+</resources>

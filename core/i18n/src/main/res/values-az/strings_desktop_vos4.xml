@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_lan_pair_title">Android ilə LAN cütləşdirmə</string>
+    <string name="desktop_lan_pair_hint">LAN-da qısaömürlü cütləşdirmə serveri başladır. Telos Sync-də kodu skan edin və ya daxil edin. Kodlar və tokenlər heç vaxt jurnala yazılmır.</string>
+    <string name="desktop_lan_pair_start">LAN cütləşdirməni başlat</string>
+    <string name="desktop_lan_pair_stop">LAN cütləşdirməni dayandır</string>
+    <string name="desktop_lan_pair_running">Cütləşdirmə serveri LAN-da dinləyir</string>
+    <string name="desktop_lan_pair_code">Cütləşdirmə kodu</string>
+    <string name="desktop_lan_pair_qr_uri">Cütləşdirmə URI (QR / yapışdır)</string>
+    <string name="desktop_lan_pair_stopped">LAN cütləşdirmə dayandırıldı</string>
+    <string name="desktop_lan_pair_bind_reject">İctimai ünvana bağlamaq olmaz — özəl LAN IP istifadə edin</string>
+    <string name="desktop_lan_pair_android_title">Telos Desktop LAN cütləşdirmə</string>
+    <string name="desktop_lan_pair_host">Masaüstü host (LAN IP)</string>
+    <string name="desktop_lan_pair_port">Masaüstü port</string>
+    <string name="desktop_lan_pair_connect">Masaüstü ilə cütləşdir</string>
+    <string name="desktop_lan_pair_paired">Masaüstü ilə cütləşdirildi</string>
+    <string name="desktop_lan_pair_fetch_bundle">Masaüstü sessiya paketini gətir</string>
+    <string name="desktop_lan_pair_fetch_ok">Şifrələnmiş masaüstü sessiya paketi saxlanıldı</string>
+    <string name="desktop_lan_pair_send_bundle">Şifrələnmiş paket göndər</string>
+    <string name="desktop_lan_pair_failed">LAN cütləşdirmə uğursuz oldu</string>
+    <string name="desktop_lan_pair_scan_hint">Android-də Sync → Parametrlər açın və URI yapışdırın və ya host, port və kod daxil edin.</string>
+</resources>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_lan_pair_title">จับคู่ LAN กับ Android</string>
+    <string name="desktop_lan_pair_hint">เริ่มเซิร์ฟเวอร์จับคู่ชั่วคราวบน LAN สแกนหรือใส่รหัสใน Telos Sync รหัสและโทเค็นจะไม่ถูกบันทึกลงบันทึก</string>
+    <string name="desktop_lan_pair_start">เริ่มการจับคู่ LAN</string>
+    <string name="desktop_lan_pair_stop">หยุดการจับคู่ LAN</string>
+    <string name="desktop_lan_pair_running">เซิร์ฟเวอร์จับคู่กำลังฟังบน LAN</string>
+    <string name="desktop_lan_pair_code">รหัสจับคู่</string>
+    <string name="desktop_lan_pair_qr_uri">URI จับคู่ (QR / วาง)</string>
+    <string name="desktop_lan_pair_stopped">หยุดการจับคู่ LAN แล้ว</string>
+    <string name="desktop_lan_pair_bind_reject">ไม่สามารถผูกที่อยู่สาธารณะได้ — ใช้ IP LAN ส่วนตัว</string>
+    <string name="desktop_lan_pair_android_title">การจับคู่ LAN ของ Telos Desktop</string>
+    <string name="desktop_lan_pair_host">โฮสต์เดสก์ท็อป (IP LAN)</string>
+    <string name="desktop_lan_pair_port">พอร์ตเดสก์ท็อป</string>
+    <string name="desktop_lan_pair_connect">จับคู่กับเดสก์ท็อป</string>
+    <string name="desktop_lan_pair_paired">จับคู่กับเดสก์ท็อปแล้ว</string>
+    <string name="desktop_lan_pair_fetch_bundle">ดึงชุดเซสชันเดสก์ท็อป</string>
+    <string name="desktop_lan_pair_fetch_ok">บันทึกชุดเซสชันเดสก์ท็อปที่เข้ารหัสแล้ว</string>
+    <string name="desktop_lan_pair_send_bundle">ส่งชุดที่เข้ารหัส</string>
+    <string name="desktop_lan_pair_failed">การจับคู่ LAN ล้มเหลว</string>
+    <string name="desktop_lan_pair_scan_hint">บน Android เปิด Sync → การตั้งค่า แล้ววาง URI หรือใส่โฮสต์ พอร์ต และรหัส</string>
+</resources>

@@ -51,6 +51,11 @@ object VirtualAppAppearance {
         "telos_flashlight_app" -> R.drawable.ic_app_flashlight_fg
         "telos_weather_app" -> R.drawable.ic_app_weather_fg
         "telos_tv_app" -> R.drawable.ic_app_tv_fg
+        "telos_keyboard_app" -> R.drawable.ic_app_keyboard_fg
+        "telos_keepass_app" -> R.drawable.ic_app_keepass_fg
+        "telos_aether_app" -> R.drawable.ic_app_aether_fg
+        "telos_fit_app" -> R.drawable.ic_app_fit_fg
+        "telos_stremio_app" -> R.drawable.ic_app_stremio_fg
         else -> TelosAppIcons.forDomain(domain)
     }
 

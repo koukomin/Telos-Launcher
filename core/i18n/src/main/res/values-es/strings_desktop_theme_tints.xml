@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_workspace_tints">Franjas de tinte de espacios</string>
+    <string name="desktop_theme_workspace_tints_hint">Acentos neón sutiles bajo los dígitos 1–4 del panel. Ocultas en panic mute. Desactivar: theme.workspaceTints=false.</string>
+</resources>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_shot_title">Captura de tela</string>
+    <string name="desktop_shot_full">Tela cheia</string>
+    <string name="desktop_shot_region">Região retangular</string>
+    <string name="desktop_shot_window">Janela</string>
+    <string name="desktop_shot_clipboard">Copiar para a área de transferência</string>
+    <string name="desktop_shot_clipboard_hint">Desativado por padrão. Também com TELOS_SHOT_CLIPBOARD=1.</string>
+    <string name="desktop_shot_redact">Editar antes de salvar</string>
+    <string name="desktop_shot_redact_hint">Desenhe um retângulo para ocultar conteúdo privado e salve.</string>
+    <string name="desktop_shot_save">Salvar</string>
+    <string name="desktop_shot_save_without_redact">Salvar sem ocultar</string>
+    <string name="desktop_shot_saved">Captura salva</string>
+    <string name="desktop_shot_failed">A captura falhou</string>
+    <string name="desktop_shot_path_hint">Salva em Pictures/Screenshots do vault (ou dados portáteis), somente proprietário (0600).</string>
+</resources>

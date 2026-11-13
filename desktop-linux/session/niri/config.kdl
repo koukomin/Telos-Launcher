@@ -18,6 +18,13 @@ layout {
 binds {
     Mod+Escape { quit; }
     Mod+Shift+E { quit; }
+    // Helix snap approximations (tiling). Compose also handles Super+Arrow.
+    Mod+Left { set-window-width "50%"; }
+    Mod+Right { set-window-width "50%"; }
+    Mod+Up { maximize-column; }
+    Mod+Down { set-window-width "50%"; }
+    Mod+Ctrl+Left { set-window-width "66%"; }
+    Mod+Ctrl+Right { set-window-width "33%"; }
 }
 
 hotkey-overlay {

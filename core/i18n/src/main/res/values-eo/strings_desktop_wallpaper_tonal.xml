@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_wallpaper_tonal_title">Akcento el fono</string>
+    <string name="desktop_wallpaper_tonal_enable">Akcento el fono</string>
+    <string name="desktop_wallpaper_tonal_hint">Specimenas la vault aŭ porteblan fonon sur ĉi tiu aparato kaj lokale derivas Material-tonalan semon. Rastrumeroj neniam alŝutiĝas. Se malsukcesas, chrome uzas neoncian.</string>
+    <string name="desktop_wallpaper_tonal_accent_wallpaper">theme.accent=wallpaper — loka semo aktiva</string>
+</resources>

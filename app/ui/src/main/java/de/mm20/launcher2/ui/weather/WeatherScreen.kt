@@ -39,6 +39,10 @@ import de.mm20.launcher2.preferences.MeasurementSystem
 import de.mm20.launcher2.preferences.weather.WeatherLocation
 import de.mm20.launcher2.ui.common.WeatherLocationSearchDialog
 import de.mm20.launcher2.ui.locals.LocalBackStack
+import de.mm20.launcher2.ui.component.TelosCyber
+import de.mm20.launcher2.ui.component.TelosCyberAppBarTitle
+import de.mm20.launcher2.ui.component.TelosDotMatrixText
+import de.mm20.launcher2.ui.component.telosTechSurface
 import de.mm20.launcher2.ui.component.VirtualAppWindow
 import de.mm20.launcher2.ui.component.telosAmbientGlow
 import de.mm20.launcher2.ui.component.telosScanlines
@@ -91,12 +95,11 @@ fun WeatherScreen() {
                 CenterAlignedTopAppBar(
                     colors = TopAppBarDefaults.centerAlignedTopAppBarColors(containerColor = Color.Transparent),
                     title = {
-                        Text(
-                            text = locationName,
-                            fontWeight = FontWeight.Bold,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                            modifier = Modifier.clickable { showLocationSearch = true }
+                        TelosCyberAppBarTitle(
+                            title = locationName,
+                            status = stringResource(I18nR.string.weather_radar_sweep),
+                            statusColor = TelosCyber.NeonCyan,
+                            modifier = Modifier.clickable { showLocationSearch = true },
                         )
                     },
                     navigationIcon = {
@@ -134,12 +137,10 @@ fun WeatherScreen() {
                 // Today Weather Hero Card
                 TodayHeroCard(currentForecast, unitSystem)
 
-                // Hourly Forecast Scrollable Row
                 if (forecasts.isNotEmpty()) {
                     HourlyForecastCard(forecasts.take(24), unitSystem)
                 }
 
-                // 14-Day Daily Forecast List
                 if (dailyForecasts.isNotEmpty()) {
                     DailyForecastCard(dailyForecasts.take(14), unitSystem)
                 }
@@ -166,9 +167,11 @@ private fun TodayHeroCard(
     val condition = forecast?.condition ?: "Partly Cloudy"
 
     Card(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .telosTechSurface(borderColor = TelosCyber.NeonCyan, shape = RoundedCornerShape(28.dp)),
         shape = RoundedCornerShape(28.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer)
+        colors = CardDefaults.cardColors(containerColor = Color.Transparent)
     ) {
         Column(
             modifier = Modifier
@@ -185,19 +188,19 @@ private fun TodayHeroCard(
                 text = temp,
                 fontSize = 64.sp,
                 fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.onPrimaryContainer
+                color = MaterialTheme.colorScheme.onSurface
             )
             Text(
                 text = condition,
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.SemiBold,
-                color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.9f)
+                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.9f)
             )
             Spacer(Modifier.height(4.dp))
             Text(
                 text = "Feels like $feelsLike",
                 style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.75f)
+                color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
     }
@@ -211,17 +214,15 @@ private fun HourlyForecastCard(
     val timeFormat = remember { DateTimeFormatter.ofPattern("HH:mm") }
 
     Card(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .telosTechSurface(borderColor = TelosCyber.NeonCyan, shape = RoundedCornerShape(24.dp)),
         shape = RoundedCornerShape(24.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh)
+        colors = CardDefaults.cardColors(containerColor = Color.Transparent)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
-            Text(
-                text = "Hourly Forecast",
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(bottom = 12.dp)
-            )
+            TelosDotMatrixText("HOURLY", fontSize = 11.sp, color = TelosCyber.NeonCyan)
+            Spacer(Modifier.height(8.dp))
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -272,17 +273,15 @@ private fun DailyForecastCard(
     val dayFormat = remember { DateTimeFormatter.ofPattern("EEE, MMM d") }
 
     Card(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .telosTechSurface(borderColor = TelosCyber.NeonGreen, shape = RoundedCornerShape(24.dp)),
         shape = RoundedCornerShape(24.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh)
+        colors = CardDefaults.cardColors(containerColor = Color.Transparent)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
-            Text(
-                text = "14-Day Forecast",
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(bottom = 12.dp)
-            )
+            TelosDotMatrixText("14-DAY", fontSize = 11.sp, color = TelosCyber.NeonGreen)
+            Spacer(Modifier.height(8.dp))
             dailyForecasts.forEach { day ->
                 val dayLabel = try {
                     Instant.ofEpochMilli(day.timestamp).atZone(ZoneId.systemDefault()).format(dayFormat)
@@ -499,21 +498,8 @@ private fun CyberWeatherRadarHUD(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(
-                "[ATMOSPHERIC_RADAR]",
-                style = MaterialTheme.typography.labelMedium,
-                fontWeight = FontWeight.Bold,
-                fontFamily = FontFamily.Monospace,
-                color = cyan,
-                letterSpacing = 1.5.sp
-            )
-            Text(
-                "[SWEEP: LIVE]",
-                style = MaterialTheme.typography.labelSmall,
-                fontWeight = FontWeight.Bold,
-                fontFamily = FontFamily.Monospace,
-                color = pink
-            )
+            TelosDotMatrixText("[ATMOSPHERIC_RADAR]", fontSize = 11.sp, color = TelosCyber.NeonCyan)
+            TelosDotMatrixText("[SWEEP: LIVE]", fontSize = 9.sp, color = TelosCyber.NeonMagenta)
         }
 
         Spacer(Modifier.height(12.dp))

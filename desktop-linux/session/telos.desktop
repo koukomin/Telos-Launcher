@@ -1,8 +1,11 @@
 [Desktop Entry]
-Name=Telos
-Comment=Telos encrypted Linux session (labwc)
-Exec=telos-session
-TryExec=telos-session
+Name=Telos Desktop
+Name[el]=Telos Desktop
+Comment=Encrypted Telos session (labwc) / Κρυπτογραφημένη συνεδρία Telos (labwc)
+Comment[el]=Κρυπτογραφημένη συνεδρία Telos (labwc)
+Exec=/usr/local/bin/telos-session
+TryExec=/usr/local/bin/telos-session
 Type=Application
 DesktopNames=Telos
 X-GDM-SessionRegisters=true
+X-LightDM-SessionRegisters=true

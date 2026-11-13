@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_appearance_title">Apparence</string>
+    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
+    <string name="desktop_theme_intensity_neon">Vault Neon</string>
+    <string name="desktop_theme_intensity_paper">Paper Ops</string>
+    <string name="desktop_wallpaper_path">Fond d’écran (chemin du vault)</string>
+    <string name="desktop_wallpaper_path_hint">Relatif au point de montage du vault (par ex. Pictures/wall.jpg). Jamais affiché sur l’écran de pré-démarrage verrouillé.</string>
+    <string name="desktop_unlock_theatre_title">Telos Phantom Vault</string>
+    <string name="desktop_unlock_theatre_quiet_ops">Quiet Ops — déverrouillez pour révéler votre fond d’écran</string>
+    <string name="desktop_unlock_theatre_hint">Le démarrage verrouillé reste en Quiet Ops avec le glyphe du vault uniquement. Après déverrouillage, Telos enchaîne en fondu vers votre fond du vault et l’intensité choisie — sans particules.</string>
+    <string name="desktop_sandbox_tint_hint">La couleur de l’anneau d’accent est uniquement de l’OpSec visuelle (Host = orange prudence, Net-isolated = cyan, Vault FS = vert, Standard = magenta).</string>
+    <string name="desktop_matched_packs_title">Packs d’icônes et de curseur assortis</string>
+    <string name="desktop_matched_packs_hint">Un clic applique une paire GPL documentée (Papirus↔BreezeX, candy-icons↔Bibata ; CandyCyber reste le glyphe chrome intégré). Les téléchargements restent dans le dossier d’icônes du vault ou portable.</string>
+    <string name="desktop_matched_packs_apply">Assortir la paire : %1$s</string>
+    <string name="desktop_matched_packs_one_click">Assortir la paire</string>
+    <string name="desktop_matched_packs_working">Assortiment des packs…</string>
+    <string name="desktop_matched_packs_ok">Pack assorti %1$s appliqué</string>
+    <string name="desktop_matched_packs_fail">Impossible d’assortir les packs : %1$s</string>
+</resources>

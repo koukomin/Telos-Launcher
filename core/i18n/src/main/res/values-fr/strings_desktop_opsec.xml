@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_opsec_title">OpSec</string>
+    <string name="desktop_opsec_secure_clipboard">Presse-papiers sécurisé</string>
+    <string name="desktop_opsec_clipboard_title">Presse-papiers</string>
+    <string name="desktop_opsec_clipboard_hint">Le texte sensible (clés, IBAN, WireGuard) est retiré de l’historique, conservé uniquement dans cette session et effacé du presse-papiers système. L’historique reste local au coffre — pas de sync cloud.</string>
+    <string name="desktop_opsec_clipboard_clear_now">Vider le presse-papiers maintenant</string>
+    <string name="desktop_opsec_clipboard_clear_all">Tout effacer</string>
+    <string name="desktop_opsec_clipboard_history_meta">Jusqu’à 20 éléments · expire après 5 min · épingler jusqu’au verrouillage · Super+V</string>
+    <string name="desktop_opsec_clipboard_history_empty">Pas encore d’historique du presse-papiers</string>
+    <string name="desktop_opsec_clipboard_pin_until_lock">Épingler</string>
+    <string name="desktop_opsec_clipboard_unpin">Désépingler</string>
+    <string name="desktop_opsec_clipboard_recall_vaulted">Rappeler le clip sensible en coffre</string>
+    <string name="desktop_opsec_clipboard_timer">Effacement automatique après %1$d secondes</string>
+    <string name="desktop_opsec_clipboard_timer_off">Désactivé</string>
+    <string name="desktop_opsec_attestation_run">Enregistrer l’instantané d’intégrité de l’hôte</string>
+    <string name="desktop_opsec_audit_title">Journal d’audit de session</string>
+    <string name="desktop_opsec_audit_refresh">Actualiser le journal</string>
+    <string name="desktop_opsec_audit_empty">Aucun événement d’audit pour l’instant</string>
+    <string name="desktop_opsec_tpm_status">État TPM : %1$s</string>
+    <string name="desktop_opsec_tpm_unknown">pas encore mesuré</string>
+    <string name="desktop_opsec_tpm_hint">Résumé local des digest PCR 0/7 via tpm2-tools si présent. Ce n’est pas une attestation distante (RAP).</string>
+</resources>

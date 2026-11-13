@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_panel_surface">Panel səthi</string>
+    <string name="desktop_theme_panel_surface_hint">Şəffaf və ya bulanıq yalnız panel kökünə təsir edir; menyular qeyri-şəffaf qalır. Bulanıq frost üçün panelBlur saxlayır; host divar kağızı bulanıqlığı yoxdursa best-effort.</string>
+    <string name="desktop_theme_panel_transparent">Şəffaf</string>
+    <string name="desktop_theme_panel_blurred">Bulanıq</string>
+    <string name="desktop_theme_panel_solid">Bərk</string>
+    <string name="desktop_theme_panel_opacity">Panel qeyri-şəffaflığı: %1$d%%</string>
+    <string name="desktop_theme_panel_blur">Şüşə bulanıqlığı: %1$d</string>
+    <string name="desktop_theme_panel_blur_unavailable">Host divar kağızı bulanıqlığı yoxdur; Telos yarı şəffaf frost lövhə istifadə edir və bulanıqlıq seçimini saxlayır.</string>
+</resources>

@@ -33,6 +33,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.KeyEvent
 import androidx.compose.ui.input.key.KeyEventType
@@ -58,6 +59,7 @@ import com.telos.desktop.apps.TelosFilesWorkspace
 import com.telos.desktop.apps.TelosMediaPlayer
 import com.telos.desktop.cursor.CursorPreset
 import com.telos.desktop.cursor.CursorState
+import com.telos.desktop.cursor.CursorThemeApplier
 import com.telos.desktop.cursor.TelosCursorEngine
 import com.telos.desktop.display.LinuxDisplayManager
 import com.telos.desktop.icons.LinuxIconThemeResolver
@@ -99,6 +101,8 @@ fun DesktopWorkspace(
     telemetry: LinuxSystemTelemetryEngine,
     onLogout: () -> Unit,
     onKeyEvent: (KeyEvent) -> Boolean,
+    playUnlockReveal: Boolean = false,
+    onUnlockRevealFinished: () -> Unit = {},
 ) {
     val dirs = remember { XdgUserDirsManager.resolve() }
     var showSettings by remember { mutableStateOf(false) }
@@ -111,9 +115,25 @@ fun DesktopWorkspace(
     var altTab by remember { mutableStateOf(false) }
     val preset = runCatching { CursorPreset.valueOf(settings.cursorPreset) }.getOrDefault(CursorPreset.SWEET_DARK_NEON)
     val density = LocalDensity.current
+    val cursorRev = com.telos.desktop.cursor.CursorUiState.revision
+    val drawComposeCursor = remember(cursorRev) { CursorThemeApplier.usesComposeOverlay() }
+
+    LaunchedEffect(cursorState, cursorRev) {
+        kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+            runCatching {
+                // First call may finish deferred XCursor scan/decode off the UI thread.
+                CursorThemeApplier.ensureDecoded()
+                val awt = CursorThemeApplier.cursorForState(cursorState)
+                java.awt.Window.getWindows().forEach { it.cursor = awt }
+            }
+        }
+    }
 
     LaunchedEffect(Unit) {
         com.telos.desktop.session.LayerShellBridge.listenLoop()
+    }
+    LaunchedEffect(Unit) {
+        com.telos.desktop.session.ClipboardHotkeyBridge.listenLoop()
     }
     LaunchedEffect(Unit) {
         com.telos.desktop.session.PortalFileChooser.pollLoop()
@@ -157,7 +177,34 @@ fun DesktopWorkspace(
     }
     LaunchedEffect(Unit) { display.applyPersistedOnStartup() }
 
-    BoxWithConstraints(Modifier.fillMaxSize().background(TelosColors.background)) {
+    val intensity = remember(settings.themeIntensity) {
+        com.telos.desktop.theme.ThemeIntensity.parse(settings.themeIntensity)
+    }
+    val hasWallpaper = remember(settings.wallpaperPath, vault.mountPoint) {
+        com.telos.desktop.theme.UnlockTheatre.resolveWallpaperFile(
+            unlocked = true,
+            vaultRoot = vault.mountPoint,
+            wallpaperPath = settings.wallpaperPath,
+        ) != null
+    }
+    BoxWithConstraints(
+        Modifier
+            .fillMaxSize()
+            .background(if (hasWallpaper) Color.Transparent else TelosColors.background),
+    ) {
+        UnlockTheatreRevealLayer(
+            unlocked = true,
+            vaultRoot = vault.mountPoint,
+            wallpaperPath = settings.wallpaperPath,
+            intensity = intensity,
+            playReveal = playUnlockReveal,
+            onRevealFinished = onUnlockRevealFinished,
+            modifier = Modifier.fillMaxSize(),
+        )
+        // Soft plate over wallpaper so desktop icons stay readable; solid when no wallpaper.
+        if (hasWallpaper) {
+            Box(Modifier.fillMaxSize().background(TelosColors.background.copy(alpha = 0.38f)))
+        }
         val wpx = with(density) { maxWidth.toPx() }
         val hpx = with(density) { maxHeight.toPx() }
         // === TELOS_PENDING_REVIEW_START: telos_kde_replacement_suite ===
@@ -179,6 +226,42 @@ fun DesktopWorkspace(
             }
             TelosFileHandler.onOpenMedia = { file ->
                 wm.open("Media Player", y = topBarPx + 12f)
+            }
+        }
+        // VOS-3: dispatch queued telos:// deep links into virtual apps / Kickoff search.
+        LaunchedEffect(wm, topBarPx) {
+            while (true) {
+                val link = com.telos.desktop.apps.TelosDeepLinkBus.take()
+                if (link != null) {
+                    when (link) {
+                        is com.telos.desktop.apps.TelosDeepLink.OpenApp -> {
+                            if (link.windowTitle == "Quake") {
+                                TelosQuake.toggle()
+                            } else {
+                                wm.open(link.windowTitle, y = topBarPx + 12f)
+                            }
+                        }
+                        is com.telos.desktop.apps.TelosDeepLink.Search -> {
+                            DesktopChrome.openAppGridWithQuery(link.query)
+                        }
+                        is com.telos.desktop.apps.TelosDeepLink.OpenFiles -> {
+                            link.path?.let { file ->
+                                TelosFilesNav.path =
+                                    if (file.isDirectory || com.telos.desktop.files.ZipArchives.isArchive(file)) {
+                                        file
+                                    } else {
+                                        file.parentFile ?: file
+                                    }
+                            }
+                            wm.open("Files", y = topBarPx + 12f)
+                        }
+                        is com.telos.desktop.apps.TelosDeepLink.OpenMedia -> {
+                            wm.open("Media Player", y = topBarPx + 12f)
+                        }
+                        com.telos.desktop.apps.TelosDeepLink.Unknown -> Unit
+                    }
+                }
+                kotlinx.coroutines.delay(400)
             }
         }
         // === TELOS_PENDING_REVIEW_END: telos_kde_replacement_suite ===
@@ -316,7 +399,7 @@ fun DesktopWorkspace(
                 )
             }
             AnimatedVisibility(DesktopChrome.overviewOpen, modifier = Modifier.fillMaxSize().zIndex(201f), enter = HelixMotion.enter, exit = HelixMotion.exit) {
-                HelixOverview(wm) { DesktopChrome.overviewOpen = false }
+                HelixOverview(wm, settings) { DesktopChrome.overviewOpen = false }
             }
             AnimatedVisibility(
                 DesktopChrome.controlCenterOpen,
@@ -326,8 +409,31 @@ fun DesktopWorkspace(
             ) {
                 HelixControlCenter(
                     wm = wm,
+                    settings = settings,
                     onOpenSettings = { showSettings = true },
                     onDismiss = { DesktopChrome.controlCenterOpen = false },
+                )
+            }
+            Box(Modifier.fillMaxSize().zIndex(206f)) {
+                HelixCommandPalette(
+                    visible = DesktopChrome.commandPaletteOpen,
+                    wm = wm,
+                    icons = icons,
+                    onDismiss = { DesktopChrome.commandPaletteOpen = false },
+                    onOpenTelos = { app ->
+                        when (app.windowTitle) {
+                            "Quake" -> TelosQuake.toggle()
+                            "Settings" -> {
+                                showSettings = true
+                                wm.open("Settings")
+                            }
+                            else -> wm.open(app.windowTitle, y = wm.workArea.minY + 12f)
+                        }
+                    },
+                    onOpenSettings = {
+                        showSettings = true
+                        wm.open("Settings")
+                    },
                 )
             }
             // === TELOS_PENDING_REVIEW_END: telos_window_drag_and_ui_fix ===
@@ -336,6 +442,14 @@ fun DesktopWorkspace(
             Box(Modifier.align(Alignment.TopEnd).padding(top = 40.dp, end = 12.dp).zIndex(203f)) { ClipboardPopup() }
             Box(Modifier.align(Alignment.CenterEnd).zIndex(204f)) { NotificationSidebar() }
             HelixToastOverlay(Modifier.align(Alignment.TopEnd).padding(top = 48.dp, end = 12.dp).zIndex(205f))
+            Box(Modifier.align(Alignment.TopEnd).padding(top = 40.dp, end = 48.dp).zIndex(206f)) {
+                com.telos.desktop.overlay.ScreenshotCaptureMenu()
+            }
+            if (TelosCaptureTool.pendingRedact != null) {
+                Box(Modifier.fillMaxSize().zIndex(320f)) {
+                    com.telos.desktop.overlay.ScreenshotRedactionOverlay()
+                }
+            }
             com.telos.desktop.session.PortalFileChooser.pending?.let { req ->
                 Box(Modifier.align(Alignment.Center).zIndex(310f)) {
                     com.telos.desktop.vault.TelosFilePickerModal(
@@ -377,8 +491,10 @@ fun DesktopWorkspace(
             LaunchedEffect(toast) {
                 toast?.let { HelixToast.show("Desktop", it) }
             }
-            Canvas(Modifier.fillMaxSize()) {
-                with(TelosCursorEngine) { drawCursor(cursorState, preset, pointer) }
+            if (drawComposeCursor) {
+                Canvas(Modifier.fillMaxSize()) {
+                    with(TelosCursorEngine) { drawCursor(cursorState, preset, pointer) }
+                }
             }
             if (SessionPower.locked.value) {
                 Box(Modifier.fillMaxSize().background(TelosColors.background.copy(alpha = 0.96f)), contentAlignment = Alignment.Center) {
@@ -408,6 +524,7 @@ fun handleDesktopKeys(
     ev: androidx.compose.ui.input.key.KeyEvent,
     wm: TelosWindowManager,
     telemetry: LinuxSystemTelemetryEngine,
+    settings: com.telos.desktop.settings.TelosDesktopSettings? = null,
 ): Boolean {
     if (TelosQuake.onGlobalKey(ev)) return true
     val down = ev.type == KeyEventType.KeyDown
@@ -416,6 +533,11 @@ fun handleDesktopKeys(
     val ctrl = ev.isCtrlPressed
     val shift = ev.isShiftPressed
     val alt = ev.isAltPressed
+    // Panic mute: Super+Shift+P — Quiet Ops + hide neon chrome; never touches nftables.
+    if (ev.isMetaPressed && shift && key == Key.P && !ctrl && !alt) {
+        com.telos.desktop.theme.PanicMuteController.toggle(settings, persist = true)
+        return true
+    }
     // === TELOS_PENDING_REVIEW_START: telos_de_final_polish ===
     if (key == Key.F11) {
         DesktopChrome.toggleFullscreen()
@@ -426,6 +548,18 @@ fun handleDesktopKeys(
         return true
     }
     if (key == Key.Escape) {
+        if (TelosCaptureTool.pendingRedact != null) {
+            TelosCaptureTool.cancelPending()
+            return true
+        }
+        if (TelosCaptureTool.menuOpen) {
+            TelosCaptureTool.menuOpen = false
+            return true
+        }
+        if (DesktopChrome.commandPaletteOpen) {
+            DesktopChrome.commandPaletteOpen = false
+            return true
+        }
         if (DesktopChrome.appGridOpen) {
             DesktopChrome.appGridOpen = false
             return true
@@ -449,17 +583,44 @@ fun handleDesktopKeys(
         DesktopChrome.toggleAppGrid()
         return true
     }
+    // Helix command palette (KRunner / PowerToys Run): Super+Period or Ctrl+Space.
+    if ((ev.isMetaPressed && key == Key.Period) || (ctrl && !ev.isMetaPressed && key == Key.Spacebar)) {
+        DesktopChrome.toggleCommandPalette()
+        return true
+    }
+    // Helix snap zones: Super+Arrow cycles 50/50 → 2/3 → 1/3; Up maximizes; Down restores.
+    if (ev.isMetaPressed && key == Key.DirectionLeft) {
+        wm.cycleSnapLeft()
+        return true
+    }
+    if (ev.isMetaPressed && key == Key.DirectionRight) {
+        wm.cycleSnapRight()
+        return true
+    }
+    if (ev.isMetaPressed && key == Key.DirectionUp) {
+        wm.snapFocused(com.telos.desktop.wm.SnapLayout.Maximize)
+        return true
+    }
+    if (ev.isMetaPressed && key == Key.DirectionDown) {
+        wm.focusedId?.let { wm.restore(it) }
+        return true
+    }
     // === TELOS_PENDING_REVIEW_END: telos_de_final_polish ===
     if (key == Key.PrintScreen) {
-        if (shift) TelosCaptureTool.area() else TelosCaptureTool.fullscreen()
+        when {
+            ctrl -> TelosCaptureTool.window()
+            shift -> TelosCaptureTool.area()
+            else -> TelosCaptureTool.fullscreen()
+        }
         return true
     }
     if (ctrl && key == Key.Escape) {
         wm.open("System Monitor", y = WorkArea.DEFAULT_TOP_BAR_PX + 8f, w = 960f, h = 640f)
         return true
     }
-    if (ctrl && key == Key.V && ev.isMetaPressed) {
-        TelosClipboardManager.popup = true
+    // Win+V equivalent: Super+V opens Helix clipboard history (panel clip glyph also toggles).
+    if (ev.isMetaPressed && key == Key.V && !ctrl && !alt) {
+        TelosClipboardManager.popup = !TelosClipboardManager.popup
         return true
     }
     if (alt && key == Key.Tab) {

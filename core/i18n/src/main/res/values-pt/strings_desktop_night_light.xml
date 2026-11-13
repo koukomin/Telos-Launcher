@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_night_light_title">Luz noturna</string>
+    <string name="desktop_night_light_hint">Aquece o ecrã com uma ferramenta do sistema (gammastep, redshift ou wlsunset). Sem serviços de localização e sem enviar nada pela rede. Sem ferramenta, só a preferência é guardada.</string>
+    <string name="desktop_night_light_enable">Ativar luz noturna</string>
+    <string name="desktop_night_light_temperature">Temperatura de cor: %1$d K</string>
+    <string name="desktop_night_light_on">Ativada</string>
+    <string name="desktop_night_light_off">Desativada</string>
+    <string name="desktop_night_light_pref_only">Preferência guardada; instale gammastep, redshift ou wlsunset para aplicar neste anfitrião</string>
+    <string name="desktop_night_light_failed">A ferramenta do sistema falhou ao alterar a temperatura do ecrã</string>
+    <string name="desktop_night_light_applied">Aplicada com %1$s</string>
+    <string name="desktop_night_light_cleared">Luz noturna desativada</string>
+    <string name="desktop_settings_search_hint">Pesquisar definições</string>
+    <string name="desktop_settings_search_empty">Nenhuma definição corresponde a esta pesquisa</string>
+    <string name="desktop_settings_session">Sessão</string>
+    <string name="desktop_settings_display">Ecrã</string>
+    <string name="desktop_settings_desktop">Ambiente de trabalho</string>
+    <string name="desktop_settings_windows">Janelas</string>
+    <string name="desktop_settings_portable">Portátil</string>
+    <string name="desktop_settings_vault">Cofre</string>
+</resources>

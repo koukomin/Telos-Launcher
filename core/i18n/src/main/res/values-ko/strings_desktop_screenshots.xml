@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_shot_title">스크린샷</string>
+    <string name="desktop_shot_full">전체 화면</string>
+    <string name="desktop_shot_region">사각 영역</string>
+    <string name="desktop_shot_window">창</string>
+    <string name="desktop_shot_clipboard">클립보드에 복사</string>
+    <string name="desktop_shot_clipboard_hint">기본값은 끔. TELOS_SHOT_CLIPBOARD=1 로도 켤 수 있습니다.</string>
+    <string name="desktop_shot_redact">저장 전 가리기</string>
+    <string name="desktop_shot_redact_hint">사각형을 그려 비공개 내용을 검게 가린 뒤 저장합니다.</string>
+    <string name="desktop_shot_save">저장</string>
+    <string name="desktop_shot_save_without_redact">가리지 않고 저장</string>
+    <string name="desktop_shot_saved">스크린샷이 저장됨</string>
+    <string name="desktop_shot_failed">스크린샷 실패</string>
+    <string name="desktop_shot_path_hint">볼트(또는 휴대용 데이터)의 Pictures/Screenshots에 소유자 전용(0600)으로 저장합니다.</string>
+</resources>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_net_dns_pref_hint">Enregistré dans le coffre. Sous Linux, Telos applique DoT via resolvectl s’il est disponible ; DoH reste une préférence uniquement.</string>
+    <string name="desktop_net_profiles_sum">Dossiers de profil du coffre sous ~/.config/telos/profiles/</string>
+    <string name="desktop_net_allowlist_path">Fichier de liste d’autorisation</string>
+    <string name="desktop_net_kill_switch">Kill-switch</string>
+    <string name="desktop_net_kill_switch_enable">Activer le kill-switch</string>
+    <string name="desktop_net_kill_switch_disable">Désactiver le kill-switch</string>
+    <string name="desktop_net_kill_switch_enforced">Appliqué : le trafic sortant non autorisé est rejeté (nftables inet telos_session)</string>
+    <string name="desktop_net_kill_switch_pref_only">Préférence enregistrée ; non appliquée sur cette plateforme</string>
+    <string name="desktop_net_kill_switch_failed">Activé, mais nftables n’a pas pu être appliqué — le trafic n’est pas bloqué</string>
+    <string name="desktop_net_kill_switch_clear_blocked">Effacer le pare-feu de session est bloqué tant que le kill-switch est activé</string>
+    <string name="desktop_net_apps_tab">Apps</string>
+    <string name="desktop_net_apps_title">Routage par application</string>
+    <string name="desktop_net_apps_hint">Un desktop-id ou paquet par ligne avec allow, deny ou vpn. Enregistré dans ~/.config/telos/app-routing.txt. Sous Linux, deny bloque le lancement dans le lanceur Telos et vpn définit TELOS_APP_ROUTE=vpn (au mieux, sans faux netns). Le routage nftables owner/cgroup par processus n’est pas appliqué, afin de préserver le kill-switch de session.</string>
+    <string name="desktop_net_apps_file">Table de routage</string>
+    <string name="desktop_net_dns_filters_title">Filtres DNS</string>
+    <string name="desktop_net_dns_filters_hint">Les listes de blocage et d’autorisation sont stockées dans le vault ~/.config/telos/ (dns-block.txt, dns-allow.txt). Un ID de configuration NextDNS applique le DoT via resolvectl sous Linux lorsqu’il est disponible. Activez le stub DNS Telos (ou définissez dns-stub.port) pour un relais local 127.0.0.1 qui répond NXDOMAIN aux hôtes bloqués et redirige le DNS avec nftables — les listes deviennent alors Enforced. Si le stub ne peut pas se lier ou si nft échoue, le statut reste Failed/PreferenceOnly. Windows et macOS n’enregistrent que les préférences.</string>
+    <string name="desktop_net_nextdns_id">ID de configuration NextDNS</string>
+    <string name="desktop_net_nextdns_id_invalid">ID de configuration NextDNS non valide (utilisez 4–12 lettres ou chiffres)</string>
+    <string name="desktop_net_dns_blocklist">Liste de blocage DNS</string>
+    <string name="desktop_net_dns_allowlist">Liste d’autorisation DNS</string>
+    <string name="desktop_net_dns_filter_status">État du filtre</string>
+    <string name="desktop_net_dns_filter_enforced">Appliqué (NextDNS DoT et/ou stub DNS Telos + redirection nft)</string>
+    <string name="desktop_net_dns_filter_pref_only">Préférence enregistrée ; le filtrage n’est pas appliqué sur ce chemin</string>
+    <string name="desktop_net_dns_filter_failed">Configuré, mais le stub DNS n’a pas pu se lier ou resolvectl/nftables n’a pas pu appliquer le filtrage</string>
+    <string name="desktop_net_apps_enforced">Appliqué : porte de lancement active (les règles deny sont consultées par DesktopFileLauncher)</string>
+    <string name="desktop_net_apps_pref_only">Préférence enregistrée ; aucune règle deny sous Linux, ou non appliquée sur cette plateforme</string>
+    <string name="desktop_net_dns_stub_enable">Activer le stub DNS Telos</string>
+    <string name="desktop_net_dns_stub_disable">Désactiver le stub DNS Telos</string>
+    <string name="desktop_net_dns_stub_hint">Le stub DNS Telos écoute sur 127.0.0.1 (port par défaut 5353), répond NXDOMAIN pour dns-block.txt (la liste d’autorisation l’emporte) et relaie les autres requêtes. nftables inet telos_dns redirige le port 53 sortant lorsque l’application privilégiée réussit.</string>
+</resources>

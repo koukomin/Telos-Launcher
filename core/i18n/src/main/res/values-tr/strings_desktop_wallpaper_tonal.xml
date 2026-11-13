@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_wallpaper_tonal_title">Duvar kağıdından vurgu</string>
+    <string name="desktop_wallpaper_tonal_enable">Vurgu rengi duvar kağıdından</string>
+    <string name="desktop_wallpaper_tonal_hint">Bu cihazda vault veya portable duvar kağıdını örnekler ve Material tonal seed’i yerelde üretir. Pikseller asla yüklenmez. Örnekleme başarısız olursa chrome neon cyan’a düşer.</string>
+    <string name="desktop_wallpaper_tonal_accent_wallpaper">theme.accent=wallpaper — yerel seed etkin</string>
+</resources>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_helix_palette_title">HELIX ƏMRİ</string>
+    <string name="desktop_helix_palette_placeholder">Tətbiqlər, pəncərələr, kalkulyator axtar…</string>
+    <string name="desktop_helix_palette_hint">Super+Nöqtə və ya Ctrl+Boşluq</string>
+    <string name="desktop_helix_palette_privacy">Yalnız vault və daşınan köklər — sessiya xaricində host home indekslənmir.</string>
+    <string name="desktop_helix_palette_open_files">Faylları aç</string>
+    <string name="desktop_helix_palette_open_settings">Parametrləri aç</string>
+    <string name="desktop_helix_palette_open_network">Şəbəkəni aç</string>
+    <string name="desktop_helix_palette_kill_window">Fokuslanmış pəncərəni bağla</string>
+    <string name="desktop_helix_palette_paste_vault_clip">Son vault mübadilə buferini yapışdır</string>
+    <string name="desktop_helix_palette_window">Pəncərə</string>
+    <string name="desktop_helix_palette_calc">Kalkulyator</string>
+    <string name="desktop_helix_palette_command">Əmr</string>
+    <string name="desktop_helix_palette_file">Fayl</string>
+    <string name="desktop_helix_palette_no_results">Nəticə yoxdur</string>
+</resources>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_icons_title">Ikon</string>
+    <string name="desktop_icons_theme_label">Tema ikon</string>
+    <string name="desktop_icons_download_section">Muat turun dari Telos</string>
+    <string name="desktop_icons_download">Muat turun</string>
+    <string name="desktop_icons_installing">Memasang…</string>
+    <string name="desktop_icons_installed">Dipasang</string>
+    <string name="desktop_icons_apply">Guna</string>
+    <string name="desktop_icons_source_system">Sistem</string>
+    <string name="desktop_icons_source_telos">Telos</string>
+    <string name="desktop_icons_source_builtin">Terbina dalam</string>
+    <string name="desktop_icons_path">Folder pek ikon: %1$s</string>
+    <string name="desktop_icons_freedesktop_note">Tema ikon freedesktop desktop (bukan pek ADW Android).</string>
+    <string name="desktop_icons_download_failed">Muat turun gagal</string>
+    <string name="desktop_icons_download_ok">Tema dipasang</string>
+    <string name="desktop_icons_license">Lesen: %1$s</string>
+    <string name="desktop_icons_portable_only">Dalam mod Portable Data, pek kekal dalam folder ikon mudah alih (bukan profil hos).</string>
+</resources>

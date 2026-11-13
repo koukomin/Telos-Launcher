@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_studio_title">主题工作室</string>
+    <string name="desktop_theme_studio_hint">Quiet Ops 为默认。Vault Neon 加强 Cyber-Tech 边框与 HUD 仪表。Paper Ops 是日间浅色选项。弹出层保持不透明；没有第二层模糊。</string>
+    <string name="desktop_theme_intensity">强度</string>
+    <string name="desktop_theme_quiet_ops">Quiet Ops</string>
+    <string name="desktop_theme_vault_neon">Vault Neon</string>
+    <string name="desktop_theme_paper_ops">Paper Ops</string>
+    <string name="desktop_theme_accent">强调色</string>
+    <string name="desktop_theme_from_wallpaper">取自壁纸的强调色</string>
+    <string name="desktop_theme_from_wallpaper_hint">在本机从保险箱或便携壁纸提取 Material 色调种子。不会上传任何内容。</string>
+    <string name="desktop_theme_density">密度</string>
+    <string name="desktop_theme_density_compact">紧凑</string>
+    <string name="desktop_theme_density_comfort">舒适</string>
+    <string name="desktop_theme_density_touch">触控</string>
+    <string name="desktop_theme_panel_height">面板高度：%1$d dp</string>
+    <string name="desktop_theme_panel_icon">面板图标：%1$d dp</string>
+    </resources>

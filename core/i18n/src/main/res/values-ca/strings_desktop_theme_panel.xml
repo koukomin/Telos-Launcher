@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_panel_surface">Superfície del panell</string>
+    <string name="desktop_theme_panel_surface_hint">Transparent o difuminat només afecta l’arrel del panell; els menús resten opacs. Difuminat desa panelBlur per al frost; el desenfocament del fons de l’amfitrió és best-effort si no és disponible.</string>
+    <string name="desktop_theme_panel_transparent">Transparent</string>
+    <string name="desktop_theme_panel_blurred">Difuminat</string>
+    <string name="desktop_theme_panel_solid">Sòlid</string>
+    <string name="desktop_theme_panel_opacity">Opacitat del panell: %1$d%%</string>
+    <string name="desktop_theme_panel_blur">Desenfocament de vidre: %1$d</string>
+    <string name="desktop_theme_panel_blur_unavailable">El desenfocament del fons de l’amfitrió no és disponible; Telos usa una placa frost translúcida i conserva la preferència de desenfocament.</string>
+</resources>

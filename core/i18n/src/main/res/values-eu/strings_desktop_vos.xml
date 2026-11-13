@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_portable_data_root">Portable data folder (config, cache, temp only here)</string>
+    <string name="desktop_host_home_trace_warning">Host Home writes settings and cache on this PC. Choose Portable Data to leave no host traces.</string>
+    <string name="desktop_boot_portable_data">Portable Data — no host traces (config/cache/temp under portable root)</string>
+    <string name="desktop_boot_portable_vault">Portable Vault — encrypted data under portable root</string>
+    <string name="desktop_boot_host_home">Host Home (may leave traces on this PC)</string>
+    <string name="desktop_boot_unlock_existing">Unlock existing vault (file or stego folder)</string>
+    <string name="desktop_boot_create_wizard">Create new elastic / stego / deniable vault</string>
+    <string name="desktop_boot_ephemeral">Ephemeral RAM-only ghost session (tmpfs)</string>
+    <string name="desktop_session_sync_title">Session sync</string>
+    <string name="desktop_session_sync_export">Export encrypted bundle</string>
+    <string name="desktop_session_sync_import">Import encrypted bundle</string>
+    <string name="desktop_session_sync_auto">Abiaraztean automatikoki inportatu sync gakoa gordeta dagoenean</string>
+    <string name="desktop_session_sync_pass">Sync passphrase (or KeePass entry %1$s)</string>
+    <string name="desktop_session_sync_keepass">KeePass database path (.kdbx)</string>
+    <string name="desktop_windows_shell_title">Windows shell replacement</string>
+    <string name="desktop_windows_shell_enable">Set Telos as login shell (HKCU)</string>
+    <string name="desktop_windows_shell_revert">Restore explorer.exe shell</string>
+    <string name="desktop_windows_shell_risk">Replaces your user shell at next sign-in. Keep a recovery path before enabling.</string>
+    <string name="desktop_helix_portable_note">Helix window chrome is drawn in Compose on all platforms; native Win32 decorations may show until shell replacement.</string>
+    <string name="desktop_session_sync_pass_required">Sync pasahitza behar da</string>
+    <string name="desktop_session_sync_imported">Saioaren sync paketea inportatu da</string>
+    <string name="desktop_session_sync_key_stored">Sync gakoa gorde da abiarazteko inporterako galdetu gabe</string>
+    <string name="desktop_session_sync_key_missing">Idatzi sync pasahitza inportazio automatikoa gaitu aurretik</string>
+    <string name="desktop_vos_profiles_title">Kutxa-profilak</string>
+    <string name="desktop_vos_profiles_summary">Izeneko profil-karpetak config profiles/ -n. desktop.properties-en izen aktiboa soilik — inoiz ez pasahitzak.</string>
+    <string name="desktop_vos_profiles_active">Profil aktiboa: %1$s</string>
+    <string name="desktop_vos_profiles_none">(bat ere ez)</string>
+    <string name="desktop_vos_profiles_empty">Oraindik ez dago profilik. Sortu bat kutxa-identitateak aldatzeko.</string>
+    <string name="desktop_vos_profiles_kind_named">Izeneko kutxa-profila</string>
+    <string name="desktop_vos_profiles_kind_portable">Kutxa eramangarriaren erroa</string>
+    <string name="desktop_vos_profiles_switch">Aldatu</string>
+    <string name="desktop_vos_profiles_use_portable">Erabili erro eramangarri hau</string>
+    <string name="desktop_vos_profiles_new_name">Profil berriaren izena</string>
+    <string name="desktop_vos_profiles_create">Sortu eta aldatu</string>
+    <string name="desktop_vos_profiles_created">Sortu eta %1$s-ra aldatu da</string>
+    <string name="desktop_vos_profiles_switched">%1$s-ra aldatu da</string>
+    <string name="desktop_vos_profiles_invalid_name">Hizkiak, zenbakiak, puntuak, azpimarra edo marratxoak (gehienez 64).</string>
+    <string name="desktop_vos_profiles_portable_hint">Erro eramangarriek config, cache eta temp ostalariaren profiletik kanpo edukitzen dituzte (Windows lehenetsia: Portable Data).</string>
+    <string name="desktop_vos_profiles_portable_path">Kutxa eramangarriaren karpetaren bidea</string>
+    <string name="desktop_vos_profiles_add_portable">Gehitu kutxa eramangarriaren erroa</string>
+    <string name="desktop_vos_profiles_portable_selected">Erro eramangarria: %1$s</string>
+    <string name="desktop_vos_profiles_portable_reject">Erro eramangarria ezin da izan ostalariaren home edo haren .config/.cache/.local.</string>
+</resources>

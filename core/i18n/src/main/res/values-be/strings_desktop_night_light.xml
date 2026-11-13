@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_night_light_title">Ночной свет</string>
+    <string name="desktop_night_light_hint">Смягчает экран через системную утилиту (gammastep, redshift или wlsunset). Без служб геолокации и без сетевых запросов. Без утилиты сохраняется только настройка.</string>
+    <string name="desktop_night_light_enable">Включить ночной свет</string>
+    <string name="desktop_night_light_temperature">Цветовая температура: %1$d K</string>
+    <string name="desktop_night_light_on">Вкл.</string>
+    <string name="desktop_night_light_off">Выкл.</string>
+    <string name="desktop_night_light_pref_only">Настройка сохранена; установите gammastep, redshift или wlsunset, чтобы применить её на этом хосте</string>
+    <string name="desktop_night_light_failed">Системная утилита не смогла изменить температуру экрана</string>
+    <string name="desktop_night_light_applied">Применено через %1$s</string>
+    <string name="desktop_night_light_cleared">Ночной свет сброшен</string>
+    <string name="desktop_settings_search_hint">Поиск настроек</string>
+    <string name="desktop_settings_search_empty">Нет настроек, соответствующих этому запросу</string>
+    <string name="desktop_settings_session">Сеанс</string>
+    <string name="desktop_settings_display">Экран</string>
+    <string name="desktop_settings_desktop">Рабочий стол</string>
+    <string name="desktop_settings_windows">Окна</string>
+    <string name="desktop_settings_portable">Портативный</string>
+    <string name="desktop_settings_vault">Хранилище</string>
+</resources>

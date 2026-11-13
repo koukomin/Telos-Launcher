@@ -23,10 +23,15 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.ui.input.pointer.pointerInput
+import de.mm20.launcher2.ui.component.TelosCyber
+import de.mm20.launcher2.ui.component.TelosCyberAppBarTitle
+import de.mm20.launcher2.ui.component.TelosCyberSectionLabel
+import de.mm20.launcher2.ui.component.TelosTechPill
 import de.mm20.launcher2.ui.component.rememberVirtualAppBlur
 import de.mm20.launcher2.ui.component.virtualAppElevated
 import de.mm20.launcher2.ui.component.virtualAppGlass
 import de.mm20.launcher2.ui.component.virtualAppSurface
+import androidx.compose.foundation.border
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -323,16 +328,17 @@ fun PhotosScreen(
                         Icon(painterResource(BaseR.drawable.arrow_back_24px), contentDescription = stringResource(I18nR.string.hc_back))
                     }
                 }
-                Column {
-                    if (!embedded || album != null) Text(
-                        album?.name ?: stringResource(I18nR.string.hc_photos),
-                        style = MaterialTheme.typography.headlineMedium,
-                        fontWeight = FontWeight.SemiBold,
+                if (!embedded || album != null) {
+                    TelosCyberAppBarTitle(
+                        title = album?.name ?: stringResource(I18nR.string.hc_photos),
+                        status = stringResource(I18nR.string.au_viewer_items, shown.size),
+                        statusColor = TelosCyber.NeonCyan,
+                        modifier = Modifier.weight(1f),
                     )
-                    Text(
-                        stringResource(I18nR.string.au_viewer_items, shown.size),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                } else {
+                    TelosCyberSectionLabel(
+                        text = stringResource(I18nR.string.au_viewer_items, shown.size),
+                        accent = TelosCyber.NeonCyan,
                     )
                 }
             }
@@ -344,38 +350,43 @@ fun PhotosScreen(
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
                     item {
-                        FilterChip(
-                            selected = kind == MediaKind.All,
+                        TelosTechPill(
+                            text = stringResource(I18nR.string.photos_filter_all),
+                            isSelected = kind == MediaKind.All,
                             onClick = { kind = MediaKind.All },
-                            label = { Text(stringResource(I18nR.string.photos_filter_all)) },
+                            accentColor = TelosCyber.NeonCyan,
                         )
                     }
                     item {
-                        FilterChip(
-                            selected = kind == MediaKind.Images,
+                        TelosTechPill(
+                            text = stringResource(I18nR.string.photos_filter_images),
+                            isSelected = kind == MediaKind.Images,
                             onClick = { kind = MediaKind.Images },
-                            label = { Text(stringResource(I18nR.string.photos_filter_images)) },
+                            accentColor = TelosCyber.NeonGreen,
                         )
                     }
                     item {
-                        FilterChip(
-                            selected = kind == MediaKind.Video,
+                        TelosTechPill(
+                            text = stringResource(I18nR.string.photos_filter_video),
+                            isSelected = kind == MediaKind.Video,
                             onClick = { kind = MediaKind.Video },
-                            label = { Text(stringResource(I18nR.string.photos_filter_video)) },
+                            accentColor = TelosCyber.NeonMagenta,
                         )
                     }
                     item {
-                        FilterChip(
-                            selected = kind == MediaKind.Gif,
+                        TelosTechPill(
+                            text = stringResource(I18nR.string.photos_filter_gif),
+                            isSelected = kind == MediaKind.Gif,
                             onClick = { kind = MediaKind.Gif },
-                            label = { Text(stringResource(I18nR.string.photos_filter_gif)) },
+                            accentColor = TelosCyber.NeonOrange,
                         )
                     }
                     item {
-                        FilterChip(
-                            selected = tab == 1 && album == null,
+                        TelosTechPill(
+                            text = stringResource(I18nR.string.photos_filter_folders),
+                            isSelected = tab == 1 && album == null,
                             onClick = { tab = 1; album = null },
-                            label = { Text(stringResource(I18nR.string.photos_filter_folders)) },
+                            accentColor = TelosCyber.NeonCyan,
                         )
                     }
                 }
@@ -454,10 +465,9 @@ fun PhotosScreen(
                 ) {
                     byMonth.forEach { (month, list) ->
                         item(span = { GridItemSpan(maxLineSpan) }) {
-                            Text(
-                                month,
-                                style = MaterialTheme.typography.titleSmall,
-                                fontWeight = FontWeight.SemiBold,
+                            TelosCyberSectionLabel(
+                                text = month,
+                                accent = TelosCyber.NeonCyan,
                                 modifier = Modifier.padding(start = 16.dp, top = 16.dp, bottom = 6.dp),
                             )
                         }
@@ -467,7 +477,13 @@ fun PhotosScreen(
                             Box {
                                 Thumb(
                                     item,
-                                    Modifier.aspectRatio(1f).combinedClickable(
+                                    Modifier
+                                        .aspectRatio(1f)
+                                        .then(
+                                            if (on) Modifier.border(1.5.dp, TelosCyber.NeonCyan)
+                                            else Modifier
+                                        )
+                                        .combinedClickable(
                                         onLongClick = {
                                             selected = if (on) selected - item.uri else selected + item.uri
                                         },
@@ -491,7 +507,7 @@ fun PhotosScreen(
                                 if (on) {
                                     Box(
                                         Modifier.matchParentSize().background(
-                                            MaterialTheme.colorScheme.primary.copy(alpha = 0.35f),
+                                            TelosCyber.NeonCyan.copy(alpha = 0.22f),
                                         ),
                                     )
                                 }

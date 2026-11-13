@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_helix_palette_title">HELIX कमांड</string>
+    <string name="desktop_helix_palette_placeholder">ऐप, विंडो, कैलकुलेटर खोजें…</string>
+    <string name="desktop_helix_palette_hint">Super+Period या Ctrl+Space</string>
+    <string name="desktop_helix_palette_privacy">केवल vault और पोर्टेबल रूट — सत्र के बाहर होस्ट होम अनुक्रमित नहीं।</string>
+    <string name="desktop_helix_palette_open_files">फ़ाइलें खोलें</string>
+    <string name="desktop_helix_palette_open_settings">सेटिंग्स खोलें</string>
+    <string name="desktop_helix_palette_open_network">नेटवर्क खोलें</string>
+    <string name="desktop_helix_palette_kill_window">फ़ोकस्ड विंडो बंद करें</string>
+    <string name="desktop_helix_palette_paste_vault_clip">अंतिम vault क्लिपबोर्ड चिपकाएँ</string>
+    <string name="desktop_helix_palette_window">विंडो</string>
+    <string name="desktop_helix_palette_calc">कैलकुलेटर</string>
+    <string name="desktop_helix_palette_command">कमांड</string>
+    <string name="desktop_helix_palette_file">फ़ाइल</string>
+    <string name="desktop_helix_palette_no_results">कोई परिणाम नहीं</string>
+</resources>

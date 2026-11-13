@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_portable_data_root">Portable data folder (config, cache, temp only here)</string>
+    <string name="desktop_host_home_trace_warning">Host Home writes settings and cache on this PC. Choose Portable Data to leave no host traces.</string>
+    <string name="desktop_boot_portable_data">Portable Data — no host traces (config/cache/temp under portable root)</string>
+    <string name="desktop_boot_portable_vault">Portable Vault — encrypted data under portable root</string>
+    <string name="desktop_boot_host_home">Host Home (may leave traces on this PC)</string>
+    <string name="desktop_boot_unlock_existing">Unlock existing vault (file or stego folder)</string>
+    <string name="desktop_boot_create_wizard">Create new elastic / stego / deniable vault</string>
+    <string name="desktop_boot_ephemeral">Ephemeral RAM-only ghost session (tmpfs)</string>
+    <string name="desktop_session_sync_title">Session sync</string>
+    <string name="desktop_session_sync_export">Export encrypted bundle</string>
+    <string name="desktop_session_sync_import">Import encrypted bundle</string>
+    <string name="desktop_session_sync_auto">সংরক্ষিত সিঙ্ক কী থাকলে বুটে স্বয়ংক্রিয় আমদানি</string>
+    <string name="desktop_session_sync_pass">Sync passphrase (or KeePass entry %1$s)</string>
+    <string name="desktop_session_sync_keepass">KeePass database path (.kdbx)</string>
+    <string name="desktop_windows_shell_title">Windows shell replacement</string>
+    <string name="desktop_windows_shell_enable">Set Telos as login shell (HKCU)</string>
+    <string name="desktop_windows_shell_revert">Restore explorer.exe shell</string>
+    <string name="desktop_windows_shell_risk">Replaces your user shell at next sign-in. Keep a recovery path before enabling.</string>
+    <string name="desktop_helix_portable_note">Helix window chrome is drawn in Compose on all platforms; native Win32 decorations may show until shell replacement.</string>
+    <string name="desktop_session_sync_pass_required">সিঙ্ক পাসফ্রেজ প্রয়োজন</string>
+    <string name="desktop_session_sync_imported">সেশন সিঙ্ক বান্ডেল আমদানি করা হয়েছে</string>
+    <string name="desktop_session_sync_key_stored">প্রম্পট ছাড়া বুট আমদানির জন্য সিঙ্ক কী সংরক্ষিত</string>
+    <string name="desktop_session_sync_key_missing">স্বয়ংক্রিয় আমদানি চালু করার আগে সিঙ্ক পাসফ্রেজ লিখুন</string>
+    <string name="desktop_vos_profiles_title">ভল্ট প্রোফাইল</string>
+    <string name="desktop_vos_profiles_summary">config profiles/ এর অধীনে নামযুক্ত প্রোফাইল ফোল্ডার। desktop.properties-এ শুধু সক্রিয় নাম — কখনো পাসওয়ার্ড নয়।</string>
+    <string name="desktop_vos_profiles_active">সক্রিয় প্রোফাইল: %1$s</string>
+    <string name="desktop_vos_profiles_none">(নেই)</string>
+    <string name="desktop_vos_profiles_empty">এখনও কোনো প্রোফাইল নেই। ভল্ট পরিচয় বদলাতে একটি তৈরি করুন।</string>
+    <string name="desktop_vos_profiles_kind_named">নামযুক্ত ভল্ট প্রোফাইল</string>
+    <string name="desktop_vos_profiles_kind_portable">পোর্টেবল ভল্ট রুট</string>
+    <string name="desktop_vos_profiles_switch">বদলান</string>
+    <string name="desktop_vos_profiles_use_portable">এই পোর্টেবল রুট ব্যবহার করুন</string>
+    <string name="desktop_vos_profiles_new_name">নতুন প্রোফাইলের নাম</string>
+    <string name="desktop_vos_profiles_create">তৈরি করে বদলান</string>
+    <string name="desktop_vos_profiles_created">%1$s তৈরি করে স্যুইচ করা হয়েছে</string>
+    <string name="desktop_vos_profiles_switched">%1$s-এ স্যুইচ করা হয়েছে</string>
+    <string name="desktop_vos_profiles_invalid_name">অক্ষর, সংখ্যা, বিন্দু, আন্ডারস্কোর বা হাইফেন ব্যবহার করুন (সর্বোচ্চ ৬৪)।</string>
+    <string name="desktop_vos_profiles_portable_hint">পোর্টেবল রুট কনফিগ, ক্যাশ ও টেম্প হোস্ট প্রোফাইলের বাইরে রাখে (Windows ডিফল্ট: Portable Data)।</string>
+    <string name="desktop_vos_profiles_portable_path">পোর্টেবল ভল্ট ফোল্ডারের পথ</string>
+    <string name="desktop_vos_profiles_add_portable">পোর্টেবল ভল্ট রুট যোগ করুন</string>
+    <string name="desktop_vos_profiles_portable_selected">পোর্টেবল রুট: %1$s</string>
+    <string name="desktop_vos_profiles_portable_reject">পোর্টেবল রুট হোস্ট হোম বা তার .config/.cache/.local হতে পারে না।</string>
+</resources>

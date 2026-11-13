@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_appearance_title">모양</string>
+    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
+    <string name="desktop_theme_intensity_neon">Vault Neon</string>
+    <string name="desktop_theme_intensity_paper">Paper Ops</string>
+    <string name="desktop_wallpaper_path">배경화면(볼트 경로)</string>
+    <string name="desktop_wallpaper_path_hint">볼트 마운트 지점 기준 상대 경로(예: Pictures/wall.jpg). 잠긴 프리부트 화면에는 절대 표시되지 않습니다.</string>
+    <string name="desktop_unlock_theatre_title">Telos Phantom Vault</string>
+    <string name="desktop_unlock_theatre_quiet_ops">Quiet Ops — 잠금 해제하여 배경화면 표시</string>
+    <string name="desktop_unlock_theatre_hint">잠긴 부팅은 볼트 글리프만 있는 Quiet Ops로 유지됩니다. 잠금 해제 후 Telos가 볼트 배경화면과 선택한 강도로 크로스페이드합니다 — 입자 효과 없음.</string>
+    <string name="desktop_sandbox_tint_hint">강조 링 색상은 시각적 OpSec 전용입니다(Host = 주황 주의, Net-isolated = 청록, Vault FS = 초록, Standard = 자홍).</string>
+    <string name="desktop_matched_packs_title">일치하는 아이콘 + 커서 팩</string>
+    <string name="desktop_matched_packs_hint">한 번 클릭으로 문서화된 GPL 쌍을 설정합니다(Papirus↔BreezeX, candy-icons↔Bibata; CandyCyber는 내장 chrome 글리프로 유지). 다운로드는 볼트 또는 휴대용 아이콘 폴더에 남습니다.</string>
+    <string name="desktop_matched_packs_apply">쌍 맞추기: %1$s</string>
+    <string name="desktop_matched_packs_one_click">쌍 맞추기</string>
+    <string name="desktop_matched_packs_working">팩 맞추는 중…</string>
+    <string name="desktop_matched_packs_ok">맞춘 팩 %1$s 적용됨</string>
+    <string name="desktop_matched_packs_fail">팩을 맞출 수 없음: %1$s</string>
+</resources>

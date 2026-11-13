@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_opsec_title">OpSec</string>
+    <string name="desktop_opsec_secure_clipboard">Arbela segurua</string>
+    <string name="desktop_opsec_clipboard_title">Arbela</string>
+    <string name="desktop_opsec_clipboard_hint">Testu sentikorra (gakoak, IBAN, WireGuard) historiatik kentzen da, saio honetan bakarrik gordetzen da eta sistemaren arbeletik garbitzen da. Historia vault lokalean geratzen da — hodeiko sinkronizaziorik gabe.</string>
+    <string name="desktop_opsec_clipboard_clear_now">Garbitu arbela orain</string>
+    <string name="desktop_opsec_clipboard_clear_all">Garbitu dena</string>
+    <string name="desktop_opsec_clipboard_history_meta">Gehienez 20 elementu · 5 minuturen buruan iraungitzen da · blokeatu arte finkatu · Super+V</string>
+    <string name="desktop_opsec_clipboard_history_empty">Oraindik ez dago arbeleko historiarik</string>
+    <string name="desktop_opsec_clipboard_pin_until_lock">Finkatu</string>
+    <string name="desktop_opsec_clipboard_unpin">Askatu</string>
+    <string name="desktop_opsec_clipboard_recall_vaulted">Berreskuratu vault-eko klip sentikorra</string>
+    <string name="desktop_opsec_clipboard_timer">Garbitu automatikoki %1$d segundo igaro ondoren</string>
+    <string name="desktop_opsec_clipboard_timer_off">Desaktibatuta</string>
+    <string name="desktop_opsec_attestation_run">Grabatu ostalariaren osotasun-argazkia</string>
+    <string name="desktop_opsec_audit_title">Saioaren auditoria-egunkaria</string>
+    <string name="desktop_opsec_audit_refresh">Freskatu egunkaria</string>
+    <string name="desktop_opsec_audit_empty">Oraindik ez dago auditoria-gertakaririk</string>
+    <string name="desktop_opsec_tpm_status">TPM egoera: %1$s</string>
+    <string name="desktop_opsec_tpm_unknown">oraindik neurtu gabe</string>
+    <string name="desktop_opsec_tpm_hint">PCR 0/7 digest laburpen lokala tpm2-tools bidez, badaude. Ez da urruneko egiaztapena (RAP).</string>
+</resources>

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_workspace_tints">工作区色条</string>
+    <string name="desktop_theme_workspace_tints_hint">面板工作区数字 1–4 下方的淡霓虹色条。恐慌静音时隐藏。关闭：theme.workspaceTints=false。</string>
+</resources>

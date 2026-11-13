@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_appearance_title">Dehra</string>
+    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
+    <string name="desktop_theme_intensity_neon">Vault Neon</string>
+    <string name="desktop_theme_intensity_paper">Paper Ops</string>
+    <string name="desktop_wallpaper_path">Sfond (mogħdija tal-vault)</string>
+    <string name="desktop_wallpaper_path_hint">Relattiva għall-punt tal-immuntar tal-vault (eż. Pictures/wall.jpg). Qatt ma tintwera fuq l-iskrin pre-boot imsakkar.</string>
+    <string name="desktop_unlock_theatre_title">Telos Phantom Vault</string>
+    <string name="desktop_unlock_theatre_quiet_ops">Quiet Ops — nisfrutta biex tiżvela l-isfond tiegħek</string>
+    <string name="desktop_unlock_theatre_hint">Il-boot imsakkar jibqa’ f’Quiet Ops bil-glif tal-vault biss. Wara l-ftuħ, Telos jagħmel crossfade għall-isfond tal-vault u l-intensità magħżula — mingħajr partiċelli.</string>
+    <string name="desktop_sandbox_tint_hint">Il-kulur taċ-ċirku tal-aċċent huwa OpSec viżwali biss (Host = oranġjo twissija, Net-isolated = ċjan, Vault FS = aħdar, Standard = maġenta).</string>
+    <string name="desktop_matched_packs_title">Pakketti ikoni + cursur imqabbla</string>
+    <string name="desktop_matched_packs_hint">Klikk wieħed issettja par GPL dokumentat (Papirus↔BreezeX, candy-icons↔Bibata; CandyCyber jibqa’ l-glif chrome inkorporat). Id-downloads jibqgħu fil-folder tal-ikoni tal-vault jew portable.</string>
+    <string name="desktop_matched_packs_apply">Qabbel il-par: %1$s</string>
+    <string name="desktop_matched_packs_one_click">Qabbel il-par</string>
+    <string name="desktop_matched_packs_working">Qed iqabbel il-pakketti…</string>
+    <string name="desktop_matched_packs_ok">Pakketti mqabbel %1$s applikat</string>
+    <string name="desktop_matched_packs_fail">Ma setgħux jiġu mqabbla l-pakketti: %1$s</string>
+</resources>

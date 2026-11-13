@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<string name="desktop_appearance_hint">Quiet Ops veya Vault Neon yoğunluğu, neon vurgu ve panik sessizliği. Profil katmanları Portable Data’da ana bilgisayar HOME’una yazmadan bunları geçersiz kılabilir.</string>
+    <string name="desktop_theme_intensity_label">Tema yoğunluğu</string>
+    <string name="desktop_theme_accent_label">Vurgu</string>
+    <string name="desktop_panic_mute_toggle">Panik sessizliği</string>
+    <string name="desktop_panic_mute_on">Panik sessizliği: Açık</string>
+    <string name="desktop_panic_mute_off">Panik sessizliği: Kapalı</string>
+    <string name="desktop_panic_mute_hint">Quiet Ops’u zorlar ve neon kenarlıklarla göstergeleri gizler. Yalnızca görsel — güvenlik duvarını veya kill-switch’i değiştirmez. Kısayol: Super+Shift+P.</string>
+    <string name="desktop_vos_profiles_appearance_hint">Her adlı profil, yoğunluk, vurgu, simgeler ve imleç için kendi desktop.properties katmanını tutabilir. Geçiş görünümü önce profil katmanından, sonra genel kasa özelliklerinden yeniden yükler.</string>
+</resources>

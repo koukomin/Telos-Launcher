@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_panel_surface">Panela surfaco</string>
+    <string name="desktop_theme_panel_surface_hint">Travidebla aŭ malklara nur tuŝas la radikon de la panelo; menuoj restas netravideblaj. Malklara konservas panelBlur por frost; gastiganta fona malklariĝo estas best-effort se nedisponebla.</string>
+    <string name="desktop_theme_panel_transparent">Travidebla</string>
+    <string name="desktop_theme_panel_blurred">Malklara</string>
+    <string name="desktop_theme_panel_solid">Solida</string>
+    <string name="desktop_theme_panel_opacity">Panelopaceco: %1$d%%</string>
+    <string name="desktop_theme_panel_blur">Vitro-malklariĝo: %1$d</string>
+    <string name="desktop_theme_panel_blur_unavailable">Gastiganta fona malklariĝo nedisponeblas; Telos uzas diafanan frost-platon kaj tenas vian malklarecpreferon.</string>
+</resources>

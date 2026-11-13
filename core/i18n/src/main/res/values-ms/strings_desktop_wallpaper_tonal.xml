@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_wallpaper_tonal_title">Aksen dari kertas dinding</string>
+    <string name="desktop_wallpaper_tonal_enable">Aksen dari kertas dinding</string>
+    <string name="desktop_wallpaper_tonal_hint">Menyampel kertas dinding vault atau portable pada peranti ini dan memperoleh benih tonal Material secara setempat. Piksel tidak pernah dimuat naik. Jika gagal, chrome menggunakan sian neon.</string>
+    <string name="desktop_wallpaper_tonal_accent_wallpaper">theme.accent=wallpaper — benih tempatan aktif</string>
+</resources>

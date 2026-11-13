@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_lan_pair_title">与 Android 的局域网配对</string>
+    <string name="desktop_lan_pair_hint">在局域网上启动短期配对服务器。在 Telos Sync 中扫描或输入代码。代码和令牌绝不会写入日志。</string>
+    <string name="desktop_lan_pair_start">开始局域网配对</string>
+    <string name="desktop_lan_pair_stop">停止局域网配对</string>
+    <string name="desktop_lan_pair_running">配对服务器正在局域网监听</string>
+    <string name="desktop_lan_pair_code">配对代码</string>
+    <string name="desktop_lan_pair_qr_uri">配对 URI（二维码 / 粘贴）</string>
+    <string name="desktop_lan_pair_stopped">局域网配对已停止</string>
+    <string name="desktop_lan_pair_bind_reject">无法绑定公网地址 — 请使用私有局域网 IP</string>
+    <string name="desktop_lan_pair_android_title">Telos Desktop 局域网配对</string>
+    <string name="desktop_lan_pair_host">桌面主机（局域网 IP）</string>
+    <string name="desktop_lan_pair_port">桌面端口</string>
+    <string name="desktop_lan_pair_connect">与桌面配对</string>
+    <string name="desktop_lan_pair_paired">已与桌面配对</string>
+    <string name="desktop_lan_pair_fetch_bundle">获取桌面会话包</string>
+    <string name="desktop_lan_pair_fetch_ok">已保存加密的桌面会话包</string>
+    <string name="desktop_lan_pair_send_bundle">发送加密包</string>
+    <string name="desktop_lan_pair_failed">局域网配对失败</string>
+    <string name="desktop_lan_pair_scan_hint">在 Android 上打开 Sync → 设置，粘贴 URI 或输入主机、端口和代码。</string>
+</resources>

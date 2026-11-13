@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_portable_data_root">Portable data folder (config, cache, temp only here)</string>
+    <string name="desktop_host_home_trace_warning">Host Home writes settings and cache on this PC. Choose Portable Data to leave no host traces.</string>
+    <string name="desktop_boot_portable_data">Portable Data — no host traces (config/cache/temp under portable root)</string>
+    <string name="desktop_boot_portable_vault">Portable Vault — encrypted data under portable root</string>
+    <string name="desktop_boot_host_home">Host Home (may leave traces on this PC)</string>
+    <string name="desktop_boot_unlock_existing">Unlock existing vault (file or stego folder)</string>
+    <string name="desktop_boot_create_wizard">Create new elastic / stego / deniable vault</string>
+    <string name="desktop_boot_ephemeral">Ephemeral RAM-only ghost session (tmpfs)</string>
+    <string name="desktop_session_sync_title">Session sync</string>
+    <string name="desktop_session_sync_export">Export encrypted bundle</string>
+    <string name="desktop_session_sync_import">Import encrypted bundle</string>
+    <string name="desktop_session_sync_auto">Automatski uvoz pri pokretanju kada je spremljen sync ključ</string>
+    <string name="desktop_session_sync_pass">Sync passphrase (or KeePass entry %1$s)</string>
+    <string name="desktop_session_sync_keepass">KeePass database path (.kdbx)</string>
+    <string name="desktop_windows_shell_title">Windows shell replacement</string>
+    <string name="desktop_windows_shell_enable">Set Telos as login shell (HKCU)</string>
+    <string name="desktop_windows_shell_revert">Restore explorer.exe shell</string>
+    <string name="desktop_windows_shell_risk">Replaces your user shell at next sign-in. Keep a recovery path before enabling.</string>
+    <string name="desktop_helix_portable_note">Helix window chrome is drawn in Compose on all platforms; native Win32 decorations may show until shell replacement.</string>
+    <string name="desktop_session_sync_pass_required">Potrebna je sync lozinka</string>
+    <string name="desktop_session_sync_imported">Paket sync sesije je uvezen</string>
+    <string name="desktop_session_sync_key_stored">Sync ključ spremljen za uvoz pri pokretanju bez upita</string>
+    <string name="desktop_session_sync_key_missing">Unesite sync lozinku prije uključivanja automatskog uvoza</string>
+    <string name="desktop_vos_profiles_title">Profili trezora</string>
+    <string name="desktop_vos_profiles_summary">Imenovane mape profila u config profiles/. U desktop.properties samo aktivno ime — nikad lozinke.</string>
+    <string name="desktop_vos_profiles_active">Aktivni profil: %1$s</string>
+    <string name="desktop_vos_profiles_none">(nema)</string>
+    <string name="desktop_vos_profiles_empty">Još nema profila. Stvorite jedan za prebacivanje identiteta trezora.</string>
+    <string name="desktop_vos_profiles_kind_named">Imenovani profil trezora</string>
+    <string name="desktop_vos_profiles_kind_portable">Korijen prijenosnog trezora</string>
+    <string name="desktop_vos_profiles_switch">Prebaci</string>
+    <string name="desktop_vos_profiles_use_portable">Upotrijebi ovaj prijenosni korijen</string>
+    <string name="desktop_vos_profiles_new_name">Naziv novog profila</string>
+    <string name="desktop_vos_profiles_create">Stvori i prebaci</string>
+    <string name="desktop_vos_profiles_created">Stvoreno i prebačeno na %1$s</string>
+    <string name="desktop_vos_profiles_switched">Prebačeno na %1$s</string>
+    <string name="desktop_vos_profiles_invalid_name">Slova, brojevi, točke, podvlake ili crtice (najv. 64).</string>
+    <string name="desktop_vos_profiles_portable_hint">Prijenosni korijeni drže config, predmemoriju i temp izvan host profila (zadano na Windowsu: Portable Data).</string>
+    <string name="desktop_vos_profiles_portable_path">Put mape prijenosnog trezora</string>
+    <string name="desktop_vos_profiles_add_portable">Dodaj korijen prijenosnog trezora</string>
+    <string name="desktop_vos_profiles_portable_selected">Prijenosni korijen: %1$s</string>
+    <string name="desktop_vos_profiles_portable_reject">Prijenosni korijen ne smije biti host home ni njegovi .config/.cache/.local.</string>
+</resources>

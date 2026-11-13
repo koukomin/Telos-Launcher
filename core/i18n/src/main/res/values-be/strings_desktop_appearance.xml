@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<string name="desktop_appearance_hint">Інтэнсіўнасць Quiet Ops або Vault Neon, неонавы акцэнт і панічнае адключэнне. Накладанні профілю могуць перавызначыць гэта без запісу ў HOME хоста ў Portable Data.</string>
+    <string name="desktop_theme_intensity_label">Інтэнсіўнасць тэмы</string>
+    <string name="desktop_theme_accent_label">Акцэнт</string>
+    <string name="desktop_panic_mute_toggle">Панічнае адключэнне</string>
+    <string name="desktop_panic_mute_on">Панічнае адключэнне: Укл.</string>
+    <string name="desktop_panic_mute_off">Панічнае адключэнне: Выкл.</string>
+    <string name="desktop_panic_mute_hint">Прымусова ўключае Quiet Ops і хавае неонавыя рамкі і індыкатары. Толькі візуальна — не змяняе міжсеткавы экран ці kill-switch. Спалучэнне: Super+Shift+P.</string>
+    <string name="desktop_vos_profiles_appearance_hint">Кожны названы профіль можа захоўваць уласнае накладанне desktop.properties для інтэнсіўнасці, акцэнту, значкоў і курсора. Пераключэнне перазагружае выгляд з накладання профілю, потым з глабальных уласцівасцей сховішча.</string>
+</resources>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_icons_title">Значки</string>
+    <string name="desktop_icons_theme_label">Тема значков</string>
+    <string name="desktop_icons_download_section">Скачать из Telos</string>
+    <string name="desktop_icons_download">Скачать</string>
+    <string name="desktop_icons_installing">Установка…</string>
+    <string name="desktop_icons_installed">Установлено</string>
+    <string name="desktop_icons_apply">Применить</string>
+    <string name="desktop_icons_source_system">Система</string>
+    <string name="desktop_icons_source_telos">Telos</string>
+    <string name="desktop_icons_source_builtin">Встроенная</string>
+    <string name="desktop_icons_path">Папка пакетов значков: %1$s</string>
+    <string name="desktop_icons_freedesktop_note">Темы значков freedesktop для рабочего стола (не Android ADW).</string>
+    <string name="desktop_icons_download_failed">Ошибка загрузки</string>
+    <string name="desktop_icons_download_ok">Тема установлена</string>
+    <string name="desktop_icons_license">Лицензия: %1$s</string>
+    <string name="desktop_icons_portable_only">В режиме Portable Data пакеты хранятся в портативной папке значков (не в профиле хоста).</string>
+</resources>

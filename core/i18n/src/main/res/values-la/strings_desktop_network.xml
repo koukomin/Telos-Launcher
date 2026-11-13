@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_net_dns_pref_hint">In arca servatur. In Linux Telos DoT per resolvectl adhibet cum praesto sit; DoH solum praelatio manet.</string>
+    <string name="desktop_net_profiles_sum">Fasciculi profili arcae sub ~/.config/telos/profiles/</string>
+    <string name="desktop_net_allowlist_path">Fasciculus elenchi permissorum</string>
+    <string name="desktop_net_kill_switch">Interruptor exitialis</string>
+    <string name="desktop_net_kill_switch_enable">Interruptorem exitialem activa</string>
+    <string name="desktop_net_kill_switch_disable">Interruptorem exitialem desactiva</string>
+    <string name="desktop_net_kill_switch_enforced">Applicatum: egressus non permissus abicitur (nftables inet telos_session)</string>
+    <string name="desktop_net_kill_switch_pref_only">Praeferentia servata; in hac platforma non applicatur</string>
+    <string name="desktop_net_kill_switch_failed">Activus, sed nftables applicari non potuerunt — commeatus non occlusus est</string>
+    <string name="desktop_net_kill_switch_clear_blocked">Purgatio muri ignis sessionis impeditur dum interruptor exitialis activus est</string>
+    <string name="desktop_net_apps_tab">Applicationes</string>
+    <string name="desktop_net_apps_title">Directio per applicationem</string>
+    <string name="desktop_net_apps_hint">One desktop-id or package per line with allow, deny, or vpn. Stored under ~/.config/telos/app-routing.txt. On Linux, deny blocks launch in the Telos launcher and vpn sets TELOS_APP_ROUTE=vpn (best-effort, no fake netns). Process-level nftables owner/cgroup routing is not applied, so the session kill-switch stays intact.</string>
+    <string name="desktop_net_apps_file">Tabula directionis</string>
+    <string name="desktop_net_dns_filters_title">Filtra DNS</string>
+    <string name="desktop_net_dns_filters_hint">Block and allow lists are stored under vault ~/.config/telos/ (dns-block.txt, dns-allow.txt). A NextDNS configuration ID applies DoT via resolvectl on Linux when available. Enable Telos DNS stub (or set dns-stub.port) to run a local 127.0.0.1 forwarder that NXDOMAINs blocked hosts and redirect DNS with nftables — then host lists become Enforced. If the stub cannot bind or nft fails, status stays Failed/PreferenceOnly. Windows and macOS store preferences only.</string>
+    <string name="desktop_net_nextdns_id">Identificatio configurationis NextDNS</string>
+    <string name="desktop_net_nextdns_id_invalid">Identificatio configurationis NextDNS invalida (4–12 litteras vel numeros utere)</string>
+    <string name="desktop_net_dns_blocklist">Tabula exclusionis DNS</string>
+    <string name="desktop_net_dns_allowlist">Tabula permissionis DNS</string>
+    <string name="desktop_net_dns_filter_status">Status filtri</string>
+    <string name="desktop_net_dns_filter_enforced">Enforced (NextDNS DoT and/or Telos DNS stub + nft redirect)</string>
+    <string name="desktop_net_dns_filter_pref_only">Praelatio servata; filtratio in hac via non adhibetur</string>
+    <string name="desktop_net_dns_filter_failed">Configured, but the DNS stub could not bind or resolvectl/nftables could not apply filtering</string>
+    <string name="desktop_net_apps_enforced">Enforced: launch-gate active (deny rules consulted by DesktopFileLauncher)</string>
+    <string name="desktop_net_apps_pref_only">Preference saved; no deny rules on Linux, or not applied on this platform</string>
+    <string name="desktop_net_dns_stub_enable">Enable Telos DNS stub</string>
+    <string name="desktop_net_dns_stub_disable">Disable Telos DNS stub</string>
+    <string name="desktop_net_dns_stub_hint">Telos DNS stub listens on 127.0.0.1 (default port 5353), answers NXDOMAIN for dns-block.txt (allowlist wins), and forwards other queries. nftables inet telos_dns redirects outbound port 53 when privileged apply succeeds.</string>
+</resources>

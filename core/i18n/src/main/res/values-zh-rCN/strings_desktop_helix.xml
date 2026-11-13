@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_helix_palette_title">HELIX 命令</string>
+    <string name="desktop_helix_palette_placeholder">搜索应用、窗口、计算器…</string>
+    <string name="desktop_helix_palette_hint">Super+句号 或 Ctrl+空格</string>
+    <string name="desktop_helix_palette_privacy">仅索引保险库与便携根目录 — 不会索引会话外的主机主目录。</string>
+    <string name="desktop_helix_palette_open_files">打开文件</string>
+    <string name="desktop_helix_palette_open_settings">打开设置</string>
+    <string name="desktop_helix_palette_open_network">打开网络</string>
+    <string name="desktop_helix_palette_kill_window">关闭焦点窗口</string>
+    <string name="desktop_helix_palette_paste_vault_clip">粘贴上次保险库剪贴板</string>
+    <string name="desktop_helix_palette_window">窗口</string>
+    <string name="desktop_helix_palette_calc">计算器</string>
+    <string name="desktop_helix_palette_command">命令</string>
+    <string name="desktop_helix_palette_file">文件</string>
+    <string name="desktop_helix_palette_no_results">无匹配项</string>
+</resources>

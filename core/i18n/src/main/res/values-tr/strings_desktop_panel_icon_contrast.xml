@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_panel_icon_contrast">Panel simge kontrastı</string>
+    <string name="desktop_panel_icon_contrast_auto">Otomatik</string>
+    <string name="desktop_panel_icon_contrast_light">Açık simgeler</string>
+    <string name="desktop_panel_icon_contrast_dark">Koyu simgeler</string>
+    <string name="desktop_panel_icon_contrast_hint">Otomatik, bu cihazda üst panelin arkasındaki duvar kağıdı şeridini örnekler ve Helix panel simgeleri ile Compose StatusNotifier etiketleri için açık veya koyu glifler seçer. Pikseller yerelde kalır. telos-sni SNI pixmap’leri yeniden renklendirilmez. Preference: panel.iconContrast=auto|light|dark.</string>
+</resources>

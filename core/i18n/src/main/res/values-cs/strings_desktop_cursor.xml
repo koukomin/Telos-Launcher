@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_cursor_title">Kurzor</string>
+    <string name="desktop_cursor_theme">Motiv kurzoru</string>
+    <string name="desktop_cursor_size">Velikost kurzoru</string>
+    <string name="desktop_cursor_system_default">Výchozí systémový</string>
+    <string name="desktop_cursor_preset_style">Styl překryvu Compose (když XCursor není k dispozici)</string>
+    <string name="desktop_cursor_download_section">Stáhnout motivy kurzoru (do portable/vault icons)</string>
+    <string name="desktop_cursor_download_named">Stáhnout %1$s (%2$s)</string>
+    <string name="desktop_cursor_download_ok">Nainstalováno %1$s</string>
+    <string name="desktop_cursor_download_fail">Motiv kurzoru se nepodařilo stáhnout: %1$s</string>
+    <string name="desktop_cursor_limit_linux">Linux: podřízené aplikace dostanou XCURSOR_THEME a XCURSOR_SIZE. Telos načte snímky XCursor do AWT kurzoru, pokud je to možné; jinak kreslí překryv Compose Sweet/Breeze. Animované sekvence XCursor se nepřehrávají.</string>
+    <string name="desktop_cursor_limit_windows">Windows: mapuje na systémové kurzory AWT. Motivy XCursor/Plasma se na ukazatel Win32 neaplikují.</string>
+    <string name="desktop_cursor_limit_macos">macOS: mapuje na systémové kurzory AWT. Motivy XCursor/Plasma se na ukazatel Cocoa neaplikují.</string>
+</resources>

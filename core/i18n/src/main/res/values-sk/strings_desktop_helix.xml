@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_helix_palette_title">PRÍKAZ HELIX</string>
+    <string name="desktop_helix_palette_placeholder">Hľadať aplikácie, okná, kalkulačku…</string>
+    <string name="desktop_helix_palette_hint">Super+Bodka alebo Ctrl+Medzerník</string>
+    <string name="desktop_helix_palette_privacy">Len korene vault a prenosné — neindexuje host home mimo relácie.</string>
+    <string name="desktop_helix_palette_open_files">Otvoriť Súbory</string>
+    <string name="desktop_helix_palette_open_settings">Otvoriť Nastavenia</string>
+    <string name="desktop_helix_palette_open_network">Otvoriť Sieť</string>
+    <string name="desktop_helix_palette_kill_window">Zavrieť aktívne okno</string>
+    <string name="desktop_helix_palette_paste_vault_clip">Prilepiť poslednú schránku vault</string>
+    <string name="desktop_helix_palette_window">Okno</string>
+    <string name="desktop_helix_palette_calc">Kalkulačka</string>
+    <string name="desktop_helix_palette_command">Príkaz</string>
+    <string name="desktop_helix_palette_file">Súbor</string>
+    <string name="desktop_helix_palette_no_results">Žiadne výsledky</string>
+</resources>

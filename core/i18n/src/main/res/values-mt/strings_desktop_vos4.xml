@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_lan_pair_title">Tqabbil LAN ma’ Android</string>
+    <string name="desktop_lan_pair_hint">Jibda server ta’ tqabbil għal żmien qasir fuq il-LAN. Skennja jew daħħal il-kodiċi f’Telos Sync. Il-kodiċijiet u t-tokens qatt ma jiġu rreġistrati.</string>
+    <string name="desktop_lan_pair_start">Ibda tqabbil LAN</string>
+    <string name="desktop_lan_pair_stop">Waqqaf tqabbil LAN</string>
+    <string name="desktop_lan_pair_running">Is-server tat-tqabbil qed jisma’ fuq il-LAN</string>
+    <string name="desktop_lan_pair_code">Kodiċi tat-tqabbil</string>
+    <string name="desktop_lan_pair_qr_uri">URI tat-tqabbil (QR / paste)</string>
+    <string name="desktop_lan_pair_stopped">It-tqabbil LAN waqaf</string>
+    <string name="desktop_lan_pair_bind_reject">Ma jistax jintrabat indirizz pubbliku — uża IP LAN privat</string>
+    <string name="desktop_lan_pair_android_title">Tqabbil LAN Telos Desktop</string>
+    <string name="desktop_lan_pair_host">Host tad-desktop (IP LAN)</string>
+    <string name="desktop_lan_pair_port">Port tad-desktop</string>
+    <string name="desktop_lan_pair_connect">Qabbel mad-desktop</string>
+    <string name="desktop_lan_pair_paired">Imqabbel mad-desktop</string>
+    <string name="desktop_lan_pair_fetch_bundle">Iġbed il-pakkett tas-sessjoni tad-desktop</string>
+    <string name="desktop_lan_pair_fetch_ok">Pakkett tas-sessjoni enkriptat salvat</string>
+    <string name="desktop_lan_pair_send_bundle">Ibgħat pakkett enkriptat</string>
+    <string name="desktop_lan_pair_failed">It-tqabbil LAN falle</string>
+    <string name="desktop_lan_pair_scan_hint">Fuq Android iftaħ Sync → Settings u paste l-URI jew daħħal host, port u kodiċi.</string>
+</resources>

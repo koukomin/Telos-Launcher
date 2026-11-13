@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_cursor_title">نشانگر</string>
+    <string name="desktop_cursor_theme">پوستهٔ نشانگر</string>
+    <string name="desktop_cursor_size">اندازهٔ نشانگر</string>
+    <string name="desktop_cursor_system_default">پیش‌فرض سیستم</string>
+    <string name="desktop_cursor_preset_style">سبک پوشش Compose (وقتی XCursor در دسترس نیست)</string>
+    <string name="desktop_cursor_download_section">دانلود پوسته‌های نشانگر (در icons قابل‌حمل/خزانه)</string>
+    <string name="desktop_cursor_download_named">دانلود %1$s (%2$s)</string>
+    <string name="desktop_cursor_download_ok">%1$s نصب شد</string>
+    <string name="desktop_cursor_download_fail">دانلود پوستهٔ نشانگر ممکن نشد: %1$s</string>
+    <string name="desktop_cursor_limit_linux">Linux: برنامه‌های فرزند XCURSOR_THEME و XCURSOR_SIZE را می‌گیرند. Telos در صورت امکان فریم‌های XCursor را در نشانگر AWT بارگذاری می‌کند؛ وگرنه پوشش Compose Sweet/Breeze رسم می‌شود. توالی‌های پویانمای XCursor پخش نمی‌شوند.</string>
+    <string name="desktop_cursor_limit_windows">Windows: به نشانگرهای سیستم AWT نگاشت می‌شود. پوسته‌های XCursor/Plasma روی اشاره‌گر Win32 اعمال نمی‌شوند.</string>
+    <string name="desktop_cursor_limit_macos">macOS: به نشانگرهای سیستم AWT نگاشت می‌شود. پوسته‌های XCursor/Plasma روی اشاره‌گر Cocoa اعمال نمی‌شوند.</string>
+</resources>

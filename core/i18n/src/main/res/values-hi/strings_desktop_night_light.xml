@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_night_light_title">नाइट लाइट</string>
+    <string name="desktop_night_light_hint">होस्ट टूल (gammastep, redshift, या wlsunset) से डिस्प्ले को गर्म बनाता है। कोई लोकेशन सेवा नहीं और नेटवर्क पर कुछ नहीं भेजा जाता। टूल न हो तो केवल वरीयता सहेजी जाती है।</string>
+    <string name="desktop_night_light_enable">नाइट लाइट सक्षम करें</string>
+    <string name="desktop_night_light_temperature">रंग तापमान: %1$d K</string>
+    <string name="desktop_night_light_on">चालू</string>
+    <string name="desktop_night_light_off">बंद</string>
+    <string name="desktop_night_light_pref_only">वरीयता सहेजी गई; इस होस्ट पर लागू करने के लिए gammastep, redshift, या wlsunset स्थापित करें</string>
+    <string name="desktop_night_light_failed">होस्ट टूल डिस्प्ले तापमान नहीं बदल सका</string>
+    <string name="desktop_night_light_applied">%1$s से लागू</string>
+    <string name="desktop_night_light_cleared">नाइट लाइट हटाई गई</string>
+    <string name="desktop_settings_search_hint">सेटिंग्स खोजें</string>
+    <string name="desktop_settings_search_empty">इस खोज से कोई सेटिंग मेल नहीं खाती</string>
+    <string name="desktop_settings_session">सत्र</string>
+    <string name="desktop_settings_display">डिस्प्ले</string>
+    <string name="desktop_settings_desktop">डेस्कटॉप</string>
+    <string name="desktop_settings_windows">विंडोज़</string>
+    <string name="desktop_settings_portable">पोर्टेबल</string>
+    <string name="desktop_settings_vault">वॉल्ट</string>
+</resources>

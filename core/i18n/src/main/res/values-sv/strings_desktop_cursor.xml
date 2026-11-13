@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_cursor_title">Pekare</string>
+    <string name="desktop_cursor_theme">Pekartema</string>
+    <string name="desktop_cursor_size">Pekarstorlek</string>
+    <string name="desktop_cursor_system_default">Systemstandard</string>
+    <string name="desktop_cursor_preset_style">Compose-överläggsstil (när XCursor inte är tillgängligt)</string>
+    <string name="desktop_cursor_download_section">Ladda ner pekarteman (till portable/valv-icons)</string>
+    <string name="desktop_cursor_download_named">Ladda ner %1$s (%2$s)</string>
+    <string name="desktop_cursor_download_ok">%1$s installerat</string>
+    <string name="desktop_cursor_download_fail">Kunde inte ladda ner pekartema: %1$s</string>
+    <string name="desktop_cursor_limit_linux">Linux: underordnade appar får XCURSOR_THEME och XCURSOR_SIZE. Telos läser in XCursor-ramar till en AWT-pekare när det går; annars ritas Compose Sweet/Breeze-överlägget. Animerade XCursor-sekvenser spelas inte upp.</string>
+    <string name="desktop_cursor_limit_windows">Windows: mappar till AWT-systempekare. XCursor/Plasma-teman tillämpas inte på Win32-pekaren.</string>
+    <string name="desktop_cursor_limit_macos">macOS: mappar till AWT-systempekare. XCursor/Plasma-teman tillämpas inte på Cocoa-pekaren.</string>
+</resources>

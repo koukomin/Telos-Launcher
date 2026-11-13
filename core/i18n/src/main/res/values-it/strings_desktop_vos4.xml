@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_lan_pair_title">Associazione LAN con Android</string>
+    <string name="desktop_lan_pair_hint">Avvia un server di associazione a breve durata sulla LAN. Scansiona o inserisci il codice in Telos Sync. Codici e token non vengono mai registrati.</string>
+    <string name="desktop_lan_pair_start">Avvia associazione LAN</string>
+    <string name="desktop_lan_pair_stop">Interrompi associazione LAN</string>
+    <string name="desktop_lan_pair_running">Server di associazione in ascolto sulla LAN</string>
+    <string name="desktop_lan_pair_code">Codice di associazione</string>
+    <string name="desktop_lan_pair_qr_uri">URI di associazione (QR / incolla)</string>
+    <string name="desktop_lan_pair_stopped">Associazione LAN interrotta</string>
+    <string name="desktop_lan_pair_bind_reject">Impossibile associare un indirizzo pubblico — usa un IP LAN privato</string>
+    <string name="desktop_lan_pair_android_title">Associazione LAN Telos Desktop</string>
+    <string name="desktop_lan_pair_host">Host desktop (IP LAN)</string>
+    <string name="desktop_lan_pair_port">Porta desktop</string>
+    <string name="desktop_lan_pair_connect">Associa al desktop</string>
+    <string name="desktop_lan_pair_paired">Associato al desktop</string>
+    <string name="desktop_lan_pair_fetch_bundle">Scarica pacchetto sessione desktop</string>
+    <string name="desktop_lan_pair_fetch_ok">Pacchetto sessione crittografato salvato</string>
+    <string name="desktop_lan_pair_send_bundle">Invia pacchetto crittografato</string>
+    <string name="desktop_lan_pair_failed">Associazione LAN non riuscita</string>
+    <string name="desktop_lan_pair_scan_hint">Su Android apri Sync → Impostazioni e incolla l’URI oppure inserisci host, porta e codice.</string>
+</resources>

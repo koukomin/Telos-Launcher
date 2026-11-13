@@ -58,6 +58,11 @@ import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberModalBottomSheetState
+import de.mm20.launcher2.ui.component.virtualAppPopup
+import de.mm20.launcher2.ui.component.TelosCyber
+import de.mm20.launcher2.ui.component.TelosCyberAppBarTitle
+import de.mm20.launcher2.ui.component.TelosTechPill
+import de.mm20.launcher2.ui.component.telosTechSurface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -166,7 +171,12 @@ private fun TopBar(title: String, onBack: () -> Unit, actions: @Composable () ->
                 Icon(painterResource(BaseR.drawable.arrow_back_24px), contentDescription = stringResource(I18nR.string.calculator_back))
             }
         }
-        Text(title, style = MaterialTheme.typography.titleLarge, modifier = Modifier.weight(1f).padding(start = if (backStack.size > 1) 4.dp else 12.dp), maxLines = 1, overflow = TextOverflow.Ellipsis)
+        TelosCyberAppBarTitle(
+            title = title,
+            status = stringResource(I18nR.string.calculator_title),
+            statusColor = TelosCyber.NeonCyan,
+            modifier = Modifier.weight(1f).padding(start = if (backStack.size > 1) 4.dp else 12.dp),
+        )
         IconButton(onClick = { showFontDialog = true }) {
             Icon(painterResource(BaseR.drawable.settings_24px), contentDescription = stringResource(I18nR.string.per_app_font_size))
         }
@@ -264,7 +274,7 @@ private fun CalculatorPage(vm: CalculatorViewModel, onUnits: () -> Unit, onVat: 
                     IconButton(onClick = { menu = true }) {
                         Icon(painterResource(BaseR.drawable.more_vert_24px), contentDescription = stringResource(I18nR.string.calculator_more))
                     }
-                    DropdownMenu(expanded = menu, onDismissRequest = { menu = false }) {
+                    DropdownMenu(expanded = menu, onDismissRequest = { menu = false }, containerColor = virtualAppPopup()) {
                         DropdownMenuItem(text = { Text(stringResource(I18nR.string.calculator_history)) }, onClick = { menu = false; showHistory = true })
                         DropdownMenuItem(
                             text = { Text(stringResource(I18nR.string.calculator_copy_result)) },
@@ -299,7 +309,7 @@ private fun CalculatorPage(vm: CalculatorViewModel, onUnits: () -> Unit, onVat: 
         }
 
         if (showHistory) {
-            ModalBottomSheet(onDismissRequest = { showHistory = false }, sheetState = rememberModalBottomSheetState()) {
+            ModalBottomSheet(onDismissRequest = { showHistory = false }, sheetState = rememberModalBottomSheetState(), containerColor = MaterialTheme.colorScheme.surfaceContainer.copy(alpha = 1f)) {
                 HistorySheet(vm, onPick = { vm.replaceExpression(it); showHistory = false })
             }
         }
@@ -315,7 +325,9 @@ private fun Display(vm: CalculatorViewModel, modifier: Modifier, onHistory: () -
         modifier
             .fillMaxWidth()
             .fillMaxHeight()
-            .padding(horizontal = 20.dp, vertical = 4.dp)
+            .padding(horizontal = 12.dp, vertical = 4.dp)
+            .telosTechSurface(borderColor = TelosCyber.NeonCyan, shape = RoundedCornerShape(18.dp))
+            .padding(horizontal = 12.dp, vertical = 8.dp)
             .pointerInput(Unit) {
                 // swipe down on the display opens the history, like in the OxygenOS calculator
                 detectVerticalDragGestures(
@@ -588,7 +600,10 @@ private fun UnitDetailPage(vm: CalculatorViewModel, cat: UnitCat, onBack: () -> 
 
 @Composable
 private fun UnitCard(title: String, content: @Composable () -> Unit) {
-    Card(Modifier.fillMaxWidth(), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh)) {
+    Card(
+        Modifier.fillMaxWidth().telosTechSurface(borderColor = TelosCyber.NeonGreen, shape = RoundedCornerShape(16.dp)),
+        colors = CardDefaults.cardColors(containerColor = Color.Transparent),
+    ) {
         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
             Text(title, style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
             content()
@@ -603,7 +618,7 @@ private fun UnitPicker(labels: List<String>, selected: Int, onSelect: (Int) -> U
         OutlinedButton(onClick = { open = true }, modifier = Modifier.fillMaxWidth()) {
             Text(labels.getOrNull(selected).orEmpty(), maxLines = 1, overflow = TextOverflow.Ellipsis)
         }
-        DropdownMenu(expanded = open, onDismissRequest = { open = false }) {
+        DropdownMenu(expanded = open, onDismissRequest = { open = false }, containerColor = virtualAppPopup()) {
             labels.forEachIndexed { i, label ->
                 DropdownMenuItem(text = { Text(label) }, onClick = { onSelect(i); open = false })
             }
@@ -646,7 +661,7 @@ private fun VatPage(vm: CalculatorViewModel, onBack: () -> Unit, onUseInCalculat
             )
             Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 for (preset in listOf("24", "13", "6", "0")) {
-                    FilterChip(selected = vm.vatRate == preset, onClick = { vm.updateVatRate(preset) }, label = { Text("$preset%") })
+                    TelosTechPill(text = "$preset%", isSelected = vm.vatRate == preset, onClick = { vm.updateVatRate(preset) }, accentColor = TelosCyber.NeonOrange)
                 }
             }
 

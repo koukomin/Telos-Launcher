@@ -46,6 +46,7 @@ object TelosDevOptsCloak {
         val app = context.applicationContext
         TelosPrivilegedDaemon.warmup(app)
         TelosStealthBlacklist.start(app)
+        TelosDevOptsSnapshot.ensureObserver(app)
         AppLaunchGate.preLaunch = { ctx, pkg ->
             cloakIfNeeded(ctx, pkg)
             de.mm20.launcher2.appmanagement.clipboard.TelosClipboardShield.onPreLaunch(ctx, pkg)
@@ -107,6 +108,13 @@ object TelosDevOptsCloak {
         val dev = p.getInt(KEY_SAVED_DEV, 1)
         val adb = p.getInt(KEY_SAVED_ADB, 1)
         val wifi = p.getInt(KEY_SAVED_WIFI, 1)
+        // Re-apply every captured Developer Options value (scales, stay-awake, …), then the flags.
+        TelosDevOptsSnapshot.restore(
+            app,
+            writeSecureSettings = TelosPrivilegedDaemon.hasWriteSecureSettings(app),
+        ) { cmd ->
+            scope.launch { TelosPrivilegedDaemon.exec(cmd) }
+        }
         writeGlobals(app, dev, adb, wifi)
         p.edit().putBoolean(KEY_CLOAKED, false).apply()
         refreshStatusSync(app)
@@ -119,6 +127,8 @@ object TelosDevOptsCloak {
     private fun applyHidden(context: Context, persistSaved: Boolean) {
         val p = prefs(context)
         if (persistSaved && !p.getBoolean(KEY_CLOAKED, false)) {
+            // Snapshot while flags are still on — before zeroing them.
+            TelosDevOptsSnapshot.capture(context)
             p.edit()
                 .putInt(KEY_SAVED_DEV, readGlobal(context, Settings.Global.DEVELOPMENT_SETTINGS_ENABLED, 0))
                 .putInt(KEY_SAVED_ADB, readGlobal(context, Settings.Global.ADB_ENABLED, 0))

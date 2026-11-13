@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
+import de.mm20.launcher2.ui.component.virtualAppPopup
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -45,7 +46,9 @@ fun TrashDialog(onDismiss: () -> Unit, onChanged: () -> Unit = {}) {
             scope.launch { busy = true; error = !trash.deletePermanently(item); items = trash.entries(); busy = false; onChanged() }
         }, { confirmDelete = null })
     }
-    AlertDialog(onDismissRequest = onDismiss,
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        containerColor = de.mm20.launcher2.ui.component.virtualAppPopup(),
         title = { Text(stringResource(I18nR.string.telos_trash_title)) },
         text = { Column(Modifier.heightIn(max = 500.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
             if (busy) LinearProgressIndicator(Modifier.fillMaxWidth())

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_wallpaper_tonal_title">Destaque a partir do fundo</string>
+    <string name="desktop_wallpaper_tonal_enable">Destaque a partir do papel de parede</string>
+    <string name="desktop_wallpaper_tonal_hint">Amostra o fundo vault ou portable neste dispositivo e deriva localmente uma semente tonal Material. Os pixels nunca são enviados. Se falhar, o chrome usa ciano neon.</string>
+    <string name="desktop_wallpaper_tonal_accent_wallpaper">theme.accent=wallpaper — semente local ativa</string>
+</resources>

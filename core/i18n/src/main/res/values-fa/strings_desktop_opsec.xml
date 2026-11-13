@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_opsec_title">OpSec</string>
+    <string name="desktop_opsec_secure_clipboard">کلیپ‌بورد امن</string>
+    <string name="desktop_opsec_clipboard_title">کلیپ‌بورد</string>
+    <string name="desktop_opsec_clipboard_hint">متن حساس (کلیدها، IBAN، WireGuard) از تاریخچه حذف می‌شود، فقط در این نشست نگه داشته و از کلیپ‌بورد سامانه پاک می‌شود. تاریخچه فقط در vault محلی است — بدون همگام‌سازی ابری.</string>
+    <string name="desktop_opsec_clipboard_clear_now">پاک‌کردن کلیپ‌بورد اکنون</string>
+    <string name="desktop_opsec_clipboard_clear_all">پاک کردن همه</string>
+    <string name="desktop_opsec_clipboard_history_meta">تا ۲۰ مورد · انقضا پس از ۵ دقیقه · سنجاق تا قفل · Super+V</string>
+    <string name="desktop_opsec_clipboard_history_empty">هنوز تاریخچه کلیپ‌بورد نیست</string>
+    <string name="desktop_opsec_clipboard_pin_until_lock">سنجاق</string>
+    <string name="desktop_opsec_clipboard_unpin">برداشتن سنجاق</string>
+    <string name="desktop_opsec_clipboard_recall_vaulted">بازیابی کلیپ حساس از vault</string>
+    <string name="desktop_opsec_clipboard_timer">پاک‌سازی خودکار پس از %1$d ثانیه</string>
+    <string name="desktop_opsec_clipboard_timer_off">خاموش</string>
+    <string name="desktop_opsec_attestation_run">ثبت نمای یکپارچگی میزبان</string>
+    <string name="desktop_opsec_audit_title">گزارش ممیزی نشست</string>
+    <string name="desktop_opsec_audit_refresh">بازخوانی گزارش</string>
+    <string name="desktop_opsec_audit_empty">هنوز رویدادی در ممیزی نیست</string>
+    <string name="desktop_opsec_tpm_status">وضعیت TPM: %1$s</string>
+    <string name="desktop_opsec_tpm_unknown">هنوز اندازه‌گیری نشده</string>
+    <string name="desktop_opsec_tpm_hint">خلاصه محلی digestهای PCR 0/7 با tpm2-tools در صورت وجود. این تأیید هویت از راه دور (RAP) نیست.</string>
+</resources>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_icons_title">Εικονίδια</string>
+    <string name="desktop_icons_theme_label">Θέμα εικονιδίων</string>
+    <string name="desktop_icons_download_section">Λήψη από το Telos</string>
+    <string name="desktop_icons_download">Λήψη</string>
+    <string name="desktop_icons_installing">Εγκατάσταση…</string>
+    <string name="desktop_icons_installed">Εγκατεστημένο</string>
+    <string name="desktop_icons_apply">Εφαρμογή</string>
+    <string name="desktop_icons_source_system">Σύστημα</string>
+    <string name="desktop_icons_source_telos">Telos</string>
+    <string name="desktop_icons_source_builtin">Ενσωματωμένο</string>
+    <string name="desktop_icons_path">Φάκελος πακέτων εικονιδίων: %1$s</string>
+    <string name="desktop_icons_freedesktop_note">Θέματα εικονιδίων freedesktop για επιφάνεια εργασίας (όχι πακέτα Android ADW).</string>
+    <string name="desktop_icons_download_failed">Η λήψη απέτυχε</string>
+    <string name="desktop_icons_download_ok">Το θέμα εγκαταστάθηκε</string>
+    <string name="desktop_icons_license">Άδεια: %1$s</string>
+    <string name="desktop_icons_portable_only">Σε λειτουργία Portable Data, τα πακέτα μένουν στον φορητό φάκελο εικονιδίων (όχι στο προφίλ του host).</string>
+</resources>

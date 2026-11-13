@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_studio_title">Studio tat-temi</string>
+    <string name="desktop_theme_studio_hint">Quiet Ops huwa d-default. Vault Neon isaħħaħ il-bordi Cyber-Tech u l-indikaturi HUD. Paper Ops hija għażla ħafifa għall-jum. Il-popups jibqgħu opaki; m’hemmx it-tieni ċajpira.</string>
+    <string name="desktop_theme_intensity">Intensità</string>
+    <string name="desktop_theme_quiet_ops">Quiet Ops</string>
+    <string name="desktop_theme_vault_neon">Vault Neon</string>
+    <string name="desktop_theme_paper_ops">Paper Ops</string>
+    <string name="desktop_theme_accent">Aċċent</string>
+    <string name="desktop_theme_from_wallpaper">Aċċent mill-isfond</string>
+    <string name="desktop_theme_from_wallpaper_hint">Jieħu kampjun lokali mill-isfond tal-vault jew data portabbli għal seed tonali Material. Xejn ma jittella’.</string>
+    <string name="desktop_theme_density">Densità</string>
+    <string name="desktop_theme_density_compact">Kompatta</string>
+    <string name="desktop_theme_density_comfort">Kumdità</string>
+    <string name="desktop_theme_density_touch">Mess</string>
+    <string name="desktop_theme_panel_height">Għoli tal-pannell: %1$d dp</string>
+    <string name="desktop_theme_panel_icon">Ikony tal-pannell: %1$d dp</string>
+    </resources>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_panel_icon_contrast">Kontrast ikon panelu</string>
+    <string name="desktop_panel_icon_contrast_auto">Auto</string>
+    <string name="desktop_panel_icon_contrast_light">Světlé ikony</string>
+    <string name="desktop_panel_icon_contrast_dark">Tmavé ikony</string>
+    <string name="desktop_panel_icon_contrast_hint">Auto vzorkuje pruh tapety za horním panelem na tomto zařízení a volí světlé nebo tmavé glyfy pro ikony Helix a popisky StatusNotifier v Compose. Pixely zůstávají lokálně. SNI pixmap z telos-sni se nepřebarvují. Preference: panel.iconContrast=auto|light|dark.</string>
+</resources>

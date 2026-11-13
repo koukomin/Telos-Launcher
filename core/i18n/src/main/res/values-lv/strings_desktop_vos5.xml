@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_vault_restore_title">Pilnīga vault atjaunošana</string>
+    <string name="desktop_vault_restore_hint">Atjauno desktop.properties un ~/.config/telos no AES sesijas dublējuma. WireGuard privātās atslēgas nekad netiek rakstītas žurnālos. Nepieciešams apstiprinājums.</string>
+    <string name="desktop_vault_restore_preview_btn">Atjaunošanas priekšskatījums</string>
+    <string name="desktop_vault_restore_preview">Gatavs atjaunot %1$s Telos konfigurācijas failus (desktop.properties: %2$s). Apstipriniet, lai lietotu.</string>
+    <string name="desktop_vault_restore_confirm">Apstiprināt atjaunošanu</string>
+    <string name="desktop_vault_restore_cancel">Atcelt atjaunošanu</string>
+    <string name="desktop_vault_restore_done">Vault sesijas konfigurācija atjaunota</string>
+    <string name="desktop_vault_restore_need_confirm">Nepieciešams atjaunošanas apstiprinājums</string>
+    <string name="desktop_luks_restore_title">LUKS-vault-image herstellen</string>
+    <string name="desktop_luks_restore_hint">Kopieert een telos_vault.img-back-up naar het portable/vault-imagepad. Vault moet vergrendeld zijn. Mount nooit met wachtwoord — ontgrendel apart na herstel. Bevestiging en SHA-256-controle vereist.</string>
+    <string name="desktop_luks_restore_path_label">Pad van back-upimage (telos_vault.img)</string>
+    <string name="desktop_luks_restore_preview_btn">Voorbeeld LUKS-imageherstel</string>
+    <string name="desktop_luks_restore_preview">Klaar om %1$s bytes te herstellen (sha256 %2$s…). Bevestig om te kopiëren. Vault moet vergrendeld blijven.</string>
+    <string name="desktop_luks_restore_confirm">LUKS-imageherstel bevestigen</string>
+    <string name="desktop_luks_restore_cancel">LUKS-herstel annuleren</string>
+    <string name="desktop_luks_restore_done">LUKS-image hersteld als %1$s (nog vergrendeld — apart ontgrendelen)</string>
+    <string name="desktop_luks_restore_need_confirm">Bevestiging voor LUKS-imageherstel vereist</string>
+    <string name="desktop_luks_restore_locked_required">Vault moet vergrendeld zijn vóór herstel van het LUKS-image</string>
+    <string name="desktop_update_title">Parakstīts darbvirsmas atjauninājums</string>
+    <string name="desktop_update_hint">Controleer een lokaal file://-pad of HTTPS-manifest ondertekend met de Telos Ed25519-sleutel. Updates worden onder portable/vault temp geplaatst en nooit automatisch geïnstalleerd. Standaardkanaal: GitHub Releases-asset telos-desktop-update.manifest.</string>
+    <string name="desktop_update_releases_hint">GitHub Releases-standaard: %1$s</string>
+    <string name="desktop_update_use_releases">GitHub Releases-URL gebruiken</string>
+    <string name="desktop_update_releases_filled">GitHub Releases-manifest-URL ingevuld</string>
+    <string name="desktop_update_url_label">Atjauninājuma manifests (ceļš, file:// vai https://)</string>
+    <string name="desktop_update_save_url">Saglabāt atjauninājuma URL</string>
+    <string name="desktop_update_url_saved">Atjauninājuma manifesta URL saglabāts</string>
+    <string name="desktop_update_check">Pārbaudīt parakstītu atjauninājumu</string>
+    <string name="desktop_update_ready">Parakstīts atjauninājums %1$s verificēts — apstipriniet instalācijas sagatavošanu</string>
+    <string name="desktop_update_install_confirm">Apstiprināt sagatavoto instalāciju</string>
+    <string name="desktop_update_install_cancel">Atcelt atjauninājumu</string>
+    <string name="desktop_update_installed">Update geplaatst als %1$s — bevestig herstarthelper (in-place jar-vervanging is best-effort)</string>
+    <string name="desktop_update_sig_fail">Atjauninājuma paraksta pārbaude neizdevās</string>
+    <string name="desktop_update_no_url">Vispirms iestatiet file:// vai HTTPS manifesta URL</string>
+    <string name="desktop_update_restart_hint">De herstarthelper schrijft een pending-update-marker en optioneel vervangscript en stopt daarna. Een draaiende JVM-jar vervangen is best-effort.</string>
+    <string name="desktop_update_restart_confirm">Herstart na update bevestigen</string>
+    <string name="desktop_update_restart_later">Later herstarten</string>
+    <string name="desktop_update_restart_failed">Kon herstarthelper voor update niet voorbereiden</string>
+</resources>

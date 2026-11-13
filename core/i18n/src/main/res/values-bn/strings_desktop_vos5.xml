@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_vault_restore_title">পূর্ণ vault পুনরুদ্ধার</string>
+    <string name="desktop_vault_restore_hint">AES সেশন ব্যাকআপ থেকে desktop.properties ও ~/.config/telos পুনরুদ্ধার করে। WireGuard প্রাইভেট কী কখনও লগে লেখা হয় না। নিশ্চিতকরণ প্রয়োজন।</string>
+    <string name="desktop_vault_restore_preview_btn">পুনরুদ্ধার প্রিভিউ</string>
+    <string name="desktop_vault_restore_preview">%1$s টি Telos কনফিগ ফাইল পুনরুদ্ধার করতে প্রস্তুত (desktop.properties: %2$s)। প্রয়োগ করতে নিশ্চিত করুন।</string>
+    <string name="desktop_vault_restore_confirm">পুনরুদ্ধার নিশ্চিত করুন</string>
+    <string name="desktop_vault_restore_cancel">পুনরুদ্ধার বাতিল</string>
+    <string name="desktop_vault_restore_done">Vault সেশন কনফিগ পুনরুদ্ধার হয়েছে</string>
+    <string name="desktop_vault_restore_need_confirm">পুনরুদ্ধার নিশ্চিতকরণ প্রয়োজন</string>
+    <string name="desktop_luks_restore_title">LUKS ভল্ট ইমেজ পুনরুদ্ধার</string>
+    <string name="desktop_luks_restore_hint">telos_vault.img ব্যাকআপ portable/vault ইমেজ পথে কপি করে। ভল্ট লক থাকতে হবে। পাসওয়ার্ড দিয়ে কখনও মাউন্ট করে না — পুনরুদ্ধারের পর আলাদাভাবে আনলক করুন। নিশ্চিতকরণ ও SHA-256 যাচাই প্রয়োজন।</string>
+    <string name="desktop_luks_restore_path_label">ব্যাকআপ ইমেজ পথ (telos_vault.img)</string>
+    <string name="desktop_luks_restore_preview_btn">LUKS ইমেজ পুনরুদ্ধারের পূর্বরূপ</string>
+    <string name="desktop_luks_restore_preview">%1$s বাইট পুনরুদ্ধারের জন্য প্রস্তুত (sha256 %2$s…)। কপি করতে নিশ্চিত করুন। ভল্ট লক থাকতে হবে।</string>
+    <string name="desktop_luks_restore_confirm">LUKS ইমেজ পুনরুদ্ধার নিশ্চিত করুন</string>
+    <string name="desktop_luks_restore_cancel">LUKS পুনরুদ্ধার বাতিল</string>
+    <string name="desktop_luks_restore_done">LUKS ইমেজ %1$s হিসেবে পুনরুদ্ধার (এখনও লক — আলাদাভাবে আনলক করুন)</string>
+    <string name="desktop_luks_restore_need_confirm">LUKS ইমেজ পুনরুদ্ধারের নিশ্চিতকরণ প্রয়োজন</string>
+    <string name="desktop_luks_restore_locked_required">LUKS ইমেজ পুনরুদ্ধারের আগে ভল্ট লক থাকতে হবে</string>
+    <string name="desktop_update_title">স্বাক্ষরিত ডেস্কটপ আপডেট</string>
+    <string name="desktop_update_hint">Telos Ed25519 কী দিয়ে স্বাক্ষরিত স্থানীয় file:// পথ বা HTTPS ম্যানিফেস্ট পরীক্ষা করুন। আপডেট portable/vault temp-এ স্টেজ হয় এবং কখনও স্বয়ংক্রিয় ইনস্টল হয় না। ডিফল্ট চ্যানেল: GitHub Releases সম্পদ telos-desktop-update.manifest।</string>
+    <string name="desktop_update_releases_hint">GitHub Releases ডিফল্ট: %1$s</string>
+    <string name="desktop_update_use_releases">GitHub Releases URL ব্যবহার করুন</string>
+    <string name="desktop_update_releases_filled">GitHub Releases ম্যানিফেস্ট URL পূরণ হয়েছে</string>
+    <string name="desktop_update_url_label">আপডেট ম্যানিফেস্ট (পথ, file://, বা https://)</string>
+    <string name="desktop_update_save_url">আপডেট URL সংরক্ষণ</string>
+    <string name="desktop_update_url_saved">আপডেট ম্যানিফেস্ট URL সংরক্ষিত</string>
+    <string name="desktop_update_check">স্বাক্ষরিত আপডেট যাচাই</string>
+    <string name="desktop_update_ready">স্বাক্ষরিত আপডেট %1$s যাচাই হয়েছে — স্টেজ ইনস্টল নিশ্চিত করুন</string>
+    <string name="desktop_update_install_confirm">স্টেজ ইনস্টল নিশ্চিত করুন</string>
+    <string name="desktop_update_install_cancel">আপডেট বাতিল</string>
+    <string name="desktop_update_installed">আপডেট %1$s হিসেবে স্টেজ — পুনরায় চালু সহায়ক নিশ্চিত করুন (চলমান jar প্রতিস্থাপন সেরা-প্রচেষ্টা)</string>
+    <string name="desktop_update_sig_fail">আপডেট স্বাক্ষর যাচাই ব্যর্থ</string>
+    <string name="desktop_update_no_url">আগে file:// বা HTTPS আপডেট ম্যানিফেস্ট URL সেট করুন</string>
+    <string name="desktop_update_restart_hint">পুনরায় চালু সহায়ক মুলতুবি-আপডেট মার্কার ও ঐচ্ছিক প্রতিস্থাপন স্ক্রিপ্ট লিখে প্রস্থান করে। চলমান JVM jar প্রতিস্থাপন সেরা-প্রচেষ্টা।</string>
+    <string name="desktop_update_restart_confirm">আপডেটের পর পুনরায় চালু নিশ্চিত করুন</string>
+    <string name="desktop_update_restart_later">পরে পুনরায় চালু করুন</string>
+    <string name="desktop_update_restart_failed">আপডেট পুনরায় চালু সহায়ক প্রস্তুত করা যায়নি</string>
+</resources>

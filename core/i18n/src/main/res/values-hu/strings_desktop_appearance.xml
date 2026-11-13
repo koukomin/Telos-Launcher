@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<string name="desktop_appearance_hint">Quiet Ops vagy Vault Neon intenzitás, neon kiemelés és pániknémítás. A profilátfedések felülírhatják ezeket anélkül, hogy Portable Data esetén a gazda HOME-jába írnának.</string>
+    <string name="desktop_theme_intensity_label">Téma intenzitása</string>
+    <string name="desktop_theme_accent_label">Kiemelés</string>
+    <string name="desktop_panic_mute_toggle">Pániknémítás</string>
+    <string name="desktop_panic_mute_on">Pániknémítás: Be</string>
+    <string name="desktop_panic_mute_off">Pániknémítás: Ki</string>
+    <string name="desktop_panic_mute_hint">Kényszeríti a Quiet Ops módot, és elrejti a neon kereteket és mérőket. Csak vizuális — nem változtatja a tűzfalat vagy a kill-switchöt. Billentyűparancs: Super+Shift+P.</string>
+    <string name="desktop_vos_profiles_appearance_hint">Minden elnevezett profil saját desktop.properties átfedést tarthat intenzitáshoz, kiemeléshez, ikonokhoz és kurzorhoz. Váltáskor a megjelenés a profilátfedésből, majd a széf globális tulajdonságaiból töltődik újra.</string>
+</resources>

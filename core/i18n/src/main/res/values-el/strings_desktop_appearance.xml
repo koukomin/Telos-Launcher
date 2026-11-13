@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<string name="desktop_appearance_hint">Ένταση Quiet Ops ή Vault Neon, neon τονισμός και πανικός σίγασης. Τα overlays προφίλ μπορούν να τα αντικαταστήσουν χωρίς εγγραφή στο HOME του υπολογιστή σε Portable Data.</string>
+    <string name="desktop_theme_intensity_label">Ένταση θέματος</string>
+    <string name="desktop_theme_accent_label">Τονισμός</string>
+    <string name="desktop_panic_mute_toggle">Σίγαση πανικού</string>
+    <string name="desktop_panic_mute_on">Σίγαση πανικού: Ενεργή</string>
+    <string name="desktop_panic_mute_off">Σίγαση πανικού: Ανενεργή</string>
+    <string name="desktop_panic_mute_hint">Επιβάλλει Quiet Ops και κρύβει neon περιγράμματα και μετρητές. Μόνο οπτικό — δεν αλλάζει το τείχος προστασίας ή το kill-switch. Συντόμευση: Super+Shift+P.</string>
+    <string name="desktop_vos_profiles_appearance_hint">Κάθε επώνυμο προφίλ μπορεί να κρατά δικό του overlay desktop.properties για ένταση θέματος, τονισμό, εικονίδια και δρομέα. Η εναλλαγή φορτώνει την εμφάνιση από το overlay προφίλ και μετά τις καθολικές ιδιότητες του θησαυροφυλακίου.</string>
+</resources>

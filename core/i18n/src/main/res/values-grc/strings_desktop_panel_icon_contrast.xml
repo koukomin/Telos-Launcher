@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_panel_icon_contrast">Ἀντίθεσις εἰκονιδίων πίνακος</string>
+    <string name="desktop_panel_icon_contrast_auto">Αὐτόματον</string>
+    <string name="desktop_panel_icon_contrast_light">Ἀνοικτὰ εἰκονίδια</string>
+    <string name="desktop_panel_icon_contrast_dark">Σκοτεινὰ εἰκονίδια</string>
+    <string name="desktop_panel_icon_contrast_hint">Τὸ Αὐτόματον λαμβάνει δεῖγμα τῆς ταινίας ταπετσαρίας ὄπισθεν τοῦ ἄνω πίνακος ἐν τῇδε τῇ συσκευῇ καὶ ἐκλέγει ἀνοικτὰ ἢ σκοτεινὰ γλύμματα τοῖς εἰκονιδίοις Helix καὶ ταῖς ἐτικέταις StatusNotifier τοῦ Compose. Τὰ εἰκόνος στοιχεῖα μένουσι τοπικά. Τὰ SNI pixmap ἐκ τοῦ telos-sni οὐκ ἀναχρωματίζονται. Προτίμησις: panel.iconContrast=auto|light|dark.</string>
+</resources>

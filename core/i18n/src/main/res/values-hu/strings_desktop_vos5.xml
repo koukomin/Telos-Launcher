@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_vault_restore_title">Teljes vault-visszaállítás</string>
+    <string name="desktop_vault_restore_hint">Visszaállítja a desktop.properties és ~/.config/telos fájlokat AES munkamenet-biztonsági mentésből. A WireGuard privát kulcsok soha nem kerülnek naplóba. Megerősítés szükséges.</string>
+    <string name="desktop_vault_restore_preview_btn">Visszaállítás előnézete</string>
+    <string name="desktop_vault_restore_preview">%1$s Telos konfigurációs fájl visszaállítására kész (desktop.properties: %2$s). Erősítse meg az alkalmazáshoz.</string>
+    <string name="desktop_vault_restore_confirm">Visszaállítás megerősítése</string>
+    <string name="desktop_vault_restore_cancel">Visszaállítás megszakítása</string>
+    <string name="desktop_vault_restore_done">Vault munkamenet-konfiguráció visszaállítva</string>
+    <string name="desktop_vault_restore_need_confirm">Visszaállítás megerősítése szükséges</string>
+    <string name="desktop_luks_restore_title">LUKS-Vault-Image wiederherstellen</string>
+    <string name="desktop_luks_restore_hint">Kopiert ein telos_vault.img-Backup in den portable/Vault-Image-Pfad. Vault muss gesperrt sein. Wird nie mit Passwort gemountet — nach der Wiederherstellung separat entsperren. Bestätigung und SHA-256-Prüfung erforderlich.</string>
+    <string name="desktop_luks_restore_path_label">Backup-Image-Pfad (telos_vault.img)</string>
+    <string name="desktop_luks_restore_preview_btn">LUKS-Image-Wiederherstellung prüfen</string>
+    <string name="desktop_luks_restore_preview">Bereit, %1$s Bytes wiederherzustellen (sha256 %2$s…). Bestätigen zum Kopieren. Vault muss gesperrt bleiben.</string>
+    <string name="desktop_luks_restore_confirm">LUKS-Image-Wiederherstellung bestätigen</string>
+    <string name="desktop_luks_restore_cancel">LUKS-Wiederherstellung abbrechen</string>
+    <string name="desktop_luks_restore_done">LUKS-Image als %1$s wiederhergestellt (weiterhin gesperrt — separat entsperren)</string>
+    <string name="desktop_luks_restore_need_confirm">Bestätigung für LUKS-Image-Wiederherstellung erforderlich</string>
+    <string name="desktop_luks_restore_locked_required">Vault muss vor dem Wiederherstellen des LUKS-Images gesperrt sein</string>
+    <string name="desktop_update_title">Aláírt asztali frissítés</string>
+    <string name="desktop_update_hint">Lokalen file://-Pfad oder HTTPS-Manifest prüfen, signiert mit dem Telos-Ed25519-Schlüssel. Updates werden unter portable/Vault-Temp bereitgestellt und nie automatisch installiert. Standardkanal: GitHub-Releases-Asset telos-desktop-update.manifest.</string>
+    <string name="desktop_update_releases_hint">GitHub-Releases-Standard: %1$s</string>
+    <string name="desktop_update_use_releases">GitHub-Releases-URL verwenden</string>
+    <string name="desktop_update_releases_filled">GitHub-Releases-Manifest-URL eingetragen</string>
+    <string name="desktop_update_url_label">Frissítési manifeszt (útvonal, file:// vagy https://)</string>
+    <string name="desktop_update_save_url">Frissítési URL mentése</string>
+    <string name="desktop_update_url_saved">Frissítési manifeszt URL elmentve</string>
+    <string name="desktop_update_check">Aláírt frissítés keresése</string>
+    <string name="desktop_update_ready">Az aláírt %1$s frissítés ellenőrizve — erősítse meg az telepítés előkészítését</string>
+    <string name="desktop_update_install_confirm">Előkészített telepítés megerősítése</string>
+    <string name="desktop_update_install_cancel">Frissítés megszakítása</string>
+    <string name="desktop_update_installed">Update als %1$s bereitgestellt — Neustart-Helfer bestätigen (In-Place-JAR-Austausch ist best-effort)</string>
+    <string name="desktop_update_sig_fail">A frissítés aláírás-ellenőrzése sikertelen</string>
+    <string name="desktop_update_no_url">Először állítson be file:// vagy HTTPS manifeszt URL-t</string>
+    <string name="desktop_update_restart_hint">Der Neustart-Helfer schreibt eine Pending-Update-Markierung und optional ein Ersetzungsskript und beendet sich danach. Austausch eines laufenden JVM-JARs ist best-effort.</string>
+    <string name="desktop_update_restart_confirm">Neustart nach Update bestätigen</string>
+    <string name="desktop_update_restart_later">Später neu starten</string>
+    <string name="desktop_update_restart_failed">Neustart-Helfer für Update konnte nicht vorbereitet werden</string>
+</resources>

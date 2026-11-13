@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_night_light_title">Lampu malam</string>
+    <string name="desktop_night_light_hint">Memanaskan paparan dengan alat hos (gammastep, redshift atau wlsunset). Tiada perkhidmatan lokasi dan tiada data dihantar melalui rangkaian. Tanpa alat, hanya keutamaan disimpan.</string>
+    <string name="desktop_night_light_enable">Dayakan lampu malam</string>
+    <string name="desktop_night_light_temperature">Suhu warna: %1$d K</string>
+    <string name="desktop_night_light_on">Hidup</string>
+    <string name="desktop_night_light_off">Mati</string>
+    <string name="desktop_night_light_pref_only">Keutamaan disimpan; pasang gammastep, redshift atau wlsunset untuk digunakan pada hos ini</string>
+    <string name="desktop_night_light_failed">Alat hos gagal menukar suhu paparan</string>
+    <string name="desktop_night_light_applied">Digunakan dengan %1$s</string>
+    <string name="desktop_night_light_cleared">Lampu malam dimatikan</string>
+    <string name="desktop_settings_search_hint">Cari tetapan</string>
+    <string name="desktop_settings_search_empty">Tiada tetapan yang sepadan dengan carian ini</string>
+    <string name="desktop_settings_session">Sesi</string>
+    <string name="desktop_settings_display">Paparan</string>
+    <string name="desktop_settings_desktop">Desktop</string>
+    <string name="desktop_settings_windows">Tetingkap</string>
+    <string name="desktop_settings_portable">Mudah alih</string>
+    <string name="desktop_settings_vault">Peti besi</string>
+</resources>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_vault_restore_title">Restawr sħiħ tal-vault</string>
+    <string name="desktop_vault_restore_hint">Tirestawra desktop.properties u ~/.config/telos minn backup tas-sessjoni AES. Ċwievet privati WireGuard qatt ma jinkitbu fil-logs. Teħtieġ konferma.</string>
+    <string name="desktop_vault_restore_preview_btn">Preview tar-restawr</string>
+    <string name="desktop_vault_restore_preview">Lest biex tirestawra %1$s fajls ta’ konfigurazzjoni Telos (desktop.properties: %2$s). Ikkonferma biex tapplika.</string>
+    <string name="desktop_vault_restore_confirm">Ikkonferma r-restawr</string>
+    <string name="desktop_vault_restore_cancel">Ikkanċella r-restawr</string>
+    <string name="desktop_vault_restore_done">Konfigurazzjoni tas-sessjoni tal-vault restawrata</string>
+    <string name="desktop_vault_restore_need_confirm">Hija meħtieġa konferma tar-restawr</string>
+    <string name="desktop_luks_restore_title">Ripristino immagine LUKS del vault</string>
+    <string name="desktop_luks_restore_hint">Copia un backup telos_vault.img nel percorso immagine portable/vault. Il vault deve essere bloccato. Non monta mai con password: sblocca separatamente dopo il ripristino. Richiede conferma e controllo SHA-256.</string>
+    <string name="desktop_luks_restore_path_label">Percorso immagine di backup (telos_vault.img)</string>
+    <string name="desktop_luks_restore_preview_btn">Anteprima ripristino immagine LUKS</string>
+    <string name="desktop_luks_restore_preview">Pronto a ripristinare %1$s byte (sha256 %2$s…). Conferma per copiare. Il vault deve restare bloccato.</string>
+    <string name="desktop_luks_restore_confirm">Conferma ripristino immagine LUKS</string>
+    <string name="desktop_luks_restore_cancel">Annulla ripristino LUKS</string>
+    <string name="desktop_luks_restore_done">Immagine LUKS ripristinata come %1$s (ancora bloccata — sblocca separatamente)</string>
+    <string name="desktop_luks_restore_need_confirm">Conferma richiesta per il ripristino dell’immagine LUKS</string>
+    <string name="desktop_luks_restore_locked_required">Il vault deve essere bloccato prima di ripristinare l’immagine LUKS</string>
+    <string name="desktop_update_title">Aġġornament tad-desktop iffirmat</string>
+    <string name="desktop_update_hint">Controlla un percorso file:// locale o un manifest HTTPS firmato con la chiave Ed25519 Telos. Gli aggiornamenti vengono preparati in portable/vault temp e non si installano mai automaticamente. Canale predefinito: asset GitHub Releases telos-desktop-update.manifest.</string>
+    <string name="desktop_update_releases_hint">Predefinito GitHub Releases: %1$s</string>
+    <string name="desktop_update_use_releases">Usa URL GitHub Releases</string>
+    <string name="desktop_update_releases_filled">URL del manifest GitHub Releases compilato</string>
+    <string name="desktop_update_url_label">Manifest tal-aġġornament (path, file://, jew https://)</string>
+    <string name="desktop_update_save_url">Issejvja l-URL tal-aġġornament</string>
+    <string name="desktop_update_url_saved">URL tal-manifest tal-aġġornament issejvjat</string>
+    <string name="desktop_update_check">Iċċekkja aġġornament iffirmat</string>
+    <string name="desktop_update_ready">Aġġornament iffirmat %1$s ivverifikat — ikkonferma biex tħejji l-installazzjoni</string>
+    <string name="desktop_update_install_confirm">Ikkonferma installazzjoni mħejjija</string>
+    <string name="desktop_update_install_cancel">Ikkanċella l-aġġornament</string>
+    <string name="desktop_update_installed">Aggiornamento preparato come %1$s — conferma l’helper di riavvio (sostituzione del jar in esecuzione è best-effort)</string>
+    <string name="desktop_update_sig_fail">Il-verifika tal-firma tal-aġġornament falliet</string>
+    <string name="desktop_update_no_url">Issettja l-ewwel URL tal-manifest file:// jew HTTPS</string>
+    <string name="desktop_update_restart_hint">L’helper di riavvio scrive un marker di aggiornamento in sospeso e uno script di sostituzione opzionale, poi esce. Sostituire un jar JVM in esecuzione è best-effort.</string>
+    <string name="desktop_update_restart_confirm">Conferma riavvio dopo l’aggiornamento</string>
+    <string name="desktop_update_restart_later">Riavvia più tardi</string>
+    <string name="desktop_update_restart_failed">Impossibile preparare l’helper di riavvio dell’aggiornamento</string>
+</resources>

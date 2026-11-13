@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_day_night_title">Тема день / ніч</string>
+    <string name="desktop_day_night_hint">Paper Ops (світла) вдень і Quiet Ops (темна) вночі в режимі Auto. Межі використовують ваш пояс. Типово пояс ручний — мережа не використовується для геолокації без згоди нижче.</string>
+    <string name="desktop_day_night_mode">Режим день / ніч</string>
+    <string name="desktop_day_night_off">Вимк.</string>
+    <string name="desktop_day_night_auto">Авто</string>
+    <string name="desktop_day_night_light">Світла</string>
+    <string name="desktop_day_night_dark">Темна</string>
+    <string name="desktop_day_night_timezone">Часовий пояс</string>
+    <string name="desktop_day_night_timezone_hint">Пояс IANA для місцевого дня/ночі (JVM до вибору). Ручний вибір не звертається до серверів.</string>
+    <string name="desktop_day_night_timezone_search">Пошук поясів</string>
+    <string name="desktop_day_night_timezone_current">Поточний пояс: %1$s</string>
+    <string name="desktop_day_night_network_assist">Мережева допомога країна / пояс</string>
+    <string name="desktop_day_night_network_assist_warning">Лише за згодою. Увімкнено, Telos робить один запит до публічного endpoint IP→geo за поясом і кодом країни. Лише ці значення (і необов’язкові координати сходу/заходу) зберігаються у vault desktop.properties. IP не логується, немає постійного відстеження й хмарної синхронізації тем. При збої мережі, kill-switch або офлайні лишається ручний пояс; Preference only або Failed показуються чесно.</string>
+    <string name="desktop_day_night_assist_pref_only">Лише налаштування — мережева допомога вимк., заблокована або не запитана; ручний пояс</string>
+    <string name="desktop_day_night_assist_failed">Невдача — endpoint geo недоступний; ручний пояс збережено</string>
+    <string name="desktop_day_night_assist_applied">Застосовано — пояс %1$s, країна %2$s (лише локально)</string>
+    <string name="desktop_day_night_country">Код країни: %1$s</string>
+</resources>

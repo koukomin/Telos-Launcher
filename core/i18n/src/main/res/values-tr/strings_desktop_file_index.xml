@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_file_index_title">Dosya adı dizini</string>
+    <string name="desktop_file_index_enable">Cihaz üzeri dosya adı dizini</string>
+    <string name="desktop_file_index_hint">İsteğe bağlı. Yalnızca vault HOME veya Portable Data kökü altındaki dosya adlarını dizinler (Host Home dışında asla host profili). .cache/telos/file-index altında yalnızca sahip izinleriyle şifreli saklanır. Dosya içeriği yok, buluta yükleme yok.</string>
+</resources>

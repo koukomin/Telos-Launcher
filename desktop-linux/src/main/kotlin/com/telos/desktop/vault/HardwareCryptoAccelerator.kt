@@ -22,6 +22,9 @@ data class HwCryptoStatus(
 )
 
 object HardwareCryptoAccelerator {
+    @Volatile
+    private var cachedProbe: HwCryptoStatus? = null
+
     init {
         if (Security.getProvider(BouncyCastleProvider.PROVIDER_NAME) == null) {
             Security.addProvider(BouncyCastleProvider())
@@ -33,26 +36,38 @@ object HardwareCryptoAccelerator {
         }
     }
 
+    /** Whether [probe] has already read /proc (or returned a cached status). */
+    fun isProbed(): Boolean = cachedProbe != null
+
+    fun clearProbeCache() {
+        cachedProbe = null
+    }
+
     fun probe(): HwCryptoStatus {
-        val cpu = File("/proc/cpuinfo").takeIf { it.isFile }?.readText().orEmpty().lowercase()
-        val flags = cpu.lineSequence().firstOrNull { it.startsWith("flags") }.orEmpty()
-        val crypto = File("/proc/crypto").takeIf { it.isFile }?.readText().orEmpty()
-        val aesNi = " aes " in " $flags " || flags.contains("aes")
-        val vaes = flags.contains("vaes")
-        val avx2 = flags.contains("avx2")
-        val avx512 = flags.contains("avx512f")
-        val shaNi = flags.contains("sha_ni") || flags.contains("sha-ni")
-        val kernelAes = crypto.contains("aesni") || crypto.contains("aes-aesni") || crypto.contains("name         : xts(aes)")
-        val kernelXts = crypto.contains("xts(aes)") || crypto.contains("xts-aes")
-        val parts = buildList {
-            if (aesNi) add("AES-NI")
-            if (vaes) add("VAES")
-            if (avx2) add("AVX2")
-            if (avx512) add("AVX512")
-            if (shaNi) add("SHA-NI")
+        cachedProbe?.let { return it }
+        synchronized(this) {
+            cachedProbe?.let { return it }
+            val cpu = File("/proc/cpuinfo").takeIf { it.isFile }?.readText().orEmpty().lowercase()
+            val flags = cpu.lineSequence().firstOrNull { it.startsWith("flags") }.orEmpty()
+            val crypto = File("/proc/crypto").takeIf { it.isFile }?.readText().orEmpty()
+            val aesNi = " aes " in " $flags " || flags.contains("aes")
+            val vaes = flags.contains("vaes")
+            val avx2 = flags.contains("avx2")
+            val avx512 = flags.contains("avx512f")
+            val shaNi = flags.contains("sha_ni") || flags.contains("sha-ni")
+            val kernelAes = crypto.contains("aesni") || crypto.contains("aes-aesni") || crypto.contains("name         : xts(aes)")
+            val kernelXts = crypto.contains("xts(aes)") || crypto.contains("xts-aes")
+            val parts = buildList {
+                if (aesNi) add("AES-NI")
+                if (vaes) add("VAES")
+                if (avx2) add("AVX2")
+                if (avx512) add("AVX512")
+                if (shaNi) add("SHA-NI")
+            }
+            val label = if (parts.isEmpty()) "HW CRYPTO: SOFTWARE" else "HW CRYPTO: ${parts.joinToString(" + ")} ACTIVE"
+            return HwCryptoStatus(aesNi, vaes, avx2, avx512, shaNi, kernelAes, kernelXts, label)
+                .also { cachedProbe = it }
         }
-        val label = if (parts.isEmpty()) "HW CRYPTO: SOFTWARE" else "HW CRYPTO: ${parts.joinToString(" + ")} ACTIVE"
-        return HwCryptoStatus(aesNi, vaes, avx2, avx512, shaNi, kernelAes, kernelXts, label)
     }
 
     fun argon2id(password: CharArray, salt: ByteArray, outLen: Int = 64): ByteArray {

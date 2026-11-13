@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_lan_pair_title">Android との LAN ペアリング</string>
+    <string name="desktop_lan_pair_hint">LAN 上で短時間のペアリングサーバーを開始します。Telos Sync でコードをスキャンまたは入力してください。コードとトークンはログに書き込まれません。</string>
+    <string name="desktop_lan_pair_start">LAN ペアリングを開始</string>
+    <string name="desktop_lan_pair_stop">LAN ペアリングを停止</string>
+    <string name="desktop_lan_pair_running">ペアリングサーバーが LAN で待機中</string>
+    <string name="desktop_lan_pair_code">ペアリングコード</string>
+    <string name="desktop_lan_pair_qr_uri">ペアリング URI（QR / 貼り付け）</string>
+    <string name="desktop_lan_pair_stopped">LAN ペアリングを停止しました</string>
+    <string name="desktop_lan_pair_bind_reject">公開アドレスにはバインドできません — プライベート LAN IP を使用してください</string>
+    <string name="desktop_lan_pair_android_title">Telos Desktop LAN ペアリング</string>
+    <string name="desktop_lan_pair_host">デスクトップホスト（LAN IP）</string>
+    <string name="desktop_lan_pair_port">デスクトップポート</string>
+    <string name="desktop_lan_pair_connect">デスクトップとペアリング</string>
+    <string name="desktop_lan_pair_paired">デスクトップとペアリング済み</string>
+    <string name="desktop_lan_pair_fetch_bundle">デスクトップセッションバンドルを取得</string>
+    <string name="desktop_lan_pair_fetch_ok">暗号化されたデスクトップセッションバンドルを保存しました</string>
+    <string name="desktop_lan_pair_send_bundle">暗号化バンドルを送信</string>
+    <string name="desktop_lan_pair_failed">LAN ペアリングに失敗しました</string>
+    <string name="desktop_lan_pair_scan_hint">Android で Sync → 設定を開き、URI を貼り付けるかホスト・ポート・コードを入力します。</string>
+</resources>

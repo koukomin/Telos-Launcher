@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<string name="desktop_appearance_hint">شدة Quiet Ops أو Vault Neon، وتمييز نيون، وكتم الذعر. يمكن لتراكبات الملف الشخصي تجاوزها دون الكتابة إلى HOME للمضيف في Portable Data.</string>
+    <string name="desktop_theme_intensity_label">شدة السمة</string>
+    <string name="desktop_theme_accent_label">التمييز</string>
+    <string name="desktop_panic_mute_toggle">كتم الذعر</string>
+    <string name="desktop_panic_mute_on">كتم الذعر: تشغيل</string>
+    <string name="desktop_panic_mute_off">كتم الذعر: إيقاف</string>
+    <string name="desktop_panic_mute_hint">يفرض Quiet Ops ويُخفي حدود النيون والمقاييس. بصري فقط — لا يغيّر الجدار الناري أو kill-switch. اختصار: Super+Shift+P.</string>
+    <string name="desktop_vos_profiles_appearance_hint">يمكن لكل ملف شخصي مسمّى الاحتفاظ بتراكب desktop.properties خاص للشدة والتمييز والأيقونات والمؤشر. التبديل يعيد تحميل المظهر من تراكب الملف ثم من خصائص الخزنة العامة.</string>
+</resources>

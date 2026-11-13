@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_appearance_title">Wygląd</string>
+    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
+    <string name="desktop_theme_intensity_neon">Vault Neon</string>
+    <string name="desktop_theme_intensity_paper">Paper Ops</string>
+    <string name="desktop_wallpaper_path">Tapeta (ścieżka vault)</string>
+    <string name="desktop_wallpaper_path_hint">Względna wobec punktu montowania vault (np. Pictures/wall.jpg). Nigdy nie pokazywana na zablokowanym ekranie przed uruchomieniem.</string>
+    <string name="desktop_unlock_theatre_title">Telos Phantom Vault</string>
+    <string name="desktop_unlock_theatre_quiet_ops">Quiet Ops — odblokuj, aby odsłonić tapetę</string>
+    <string name="desktop_unlock_theatre_hint">Zablokowany start pozostaje w Quiet Ops tylko z glifem vault. Po odblokowaniu Telos robi crossfade do tapety vault i wybranej intensywności — bez cząsteczek.</string>
+    <string name="desktop_sandbox_tint_hint">Kolor pierścienia akcentu to tylko wizualny OpSec (Host = pomarańczowy ostrożność, Net-isolated = cyjan, Vault FS = zielony, Standard = magenta).</string>
+    <string name="desktop_matched_packs_title">Dopasowane pakiety ikon i kursora</string>
+    <string name="desktop_matched_packs_hint">Jedno kliknięcie ustawia udokumentowaną parę GPL (Papirus↔BreezeX, candy-icons↔Bibata; CandyCyber pozostaje wbudowanym glifem chrome). Pobrania zostają w folderze ikon vault lub portable.</string>
+    <string name="desktop_matched_packs_apply">Dopasuj parę: %1$s</string>
+    <string name="desktop_matched_packs_one_click">Dopasuj parę</string>
+    <string name="desktop_matched_packs_working">Dopasowywanie pakietów…</string>
+    <string name="desktop_matched_packs_ok">Zastosowano dopasowany pakiet %1$s</string>
+    <string name="desktop_matched_packs_fail">Nie udało się dopasować pakietów: %1$s</string>
+</resources>

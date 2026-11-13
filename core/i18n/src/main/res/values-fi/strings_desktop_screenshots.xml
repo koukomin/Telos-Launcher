@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_shot_title">Kuvakaappaus</string>
+    <string name="desktop_shot_full">Koko näyttö</string>
+    <string name="desktop_shot_region">Suorakaiteinen alue</string>
+    <string name="desktop_shot_window">Ikkuna</string>
+    <string name="desktop_shot_clipboard">Kopioi leikepöydälle</string>
+    <string name="desktop_shot_clipboard_hint">Oletuksena pois. Myös TELOS_SHOT_CLIPBOARD=1.</string>
+    <string name="desktop_shot_redact">Peitä ennen tallennusta</string>
+    <string name="desktop_shot_redact_hint">Piirrä suorakulmio peittääksesi yksityisen sisällön ja tallenna.</string>
+    <string name="desktop_shot_save">Tallenna</string>
+    <string name="desktop_shot_save_without_redact">Tallenna ilman peittoa</string>
+    <string name="desktop_shot_saved">Kuvakaappaus tallennettu</string>
+    <string name="desktop_shot_failed">Kuvakaappaus epäonnistui</string>
+    <string name="desktop_shot_path_hint">Tallentaa vaultin (tai portable data) Pictures/Screenshots-kansioon, vain omistaja (0600).</string>
+</resources>

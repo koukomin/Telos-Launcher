@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_opsec_title">OpSec</string>
+    <string name="desktop_opsec_secure_clipboard">安全剪贴板</string>
+    <string name="desktop_opsec_clipboard_title">剪贴板</string>
+    <string name="desktop_opsec_clipboard_hint">敏感文本（密钥、IBAN、WireGuard）会从历史中清除，仅保存在本会话，并从系统剪贴板移除。历史仅存于保险库本地 — 不同步到云端。</string>
+    <string name="desktop_opsec_clipboard_clear_now">立即清空剪贴板</string>
+    <string name="desktop_opsec_clipboard_clear_all">全部清除</string>
+    <string name="desktop_opsec_clipboard_history_meta">最多 20 条 · 5 分钟后过期 · 固定到锁定 · Super+V</string>
+    <string name="desktop_opsec_clipboard_history_empty">暂无剪贴板历史</string>
+    <string name="desktop_opsec_clipboard_pin_until_lock">固定</string>
+    <string name="desktop_opsec_clipboard_unpin">取消固定</string>
+    <string name="desktop_opsec_clipboard_recall_vaulted">取回保险库中的敏感剪贴</string>
+    <string name="desktop_opsec_clipboard_timer">%1$d 秒后自动清空</string>
+    <string name="desktop_opsec_clipboard_timer_off">关闭</string>
+    <string name="desktop_opsec_attestation_run">记录主机完整性快照</string>
+    <string name="desktop_opsec_audit_title">会话审计日志</string>
+    <string name="desktop_opsec_audit_refresh">刷新审计日志</string>
+    <string name="desktop_opsec_audit_empty">暂无审计事件</string>
+    <string name="desktop_opsec_tpm_status">TPM 状态：%1$s</string>
+    <string name="desktop_opsec_tpm_unknown">尚未测量</string>
+    <string name="desktop_opsec_tpm_hint">在存在 tpm2-tools 时本地汇总 PCR 0/7 摘要。这不是远程证明（RAP）。</string>
+</resources>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_vault_restore_title">Restauration complète du vault</string>
+    <string name="desktop_vault_restore_hint">Restaure desktop.properties et ~/.config/telos depuis une sauvegarde de session AES. Les clés privées WireGuard ne sont jamais écrites dans les journaux. Confirmation requise.</string>
+    <string name="desktop_vault_restore_preview_btn">Aperçu de la restauration</string>
+    <string name="desktop_vault_restore_preview">Prêt à restaurer %1$s fichiers de configuration Telos (desktop.properties : %2$s). Confirmez pour appliquer.</string>
+    <string name="desktop_vault_restore_confirm">Confirmer la restauration</string>
+    <string name="desktop_vault_restore_cancel">Annuler la restauration</string>
+    <string name="desktop_vault_restore_done">Configuration de session du vault restaurée</string>
+    <string name="desktop_vault_restore_need_confirm">Confirmation de restauration requise</string>
+    <string name="desktop_luks_restore_title">Restauration de l’image LUKS du coffre</string>
+    <string name="desktop_luks_restore_hint">Copie une sauvegarde telos_vault.img vers le chemin d’image portable/coffre. Le coffre doit être verrouillé. Ne monte jamais avec un mot de passe — déverrouillez séparément après restauration. Confirmation et contrôle SHA-256 requis.</string>
+    <string name="desktop_luks_restore_path_label">Chemin de l’image de sauvegarde (telos_vault.img)</string>
+    <string name="desktop_luks_restore_preview_btn">Aperçu de la restauration d’image LUKS</string>
+    <string name="desktop_luks_restore_preview">Prêt à restaurer %1$s octets (sha256 %2$s…). Confirmez pour copier. Le coffre doit rester verrouillé.</string>
+    <string name="desktop_luks_restore_confirm">Confirmer la restauration d’image LUKS</string>
+    <string name="desktop_luks_restore_cancel">Annuler la restauration LUKS</string>
+    <string name="desktop_luks_restore_done">Image LUKS restaurée en tant que %1$s (toujours verrouillée — déverrouillez séparément)</string>
+    <string name="desktop_luks_restore_need_confirm">Confirmation requise pour restaurer l’image LUKS</string>
+    <string name="desktop_luks_restore_locked_required">Le coffre doit être verrouillé avant de restaurer l’image LUKS</string>
+    <string name="desktop_update_title">Mise à jour desktop signée</string>
+    <string name="desktop_update_hint">Vérifiez un chemin file:// local ou un manifeste HTTPS signé avec la clé Ed25519 Telos. Les mises à jour sont préparées sous portable/vault temp et ne s’installent jamais automatiquement. Canal par défaut : ressource GitHub Releases telos-desktop-update.manifest.</string>
+    <string name="desktop_update_releases_hint">Défaut GitHub Releases : %1$s</string>
+    <string name="desktop_update_use_releases">Utiliser l’URL GitHub Releases</string>
+    <string name="desktop_update_releases_filled">URL du manifeste GitHub Releases renseignée</string>
+    <string name="desktop_update_url_label">Manifeste de mise à jour (chemin, file:// ou https://)</string>
+    <string name="desktop_update_save_url">Enregistrer l’URL de mise à jour</string>
+    <string name="desktop_update_url_saved">URL du manifeste de mise à jour enregistrée</string>
+    <string name="desktop_update_check">Rechercher une mise à jour signée</string>
+    <string name="desktop_update_ready">Mise à jour signée %1$s vérifiée — confirmez pour préparer l’installation</string>
+    <string name="desktop_update_install_confirm">Confirmer l’installation préparée</string>
+    <string name="desktop_update_install_cancel">Annuler la mise à jour</string>
+    <string name="desktop_update_installed">Mise à jour préparée comme %1$s — confirmez l’assistant de redémarrage (remplacement du jar en cours = best-effort)</string>
+    <string name="desktop_update_sig_fail">Échec de la vérification de signature de mise à jour</string>
+    <string name="desktop_update_no_url">Définissez d’abord une URL de manifeste file:// ou HTTPS</string>
+    <string name="desktop_update_restart_hint">L’assistant de redémarrage écrit un marqueur de mise à jour en attente et un script de remplacement facultatif, puis quitte. Remplacer un jar JVM en cours est best-effort.</string>
+    <string name="desktop_update_restart_confirm">Confirmer le redémarrage après mise à jour</string>
+    <string name="desktop_update_restart_later">Redémarrer plus tard</string>
+    <string name="desktop_update_restart_failed">Impossible de préparer l’assistant de redémarrage de mise à jour</string>
+</resources>

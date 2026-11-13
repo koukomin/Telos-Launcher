@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_vault_restore_title">Vollständige Vault-Wiederherstellung</string>
+    <string name="desktop_vault_restore_hint">Stellt desktop.properties und ~/.config/telos aus einem AES-Sitzungsbackup wieder her. WireGuard-Privatschlüssel werden nie in Protokolle geschrieben. Bestätigung erforderlich.</string>
+    <string name="desktop_vault_restore_preview_btn">Wiederherstellung Vorschau</string>
+    <string name="desktop_vault_restore_preview">Bereit, %1$s Telos-Konfigurationsdateien wiederherzustellen (desktop.properties: %2$s). Zum Anwenden bestätigen.</string>
+    <string name="desktop_vault_restore_confirm">Wiederherstellung bestätigen</string>
+    <string name="desktop_vault_restore_cancel">Wiederherstellung abbrechen</string>
+    <string name="desktop_vault_restore_done">Vault-Sitzungskonfiguration wiederhergestellt</string>
+    <string name="desktop_vault_restore_need_confirm">Bestätigung der Wiederherstellung erforderlich</string>
+    <string name="desktop_luks_restore_title">LUKS-Vault-Image wiederherstellen</string>
+    <string name="desktop_luks_restore_hint">Kopiert ein telos_vault.img-Backup in den portable/Vault-Image-Pfad. Vault muss gesperrt sein. Wird nie mit Passwort gemountet — nach der Wiederherstellung separat entsperren. Bestätigung und SHA-256-Prüfung erforderlich.</string>
+    <string name="desktop_luks_restore_path_label">Backup-Image-Pfad (telos_vault.img)</string>
+    <string name="desktop_luks_restore_preview_btn">LUKS-Image-Wiederherstellung prüfen</string>
+    <string name="desktop_luks_restore_preview">Bereit, %1$s Bytes wiederherzustellen (sha256 %2$s…). Bestätigen zum Kopieren. Vault muss gesperrt bleiben.</string>
+    <string name="desktop_luks_restore_confirm">LUKS-Image-Wiederherstellung bestätigen</string>
+    <string name="desktop_luks_restore_cancel">LUKS-Wiederherstellung abbrechen</string>
+    <string name="desktop_luks_restore_done">LUKS-Image als %1$s wiederhergestellt (weiterhin gesperrt — separat entsperren)</string>
+    <string name="desktop_luks_restore_need_confirm">Bestätigung für LUKS-Image-Wiederherstellung erforderlich</string>
+    <string name="desktop_luks_restore_locked_required">Vault muss vor dem Wiederherstellen des LUKS-Images gesperrt sein</string>
+    <string name="desktop_update_title">Signiertes Desktop-Update</string>
+    <string name="desktop_update_hint">Lokalen file://-Pfad oder HTTPS-Manifest prüfen, signiert mit dem Telos-Ed25519-Schlüssel. Updates werden unter portable/Vault-Temp bereitgestellt und nie automatisch installiert. Standardkanal: GitHub-Releases-Asset telos-desktop-update.manifest.</string>
+    <string name="desktop_update_releases_hint">GitHub-Releases-Standard: %1$s</string>
+    <string name="desktop_update_use_releases">GitHub-Releases-URL verwenden</string>
+    <string name="desktop_update_releases_filled">GitHub-Releases-Manifest-URL eingetragen</string>
+    <string name="desktop_update_url_label">Update-Manifest (Dateipfad, file:// oder https://)</string>
+    <string name="desktop_update_save_url">Update-URL speichern</string>
+    <string name="desktop_update_url_saved">Update-Manifest-URL gespeichert</string>
+    <string name="desktop_update_check">Nach signiertem Update suchen</string>
+    <string name="desktop_update_ready">Signiertes Update %1$s verifiziert — Bestätigen zum Bereitstellen</string>
+    <string name="desktop_update_install_confirm">Bereitstellung bestätigen</string>
+    <string name="desktop_update_install_cancel">Update abbrechen</string>
+    <string name="desktop_update_installed">Update als %1$s bereitgestellt — Neustart-Helfer bestätigen (In-Place-JAR-Austausch ist best-effort)</string>
+    <string name="desktop_update_sig_fail">Update-Signaturprüfung fehlgeschlagen</string>
+    <string name="desktop_update_no_url">Zuerst eine file://- oder HTTPS-Manifest-URL setzen</string>
+    <string name="desktop_update_restart_hint">Der Neustart-Helfer schreibt eine Pending-Update-Markierung und optional ein Ersetzungsskript und beendet sich danach. Austausch eines laufenden JVM-JARs ist best-effort.</string>
+    <string name="desktop_update_restart_confirm">Neustart nach Update bestätigen</string>
+    <string name="desktop_update_restart_later">Später neu starten</string>
+    <string name="desktop_update_restart_failed">Neustart-Helfer für Update konnte nicht vorbereitet werden</string>
+</resources>

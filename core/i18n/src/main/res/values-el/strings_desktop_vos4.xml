@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_lan_pair_title">Σύζευξη LAN με Android</string>
+    <string name="desktop_lan_pair_hint">Εκκινήστε έναν σύντομο διακομιστή σύζευξης στο LAN. Σαρώστε ή εισαγάγετε τον κωδικό στο Telos Sync. Οι κωδικοί και τα διακριτικά δεν γράφονται ποτέ στα αρχεία καταγραφής.</string>
+    <string name="desktop_lan_pair_start">Έναρξη σύζευξης LAN</string>
+    <string name="desktop_lan_pair_stop">Διακοπή σύζευξης LAN</string>
+    <string name="desktop_lan_pair_running">Ο διακομιστής σύζευξης ακούει στο LAN</string>
+    <string name="desktop_lan_pair_code">Κωδικός σύζευξης</string>
+    <string name="desktop_lan_pair_qr_uri">URI σύζευξης (QR / επικόλληση)</string>
+    <string name="desktop_lan_pair_stopped">Η σύζευξη LAN σταμάτησε</string>
+    <string name="desktop_lan_pair_bind_reject">Δεν γίνεται δέσμευση δημόσιας διεύθυνσης — χρησιμοποιήστε ιδιωτική IP LAN</string>
+    <string name="desktop_lan_pair_android_title">Σύζευξη LAN Telos Desktop</string>
+    <string name="desktop_lan_pair_host">Host desktop (IP LAN)</string>
+    <string name="desktop_lan_pair_port">Θύρα desktop</string>
+    <string name="desktop_lan_pair_connect">Σύζευξη με desktop</string>
+    <string name="desktop_lan_pair_paired">Συζεύχθηκε με το desktop</string>
+    <string name="desktop_lan_pair_fetch_bundle">Λήψη πακέτου συνεδρίας desktop</string>
+    <string name="desktop_lan_pair_fetch_ok">Το κρυπτογραφημένο πακέτο συνεδρίας αποθηκεύτηκε</string>
+    <string name="desktop_lan_pair_send_bundle">Αποστολή κρυπτογραφημένου πακέτου</string>
+    <string name="desktop_lan_pair_failed">Η σύζευξη LAN απέτυχε</string>
+    <string name="desktop_lan_pair_scan_hint">Στο Android ανοίξτε Sync → Ρυθμίσεις και επικολλήστε το URI ή εισαγάγετε host, θύρα και κωδικό.</string>
+</resources>

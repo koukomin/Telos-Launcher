@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_portable_data_root">Portable data folder (config, cache, temp only here)</string>
+    <string name="desktop_host_home_trace_warning">Host Home writes settings and cache on this PC. Choose Portable Data to leave no host traces.</string>
+    <string name="desktop_boot_portable_data">Portable Data — no host traces (config/cache/temp under portable root)</string>
+    <string name="desktop_boot_portable_vault">Portable Vault — encrypted data under portable root</string>
+    <string name="desktop_boot_host_home">Host Home (may leave traces on this PC)</string>
+    <string name="desktop_boot_unlock_existing">Unlock existing vault (file or stego folder)</string>
+    <string name="desktop_boot_create_wizard">Create new elastic / stego / deniable vault</string>
+    <string name="desktop_boot_ephemeral">Ephemeral RAM-only ghost session (tmpfs)</string>
+    <string name="desktop_session_sync_title">Session sync</string>
+    <string name="desktop_session_sync_export">Export encrypted bundle</string>
+    <string name="desktop_session_sync_import">Import encrypted bundle</string>
+    <string name="desktop_session_sync_auto">已存储同步密钥时开机自动导入</string>
+    <string name="desktop_session_sync_pass">Sync passphrase (or KeePass entry %1$s)</string>
+    <string name="desktop_session_sync_keepass">KeePass database path (.kdbx)</string>
+    <string name="desktop_windows_shell_title">Windows shell replacement</string>
+    <string name="desktop_windows_shell_enable">Set Telos as login shell (HKCU)</string>
+    <string name="desktop_windows_shell_revert">Restore explorer.exe shell</string>
+    <string name="desktop_windows_shell_risk">Replaces your user shell at next sign-in. Keep a recovery path before enabling.</string>
+    <string name="desktop_helix_portable_note">Helix window chrome is drawn in Compose on all platforms; native Win32 decorations may show until shell replacement.</string>
+    <string name="desktop_session_sync_pass_required">需要同步密码短语</string>
+    <string name="desktop_session_sync_imported">已导入会话同步包</string>
+    <string name="desktop_session_sync_key_stored">已存储同步密钥，开机导入无需提示</string>
+    <string name="desktop_session_sync_key_missing">启用自动导入前请输入同步密码短语</string>
+    <string name="desktop_vos_profiles_title">保险库配置</string>
+    <string name="desktop_vos_profiles_summary">位于 config profiles/ 下的命名配置文件夹。desktop.properties 仅保存活动名称 — 绝不保存密码。</string>
+    <string name="desktop_vos_profiles_active">当前配置：%1$s</string>
+    <string name="desktop_vos_profiles_none">（无）</string>
+    <string name="desktop_vos_profiles_empty">尚无配置。创建一个以切换保险库身份。</string>
+    <string name="desktop_vos_profiles_kind_named">命名保险库配置</string>
+    <string name="desktop_vos_profiles_kind_portable">便携保险库根目录</string>
+    <string name="desktop_vos_profiles_switch">切换</string>
+    <string name="desktop_vos_profiles_use_portable">使用此便携根目录</string>
+    <string name="desktop_vos_profiles_new_name">新配置名称</string>
+    <string name="desktop_vos_profiles_create">创建并切换</string>
+    <string name="desktop_vos_profiles_created">已创建并切换到 %1$s</string>
+    <string name="desktop_vos_profiles_switched">已切换到 %1$s</string>
+    <string name="desktop_vos_profiles_invalid_name">使用字母、数字、点、下划线或连字符（最多 64）。</string>
+    <string name="desktop_vos_profiles_portable_hint">便携根目录将配置、缓存和临时文件保留在主机配置之外（Windows 默认：Portable Data）。</string>
+    <string name="desktop_vos_profiles_portable_path">便携保险库文件夹路径</string>
+    <string name="desktop_vos_profiles_add_portable">添加便携保险库根目录</string>
+    <string name="desktop_vos_profiles_portable_selected">便携根目录：%1$s</string>
+    <string name="desktop_vos_profiles_portable_reject">便携根目录不能是主机主目录或其 .config/.cache/.local。</string>
+</resources>

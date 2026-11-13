@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_appearance_title">Görünüş</string>
+    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
+    <string name="desktop_theme_intensity_neon">Vault Neon</string>
+    <string name="desktop_theme_intensity_paper">Paper Ops</string>
+    <string name="desktop_wallpaper_path">Divar kağızı (vault yolu)</string>
+    <string name="desktop_wallpaper_path_hint">Vault qoşma nöqtəsinə nisbətən (məs. Pictures/wall.jpg). Kilidli pre-boot ekranında heç vaxt göstərilmir.</string>
+    <string name="desktop_unlock_theatre_title">Telos Phantom Vault</string>
+    <string name="desktop_unlock_theatre_quiet_ops">Quiet Ops — divar kağızını göstərmək üçün kilidi açın</string>
+    <string name="desktop_unlock_theatre_hint">Kilidli yüklənmə yalnız vault glifi ilə Quiet Ops-də qalır. Açıldıqdan sonra Telos vault divar kağızına və seçilmiş intensivliyə keçid edir — hissəciksiz.</string>
+    <string name="desktop_sandbox_tint_hint">Vurğu halqasının rəngi yalnız vizual OpSec-dir (Host = narıncı ehtiyat, Net-isolated = mavi-yaşıl, Vault FS = yaşıl, Standard = maqenta).</string>
+    <string name="desktop_matched_packs_title">Uyğun nişan + kursor paketləri</string>
+    <string name="desktop_matched_packs_hint">Bir klik sənədləşdirilmiş GPL cütü təyin edir (Papirus↔BreezeX, candy-icons↔Bibata; CandyCyber daxili chrome glifi olaraq qalır). Yükləmələr vault və ya portable nişan qovluğunda qalır.</string>
+    <string name="desktop_matched_packs_apply">Cütü uyğunlaşdır: %1$s</string>
+    <string name="desktop_matched_packs_one_click">Cütü uyğunlaşdır</string>
+    <string name="desktop_matched_packs_working">Paketlər uyğunlaşdırılır…</string>
+    <string name="desktop_matched_packs_ok">Uyğun paket %1$s tətbiq olundu</string>
+    <string name="desktop_matched_packs_fail">Paketləri uyğunlaşdırmaq mümkün olmadı: %1$s</string>
+</resources>

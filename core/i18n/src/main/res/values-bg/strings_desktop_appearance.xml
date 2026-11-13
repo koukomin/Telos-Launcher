@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<string name="desktop_appearance_hint">Интензитет Quiet Ops или Vault Neon, неонов акцент и паническо заглушаване. Профилните наслагвания могат да ги презапишат без запис в HOME на хоста при Portable Data.</string>
+    <string name="desktop_theme_intensity_label">Интензитет на темата</string>
+    <string name="desktop_theme_accent_label">Акцент</string>
+    <string name="desktop_panic_mute_toggle">Паническо заглушаване</string>
+    <string name="desktop_panic_mute_on">Паническо заглушаване: Вкл.</string>
+    <string name="desktop_panic_mute_off">Паническо заглушаване: Изкл.</string>
+    <string name="desktop_panic_mute_hint">Налага Quiet Ops и скрива неоновите рамки и индикатори. Само визуално — не променя защитната стена или kill-switch. Клавиш: Super+Shift+P.</string>
+    <string name="desktop_vos_profiles_appearance_hint">Всеки именуван профил може да пази собствено наслагване desktop.properties за интензитет, акцент, икони и курсор. Превключването презарежда вида от наслагването на профила, после от глобалните свойства на трезора.</string>
+</resources>

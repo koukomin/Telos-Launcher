@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_portable_data_root">Portable data folder (config, cache, temp only here)</string>
+    <string name="desktop_host_home_trace_warning">Host Home writes settings and cache on this PC. Choose Portable Data to leave no host traces.</string>
+    <string name="desktop_boot_portable_data">Portable Data — no host traces (config/cache/temp under portable root)</string>
+    <string name="desktop_boot_portable_vault">Portable Vault — encrypted data under portable root</string>
+    <string name="desktop_boot_host_home">Host Home (may leave traces on this PC)</string>
+    <string name="desktop_boot_unlock_existing">Unlock existing vault (file or stego folder)</string>
+    <string name="desktop_boot_create_wizard">Create new elastic / stego / deniable vault</string>
+    <string name="desktop_boot_ephemeral">Ephemeral RAM-only ghost session (tmpfs)</string>
+    <string name="desktop_session_sync_title">Session sync</string>
+    <string name="desktop_session_sync_export">Export encrypted bundle</string>
+    <string name="desktop_session_sync_import">Import encrypted bundle</string>
+    <string name="desktop_session_sync_auto">Automatyczny import przy starcie, gdy zapisano klucz sync</string>
+    <string name="desktop_session_sync_pass">Sync passphrase (or KeePass entry %1$s)</string>
+    <string name="desktop_session_sync_keepass">KeePass database path (.kdbx)</string>
+    <string name="desktop_windows_shell_title">Windows shell replacement</string>
+    <string name="desktop_windows_shell_enable">Set Telos as login shell (HKCU)</string>
+    <string name="desktop_windows_shell_revert">Restore explorer.exe shell</string>
+    <string name="desktop_windows_shell_risk">Replaces your user shell at next sign-in. Keep a recovery path before enabling.</string>
+    <string name="desktop_helix_portable_note">Helix window chrome is drawn in Compose on all platforms; native Win32 decorations may show until shell replacement.</string>
+    <string name="desktop_session_sync_pass_required">Wymagane hasło sync</string>
+    <string name="desktop_session_sync_imported">Zaimportowano pakiet sync sesji</string>
+    <string name="desktop_session_sync_key_stored">Zapisano klucz sync do importu przy starcie bez monitu</string>
+    <string name="desktop_session_sync_key_missing">Wprowadź hasło sync przed włączeniem automatycznego importu</string>
+    <string name="desktop_vos_profiles_title">Profile sejfu</string>
+    <string name="desktop_vos_profiles_summary">Nazwane foldery profili w config profiles/. W desktop.properties tylko aktywna nazwa — nigdy hasła.</string>
+    <string name="desktop_vos_profiles_active">Aktywny profil: %1$s</string>
+    <string name="desktop_vos_profiles_none">(brak)</string>
+    <string name="desktop_vos_profiles_empty">Brak profili. Utwórz jeden, aby przełączać tożsamości sejfu.</string>
+    <string name="desktop_vos_profiles_kind_named">Nazwany profil sejfu</string>
+    <string name="desktop_vos_profiles_kind_portable">Przenośny katalog główny sejfu</string>
+    <string name="desktop_vos_profiles_switch">Przełącz</string>
+    <string name="desktop_vos_profiles_use_portable">Użyj tego przenośnego katalogu</string>
+    <string name="desktop_vos_profiles_new_name">Nazwa nowego profilu</string>
+    <string name="desktop_vos_profiles_create">Utwórz i przełącz</string>
+    <string name="desktop_vos_profiles_created">Utworzono i przełączono na %1$s</string>
+    <string name="desktop_vos_profiles_switched">Przełączono na %1$s</string>
+    <string name="desktop_vos_profiles_invalid_name">Litery, cyfry, kropki, podkreślenia lub myślniki (maks. 64).</string>
+    <string name="desktop_vos_profiles_portable_hint">Przenośne katalogi trzymają config, cache i temp poza profilem hosta (domyślnie Windows: Portable Data).</string>
+    <string name="desktop_vos_profiles_portable_path">Ścieżka folderu przenośnego sejfu</string>
+    <string name="desktop_vos_profiles_add_portable">Dodaj przenośny katalog sejfu</string>
+    <string name="desktop_vos_profiles_portable_selected">Przenośny katalog: %1$s</string>
+    <string name="desktop_vos_profiles_portable_reject">Przenośny katalog nie może być katalogiem domowym hosta ani jego .config/.cache/.local.</string>
+</resources>

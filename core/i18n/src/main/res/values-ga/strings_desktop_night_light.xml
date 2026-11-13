@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_night_light_title">Solas Oíche</string>
+    <string name="desktop_night_light_hint">Téann an taispeáint le huirlis ósta (gammastep, redshift, nó wlsunset). Gan seirbhísí suímh agus ní sheoltar aon rud ar an líonra. Gan uirlis, sábháiltear an rogha amháin.</string>
+    <string name="desktop_night_light_enable">Cumasaigh Solas Oíche</string>
+    <string name="desktop_night_light_temperature">Teocht datha: %1$d K</string>
+    <string name="desktop_night_light_on">Ar</string>
+    <string name="desktop_night_light_off">As</string>
+    <string name="desktop_night_light_pref_only">Rogha sábháilte; suiteáil gammastep, redshift, nó wlsunset leis a chur i bhfeidhm ar an óstach seo</string>
+    <string name="desktop_night_light_failed">Theip ar an uirlis ósta teocht an taispeána a athrú</string>
+    <string name="desktop_night_light_applied">Curtha i bhfeidhm le %1$s</string>
+    <string name="desktop_night_light_cleared">Solas Oíche glanta</string>
+    <string name="desktop_settings_search_hint">Cuardaigh socruithe</string>
+    <string name="desktop_settings_search_empty">Níl aon socrú ag teacht leis an gcuardach seo</string>
+    <string name="desktop_settings_session">Seisiún</string>
+    <string name="desktop_settings_display">Taispeáint</string>
+    <string name="desktop_settings_desktop">Deasc</string>
+    <string name="desktop_settings_windows">Fuinneoga</string>
+    <string name="desktop_settings_portable">Inaistrithe</string>
+    <string name="desktop_settings_vault">Taisceadán</string>
+</resources>

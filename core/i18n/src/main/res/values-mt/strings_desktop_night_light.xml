@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_night_light_title">Dawl bil-Lejl</string>
+    <string name="desktop_night_light_hint">Issaħħan l-iskrin b’għodda tal-host (gammastep, redshift, jew wlsunset). Ebda servizzi ta’ lokazzjoni u xejn ma jintbagħat fuq in-netwerk. Mingħajr għodda, tiġi ffrankata biss il-preferenza.</string>
+    <string name="desktop_night_light_enable">Permeż Dawl bil-Lejl</string>
+    <string name="desktop_night_light_temperature">Temperatura tal-kulur: %1$d K</string>
+    <string name="desktop_night_light_on">Mixgħul</string>
+    <string name="desktop_night_light_off">Mitfi</string>
+    <string name="desktop_night_light_pref_only">Preferenza ffrankata; installa gammastep, redshift, jew wlsunset biex tapplika fuq dan il-host</string>
+    <string name="desktop_night_light_failed">L-għodda tal-host naqset milli tbiddel it-temperatura tal-iskrin</string>
+    <string name="desktop_night_light_applied">Applikat b’%1$s</string>
+    <string name="desktop_night_light_cleared">Dawl bil-Lejl mitfi</string>
+    <string name="desktop_settings_search_hint">Fittex settings</string>
+    <string name="desktop_settings_search_empty">L-ebda setting ma jaqbel ma’ din it-tfittxija</string>
+    <string name="desktop_settings_session">Sessjoni</string>
+    <string name="desktop_settings_display">Wirja</string>
+    <string name="desktop_settings_desktop">Desktop</string>
+    <string name="desktop_settings_windows">Windows</string>
+    <string name="desktop_settings_portable">Portabbli</string>
+    <string name="desktop_settings_vault">Vault</string>
+</resources>

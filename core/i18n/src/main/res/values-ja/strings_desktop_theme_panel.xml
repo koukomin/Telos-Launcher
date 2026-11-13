@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_panel_surface">パネル表面</string>
+    <string name="desktop_theme_panel_surface_hint">透明またはぼかしはパネル根のみ。メニューは不透明のまま。ぼかしは frost 用に panelBlur を保存。ホスト壁紙の背景ぼかしは未対応時ベストエフォート。</string>
+    <string name="desktop_theme_panel_transparent">透明</string>
+    <string name="desktop_theme_panel_blurred">ぼかし</string>
+    <string name="desktop_theme_panel_solid">不透明</string>
+    <string name="desktop_theme_panel_opacity">パネル不透明度: %1$d%%</string>
+    <string name="desktop_theme_panel_blur">ガラスぼかし: %1$d</string>
+    <string name="desktop_theme_panel_blur_unavailable">ホスト壁紙ぼかしは利用できません。Telos は半透明の frost プレートを使い、ぼかし設定を保持します。</string>
+</resources>

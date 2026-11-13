@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_vault_restore_title">Поўнае аднаўленне vault</string>
+    <string name="desktop_vault_restore_hint">Аднаўляе desktop.properties і ~/.config/telos з AES-рэзервовай копіі сеанса. Закрытыя ключы WireGuard ніколі не запісваюцца ў журналы. Патрабуецца пацверджанне.</string>
+    <string name="desktop_vault_restore_preview_btn">Папярэдні прагляд аднаўлення</string>
+    <string name="desktop_vault_restore_preview">Гатова аднавіць %1$s файлаў канфігурацыі Telos (desktop.properties: %2$s). Пацвердзіце для прымянення.</string>
+    <string name="desktop_vault_restore_confirm">Пацвердзіць аднаўленне</string>
+    <string name="desktop_vault_restore_cancel">Скасаваць аднаўленне</string>
+    <string name="desktop_vault_restore_done">Канфігурацыя сеанса vault адноўлена</string>
+    <string name="desktop_vault_restore_need_confirm">Патрабуецца пацверджанне аднаўлення</string>
+    <string name="desktop_luks_restore_title">Восстановление образа LUKS vault</string>
+    <string name="desktop_luks_restore_hint">Скопируйте резервную копию telos_vault.img в путь portable/vault. Vault должен быть заблокирован. Никогда не монтирует с паролем — разблокируйте отдельно после восстановления. Требуются подтверждение и проверка SHA-256.</string>
+    <string name="desktop_luks_restore_path_label">Путь к образу резервной копии (telos_vault.img)</string>
+    <string name="desktop_luks_restore_preview_btn">Предпросмотр восстановления образа LUKS</string>
+    <string name="desktop_luks_restore_preview">Готово к восстановлению %1$s байт (sha256 %2$s…). Подтвердите копирование. Vault должен оставаться заблокированным.</string>
+    <string name="desktop_luks_restore_confirm">Подтвердить восстановление образа LUKS</string>
+    <string name="desktop_luks_restore_cancel">Отменить восстановление LUKS</string>
+    <string name="desktop_luks_restore_done">Образ LUKS восстановлен как %1$s (всё ещё заблокирован — разблокируйте отдельно)</string>
+    <string name="desktop_luks_restore_need_confirm">Требуется подтверждение восстановления образа LUKS</string>
+    <string name="desktop_luks_restore_locked_required">Vault должен быть заблокирован перед восстановлением образа LUKS</string>
+    <string name="desktop_update_title">Падпісанае абнаўленне desktop</string>
+    <string name="desktop_update_hint">Проверьте локальный путь file:// или HTTPS-манифест, подписанный ключом Ed25519 Telos. Обновления размещаются в portable/vault temp и никогда не устанавливаются автоматически. Канал по умолчанию: ресурс GitHub Releases telos-desktop-update.manifest.</string>
+    <string name="desktop_update_releases_hint">GitHub Releases по умолчанию: %1$s</string>
+    <string name="desktop_update_use_releases">Использовать URL GitHub Releases</string>
+    <string name="desktop_update_releases_filled">URL манифеста GitHub Releases заполнен</string>
+    <string name="desktop_update_url_label">Маніфест абнаўлення (шлях, file:// або https://)</string>
+    <string name="desktop_update_save_url">Захаваць URL абнаўлення</string>
+    <string name="desktop_update_url_saved">URL маніфеста абнаўлення захаваны</string>
+    <string name="desktop_update_check">Праверыць падпісанае абнаўленне</string>
+    <string name="desktop_update_ready">Падпісанае абнаўленне %1$s праверана — пацвердзіце падрыхтоўку ўсталявання</string>
+    <string name="desktop_update_install_confirm">Пацвердзіць падрыхтаванае ўсталяванне</string>
+    <string name="desktop_update_install_cancel">Скасаваць абнаўленне</string>
+    <string name="desktop_update_installed">Обновление размещено как %1$s — подтвердите помощник перезапуска (замена работающего jar — best-effort)</string>
+    <string name="desktop_update_sig_fail">Праверка подпісу абнаўлення не ўдалася</string>
+    <string name="desktop_update_no_url">Спачатку ўкажыце URL маніфеста file:// або HTTPS</string>
+    <string name="desktop_update_restart_hint">Помощник перезапуска записывает маркер ожидающего обновления и необязательный скрипт замены, затем завершает работу. Замена работающего JVM jar — best-effort.</string>
+    <string name="desktop_update_restart_confirm">Подтвердить перезапуск после обновления</string>
+    <string name="desktop_update_restart_later">Перезапустить позже</string>
+    <string name="desktop_update_restart_failed">Не удалось подготовить помощник перезапуска обновления</string>
+</resources>

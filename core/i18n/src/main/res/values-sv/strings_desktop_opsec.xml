@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_opsec_title">OpSec</string>
+    <string name="desktop_opsec_secure_clipboard">Säker urklipp</string>
+    <string name="desktop_opsec_clipboard_title">Urklipp</string>
+    <string name="desktop_opsec_clipboard_hint">Känslig text (nycklar, IBAN, WireGuard) rensas från historiken, sparas bara i denna session och rensas från systemets urklipp. Historiken stannar vault-lokal — ingen molnsynk.</string>
+    <string name="desktop_opsec_clipboard_clear_now">Rensa urklipp nu</string>
+    <string name="desktop_opsec_clipboard_clear_all">Rensa allt</string>
+    <string name="desktop_opsec_clipboard_history_meta">Upp till 20 objekt · går ut efter 5 minuter · fäst till lås · Super+V</string>
+    <string name="desktop_opsec_clipboard_history_empty">Ingen urklippshistorik ännu</string>
+    <string name="desktop_opsec_clipboard_pin_until_lock">Fäst</string>
+    <string name="desktop_opsec_clipboard_unpin">Lossa</string>
+    <string name="desktop_opsec_clipboard_recall_vaulted">Hämta vaultat känsligt klipp</string>
+    <string name="desktop_opsec_clipboard_timer">Rensa automatiskt efter %1$d sekunder</string>
+    <string name="desktop_opsec_clipboard_timer_off">Av</string>
+    <string name="desktop_opsec_attestation_run">Registrera värdintegritetsögonblicksbild</string>
+    <string name="desktop_opsec_audit_title">Sessionsgranskningslogg</string>
+    <string name="desktop_opsec_audit_refresh">Uppdatera granskningsloggen</string>
+    <string name="desktop_opsec_audit_empty">Inga granskningshändelser ännu</string>
+    <string name="desktop_opsec_tpm_status">TPM-status: %1$s</string>
+    <string name="desktop_opsec_tpm_unknown">inte mätt ännu</string>
+    <string name="desktop_opsec_tpm_hint">Lokal PCR 0/7-digestsammamfattning via tpm2-tools om de finns. Detta är inte fjärrattestering (RAP).</string>
+</resources>

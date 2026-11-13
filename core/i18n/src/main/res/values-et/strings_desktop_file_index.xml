@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_file_index_title">Failinime register</string>
+    <string name="desktop_file_index_enable">Seadmes olev failinime register</string>
+    <string name="desktop_file_index_hint">Valikuline. Indekseerib ainult failinimesid vault HOME või Portable Data juure all (mitte kunagi hostiprofiili, välja arvatud Host Home). Salvestatakse krüpteeritult kausta .cache/telos/file-index ainult omaniku õigustega. Failisisu ega pilve üleslaadimist ei toimu.</string>
+</resources>

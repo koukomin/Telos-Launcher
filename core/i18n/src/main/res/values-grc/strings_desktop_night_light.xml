@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_night_light_title">Νυχτερινό φως</string>
+    <string name="desktop_night_light_hint">Ζεσταίνει την οθόνη με εργαλείο του συστήματος (gammastep, redshift ή wlsunset). Χωρίς υπηρεσίες τοποθεσίας και χωρίς αποστολή στο δίκτυο. Χωρίς εργαλείο, αποθηκεύεται μόνο η προτίμηση.</string>
+    <string name="desktop_night_light_enable">Ενεργοποίηση νυχτερινού φωτός</string>
+    <string name="desktop_night_light_temperature">Θερμοκρασία χρώματος: %1$d K</string>
+    <string name="desktop_night_light_on">Ενεργό</string>
+    <string name="desktop_night_light_off">Ανενεργό</string>
+    <string name="desktop_night_light_pref_only">Η προτίμηση αποθηκεύτηκε· εγκαταστήστε gammastep, redshift ή wlsunset για εφαρμογή σε αυτόν τον υπολογιστή</string>
+    <string name="desktop_night_light_failed">Το εργαλείο συστήματος απέτυχε να αλλάξει τη θερμοκρασία οθόνης</string>
+    <string name="desktop_night_light_applied">Εφαρμόστηκε με %1$s</string>
+    <string name="desktop_night_light_cleared">Το νυχτερινό φως απενεργοποιήθηκε</string>
+    <string name="desktop_settings_search_hint">Αναζήτηση ρυθμίσεων</string>
+    <string name="desktop_settings_search_empty">Καμία ρύθμιση δεν ταιριάζει με αυτή την αναζήτηση</string>
+    <string name="desktop_settings_session">Συνεδρία</string>
+    <string name="desktop_settings_display">Οθόνη</string>
+    <string name="desktop_settings_desktop">Επιφάνεια εργασίας</string>
+    <string name="desktop_settings_windows">Παράθυρα</string>
+    <string name="desktop_settings_portable">Φορητό</string>
+    <string name="desktop_settings_vault">Θησαυροφυλάκιο</string>
+</resources>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_icons_title">আইকন</string>
+    <string name="desktop_icons_theme_label">আইকন থিম</string>
+    <string name="desktop_icons_download_section">Telos থেকে ডাউনলোড</string>
+    <string name="desktop_icons_download">ডাউনলোড</string>
+    <string name="desktop_icons_installing">ইনস্টল হচ্ছে…</string>
+    <string name="desktop_icons_installed">ইনস্টল করা হয়েছে</string>
+    <string name="desktop_icons_apply">প্রয়োগ</string>
+    <string name="desktop_icons_source_system">সিস্টেম</string>
+    <string name="desktop_icons_source_telos">Telos</string>
+    <string name="desktop_icons_source_builtin">অন্তর্নির্মিত</string>
+    <string name="desktop_icons_path">আইকন প্যাক ফোল্ডার: %1$s</string>
+    <string name="desktop_icons_freedesktop_note">ডেস্কটপ freedesktop আইকন থিম (Android ADW আইকন প্যাক নয়)।</string>
+    <string name="desktop_icons_download_failed">ডাউনলোড ব্যর্থ</string>
+    <string name="desktop_icons_download_ok">থিম ইনস্টল হয়েছে</string>
+    <string name="desktop_icons_license">লাইসেন্স: %1$s</string>
+    <string name="desktop_icons_portable_only">Portable Data মোডে প্যাকগুলো পোর্টেবল আইকন ফোল্ডারে থাকে (হোস্ট প্রোফাইলে নয়)।</string>
+</resources>

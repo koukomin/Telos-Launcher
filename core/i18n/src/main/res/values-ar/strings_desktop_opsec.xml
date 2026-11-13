@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_opsec_title">OpSec</string>
+    <string name="desktop_opsec_secure_clipboard">حافظة آمنة</string>
+    <string name="desktop_opsec_clipboard_title">الحافظة</string>
+    <string name="desktop_opsec_clipboard_hint">يُزال النص الحساس (المفاتيح وIBAN وWireGuard) من السجل، ويُحفظ في هذه الجلسة فقط، ويُمسح من حافظة النظام. يبقى السجل داخل الخزنة محليًا — بلا مزامنة سحابية.</string>
+    <string name="desktop_opsec_clipboard_clear_now">مسح الحافظة الآن</string>
+    <string name="desktop_opsec_clipboard_clear_all">مسح الكل</string>
+    <string name="desktop_opsec_clipboard_history_meta">حتى 20 عنصرًا · تنتهي بعد 5 دقائق · تثبيت حتى القفل · Super+V</string>
+    <string name="desktop_opsec_clipboard_history_empty">لا يوجد سجل للحافظة بعد</string>
+    <string name="desktop_opsec_clipboard_pin_until_lock">تثبيت</string>
+    <string name="desktop_opsec_clipboard_unpin">إلغاء التثبيت</string>
+    <string name="desktop_opsec_clipboard_recall_vaulted">استرجاع المقطع الحساس من الخزنة</string>
+    <string name="desktop_opsec_clipboard_timer">مسح تلقائي بعد %1$d ثانية</string>
+    <string name="desktop_opsec_clipboard_timer_off">إيقاف</string>
+    <string name="desktop_opsec_attestation_run">تسجيل لقطة سلامة المضيف</string>
+    <string name="desktop_opsec_audit_title">سجل تدقيق الجلسة</string>
+    <string name="desktop_opsec_audit_refresh">تحديث سجل التدقيق</string>
+    <string name="desktop_opsec_audit_empty">لا توجد أحداث تدقيق بعد</string>
+    <string name="desktop_opsec_tpm_status">حالة TPM: %1$s</string>
+    <string name="desktop_opsec_tpm_unknown">لم تُقَس بعد</string>
+    <string name="desktop_opsec_tpm_hint">ملخص محلي لملخصات PCR 0/7 عبر tpm2-tools إن وُجدت. هذه ليست مصادقة عن بُعد (RAP).</string>
+</resources>

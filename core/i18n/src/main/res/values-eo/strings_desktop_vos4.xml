@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_lan_pair_title">LAN-parigo kun Android</string>
+    <string name="desktop_lan_pair_hint">Startas mallongan parigservilon en la LAN. Skanu aŭ enigu la kodon en Telos Sync. Kodoj kaj ĵetonoj neniam estas protokolitaj.</string>
+    <string name="desktop_lan_pair_start">Komenci LAN-parigon</string>
+    <string name="desktop_lan_pair_stop">Ĉesi LAN-parigon</string>
+    <string name="desktop_lan_pair_running">Parigservilo aŭskultas en la LAN</string>
+    <string name="desktop_lan_pair_code">Parigkodo</string>
+    <string name="desktop_lan_pair_qr_uri">Parig-URI (QR / alglui)</string>
+    <string name="desktop_lan_pair_stopped">LAN-parigo ĉesis</string>
+    <string name="desktop_lan_pair_bind_reject">Ne eblas ligi publikan adreson — uzu privatan LAN-IP</string>
+    <string name="desktop_lan_pair_android_title">LAN-parigo de Telos Desktop</string>
+    <string name="desktop_lan_pair_host">Labortabla gastiganto (LAN-IP)</string>
+    <string name="desktop_lan_pair_port">Labortabla pordo</string>
+    <string name="desktop_lan_pair_connect">Parigi kun labortablo</string>
+    <string name="desktop_lan_pair_paired">Parigita kun labortablo</string>
+    <string name="desktop_lan_pair_fetch_bundle">Akiri labortablan seancan pakaĵon</string>
+    <string name="desktop_lan_pair_fetch_ok">Ĉifrita labortabla seanca pakaĵo konservita</string>
+    <string name="desktop_lan_pair_send_bundle">Sendi ĉifritan pakaĵon</string>
+    <string name="desktop_lan_pair_failed">LAN-parigo malsukcesis</string>
+    <string name="desktop_lan_pair_scan_hint">En Android malfermu Sync → Agordoj kaj algluu la URI aŭ enigu gastiganton, pordon kaj kodon.</string>
+</resources>

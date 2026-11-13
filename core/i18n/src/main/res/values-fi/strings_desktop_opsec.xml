@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_opsec_title">OpSec</string>
+    <string name="desktop_opsec_secure_clipboard">Turvallinen leikepöytä</string>
+    <string name="desktop_opsec_clipboard_title">Leikepöytä</string>
+    <string name="desktop_opsec_clipboard_hint">Arkaluonteinen teksti (avaimet, IBAN, WireGuard) poistetaan historiasta, säilytetään vain tässä istunnossa ja tyhjennetään järjestelmän leikepöydältä. Historia pysyy vaultissa — ei pilvisynkronointia.</string>
+    <string name="desktop_opsec_clipboard_clear_now">Tyhjennä leikepöytä nyt</string>
+    <string name="desktop_opsec_clipboard_clear_all">Tyhjennä kaikki</string>
+    <string name="desktop_opsec_clipboard_history_meta">Enintään 20 kohdetta · vanhenee 5 minuutin kuluttua · kiinnitä lukitukseen asti · Super+V</string>
+    <string name="desktop_opsec_clipboard_history_empty">Leikepöydän historiaa ei vielä ole</string>
+    <string name="desktop_opsec_clipboard_pin_until_lock">Kiinnitä</string>
+    <string name="desktop_opsec_clipboard_unpin">Irrota</string>
+    <string name="desktop_opsec_clipboard_recall_vaulted">Palauta vaultattu arkaluonteinen leike</string>
+    <string name="desktop_opsec_clipboard_timer">Tyhjennä automaattisesti %1$d sekunnin kuluttua</string>
+    <string name="desktop_opsec_clipboard_timer_off">Pois</string>
+    <string name="desktop_opsec_attestation_run">Tallenna isännän eheyskuva</string>
+    <string name="desktop_opsec_audit_title">Istunnon auditointiloki</string>
+    <string name="desktop_opsec_audit_refresh">Päivitä loki</string>
+    <string name="desktop_opsec_audit_empty">Ei vielä auditointitapahtumia</string>
+    <string name="desktop_opsec_tpm_status">TPM-tila: %1$s</string>
+    <string name="desktop_opsec_tpm_unknown">ei vielä mitattu</string>
+    <string name="desktop_opsec_tpm_hint">Paikallinen PCR 0/7 -tiivisteyhteenveto tpm2-toolsilla, jos saatavilla. Tämä ei ole etäattestointi (RAP).</string>
+</resources>

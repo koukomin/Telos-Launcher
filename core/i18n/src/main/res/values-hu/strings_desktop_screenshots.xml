@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_shot_title">Képernyőkép</string>
+    <string name="desktop_shot_full">Teljes képernyő</string>
+    <string name="desktop_shot_region">Téglalap alakú terület</string>
+    <string name="desktop_shot_window">Ablak</string>
+    <string name="desktop_shot_clipboard">Másolás a vágólapra</string>
+    <string name="desktop_shot_clipboard_hint">Alapból ki. TELOS_SHOT_CLIPBOARD=1 esetén is bekapcsolható.</string>
+    <string name="desktop_shot_redact">Kitakarás mentés előtt</string>
+    <string name="desktop_shot_redact_hint">Rajzoljon téglalapot a privát tartalom elfedéséhez, majd mentse.</string>
+    <string name="desktop_shot_save">Mentés</string>
+    <string name="desktop_shot_save_without_redact">Mentés kitakarás nélkül</string>
+    <string name="desktop_shot_saved">Képernyőkép mentve</string>
+    <string name="desktop_shot_failed">A képernyőkép sikertelen</string>
+    <string name="desktop_shot_path_hint">A vault (vagy portable data) Pictures/Screenshots mappájába ment, csak tulajdonos (0600).</string>
+</resources>

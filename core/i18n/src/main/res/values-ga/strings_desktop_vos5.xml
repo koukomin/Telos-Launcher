@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_vault_restore_title">Athchóiriú vault iomlán</string>
+    <string name="desktop_vault_restore_hint">Athchóiríonn desktop.properties agus ~/.config/telos ó chúltaca seisiúin AES. Ní scríobhtar eochracha príobháideacha WireGuard chuig logaí riamh. Deimhniú ag teastáil.</string>
+    <string name="desktop_vault_restore_preview_btn">Réamhamharc athchóirithe</string>
+    <string name="desktop_vault_restore_preview">Réidh chun %1$s comhad cumraíochta Telos a athchóiriú (desktop.properties: %2$s). Deimhnigh chun cur i bhfeidhm.</string>
+    <string name="desktop_vault_restore_confirm">Deimhnigh athchóiriú</string>
+    <string name="desktop_vault_restore_cancel">Cealaigh athchóiriú</string>
+    <string name="desktop_vault_restore_done">Cumraíocht seisiúin vault athchóirithe</string>
+    <string name="desktop_vault_restore_need_confirm">Deimhniú athchóirithe ag teastáil</string>
+    <string name="desktop_luks_restore_title">Athchóiriú íomhá LUKS an vault</string>
+    <string name="desktop_luks_restore_hint">Cóipeálann cúltaca telos_vault.img go cosán íomhá iniompartha/vault. Ní mór an vault a bheith faoi ghlas. Ní mountálann le pasfhocal riamh — díghlasáil ar leithligh tar éis athchóirithe. Teastaíonn deimhniú agus seiceáil SHA-256.</string>
+    <string name="desktop_luks_restore_path_label">Cosán íomhá cúltaca (telos_vault.img)</string>
+    <string name="desktop_luks_restore_preview_btn">Réamhamharc ar athchóiriú íomhá LUKS</string>
+    <string name="desktop_luks_restore_preview">Réidh %1$s beart a athchóiriú (sha256 %2$s…). Deimhnigh chun cóipeáil. Ní mór an vault a fhanacht faoi ghlas.</string>
+    <string name="desktop_luks_restore_confirm">Deimhnigh athchóiriú íomhá LUKS</string>
+    <string name="desktop_luks_restore_cancel">Cealaigh athchóiriú LUKS</string>
+    <string name="desktop_luks_restore_done">Íomhá LUKS athchóirithe mar %1$s (fós faoi ghlas — díghlasáil ar leithligh)</string>
+    <string name="desktop_luks_restore_need_confirm">Teastaíonn deimhniú chun íomhá LUKS a athchóiriú</string>
+    <string name="desktop_luks_restore_locked_required">Ní mór an vault a bheith faoi ghlas sula n-athchóirítear an íomhá LUKS</string>
+    <string name="desktop_update_title">Nuashonrú deisce sínithe</string>
+    <string name="desktop_update_hint">Seiceáil cosán file:// áitiúil nó manifest HTTPS sínithe le heochair Ed25519 Telos. Stáitseann nuashonruithe faoi iniompartha/vault temp agus ní shuiteáiltear go huathoibríoch riamh. Cainéal réamhshocraithe: sócmhainn GitHub Releases telos-desktop-update.manifest.</string>
+    <string name="desktop_update_releases_hint">Réamhshocrú GitHub Releases: %1$s</string>
+    <string name="desktop_update_use_releases">Úsáid URL GitHub Releases</string>
+    <string name="desktop_update_releases_filled">URL manifest GitHub Releases líonta</string>
+    <string name="desktop_update_url_label">Manifest nuashonraithe (cosán, file://, nó https://)</string>
+    <string name="desktop_update_save_url">Sábháil URL nuashonraithe</string>
+    <string name="desktop_update_url_saved">URL manifest nuashonraithe sábháilte</string>
+    <string name="desktop_update_check">Seiceáil nuashonrú sínithe</string>
+    <string name="desktop_update_ready">Nuashonrú sínithe %1$s fíoraithe — deimhnigh chun suiteáil a ullmhú</string>
+    <string name="desktop_update_install_confirm">Deimhnigh suiteáil ullmhaithe</string>
+    <string name="desktop_update_install_cancel">Cealaigh nuashonrú</string>
+    <string name="desktop_update_installed">Nuashonrú stáitsithe mar %1$s — deimhnigh cúntóir atosaithe (malartú jar atá ag rith is best-effort)</string>
+    <string name="desktop_update_sig_fail">Theip ar fhíorú síniú nuashonraithe</string>
+    <string name="desktop_update_no_url">Socraigh URL manifest file:// nó HTTPS ar dtús</string>
+    <string name="desktop_update_restart_hint">Scríobhann an cúntóir atosaithe marcóir nuashonraithe ar feitheamh agus script malairte roghnach, ansin scoireann. Is best-effort é jar JVM atá ag rith a mhalartú.</string>
+    <string name="desktop_update_restart_confirm">Deimhnigh atosú tar éis nuashonraithe</string>
+    <string name="desktop_update_restart_later">Atosaigh níos déanaí</string>
+    <string name="desktop_update_restart_failed">Níorbh fhéidir cúntóir atosaithe nuashonraithe a ullmhú</string>
+</resources>

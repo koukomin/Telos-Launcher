@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_appearance_title">Выгляд</string>
+    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
+    <string name="desktop_theme_intensity_neon">Vault Neon</string>
+    <string name="desktop_theme_intensity_paper">Paper Ops</string>
+    <string name="desktop_wallpaper_path">Шпалеры (шлях vault)</string>
+    <string name="desktop_wallpaper_path_hint">Адносна пункта мантавання vault (напр. Pictures/wall.jpg). Ніколі не паказваецца на заблакаваным pre-boot экране.</string>
+    <string name="desktop_unlock_theatre_title">Telos Phantom Vault</string>
+    <string name="desktop_unlock_theatre_quiet_ops">Quiet Ops — разблакуйце, каб паказаць шпалеры</string>
+    <string name="desktop_unlock_theatre_hint">Заблакаваны boot застаецца ў Quiet Ops толькі з гліфам vault. Пасля разблакавання Telos робіць пераход да шпалер vault і абранай інтэнсіўнасці — без часціц.</string>
+    <string name="desktop_sandbox_tint_hint">Колер акцэнтнага кольца — толькі візуальны OpSec (Host = аранжавы caution, Net-isolated = блакітны, Vault FS = зялёны, Standard = пурпурны).</string>
+    <string name="desktop_matched_packs_title">Узгодненыя пакеты значкоў + курсора</string>
+    <string name="desktop_matched_packs_hint">Адзін клік задае дакументаваную GPL-пару (Papirus↔BreezeX, candy-icons↔Bibata; CandyCyber застаецца ўбудаваным chrome-гліфам). Спампоўкі застаюцца ў тэчцы значкоў vault або portable.</string>
+    <string name="desktop_matched_packs_apply">Узгадніць пару: %1$s</string>
+    <string name="desktop_matched_packs_one_click">Узгадніць пару</string>
+    <string name="desktop_matched_packs_working">Узгадненне пакетаў…</string>
+    <string name="desktop_matched_packs_ok">Ужыты ўзгоднены пакет %1$s</string>
+    <string name="desktop_matched_packs_fail">Не ўдалося ўзгадніць пакеты: %1$s</string>
+</resources>

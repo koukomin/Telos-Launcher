@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_helix_snap_title">Snap zonas</string>
+    <string name="desktop_helix_snap_50_50">50 / 50</string>
+    <string name="desktop_helix_snap_two_thirds">2/3 · 1/3</string>
+    <string name="desktop_helix_snap_grid">2×2 režģis</string>
+    <string name="desktop_helix_snap_left">Piesaistīt pa kreisi</string>
+    <string name="desktop_helix_snap_right">Piesaistīt pa labi</string>
+    <string name="desktop_helix_snap_maximize">Maksimizēt</string>
+    <string name="desktop_helix_window_mode">Logu režīms</string>
+    <string name="desktop_helix_tiling">Flīzes (niri)</string>
+    <string name="desktop_helix_stacking">Kaulēšana (labwc)</string>
+    <string name="desktop_helix_window_mode_hint">Stājas spēkā nākamajā Telos sesijas startā, ja TELOS_COMPOSITOR nav iestatīts. Super+bulta piesaista fokusēto logu.</string>
+</resources>

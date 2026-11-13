@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_icons_title">סמלים</string>
+    <string name="desktop_icons_theme_label">ערכת סמלים</string>
+    <string name="desktop_icons_download_section">הורדה מ-Telos</string>
+    <string name="desktop_icons_download">הורדה</string>
+    <string name="desktop_icons_installing">מתקין…</string>
+    <string name="desktop_icons_installed">מותקן</string>
+    <string name="desktop_icons_apply">החלה</string>
+    <string name="desktop_icons_source_system">מערכת</string>
+    <string name="desktop_icons_source_telos">Telos</string>
+    <string name="desktop_icons_source_builtin">מובנה</string>
+    <string name="desktop_icons_path">תיקיית חבילות סמלים: %1$s</string>
+    <string name="desktop_icons_freedesktop_note">ערכות סמלי freedesktop לשולחן העבודה (לא חבילות ADW של Android).</string>
+    <string name="desktop_icons_download_failed">ההורדה נכשלה</string>
+    <string name="desktop_icons_download_ok">הערכת הסמלים הותקנה</string>
+    <string name="desktop_icons_license">רישיון: %1$s</string>
+    <string name="desktop_icons_portable_only">במצב Portable Data החבילות נשארות בתיקיית הסמלים הניידת (לא בפרופיל המארח).</string>
+</resources>

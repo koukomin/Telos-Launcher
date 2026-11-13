@@ -72,6 +72,8 @@ import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.comms.RadioPlayButton
 import de.mm20.launcher2.ui.comms.RadioViewModel
 import de.mm20.launcher2.ui.comms.radioStationSubtitle
+import de.mm20.launcher2.ui.component.TelosCyber
+import de.mm20.launcher2.ui.component.telosTechSurface
 import org.koin.compose.koinInject
 
 enum class RadioChip { All, Recent, Mine, Browser }
@@ -173,10 +175,15 @@ fun RadioStationCard(
         label = "cardTint",
     )
     val low = MaterialTheme.colorScheme.surfaceContainerLow
+    val cardShape = RoundedCornerShape(12.dp)
     Row(
         modifier
             .pressScale(reduce, onClick = { if (uiSettings.tapPlays) player.toggleStation(station) else onLongClick() }, onLongClick = onLongClick)
-            .clip(RoundedCornerShape(12.dp))
+            .telosTechSurface(
+                borderColor = if (playing) TelosCyber.NeonGreen else TelosCyber.NeonCyan.copy(alpha = 0.65f),
+                shape = cardShape,
+            )
+            .clip(cardShape)
             .background(Brush.verticalGradient(listOf(tint.compositeOver(low), low)))
             .padding(12.dp),
     ) {

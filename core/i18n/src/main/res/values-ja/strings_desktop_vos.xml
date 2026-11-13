@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_portable_data_root">Portable data folder (config, cache, temp only here)</string>
+    <string name="desktop_host_home_trace_warning">Host Home writes settings and cache on this PC. Choose Portable Data to leave no host traces.</string>
+    <string name="desktop_boot_portable_data">Portable Data — no host traces (config/cache/temp under portable root)</string>
+    <string name="desktop_boot_portable_vault">Portable Vault — encrypted data under portable root</string>
+    <string name="desktop_boot_host_home">Host Home (may leave traces on this PC)</string>
+    <string name="desktop_boot_unlock_existing">Unlock existing vault (file or stego folder)</string>
+    <string name="desktop_boot_create_wizard">Create new elastic / stego / deniable vault</string>
+    <string name="desktop_boot_ephemeral">Ephemeral RAM-only ghost session (tmpfs)</string>
+    <string name="desktop_session_sync_title">Session sync</string>
+    <string name="desktop_session_sync_export">Export encrypted bundle</string>
+    <string name="desktop_session_sync_import">Import encrypted bundle</string>
+    <string name="desktop_session_sync_auto">同期キーが保存されている場合、起動時に自動インポート</string>
+    <string name="desktop_session_sync_pass">Sync passphrase (or KeePass entry %1$s)</string>
+    <string name="desktop_session_sync_keepass">KeePass database path (.kdbx)</string>
+    <string name="desktop_windows_shell_title">Windows shell replacement</string>
+    <string name="desktop_windows_shell_enable">Set Telos as login shell (HKCU)</string>
+    <string name="desktop_windows_shell_revert">Restore explorer.exe shell</string>
+    <string name="desktop_windows_shell_risk">Replaces your user shell at next sign-in. Keep a recovery path before enabling.</string>
+    <string name="desktop_helix_portable_note">Helix window chrome is drawn in Compose on all platforms; native Win32 decorations may show until shell replacement.</string>
+    <string name="desktop_session_sync_pass_required">同期パスフレーズが必要です</string>
+    <string name="desktop_session_sync_imported">セッション同期バンドルをインポートしました</string>
+    <string name="desktop_session_sync_key_stored">起動時の無プロンプトインポート用に同期キーを保存しました</string>
+    <string name="desktop_session_sync_key_missing">自動インポートを有効にする前に同期パスフレーズを入力してください</string>
+    <string name="desktop_vos_profiles_title">ボルトプロファイル</string>
+    <string name="desktop_vos_profiles_summary">config profiles/ 配下の名前付きプロファイルフォルダー。desktop.properties にはアクティブ名のみ — パスワードは絶対に保存しません。</string>
+    <string name="desktop_vos_profiles_active">アクティブなプロファイル: %1$s</string>
+    <string name="desktop_vos_profiles_none">（なし）</string>
+    <string name="desktop_vos_profiles_empty">まだプロファイルがありません。ボルトの識別を切り替えるには作成してください。</string>
+    <string name="desktop_vos_profiles_kind_named">名前付きボルトプロファイル</string>
+    <string name="desktop_vos_profiles_kind_portable">ポータブルボルトのルート</string>
+    <string name="desktop_vos_profiles_switch">切り替え</string>
+    <string name="desktop_vos_profiles_use_portable">このポータブルルートを使用</string>
+    <string name="desktop_vos_profiles_new_name">新しいプロファイル名</string>
+    <string name="desktop_vos_profiles_create">作成して切り替え</string>
+    <string name="desktop_vos_profiles_created">%1$s を作成して切り替えました</string>
+    <string name="desktop_vos_profiles_switched">%1$s に切り替えました</string>
+    <string name="desktop_vos_profiles_invalid_name">文字、数字、ドット、アンダースコア、ハイフンを使用（最大 64）。</string>
+    <string name="desktop_vos_profiles_portable_hint">ポータブルルートは設定・キャッシュ・一時ファイルをホストプロファイル外に保ちます（Windows 既定: Portable Data）。</string>
+    <string name="desktop_vos_profiles_portable_path">ポータブルボルトフォルダーのパス</string>
+    <string name="desktop_vos_profiles_add_portable">ポータブルボルトルートを追加</string>
+    <string name="desktop_vos_profiles_portable_selected">ポータブルルート: %1$s</string>
+    <string name="desktop_vos_profiles_portable_reject">ポータブルルートはホストのホームやその .config/.cache/.local にはできません。</string>
+</resources>

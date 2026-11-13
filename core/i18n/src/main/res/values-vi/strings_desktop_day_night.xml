@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_day_night_title">Giao diện ngày / đêm</string>
+    <string name="desktop_day_night_hint">Paper Ops (light) by day and Quiet Ops (dark) by night when Auto is selected. Boundaries use your chosen timezone. Default is manual timezone — the network is never contacted for location unless you opt in below.</string>
+    <string name="desktop_day_night_mode">Day / night mode</string>
+    <string name="desktop_day_night_off">Tắt</string>
+    <string name="desktop_day_night_auto">Tự động</string>
+    <string name="desktop_day_night_light">Sáng</string>
+    <string name="desktop_day_night_dark">Tối</string>
+    <string name="desktop_day_night_timezone">Múi giờ</string>
+    <string name="desktop_day_night_timezone_hint">IANA timezone for local day/night (JVM default until you pick one). Manual selection never phones home.</string>
+    <string name="desktop_day_night_timezone_search">Search timezones</string>
+    <string name="desktop_day_night_timezone_current">Current timezone: %1$s</string>
+    <string name="desktop_day_night_network_assist">Hỗ trợ mạng quốc gia / múi giờ</string>
+    <string name="desktop_day_night_network_assist_warning">Chỉ khi đồng ý. Khi bật, Telos gửi một lần tới endpoint IP→địa lý công khai để lấy múi giờ và mã quốc gia. Chỉ các giá trị đó (và tọa độ tùy chọn bình minh/hoàng hôn) được lưu trong vault desktop.properties. IP không được ghi nhật ký, không theo dõi liên tục, không đồng bộ chủ đề lên đám mây. Nếu mạng lỗi, kill-switch bật hoặc ngoại tuyến, giữ múi giờ thủ công; Preference only hoặc Failed được hiện trung thực.</string>
+    <string name="desktop_day_night_assist_pref_only">Chỉ tùy chọn — hỗ trợ mạng tắt, bị chặn hoặc không yêu cầu; dùng múi giờ thủ công</string>
+    <string name="desktop_day_night_assist_failed">Thất bại — không tới được endpoint địa lý; giữ múi giờ thủ công</string>
+    <string name="desktop_day_night_assist_applied">Đã áp dụng — múi giờ %1$s, quốc gia %2$s (chỉ cục bộ)</string>
+    <string name="desktop_day_night_country">Mã quốc gia: %1$s</string>
+</resources>

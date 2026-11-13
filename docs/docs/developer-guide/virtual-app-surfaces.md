@@ -42,6 +42,41 @@ Telos video wallpaper glass samples only the service’s own rendered surface wi
 The home clock, transparent resting search bar and dock page dots have no automatic rectangular contrast backing. Wallpaper-aware foreground selection still runs, while the search bar keeps its explicitly selected style and active surface. Other widget/app glass panels and their contrast policy are unchanged. This also removes the extra backing that appeared when wallpaper sampling was unavailable on Android 13 and newer.
 
 
+## Cyber-Tech chrome (virtual apps)
+
+Shared kit in `app/ui/.../component/TelosCyber.kt` and `TelosTechBorder.kt`:
+`TelosCyber` neon accents (`#00E676` / `#00F0FF` / `#FF007F` / `#FF9100`),
+`telosTechSurface` / `telosTechCard` glowing borders on opaque
+`surfaceContainerLow`, `TelosTechPill` for tabs/filters, `TelosDotMatrixText`
+and gauges for HUD/telemetry, plus `TelosCyberAppBarTitle` /
+`TelosCyberHubTile` / `TelosCyberStatChip` for hub chrome.
+
+Apply Cyber-Tech to virtual-app headers, status HUDs, hub tiles, filter pills
+and mini-players. Prefer opaque Material containers under neon borders — do not
+use transparent root `surface` as card fill or icon foreground. Do **not** wrap
+full-bleed camera/video viewfinders, Ermis mail bodies, or dense Files list rows
+in neon cards; keep chrome on toolbars/tabs and leave content planes readable.
+Popups over glass still use `virtualAppPopup()`.
+
+## TelosSurfaceTokens (shared Helix / Android chrome kit)
+
+Formal role names live in `:ui-kmp` (`TelosSurfaceTokens`) and are mirrored on
+Android in `app/ui/.../component/TelosSurfaceTokens.kt` (MaterialTheme accessors).
+`:app:app` must not depend on `:desktop-linux`; both Helix and virtual apps import
+`:ui-kmp` (or the Android Material bindings) only.
+
+| Token | Role | Contract |
+| --- | --- | --- |
+| `panelGlass` | Root / top-panel glass | **Only** role that may carry alpha (wallpaper translucency). |
+| `cardOpaque` | Cards under neon borders | Opaque `surfaceContainerLow` / shared card fill (`alpha = 1`). |
+| `popupOpaque` | Menus, dialogs, Control Center | Opaque `surfaceContainer` / `virtualAppPopup()` (`alpha = 1`). |
+| `hudLabel` | Dot-matrix / telemetry labels | Accent (desktop secondary / Android neon cyan). |
+| `techPill` | Unselected tech pills | Opaque container fill under neon selection. |
+
+Helix Settings cards, Control Center, top panel, Overview snap bars and panel
+popups consume these tokens. Android `telosTechSurface` / `TelosTechPill` use
+`cardOpaque` / `techPill`; dialogs keep `popupOpaque` → `virtualAppPopup()`.
+
 ## Readable overlays, controls and search
 
 Keep `surface`/`background` clear for root scaffolds, but preserve opaque
@@ -154,11 +189,18 @@ Viewer selection reuses the shared URI delete/trash flow for multiple files.
 HWUI startup restoration is asynchronous and honors the existing opt-in. OpenGL
 uses skiagl. The selected property is not proof of the renderer in an already
 running process: Android locks that pipeline at initialization. The notice is
-on by default and configurable. Saved Wi-Fi reveal is authenticated. Telos reads
-configured networks through privileged `IWifiManager` (Shizuku or root) and falls
-back to the config store files. It detects Shizuku/root automatically and prompts
-to enable them. Parsing cannot cross network blocks, and backgrounding clears
+on by default and configurable. Saved Wi-Fi reveal lives under **Telos Network →
+Settings** (moved out of System). Reveal is authenticated. Telos reads configured
+networks through privileged `IWifiManager` (Shizuku or root, preferring the Telos
+built-in Shizuku binder) and falls back to the config store files. It detects
+Shizuku/root automatically and opens System → Shizuku when the external manager
+APK is absent. Parsing cannot cross network blocks, and backgrounding clears
 revealed credentials. OEM/SELinux restrictions may still prevent reading the store.
+
+Developer Options stealth cloak snapshots the related Global/System keys before
+clearing `development_settings_enabled` and restores that snapshot on uncloak or
+when the master Developer Options flag returns to enabled, so animator scales and
+similar toggles are not discarded with the flag.
 
 Use the [adaptive UI contract](./adaptive-ui) for shared tokens, preference/navigation components,
 font scaling, insets and required validation. See [UI validation](./ui-validation) for execution

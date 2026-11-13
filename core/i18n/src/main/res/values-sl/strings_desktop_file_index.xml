@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_file_index_title">Kazalo imen datotek</string>
+    <string name="desktop_file_index_enable">Kazalo imen datotek v napravi</string>
+    <string name="desktop_file_index_hint">Izbirno. Indeksira samo imena datotek pod HOME trezorja ali korenom Portable Data (nikoli profil gostitelja, razen Host Home). Shranjeno šifrirano v .cache/telos/file-index z dovoljenji samo za lastnika. Brez vsebine datotek in brez nalaganja v oblak.</string>
+</resources>

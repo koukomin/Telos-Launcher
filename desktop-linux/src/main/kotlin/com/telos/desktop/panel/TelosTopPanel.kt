@@ -41,8 +41,16 @@ import com.telos.desktop.icons.CandyIcon
 import com.telos.desktop.ui.DesktopChrome
 import com.telos.desktop.ui.TelosColors
 import com.telos.desktop.apps.TelosVirtualApps
+import com.telos.desktop.theme.PanelIconContrast
+import com.telos.desktop.theme.PanelSurfaceMapping
+import com.telos.desktop.theme.PanelSurfaceMode
+import com.telos.desktop.theme.WorkspaceTintStrips
+import com.telos.desktop.ui.HelixTechPill
 import com.telos.desktop.wm.TelosWindowManager
+import de.mm20.launcher2.uikmp.TelosSurfaceTokens
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.withContext
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -66,6 +74,17 @@ fun TelosTopPanel(
     var power by remember { mutableStateOf(LaptopPowerManager.snapshot()) }
     var tray by remember { mutableStateOf(SystemTrayManager.snapshot()) }
     var cpuPill by remember { mutableStateOf("CPU --") }
+    var iconTone by remember { mutableStateOf(PanelIconContrast.Tone.Light) }
+    val contrastMode = PanelIconContrast.parseMode(settings?.panelIconContrast)
+    val wallpaperPath = settings?.wallpaperPath
+    LaunchedEffect(contrastMode, wallpaperPath) {
+        iconTone = withContext(Dispatchers.IO) {
+            PanelIconContrast.sampleFile(
+                PanelIconContrast.resolveWallpaperFile(wallpaperPath?.ifBlank { null }),
+                contrastMode,
+            ).tone
+        }
+    }
     LaunchedEffect(Unit) {
         while (true) {
             clock = LocalDateTime.now()
@@ -75,15 +94,44 @@ fun TelosTopPanel(
             tray = SystemTrayManager.snapshot()
             val s = engine.overviewHistory.lastOrNull() ?: engine.poll()
             cpuPill = "${s.cpu.totalPercent.toInt()}%"
+            // Refresh wallpaper digest periodically (privacy-local; IO only).
+            iconTone = withContext(Dispatchers.IO) {
+                PanelIconContrast.sampleFile(
+                    PanelIconContrast.resolveWallpaperFile(settings?.wallpaperPath?.ifBlank { null }),
+                    PanelIconContrast.parseMode(settings?.panelIconContrast),
+                ).tone
+            }
             delay(2000)
         }
     }
     val barH = (settings?.panelHeightDp ?: 36f).dp
-    val barColor = Color((settings?.panelArgb ?: 0xF2241E36).toInt()).copy(alpha = settings?.panelAlpha ?: 0.94f)
+    val surface = PanelSurfaceMapping.resolve(
+        mode = PanelSurfaceMode.parse(settings?.panelSurfaceMode),
+        panelAlpha = settings?.panelAlpha ?: TelosSurfaceTokens.DEFAULT_PANEL_GLASS_ALPHA,
+        panelBlur = settings?.panelBlur ?: 12f,
+    )
+    val tintRgb = Color((settings?.panelArgb ?: 0xF2241E36L).toInt())
+    // Panel root only may clear; solid uses opaque surfaceContainer / tech-pill tone.
+    val barColor = if (surface.solidSurfaceContainer) {
+        TelosSurfaceTokens.techPill
+    } else {
+        TelosSurfaceTokens.panelGlass(base = tintRgb, alpha = surface.alpha)
+    }
+    // Best-effort frost plate when blurred mode stores blur but host backdrop blur is unavailable.
+    val frostOverlay = if (surface.frostPlateFallback) {
+        TelosColors.surfaceHigh.copy(alpha = (0.08f + (surface.blurRadius / 32f) * 0.18f).coerceIn(0.08f, 0.26f))
+    } else {
+        null
+    }
     val iconDp = (settings?.panelIconDp ?: 22f).dp
+    val glyph = PanelIconContrast.glyphColor(iconTone)
+    val accentLabel = PanelIconContrast.labelColor(iconTone, accent = true)
     Box(
         modifier.fillMaxWidth().height(barH)
             .background(barColor)
+            .then(
+                if (frostOverlay != null) Modifier.background(frostOverlay) else Modifier,
+            )
             .border(1.dp, TelosColors.outline)
             .combinedClickable(onClick = {}, onLongClick = { popup = PanelPopup.Style })
             .onPointerEvent(PointerEventType.Press) { ev ->
@@ -96,73 +144,121 @@ fun TelosTopPanel(
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 // === TELOS_PENDING_REVIEW_START: telos_de_final_polish ===
                 Box(Modifier.clickable { onLauncher() }.padding(4.dp)) {
-                    CandyCyberIcon(CandyIcon.TelosLogo, iconDp)
+                    CandyCyberIcon(CandyIcon.TelosLogo, iconDp, contrastTone = iconTone)
                 }
                 // === TELOS_PENDING_REVIEW_END: telos_de_final_polish ===
+                val showWorkspaceTints = WorkspaceTintStrips.shouldShow(
+                    settings?.workspaceTints ?: true,
+                    settings?.themePanicMute ?: false,
+                )
+                val quietOps = settings?.themeQuietOps ?: false
                 (0 until wm.workspaceCount).forEach { i ->
                     val active = wm.currentWorkspace == i
                     val dots = wm.windows.count { it.workspace == i }
-                    Text(
-                        "${i + 1}${if (dots > 0) "·$dots" else ""}",
-                        color = if (active) TelosColors.primary else TelosColors.onSurface,
-                        fontSize = 12.sp,
+                    val oneBased = i + 1
+                    val tintArgb = if (showWorkspaceTints) {
+                        WorkspaceTintStrips.argbForWorkspace(
+                            oneBased,
+                            WorkspaceTintStrips.stripAlpha(quietOps, active),
+                        )
+                    } else {
+                        null
+                    }
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
                         modifier = Modifier.clickable { wm.switchWorkspace(i) },
-                    )
+                    ) {
+                        Text(
+                            "$oneBased${if (dots > 0) "·$dots" else ""}",
+                            color = if (active) TelosColors.primary else glyph,
+                            fontSize = 12.sp,
+                        )
+                        if (tintArgb != null) {
+                            Box(
+                                Modifier
+                                    .padding(top = 1.dp)
+                                    .width(14.dp)
+                                    .height(2.dp)
+                                    .background(Color(tintArgb.toInt())),
+                            )
+                        }
+                    }
                 }
-                Text(wm.windows.find { it.id == wm.focusedId }?.title ?: "Desktop", color = TelosColors.onSurface, fontSize = 12.sp)
+                Text(wm.windows.find { it.id == wm.focusedId }?.title ?: "Desktop", color = glyph, fontSize = 12.sp)
                 // === TELOS_PENDING_REVIEW_START: telos_launcher_desktop_ui_parity ===
                 TelosVirtualApps.all.filter { it.domain in TelosVirtualApps.pinnedDefaults }.forEach { app ->
                     Box(Modifier.clickable { onOpenTelos(app.windowTitle) }.padding(horizontal = 2.dp)) {
-                        CandyCyberIcon(app.icon, iconDp)
+                        CandyCyberIcon(app.icon, iconDp, contrastTone = iconTone)
                     }
                 }
                 // === TELOS_PENDING_REVIEW_END: telos_launcher_desktop_ui_parity ===
             }
             Text(
                 clock.format(DateTimeFormatter.ofPattern("EEE d MMM  HH:mm")),
-                color = TelosColors.onSurface,
+                color = glyph,
                 modifier = Modifier.clickable { popup = if (popup == PanelPopup.Clock) PanelPopup.None else PanelPopup.Clock },
             )
             Row(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalAlignment = Alignment.CenterVertically) {
-                Box(Modifier.clickable { TelosQuake.toggle() }.padding(2.dp)) { CandyCyberIcon(CandyIcon.Terminal, 18.dp) }
-                Text(cpuPill, fontSize = 11.sp, color = TelosColors.secondary, modifier = Modifier.clickable { onOpenMonitor() })
-                Box(Modifier.clickable { DesktopChrome.toggleControlCenter() }.padding(2.dp)) { CandyCyberIcon(CandyIcon.Volume, 18.dp) }
-                Box(Modifier.clickable { DesktopChrome.toggleControlCenter() }.padding(2.dp)) { CandyCyberIcon(CandyIcon.Network, 18.dp) }
-                Box(Modifier.clickable { DesktopChrome.toggleControlCenter() }.padding(2.dp)) { CandyCyberIcon(CandyIcon.Battery, 18.dp) }
+                Box(Modifier.clickable { TelosQuake.toggle() }.padding(2.dp)) {
+                    CandyCyberIcon(CandyIcon.Terminal, 18.dp, contrastTone = iconTone)
+                }
+                Text(cpuPill, fontSize = 11.sp, color = accentLabel, modifier = Modifier.clickable { onOpenMonitor() })
+                Box(Modifier.clickable { DesktopChrome.toggleControlCenter() }.padding(2.dp)) {
+                    CandyCyberIcon(CandyIcon.Volume, 18.dp, contrastTone = iconTone)
+                }
+                Box(Modifier.clickable { DesktopChrome.toggleControlCenter() }.padding(2.dp)) {
+                    CandyCyberIcon(CandyIcon.Network, 18.dp, contrastTone = iconTone)
+                }
+                Box(Modifier.clickable { DesktopChrome.toggleControlCenter() }.padding(2.dp)) {
+                    CandyCyberIcon(CandyIcon.Battery, 18.dp, contrastTone = iconTone)
+                }
                 // IME / keyboard layout chip (Plasma-style). Host fcitx5/ibus still own the engines.
                 val imeLabel = SystemTrayManager.keyboardManager.activeLayout.uppercase()
                 Text(
                     imeLabel,
                     fontSize = 11.sp,
-                    color = TelosColors.secondary,
+                    color = accentLabel,
                     modifier = Modifier
                         .clickable { SystemTrayManager.keyboardManager.toggleNextLayout() }
                         .padding(horizontal = 4.dp, vertical = 2.dp),
                 )
-                Box(Modifier.clickable { popup = PanelPopup.Tray }.padding(2.dp)) { CandyCyberIcon(CandyIcon.Tray, 18.dp) }
+                Box(Modifier.clickable { popup = PanelPopup.Tray }.padding(2.dp)) {
+                    CandyCyberIcon(CandyIcon.Tray, 18.dp, contrastTone = iconTone)
+                }
                 // Live SNI titles inline when few; full list still in tray popup.
+                // Compose-controlled labels only — host SNI pixmaps stay with telos-sni.
                 tray.filter { it.id.startsWith("sni:") }.take(3).forEach { item ->
                     Text(
                         item.name.take(10),
                         fontSize = 10.sp,
-                        color = TelosColors.onSurface.copy(alpha = 0.85f),
+                        color = glyph.copy(alpha = 0.85f),
                         maxLines = 1,
                         modifier = Modifier.clickable { SystemTrayManager.launch(item) }.padding(horizontal = 2.dp),
                     )
                 }
-                Box(Modifier.clickable { TelosClipboardManager.popup = !TelosClipboardManager.popup }.padding(2.dp)) { CandyCyberIcon(CandyIcon.Clip, 18.dp) }
-                Box(Modifier.clickable { TelosNotificationCenter.open.value = !TelosNotificationCenter.open.value }.padding(2.dp)) { CandyCyberIcon(CandyIcon.Bell, 18.dp) }
-                Box(Modifier.clickable { TelosCaptureTool.fullscreen() }.padding(2.dp)) { CandyCyberIcon(CandyIcon.Shot, 18.dp) }
-                Text("Vault+", fontSize = 11.sp, color = TelosColors.secondary, modifier = Modifier.clickable {
+                Box(Modifier.clickable { TelosClipboardManager.popup = !TelosClipboardManager.popup }.padding(2.dp)) {
+                    CandyCyberIcon(CandyIcon.Clip, 18.dp, contrastTone = iconTone)
+                }
+                Box(Modifier.clickable { TelosNotificationCenter.open.value = !TelosNotificationCenter.open.value }.padding(2.dp)) {
+                    CandyCyberIcon(CandyIcon.Bell, 18.dp, contrastTone = iconTone)
+                }
+                Box(Modifier.clickable { TelosCaptureTool.openMenu() }.padding(2.dp)) {
+                    CandyCyberIcon(CandyIcon.Shot, 18.dp, contrastTone = iconTone)
+                }
+                Text("Vault+", fontSize = 11.sp, color = accentLabel, modifier = Modifier.clickable {
                     runCatching { com.telos.desktop.vault.PhantomVault.engine.expandManual() }
                 })
-                Box(Modifier.clickable { DesktopChrome.toggleFullscreen() }.padding(2.dp)) { CandyCyberIcon(CandyIcon.Monitor, 18.dp) }
-                Box(Modifier.clickable { SessionPower.open.value = true }.padding(2.dp)) { CandyCyberIcon(CandyIcon.Power, 18.dp) }
+                Box(Modifier.clickable { DesktopChrome.toggleFullscreen() }.padding(2.dp)) {
+                    CandyCyberIcon(CandyIcon.Monitor, 18.dp, contrastTone = iconTone)
+                }
+                Box(Modifier.clickable { SessionPower.open.value = true }.padding(2.dp)) {
+                    CandyCyberIcon(CandyIcon.Power, 18.dp, contrastTone = iconTone)
+                }
             }
         }
         if (popup != PanelPopup.None) {
             Box(Modifier.fillMaxWidth().padding(top = 36.dp), contentAlignment = Alignment.TopEnd) {
-                Column(Modifier.width(320.dp).background(TelosColors.menu).border(1.dp, TelosColors.outline).padding(12.dp)) {
+                Column(Modifier.width(320.dp).background(TelosSurfaceTokens.popupOpaque).border(1.dp, TelosColors.outline).padding(12.dp)) {
                     when (popup) {
                         PanelPopup.Clock -> {
                             val s = engine.overviewHistory.lastOrNull()
@@ -208,7 +304,50 @@ fun TelosTopPanel(
                             if (s == null) {
                                 Text("Panel settings unavailable", color = TelosColors.onSurface)
                             } else {
-                                Text(com.telos.desktop.i18n.TelosI18n.t("menu_customize"), color = TelosColors.secondary)
+                                val t = com.telos.desktop.i18n.TelosI18n
+                                val mode = PanelSurfaceMode.parse(s.panelSurfaceMode)
+                                Text(t.t("menu_customize"), color = TelosColors.secondary)
+                                Text(t.t("desktop_theme_panel_surface"), fontSize = 11.sp, color = TelosColors.onSurface)
+                                Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                                    HelixTechPill(
+                                        t.t("desktop_theme_panel_transparent"),
+                                        selected = mode == PanelSurfaceMode.Transparent,
+                                        accent = TelosColors.secondary,
+                                    ) {
+                                        s.panelSurfaceMode = PanelSurfaceMode.Transparent.propertyValue
+                                        s.save()
+                                    }
+                                    HelixTechPill(
+                                        t.t("desktop_theme_panel_blurred"),
+                                        selected = mode == PanelSurfaceMode.Blurred,
+                                        accent = Color(0xFF00E676),
+                                    ) {
+                                        s.panelSurfaceMode = PanelSurfaceMode.Blurred.propertyValue
+                                        s.save()
+                                    }
+                                    HelixTechPill(
+                                        t.t("desktop_theme_panel_solid"),
+                                        selected = mode == PanelSurfaceMode.Solid,
+                                        accent = TelosColors.primary,
+                                    ) {
+                                        s.panelSurfaceMode = PanelSurfaceMode.Solid.propertyValue
+                                        s.save()
+                                    }
+                                }
+                                Text(
+                                    t.t("desktop_theme_panel_surface_hint"),
+                                    fontSize = 10.sp,
+                                    color = TelosColors.onSurface.copy(0.65f),
+                                )
+                                if (mode != PanelSurfaceMode.Solid &&
+                                    PanelSurfaceMapping.resolve(mode, s.panelAlpha, s.panelBlur).frostPlateFallback
+                                ) {
+                                    Text(
+                                        t.t("desktop_theme_panel_blur_unavailable"),
+                                        fontSize = 10.sp,
+                                        color = TelosColors.secondary.copy(0.85f),
+                                    )
+                                }
                                 Text("Height ${s.panelHeightDp.toInt()} dp", fontSize = 11.sp, color = TelosColors.onSurface)
                                 Slider((s.panelHeightDp - 32f) / 16f, {
                                     s.panelHeightDp = (32f + it * 16f).coerceIn(32f, 48f)
@@ -219,16 +358,28 @@ fun TelosTopPanel(
                                     s.panelIconDp = (20f + it * 16f).coerceIn(20f, 36f)
                                     s.save()
                                 })
-                                Text("Transparency ${(s.panelAlpha * 100).toInt()}%", fontSize = 11.sp, color = TelosColors.onSurface)
-                                Slider(s.panelAlpha, {
-                                    s.panelAlpha = it.coerceIn(0.2f, 1f)
-                                    s.save()
-                                })
-                                Text("Glass blur ${s.panelBlur.toInt()}", fontSize = 11.sp, color = TelosColors.onSurface)
-                                Slider((s.panelBlur / 32f).coerceIn(0f, 1f), {
-                                    s.panelBlur = (it * 32f).coerceIn(0f, 32f)
-                                    s.save()
-                                })
+                                if (mode != PanelSurfaceMode.Solid) {
+                                    Text(
+                                        t.t("desktop_theme_panel_opacity", (s.panelAlpha * 100).toInt()),
+                                        fontSize = 11.sp,
+                                        color = TelosColors.onSurface,
+                                    )
+                                    Slider(s.panelAlpha.coerceIn(0.2f, 1f), {
+                                        s.panelAlpha = it.coerceIn(0.2f, 1f)
+                                        s.save()
+                                    })
+                                }
+                                if (mode == PanelSurfaceMode.Blurred) {
+                                    Text(
+                                        t.t("desktop_theme_panel_blur", s.panelBlur.toInt()),
+                                        fontSize = 11.sp,
+                                        color = TelosColors.onSurface,
+                                    )
+                                    Slider((s.panelBlur / 32f).coerceIn(0f, 1f), {
+                                        s.panelBlur = (it * 32f).coerceIn(0f, 32f)
+                                        s.save()
+                                    })
+                                }
                                 Text("Tint (ARGB hex ${s.panelArgb.toString(16)})", fontSize = 11.sp, color = TelosColors.onSurface)
                                 val r = ((s.panelArgb shr 16) and 0xFF) / 255f
                                 val g = ((s.panelArgb shr 8) and 0xFF) / 255f
@@ -245,6 +396,46 @@ fun TelosTopPanel(
                                     s.panelArgb = (s.panelArgb and 0xFFFFFF00L) or (nb * 255).toLong()
                                     s.save()
                                 })
+                                Text(
+                                    t.t("desktop_theme_workspace_tints"),
+                                    fontSize = 11.sp,
+                                    color = if (s.workspaceTints) TelosColors.secondary else TelosColors.onSurface,
+                                    modifier = Modifier.clickable {
+                                        s.workspaceTints = !s.workspaceTints
+                                        s.save()
+                                    }.padding(top = 4.dp),
+                                )
+                                val contrast = PanelIconContrast.parseMode(s.panelIconContrast)
+                                Text(
+                                    com.telos.desktop.i18n.TelosI18n.t("desktop_panel_icon_contrast"),
+                                    fontSize = 11.sp,
+                                    color = TelosColors.secondary,
+                                    modifier = Modifier.padding(top = 6.dp),
+                                )
+                                Text(
+                                    when (contrast) {
+                                        PanelIconContrast.Mode.Auto ->
+                                            com.telos.desktop.i18n.TelosI18n.t("desktop_panel_icon_contrast_auto")
+                                        PanelIconContrast.Mode.Light ->
+                                            com.telos.desktop.i18n.TelosI18n.t("desktop_panel_icon_contrast_light")
+                                        PanelIconContrast.Mode.Dark ->
+                                            com.telos.desktop.i18n.TelosI18n.t("desktop_panel_icon_contrast_dark")
+                                    },
+                                    fontSize = 11.sp,
+                                    color = TelosColors.onSurface,
+                                    modifier = Modifier.clickable {
+                                        s.panelIconContrast = when (contrast) {
+                                            PanelIconContrast.Mode.Auto ->
+                                                PanelIconContrast.Mode.Light.propertyValue
+                                            PanelIconContrast.Mode.Light ->
+                                                PanelIconContrast.Mode.Dark.propertyValue
+                                            PanelIconContrast.Mode.Dark ->
+                                                PanelIconContrast.Mode.Auto.propertyValue
+                                        }
+                                        PanelIconContrast.clearCache()
+                                        s.save()
+                                    }.padding(top = 2.dp),
+                                )
                             }
                         }
                         else -> {}

@@ -12,10 +12,26 @@ class VirtualAppTaskTest {
             contract.ROUTE_VOICE_RECORDER, contract.ROUTE_SCREEN_RECORDER, contract.ROUTE_SCREENSHOT,
             contract.ROUTE_NOTES, contract.ROUTE_ERMIS, contract.ROUTE_CALENDAR, contract.ROUTE_DOWNLOADS,
             "settings/clock", "settings/akou", "settings/magnifier", "settings/flashlight",
-            contract.ROUTE_WEATHER, contract.ROUTE_SYNC, contract.ROUTE_BACKUP)
+            contract.ROUTE_WEATHER, contract.ROUTE_SYNC, contract.ROUTE_BACKUP,
+            contract.ROUTE_KEYBOARD, contract.ROUTE_KEEPASS, contract.ROUTE_AETHER, contract.ROUTE_FIT)
         val ids = routes.map { contract.virtualAppTaskId(it) }
         assertFalse(ids.contains(null))
         assertEquals(routes.size, ids.toSet().size)
+    }
+
+    @Test fun keyboardKeepassAetherAndFitHaveStableAliases() {
+        assertEquals("keyboard", contract.virtualAppTaskId(contract.ROUTE_KEYBOARD))
+        assertEquals("keepass", contract.virtualAppTaskId(contract.ROUTE_KEEPASS))
+        assertEquals("aether", contract.virtualAppTaskId(contract.ROUTE_AETHER))
+        assertEquals("fit", contract.virtualAppTaskId(contract.ROUTE_FIT))
+        assertEquals(
+            "de.mm20.launcher2.ui.settings.TelosApp_keyboard",
+            contract.virtualAppActivityClassName(contract.ROUTE_KEYBOARD),
+        )
+        assertEquals(
+            "de.mm20.launcher2.ui.settings.TelosApp_fit",
+            contract.virtualAppActivityClassName(contract.ROUTE_FIT),
+        )
     }
 
     @Test fun recentsAliasesHaveStableIndependentComponents() {
@@ -26,7 +42,7 @@ class VirtualAppTaskTest {
     }
 
     @Test fun mediaAndViewerAliasesReuseTheirAppTask() {
-        for (route in listOf(contract.ROUTE_MEDIA, contract.ROUTE_MUSIC, contract.ROUTE_RADIO, contract.ROUTE_VIDEO))
+        for (route in listOf(contract.ROUTE_MEDIA, contract.ROUTE_MUSIC, contract.ROUTE_RADIO, contract.ROUTE_VIDEO, contract.ROUTE_TV))
             assertEquals("media", contract.virtualAppTaskId(route))
         assertEquals(contract.virtualAppTaskId(contract.ROUTE_VIEWER), contract.virtualAppTaskId(contract.ROUTE_PHOTOS))
     }

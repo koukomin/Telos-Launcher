@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_lan_pair_title">Pemasangan LAN dengan Android</string>
+    <string name="desktop_lan_pair_hint">Memulakan pelayan pemasangan jangka pendek pada LAN. Imbas atau masukkan kod dalam Telos Sync. Kod dan token tidak pernah dilog.</string>
+    <string name="desktop_lan_pair_start">Mulakan pemasangan LAN</string>
+    <string name="desktop_lan_pair_stop">Hentikan pemasangan LAN</string>
+    <string name="desktop_lan_pair_running">Pelayan pemasangan mendengar pada LAN</string>
+    <string name="desktop_lan_pair_code">Kod pemasangan</string>
+    <string name="desktop_lan_pair_qr_uri">URI pemasangan (QR / tampal)</string>
+    <string name="desktop_lan_pair_stopped">Pemasangan LAN dihentikan</string>
+    <string name="desktop_lan_pair_bind_reject">Tidak boleh mengikat alamat awam — guna IP LAN peribadi</string>
+    <string name="desktop_lan_pair_android_title">Pemasangan LAN Telos Desktop</string>
+    <string name="desktop_lan_pair_host">Hos desktop (IP LAN)</string>
+    <string name="desktop_lan_pair_port">Port desktop</string>
+    <string name="desktop_lan_pair_connect">Pasangkan dengan desktop</string>
+    <string name="desktop_lan_pair_paired">Dipasangkan dengan desktop</string>
+    <string name="desktop_lan_pair_fetch_bundle">Dapatkan bungkusan sesi desktop</string>
+    <string name="desktop_lan_pair_fetch_ok">Bungkusan sesi desktop disulitkan disimpan</string>
+    <string name="desktop_lan_pair_send_bundle">Hantar bungkusan disulitkan</string>
+    <string name="desktop_lan_pair_failed">Pemasangan LAN gagal</string>
+    <string name="desktop_lan_pair_scan_hint">Pada Android buka Sync → Tetapan dan tampal URI atau masukkan hos, port dan kod.</string>
+</resources>

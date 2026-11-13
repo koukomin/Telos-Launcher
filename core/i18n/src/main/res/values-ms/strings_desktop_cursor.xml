@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_cursor_title">Kursor</string>
+    <string name="desktop_cursor_theme">Tema kursor</string>
+    <string name="desktop_cursor_size">Ukuran kursor</string>
+    <string name="desktop_cursor_system_default">Lalai sistem</string>
+    <string name="desktop_cursor_preset_style">Gaya overlay Compose (saat XCursor tidak tersedia)</string>
+    <string name="desktop_cursor_download_section">Unduh tema kursor (ke icons portabel/vault)</string>
+    <string name="desktop_cursor_download_named">Unduh %1$s (%2$s)</string>
+    <string name="desktop_cursor_download_ok">%1$s dipasang</string>
+    <string name="desktop_cursor_download_fail">Tidak dapat memuat turun tema kursor: %1$s</string>
+    <string name="desktop_cursor_limit_linux">Linux: aplikasi anak mendapat XCURSOR_THEME dan XCURSOR_SIZE. Telos memuat bingkai XCursor ke kursor AWT bila memungkinkan; jika tidak, overlay Compose Sweet/Breeze digambar. Urutan XCursor beranimasi tidak diputar.</string>
+    <string name="desktop_cursor_limit_windows">Windows: dipetakan ke kursor sistem AWT. Tema XCursor/Plasma tidak diterapkan ke penunjuk Win32.</string>
+    <string name="desktop_cursor_limit_macos">macOS: dipetakan ke kursor sistem AWT. Tema XCursor/Plasma tidak diterapkan ke penunjuk Cocoa.</string>
+</resources>

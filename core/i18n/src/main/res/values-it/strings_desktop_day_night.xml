@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_day_night_title">Tema giorno / notte</string>
+    <string name="desktop_day_night_hint">Paper Ops (chiaro) di giorno e Quiet Ops (scuro) di notte in Auto. I limiti usano il fuso orario scelto. Predefinito: fuso manuale — la rete non è mai usata per la posizione salvo consenso sotto.</string>
+    <string name="desktop_day_night_mode">Modalità giorno / notte</string>
+    <string name="desktop_day_night_off">Disattivato</string>
+    <string name="desktop_day_night_auto">Auto</string>
+    <string name="desktop_day_night_light">Chiaro</string>
+    <string name="desktop_day_night_dark">Scuro</string>
+    <string name="desktop_day_night_timezone">Fuso orario</string>
+    <string name="desktop_day_night_timezone_hint">Fuso IANA per giorno/notte locale (default JVM finché non scegli). La scelta manuale non contatta server.</string>
+    <string name="desktop_day_night_timezone_search">Cerca fusi orari</string>
+    <string name="desktop_day_night_timezone_current">Fuso attuale: %1$s</string>
+    <string name="desktop_day_night_network_assist">Assistenza di rete paese / fuso</string>
+    <string name="desktop_day_night_network_assist_warning">Solo con consenso. Se attiva, Telos fa una sola richiesta a un endpoint pubblico IP→geo per fuso e codice paese. Solo quei valori (e coordinate opzionali per alba/tramonto) sono salvati in vault desktop.properties. L’IP non è registrato, nessun tracciamento continuo, nessun sync cloud dei temi. Se la rete fallisce, c’è kill-switch o sei offline, resta il fuso manuale; Preference only o Failed sono mostrati onestamente.</string>
+    <string name="desktop_day_night_assist_pref_only">Solo preferenza — assistenza rete off, bloccata o non richiesta; fuso manuale</string>
+    <string name="desktop_day_night_assist_failed">Non riuscito — endpoint geo irraggiungibile; fuso manuale mantenuto</string>
+    <string name="desktop_day_night_assist_applied">Applicato — fuso %1$s, paese %2$s (solo locale)</string>
+    <string name="desktop_day_night_country">Codice paese: %1$s</string>
+</resources>

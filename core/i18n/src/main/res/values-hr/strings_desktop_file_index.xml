@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_file_index_title">Indeks naziva datoteka</string>
+    <string name="desktop_file_index_enable">Indeks naziva datoteka na uređaju</string>
+    <string name="desktop_file_index_hint">Neobavezno. Indeksira samo nazive datoteka pod HOME trezora ili korijenom Portable Data (nikad profil hosta osim Host Home). Pohranjeno šifrirano u .cache/telos/file-index s dozvolama samo vlasnika. Bez sadržaja datoteka i bez prijenosa u oblak.</string>
+</resources>

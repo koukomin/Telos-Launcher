@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<string name="desktop_appearance_hint">Intensitas Quiet Ops atau Vault Neon, aksen neon, dan senyap panik. Overlay profil dapat menimpanya tanpa menulis ke HOME host di Portable Data.</string>
+    <string name="desktop_theme_intensity_label">Intensitas tema</string>
+    <string name="desktop_theme_accent_label">Aksen</string>
+    <string name="desktop_panic_mute_toggle">Senyap panik</string>
+    <string name="desktop_panic_mute_on">Senyap panik: Aktif</string>
+    <string name="desktop_panic_mute_off">Senyap panik: Nonaktif</string>
+    <string name="desktop_panic_mute_hint">Memaksa Quiet Ops dan menyembunyikan bingkai serta pengukur neon. Hanya visual — tidak mengubah firewall atau kill-switch. Pintasan: Super+Shift+P.</string>
+    <string name="desktop_vos_profiles_appearance_hint">Setiap profil bernama dapat menyimpan overlay desktop.properties sendiri untuk intensitas, aksen, ikon, dan kursor. Peralihan memuat ulang tampilan dari overlay profil, lalu properti brankas global.</string>
+</resources>

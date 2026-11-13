@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_icons_title">Икони</string>
+    <string name="desktop_icons_theme_label">Тема на иконите</string>
+    <string name="desktop_icons_download_section">Изтегляне от Telos</string>
+    <string name="desktop_icons_download">Изтегляне</string>
+    <string name="desktop_icons_installing">Инсталиране…</string>
+    <string name="desktop_icons_installed">Инсталирано</string>
+    <string name="desktop_icons_apply">Прилагане</string>
+    <string name="desktop_icons_source_system">Система</string>
+    <string name="desktop_icons_source_telos">Telos</string>
+    <string name="desktop_icons_source_builtin">Вградена</string>
+    <string name="desktop_icons_path">Папка с пакети икони: %1$s</string>
+    <string name="desktop_icons_freedesktop_note">Теми на икони freedesktop за работен плот (не Android ADW пакети).</string>
+    <string name="desktop_icons_download_failed">Изтеглянето неуспешно</string>
+    <string name="desktop_icons_download_ok">Темата е инсталирана</string>
+    <string name="desktop_icons_license">Лиценз: %1$s</string>
+    <string name="desktop_icons_portable_only">В режим Portable Data пакетите остават в преносимата папка с икони (не в профила на хоста).</string>
+</resources>

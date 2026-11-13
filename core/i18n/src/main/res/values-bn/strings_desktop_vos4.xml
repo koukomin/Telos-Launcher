@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_lan_pair_title">Android-এর সাথে LAN পেয়ারিং</string>
+    <string name="desktop_lan_pair_hint">LAN-এ স্বল্পস্থায়ী পেয়ারিং সার্ভার চালু করে। Telos Sync-এ কোড স্ক্যান বা লিখুন। কোড ও টোকেন কখনো লগে লেখা হয় না।</string>
+    <string name="desktop_lan_pair_start">LAN পেয়ারিং শুরু</string>
+    <string name="desktop_lan_pair_stop">LAN পেয়ারিং বন্ধ</string>
+    <string name="desktop_lan_pair_running">পেয়ারিং সার্ভার LAN-এ শুনছে</string>
+    <string name="desktop_lan_pair_code">পেয়ারিং কোড</string>
+    <string name="desktop_lan_pair_qr_uri">পেয়ারিং URI (QR / পেস্ট)</string>
+    <string name="desktop_lan_pair_stopped">LAN পেয়ারিং বন্ধ হয়েছে</string>
+    <string name="desktop_lan_pair_bind_reject">পাবলিক ঠিকানায় বাঁধা যায় না — ব্যক্তিগত LAN IP ব্যবহার করুন</string>
+    <string name="desktop_lan_pair_android_title">Telos Desktop LAN পেয়ারিং</string>
+    <string name="desktop_lan_pair_host">ডেস্কটপ হোস্ট (LAN IP)</string>
+    <string name="desktop_lan_pair_port">ডেস্কটপ পোর্ট</string>
+    <string name="desktop_lan_pair_connect">ডেস্কটপের সাথে পেয়ার</string>
+    <string name="desktop_lan_pair_paired">ডেস্কটপের সাথে পেয়ার হয়েছে</string>
+    <string name="desktop_lan_pair_fetch_bundle">ডেস্কটপ সেশন বান্ডেল আনুন</string>
+    <string name="desktop_lan_pair_fetch_ok">এনক্রিপ্টেড ডেস্কটপ সেশন বান্ডেল সংরক্ষিত</string>
+    <string name="desktop_lan_pair_send_bundle">এনক্রিপ্টেড বান্ডেল পাঠান</string>
+    <string name="desktop_lan_pair_failed">LAN পেয়ারিং ব্যর্থ</string>
+    <string name="desktop_lan_pair_scan_hint">Android-এ Sync → সেটিংস খুলে URI পেস্ট করুন অথবা হোস্ট, পোর্ট ও কোড লিখুন।</string>
+</resources>

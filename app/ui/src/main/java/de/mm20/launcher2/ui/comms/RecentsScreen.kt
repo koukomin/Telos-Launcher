@@ -27,7 +27,6 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
-import androidx.compose.material3.FilterChip
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.Icon
@@ -37,6 +36,9 @@ import androidx.compose.material3.SwipeToDismissBox
 import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberSwipeToDismissBoxState
+import de.mm20.launcher2.ui.component.TelosCyber
+import de.mm20.launcher2.ui.component.TelosTechPill
+import de.mm20.launcher2.ui.component.virtualAppPopup
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -154,53 +156,60 @@ fun RecentsScreen(searchQuery: String = "", showFilters: Boolean = false) {
             horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             item {
-                FilterChip(
-                    selected = filter == RecentsFilter.All,
+                TelosTechPill(
+                    text = stringResource(I18nR.string.filter_all),
+                    isSelected = filter == RecentsFilter.All,
                     onClick = { filter = RecentsFilter.All },
-                    label = { Text(stringResource(I18nR.string.filter_all)) },
+                    accentColor = TelosCyber.NeonCyan,
                 )
             }
             item {
-                FilterChip(
-                    selected = filter == RecentsFilter.Today,
+                TelosTechPill(
+                    text = stringResource(I18nR.string.hc_today),
+                    isSelected = filter == RecentsFilter.Today,
                     onClick = { filter = RecentsFilter.Today },
-                    label = { Text(stringResource(I18nR.string.hc_today)) },
+                    accentColor = TelosCyber.NeonGreen,
                 )
             }
             item {
-                FilterChip(
-                    selected = filter == RecentsFilter.Missed,
+                TelosTechPill(
+                    text = stringResource(I18nR.string.filter_missed),
+                    isSelected = filter == RecentsFilter.Missed,
                     onClick = { filter = RecentsFilter.Missed },
-                    label = { Text(stringResource(I18nR.string.filter_missed)) },
+                    accentColor = TelosCyber.NeonMagenta,
                 )
             }
             item {
-                FilterChip(
-                    selected = filter == RecentsFilter.Incoming,
+                TelosTechPill(
+                    text = stringResource(I18nR.string.filter_incoming),
+                    isSelected = filter == RecentsFilter.Incoming,
                     onClick = { filter = RecentsFilter.Incoming },
-                    label = { Text(stringResource(I18nR.string.filter_incoming)) },
+                    accentColor = TelosCyber.NeonCyan,
                 )
             }
             item {
-                FilterChip(
-                    selected = filter == RecentsFilter.Outgoing,
+                TelosTechPill(
+                    text = stringResource(I18nR.string.filter_outgoing),
+                    isSelected = filter == RecentsFilter.Outgoing,
                     onClick = { filter = RecentsFilter.Outgoing },
-                    label = { Text(stringResource(I18nR.string.filter_outgoing)) },
+                    accentColor = TelosCyber.NeonOrange,
                 )
             }
             item {
-                FilterChip(
-                    selected = filter == RecentsFilter.Rejected,
+                TelosTechPill(
+                    text = stringResource(I18nR.string.filter_rejected),
+                    isSelected = filter == RecentsFilter.Rejected,
                     onClick = { filter = RecentsFilter.Rejected },
-                    label = { Text(stringResource(I18nR.string.filter_rejected)) },
+                    accentColor = TelosCyber.NeonMagenta,
                 )
             }
             item {
                 val talk = recents.sumOf { it.durationSeconds }
-                FilterChip(
-                    selected = filter == RecentsFilter.TalkTime,
+                TelosTechPill(
+                    text = stringResource(I18nR.string.hc_talk_duration, formatCallDuration(talk)),
+                    isSelected = filter == RecentsFilter.TalkTime,
                     onClick = { filter = RecentsFilter.TalkTime },
-                    label = { Text(stringResource(I18nR.string.hc_talk_duration, formatCallDuration(talk))) },
+                    accentColor = TelosCyber.NeonGreen,
                 )
             }
         }
@@ -278,6 +287,7 @@ fun RecentsScreen(searchQuery: String = "", showFilters: Boolean = false) {
         pendingCall?.let { number ->
             AlertDialog(
                 onDismissRequest = { pendingCall = null },
+                containerColor = virtualAppPopup(),
                 title = { Text(stringResource(I18nR.string.hc_place_call)) },
                 text = { Text(number) },
                 confirmButton = {

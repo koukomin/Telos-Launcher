@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_cursor_title">Kurtsorea</string>
+    <string name="desktop_cursor_theme">Kurtsore-gaia</string>
+    <string name="desktop_cursor_size">Kurtsore-tamaina</string>
+    <string name="desktop_cursor_system_default">Sistemaren lehenetsia</string>
+    <string name="desktop_cursor_preset_style">Compose gainjartze-estiloa (XCursor erabilgarri ez denean)</string>
+    <string name="desktop_cursor_download_section">Deskargatu kurtsore-gaiak (eramangarri/biltegi icons-era)</string>
+    <string name="desktop_cursor_download_named">Deskargatu %1$s (%2$s)</string>
+    <string name="desktop_cursor_download_ok">%1$s instalatu da</string>
+    <string name="desktop_cursor_download_fail">Ezin izan da kurtsore-gaia deskargatu: %1$s</string>
+    <string name="desktop_cursor_limit_linux">Linux: ume-aplikazioek XCURSOR_THEME eta XCURSOR_SIZE jasotzen dituzte. Telosek XCursor fotogramak AWT kurtsorean kargatzen ditu ahal denean; bestela Compose Sweet/Breeze gainjartzea marrazten du. XCursor sekuentzia animatuak ez dira erreproduzitzen.</string>
+    <string name="desktop_cursor_limit_windows">Windows: AWT sistemako kurtsoreetara mapatzen du. XCursor/Plasma gaiak ez dira Win32 erakuslean aplikatzen.</string>
+    <string name="desktop_cursor_limit_macos">macOS: AWT sistemako kurtsoreetara mapatzen du. XCursor/Plasma gaiak ez dira Cocoa erakuslean aplikatzen.</string>
+</resources>

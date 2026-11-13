@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_store_permissions">Permissões</string>
+    <string name="desktop_store_sandbox_tier">Nível de sandbox</string>
+    <string name="desktop_sandbox_tier_host">Anfitrião</string>
+    <string name="desktop_sandbox_tier_vault_fs">Sistema de ficheiros do cofre</string>
+    <string name="desktop_sandbox_tier_net_isolated">Rede isolada</string>
+    <string name="desktop_sandbox_tier_standard">Padrão</string>
+    <string name="desktop_perm_filesystem_home">Pasta pessoal</string>
+    <string name="desktop_perm_filesystem_host">Sistema de ficheiros do anfitrião</string>
+    <string name="desktop_perm_network">Rede</string>
+    <string name="desktop_perm_gpu">GPU (DRI)</string>
+    <string name="desktop_perm_wayland">Wayland</string>
+    <string name="desktop_perm_x11">X11</string>
+    <string name="desktop_perm_pulseaudio">Áudio</string>
+    <string name="desktop_perm_notifications">Notificações</string>
+    <string name="desktop_perm_camera">Câmara</string>
+    <string name="desktop_perm_microphone">Microfone</string>
+    <string name="desktop_flatpak_unavailable">O Flatpak não está disponível; as substituições de permissões não estão disponíveis neste sistema.</string>
+    <string name="desktop_flatpak_override_applied">Substituição Flatpak aplicada</string>
+    <string name="desktop_flatpak_override_failed">Não foi possível aplicar a substituição Flatpak</string>
+    <string name="desktop_flatpak_reset_overrides">Repor substituições</string>
+    <string name="desktop_deeplink_handler_hint">telos:// abre apps Telos e a pesquisa Kickoff (registado ao iniciar o ambiente de trabalho).</string>
+    <string name="desktop_store_backends">Origens de pacotes</string>
+    <string name="desktop_store_backend_flatpak">Flatpak</string>
+    <string name="desktop_store_backend_winget">Winget</string>
+    <string name="desktop_store_backend_scoop">Scoop</string>
+    <string name="desktop_store_windows_pref_only">Winget/Scoop são só para Windows; este sistema não executa ações de pacotes Windows.</string>
+    <string name="desktop_store_windows_unavailable">Nem winget nem scoop foram encontrados no PATH.</string>
+    <string name="desktop_store_windows_installed">Pacotes Windows (instalados)</string>
+    <string name="desktop_store_windows_search">Pacotes Windows (pesquisa)</string>
+    <string name="desktop_store_install_confirm_title">Confirmar instalação</string>
+    <string name="desktop_store_install_confirm_body">Instalar %1$s (%2$s) via %3$s?</string>
+    <string name="desktop_store_install_started">Instalação iniciada para %1$s</string>
+    <string name="desktop_store_install_failed">Não foi possível iniciar a instalação de %1$s</string>
+    <string name="desktop_portal_device_title">Câmara e microfone (portal)</string>
+    <string name="desktop_portal_device_hint">Regista o seu pedido e consulta o xdg-desktop-portal quando os portais Device/Camera existem. Sem ferramentas de portal fica só preferência.</string>
+    <string name="desktop_portal_device_requested">Diálogo de acesso do portal pedido</string>
+    <string name="desktop_portal_device_pref_only">Preferência guardada; ferramentas de portal indisponíveis (só preferência).</string>
+    <string name="desktop_portal_device_unavailable">Acesso a dispositivos do portal indisponível neste sistema.</string>
+    <string name="desktop_portal_device_failed">Não foi possível pedir acesso ao dispositivo ao portal de ambiente de trabalho</string>
+    <string name="desktop_netns_cap_unshare">netns por app: unshare --net disponível</string>
+    <string name="desktop_netns_cap_ip">netns por app: ip netns disponível</string>
+    <string name="desktop_netns_cap_unavailable">Ferramentas netns por app em falta; isolamento fica só preferência</string>
+    <string name="desktop_netns_flatpak_owned">Flatpak isolado de rede usa Flatpak --unshare=network (sem netns do anfitrião).</string>
+    <string name="desktop_netns_flatpak_no_tools">Nível isolado de rede; faltam unshare/ip netns — só override Flatpak quando o Flatpak o aplica.</string>
+    <string name="desktop_netns_not_isolated">A app não está marcada como isolada de rede.</string>
+</resources>

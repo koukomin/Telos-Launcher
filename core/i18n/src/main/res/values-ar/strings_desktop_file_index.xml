@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_file_index_title">فهرس أسماء الملفات</string>
+    <string name="desktop_file_index_enable">فهرس أسماء الملفات على الجهاز</string>
+    <string name="desktop_file_index_hint">اختياري. يفهرس أسماء الملفات فقط ضمن HOME للخزنة أو جذر Portable Data (وليس ملف المضيف أبدًا إلا في Host Home). يُخزَّن مشفّرًا تحت .cache/telos/file-index بصلاحيات المالك فقط. بلا محتوى ملفات وبلا رفع إلى السحابة.</string>
+</resources>

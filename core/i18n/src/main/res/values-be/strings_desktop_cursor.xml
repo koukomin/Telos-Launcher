@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_cursor_title">Курсор</string>
+    <string name="desktop_cursor_theme">Тэма курсора</string>
+    <string name="desktop_cursor_size">Памер курсора</string>
+    <string name="desktop_cursor_system_default">Сістэмны па змаўчанні</string>
+    <string name="desktop_cursor_preset_style">Стыль накладання Compose (калі XCursor недаступны)</string>
+    <string name="desktop_cursor_download_section">Спампаваць тэмы курсора (у icons portable/сховішча)</string>
+    <string name="desktop_cursor_download_named">Спампаваць %1$s (%2$s)</string>
+    <string name="desktop_cursor_download_ok">Усталявана %1$s</string>
+    <string name="desktop_cursor_download_fail">Не ўдалося спампаваць тэму курсора: %1$s</string>
+    <string name="desktop_cursor_limit_linux">Linux: даччыныя праграмы атрымліваюць XCURSOR_THEME і XCURSOR_SIZE. Telos загружае кадры XCursor у курсор AWT, калі магчыма; інакш малюе накладанне Compose Sweet/Breeze. Анімаваныя паслядоўнасці XCursor не прайграюцца.</string>
+    <string name="desktop_cursor_limit_windows">Windows: супастаўляе са стандартнымі курсорамі AWT. Тэмы XCursor/Plasma не прымяняюцца да ўказальніка Win32.</string>
+    <string name="desktop_cursor_limit_macos">macOS: супастаўляе са стандартнымі курсорамі AWT. Тэмы XCursor/Plasma не прымяняюцца да ўказальніка Cocoa.</string>
+</resources>

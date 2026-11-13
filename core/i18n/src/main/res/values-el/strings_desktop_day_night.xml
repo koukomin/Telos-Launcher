@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_day_night_title">Θέμα ημέρας / νύχτας</string>
+    <string name="desktop_day_night_hint">Paper Ops (ανοιχτό) την ημέρα και Quiet Ops (σκούρο) τη νύχτα όταν είναι επιλεγμένο το Αυτόματο. Τα όρια χρησιμοποιούν τη ζώνη ώρας που επιλέξατε. Προεπιλογή είναι η χειροκίνητη ζώνη — το δίκτυο δεν επικοινωνεί ποτέ για τοποθεσία εκτός αν το ενεργοποιήσετε παρακάτω.</string>
+    <string name="desktop_day_night_mode">Λειτουργία ημέρας / νύχτας</string>
+    <string name="desktop_day_night_off">Ανενεργό</string>
+    <string name="desktop_day_night_auto">Αυτόματο</string>
+    <string name="desktop_day_night_light">Ανοιχτό</string>
+    <string name="desktop_day_night_dark">Σκούρο</string>
+    <string name="desktop_day_night_timezone">Ζώνη ώρας</string>
+    <string name="desktop_day_night_timezone_hint">Ζώνη IANA για τοπική ημέρα/νύχτα (προεπιλογή JVM μέχρι να επιλέξετε). Η χειροκίνητη επιλογή δεν επικοινωνεί με διακομιστές.</string>
+    <string name="desktop_day_night_timezone_search">Αναζήτηση ζωνών ώρας</string>
+    <string name="desktop_day_night_timezone_current">Τρέχουσα ζώνη ώρας: %1$s</string>
+    <string name="desktop_day_night_network_assist">Βοήθεια χώρας / ζώνης μέσω δικτύου</string>
+    <string name="desktop_day_night_network_assist_warning">Μόνο με ρητή συναίνεση. Όταν ενεργοποιηθεί, το Telos κάνει ένα μοναδικό αίτημα σε δημόσιο endpoint IP→γεωγραφίας για ζώνη ώρας και κωδικό χώρας. Αποθηκεύονται μόνο αυτές οι τιμές (και προαιρετικές συντεταγμένες για ανατολή/δύση) στο vault desktop.properties. Η IP δεν καταγράφεται, δεν υπάρχει συνεχής παρακολούθηση και τα θέματα δεν συγχρονίζονται στο cloud. Αν αποτύχει το δίκτυο, είναι ενεργό το kill-switch ή είστε εκτός σύνδεσης, διατηρείται η χειροκίνητη ζώνη και εμφανίζεται ειλικρινά Preference only ή Failed.</string>
+    <string name="desktop_day_night_assist_pref_only">Μόνο προτίμηση — η βοήθεια δικτύου είναι ανενεργή, αποκλεισμένη ή δεν ζητήθηκε· χρήση χειροκίνητης ζώνης</string>
+    <string name="desktop_day_night_assist_failed">Αποτυχία — δεν ήταν δυνατή η επικοινωνία με το geo endpoint· διατήρηση χειροκίνητης ζώνης</string>
+    <string name="desktop_day_night_assist_applied">Εφαρμόστηκε — ζώνη %1$s, χώρα %2$s (μόνο τοπικά)</string>
+    <string name="desktop_day_night_country">Κωδικός χώρας: %1$s</string>
+</resources>

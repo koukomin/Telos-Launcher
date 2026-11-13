@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_night_light_title">Noční světlo</string>
+    <string name="desktop_night_light_hint">Zahřívá displej systémovým nástrojem (gammastep, redshift nebo wlsunset). Bez služeb polohy a bez odesílání dat po síti. Bez nástroje se uloží jen preference.</string>
+    <string name="desktop_night_light_enable">Zapnout noční světlo</string>
+    <string name="desktop_night_light_temperature">Teplota barev: %1$d K</string>
+    <string name="desktop_night_light_on">Zapnuto</string>
+    <string name="desktop_night_light_off">Vypnuto</string>
+    <string name="desktop_night_light_pref_only">Preference uložena; nainstalujte gammastep, redshift nebo wlsunset pro použití na tomto hostiteli</string>
+    <string name="desktop_night_light_failed">Systémový nástroj nedokázal změnit teplotu displeje</string>
+    <string name="desktop_night_light_applied">Použito přes %1$s</string>
+    <string name="desktop_night_light_cleared">Noční světlo vypnuto</string>
+    <string name="desktop_settings_search_hint">Hledat v nastavení</string>
+    <string name="desktop_settings_search_empty">Žádné nastavení neodpovídá tomuto hledání</string>
+    <string name="desktop_settings_session">Sezení</string>
+    <string name="desktop_settings_display">Displej</string>
+    <string name="desktop_settings_desktop">Plocha</string>
+    <string name="desktop_settings_windows">Okna</string>
+    <string name="desktop_settings_portable">Přenosné</string>
+    <string name="desktop_settings_vault">Trezor</string>
+</resources>

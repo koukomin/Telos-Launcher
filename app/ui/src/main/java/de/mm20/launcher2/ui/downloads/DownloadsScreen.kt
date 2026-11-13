@@ -82,6 +82,10 @@ import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.locals.LocalBackStack
 import de.mm20.launcher2.ui.media.MediaFrame
 import de.mm20.launcher2.ui.component.TelosSearchBar
+import de.mm20.launcher2.ui.component.TelosCyber
+import de.mm20.launcher2.ui.component.TelosCyberSectionLabel
+import de.mm20.launcher2.ui.component.TelosTechPill
+import de.mm20.launcher2.ui.component.telosTechSurface
 import de.mm20.launcher2.ui.component.SearchEmptyState
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
@@ -255,7 +259,7 @@ fun DownloadsScreen(initialUrls: List<String> = emptyList()) {
                     Modifier.horizontalScroll(rememberScrollState()).padding(horizontal = 16.dp, vertical = 4.dp),
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
-                    for (f in Filter.entries) {
+                    for ((idx, f) in Filter.entries.withIndex()) {
                         val label = when (f) {
                             Filter.All -> I18nR.string.dl_tab_all
                             Filter.Active -> I18nR.string.dl_tab_active
@@ -265,10 +269,11 @@ fun DownloadsScreen(initialUrls: List<String> = emptyList()) {
                             Filter.Torrents -> I18nR.string.dl_tab_torrents
                             Filter.Media -> I18nR.string.dl_m_tab
                         }
-                        FilterChip(
-                            selected = filter == f,
+                        TelosTechPill(
+                            text = stringResource(label) + if ((counts[f] ?: 0) > 0) " ${counts[f]}" else "",
+                            isSelected = filter == f,
                             onClick = { filter = f },
-                            label = { Text(stringResource(label) + if ((counts[f] ?: 0) > 0) " ${counts[f]}" else "") },
+                            accentColor = TelosCyber.accentFor(idx),
                         )
                     }
                 }
@@ -411,15 +416,16 @@ private fun SpeedHeader(tasks: List<DownloadTask>) {
     if (active.isEmpty()) return
     val speed = active.sumOf { it.speedBps }
     Row(
-        Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 4.dp),
+        Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 4.dp)
+            .telosTechSurface(borderColor = TelosCyber.NeonGreen, shape = androidx.compose.foundation.shape.RoundedCornerShape(14.dp))
+            .padding(horizontal = 12.dp, vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Icon(painterResource(BaseR.drawable.speed_24px), null, Modifier.size(18.dp), tint = MaterialTheme.colorScheme.primary)
-        Spacer(Modifier.width(8.dp))
-        Text(
+        TelosCyberSectionLabel(
             pluralStringResource(I18nR.plurals.dl_header_active, active.size, active.size) + " · " + Formatting.speed(speed),
-            style = MaterialTheme.typography.labelLarge,
-            color = MaterialTheme.colorScheme.primary,
+            accent = TelosCyber.NeonGreen,
         )
     }
 }

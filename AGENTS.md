@@ -1,6 +1,9 @@
 # AGENTS.md
 
-This file provides guidance to Codex (Codex.ai/code) when working with code in this repository.
+**Single source of truth for every AI coding agent** working in this repository
+(Claude, Codex, Copilot, Cursor, Devin, ChatGPT, Gemini, Grok, and any other
+assistant). Do not maintain a parallel instruction file. `CLAUDE.md` and
+`.github/copilot-instructions.md` only point here.
 
 ## Project
 
@@ -8,7 +11,7 @@ Telos — a search-focused, free and open source Android launcher (package `de.m
 
 ## Build & common commands
 
-- Build environment: JDK 21 toolchain (see `gradle/gradle-daemon-jvm.properties`), Gradle 9.6.0 via wrapper.
+- Build environment: JDK 21 toolchain (see `gradle/gradle-daemon-jvm.properties`), Gradle 9.9.0 via wrapper.
 - Build variants are a combination of a build type (`debug`, `release`, `nightly`) and a product flavor (`default`, `fdroid`), e.g. `assembleDefaultDebug`, `assembleFdroidRelease`.
 - Build a debug APK: `./gradlew assembleDefaultDebug`
 - Install to a connected device/emulator: `./gradlew installDefaultDebug`
@@ -56,11 +59,15 @@ Search is the core feature. `core/base` defines the common `Searchable`/`Savable
 
 External apps can extend Kvaesitso (weather, file/contact/places search, calendar) by implementing content providers using `plugins/sdk`, without needing the launcher's internal modules. `:data:plugins` holds low-level plugin APIs/access control; `:services:plugins` is the higher-level plugin management service (enable/disable/list). See `docs/docs/developer-guide/plugins/` for the plugin type contracts and `docs/docs/developer-guide/plugins/access-control.md` for the security model.
 
-## Telos Linux Desktop — pending phases (do not forget)
+## Telos Desktop — pending phases (do not forget)
 
-`:desktop-linux` P0/P1 (labwc session, vault as full `$HOME`, Linux only) is in the tree. See `docs/docs/developer-guide/desktop-roadmap.md`.
+Gradle module `:desktop-linux` hosts **Telos Desktop** (Compose for Desktop JVM). Linux labwc/niri session + vault-as-`$HOME` are in tree. Windows UberJar is a portable Host Home shell; macOS Intel/ARM ships only after Linux + Windows play correctly. See `docs/docs/developer-guide/desktop-roadmap.md` and `.github/workflows/build-desktop-binaries.yml`.
 
-If the user asks what is still pending for the Linux desktop: **none of P0–P4, Helix, Surface, or Wayland W0–W3**. Spec: `docs/docs/developer-guide/telos-wayland-shell.md`. Spec: `docs/docs/developer-guide/telos-helix.md`. Never depend `:app:app` on `:desktop-linux`. `:app:ui` may use `:ui-kmp`.
+If the user asks what is still pending for the Linux session stack: **none of P0–P4, Helix, Surface, or Wayland W0–W3**. Spec: `docs/docs/developer-guide/telos-wayland-shell.md`. Spec: `docs/docs/developer-guide/telos-helix.md`. Never depend `:app:app` on `:desktop-linux`. `:app:ui` may use `:ui-kmp`.
+
+## Python tooling (do not scatter scripts)
+
+Keep Python under `tools/` (and `docs/scripts/` / `.github/scripts/` for docs/CI only). Supported trees: `tools/i18n/`, `tools/translations/`, `tools/validation/`, `tools/performance/`, plus release helpers `tools/release-*.py`. **Do not** leave one-shot `patch_*.py` / `fix_*.py` in the repository root — edit sources directly or add a maintained tool under `tools/` with a README.
 
 ## Documentation
 

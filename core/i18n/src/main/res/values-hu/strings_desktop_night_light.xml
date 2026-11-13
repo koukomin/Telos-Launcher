@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_night_light_title">Éjszakai fény</string>
+    <string name="desktop_night_light_hint">Felmelegíti a kijelzőt gazdaeszköz-segédprogrammal (gammastep, redshift vagy wlsunset). Nincs helymeghatározás, és semmi sem megy a hálózatra. Segédprogram nélkül csak a beállítás mentődik.</string>
+    <string name="desktop_night_light_enable">Éjszakai fény bekapcsolása</string>
+    <string name="desktop_night_light_temperature">Színhőmérséklet: %1$d K</string>
+    <string name="desktop_night_light_on">Be</string>
+    <string name="desktop_night_light_off">Ki</string>
+    <string name="desktop_night_light_pref_only">Beállítás mentve; telepítse a gammastep, redshift vagy wlsunset eszközt az alkalmazáshoz ezen a gépen</string>
+    <string name="desktop_night_light_failed">A gazdaeszköz-segédprogram nem tudta módosítani a kijelző hőmérsékletét</string>
+    <string name="desktop_night_light_applied">Alkalmazva: %1$s</string>
+    <string name="desktop_night_light_cleared">Éjszakai fény kikapcsolva</string>
+    <string name="desktop_settings_search_hint">Keresés a beállításokban</string>
+    <string name="desktop_settings_search_empty">Nincs ehhez a kereséshez illő beállítás</string>
+    <string name="desktop_settings_session">Munkamenet</string>
+    <string name="desktop_settings_display">Kijelző</string>
+    <string name="desktop_settings_desktop">Asztal</string>
+    <string name="desktop_settings_windows">Ablakok</string>
+    <string name="desktop_settings_portable">Hordozható</string>
+    <string name="desktop_settings_vault">Széf</string>
+</resources>

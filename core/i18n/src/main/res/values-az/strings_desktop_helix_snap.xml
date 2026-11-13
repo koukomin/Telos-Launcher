@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_helix_snap_title">Snap zonaları</string>
+    <string name="desktop_helix_snap_50_50">50 / 50</string>
+    <string name="desktop_helix_snap_two_thirds">2/3 · 1/3</string>
+    <string name="desktop_helix_snap_grid">2×2 tor</string>
+    <string name="desktop_helix_snap_left">Sola yapışdır</string>
+    <string name="desktop_helix_snap_right">Sağa yapışdır</string>
+    <string name="desktop_helix_snap_maximize">Maksimallaşdır</string>
+    <string name="desktop_helix_window_mode">Pəncərə rejimi</string>
+    <string name="desktop_helix_tiling">Kafel (niri)</string>
+    <string name="desktop_helix_stacking">Yığma (labwc)</string>
+    <string name="desktop_helix_window_mode_hint">TELOS_COMPOSITOR təyin olunmayıbsa, növbəti Telos sessiyasının başlanğıcında tətbiq olunur. Super+ox fokuslanmış pəncərəni yapışdırır.</string>
+</resources>

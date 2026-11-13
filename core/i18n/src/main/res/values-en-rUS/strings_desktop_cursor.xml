@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_cursor_title">Cursor</string>
+    <string name="desktop_cursor_theme">Cursor theme</string>
+    <string name="desktop_cursor_size">Cursor size</string>
+    <string name="desktop_cursor_system_default">System default</string>
+    <string name="desktop_cursor_preset_style">Compose overlay style (when XCursor is unavailable)</string>
+    <string name="desktop_cursor_download_section">Download cursor themes (into portable/vault icons)</string>
+    <string name="desktop_cursor_download_named">Download %1$s (%2$s)</string>
+    <string name="desktop_cursor_download_ok">Installed %1$s</string>
+    <string name="desktop_cursor_download_fail">Could not download cursor theme: %1$s</string>
+    <string name="desktop_cursor_limit_linux">Linux: child apps get XCURSOR_THEME and XCURSOR_SIZE. Telos loads XCursor frames into an AWT cursor when possible; otherwise the Compose Sweet/Breeze overlay is drawn. Animated XCursor sequences are not played.</string>
+    <string name="desktop_cursor_limit_windows">Windows: maps to stock AWT system cursors. XCursor/Plasma themes are not applied to the Win32 pointer.</string>
+    <string name="desktop_cursor_limit_macos">macOS: maps to stock AWT system cursors. XCursor/Plasma themes are not applied to the Cocoa pointer.</string>
+</resources>

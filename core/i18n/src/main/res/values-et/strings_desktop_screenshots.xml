@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_shot_title">Ekraanipilt</string>
+    <string name="desktop_shot_full">Terve ekraan</string>
+    <string name="desktop_shot_region">Ristkülikukujuline ala</string>
+    <string name="desktop_shot_window">Aken</string>
+    <string name="desktop_shot_clipboard">Kopeeri lõikelauale</string>
+    <string name="desktop_shot_clipboard_hint">Vaikimisi väljas. Ka TELOS_SHOT_CLIPBOARD=1.</string>
+    <string name="desktop_shot_redact">Varja enne salvestamist</string>
+    <string name="desktop_shot_redact_hint">Joonista ristkülik privaatse sisu mustamiseks ja salvesta.</string>
+    <string name="desktop_shot_save">Salvesta</string>
+    <string name="desktop_shot_save_without_redact">Salvesta ilma varjamata</string>
+    <string name="desktop_shot_saved">Ekraanipilt salvestatud</string>
+    <string name="desktop_shot_failed">Ekraanipilt ebaõnnestus</string>
+    <string name="desktop_shot_path_hint">Salvestab vaulti (või portable data) Pictures/Screenshots alla, ainult omanik (0600).</string>
+</resources>

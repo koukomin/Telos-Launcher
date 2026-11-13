@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_portable_data_root">Portable data folder (config, cache, temp only here)</string>
+    <string name="desktop_host_home_trace_warning">Host Home writes settings and cache on this PC. Choose Portable Data to leave no host traces.</string>
+    <string name="desktop_boot_portable_data">Portable Data — no host traces (config/cache/temp under portable root)</string>
+    <string name="desktop_boot_portable_vault">Portable Vault — encrypted data under portable root</string>
+    <string name="desktop_boot_host_home">Host Home (may leave traces on this PC)</string>
+    <string name="desktop_boot_unlock_existing">Unlock existing vault (file or stego folder)</string>
+    <string name="desktop_boot_create_wizard">Create new elastic / stego / deniable vault</string>
+    <string name="desktop_boot_ephemeral">Ephemeral RAM-only ghost session (tmpfs)</string>
+    <string name="desktop_session_sync_title">Session sync</string>
+    <string name="desktop_session_sync_export">Export encrypted bundle</string>
+    <string name="desktop_session_sync_import">Import encrypted bundle</string>
+    <string name="desktop_session_sync_auto">استيراد تلقائي عند الإقلاع عند وجود مفتاح مزامنة مخزّن</string>
+    <string name="desktop_session_sync_pass">Sync passphrase (or KeePass entry %1$s)</string>
+    <string name="desktop_session_sync_keepass">KeePass database path (.kdbx)</string>
+    <string name="desktop_windows_shell_title">Windows shell replacement</string>
+    <string name="desktop_windows_shell_enable">Set Telos as login shell (HKCU)</string>
+    <string name="desktop_windows_shell_revert">Restore explorer.exe shell</string>
+    <string name="desktop_windows_shell_risk">Replaces your user shell at next sign-in. Keep a recovery path before enabling.</string>
+    <string name="desktop_helix_portable_note">Helix window chrome is drawn in Compose on all platforms; native Win32 decorations may show until shell replacement.</string>
+    <string name="desktop_session_sync_pass_required">عبارة مرور المزامنة مطلوبة</string>
+    <string name="desktop_session_sync_imported">تم استيراد حزمة مزامنة الجلسة</string>
+    <string name="desktop_session_sync_key_stored">تم تخزين مفتاح المزامنة للاستيراد عند الإقلاع دون مطالبة</string>
+    <string name="desktop_session_sync_key_missing">أدخل عبارة مرور المزامنة قبل تمكين الاستيراد التلقائي</string>
+    <string name="desktop_vos_profiles_title">ملفات تعريف الخزنة</string>
+    <string name="desktop_vos_profiles_summary">مجلدات ملفات تعريف مسماة ضمن config profiles/. الاسم النشط فقط في desktop.properties — لا كلمات مرور أبدًا.</string>
+    <string name="desktop_vos_profiles_active">ملف التعريف النشط: %1$s</string>
+    <string name="desktop_vos_profiles_none">(لا شيء)</string>
+    <string name="desktop_vos_profiles_empty">لا توجد ملفات تعريف بعد. أنشئ واحدًا لتبديل هويات الخزنة.</string>
+    <string name="desktop_vos_profiles_kind_named">ملف تعريف خزنة مسمى</string>
+    <string name="desktop_vos_profiles_kind_portable">جذر خزنة محمولة</string>
+    <string name="desktop_vos_profiles_switch">تبديل</string>
+    <string name="desktop_vos_profiles_use_portable">استخدم هذا الجذر المحمول</string>
+    <string name="desktop_vos_profiles_new_name">اسم ملف التعريف الجديد</string>
+    <string name="desktop_vos_profiles_create">إنشاء وتبديل</string>
+    <string name="desktop_vos_profiles_created">تم الإنشاء والتبديل إلى %1$s</string>
+    <string name="desktop_vos_profiles_switched">تم التبديل إلى %1$s</string>
+    <string name="desktop_vos_profiles_invalid_name">استخدم أحرفًا وأرقامًا ونقاطًا وشرطات سفلية أو شرطات (حد أقصى 64).</string>
+    <string name="desktop_vos_profiles_portable_hint">الجذور المحمولة تبقي الإعدادات والذاكرة المؤقتة والملفات المؤقتة خارج ملف تعريف المضيف (افتراضي Windows: Portable Data).</string>
+    <string name="desktop_vos_profiles_portable_path">مسار مجلد الخزنة المحمولة</string>
+    <string name="desktop_vos_profiles_add_portable">إضافة جذر خزنة محمولة</string>
+    <string name="desktop_vos_profiles_portable_selected">الجذر المحمول: %1$s</string>
+    <string name="desktop_vos_profiles_portable_reject">لا يمكن أن يكون الجذر المحمول مجلد منزل المضيف أو .config/.cache/.local الخاصة به.</string>
+</resources>

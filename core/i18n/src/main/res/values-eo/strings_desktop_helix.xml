@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_helix_palette_title">HELIX KOMANDO</string>
+    <string name="desktop_helix_palette_placeholder">Serĉi programojn, fenestrojn, kalkulilon…</string>
+    <string name="desktop_helix_palette_hint">Super+Punkto aŭ Ctrl+Spaco</string>
+    <string name="desktop_helix_palette_privacy">Nur vault kaj porteblaj radikoj — ne indeksas gastigan hejmon ekster la seanco.</string>
+    <string name="desktop_helix_palette_open_files">Malfermi Dosierojn</string>
+    <string name="desktop_helix_palette_open_settings">Malfermi Agordojn</string>
+    <string name="desktop_helix_palette_open_network">Malfermi Reton</string>
+    <string name="desktop_helix_palette_kill_window">Fermi fokusitan fenestron</string>
+    <string name="desktop_helix_palette_paste_vault_clip">Alglui lastan vault-tondujon</string>
+    <string name="desktop_helix_palette_window">Fenestro</string>
+    <string name="desktop_helix_palette_calc">Kalkulilo</string>
+    <string name="desktop_helix_palette_command">Komando</string>
+    <string name="desktop_helix_palette_file">Dosiero</string>
+    <string name="desktop_helix_palette_no_results">Neniuj rezultoj</string>
+</resources>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_lan_pair_title">جفت‌سازی LAN با Android</string>
+    <string name="desktop_lan_pair_hint">یک سرور جفت‌سازی کوتاه‌مدت روی LAN راه‌اندازی می‌کند. کد را در Telos Sync اسکن یا وارد کنید. کدها و توکن‌ها هرگز در گزارش‌ها نوشته نمی‌شوند.</string>
+    <string name="desktop_lan_pair_start">شروع جفت‌سازی LAN</string>
+    <string name="desktop_lan_pair_stop">توقف جفت‌سازی LAN</string>
+    <string name="desktop_lan_pair_running">سرور جفت‌سازی روی LAN گوش می‌دهد</string>
+    <string name="desktop_lan_pair_code">کد جفت‌سازی</string>
+    <string name="desktop_lan_pair_qr_uri">URI جفت‌سازی (QR / جای‌گذاری)</string>
+    <string name="desktop_lan_pair_stopped">جفت‌سازی LAN متوقف شد</string>
+    <string name="desktop_lan_pair_bind_reject">نمی‌توان آدرس عمومی را متصل کرد — از IP خصوصی LAN استفاده کنید</string>
+    <string name="desktop_lan_pair_android_title">جفت‌سازی LAN دسکتاپ Telos</string>
+    <string name="desktop_lan_pair_host">میزبان دسکتاپ (IP LAN)</string>
+    <string name="desktop_lan_pair_port">درگاه دسکتاپ</string>
+    <string name="desktop_lan_pair_connect">جفت‌سازی با دسکتاپ</string>
+    <string name="desktop_lan_pair_paired">با دسکتاپ جفت شد</string>
+    <string name="desktop_lan_pair_fetch_bundle">دریافت بسته نشست دسکتاپ</string>
+    <string name="desktop_lan_pair_fetch_ok">بسته نشست رمزنگاری‌شده ذخیره شد</string>
+    <string name="desktop_lan_pair_send_bundle">ارسال بسته رمزنگاری‌شده</string>
+    <string name="desktop_lan_pair_failed">جفت‌سازی LAN ناموفق بود</string>
+    <string name="desktop_lan_pair_scan_hint">در Android مسیر Sync ← تنظیمات را باز کنید و URI را جای‌گذاری کنید یا میزبان، درگاه و کد را وارد کنید.</string>
+</resources>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_helix_snap_title">Algluiĝaj zonoj</string>
+    <string name="desktop_helix_snap_50_50">50 / 50</string>
+    <string name="desktop_helix_snap_two_thirds">2/3 · 1/3</string>
+    <string name="desktop_helix_snap_grid">Krado 2×2</string>
+    <string name="desktop_helix_snap_left">Alglui maldekstren</string>
+    <string name="desktop_helix_snap_right">Alglui dekstren</string>
+    <string name="desktop_helix_snap_maximize">Maksimumigi</string>
+    <string name="desktop_helix_window_mode">Fenestromodo</string>
+    <string name="desktop_helix_tiling">Kahelado (niri)</string>
+    <string name="desktop_helix_stacking">Stakado (labwc)</string>
+    <string name="desktop_helix_window_mode_hint">Aplikas je la sekva starto de Telos-seanco kiam TELOS_COMPOSITOR ne estas agordita. Super+sago algluas la fokusitan fenestron.</string>
+</resources>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_cursor_title">Žymeklis</string>
+    <string name="desktop_cursor_theme">Žymeklio tema</string>
+    <string name="desktop_cursor_size">Žymeklio dydis</string>
+    <string name="desktop_cursor_system_default">Sistemos numatytasis</string>
+    <string name="desktop_cursor_preset_style">Compose perdangos stilius (kai XCursor nepasiekiamas)</string>
+    <string name="desktop_cursor_download_section">Atsisiųsti žymeklio temas (į portable/vault icons)</string>
+    <string name="desktop_cursor_download_named">Atsisiųsti %1$s (%2$s)</string>
+    <string name="desktop_cursor_download_ok">Įdiegta %1$s</string>
+    <string name="desktop_cursor_download_fail">Nepavyko atsisiųsti žymeklio temos: %1$s</string>
+    <string name="desktop_cursor_limit_linux">Linux: antrinės programos gauna XCURSOR_THEME ir XCURSOR_SIZE. Telos, kai įmanoma, įkelia XCursor kadrus į AWT žymeklį; kitaip piešia Compose Sweet/Breeze perdangą. Animuotos XCursor sekos negrajinamos.</string>
+    <string name="desktop_cursor_limit_windows">Windows: susieja su AWT sistemos žymekliais. XCursor/Plasma temos netaikomos Win32 rodyklei.</string>
+    <string name="desktop_cursor_limit_macos">macOS: susieja su AWT sistemos žymekliais. XCursor/Plasma temos netaikomos Cocoa rodyklei.</string>
+</resources>

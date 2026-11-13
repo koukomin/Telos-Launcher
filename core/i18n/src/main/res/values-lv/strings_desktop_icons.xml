@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_icons_title">Ikonas</string>
+    <string name="desktop_icons_theme_label">Ikonu tēma</string>
+    <string name="desktop_icons_download_section">Lejupielādēt no Telos</string>
+    <string name="desktop_icons_download">Lejupielādēt</string>
+    <string name="desktop_icons_installing">Instalē…</string>
+    <string name="desktop_icons_installed">Instalēts</string>
+    <string name="desktop_icons_apply">Lietot</string>
+    <string name="desktop_icons_source_system">Sistēma</string>
+    <string name="desktop_icons_source_telos">Telos</string>
+    <string name="desktop_icons_source_builtin">Iebūvēts</string>
+    <string name="desktop_icons_path">Ikonu pakešu mape: %1$s</string>
+    <string name="desktop_icons_freedesktop_note">Darbvirsmas freedesktop ikonu tēmas (ne Android ADW pakotnes).</string>
+    <string name="desktop_icons_download_failed">Lejupielāde neizdevās</string>
+    <string name="desktop_icons_download_ok">Tēma instalēta</string>
+    <string name="desktop_icons_license">Licence: %1$s</string>
+    <string name="desktop_icons_portable_only">Portable Data režīmā pakotnes paliek pārnēsājamajā ikonu mapē (ne viesotāja profilā).</string>
+</resources>

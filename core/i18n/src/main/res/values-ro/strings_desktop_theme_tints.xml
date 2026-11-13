@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_workspace_tints">Benzi de nuanță ale spațiilor</string>
+    <string name="desktop_theme_workspace_tints_hint">Accente neon subtile sub cifrele 1–4 ale panoului. Ascunse la panic mute. Dezactivare: theme.workspaceTints=false.</string>
+</resources>

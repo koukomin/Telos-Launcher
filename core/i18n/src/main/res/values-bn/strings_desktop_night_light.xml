@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_night_light_title">নাইট লাইট</string>
+    <string name="desktop_night_light_hint">হোস্ট টুল (gammastep, redshift, বা wlsunset) দিয়ে ডিসপ্লে গরম করে। কোনো লোকেশন সার্ভিস নেই এবং নেটওয়ার্কে কিছু পাঠানো হয় না। টুল না থাকলে শুধু পছন্দ সংরক্ষিত হয়।</string>
+    <string name="desktop_night_light_enable">নাইট লাইট চালু করুন</string>
+    <string name="desktop_night_light_temperature">রঙের তাপমাত্রা: %1$d K</string>
+    <string name="desktop_night_light_on">চালু</string>
+    <string name="desktop_night_light_off">বন্ধ</string>
+    <string name="desktop_night_light_pref_only">পছন্দ সংরক্ষিত; এই হোস্টে প্রয়োগ করতে gammastep, redshift, বা wlsunset ইনস্টল করুন</string>
+    <string name="desktop_night_light_failed">হোস্ট টুল ডিসপ্লের তাপমাত্রা পরিবর্তন করতে ব্যর্থ</string>
+    <string name="desktop_night_light_applied">%1$s দিয়ে প্রয়োগ করা হয়েছে</string>
+    <string name="desktop_night_light_cleared">নাইট লাইট বন্ধ</string>
+    <string name="desktop_settings_search_hint">সেটিংস খুঁজুন</string>
+    <string name="desktop_settings_search_empty">এই অনুসন্ধানের সাথে কোনো সেটিং মিলেনি</string>
+    <string name="desktop_settings_session">সেশন</string>
+    <string name="desktop_settings_display">ডিসপ্লে</string>
+    <string name="desktop_settings_desktop">ডেস্কটপ</string>
+    <string name="desktop_settings_windows">উইন্ডো</string>
+    <string name="desktop_settings_portable">পোর্টেবল</string>
+    <string name="desktop_settings_vault">ভল্ট</string>
+</resources>

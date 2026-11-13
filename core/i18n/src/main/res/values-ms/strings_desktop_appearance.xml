@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<string name="desktop_appearance_hint">Keamatan Quiet Ops atau Vault Neon, aksen neon dan senyap panik. Overlay profil boleh mengatasi tanpa menulis ke HOME hos dalam Portable Data.</string>
+    <string name="desktop_theme_intensity_label">Keamatan tema</string>
+    <string name="desktop_theme_accent_label">Aksen</string>
+    <string name="desktop_panic_mute_toggle">Senyap panik</string>
+    <string name="desktop_panic_mute_on">Senyap panik: Hidup</string>
+    <string name="desktop_panic_mute_off">Senyap panik: Mati</string>
+    <string name="desktop_panic_mute_hint">Memaksa Quiet Ops dan menyembunyikan sempadan serta tolok neon. Visual sahaja — tidak mengubah firewall atau kill-switch. Pintasan: Super+Shift+P.</string>
+    <string name="desktop_vos_profiles_appearance_hint">Setiap profil bernama boleh menyimpan overlay desktop.properties sendiri untuk keamatan, aksen, ikon dan kursor. Penukaran memuatkan semula penampilan daripada overlay profil, kemudian sifat peti besi global.</string>
+</resources>

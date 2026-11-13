@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_cursor_title">İmleç</string>
+    <string name="desktop_cursor_theme">İmleç teması</string>
+    <string name="desktop_cursor_size">İmleç boyutu</string>
+    <string name="desktop_cursor_system_default">Sistem varsayılanı</string>
+    <string name="desktop_cursor_preset_style">Compose kaplama stili (XCursor yoksa)</string>
+    <string name="desktop_cursor_download_section">İmleç temalarını indir (taşınabilir/kasa icons)</string>
+    <string name="desktop_cursor_download_named">%1$s indir (%2$s)</string>
+    <string name="desktop_cursor_download_ok">%1$s kuruldu</string>
+    <string name="desktop_cursor_download_fail">İmleç teması indirilemedi: %1$s</string>
+    <string name="desktop_cursor_limit_linux">Linux: alt uygulamalar XCURSOR_THEME ve XCURSOR_SIZE alır. Telos mümkünse XCursor karelerini AWT imlecine yükler; aksi halde Compose Sweet/Breeze kaplaması çizilir. Animasyonlu XCursor dizileri oynatılmaz.</string>
+    <string name="desktop_cursor_limit_windows">Windows: stok AWT sistem imleçlerine eşler. XCursor/Plasma temaları Win32 işaretçisine uygulanmaz.</string>
+    <string name="desktop_cursor_limit_macos">macOS: stok AWT sistem imleçlerine eşler. XCursor/Plasma temaları Cocoa işaretçisine uygulanmaz.</string>
+</resources>

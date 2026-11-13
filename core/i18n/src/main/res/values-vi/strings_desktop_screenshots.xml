@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_shot_title">Ảnh chụp màn hình</string>
+    <string name="desktop_shot_full">Toàn màn hình</string>
+    <string name="desktop_shot_region">Vùng hình chữ nhật</string>
+    <string name="desktop_shot_window">Cửa sổ</string>
+    <string name="desktop_shot_clipboard">Sao chép vào clipboard</string>
+    <string name="desktop_shot_clipboard_hint">Tắt theo mặc định. Cũng bật với TELOS_SHOT_CLIPBOARD=1.</string>
+    <string name="desktop_shot_redact">Che trước khi lưu</string>
+    <string name="desktop_shot_redact_hint">Vẽ hình chữ nhật để làm đen nội dung riêng tư rồi lưu.</string>
+    <string name="desktop_shot_save">Lưu</string>
+    <string name="desktop_shot_save_without_redact">Lưu không che</string>
+    <string name="desktop_shot_saved">Đã lưu ảnh chụp</string>
+    <string name="desktop_shot_failed">Chụp màn hình thất bại</string>
+    <string name="desktop_shot_path_hint">Lưu vào Pictures/Screenshots của vault (hoặc dữ liệu di động), chỉ chủ sở hữu (0600).</string>
+</resources>

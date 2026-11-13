@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_opsec_title">OpSec</string>
+    <string name="desktop_opsec_secure_clipboard">Droša starpliktuve</string>
+    <string name="desktop_opsec_clipboard_title">Starpliktuve</string>
+    <string name="desktop_opsec_clipboard_hint">Jutīgs teksts (atslegas, IBAN, WireGuard) tiek izņemts no vēstures, glabāts tikai šajā sesijā un notīrīts no sistēmas starpliktuves. Vēsture paliek vault — bez mākoņa sinhronizācijas.</string>
+    <string name="desktop_opsec_clipboard_clear_now">Notīrīt starpliktuvi tagad</string>
+    <string name="desktop_opsec_clipboard_clear_all">Notīrīt visu</string>
+    <string name="desktop_opsec_clipboard_history_meta">Līdz 20 vienumiem · beidzas pēc 5 minūtēm · piespraust līdz bloķēšanai · Super+V</string>
+    <string name="desktop_opsec_clipboard_history_empty">Vēl nav starpliktuves vēstures</string>
+    <string name="desktop_opsec_clipboard_pin_until_lock">Piespraust</string>
+    <string name="desktop_opsec_clipboard_unpin">Atspraust</string>
+    <string name="desktop_opsec_clipboard_recall_vaulted">Atgūt vaultēto jutīgo klipu</string>
+    <string name="desktop_opsec_clipboard_timer">Automātiski notīrīt pēc %1$d sekundēm</string>
+    <string name="desktop_opsec_clipboard_timer_off">Izslēgts</string>
+    <string name="desktop_opsec_attestation_run">Ierakstīt resursdatora integritātes momentuzņēmumu</string>
+    <string name="desktop_opsec_audit_title">Sesijas audita žurnāls</string>
+    <string name="desktop_opsec_audit_refresh">Atsvaidzināt žurnālu</string>
+    <string name="desktop_opsec_audit_empty">Vēl nav audita notikumu</string>
+    <string name="desktop_opsec_tpm_status">TPM statuss: %1$s</string>
+    <string name="desktop_opsec_tpm_unknown">vēl nav mērīts</string>
+    <string name="desktop_opsec_tpm_hint">Lokāls PCR 0/7 sagremošanas kopsavilkums ar tpm2-tools, ja pieejams. Tas nav attālināta apliecināšana (RAP).</string>
+</resources>

@@ -45,6 +45,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -62,6 +63,11 @@ import de.mm20.launcher2.globalactions.GlobalActionsService
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.common.share.ShareActions
 import de.mm20.launcher2.ui.component.SearchEmptyState
+import de.mm20.launcher2.ui.component.TelosCyber
+import de.mm20.launcher2.ui.component.TelosCyberAppBarTitle
+import de.mm20.launcher2.ui.component.TelosCyberSectionLabel
+import de.mm20.launcher2.ui.component.telosTechSurface
+import androidx.compose.ui.unit.sp
 import de.mm20.launcher2.ui.component.TelosSearchBar
 import de.mm20.launcher2.ui.component.preferences.ListPreference
 import de.mm20.launcher2.ui.component.preferences.ListPreferenceItem
@@ -140,12 +146,12 @@ fun ScreenshotScreen() {
             modifier = Modifier.weight(1f),
         ) {
             item(span = { GridItemSpan(maxLineSpan) }) {
-                Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-                    Text(
-                        stringResource(I18nR.string.screenshot_title),
-                        style = MaterialTheme.typography.displaySmall,
-                        fontWeight = FontWeight.SemiBold,
-                        modifier = Modifier.weight(1f).padding(start = 8.dp, top = 16.dp, bottom = 8.dp),
+                Row(Modifier.fillMaxWidth().padding(start = 8.dp, top = 8.dp, bottom = 4.dp), verticalAlignment = Alignment.CenterVertically) {
+                    TelosCyberAppBarTitle(
+                        title = stringResource(I18nR.string.screenshot_title),
+                        status = stringResource(if (running) I18nR.string.net_hub_state_on else I18nR.string.screenshot_accessibility_banner),
+                        statusColor = if (running) TelosCyber.NeonCyan else TelosCyber.NeonMagenta,
+                        modifier = Modifier.weight(1f),
                     )
                     IconButton(onClick = { backStack.add(ScreenshotSettingsRoute) }) {
                         Icon(painterResource(BaseR.drawable.settings_24px), contentDescription = stringResource(I18nR.string.voice_settings))
@@ -179,9 +185,9 @@ fun ScreenshotScreen() {
                 }
             }
             item(span = { GridItemSpan(maxLineSpan) }) {
-                Text(
+                TelosCyberSectionLabel(
                     stringResource(I18nR.string.screenshot_screenshots),
-                    style = MaterialTheme.typography.titleMedium,
+                    accent = TelosCyber.NeonCyan,
                     modifier = Modifier.padding(start = 8.dp, top = 8.dp, bottom = 4.dp),
                 )
             }
@@ -268,15 +274,14 @@ private fun CaptureCard(icon: Int, title: Int, summary: Int, onClick: () -> Unit
     Row(
         Modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(20.dp))
-            .background(MaterialTheme.colorScheme.surfaceContainerHigh)
+            .telosTechSurface(borderColor = TelosCyber.NeonCyan, shape = RoundedCornerShape(20.dp))
             .clickable(onClick = onClick)
             .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-        Box(Modifier.size(48.dp).clip(CircleShape).background(MaterialTheme.colorScheme.primary), contentAlignment = Alignment.Center) {
-            Icon(painterResource(icon), contentDescription = null, tint = MaterialTheme.colorScheme.onPrimary, modifier = Modifier.size(26.dp))
+        Box(Modifier.size(48.dp).clip(CircleShape).background(TelosCyber.NeonCyan), contentAlignment = Alignment.Center) {
+            Icon(painterResource(icon), contentDescription = null, tint = Color.Black, modifier = Modifier.size(26.dp))
         }
         Column(Modifier.weight(1f)) {
             Text(stringResource(title), style = MaterialTheme.typography.titleMedium)

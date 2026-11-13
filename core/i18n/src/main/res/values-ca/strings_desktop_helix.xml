@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_helix_palette_title">ORDRE HELIX</string>
+    <string name="desktop_helix_palette_placeholder">Cerca apps, finestres, calculadora…</string>
+    <string name="desktop_helix_palette_hint">Super+Punt o Ctrl+Espai</string>
+    <string name="desktop_helix_palette_privacy">Només arrels vault i portàtils — no indexa l’home de l’amfitrió fora de la sessió.</string>
+    <string name="desktop_helix_palette_open_files">Obre Fitxers</string>
+    <string name="desktop_helix_palette_open_settings">Obre Configuració</string>
+    <string name="desktop_helix_palette_open_network">Obre Xarxa</string>
+    <string name="desktop_helix_palette_kill_window">Tanca la finestra enfocada</string>
+    <string name="desktop_helix_palette_paste_vault_clip">Enganxa l’últim porta-retalls vault</string>
+    <string name="desktop_helix_palette_window">Finestra</string>
+    <string name="desktop_helix_palette_calc">Calculadora</string>
+    <string name="desktop_helix_palette_command">Ordre</string>
+    <string name="desktop_helix_palette_file">Fitxer</string>
+    <string name="desktop_helix_palette_no_results">Sense resultats</string>
+</resources>

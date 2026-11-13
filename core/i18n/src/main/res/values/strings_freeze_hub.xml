@@ -18,4 +18,8 @@
     <string name="freeze_hub_recents">Freeze after removal from Recents</string>
     <string name="freeze_hub_recents_help">Refreeze managed or Telos-thawed apps after their last task is removed. Requires Shizuku / Root; usage exclusions still apply. Off by default.</string>
     <string name="freeze_hub_recents_unavailable">Recents detection unavailable. Start Shizuku / Root and grant permission.</string>
+    <string name="freeze_desk_title">Freeze Desk</string>
+    <string name="freeze_desk_filter_bloat">Bloat</string>
+    <string name="freeze_desk_open_summary">Open Telos System → Apps to freeze, search and filter installed packages.</string>
+    <string name="freeze_desk_rules_help">Auto-freeze rules and backends stay here. Per-app freeze and AppOps live on Freeze Desk.</string>
 </resources>

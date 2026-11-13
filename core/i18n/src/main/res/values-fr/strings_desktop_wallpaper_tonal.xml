@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_wallpaper_tonal_title">Accent depuis le fond d’écran</string>
+    <string name="desktop_wallpaper_tonal_enable">Accent depuis le fond d’écran</string>
+    <string name="desktop_wallpaper_tonal_hint">Échantillonne le fond vault ou portable sur cet appareil et dérive localement une graine tonale Material. Les pixels ne sont jamais envoyés. En cas d’échec, le chrome utilise le cyan néon.</string>
+    <string name="desktop_wallpaper_tonal_accent_wallpaper">theme.accent=wallpaper — graine locale active</string>
+</resources>

@@ -10,6 +10,7 @@ package com.telos.desktop.platform
 enum class TelosRuntimePlatform {
     AndroidMobile,
     LinuxDesktop,
+    WindowsDesktop,
     MacDesktop,
     BsdDesktop,
 }
@@ -25,6 +26,11 @@ data class SettingsVisibilityFilter(
         get() = platform == TelosRuntimePlatform.LinuxDesktop ||
             (platform == TelosRuntimePlatform.AndroidMobile && desktopModeOnAndroid)
 
+    /** Windowed Compose shell on Windows / macOS (no labwc session). */
+    val showPortableDesktopShell: Boolean
+        get() = platform == TelosRuntimePlatform.WindowsDesktop ||
+            platform == TelosRuntimePlatform.MacDesktop
+
     val showShizukuDhizukuFreeze: Boolean get() = showAndroidMobileSettings
     val showWorkProfileIsland: Boolean get() = showAndroidMobileSettings
     val showT9DialerSmsPermissions: Boolean get() = showAndroidMobileSettings
@@ -32,15 +38,23 @@ data class SettingsVisibilityFilter(
 
     val showDisplayResolution: Boolean
         get() = platform == TelosRuntimePlatform.LinuxDesktop ||
-            platform == TelosRuntimePlatform.MacDesktop
+            platform == TelosRuntimePlatform.MacDesktop ||
+            platform == TelosRuntimePlatform.WindowsDesktop
     val showXdgUserDirs: Boolean
         get() = platform == TelosRuntimePlatform.LinuxDesktop ||
             platform == TelosRuntimePlatform.BsdDesktop
     val showDesktopSurfaceFilters: Boolean get() = platform != TelosRuntimePlatform.AndroidMobile
-    val showLinuxIconThemeSelector: Boolean get() = platform == TelosRuntimePlatform.LinuxDesktop
+    /** Freedesktop / Telos-downloaded icon themes (Linux system + portable Win/mac packs). Not Android ADW. */
+    val showLinuxIconThemeSelector: Boolean
+        get() = platform == TelosRuntimePlatform.LinuxDesktop ||
+            platform == TelosRuntimePlatform.WindowsDesktop ||
+            platform == TelosRuntimePlatform.MacDesktop ||
+            platform == TelosRuntimePlatform.BsdDesktop
     val showLuksVault: Boolean get() = platform == TelosRuntimePlatform.LinuxDesktop
     val showKlassyWindowManager: Boolean get() = platform == TelosRuntimePlatform.LinuxDesktop
     val showSweetCursor: Boolean get() = platform != TelosRuntimePlatform.AndroidMobile
+    val showNftSessionNetGuard: Boolean get() = platform == TelosRuntimePlatform.LinuxDesktop
+    val showLabwcSession: Boolean get() = platform == TelosRuntimePlatform.LinuxDesktop
 
     companion object {
         fun linuxDesktop(): SettingsVisibilityFilter =
@@ -49,6 +63,7 @@ data class SettingsVisibilityFilter(
         fun forOs(osName: String): SettingsVisibilityFilter {
             val n = osName.lowercase()
             val platform = when {
+                n.contains("win") -> TelosRuntimePlatform.WindowsDesktop
                 n.contains("mac") || n.contains("darwin") -> TelosRuntimePlatform.MacDesktop
                 n.contains("bsd") -> TelosRuntimePlatform.BsdDesktop
                 else -> TelosRuntimePlatform.LinuxDesktop

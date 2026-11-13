@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_workspace_tints">Цветные полоски рабочих столов</string>
+    <string name="desktop_theme_workspace_tints_hint">Тонкие неоновые акценты под цифрами 1–4 на панели. Скрываются при panic mute. Отключить: theme.workspaceTints=false.</string>
+</resources>

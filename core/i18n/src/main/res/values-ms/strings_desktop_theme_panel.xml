@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_panel_surface">Permukaan panel</string>
+    <string name="desktop_theme_panel_surface_hint">Lutsinar atau kabur hanya menjejaskan akar panel; menu kekal legap. Kabur menyimpan panelBlur untuk frost; kabur kertas dinding hos ialah best-effort jika tiada.</string>
+    <string name="desktop_theme_panel_transparent">Lutsinar</string>
+    <string name="desktop_theme_panel_blurred">Kabur</string>
+    <string name="desktop_theme_panel_solid">Padu</string>
+    <string name="desktop_theme_panel_opacity">Kelegapan panel: %1$d%%</string>
+    <string name="desktop_theme_panel_blur">Kabur kaca: %1$d</string>
+    <string name="desktop_theme_panel_blur_unavailable">Kabur kertas dinding hos tidak tersedia; Telos menggunakan plat frost lut cahaya dan mengekalkan keutamaan kabur.</string>
+</resources>

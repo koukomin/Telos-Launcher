@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_lan_pair_title">Emparejamiento LAN con Android</string>
+    <string name="desktop_lan_pair_hint">Inicia un servidor de emparejamiento breve en la LAN. Escanea o introduce el código en Telos Sync. Los códigos y tokens nunca se registran.</string>
+    <string name="desktop_lan_pair_start">Iniciar emparejamiento LAN</string>
+    <string name="desktop_lan_pair_stop">Detener emparejamiento LAN</string>
+    <string name="desktop_lan_pair_running">Servidor de emparejamiento escuchando en la LAN</string>
+    <string name="desktop_lan_pair_code">Código de emparejamiento</string>
+    <string name="desktop_lan_pair_qr_uri">URI de emparejamiento (QR / pegar)</string>
+    <string name="desktop_lan_pair_stopped">Emparejamiento LAN detenido</string>
+    <string name="desktop_lan_pair_bind_reject">No se puede enlazar una dirección pública — use una IP LAN privada</string>
+    <string name="desktop_lan_pair_android_title">Emparejamiento LAN de Telos Desktop</string>
+    <string name="desktop_lan_pair_host">Host del escritorio (IP LAN)</string>
+    <string name="desktop_lan_pair_port">Puerto del escritorio</string>
+    <string name="desktop_lan_pair_connect">Emparejar con el escritorio</string>
+    <string name="desktop_lan_pair_paired">Emparejado con el escritorio</string>
+    <string name="desktop_lan_pair_fetch_bundle">Obtener paquete de sesión del escritorio</string>
+    <string name="desktop_lan_pair_fetch_ok">Paquete de sesión cifrado guardado</string>
+    <string name="desktop_lan_pair_send_bundle">Enviar paquete cifrado</string>
+    <string name="desktop_lan_pair_failed">Falló el emparejamiento LAN</string>
+    <string name="desktop_lan_pair_scan_hint">En Android abra Sync → Ajustes y pegue el URI o introduzca host, puerto y código.</string>
+</resources>

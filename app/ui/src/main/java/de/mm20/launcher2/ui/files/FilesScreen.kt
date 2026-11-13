@@ -2,6 +2,8 @@ package de.mm20.launcher2.ui.files
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
 
+import de.mm20.launcher2.ui.component.TelosCyber
+import de.mm20.launcher2.ui.component.TelosCyberAppBarTitle
 import de.mm20.launcher2.ui.R
 import androidx.compose.ui.res.stringResource
 import android.Manifest
@@ -319,7 +321,13 @@ internal fun FilesBrowser(vm: FilesViewModel, handlesBack: Boolean = true) {
                             onFilters = { showSearchFilters = true },
                         )
                         else -> TopAppBar(
-                            title = { Text(vm.path?.let { vm.connectionName(it)?.takeIf { _ -> RemotePath.isRoot(it) } ?: if (ArchivePath.isRoot(it)) nameOf(ArchivePath.archiveOf(it)) else if (de.mm20.launcher2.ui.files.vault.VaultPath.isRoot(it)) nameOf(de.mm20.launcher2.ui.files.vault.VaultPath.vaultOf(it)) else nameOf(it) } ?: stringResource(I18nR.string.hc_telos_files), maxLines = 1, overflow = TextOverflow.Ellipsis) },
+                            title = {
+                                TelosCyberAppBarTitle(
+                                    title = vm.path?.let { vm.connectionName(it)?.takeIf { _ -> RemotePath.isRoot(it) } ?: if (ArchivePath.isRoot(it)) nameOf(ArchivePath.archiveOf(it)) else if (de.mm20.launcher2.ui.files.vault.VaultPath.isRoot(it)) nameOf(de.mm20.launcher2.ui.files.vault.VaultPath.vaultOf(it)) else nameOf(it) } ?: stringResource(I18nR.string.hc_telos_files),
+                                    status = stringResource(I18nR.string.hc_telos_files),
+                                    statusColor = TelosCyber.NeonCyan,
+                                )
+                            },
                             navigationIcon = {
                                 IconButton(onClick = { scope.launch { drawer.open() } }) {
                                     Icon(painterResource(Icons.storage_24px), contentDescription = stringResource(I18nR.string.hc_storage))

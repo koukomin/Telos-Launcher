@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_cursor_title">Kurzor</string>
+    <string name="desktop_cursor_theme">Kurzortéma</string>
+    <string name="desktop_cursor_size">Kurzorméret</string>
+    <string name="desktop_cursor_system_default">Rendszer alapértelmezett</string>
+    <string name="desktop_cursor_preset_style">Compose átfedés stílus (ha az XCursor nem elérhető)</string>
+    <string name="desktop_cursor_download_section">Kurzortémák letöltése (hordozható/trezor icons)</string>
+    <string name="desktop_cursor_download_named">%1$s letöltése (%2$s)</string>
+    <string name="desktop_cursor_download_ok">%1$s telepítve</string>
+    <string name="desktop_cursor_download_fail">A kurzortéma nem tölthető le: %1$s</string>
+    <string name="desktop_cursor_limit_linux">Linux: a gyermekalkalmazások megkapják az XCURSOR_THEME és XCURSOR_SIZE értékeket. A Telos lehetőség szerint XCursor képkockákat tölt AWT kurzorba; különben a Compose Sweet/Breeze átfedést rajzolja. Az animált XCursor sorozatok nem játszódnak le.</string>
+    <string name="desktop_cursor_limit_windows">Windows: AWT rendszerbeli kurzorokra képezi le. Az XCursor/Plasma témák nem alkalmazódnak a Win32 mutatóra.</string>
+    <string name="desktop_cursor_limit_macos">macOS: AWT rendszerbeli kurzorokra képezi le. Az XCursor/Plasma témák nem alkalmazódnak a Cocoa mutatóra.</string>
+</resources>

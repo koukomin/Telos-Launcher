@@ -74,6 +74,11 @@ import androidx.navigation3.runtime.NavKey
 import androidx.compose.runtime.saveable.rememberSaveable
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.SearchEmptyState
+import de.mm20.launcher2.ui.component.TelosCyber
+import de.mm20.launcher2.ui.component.TelosCyberAppBarTitle
+import de.mm20.launcher2.ui.component.TelosCyberSectionLabel
+import de.mm20.launcher2.ui.component.TelosDotMatrixText
+import de.mm20.launcher2.ui.component.telosTechSurface
 import de.mm20.launcher2.ui.component.TelosSearchBar
 import de.mm20.launcher2.ui.component.preferences.ListPreference
 import de.mm20.launcher2.ui.component.preferences.ListPreferenceItem
@@ -202,7 +207,23 @@ fun ScreenRecorderScreen() {
                 )
             }
             Row(Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 8.dp), verticalAlignment = Alignment.CenterVertically) {
-                Spacer(Modifier.weight(1f))
+                TelosCyberAppBarTitle(
+                    title = stringResource(I18nR.string.screenrec_title),
+                    status = stringResource(
+                        when (state.status) {
+                            ScreenRecStatus.Idle -> I18nR.string.screenrec_start
+                            ScreenRecStatus.Countdown -> I18nR.string.screenrec_start
+                            ScreenRecStatus.Recording -> I18nR.string.screenrec_recording
+                            ScreenRecStatus.Paused -> I18nR.string.screenrec_paused
+                        }
+                    ),
+                    statusColor = when (state.status) {
+                        ScreenRecStatus.Recording -> TelosCyber.NeonMagenta
+                        ScreenRecStatus.Paused -> TelosCyber.NeonOrange
+                        else -> TelosCyber.NeonCyan
+                    },
+                    modifier = Modifier.weight(1f).padding(start = 12.dp),
+                )
                 IconButton(onClick = { showFontDialog = true }) {
                     Icon(painterResource(BaseR.drawable.text_fields_24px), contentDescription = stringResource(I18nR.string.per_app_font_size))
                 }
@@ -210,13 +231,20 @@ fun ScreenRecorderScreen() {
                     Icon(painterResource(BaseR.drawable.settings_24px), contentDescription = stringResource(I18nR.string.voice_settings))
                 }
             }
-            Text(
-                stringResource(I18nR.string.screenrec_title),
-                style = MaterialTheme.typography.displaySmall,
-                fontWeight = FontWeight.SemiBold,
-                modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp),
-            )
-            Column(Modifier.fillMaxWidth().padding(vertical = 24.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+            Column(
+                Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 16.dp)
+                    .telosTechSurface(
+                        borderColor = when (state.status) {
+                            ScreenRecStatus.Recording -> TelosCyber.NeonMagenta
+                            ScreenRecStatus.Paused -> TelosCyber.NeonOrange
+                            else -> TelosCyber.NeonCyan
+                        },
+                    )
+                    .padding(vertical = 24.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
                 when (state.status) {
                     ScreenRecStatus.Idle -> {
                         Box(
@@ -261,9 +289,9 @@ fun ScreenRecorderScreen() {
                     }
                 }
             }
-            Text(
+            TelosCyberSectionLabel(
                 stringResource(I18nR.string.screenrec_recordings),
-                style = MaterialTheme.typography.titleMedium,
+                accent = TelosCyber.NeonCyan,
                 modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp),
             )
             }

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_portable_data_root">Portable data folder (config, cache, temp only here)</string>
+    <string name="desktop_host_home_trace_warning">Host Home writes settings and cache on this PC. Choose Portable Data to leave no host traces.</string>
+    <string name="desktop_boot_portable_data">Portable Data — no host traces (config/cache/temp under portable root)</string>
+    <string name="desktop_boot_portable_vault">Portable Vault — encrypted data under portable root</string>
+    <string name="desktop_boot_host_home">Host Home (may leave traces on this PC)</string>
+    <string name="desktop_boot_unlock_existing">Unlock existing vault (file or stego folder)</string>
+    <string name="desktop_boot_create_wizard">Create new elastic / stego / deniable vault</string>
+    <string name="desktop_boot_ephemeral">Ephemeral RAM-only ghost session (tmpfs)</string>
+    <string name="desktop_session_sync_title">Session sync</string>
+    <string name="desktop_session_sync_export">Export encrypted bundle</string>
+    <string name="desktop_session_sync_import">Import encrypted bundle</string>
+    <string name="desktop_session_sync_auto">Importação automática na inicialização quando uma chave de sync está armazenada</string>
+    <string name="desktop_session_sync_pass">Sync passphrase (or KeePass entry %1$s)</string>
+    <string name="desktop_session_sync_keepass">KeePass database path (.kdbx)</string>
+    <string name="desktop_windows_shell_title">Windows shell replacement</string>
+    <string name="desktop_windows_shell_enable">Set Telos as login shell (HKCU)</string>
+    <string name="desktop_windows_shell_revert">Restore explorer.exe shell</string>
+    <string name="desktop_windows_shell_risk">Replaces your user shell at next sign-in. Keep a recovery path before enabling.</string>
+    <string name="desktop_helix_portable_note">Helix window chrome is drawn in Compose on all platforms; native Win32 decorations may show until shell replacement.</string>
+    <string name="desktop_session_sync_pass_required">Frase secreta de sync necessária</string>
+    <string name="desktop_session_sync_imported">Pacote de sync da sessão importado</string>
+    <string name="desktop_session_sync_key_stored">Chave de sync armazenada para importação na inicialização sem prompt</string>
+    <string name="desktop_session_sync_key_missing">Digite uma frase secreta de sync antes de ativar a importação automática</string>
+    <string name="desktop_vos_profiles_title">Perfis do vault</string>
+    <string name="desktop_vos_profiles_summary">Pastas de perfil com nome em config profiles/. Apenas o nome ativo em desktop.properties — nunca senhas.</string>
+    <string name="desktop_vos_profiles_active">Perfil ativo: %1$s</string>
+    <string name="desktop_vos_profiles_none">(nenhum)</string>
+    <string name="desktop_vos_profiles_empty">Ainda não há perfis. Crie um para alternar identidades do vault.</string>
+    <string name="desktop_vos_profiles_kind_named">Perfil de vault com nome</string>
+    <string name="desktop_vos_profiles_kind_portable">Raiz de vault portátil</string>
+    <string name="desktop_vos_profiles_switch">Alternar</string>
+    <string name="desktop_vos_profiles_use_portable">Usar esta raiz portátil</string>
+    <string name="desktop_vos_profiles_new_name">Nome do novo perfil</string>
+    <string name="desktop_vos_profiles_create">Criar e alternar</string>
+    <string name="desktop_vos_profiles_created">Criado e alternado para %1$s</string>
+    <string name="desktop_vos_profiles_switched">Alternado para %1$s</string>
+    <string name="desktop_vos_profiles_invalid_name">Use letras, números, pontos, underscores ou hífens (máx. 64).</string>
+    <string name="desktop_vos_profiles_portable_hint">Raízes portáteis mantêm config, cache e temp fora do perfil do host (padrão no Windows: Portable Data).</string>
+    <string name="desktop_vos_profiles_portable_path">Caminho da pasta do vault portátil</string>
+    <string name="desktop_vos_profiles_add_portable">Adicionar raiz de vault portátil</string>
+    <string name="desktop_vos_profiles_portable_selected">Raiz portátil: %1$s</string>
+    <string name="desktop_vos_profiles_portable_reject">A raiz portátil não pode ser a home do host nem suas .config/.cache/.local.</string>
+</resources>

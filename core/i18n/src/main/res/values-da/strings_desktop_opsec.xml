@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_opsec_title">OpSec</string>
+    <string name="desktop_opsec_secure_clipboard">Sikker udklipsholder</string>
+    <string name="desktop_opsec_clipboard_title">Udklipsholder</string>
+    <string name="desktop_opsec_clipboard_hint">Følsom tekst (nøgler, IBAN, WireGuard) fjernes fra historikken, gemmes kun i denne session og ryddes fra systemets udklipsholder. Historikken forbliver vault-lokal — ingen cloud-synk.</string>
+    <string name="desktop_opsec_clipboard_clear_now">Ryd udklipsholder nu</string>
+    <string name="desktop_opsec_clipboard_clear_all">Ryd alt</string>
+    <string name="desktop_opsec_clipboard_history_meta">Op til 20 elementer · udløber efter 5 minutter · fastgør til lås · Super+V</string>
+    <string name="desktop_opsec_clipboard_history_empty">Endnu ingen udklipshistorik</string>
+    <string name="desktop_opsec_clipboard_pin_until_lock">Fastgør</string>
+    <string name="desktop_opsec_clipboard_unpin">Frigør</string>
+    <string name="desktop_opsec_clipboard_recall_vaulted">Hent vaultet følsomt klip</string>
+    <string name="desktop_opsec_clipboard_timer">Ryd automatisk efter %1$d sekunder</string>
+    <string name="desktop_opsec_clipboard_timer_off">Fra</string>
+    <string name="desktop_opsec_attestation_run">Registrer værtsintegritetsøjebliksbillede</string>
+    <string name="desktop_opsec_audit_title">Sessionsrevisionslog</string>
+    <string name="desktop_opsec_audit_refresh">Opdater revisionslog</string>
+    <string name="desktop_opsec_audit_empty">Ingen revisionshændelser endnu</string>
+    <string name="desktop_opsec_tpm_status">TPM-status: %1$s</string>
+    <string name="desktop_opsec_tpm_unknown">ikke målt endnu</string>
+    <string name="desktop_opsec_tpm_hint">Lokal PCR 0/7-digestoversigt via tpm2-tools, hvis til stede. Dette er ikke fjernattestering (RAP).</string>
+</resources>

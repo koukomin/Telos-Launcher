@@ -11,6 +11,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -24,7 +26,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -94,6 +95,8 @@ import de.mm20.launcher2.store.model.projectPageUrl
 import de.mm20.launcher2.store.model.AppSource
 import de.mm20.launcher2.store.model.StoreItem
 import de.mm20.launcher2.store.parser.StoreUrlParser
+import de.mm20.launcher2.ui.component.TelosCyber
+import de.mm20.launcher2.ui.component.TelosTechPill
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.locals.LocalBackStack
 import de.mm20.launcher2.ui.media.MediaFrame
@@ -258,23 +261,26 @@ fun StoreDashboardScreen(initialLink: String = "", initialQuery: String = "") {
                 val showStoreTab = preferredStorePkg != null
                 val playTabIndex = if (showStoreTab) 3 else -1
 
-                PrimaryScrollableTabRow(
-                    selectedTabIndex = tab,
-                    edgePadding = 16.dp,
-                    modifier = Modifier.fillMaxWidth(),
+                Row(
+                    Modifier
+                        .fillMaxWidth()
+                        .horizontalScroll(rememberScrollState())
+                        .padding(horizontal = 16.dp, vertical = 8.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
-                    Tab(selected = tab == 0, onClick = { tab = 0 }, text = { Text(stringResource(I18nR.string.hc_apps), maxLines = 1) })
-                    Tab(selected = tab == 1, onClick = { tab = 1 }, text = { Text(stringResource(I18nR.string.hc_telos_apps), maxLines = 1) })
-                    Tab(selected = tab == 2, onClick = { tab = 2 }, text = { Text(stringResource(I18nR.string.recommendation_tab_label), maxLines = 1) })
+                    TelosTechPill(stringResource(I18nR.string.hc_apps), tab == 0, { tab = 0 }, accentColor = TelosCyber.NeonCyan)
+                    TelosTechPill(stringResource(I18nR.string.hc_telos_apps), tab == 1, { tab = 1 }, accentColor = TelosCyber.NeonGreen)
+                    TelosTechPill(stringResource(I18nR.string.recommendation_tab_label), tab == 2, { tab = 2 }, accentColor = TelosCyber.NeonOrange)
                     if (showStoreTab) {
-                        Tab(
-                            selected = tab == playTabIndex,
-                            onClick = { 
+                        TelosTechPill(
+                            preferredStoreTitle,
+                            false,
+                            {
                                 scope.launch {
                                     PlayStoreInventory.openPreferredStoreUpdates(context, freezeManager)
                                 }
                             },
-                            text = { Text(preferredStoreTitle, maxLines = 1) }
+                            accentColor = TelosCyber.NeonMagenta,
                         )
                     }
                 }
@@ -284,17 +290,19 @@ fun StoreDashboardScreen(initialLink: String = "", initialQuery: String = "") {
                         horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
                         item {
-                            FilterChip(
-                                selected = category == null,
+                            TelosTechPill(
+                                text = "[ALL]",
+                                isSelected = category == null,
                                 onClick = { viewModel.category.value = null },
-                                label = { Text("[ALL]", fontFamily = FontFamily.Monospace, fontWeight = FontWeight.Bold) }
+                                accentColor = TelosCyber.NeonCyan,
                             )
                         }
                         items(categories) { cat ->
-                            FilterChip(
-                                selected = category == cat,
+                            TelosTechPill(
+                                text = cat.uppercase(),
+                                isSelected = category == cat,
                                 onClick = { viewModel.category.value = if (category == cat) null else cat },
-                                label = { Text(cat.uppercase(), fontFamily = FontFamily.Monospace, fontWeight = FontWeight.Bold) }
+                                accentColor = TelosCyber.accentFor(cat.hashCode()),
                             )
                         }
                     }

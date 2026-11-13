@@ -14,7 +14,6 @@ import android.os.Build
 import android.os.Process
 import android.os.SystemClock
 import android.text.format.Formatter
-import androidx.activity.compose.LocalActivity
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
@@ -24,6 +23,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -40,6 +40,7 @@ import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
@@ -74,9 +75,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.content.getSystemService
-import androidx.fragment.app.FragmentActivity
 import androidx.navigation3.runtime.NavKey
-import de.mm20.launcher2.comms.AuthManager
 import de.mm20.launcher2.comms.graphics.HwuiRenderer
 import de.mm20.launcher2.network.NetState
 import de.mm20.launcher2.network.NetworkEngine
@@ -85,7 +84,11 @@ import de.mm20.launcher2.network.api.LogController
 import de.mm20.launcher2.preferences.comms.CommsSettings
 import de.mm20.launcher2.preferences.ui.UiSettings
 import de.mm20.launcher2.ui.R
-import de.mm20.launcher2.ui.comms.ContactQrImage
+import de.mm20.launcher2.ui.component.TelosCyber
+import de.mm20.launcher2.ui.component.TelosCyberAppBarTitle
+import de.mm20.launcher2.ui.component.TelosCyberSectionLabel
+import de.mm20.launcher2.ui.component.TelosTechPill
+import de.mm20.launcher2.ui.component.telosTechSurface
 import de.mm20.launcher2.ui.locals.LocalBackStack
 import de.mm20.launcher2.ui.theme.transparency.transparency
 import kotlinx.coroutines.Dispatchers
@@ -106,7 +109,6 @@ internal data class ProcRow(val pid: Int, val name: String, val ramKb: Long?)
 @Composable
 fun SystemDashboardScreen(initialTab: String = "") {
     val context = LocalContext.current
-    val activity = LocalActivity.current as? FragmentActivity
     val backStack = LocalBackStack.current
     val scope = rememberCoroutineScope()
     val scheme = MaterialTheme.colorScheme
@@ -115,11 +117,6 @@ fun SystemDashboardScreen(initialTab: String = "") {
     var ramTotal by remember { mutableStateOf(0L) }
     var ips by remember { mutableStateOf(listOf<String>()) }
     var wifiSsid by remember { mutableStateOf<String?>(null) }
-    var secureWifi by remember { mutableStateOf(false) }
-    var privilegedWifi by remember { mutableStateOf(false) }
-    var wifiPsk by remember { mutableStateOf<String?>(null) }
-    var showPsk by remember { mutableStateOf(false) }
-    var networks by remember { mutableStateOf<List<WifiEntry>>(emptyList()) }
     var processes by remember { mutableStateOf<List<ProcRow>>(emptyList()) }
     var status by remember { mutableStateOf<String?>(null) }
     val uiSettings: UiSettings = koinInject()
@@ -128,10 +125,13 @@ fun SystemDashboardScreen(initialTab: String = "") {
     val logs: LogController = koinInject()
     val dns: DnsController = koinInject()
     val systemWidgetOn by uiSettings.systemWidgetEnabled.collectAsState(false)
+    val preferredRenderer by comms.hwuiRenderer.collectAsState(HwuiRenderer.MODE_DEFAULT)
+    val restartNotice by comms.hwuiShowRestartNotice.collectAsState(true)
     val netState by engine.state.collectAsState()
     val netStats by logs.stats.collectAsState()
     val dnsServer by dns.selected.collectAsState()
     var liveRenderer by remember { mutableStateOf(HwuiRenderer.MODE_DEFAULT) }
+    var explainRestart by remember { mutableStateOf(false) }
     val storeVm: de.mm20.launcher2.ui.store.StoreViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
     var currentTab by androidx.compose.runtime.saveable.rememberSaveable {
         mutableStateOf(
@@ -144,20 +144,9 @@ fun SystemDashboardScreen(initialTab: String = "") {
             }
         )
     }
-    var wifiReadJob by remember { mutableStateOf<kotlinx.coroutines.Job?>(null) }
     val pulse = rememberInfiniteTransition(label = "sysPulse")
     val t by pulse.animateFloat(0f, 1f, infiniteRepeatable(tween(2400, easing = LinearEasing), RepeatMode.Restart), label = "t")
 
-    de.mm20.launcher2.ui.component.PrivilegedConnectionEffect {
-        scope.launch { privilegedWifi = PrivilegedWifiStore.detect(context).privilege != WifiPrivilege.None }
-    }
-    androidx.lifecycle.compose.LifecycleEventEffect(androidx.lifecycle.Lifecycle.Event.ON_RESUME) {
-        scope.launch { privilegedWifi = PrivilegedWifiStore.detect(context).privilege != WifiPrivilege.None }
-    }
-    androidx.lifecycle.compose.LifecycleEventEffect(androidx.lifecycle.Lifecycle.Event.ON_STOP) {
-        wifiReadJob?.cancel()
-        wifiPsk = null; showPsk = false; networks = emptyList()
-    }
     LaunchedEffect(Unit) {
         var previousCpu: Pair<Long, Long>? = null
         while (true) {
@@ -170,10 +159,7 @@ fun SystemDashboardScreen(initialTab: String = "") {
             ramUsed = mi.totalMem - mi.availMem
             ramTotal = mi.totalMem
             ips = localIps()
-            val connectedSsid = currentSsidSystemDash(context)
-            if (connectedSsid != wifiSsid) { wifiPsk = null; showPsk = false; networks = emptyList() }
-            wifiSsid = connectedSsid
-            secureWifi = hasWifiPassword(context)
+            wifiSsid = currentSsidSystemDash(context)
 
             processes = withContext(Dispatchers.IO) { runningProcs(context) }
             liveRenderer = HwuiRenderer.current()
@@ -181,6 +167,19 @@ fun SystemDashboardScreen(initialTab: String = "") {
         }
     }
 
+    if (explainRestart) {
+        androidx.compose.material3.AlertDialog(
+            onDismissRequest = { explainRestart = false },
+            title = { Text(stringResource(I18nR.string.hc_graphics_api)) },
+            text = { Text(stringResource(I18nR.string.app_polish_renderer_restart)) },
+            confirmButton = {
+                androidx.compose.material3.TextButton(onClick = { explainRestart = false }) {
+                    Text(stringResource(android.R.string.ok))
+                }
+            },
+            containerColor = de.mm20.launcher2.ui.component.virtualAppPopup(),
+        )
+    }
     de.mm20.launcher2.ui.component.VirtualAppWindow {
     Box(Modifier.fillMaxSize().background(Brush.verticalGradient(listOf(scheme.primary.copy(alpha = 0.22f * MaterialTheme.transparency.surface), Color.Transparent)))) {
         Canvas(Modifier.fillMaxSize()) {
@@ -196,38 +195,49 @@ fun SystemDashboardScreen(initialTab: String = "") {
                         Icon(painterResource(BaseR.drawable.arrow_back_24px), stringResource(I18nR.string.hc_back))
                     }
                 }
-                Text(stringResource(I18nR.string.telos_system_label), style = MaterialTheme.typography.titleLarge, modifier = Modifier.weight(1f).padding(start = if (backStack.size > 1) 0.dp else 8.dp))
+                TelosCyberAppBarTitle(
+                    title = stringResource(I18nR.string.telos_system_label),
+                    status = stringResource(I18nR.string.net_hub_status),
+                    statusColor = TelosCyber.NeonCyan,
+                    modifier = Modifier.weight(1f).padding(start = if (backStack.size > 1) 0.dp else 8.dp),
+                )
             }
-            androidx.compose.material3.ScrollableTabRow(
-                selectedTabIndex = currentTab,
-                containerColor = Color.Transparent,
-                edgePadding = 8.dp,
-                modifier = Modifier.fillMaxWidth(),
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 8.dp, vertical = 4.dp)
+                    .horizontalScroll(androidx.compose.foundation.rememberScrollState()),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
-                androidx.compose.material3.Tab(
-                    selected = currentTab == 0,
+                TelosTechPill(
+                    text = stringResource(I18nR.string.telos_system_label),
+                    isSelected = currentTab == 0,
                     onClick = { currentTab = 0 },
-                    text = { Text(stringResource(I18nR.string.telos_system_label)) }
+                    accentColor = TelosCyber.NeonCyan,
                 )
-                androidx.compose.material3.Tab(
-                    selected = currentTab == 1,
+                TelosTechPill(
+                    text = stringResource(I18nR.string.hc_apps),
+                    isSelected = currentTab == 1,
                     onClick = { currentTab = 1 },
-                    text = { Text(stringResource(I18nR.string.hc_apps)) }
+                    accentColor = TelosCyber.NeonGreen,
                 )
-                androidx.compose.material3.Tab(
-                    selected = currentTab == 2,
+                TelosTechPill(
+                    text = stringResource(I18nR.string.preference_screen_tweaks),
+                    isSelected = currentTab == 2,
                     onClick = { currentTab = 2 },
-                    text = { Text(stringResource(I18nR.string.preference_screen_tweaks)) }
+                    accentColor = TelosCyber.NeonOrange,
                 )
-                androidx.compose.material3.Tab(
-                    selected = currentTab == 3,
+                TelosTechPill(
+                    text = stringResource(I18nR.string.security_hub_tab_title),
+                    isSelected = currentTab == 3,
                     onClick = { currentTab = 3 },
-                    text = { Text(stringResource(I18nR.string.security_hub_tab_title)) }
+                    accentColor = TelosCyber.NeonMagenta,
                 )
-                androidx.compose.material3.Tab(
-                    selected = currentTab == 4,
+                TelosTechPill(
+                    text = stringResource(I18nR.string.telos_shizuku_title),
+                    isSelected = currentTab == 4,
                     onClick = { currentTab = 4 },
-                    text = { Text(stringResource(I18nR.string.telos_shizuku_title)) }
+                    accentColor = TelosCyber.NeonCyan,
                 )
             }
             if (currentTab == 1) {
@@ -264,32 +274,69 @@ fun SystemDashboardScreen(initialTab: String = "") {
                                 HwuiRenderer.MODE_OPENGL -> stringResource(I18nR.string.hc_graphics_opengl)
                                 else -> stringResource(I18nR.string.hc_graphics_default)
                             },
-                            color = if (liveRenderer == HwuiRenderer.MODE_VULKAN) scheme.primary else scheme.primary,
+                            color = scheme.primary,
                         )
                         Text(stringResource(I18nR.string.hc_graphics_api_about_summary), style = MaterialTheme.typography.bodySmall)
+                        Text(stringResource(I18nR.string.app_polish_renderer_restart), style = MaterialTheme.typography.bodySmall)
                         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                             FilterChip(
-                                selected = liveRenderer == HwuiRenderer.MODE_VULKAN,
+                                selected = preferredRenderer == HwuiRenderer.MODE_VULKAN,
                                 onClick = {
                                     scope.launch {
-                                        comms.setHwuiRenderer(HwuiRenderer.MODE_VULKAN)
-                                        HwuiRenderer.apply(HwuiRenderer.MODE_VULKAN)
+                                        val mode = HwuiRenderer.MODE_VULKAN
+                                        comms.setHwuiRenderer(mode)
+                                        val ok = HwuiRenderer.apply(mode)
                                         liveRenderer = HwuiRenderer.current()
+                                        status = if (ok) {
+                                            if (restartNotice) explainRestart = true
+                                            context.getString(I18nR.string.hc_graphics_applied)
+                                        } else {
+                                            context.getString(I18nR.string.hc_graphics_need_privilege, HwuiRenderer.adbCommand(mode))
+                                        }
                                     }
                                 },
                                 label = { Text(stringResource(I18nR.string.hc_graphics_vulkan)) },
                             )
                             FilterChip(
-                                selected = liveRenderer == HwuiRenderer.MODE_OPENGL,
+                                selected = preferredRenderer == HwuiRenderer.MODE_OPENGL,
                                 onClick = {
                                     scope.launch {
-                                        comms.setHwuiRenderer(HwuiRenderer.MODE_OPENGL)
-                                        HwuiRenderer.apply(HwuiRenderer.MODE_OPENGL)
+                                        val mode = HwuiRenderer.MODE_OPENGL
+                                        comms.setHwuiRenderer(mode)
+                                        val ok = HwuiRenderer.apply(mode)
                                         liveRenderer = HwuiRenderer.current()
+                                        status = if (ok) {
+                                            if (restartNotice) explainRestart = true
+                                            context.getString(I18nR.string.hc_graphics_applied)
+                                        } else {
+                                            context.getString(I18nR.string.hc_graphics_need_privilege, HwuiRenderer.adbCommand(mode))
+                                        }
                                     }
                                 },
                                 label = { Text(stringResource(I18nR.string.hc_graphics_opengl)) },
                             )
+                            FilterChip(
+                                selected = preferredRenderer == HwuiRenderer.MODE_DEFAULT,
+                                onClick = {
+                                    scope.launch {
+                                        val mode = HwuiRenderer.MODE_DEFAULT
+                                        comms.setHwuiRenderer(mode)
+                                        val ok = HwuiRenderer.apply(mode)
+                                        liveRenderer = HwuiRenderer.current()
+                                        status = if (ok) {
+                                            if (restartNotice) explainRestart = true
+                                            context.getString(I18nR.string.hc_graphics_applied)
+                                        } else {
+                                            context.getString(I18nR.string.hc_graphics_need_privilege, HwuiRenderer.adbCommand(mode))
+                                        }
+                                    }
+                                },
+                                label = { Text(stringResource(I18nR.string.hc_graphics_default)) },
+                            )
+                        }
+                        status?.let { msg ->
+                            val ok = msg == context.getString(I18nR.string.hc_graphics_applied)
+                            Text(msg, color = if (ok) scheme.primary else scheme.error)
                         }
                         Row(
                             Modifier.fillMaxWidth(),
@@ -312,10 +359,10 @@ fun SystemDashboardScreen(initialTab: String = "") {
                             title = stringResource(I18nR.string.telos_system_cpu),
                             value = cpuUsage,
                             valueText = "${(cpuUsage * 100).toInt()}%",
-                            subtitle = if (cpu != null) "OCTA-CORE CORE" else stringResource(I18nR.string.virtual_telemetry_unavailable),
+                            subtitle = if (cpu != null) stringResource(I18nR.string.telos_system_cpu) else stringResource(I18nR.string.virtual_telemetry_unavailable),
                             modifier = Modifier.weight(1f),
-                            primaryColor = Color(0xFF00F2FE),
-                            accentColor = Color(0xFFFF007F),
+                            primaryColor = TelosCyber.NeonCyan,
+                            accentColor = TelosCyber.NeonMagenta,
                         )
 
                         val ramF = if (ramTotal == 0L) 0f else ramUsed.toFloat() / ramTotal
@@ -325,8 +372,8 @@ fun SystemDashboardScreen(initialTab: String = "") {
                             valueText = "${(ramF * 100).toInt()}%",
                             subtitle = "${Formatter.formatFileSize(context, ramUsed)} / ${Formatter.formatFileSize(context, ramTotal)}",
                             modifier = Modifier.weight(1f),
-                            primaryColor = Color(0xFF8A2BE2),
-                            accentColor = Color(0xFF00F2FE),
+                            primaryColor = TelosCyber.NeonGreen,
+                            accentColor = TelosCyber.NeonCyan,
                         )
                     }
                 }
@@ -344,42 +391,20 @@ fun SystemDashboardScreen(initialTab: String = "") {
                         Text("${stringResource(I18nR.string.net_hub_stat_blocked_dns)} ${netStats.dnsBlocked}  ·  ${stringResource(I18nR.string.net_hub_stat_blocked_conn)} ${netStats.connectionsBlocked}")
                         Text("SSID: ${wifiSsid ?: "—"}")
                         ips.forEach { Text(it) }
-                        if (showPsk && wifiPsk != null) {
-                            Text("PSK: $wifiPsk")
-                            val payload = wifiQrPayload(wifiSsid.orEmpty(), wifiPsk.orEmpty())
-                            ContactQrImage(payload, Modifier.padding(top = 8.dp))
+                        Text(
+                            stringResource(I18nR.string.telos_system_saved_wifi),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = scheme.onSurfaceVariant,
+                        )
+                        FilledTonalButton(onClick = {
+                            backStack.add(de.mm20.launcher2.ui.network.NetworkSettingsRoute)
+                        }) {
+                            Text(stringResource(I18nR.string.telos_system_reveal_wifi))
                         }
-                        if (wifiSsid != null && secureWifi) FilledTonalButton(enabled = privilegedWifi, onClick = {
-                            wifiReadJob?.cancel()
-                            wifiReadJob = scope.launch {
-                                val act = activity ?: return@launch
-                                val ok = AuthManager().authenticateNative(act, context.getString(I18nR.string.telos_system_unlock_wifi))
-                                if (!ok) return@launch
-                                status = context.getString(I18nR.string.telos_system_reading_wifi)
-                                val list = try { withContext(Dispatchers.IO) { readWifiStore(context) } }
-                                catch (e: kotlinx.coroutines.CancellationException) { throw e }
-                                catch (_: Exception) { status = context.getString(I18nR.string.virtual_telemetry_unavailable); return@launch }
-                                networks = list
-                                wifiPsk = list.firstOrNull { it.ssid == wifiSsid }?.psk
-                                showPsk = true
-                                status = if (list.isEmpty()) context.getString(I18nR.string.telos_system_wifi_need_root) else null
-                            }
-                        }) { Text(stringResource(I18nR.string.telos_system_reveal_wifi)) }
-                        status?.let { Text(it, color = scheme.error) }
                     }
                 }
-                item { SavedWifiPasswordsPreference() }
                 item { SystemToolsSection() }
-                if (networks.isNotEmpty()) {
-                    item { Text(stringResource(I18nR.string.telos_system_saved_wifi), style = MaterialTheme.typography.titleMedium) }
-                    items(networks, key = { it.ssid }) { n ->
-                        GlassCard {
-                            Text(n.ssid, style = MaterialTheme.typography.titleSmall)
-                            Text(n.psk ?: "—")
-                        }
-                    }
-                }
-                item { Text(stringResource(I18nR.string.telos_system_processes), style = MaterialTheme.typography.titleMedium) }
+                item { TelosCyberSectionLabel(stringResource(I18nR.string.telos_system_processes), accent = TelosCyber.NeonOrange) }
                 items(processes.take(40), key = { it.pid }) { p ->
                     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                         Text("${p.pid}  ${p.name}", modifier = Modifier.weight(1f), maxLines = 1)
@@ -395,12 +420,13 @@ fun SystemDashboardScreen(initialTab: String = "") {
 
 @Composable
 private fun GlassCard(content: @Composable () -> Unit) {
-    de.mm20.launcher2.ui.component.LauncherCard(shape = MaterialTheme.shapes.medium) {
-        Column(
-            Modifier.fillMaxWidth().padding(de.mm20.launcher2.ui.layout.UiSpacing.Content),
-            verticalArrangement = Arrangement.spacedBy(6.dp),
-        ) { content() }
-    }
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .telosTechSurface(borderColor = TelosCyber.NeonCyan, shape = MaterialTheme.shapes.medium)
+            .padding(de.mm20.launcher2.ui.layout.UiSpacing.Content),
+        verticalArrangement = Arrangement.spacedBy(6.dp),
+    ) { content() }
 }
 
 private fun formatUptime(ms: Long): String {
@@ -460,18 +486,6 @@ internal fun runningProcs(context: Context): List<ProcRow> {
         ProcRow(process.pid, process.processName, memory?.getOrNull(index)?.totalPss?.toLong()?.takeIf { it > 0 })
     }.sortedBy { it.name }
 }
-
-internal suspend fun readWifiStore(context: Context): List<WifiEntry> =
-    PrivilegedWifiStore.load(context.applicationContext)
-
-private fun hasWifiPassword(context: Context): Boolean = runCatching {
-    if (currentSsid(context) == null || Build.VERSION.SDK_INT < 31) return false
-    val info = context.getSystemService<WifiManager>()?.connectionInfo ?: return false
-    info.currentSecurityType in setOf(
-        android.net.wifi.WifiInfo.SECURITY_TYPE_PSK, android.net.wifi.WifiInfo.SECURITY_TYPE_SAE,
-        android.net.wifi.WifiInfo.SECURITY_TYPE_WEP, android.net.wifi.WifiInfo.SECURITY_TYPE_WAPI_PSK,
-    )
-}.getOrDefault(false)
 
 @Composable
 private fun BatteryCard() {

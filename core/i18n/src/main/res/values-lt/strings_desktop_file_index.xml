@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_file_index_title">Failų vardų indeksas</string>
+    <string name="desktop_file_index_enable">Failų vardų indeksas įrenginyje</string>
+    <string name="desktop_file_index_hint">Pasirinktinai. Indeksavoja tik failų vardus po vault HOME arba Portable Data šaknimi (niekada šeimininko profilio, išskyrus Host Home). Saugoma šifruota .cache/telos/file-index su tik savininko teisėmis. Be failų turinio ir be įkėlimo į debesį.</string>
+</resources>

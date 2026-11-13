@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_lan_pair_title">LAN savienošana ar Android</string>
+    <string name="desktop_lan_pair_hint">Palaiž īslaicīgu savienošanas serveri LAN. Noskenējiet vai ievadiet kodu Telos Sync. Kodi un žetoni nekad netiek reģistrēti.</string>
+    <string name="desktop_lan_pair_start">Sākt LAN savienošanu</string>
+    <string name="desktop_lan_pair_stop">Apturēt LAN savienošanu</string>
+    <string name="desktop_lan_pair_running">Savienošanas serveris klausās LAN</string>
+    <string name="desktop_lan_pair_code">Savienošanas kods</string>
+    <string name="desktop_lan_pair_qr_uri">Savienošanas URI (QR / ielīmēt)</string>
+    <string name="desktop_lan_pair_stopped">LAN savienošana apturēta</string>
+    <string name="desktop_lan_pair_bind_reject">Nevar piesaistīt publisku adresi — izmantojiet privātu LAN IP</string>
+    <string name="desktop_lan_pair_android_title">Telos Desktop LAN savienošana</string>
+    <string name="desktop_lan_pair_host">Darbvirsmas resursdators (LAN IP)</string>
+    <string name="desktop_lan_pair_port">Darbvirsmas ports</string>
+    <string name="desktop_lan_pair_connect">Savienot ar darbvirsmu</string>
+    <string name="desktop_lan_pair_paired">Savienots ar darbvirsmu</string>
+    <string name="desktop_lan_pair_fetch_bundle">Iegūt darbvirsmas sesijas pakotni</string>
+    <string name="desktop_lan_pair_fetch_ok">Šifrētā darbvirsmas sesijas pakotne saglabāta</string>
+    <string name="desktop_lan_pair_send_bundle">Sūtīt šifrētu pakotni</string>
+    <string name="desktop_lan_pair_failed">LAN savienošana neizdevās</string>
+    <string name="desktop_lan_pair_scan_hint">Android ierīcē atveriet Sync → Iestatījumi un ielīmējiet URI vai ievadiet resursdatoru, portu un kodu.</string>
+</resources>

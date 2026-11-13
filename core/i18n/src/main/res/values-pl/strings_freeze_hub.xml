@@ -31,4 +31,8 @@
     
     
 
+    <string name="freeze_desk_title">Freeze Desk</string>
+    <string name="freeze_desk_filter_bloat">Bloat</string>
+    <string name="freeze_desk_open_summary">Otwórz System → Aplikacje, aby zamrażać, wyszukiwać i filtrować zainstalowane pakiety.</string>
+    <string name="freeze_desk_rules_help">Reguły autozamrażania i backends zostają tutaj. Zamrażanie aplikacji i AppOps są w Freeze Desk.</string>
 </resources>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_portable_data_root">Portable data folder (config, cache, temp only here)</string>
+    <string name="desktop_host_home_trace_warning">Host Home writes settings and cache on this PC. Choose Portable Data to leave no host traces.</string>
+    <string name="desktop_boot_portable_data">Portable Data — no host traces (config/cache/temp under portable root)</string>
+    <string name="desktop_boot_portable_vault">Portable Vault — encrypted data under portable root</string>
+    <string name="desktop_boot_host_home">Host Home (may leave traces on this PC)</string>
+    <string name="desktop_boot_unlock_existing">Unlock existing vault (file or stego folder)</string>
+    <string name="desktop_boot_create_wizard">Create new elastic / stego / deniable vault</string>
+    <string name="desktop_boot_ephemeral">Ephemeral RAM-only ghost session (tmpfs)</string>
+    <string name="desktop_session_sync_title">Session sync</string>
+    <string name="desktop_session_sync_export">Export encrypted bundle</string>
+    <string name="desktop_session_sync_import">Import encrypted bundle</string>
+    <string name="desktop_session_sync_auto">Αὐτόματος εἰσαγωγὴ κατὰ τὴν ἐκκίνησιν ὅταν κλεὶς συγχρονισμοῦ ἀποθηκευμένη ἐστίν</string>
+    <string name="desktop_session_sync_pass">Sync passphrase (or KeePass entry %1$s)</string>
+    <string name="desktop_session_sync_keepass">KeePass database path (.kdbx)</string>
+    <string name="desktop_windows_shell_title">Windows shell replacement</string>
+    <string name="desktop_windows_shell_enable">Set Telos as login shell (HKCU)</string>
+    <string name="desktop_windows_shell_revert">Restore explorer.exe shell</string>
+    <string name="desktop_windows_shell_risk">Replaces your user shell at next sign-in. Keep a recovery path before enabling.</string>
+    <string name="desktop_helix_portable_note">Helix window chrome is drawn in Compose on all platforms; native Win32 decorations may show until shell replacement.</string>
+    <string name="desktop_session_sync_pass_required">Συνθηματικὸν συγχρονισμοῦ ἀπαιτεῖται</string>
+    <string name="desktop_session_sync_imported">Τὸ δέμα συγχρονισμοῦ συνεδρίας εἰσήχθη</string>
+    <string name="desktop_session_sync_key_stored">Κλεὶς συγχρονισμοῦ ἀποθηκευμένη πρὸς εἰσαγωγὴν ἄνευ προτροπῆς κατὰ τὴν ἐκκίνησιν</string>
+    <string name="desktop_session_sync_key_missing">Εἴσαγε συνθηματικὸν συγχρονισμοῦ πρὶν ἐνεργοποιήσῃς τὴν αὐτόματον εἰσαγωγήν</string>
+    <string name="desktop_vos_profiles_title">Προφίλ θησαυροφυλακίου</string>
+    <string name="desktop_vos_profiles_summary">Ὀνομασμένοι φάκελοι προφίλ ἐν config profiles/. Μόνον τὸ ἐνεργὸν ὄνομα ἐν desktop.properties — οὐδέποτε κωδικοί.</string>
+    <string name="desktop_vos_profiles_active">Ἐνεργὸν προφίλ: %1$s</string>
+    <string name="desktop_vos_profiles_none">(οὐδέν)</string>
+    <string name="desktop_vos_profiles_empty">Οὔπω ὑπάρχουσι προφίλ. Δημιούργησον ἓν πρὸς ἐναλλαγὴν ταυτοτήτων.</string>
+    <string name="desktop_vos_profiles_kind_named">Ὀνομαστικὸν προφίλ θησαυροφυλακίου</string>
+    <string name="desktop_vos_profiles_kind_portable">Ῥίζα φορητοῦ θησαυροφυλακίου</string>
+    <string name="desktop_vos_profiles_switch">Ἐναλλαγή</string>
+    <string name="desktop_vos_profiles_use_portable">Χρῆσις ταύτης τῆς φορητῆς ῥίζης</string>
+    <string name="desktop_vos_profiles_new_name">Ὄνομα νέου προφίλ</string>
+    <string name="desktop_vos_profiles_create">Δημιουργία καὶ ἐναλλαγή</string>
+    <string name="desktop_vos_profiles_created">Ἐδημιουργήθη καὶ ἐνηλλάγη εἰς %1$s</string>
+    <string name="desktop_vos_profiles_switched">Ἐνηλλάγη εἰς %1$s</string>
+    <string name="desktop_vos_profiles_invalid_name">Χρῶ γράμμασι, ἀριθμοῖς, στιγμᾶς, ὑπογραμμᾶς ἢ παύλαις (μέγ. 64).</string>
+    <string name="desktop_vos_profiles_portable_hint">Αἱ φορηταὶ ῥίζαι φυλάττουσι config, cache καὶ temp ἐκτὸς τοῦ προφίλ τοῦ host (προεπιλογὴ Windows: Portable Data).</string>
+    <string name="desktop_vos_profiles_portable_path">Διαδρομὴ φακέλου φορητοῦ θησαυροφυλακίου</string>
+    <string name="desktop_vos_profiles_add_portable">Προσθήκη ῥίζης φορητοῦ θησαυροφυλακίου</string>
+    <string name="desktop_vos_profiles_portable_selected">Φορητὴ ῥίζα: %1$s</string>
+    <string name="desktop_vos_profiles_portable_reject">Ἡ φορητὴ ῥίζα οὐ δύναται εἶναι τὸ home τοῦ host ἢ τὰ .config/.cache/.local αὐτοῦ.</string>
+</resources>

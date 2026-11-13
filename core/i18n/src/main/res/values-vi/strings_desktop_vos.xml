@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_portable_data_root">Portable data folder (config, cache, temp only here)</string>
+    <string name="desktop_host_home_trace_warning">Host Home writes settings and cache on this PC. Choose Portable Data to leave no host traces.</string>
+    <string name="desktop_boot_portable_data">Portable Data — no host traces (config/cache/temp under portable root)</string>
+    <string name="desktop_boot_portable_vault">Portable Vault — encrypted data under portable root</string>
+    <string name="desktop_boot_host_home">Host Home (may leave traces on this PC)</string>
+    <string name="desktop_boot_unlock_existing">Unlock existing vault (file or stego folder)</string>
+    <string name="desktop_boot_create_wizard">Create new elastic / stego / deniable vault</string>
+    <string name="desktop_boot_ephemeral">Ephemeral RAM-only ghost session (tmpfs)</string>
+    <string name="desktop_session_sync_title">Session sync</string>
+    <string name="desktop_session_sync_export">Export encrypted bundle</string>
+    <string name="desktop_session_sync_import">Import encrypted bundle</string>
+    <string name="desktop_session_sync_auto">Tự động nhập khi khởi động nếu đã lưu khóa sync</string>
+    <string name="desktop_session_sync_pass">Sync passphrase (or KeePass entry %1$s)</string>
+    <string name="desktop_session_sync_keepass">KeePass database path (.kdbx)</string>
+    <string name="desktop_windows_shell_title">Windows shell replacement</string>
+    <string name="desktop_windows_shell_enable">Set Telos as login shell (HKCU)</string>
+    <string name="desktop_windows_shell_revert">Restore explorer.exe shell</string>
+    <string name="desktop_windows_shell_risk">Replaces your user shell at next sign-in. Keep a recovery path before enabling.</string>
+    <string name="desktop_helix_portable_note">Helix window chrome is drawn in Compose on all platforms; native Win32 decorations may show until shell replacement.</string>
+    <string name="desktop_session_sync_pass_required">Cần cụm mật khẩu sync</string>
+    <string name="desktop_session_sync_imported">Đã nhập gói sync phiên</string>
+    <string name="desktop_session_sync_key_stored">Đã lưu khóa sync để nhập khi khởi động mà không hỏi</string>
+    <string name="desktop_session_sync_key_missing">Nhập cụm mật khẩu sync trước khi bật nhập tự động</string>
+    <string name="desktop_vos_profiles_title">Hồ sơ vault</string>
+    <string name="desktop_vos_profiles_summary">Thư mục hồ sơ có tên dưới config profiles/. Chỉ tên đang dùng trong desktop.properties — không bao giờ mật khẩu.</string>
+    <string name="desktop_vos_profiles_active">Hồ sơ đang dùng: %1$s</string>
+    <string name="desktop_vos_profiles_none">(không)</string>
+    <string name="desktop_vos_profiles_empty">Chưa có hồ sơ. Tạo một để chuyển danh tính vault.</string>
+    <string name="desktop_vos_profiles_kind_named">Hồ sơ vault có tên</string>
+    <string name="desktop_vos_profiles_kind_portable">Gốc vault di động</string>
+    <string name="desktop_vos_profiles_switch">Chuyển</string>
+    <string name="desktop_vos_profiles_use_portable">Dùng gốc di động này</string>
+    <string name="desktop_vos_profiles_new_name">Tên hồ sơ mới</string>
+    <string name="desktop_vos_profiles_create">Tạo và chuyển</string>
+    <string name="desktop_vos_profiles_created">Đã tạo và chuyển sang %1$s</string>
+    <string name="desktop_vos_profiles_switched">Đã chuyển sang %1$s</string>
+    <string name="desktop_vos_profiles_invalid_name">Dùng chữ, số, chấm, gạch dưới hoặc gạch nối (tối đa 64).</string>
+    <string name="desktop_vos_profiles_portable_hint">Gốc di động giữ config, cache và temp khỏi hồ sơ máy chủ (mặc định Windows: Portable Data).</string>
+    <string name="desktop_vos_profiles_portable_path">Đường dẫn thư mục vault di động</string>
+    <string name="desktop_vos_profiles_add_portable">Thêm gốc vault di động</string>
+    <string name="desktop_vos_profiles_portable_selected">Gốc di động: %1$s</string>
+    <string name="desktop_vos_profiles_portable_reject">Gốc di động không được là thư mục home máy chủ hoặc .config/.cache/.local của nó.</string>
+</resources>

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_workspace_tints">Paski kolorów pulpitów</string>
+    <string name="desktop_theme_workspace_tints_hint">Subtelne neonowe akcenty pod cyframi 1–4 na panelu. Ukryte przy panic mute. Wyłącz: theme.workspaceTints=false.</string>
+</resources>

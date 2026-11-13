@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_shot_title">Captura de pantalla</string>
+    <string name="desktop_shot_full">Pantalla completa</string>
+    <string name="desktop_shot_region">Región rectangular</string>
+    <string name="desktop_shot_window">Ventana</string>
+    <string name="desktop_shot_clipboard">Copiar al portapapeles</string>
+    <string name="desktop_shot_clipboard_hint">Desactivado por defecto. También con TELOS_SHOT_CLIPBOARD=1.</string>
+    <string name="desktop_shot_redact">Redactar antes de guardar</string>
+    <string name="desktop_shot_redact_hint">Dibuja un rectángulo para ocultar contenido privado y guarda.</string>
+    <string name="desktop_shot_save">Guardar</string>
+    <string name="desktop_shot_save_without_redact">Guardar sin redactar</string>
+    <string name="desktop_shot_saved">Captura guardada</string>
+    <string name="desktop_shot_failed">La captura falló</string>
+    <string name="desktop_shot_path_hint">Se guarda en Pictures/Screenshots del vault (o datos portátiles), solo propietario (0600).</string>
+</resources>

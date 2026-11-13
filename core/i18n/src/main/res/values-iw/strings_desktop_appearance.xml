@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<string name="desktop_appearance_hint">עוצמת Quiet Ops או Vault Neon, הדגשת ניאון והשתקת חירום. שכבות פרופיל יכולות לדרוס אותן בלי לכתוב ל-HOME של המארח ב-Portable Data.</string>
+    <string name="desktop_theme_intensity_label">עוצמת ערכת נושא</string>
+    <string name="desktop_theme_accent_label">הדגשה</string>
+    <string name="desktop_panic_mute_toggle">השתקת חירום</string>
+    <string name="desktop_panic_mute_on">השתקת חירום: פועל</string>
+    <string name="desktop_panic_mute_off">השתקת חירום: כבוי</string>
+    <string name="desktop_panic_mute_hint">כופה Quiet Ops ומסתיר מסגרות ומדדי ניאון. חזותי בלבד — לא משנה חומת אש או kill-switch. קיצור: Super+Shift+P.</string>
+    <string name="desktop_vos_profiles_appearance_hint">כל פרופיל בעל שם יכול לשמור שכבת desktop.properties משלו לעוצמה, הדגשה, סמלים וסמן. מעבר טוען מחדש את המראה משכבת הפרופיל ואז מתכונות הכספת הגלובליות.</string>
+</resources>

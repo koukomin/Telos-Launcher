@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_cursor_title">カーソル</string>
+    <string name="desktop_cursor_theme">カーソルテーマ</string>
+    <string name="desktop_cursor_size">カーソルサイズ</string>
+    <string name="desktop_cursor_system_default">システム既定</string>
+    <string name="desktop_cursor_preset_style">Compose オーバーレイスタイル（XCursor が使えない場合）</string>
+    <string name="desktop_cursor_download_section">カーソルテーマをダウンロード（ポータブル/ボルト icons へ）</string>
+    <string name="desktop_cursor_download_named">%1$s をダウンロード（%2$s）</string>
+    <string name="desktop_cursor_download_ok">%1$s をインストールしました</string>
+    <string name="desktop_cursor_download_fail">カーソルテーマをダウンロードできませんでした: %1$s</string>
+    <string name="desktop_cursor_limit_linux">Linux: 子プロセスは XCURSOR_THEME と XCURSOR_SIZE を受け取ります。可能な場合 Telos は XCursor フレームを AWT カーソルに読み込み、そうでなければ Compose Sweet/Breeze オーバーレイを描画します。アニメーション XCursor は再生しません。</string>
+    <string name="desktop_cursor_limit_windows">Windows: AWT システムカーソルに対応付けます。XCursor/Plasma テーマは Win32 ポインターには適用されません。</string>
+    <string name="desktop_cursor_limit_macos">macOS: AWT システムカーソルに対応付けます。XCursor/Plasma テーマは Cocoa ポインターには適用されません。</string>
+</resources>

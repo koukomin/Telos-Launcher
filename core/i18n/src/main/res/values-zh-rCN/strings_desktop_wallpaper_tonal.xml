@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_wallpaper_tonal_title">壁纸强调色</string>
+    <string name="desktop_wallpaper_tonal_enable">从壁纸提取强调色</string>
+    <string name="desktop_wallpaper_tonal_hint">在本机对保险库或便携壁纸采样，并本地推导 Material 色调种子。像素绝不会上传。采样失败时界面回退到霓虹青。</string>
+    <string name="desktop_wallpaper_tonal_accent_wallpaper">theme.accent=wallpaper — 本地种子已启用</string>
+</resources>

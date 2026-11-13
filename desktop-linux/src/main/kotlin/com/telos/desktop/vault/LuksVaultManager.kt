@@ -15,8 +15,16 @@ import kotlin.io.path.exists
 class LuksVaultManager(
     private val home: Path = Path(System.getProperty("user.home")),
 ) {
-    val vaultImage: File = home.resolve(".local/share/telos/telos_vault.img").toFile()
-    val mountPoint: File = home.resolve(".local/share/telos/vault_mnt").toFile()
+    @Volatile
+    var portableSessionRoot: File? = null
+
+    val vaultImage: File
+        get() = portableSessionRoot?.let { File(it, "telos_vault.img") }
+            ?: home.resolve(".local/share/telos/telos_vault.img").toFile()
+
+    val mountPoint: File
+        get() = portableSessionRoot
+            ?: home.resolve(".local/share/telos/vault_mnt").toFile()
     val mapperName: String = "telos_vault"
 
     val configDir: File get() = File(mountPoint, "config")
@@ -31,8 +39,17 @@ class LuksVaultManager(
 
     private var shutdownHookRegistered = false
 
+    fun bindPortableSessionRoot(root: File) {
+        portableSessionRoot = root
+        ensureVaultSubdirs()
+    }
+
+    fun clearPortableSessionRoot() {
+        portableSessionRoot = null
+    }
+
     fun ensureLayout() {
-        vaultImage.parentFile.mkdirs()
+        vaultImage.parentFile?.mkdirs()
         mountPoint.mkdirs()
     }
 

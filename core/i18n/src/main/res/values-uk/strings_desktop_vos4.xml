@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_lan_pair_title">LAN-сполучення з Android</string>
+    <string name="desktop_lan_pair_hint">Запускає короткочасний сервер сполучення в LAN. Відскануйте або введіть код у Telos Sync. Коди й токени ніколи не записуються в журнали.</string>
+    <string name="desktop_lan_pair_start">Запустити LAN-сполучення</string>
+    <string name="desktop_lan_pair_stop">Зупинити LAN-сполучення</string>
+    <string name="desktop_lan_pair_running">Сервер сполучення слухає в LAN</string>
+    <string name="desktop_lan_pair_code">Код сполучення</string>
+    <string name="desktop_lan_pair_qr_uri">URI сполучення (QR / вставити)</string>
+    <string name="desktop_lan_pair_stopped">LAN-сполучення зупинено</string>
+    <string name="desktop_lan_pair_bind_reject">Не можна прив’язати публічну адресу — використайте приватну LAN IP</string>
+    <string name="desktop_lan_pair_android_title">LAN-сполучення Telos Desktop</string>
+    <string name="desktop_lan_pair_host">Хост стільниці (LAN IP)</string>
+    <string name="desktop_lan_pair_port">Порт стільниці</string>
+    <string name="desktop_lan_pair_connect">Сполучити зі стільницею</string>
+    <string name="desktop_lan_pair_paired">Сполучено зі стільницею</string>
+    <string name="desktop_lan_pair_fetch_bundle">Отримати пакет сеансу стільниці</string>
+    <string name="desktop_lan_pair_fetch_ok">Зашифрований пакет сеансу збережено</string>
+    <string name="desktop_lan_pair_send_bundle">Надіслати зашифрований пакет</string>
+    <string name="desktop_lan_pair_failed">Збій LAN-сполучення</string>
+    <string name="desktop_lan_pair_scan_hint">На Android відкрийте Sync → Параметри та вставте URI або введіть хост, порт і код.</string>
+</resources>

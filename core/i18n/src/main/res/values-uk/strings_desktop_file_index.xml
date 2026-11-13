@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_file_index_title">Індекс імен файлів</string>
+    <string name="desktop_file_index_enable">Індекс імен файлів на пристрої</string>
+    <string name="desktop_file_index_hint">За бажанням. Індексує лише імена файлів під HOME сховища або коренем Portable Data (ніколи профіль хоста, крім Host Home). Зберігається зашифрованим у .cache/telos/file-index з правами лише власника. Без вмісту файлів і без завантаження в хмару.</string>
+</resources>

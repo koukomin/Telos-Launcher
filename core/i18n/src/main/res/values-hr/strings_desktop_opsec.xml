@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_opsec_title">OpSec</string>
+    <string name="desktop_opsec_secure_clipboard">Siguran međuspremnik</string>
+    <string name="desktop_opsec_clipboard_title">Međuspremnik</string>
+    <string name="desktop_opsec_clipboard_hint">Osjetljiv tekst (ključevi, IBAN, WireGuard) uklanja se iz povijesti, čuva samo u ovoj sesiji i briše iz sistemskog međuspremnika. Povijest ostaje u vaultu — bez sinkronizacije u oblaku.</string>
+    <string name="desktop_opsec_clipboard_clear_now">Očisti međuspremnik sada</string>
+    <string name="desktop_opsec_clipboard_clear_all">Obriši sve</string>
+    <string name="desktop_opsec_clipboard_history_meta">Do 20 stavki · istječe nakon 5 minuta · pripni do zaključavanja · Super+V</string>
+    <string name="desktop_opsec_clipboard_history_empty">Još nema povijesti međuspremnika</string>
+    <string name="desktop_opsec_clipboard_pin_until_lock">Pripni</string>
+    <string name="desktop_opsec_clipboard_unpin">Otkvači</string>
+    <string name="desktop_opsec_clipboard_recall_vaulted">Dohvati osjetljivi isječak iz vaulta</string>
+    <string name="desktop_opsec_clipboard_timer">Automatski očisti nakon %1$d s</string>
+    <string name="desktop_opsec_clipboard_timer_off">Isključeno</string>
+    <string name="desktop_opsec_attestation_run">Zabilježi snimku integriteta hosta</string>
+    <string name="desktop_opsec_audit_title">Revizijski zapisnik sesije</string>
+    <string name="desktop_opsec_audit_refresh">Osvježi zapisnik</string>
+    <string name="desktop_opsec_audit_empty">Još nema revizijskih događaja</string>
+    <string name="desktop_opsec_tpm_status">TPM status: %1$s</string>
+    <string name="desktop_opsec_tpm_unknown">još nije izmjereno</string>
+    <string name="desktop_opsec_tpm_hint">Lokalni sažetak digest-a PCR 0/7 putem tpm2-tools ako su dostupni. Ovo nije udaljena atestacija (RAP).</string>
+</resources>

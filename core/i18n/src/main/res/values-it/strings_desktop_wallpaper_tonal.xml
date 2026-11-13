@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_wallpaper_tonal_title">Accento dallo sfondo</string>
+    <string name="desktop_wallpaper_tonal_enable">Accento dallo sfondo</string>
+    <string name="desktop_wallpaper_tonal_hint">Campiona lo sfondo vault o portable su questo dispositivo e deriva localmente un seed tonale Material. I pixel non vengono mai caricati. Se il campionamento fallisce, il chrome usa il ciano neon.</string>
+    <string name="desktop_wallpaper_tonal_accent_wallpaper">theme.accent=wallpaper — seed locale attivo</string>
+</resources>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_net_dns_pref_hint">يُحفظ في الخزنة. على لينكس يطبّق Telos بروتوكول DoT عبر resolvectl عند توافره؛ ويبقى DoH تفضيلاً فقط.</string>
+    <string name="desktop_net_profiles_sum">مجلدات ملفات تعريف الخزنة ضمن ~/.config/telos/profiles/</string>
+    <string name="desktop_net_allowlist_path">ملف قائمة السماح</string>
+    <string name="desktop_net_kill_switch">مفتاح القطع</string>
+    <string name="desktop_net_kill_switch_enable">تفعيل مفتاح القطع</string>
+    <string name="desktop_net_kill_switch_disable">إيقاف مفتاح القطع</string>
+    <string name="desktop_net_kill_switch_enforced">مُطبَّق: يُسقَط الخروج غير المدرج في القائمة (nftables inet telos_session)</string>
+    <string name="desktop_net_kill_switch_pref_only">تم حفظ التفضيل؛ غير مُطبَّق على هذه المنصة</string>
+    <string name="desktop_net_kill_switch_failed">مفعّل، لكن تعذّر تطبيق nftables — المرور غير محظور</string>
+    <string name="desktop_net_kill_switch_clear_blocked">مسح جدار ناري الجلسة محظور طالما مفتاح القطع مفعّل</string>
+    <string name="desktop_net_apps_tab">التطبيقات</string>
+    <string name="desktop_net_apps_title">توجيه لكل تطبيق</string>
+    <string name="desktop_net_apps_hint">معرّف سطح مكتب أو حزمة في كل سطر مع allow أو deny أو vpn. يُحفظ في ~/.config/telos/app-routing.txt. على Linux يمنع deny التشغيل من مشغّل Telos ويضبط vpn المتغير TELOS_APP_ROUTE=vpn (أفضل جهد، دون netns مزيف). لا يُطبَّق توجيه nftables حسب المالك/cgroup على مستوى العملية حفاظًا على kill-switch الجلسة.</string>
+    <string name="desktop_net_apps_file">جدول التوجيه</string>
+    <string name="desktop_net_dns_filters_title">مرشحات DNS</string>
+    <string name="desktop_net_dns_filters_hint">قوائم الحظر والسماح محفوظة في vault ~/.config/telos/ (dns-block.txt و dns-allow.txt). معرّف NextDNS يطبّق DoT عبر resolvectl على Linux عند التوفر. فعّل Telos DNS stub (أو عيّن dns-stub.port) لتشغيل مُمرّر محلي على 127.0.0.1 يرد NXDOMAIN للمضيفين المحظورين ويعيد توجيه DNS عبر nftables — فتصبح القوائم Enforced. إذا تعذّر الربط أو فشل nft تبقى الحالة Failed/PreferenceOnly. Windows وmacOS يحفظان التفضيلات فقط.</string>
+    <string name="desktop_net_nextdns_id">معرّف إعداد NextDNS</string>
+    <string name="desktop_net_nextdns_id_invalid">معرّف إعداد NextDNS غير صالح (استخدم 4–12 حرفًا أو رقمًا)</string>
+    <string name="desktop_net_dns_blocklist">قائمة حظر DNS</string>
+    <string name="desktop_net_dns_allowlist">قائمة سماح DNS</string>
+    <string name="desktop_net_dns_filter_status">حالة المرشح</string>
+    <string name="desktop_net_dns_filter_enforced">مُفعَّل (NextDNS DoT و/أو Telos DNS stub مع إعادة توجيه nft)</string>
+    <string name="desktop_net_dns_filter_pref_only">تم حفظ التفضيل؛ لا يُطبَّق التصفية على هذا المسار</string>
+    <string name="desktop_net_dns_filter_failed">مُعدّ، لكن تعذّر على DNS stub الربط أو لم يستطع resolvectl/nftables تطبيق التصفية</string>
+    <string name="desktop_net_apps_enforced">مُفعَّل: بوابة التشغيل نشطة (DesktopFileLauncher يراجع قواعد deny)</string>
+    <string name="desktop_net_apps_pref_only">تم حفظ التفضيل؛ لا توجد قواعد deny على Linux أو غير مطبّق على هذه المنصة</string>
+    <string name="desktop_net_dns_stub_enable">تفعيل Telos DNS stub</string>
+    <string name="desktop_net_dns_stub_disable">تعطيل Telos DNS stub</string>
+    <string name="desktop_net_dns_stub_hint">يستمع Telos DNS stub على 127.0.0.1 (المنفذ الافتراضي 5353)، ويرد NXDOMAIN لـ dns-block.txt (قائمة السماح تتقدّم) ويعيد توجيه الاستعلامات الأخرى. يعيد nftables inet telos_dns توجيه المنفذ 53 الصادر عند نجاح التطبيق المميز.</string>
+</resources>

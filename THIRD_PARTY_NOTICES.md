@@ -54,6 +54,9 @@ based on" table in `readme.md`.
 | [Spy Camera OS](https://github.com/wolkenschieber/spy-camera-os) | CC-BY-NC-3.0 | Feature ideas only for discreet capture; no source copied |
 | [PdfBox-Android](https://github.com/TomRoush/PdfBox-Android) | Apache-2.0 | Copyright the Apache PDFBox authors and Tom Roush; used unchanged as a Maven dependency |
 | [baresip](https://github.com/baresip/baresip), [baresip-studio](https://github.com/juha-h/baresip-studio) | BSD-3-Clause | Planned, not yet included |
+| [Papirus icon theme](https://github.com/PapirusDevelopmentTeam/papirus-icon-theme) | GPL-3.0 | Copyright (C) Papirus Development Team. Optional desktop download catalog entry only; not bundled. |
+| [Tela icon theme](https://github.com/vinceliuice/Tela-icon-theme) | GPL-3.0 | Copyright (C) vinceliuice. Optional desktop download catalog entry only; not bundled. |
+| [candy-icons](https://github.com/EliverLara/candy-icons) | GPL-3.0 | Copyright (C) Eliver Lara. Optional desktop download catalog entry only; not bundled. Distinct from Telos built-in CandyCyber Compose glyphs. |
 
 ## Trademarks
 
@@ -376,6 +379,19 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 ## AppOpsNext embedded component
 
 [AppOpsNext](https://github.com/1zumiii/AppOpsNext), by 1zumiii, GPL-3.0. The complete upstream application source, tests and native daemon are adapted under `libs/appops-next`; the exact source commit and version are recorded in its `UPSTREAM.md`, with the full GPL license retained. The source is embedded in Telos rather than depending on an installed companion. Its Phosphor icon license is retained in `src/main/assets/licenses/phosphor-icons.txt`. Telos-specific changes include host-owned lifecycle/storage, internal per-package navigation, shared Shizuku UserService process transport and inherited Telos typography. The native ARM64 daemon is built from source; other ABIs retain the UserService backend. Integration validation and additional locale coverage are in progress; this notice is not a device-validation claim.
+
+## Desktop cursor themes (optional downloads)
+
+Telos Desktop can optionally download GPL-compatible XCursor packs into the
+portable/vault Freedesktop icons directory (`…/icons/<Theme>/cursors`). Nothing
+from these projects is bundled in the repository or APK; archives are fetched
+only when the user taps Download in Settings → Cursor.
+
+| Project | License | Notes |
+| --- | --- | --- |
+| [BreezeX_Cursor](https://github.com/ful1e5/BreezeX_Cursor) (ful1e5) | GPL-3.0-or-later | Breeze-inspired XCursor themes offered as optional downloads |
+| [Bibata_Cursor](https://github.com/ful1e5/Bibata_Cursor) (ful1e5) | GPL-3.0-or-later | Bibata Modern/Original Classic XCursor themes offered as optional downloads |
+| [KDE Breeze cursors](https://invent.kde.org/plasma/breeze) | LGPL-2.1-or-later (upstream Plasma) | Discovered from distro `/usr/share/icons` when installed; not redistributed by Telos |
 
 ## Camera recognition and searchable PDF
 

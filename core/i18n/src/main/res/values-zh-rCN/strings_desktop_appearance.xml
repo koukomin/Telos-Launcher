@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<string name="desktop_appearance_hint">Quiet Ops 或 Vault Neon 强度、霓虹强调色与紧急静音。配置文件叠加可覆盖这些项，且在便携数据模式下不会写入主机 HOME。</string>
+    <string name="desktop_theme_intensity_label">主题强度</string>
+    <string name="desktop_theme_accent_label">强调色</string>
+    <string name="desktop_panic_mute_toggle">紧急静音</string>
+    <string name="desktop_panic_mute_on">紧急静音：开</string>
+    <string name="desktop_panic_mute_off">紧急静音：关</string>
+    <string name="desktop_panic_mute_hint">强制 Quiet Ops 并隐藏霓虹边框与仪表。仅视觉效果——不改防火墙或 kill-switch。快捷键：Super+Shift+P。</string>
+    <string name="desktop_vos_profiles_appearance_hint">每个命名配置文件可保留自己的 desktop.properties 叠加，用于强度、强调色、图标与光标。切换时先从配置文件叠加再从全局保险库属性重新加载外观。</string>
+</resources>

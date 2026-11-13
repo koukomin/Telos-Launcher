@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+    <string name="keepass_entry_username">Nomen usoris</string>
+    <string name="keepass_entry_password">Tessera</string>
+    <string name="keepass_entry_url">URL</string>
+    <string name="keepass_entry_notes">Notae</string>
+    <string name="keepass_entry_reveal">Ostende tesseram</string>
+    <string name="keepass_entry_hide">Cela tesseram</string>
+    <string name="fit_status_synced">Cum Health Connect synchronizatum</string>
+    <string name="fit_status_partial">Health Connect praesto — data demonstrativa localia</string>
+    <string name="fit_status_local_demo">Data demonstrativa localia</string>
+    <string name="fit_food_search_title">Cibum quaere</string>
+    <string name="fit_food_search_hint">Cibus, nota mercatoria, vel barcode</string>
+    <string name="sync_preview_title">Praevisio Sync</string>
+    <string name="sync_preview_summary">Indices fasciculorum et machinarum exempla sunt. Coniunctio et synchronizatio viva nondum praesto sunt.</string>
+    <string name="aether_compose_title">Notam compone</string>
+    <string name="aether_compose_hint">Notam localem scribe. Relays nondum conexae sunt.</string>
+    <string name="aether_preview_summary">Aether praevisio localis est. Transmissio ad relays Nostr nondum praesto est.</string>
+    <string name="aether_broadcast_unavailable">Transmissio non praesto</string>
+    <string name="aether_attached_media">Medium adiunctum: %1$s</string>
+    <string name="aether_dm_unavailable_title">Nuntii directi non praesto</string>
+    <string name="aether_dm_unavailable_summary">DM encryptati sessionem Nostr vivam requirunt. Haec versio colloquia solum localiter servat.</string>
+    <string name="keepass_db_password">Tessera basium datorum</string>
+    <string name="keepass_lock">Claude arcam</string>
+    <string name="keepass_open_kdbx">Aperi KDBX</string>
+    <string name="keepass_open_stego">Aperi ex imagine (steganographia)</string>
+    <string name="keepass_unnamed">Sine nomine</string>
+    <string name="keepass_wrong_password">Tessera falsa vel fasciculus invalidus</string>
+    <string name="keepass_title">KeePassTL</string>
+    <string name="telos_trash_working">In opere…</string>
+    <string name="keepass_encrypted_val">Cryptatum</string>
+</resources>

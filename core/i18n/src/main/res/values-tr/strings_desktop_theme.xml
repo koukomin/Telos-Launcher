@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_appearance_title">Görünüm</string>
+    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
+    <string name="desktop_theme_intensity_neon">Vault Neon</string>
+    <string name="desktop_theme_intensity_paper">Paper Ops</string>
+    <string name="desktop_wallpaper_path">Duvar kağıdı (vault yolu)</string>
+    <string name="desktop_wallpaper_path_hint">Vault bağlama noktasına göreli (ör. Pictures/wall.jpg). Kilitli önyükleme ekranında asla gösterilmez.</string>
+    <string name="desktop_unlock_theatre_title">Telos Phantom Vault</string>
+    <string name="desktop_unlock_theatre_quiet_ops">Quiet Ops — duvar kağıdını göstermek için kilidi açın</string>
+    <string name="desktop_unlock_theatre_hint">Kilitli önyükleme yalnızca vault glifiyle Quiet Ops’ta kalır. Kilit açıldıktan sonra Telos vault duvar kağıdına ve seçilen yoğunluğa çapraz geçiş yapar — parçacık yok.</string>
+    <string name="desktop_sandbox_tint_hint">Vurgu halkası rengi yalnızca görsel OpSec’tir (Host = turuncu uyarı, Net-isolated = camgöbeği, Vault FS = yeşil, Standard = magenta).</string>
+    <string name="desktop_matched_packs_title">Eşleşen simge + imleç paketleri</string>
+    <string name="desktop_matched_packs_hint">Tek tık belgelenmiş bir GPL çifti ayarlar (Papirus↔BreezeX, candy-icons↔Bibata; CandyCyber yerleşik chrome glifi olarak kalır). İndirmeler vault veya portable simge klasöründe kalır.</string>
+    <string name="desktop_matched_packs_apply">Çifti eşleştir: %1$s</string>
+    <string name="desktop_matched_packs_one_click">Çifti eşleştir</string>
+    <string name="desktop_matched_packs_working">Paketler eşleştiriliyor…</string>
+    <string name="desktop_matched_packs_ok">Eşleşen paket %1$s uygulandı</string>
+    <string name="desktop_matched_packs_fail">Paketler eşleştirilemedi: %1$s</string>
+</resources>

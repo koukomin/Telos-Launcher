@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_cursor_title">커서</string>
+    <string name="desktop_cursor_theme">커서 테마</string>
+    <string name="desktop_cursor_size">커서 크기</string>
+    <string name="desktop_cursor_system_default">시스템 기본값</string>
+    <string name="desktop_cursor_preset_style">Compose 오버레이 스타일(XCursor를 사용할 수 없을 때)</string>
+    <string name="desktop_cursor_download_section">커서 테마 다운로드(포터블/볼트 icons)</string>
+    <string name="desktop_cursor_download_named">%1$s 다운로드(%2$s)</string>
+    <string name="desktop_cursor_download_ok">%1$s 설치됨</string>
+    <string name="desktop_cursor_download_fail">커서 테마를 다운로드할 수 없음: %1$s</string>
+    <string name="desktop_cursor_limit_linux">Linux: 자식 앱은 XCURSOR_THEME와 XCURSOR_SIZE를 받습니다. 가능하면 Telos가 XCursor 프레임을 AWT 커서로 로드하고, 그렇지 않으면 Compose Sweet/Breeze 오버레이를 그립니다. 애니메이션 XCursor 시퀀스는 재생되지 않습니다.</string>
+    <string name="desktop_cursor_limit_windows">Windows: AWT 시스템 커서에 매핑합니다. XCursor/Plasma 테마는 Win32 포인터에 적용되지 않습니다.</string>
+    <string name="desktop_cursor_limit_macos">macOS: AWT 시스템 커서에 매핑합니다. XCursor/Plasma 테마는 Cocoa 포인터에 적용되지 않습니다.</string>
+</resources>

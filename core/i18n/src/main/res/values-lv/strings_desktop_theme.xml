@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_appearance_title">Izskats</string>
+    <string name="desktop_theme_intensity_quiet">Quiet Ops</string>
+    <string name="desktop_theme_intensity_neon">Vault Neon</string>
+    <string name="desktop_theme_intensity_paper">Paper Ops</string>
+    <string name="desktop_wallpaper_path">Fona attēls (vault ceļš)</string>
+    <string name="desktop_wallpaper_path_hint">Relatīvi pret vault montēšanas punktu (piem. Pictures/wall.jpg). Nekad netiek rādīts bloķētajā pirmsboot ekrānā.</string>
+    <string name="desktop_unlock_theatre_title">Telos Phantom Vault</string>
+    <string name="desktop_unlock_theatre_quiet_ops">Quiet Ops — atbloķējiet, lai atklātu fona attēlu</string>
+    <string name="desktop_unlock_theatre_hint">Bloķētais boot paliek Quiet Ops tikai ar vault glifu. Pēc atbloķēšanas Telos pāriet uz vault fonu un izvēlēto intensitāti — bez daļiņām.</string>
+    <string name="desktop_sandbox_tint_hint">Akcenta gredzena krāsa ir tikai vizuāls OpSec (Host = oranža piesardzība, Net-isolated = ciāna, Vault FS = zaļa, Standard = magenta).</string>
+    <string name="desktop_matched_packs_title">Saskaņotas ikonu + kursora pakotnes</string>
+    <string name="desktop_matched_packs_hint">Viens klikšķis iestata dokumentētu GPL pāri (Papirus↔BreezeX, candy-icons↔Bibata; CandyCyber paliek iebūvētais chrome glifs). Lejupielādes paliek vault vai portable ikonu mapē.</string>
+    <string name="desktop_matched_packs_apply">Saskaņot pāri: %1$s</string>
+    <string name="desktop_matched_packs_one_click">Saskaņot pāri</string>
+    <string name="desktop_matched_packs_working">Saskaņo pakotnes…</string>
+    <string name="desktop_matched_packs_ok">Lietota saskaņotā pakotne %1$s</string>
+    <string name="desktop_matched_packs_fail">Neizdevās saskaņot pakotnes: %1$s</string>
+</resources>

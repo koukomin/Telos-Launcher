@@ -17,7 +17,11 @@ val LocalVirtualAppBlur = staticCompositionLocalOf<VirtualAppBlur?> { null }
     else MaterialTheme.colorScheme.surface.copy(alpha = MaterialTheme.transparency.background)
 @Composable fun virtualAppElevated(): Color = MaterialTheme.colorScheme.surfaceContainerHigh
     .copy(alpha = 1f)
-/** Dialogs, menus and list pickers over wallpaper glass. */
+/**
+ * Dialogs, menus and list pickers over wallpaper glass.
+ * Shared surface-kit role: [TelosSurfaceTokens.popupOpaque] / ui-kmp `popupOpaque`.
+ * Always opaque — never cleared root `surface`.
+ */
 @Composable fun virtualAppPopup(): Color = MaterialTheme.colorScheme.surfaceContainer
     .copy(alpha = 1f)
 /** Settings lists (PreferenceScreen): frosted plate, not a clear hole over wallpaper. */

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<string name="desktop_appearance_hint">Intenzita Quiet Ops alebo Vault Neon, neónový akcent a panické stlmenie. Prekryvy profilu ich môžu prepísať bez zápisu do HOME hostiteľa v Portable Data.</string>
+    <string name="desktop_theme_intensity_label">Intenzita motívu</string>
+    <string name="desktop_theme_accent_label">Akcent</string>
+    <string name="desktop_panic_mute_toggle">Panické stlmenie</string>
+    <string name="desktop_panic_mute_on">Panické stlmenie: Zapnuté</string>
+    <string name="desktop_panic_mute_off">Panické stlmenie: Vypnuté</string>
+    <string name="desktop_panic_mute_hint">Vynúti Quiet Ops a skryje neónové okraje a ukazovatele. Len vizuálne — nemení firewall ani kill-switch. Skratka: Super+Shift+P.</string>
+    <string name="desktop_vos_profiles_appearance_hint">Každý pomenovaný profil môže mať vlastný prekryv desktop.properties pre intenzitu, akcent, ikony a kurzor. Prepnutie načíta vzhľad z prekryvu profilu a potom z globálnych vlastností trezoru.</string>
+</resources>

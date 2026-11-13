@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_panel_surface">패널 표면</string>
+    <string name="desktop_theme_panel_surface_hint">투명 또는 흐림은 패널 루트에만 적용되며 메뉴는 불투명합니다. 흐림은 frost용 panelBlur를 저장합니다. 호스트 배경화면 블러는 없으면 best-effort입니다.</string>
+    <string name="desktop_theme_panel_transparent">투명</string>
+    <string name="desktop_theme_panel_blurred">흐림</string>
+    <string name="desktop_theme_panel_solid">단색</string>
+    <string name="desktop_theme_panel_opacity">패널 불투명도: %1$d%%</string>
+    <string name="desktop_theme_panel_blur">유리 흐림: %1$d</string>
+    <string name="desktop_theme_panel_blur_unavailable">호스트 배경화면 블러를 사용할 수 없습니다. Telos는 반투명 frost 판을 쓰고 흐림 설정을 유지합니다.</string>
+</resources>

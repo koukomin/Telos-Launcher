@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_opsec_title">OpSec</string>
+    <string name="desktop_opsec_secure_clipboard">Portapapeles seguro</string>
+    <string name="desktop_opsec_clipboard_title">Portapapeles</string>
+    <string name="desktop_opsec_clipboard_hint">El texto sensible (claves, IBAN, WireGuard) se elimina del historial, se guarda solo en esta sesión y se borra del portapapeles del sistema. El historial es local al vault — sin sincronización en la nube.</string>
+    <string name="desktop_opsec_clipboard_clear_now">Vaciar portapapeles ahora</string>
+    <string name="desktop_opsec_clipboard_clear_all">Borrar todo</string>
+    <string name="desktop_opsec_clipboard_history_meta">Hasta 20 elementos · caduca a los 5 minutos · fijar hasta bloqueo · Super+V</string>
+    <string name="desktop_opsec_clipboard_history_empty">Aún no hay historial del portapapeles</string>
+    <string name="desktop_opsec_clipboard_pin_until_lock">Fijar</string>
+    <string name="desktop_opsec_clipboard_unpin">Quitar</string>
+    <string name="desktop_opsec_clipboard_recall_vaulted">Recuperar clip sensible guardado</string>
+    <string name="desktop_opsec_clipboard_timer">Borrar automáticamente tras %1$d segundos</string>
+    <string name="desktop_opsec_clipboard_timer_off">Desactivado</string>
+    <string name="desktop_opsec_attestation_run">Registrar instantánea de integridad del host</string>
+    <string name="desktop_opsec_audit_title">Registro de auditoría de sesión</string>
+    <string name="desktop_opsec_audit_refresh">Actualizar registro</string>
+    <string name="desktop_opsec_audit_empty">Aún no hay eventos de auditoría</string>
+    <string name="desktop_opsec_tpm_status">Estado TPM: %1$s</string>
+    <string name="desktop_opsec_tpm_unknown">aún no medido</string>
+    <string name="desktop_opsec_tpm_hint">Resumen local de digest PCR 0/7 con tpm2-tools si está presente. No es atestación remota (RAP).</string>
+</resources>

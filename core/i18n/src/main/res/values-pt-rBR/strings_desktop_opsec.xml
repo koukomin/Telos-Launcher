@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_opsec_title">OpSec</string>
+    <string name="desktop_opsec_secure_clipboard">Área de transferência segura</string>
+    <string name="desktop_opsec_clipboard_title">Área de transferência</string>
+    <string name="desktop_opsec_clipboard_hint">Texto sensível (chaves, IBAN, WireGuard) é removido do histórico, guardado só nesta sessão e limpo da área de transferência do sistema. O histórico fica no vault — sem sincronização na nuvem.</string>
+    <string name="desktop_opsec_clipboard_clear_now">Limpar área de transferência agora</string>
+    <string name="desktop_opsec_clipboard_clear_all">Limpar tudo</string>
+    <string name="desktop_opsec_clipboard_history_meta">Até 20 itens · expira após 5 minutos · fixar até bloquear · Super+V</string>
+    <string name="desktop_opsec_clipboard_history_empty">Ainda sem histórico da área de transferência</string>
+    <string name="desktop_opsec_clipboard_pin_until_lock">Fixar</string>
+    <string name="desktop_opsec_clipboard_unpin">Soltar</string>
+    <string name="desktop_opsec_clipboard_recall_vaulted">Recuperar clip sensível no vault</string>
+    <string name="desktop_opsec_clipboard_timer">Limpar automaticamente após %1$d segundos</string>
+    <string name="desktop_opsec_clipboard_timer_off">Desligado</string>
+    <string name="desktop_opsec_attestation_run">Registrar instantâneo de integridade do host</string>
+    <string name="desktop_opsec_audit_title">Registro de auditoria da sessão</string>
+    <string name="desktop_opsec_audit_refresh">Atualizar registro</string>
+    <string name="desktop_opsec_audit_empty">Ainda não há eventos de auditoria</string>
+    <string name="desktop_opsec_tpm_status">Status do TPM: %1$s</string>
+    <string name="desktop_opsec_tpm_unknown">ainda não medido</string>
+    <string name="desktop_opsec_tpm_hint">Resumo local dos digests PCR 0/7 via tpm2-tools quando presentes. Não é atestação remota (RAP).</string>
+</resources>

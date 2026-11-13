@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_theme_panel_surface">Повърхност на панела</string>
+    <string name="desktop_theme_panel_surface_hint">Прозрачен или размит засяга само корена на панела; менютата остават непрозрачни. Размит запазва panelBlur за frost; размазването на тапета на хоста е best-effort, ако липсва.</string>
+    <string name="desktop_theme_panel_transparent">Прозрачен</string>
+    <string name="desktop_theme_panel_blurred">Размит</string>
+    <string name="desktop_theme_panel_solid">Плътен</string>
+    <string name="desktop_theme_panel_opacity">Непрозрачност на панела: %1$d%%</string>
+    <string name="desktop_theme_panel_blur">Размазване на стъклото: %1$d</string>
+    <string name="desktop_theme_panel_blur_unavailable">Размазването на тапета на хоста не е налично; Telos използва полупрозрачна frost плоча и запазва предпочитанието за размазване.</string>
+</resources>

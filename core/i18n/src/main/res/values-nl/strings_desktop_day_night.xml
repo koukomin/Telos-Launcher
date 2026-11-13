@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_day_night_title">Dag-/nachtthema</string>
+    <string name="desktop_day_night_hint">Paper Ops (licht) overdag en Quiet Ops (donker) ’s nachts bij Auto. Grenzen gebruiken je tijdzone. Standaard handmatige zone — netwerk wordt nooit voor locatie gebruikt tenzij je hieronder opt-in geeft.</string>
+    <string name="desktop_day_night_mode">Dag-/nachtmodus</string>
+    <string name="desktop_day_night_off">Uit</string>
+    <string name="desktop_day_night_auto">Auto</string>
+    <string name="desktop_day_night_light">Licht</string>
+    <string name="desktop_day_night_dark">Donker</string>
+    <string name="desktop_day_night_timezone">Tijdzone</string>
+    <string name="desktop_day_night_timezone_hint">IANA-tijdzone voor lokale dag/nacht (JVM tot je kiest). Handmatige keuze belt geen servers.</string>
+    <string name="desktop_day_night_timezone_search">Tijdzones zoeken</string>
+    <string name="desktop_day_night_timezone_current">Huidige tijdzone: %1$s</string>
+    <string name="desktop_day_night_network_assist">Netwerkhulp land / tijdzone</string>
+    <string name="desktop_day_night_network_assist_warning">Alleen met toestemming. Ingeschakeld doet Telos één verzoek naar een publiek IP→geo-eindpunt voor tijdzone en landcode. Alleen die waarden (en optionele coördinaten voor zonsopkomst/-ondergang) gaan in vault desktop.properties. Je IP wordt niet gelogd, geen continue tracking, geen cloud-themasync. Bij netwerkfout, kill-switch of offline blijft de handmatige zone; Preference only of Failed wordt eerlijk getoond.</string>
+    <string name="desktop_day_night_assist_pref_only">Alleen voorkeur — netwerkhulp uit, geblokkeerd of niet gevraagd; handmatige zone</string>
+    <string name="desktop_day_night_assist_failed">Mislukt — geo-eindpunt onbereikbaar; handmatige zone behouden</string>
+    <string name="desktop_day_night_assist_applied">Toegepast — zone %1$s, land %2$s (alleen lokaal)</string>
+    <string name="desktop_day_night_country">Landcode: %1$s</string>
+</resources>

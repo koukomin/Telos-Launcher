@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="desktop_opsec_title">OpSec</string>
+    <string name="desktop_opsec_secure_clipboard">Bảng tạm bảo mật</string>
+    <string name="desktop_opsec_clipboard_title">Bảng tạm</string>
+    <string name="desktop_opsec_clipboard_hint">Văn bản nhạy cảm (khóa, IBAN, WireGuard) bị loại khỏi lịch sử, chỉ giữ trong phiên này và xóa khỏi clipboard hệ thống. Lịch sử chỉ trong vault — không đồng bộ đám mây.</string>
+    <string name="desktop_opsec_clipboard_clear_now">Xóa bảng tạm ngay</string>
+    <string name="desktop_opsec_clipboard_clear_all">Xóa tất cả</string>
+    <string name="desktop_opsec_clipboard_history_meta">Tối đa 20 mục · hết hạn sau 5 phút · ghim đến khi khóa · Super+V</string>
+    <string name="desktop_opsec_clipboard_history_empty">Chưa có lịch sử clipboard</string>
+    <string name="desktop_opsec_clipboard_pin_until_lock">Ghim</string>
+    <string name="desktop_opsec_clipboard_unpin">Bỏ ghim</string>
+    <string name="desktop_opsec_clipboard_recall_vaulted">Gọi lại clip nhạy cảm trong vault</string>
+    <string name="desktop_opsec_clipboard_timer">Tự xóa sau %1$d giây</string>
+    <string name="desktop_opsec_clipboard_timer_off">Tắt</string>
+    <string name="desktop_opsec_attestation_run">Ghi ảnh chụp toàn vẹn máy chủ</string>
+    <string name="desktop_opsec_audit_title">Nhật ký kiểm toán phiên</string>
+    <string name="desktop_opsec_audit_refresh">Làm mới nhật ký</string>
+    <string name="desktop_opsec_audit_empty">Chưa có sự kiện kiểm toán</string>
+    <string name="desktop_opsec_tpm_status">Trạng thái TPM: %1$s</string>
+    <string name="desktop_opsec_tpm_unknown">chưa đo</string>
+    <string name="desktop_opsec_tpm_hint">Tóm tắt digest PCR 0/7 cục bộ qua tpm2-tools khi có. Đây không phải chứng thực từ xa (RAP).</string>
+</resources>

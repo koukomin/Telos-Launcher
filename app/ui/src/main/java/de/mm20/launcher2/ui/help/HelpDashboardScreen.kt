@@ -42,10 +42,15 @@ import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.icons.StaticIconLayer
 import de.mm20.launcher2.icons.StaticLauncherIcon
 import de.mm20.launcher2.icons.TransparentLayer
-import de.mm20.launcher2.ui.component.LauncherCard
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
+import de.mm20.launcher2.ui.component.TelosCyber
+import de.mm20.launcher2.ui.component.TelosCyberAppBarTitle
+import de.mm20.launcher2.ui.component.TelosCyberSectionLabel
 import de.mm20.launcher2.ui.component.VirtualAppWindow
+import de.mm20.launcher2.ui.component.telosTechSurface
 import de.mm20.launcher2.ui.locals.LocalBackStack
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.graphics.Color
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -83,7 +88,7 @@ fun HelpDashboardScreen() {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(MaterialTheme.colorScheme.surface)
+                .background(Color.Transparent)
                 .windowInsetsPadding(WindowInsets.safeDrawing.only(WindowInsetsSides.Vertical))
         ) {
             Row(Modifier.fillMaxWidth().padding(8.dp), verticalAlignment = Alignment.CenterVertically) {
@@ -92,18 +97,13 @@ fun HelpDashboardScreen() {
                         Icon(painterResource(BaseR.drawable.arrow_back_24px), stringResource(I18nR.string.hc_back))
                     }
                 }
-                Text(
-                    text = stringResource(I18nR.string.telos_help_title),
-                    style = MaterialTheme.typography.titleLarge,
+                TelosCyberAppBarTitle(
+                    title = stringResource(I18nR.string.telos_help_title),
+                    status = stringResource(I18nR.string.telos_help_subtitle),
+                    statusColor = TelosCyber.NeonCyan,
                     modifier = Modifier.weight(1f).padding(start = if (backStack.size > 1) 0.dp else 8.dp),
                 )
             }
-            Text(
-                text = stringResource(I18nR.string.telos_help_subtitle),
-                style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.padding(horizontal = 24.dp, vertical = 4.dp),
-            )
             OutlinedTextField(
                 value = query,
                 onValueChange = { query = it },
@@ -121,6 +121,7 @@ fun HelpDashboardScreen() {
                         ChapterCard(
                             title = launcherTitle,
                             summary = launcherSum,
+                            accent = TelosCyber.NeonCyan,
                             onClick = { backStack.add(HelpLessonRoute(HELP_TOPIC_LAUNCHER)) },
                         )
                     }
@@ -130,18 +131,14 @@ fun HelpDashboardScreen() {
                         ChapterCard(
                             title = settingsTitle,
                             summary = settingsSum,
+                            accent = TelosCyber.NeonOrange,
                             onClick = { backStack.add(HelpLessonRoute(HELP_TOPIC_SETTINGS)) },
                         )
                     }
                 }
                 if (showAppsHeader) {
                     item(key = "ch-apps") {
-                        Text(
-                            appsTitle,
-                            style = MaterialTheme.typography.titleMedium,
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier.padding(top = 8.dp),
-                        )
+                        TelosCyberSectionLabel(appsTitle, accent = TelosCyber.NeonGreen)
                         Text(
                             appsSum,
                             style = MaterialTheme.typography.bodySmall,
@@ -158,43 +155,49 @@ fun HelpDashboardScreen() {
 }
 
 @Composable
-private fun ChapterCard(title: String, summary: String, onClick: () -> Unit) {
-    LauncherCard(modifier = Modifier.fillMaxWidth().clickable(onClick = onClick)) {
-        Column(Modifier.padding(20.dp)) {
-            Text(title, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
-            Text(summary, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-        }
+private fun ChapterCard(title: String, summary: String, accent: Color, onClick: () -> Unit) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .telosTechSurface(borderColor = accent, shape = RoundedCornerShape(18.dp))
+            .clickable(onClick = onClick)
+            .padding(20.dp),
+    ) {
+        Text(title, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
+        Text(summary, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
     }
 }
 
 @Composable
 private fun AppRow(app: HelpAppLesson, onClick: () -> Unit) {
     val context = LocalContext.current
-    LauncherCard(modifier = Modifier.fillMaxWidth().clickable(onClick = onClick)) {
-        Row(
-            Modifier.fillMaxWidth().padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
-        ) {
-            ShapedLauncherIcon(
-                size = 56.dp,
-                icon = {
-                    StaticLauncherIcon(
-                        StaticIconLayer(ContextCompat.getDrawable(context, app.iconRes)!!, 1f),
-                        TransparentLayer,
-                    )
-                },
-            )
-            Column(Modifier.weight(1f)) {
-                Text(stringResource(app.nameRes), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
-                Text(
-                    stringResource(app.descRes),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    maxLines = 2,
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .telosTechSurface(borderColor = TelosCyber.accentFor(app.key.hashCode()), shape = RoundedCornerShape(16.dp))
+            .clickable(onClick = onClick)
+            .padding(16.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
+    ) {
+        ShapedLauncherIcon(
+            size = 56.dp,
+            icon = {
+                StaticLauncherIcon(
+                    StaticIconLayer(ContextCompat.getDrawable(context, app.iconRes)!!, 1f),
+                    TransparentLayer,
                 )
-            }
-            Icon(painterResource(BaseR.drawable.arrow_right_24px), contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(24.dp))
+            },
+        )
+        Column(Modifier.weight(1f)) {
+            Text(stringResource(app.nameRes), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+            Text(
+                stringResource(app.descRes),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                maxLines = 2,
+            )
         }
+        Icon(painterResource(BaseR.drawable.arrow_right_24px), contentDescription = null, tint = TelosCyber.NeonCyan, modifier = Modifier.size(24.dp))
     }
 }
