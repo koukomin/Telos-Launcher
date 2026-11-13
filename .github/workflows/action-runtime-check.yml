@@ -9,6 +9,8 @@ on:
 
 permissions:
   contents: read
+  # download-artifact needs actions:read to list/fetch artifacts from this run
+  actions: read
 
 jobs:
   runtime-smoke:
@@ -57,9 +59,8 @@ jobs:
           if-no-files-found: error
       - uses: actions/download-artifact@v8
         with:
-          pattern: runtime-*
+          name: runtime-roundtrip
           path: runtime-restored
-          merge-multiple: true
       - name: Verify artifact round trip
         run: cmp runtime-fixture/result.txt runtime-restored/result.txt
       - uses: actions/upload-pages-artifact@v5

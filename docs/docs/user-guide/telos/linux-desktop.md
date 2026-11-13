@@ -10,15 +10,15 @@ Linux session chrome: KDE-style top bar with glyphs, Kickoff, icon dock, Overvie
 
 ## Download binaries (GitHub)
 
-GitHub Actions builds **ready UberJars** for:
+GitHub Actions builds **ready binaries** for:
 
 | Platform | Artifact | Status |
 | --- | --- | --- |
 | Linux x64 / arm64 | `telos-desktop-linux-*.jar` (+ session tarball) | Shipped on tag / workflow_dispatch / PR desktop paths |
-| Windows x64 | `telos-desktop-windows-x64-*.jar` (Exe best-effort) | Shipped with release; play-test Host Home first |
+| Windows x64 | `telos-desktop-windows-x64-*-setup.exe` (preferred), `*-portable.zip`, UberJar | Shipped with release and desktop CI; setup/portable bundle a JRE |
 | macOS Intel / ARM | — | **Deferred** until Linux + Windows play correctly |
 
-Workflow: `.github/workflows/build-desktop-binaries.yml`. Releases also attach jars via `build-release.yml`.
+Workflow: `.github/workflows/build-desktop-binaries.yml`. Releases attach the setup `.exe`, portable zip, and jars via `build-release.yml`. Windows CI builds are unsigned (SmartScreen may warn).
 
 ```bash
 # Linux
@@ -26,7 +26,9 @@ java -jar telos-desktop-linux-x64-*.jar
 # or full session after install
 ./desktop-linux/session/telos-session
 
-# Windows (JDK 21+ on PATH)
+# Windows — preferred: run telos-desktop-windows-x64-*-setup.exe
+# Portable: unzip *-portable.zip and run telos-desktop.exe inside that folder
+# UberJar fallback (JDK 21+ on PATH):
 java -jar telos-desktop-windows-x64-*.jar
 ```
 
@@ -74,7 +76,7 @@ The vault password (and optional FIDO2 key) unlocks an encrypted volume that **b
 
 `./install-telos-de.sh` installs the jar, `telos-session`, and Wayland session entries (`telos.desktop`, `telos-niri.desktop`). Only one session runs at a time. To try labwc inside another Wayland desktop, set `TELOS_ALLOW_NESTED=1`.
 
-On Windows, optional per-user shell replacement (`tools/windows/install-telos-shell.ps1` or Settings → Portable) launches the UberJar at sign-in; revert restores `explorer.exe`.
+On Windows, optional per-user shell replacement (`tools/windows/install-telos-shell.ps1` or Settings → Portable) launches `telos-desktop.exe` when present, otherwise `java -jar` on the UberJar; revert restores `explorer.exe`.
 
 **OpSec (VOS-6 partial):** Settings and Network → Status show a session audit log under `~/.config/telos/opsec/audit.log` (owner-only). Helix clipboard history (Super+V or the panel clip glyph) keeps up to 20 vault-local items with a 5-minute TTL; pin until lock is optional. Sensitive material (keys/IBAN/WireGuard/card/OTP) is scrubbed from history, vaulted in session memory only, and cleared from the system clipboard — **no cloud sync**. Unlock writes a light host integrity snapshot (OS, compositor, portable flag). When the host has `tpm2-tools`, Settings → OpSec also shows a TPM status line with PCR 0/7 digest summaries (and an optional local quote digest if you place an AK handle at `~/.config/telos/tpm/ak.handle`). Without TPM tools the snapshot records `tpm=unavailable`. This is **not** remote attestation (RAP).
 
