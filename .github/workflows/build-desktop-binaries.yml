@@ -91,17 +91,38 @@ jobs:
         if: github.event_name == 'workflow_dispatch' || startsWith(github.ref, 'refs/tags/v') || github.event_name == 'pull_request'
         shell: pwsh
         run: |
-          choco install wixtoolset --version=3.14.1 -y --no-progress
+          # windows-latest often ships WiX 3.14 already. Do not choco-pin an older
+          # build — that fails with exit 1 even when light.exe is present (PS 7
+          # treats native exit codes as terminating).
+          $ErrorActionPreference = 'Stop'
           $candidates = @(
             "${env:ProgramFiles(x86)}\WiX Toolset v3.14\bin",
             "${env:ProgramFiles}\WiX Toolset v3.14\bin",
             "${env:ProgramFiles(x86)}\WiX Toolset v3.11\bin"
           )
-          $wix = $candidates | Where-Object { Test-Path (Join-Path $_ 'light.exe') } | Select-Object -First 1
-          if (-not $wix) { throw 'WiX light.exe not found after chocolatey install' }
+          $candidates += @(
+            Get-ChildItem -Path "${env:ProgramFiles(x86)}" -Filter 'WiX Toolset v3*' -Directory -ErrorAction SilentlyContinue |
+              ForEach-Object { Join-Path $_.FullName 'bin' }
+          )
+          $wix = $candidates |
+            Where-Object { $_ -and (Test-Path (Join-Path $_ 'light.exe')) } |
+            Select-Object -First 1
+          if (-not $wix) {
+            choco install wixtoolset -y --no-progress
+            if ($LASTEXITCODE -ne 0) { throw "choco install wixtoolset failed: $LASTEXITCODE" }
+            $candidates += @(
+              Get-ChildItem -Path "${env:ProgramFiles(x86)}" -Filter 'WiX Toolset v3*' -Directory -ErrorAction SilentlyContinue |
+                ForEach-Object { Join-Path $_.FullName 'bin' }
+            )
+            $wix = $candidates |
+              Where-Object { $_ -and (Test-Path (Join-Path $_ 'light.exe')) } |
+              Select-Object -First 1
+          }
+          if (-not $wix) { throw 'WiX light.exe not found (install WiX Toolset 3.x)' }
           Add-Content -Path $env:GITHUB_PATH -Value $wix
           Write-Host "WiX bin on PATH: $wix"
-          & (Join-Path $wix 'light.exe') | Select-Object -First 2
+          Test-Path (Join-Path $wix 'candle.exe') | ForEach-Object { if (-not $_) { throw 'candle.exe missing' } }
+          exit 0
       - name: Unit tests
         shell: bash
         run: ./gradlew :ui-kmp:test :desktop-linux:test --stacktrace

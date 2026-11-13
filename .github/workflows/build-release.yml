@@ -210,16 +210,35 @@ jobs:
       - name: Install WiX 3 (required for Compose packageExe / jpackage)
         shell: pwsh
         run: |
-          choco install wixtoolset --version=3.14.1 -y --no-progress
+          # Prefer preinstalled WiX on windows-latest; only choco-install when missing.
+          $ErrorActionPreference = 'Stop'
           $candidates = @(
             "${env:ProgramFiles(x86)}\WiX Toolset v3.14\bin",
             "${env:ProgramFiles}\WiX Toolset v3.14\bin",
             "${env:ProgramFiles(x86)}\WiX Toolset v3.11\bin"
           )
-          $wix = $candidates | Where-Object { Test-Path (Join-Path $_ 'light.exe') } | Select-Object -First 1
-          if (-not $wix) { throw 'WiX light.exe not found after chocolatey install' }
+          $candidates += @(
+            Get-ChildItem -Path "${env:ProgramFiles(x86)}" -Filter 'WiX Toolset v3*' -Directory -ErrorAction SilentlyContinue |
+              ForEach-Object { Join-Path $_.FullName 'bin' }
+          )
+          $wix = $candidates |
+            Where-Object { $_ -and (Test-Path (Join-Path $_ 'light.exe')) } |
+            Select-Object -First 1
+          if (-not $wix) {
+            choco install wixtoolset -y --no-progress
+            if ($LASTEXITCODE -ne 0) { throw "choco install wixtoolset failed: $LASTEXITCODE" }
+            $candidates += @(
+              Get-ChildItem -Path "${env:ProgramFiles(x86)}" -Filter 'WiX Toolset v3*' -Directory -ErrorAction SilentlyContinue |
+                ForEach-Object { Join-Path $_.FullName 'bin' }
+            )
+            $wix = $candidates |
+              Where-Object { $_ -and (Test-Path (Join-Path $_ 'light.exe')) } |
+              Select-Object -First 1
+          }
+          if (-not $wix) { throw 'WiX light.exe not found (install WiX Toolset 3.x)' }
           Add-Content -Path $env:GITHUB_PATH -Value $wix
           Write-Host "WiX bin on PATH: $wix"
+          exit 0
       - name: Test and build Windows UberJar + Exe
         shell: bash
         run: |
