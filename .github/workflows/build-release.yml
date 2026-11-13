@@ -207,9 +207,27 @@ jobs:
       - uses: gradle/actions/setup-gradle@v6
         with:
           cache-provider: basic
-      - name: Test and build Windows UberJar
+      - name: Install WiX 3 (required for Compose packageExe / jpackage)
+        shell: pwsh
+        run: |
+          choco install wixtoolset --version=3.14.1 -y --no-progress
+          $candidates = @(
+            "${env:ProgramFiles(x86)}\WiX Toolset v3.14\bin",
+            "${env:ProgramFiles}\WiX Toolset v3.14\bin",
+            "${env:ProgramFiles(x86)}\WiX Toolset v3.11\bin"
+          )
+          $wix = $candidates | Where-Object { Test-Path (Join-Path $_ 'light.exe') } | Select-Object -First 1
+          if (-not $wix) { throw 'WiX light.exe not found after chocolatey install' }
+          Add-Content -Path $env:GITHUB_PATH -Value $wix
+          Write-Host "WiX bin on PATH: $wix"
+      - name: Test and build Windows UberJar + Exe
         shell: bash
-        run: ./gradlew :ui-kmp:test :desktop-linux:test :desktop-linux:packageUberJarForCurrentOS --stacktrace
+        run: |
+          ./gradlew :ui-kmp:test :desktop-linux:test \
+            :desktop-linux:packageUberJarForCurrentOS \
+            :desktop-linux:createDistributable \
+            :desktop-linux:packageExe \
+            --stacktrace
       - name: Package Windows artifacts
         shell: bash
         run: |
@@ -218,10 +236,33 @@ jobs:
           mapfile -t JARS < <(find desktop-linux/build/compose/jars -maxdepth 1 -name '*.jar')
           test "${#JARS[@]}" -eq 1
           cp "${JARS[0]}" "win-out/telos-desktop-windows-x64-${VERSION_NAME}.jar"
-          cat > win-out/README-WINDOWS.txt <<'EOF'
-          Telos Desktop (Windows) — requires JDK 21+.
-          java -jar telos-desktop-windows-x64-*.jar
-          Defaults to Host Home (no LUKS). macOS builds deferred.
+
+          mapfile -t SETUP_EXES < <(find desktop-linux/build/compose/binaries -type f -name '*.exe' \
+            ! -path '*/app/*' 2>/dev/null | sort)
+          if [ "${#SETUP_EXES[@]}" -lt 1 ]; then
+            mapfile -t SETUP_EXES < <(find desktop-linux/build/compose -type f -name '*.exe' \
+              ! -path '*/runtime/*' ! -path '*/app/telos-desktop/*' 2>/dev/null | sort)
+          fi
+          test "${#SETUP_EXES[@]}" -ge 1
+          cp "${SETUP_EXES[0]}" "win-out/telos-desktop-windows-x64-${VERSION_NAME}-setup.exe"
+          cp "win-out/telos-desktop-windows-x64-${VERSION_NAME}-setup.exe" \
+            "win-out/telos-desktop-windows-x64-setup.exe"
+
+          APP_DIR=$(find desktop-linux/build/compose/binaries -type d -path '*/app/telos-desktop' 2>/dev/null | head -1)
+          test -n "$APP_DIR"
+          PORTABLE_ZIP="$GITHUB_WORKSPACE/win-out/telos-desktop-windows-x64-${VERSION_NAME}-portable.zip"
+          APP_DIR_WIN=$(cygpath -w "$APP_DIR" 2>/dev/null || echo "$APP_DIR")
+          PORTABLE_ZIP_WIN=$(cygpath -w "$PORTABLE_ZIP" 2>/dev/null || echo "$PORTABLE_ZIP")
+          powershell.exe -NoProfile -Command \
+            "Compress-Archive -Path '$APP_DIR_WIN' -DestinationPath '$PORTABLE_ZIP_WIN' -Force"
+          test -s "win-out/telos-desktop-windows-x64-${VERSION_NAME}-portable.zip"
+
+          cat > win-out/README-WINDOWS.txt <<EOF
+          Telos Desktop (Windows x64)
+          Prefer telos-desktop-windows-x64-${VERSION_NAME}-setup.exe (bundled JRE).
+          Portable: unzip *-portable.zip and run telos-desktop.exe in that folder.
+          UberJar fallback (JDK 21+): java -jar telos-desktop-windows-x64-*.jar
+          Defaults to Portable Data. macOS builds deferred. Unsigned CI builds.
           EOF
       - uses: actions/upload-artifact@v7
         with:
@@ -249,11 +290,12 @@ jobs:
           merge-multiple: true
       - name: Publish complete release
         run: |
-          # Android ABIs + Linux + Windows desktop jars required.
+          # Android ABIs + Linux + Windows desktop jar + Windows setup exe required.
           for FILE in telos-arm64-v8a.apk telos-armeabi-v7a.apk telos-linux-desktop.jar start-telos-desktop.sh telos-linux-session.tar.gz; do
             test -s "release-assets/$FILE"
           done
           test -n "$(ls release-assets/telos-desktop-windows-x64-*.jar 2>/dev/null | head -1)"
+          test -n "$(ls release-assets/telos-desktop-windows-x64-*-setup.exe 2>/dev/null | head -1)"
           bash tools/release-notes.sh "$TAG" "$RUNNER_TEMP/notes.md"
           if ! gh release view "$TAG" >/dev/null 2>&1; then
             gh release create "$TAG" --draft --target "$GITHUB_SHA" \

@@ -8,7 +8,7 @@ gallery, music, video and radio players, an app store and an app freezer.
 ::: tip Two parts
 - [**The launcher**](./launcher/) is search, home screen, widgets, icons and themes (inherited from Kvaesitso).
 - **The Telos apps** are added on top. Each one has its own page below.
-- [**Telos Desktop**](./linux-desktop) is a separate JVM shell (`:desktop-linux`), not in the APK — Linux session + Windows portable jar (macOS later).
+- [**Telos Desktop**](./linux-desktop) is a separate JVM shell (`:desktop-linux`), not in the APK — Linux session + Windows setup `.exe` / portable zip (macOS later).
 :::
 
 ## ✨ Built-in apps

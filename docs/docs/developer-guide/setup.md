@@ -14,6 +14,8 @@ The optional Linux desktop shell is a separate Gradle module:
 
 ```sh
 ./gradlew :desktop-linux:packageUberJarForCurrentOS
+# Windows only (JDK 21 + WiX 3.14): setup .exe with bundled JRE
+./gradlew :desktop-linux:packageExe
 ```
 
 Do not add `:desktop-linux` or `:ui-kmp` to `:app:app`. `:app:ui` may depend on `:ui-kmp`. Details: [Telos Linux Desktop](/docs/developer-guide/desktop-linux).

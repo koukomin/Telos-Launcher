@@ -1,5 +1,6 @@
 # Telos Desktop binaries for GitHub (Linux + Windows first; macOS deferred).
-# Uploads ready-to-run UberJars. On tags / workflow_dispatch also builds Windows Exe when possible.
+# Uploads ready-to-run UberJars. Windows also builds a jpackage Exe installer
+# (WiX 3.x) and a portable app-image zip that contains telos-desktop.exe + JRE.
 
 name: Build Telos Desktop Binaries
 
@@ -86,6 +87,21 @@ jobs:
       - uses: gradle/actions/setup-gradle@v6
         with:
           cache-provider: basic
+      - name: Install WiX 3 (required for Compose packageExe / jpackage)
+        if: github.event_name == 'workflow_dispatch' || startsWith(github.ref, 'refs/tags/v') || github.event_name == 'pull_request'
+        shell: pwsh
+        run: |
+          choco install wixtoolset --version=3.14.1 -y --no-progress
+          $candidates = @(
+            "${env:ProgramFiles(x86)}\WiX Toolset v3.14\bin",
+            "${env:ProgramFiles}\WiX Toolset v3.14\bin",
+            "${env:ProgramFiles(x86)}\WiX Toolset v3.11\bin"
+          )
+          $wix = $candidates | Where-Object { Test-Path (Join-Path $_ 'light.exe') } | Select-Object -First 1
+          if (-not $wix) { throw 'WiX light.exe not found after chocolatey install' }
+          Add-Content -Path $env:GITHUB_PATH -Value $wix
+          Write-Host "WiX bin on PATH: $wix"
+          & (Join-Path $wix 'light.exe') | Select-Object -First 2
       - name: Unit tests
         shell: bash
         run: ./gradlew :ui-kmp:test :desktop-linux:test --stacktrace
@@ -93,11 +109,14 @@ jobs:
         if: github.event_name == 'workflow_dispatch' || startsWith(github.ref, 'refs/tags/v') || github.event_name == 'pull_request'
         shell: bash
         run: ./gradlew :desktop-linux:packageUberJarForCurrentOS -x externalNativeBuildDebug -x externalNativeBuildRelease --stacktrace
-      - name: Package Windows Exe (best effort)
-        if: github.event_name == 'workflow_dispatch' || startsWith(github.ref, 'refs/tags/v')
+      - name: Package Windows Exe installer + portable app image
+        if: github.event_name == 'workflow_dispatch' || startsWith(github.ref, 'refs/tags/v') || github.event_name == 'pull_request'
         shell: bash
-        continue-on-error: true
-        run: ./gradlew :desktop-linux:packageExe -x externalNativeBuildDebug -x externalNativeBuildRelease --stacktrace
+        run: |
+          # packageExe = WiX/jpackage setup .exe (bundled JRE).
+          # createDistributable = portable folder with telos-desktop.exe + runtime (no WiX).
+          ./gradlew :desktop-linux:createDistributable :desktop-linux:packageExe \
+            -x externalNativeBuildDebug -x externalNativeBuildRelease --stacktrace
       - name: Stage Windows artifacts
         if: github.event_name == 'workflow_dispatch' || startsWith(github.ref, 'refs/tags/v') || github.event_name == 'pull_request'
         shell: bash
@@ -107,21 +126,62 @@ jobs:
           mapfile -t JARS < <(find desktop-linux/build/compose/jars -maxdepth 1 -name '*.jar' 2>/dev/null || true)
           test "${#JARS[@]}" -ge 1
           cp "${JARS[0]}" "out/telos-desktop-windows-x64-${VERSION}.jar"
-          # jpackage / compose may emit exe under build/compose/binaries
-          find desktop-linux/build/compose -type f \( -name '*.exe' -o -name '*.msi' \) -print0 2>/dev/null \
-            | while IFS= read -r -d '' f; do cp "$f" "out/"; done || true
-          cat > out/README-WINDOWS.txt <<'EOF'
-          Telos Desktop (Windows)
-          -----------------------
-          Requires JDK 21+ on PATH (Temurin recommended).
 
-          Run the UberJar:
-            java -jar telos-desktop-windows-x64-*.jar
+          # Installer .exe from packageExe (compose/binaries/**/exe or similar).
+          mapfile -t SETUP_EXES < <(find desktop-linux/build/compose/binaries -type f -name '*.exe' \
+            ! -path '*/app/*' 2>/dev/null | sort)
+          if [ "${#SETUP_EXES[@]}" -lt 1 ]; then
+            # Fallback: any exe not inside the app-image runtime tree named like an installer.
+            mapfile -t SETUP_EXES < <(find desktop-linux/build/compose -type f -name '*.exe' \
+              ! -path '*/runtime/*' ! -path '*/app/telos-desktop/*' 2>/dev/null | sort)
+          fi
+          test "${#SETUP_EXES[@]}" -ge 1
+          cp "${SETUP_EXES[0]}" "out/telos-desktop-windows-x64-${VERSION}-setup.exe"
+          # Keep a short alias for download UX.
+          cp "out/telos-desktop-windows-x64-${VERSION}-setup.exe" "out/telos-desktop-windows-x64-setup.exe"
 
-          First launch defaults to Host Home (no LUKS). Labwc session, nftables
-          net-guard and Linux vault modes are Linux-only.
+          # Portable app-image zip (telos-desktop.exe + bundled JRE). Must keep folder intact.
+          # Use PowerShell Compress-Archive — Git Bash on windows-latest often lacks zip(1).
+          APP_DIR=$(find desktop-linux/build/compose/binaries -type d -path '*/app/telos-desktop' 2>/dev/null | head -1)
+          test -n "$APP_DIR"
+          test -f "$APP_DIR/telos-desktop.exe" || test -f "$APP_DIR/Telos Desktop.exe" || \
+            test -n "$(find "$APP_DIR" -maxdepth 1 -iname '*.exe' | head -1)"
+          PORTABLE_ZIP="$GITHUB_WORKSPACE/out/telos-desktop-windows-x64-${VERSION}-portable.zip"
+          # Convert Git-Bash paths to Windows paths for Compress-Archive.
+          APP_DIR_WIN=$(cygpath -w "$APP_DIR" 2>/dev/null || echo "$APP_DIR")
+          PORTABLE_ZIP_WIN=$(cygpath -w "$PORTABLE_ZIP" 2>/dev/null || echo "$PORTABLE_ZIP")
+          powershell.exe -NoProfile -Command \
+            "Compress-Archive -Path '$APP_DIR_WIN' -DestinationPath '$PORTABLE_ZIP_WIN' -Force"
+          test -s "out/telos-desktop-windows-x64-${VERSION}-portable.zip"
 
-          macOS Intel/ARM binaries ship after Linux + Windows play correctly.
+          cat > out/README-WINDOWS.txt <<EOF
+          Telos Desktop (Windows x64)
+          ---------------------------
+
+          Preferred (no separate JDK install):
+            1) Download telos-desktop-windows-x64-${VERSION}-setup.exe
+            2) Run the installer (per-user, Start Menu shortcut)
+            3) Launch "telos-desktop" from the Start Menu
+
+          Portable (unzip, keep the folder together):
+            telos-desktop-windows-x64-${VERSION}-portable.zip
+            → open the folder → run telos-desktop.exe
+            The .exe alone is not enough; the bundled runtime must sit beside it.
+
+          UberJar fallback (requires JDK 21+ on PATH):
+            java -jar telos-desktop-windows-x64-${VERSION}.jar
+
+          First launch defaults to Portable Data (config next to the install /
+          portable root). Host Home is an explicit opt-in. Labwc session,
+          nftables net-guard and Linux vault modes are Linux-only.
+
+          Build (on Windows, JDK 21 + WiX 3.14):
+            ./gradlew :desktop-linux:packageExe
+            ./gradlew :desktop-linux:createDistributable
+            ./gradlew :desktop-linux:packageUberJarForCurrentOS
+
+          Code signing is not applied in CI (SmartScreen may warn). macOS
+          Intel/ARM binaries ship after Linux + Windows play correctly.
           EOF
       - uses: actions/upload-artifact@v7
         if: github.event_name == 'workflow_dispatch' || startsWith(github.ref, 'refs/tags/v') || github.event_name == 'pull_request'

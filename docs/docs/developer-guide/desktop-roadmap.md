@@ -6,7 +6,7 @@ sidebar_position: 9
 
 When a later session asks **what is still pending** for the **Linux session stack**, the answer is **none of P0–P4, Helix, Surface, or Wayland W0–W3**. Spec: [telos-wayland-shell.md](./telos-wayland-shell.md). `:app:app` still must not depend on `:desktop-linux`. `:app:ui` hosts `:ui-kmp` screens. Spec: [Telos Helix](./telos-helix.md).
 
-**Cross-platform binaries (GitHub):** Linux + Windows UberJars are the current ship targets (see `build-desktop-binaries.yml`). macOS Intel/ARM ships only after those play correctly. Branding is **Telos Desktop** (module path remains `:desktop-linux`).
+**Cross-platform binaries (GitHub):** Linux UberJars + Windows UberJar **and** Windows setup `.exe` / portable zip (Compose `packageExe` + `createDistributable` on `windows-latest`, WiX 3.x) are the current ship targets (see `build-desktop-binaries.yml`). macOS Intel/ARM ships only after those play correctly. Branding is **Telos Desktop** (module path remains `:desktop-linux`).
 
 | Phase | Status | Scope |
 | --- | --- | --- |

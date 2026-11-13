@@ -142,8 +142,10 @@ compose.desktop {
     application {
         mainClass = "com.telos.desktop.MainKt"
         nativeDistributions {
-            // Linux: AppImage/Deb/Rpm + UberJar. Windows: Exe + UberJar (built on windows-latest).
+            // Linux: AppImage/Deb/Rpm + UberJar. Windows: Exe installer + UberJar
+            // (Compose jpackage; WiX 3.x required for packageExe — see build-desktop-binaries.yml).
             // macOS Dmg/Pkg intentionally deferred until Linux + Windows binaries play correctly.
+            // Windows packaging must run on windows-latest (not Wine cross-build on Linux CI).
             targetFormats(
                 TargetFormat.AppImage,
                 TargetFormat.Deb,
@@ -162,7 +164,13 @@ compose.desktop {
             }
             windows {
                 menuGroup = "Telos"
+                // Stable per-product GUID so WiX/jpackage upgrades replace the same install.
                 upgradeUuid = "a7c2e9f1-4b5d-4e8a-9c1f-2d3e4f5a6b7c"
+                shortcut = true
+                dirChooser = true
+                perUserInstall = true
+                // GUI launcher (no console window). Bundles a JRE via jpackage.
+                console = false
             }
         }
     }

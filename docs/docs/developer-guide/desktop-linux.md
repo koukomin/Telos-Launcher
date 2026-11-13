@@ -4,7 +4,7 @@ sidebar_position: 8
 
 # Telos Desktop (`:desktop-linux`)
 
-`:desktop-linux` is a **standalone Compose for Desktop / JVM** module for **Telos Desktop**. It is registered in `settings.gradle.kts` and is **not** a dependency of `:app:app`. The Android APK does not ship Compose Desktop, cryptsetup helpers, or Linux icon scanners. CI publishes Linux and Windows UberJars to GitHub; macOS is deferred until those run cleanly.
+`:desktop-linux` is a **standalone Compose for Desktop / JVM** module for **Telos Desktop**. It is registered in `settings.gradle.kts` and is **not** a dependency of `:app:app`. The Android APK does not ship Compose Desktop, cryptsetup helpers, or Linux icon scanners. CI publishes Linux UberJars and Windows UberJar **plus** a WiX/jpackage **setup `.exe`** (and a portable zip with `telos-desktop.exe` + bundled JRE) to GitHub; macOS is deferred until those run cleanly.
 
 ## Build
 
@@ -14,6 +14,25 @@ sidebar_position: 8
 ./gradlew :desktop-linux:packageRpm
 ./gradlew :desktop-linux:packageAppImage
 ```
+
+### Windows `.exe` (Compose jpackage)
+
+Run these **on Windows** with **JDK 21** and **WiX Toolset 3.14** on `PATH` (`light.exe` / `candle.exe`). Linux CI cannot cross-build a real Windows installer (Wine-only packaging is not used).
+
+```bash
+# GUI installer (bundled JRE) — primary downloadable artifact
+./gradlew :desktop-linux:packageExe
+# → desktop-linux/build/compose/binaries/main/exe/*.exe
+
+# Portable app image (folder with telos-desktop.exe + runtime; zip the folder)
+./gradlew :desktop-linux:createDistributable
+# → desktop-linux/build/compose/binaries/main/app/telos-desktop/
+
+# UberJar fallback (needs a JDK 21+ on the target machine)
+./gradlew :desktop-linux:packageUberJarForCurrentOS
+```
+
+CI: `.github/workflows/build-desktop-binaries.yml` (Windows job installs WiX via Chocolatey, uploads `telos-desktop-windows-x64-*-setup.exe`, `*-portable.zip`, and the UberJar). Release uploads the same via `build-release.yml`. Builds are **unsigned** (SmartScreen may warn until a code-signing cert is configured).
 
 Main class: `com.telos.desktop.MainKt`. The window is undecorated fullscreen.
 
