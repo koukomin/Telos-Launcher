@@ -19,6 +19,7 @@ import java.util.concurrent.TimeUnit
 object ShizukuProcesses {
     @Volatile private var appContext: Context? = null
     private val monitor = Any()
+    private class UnsupportedNewProcessTransaction : UnsupportedOperationException("newProcess transact rejected")
     private class Binding {
         val ready = CountDownLatch(1)
         @Volatile var service: ICommandService? = null
@@ -41,7 +42,11 @@ object ShizukuProcesses {
     fun start(args: Array<String>, environment: Array<String>? = null, directory: String? = null, retryOnSpawnFailure: Boolean = true): Process {
         check(Looper.myLooper() != Looper.getMainLooper()) { "Privileged processes must start off Main" }
         check(args.isNotEmpty() && available())
-        runCatching { startViaNewProcess(args, environment, directory) }.getOrNull()?.let { return it }
+        runCatching { startViaNewProcess(args, environment, directory) }.onFailure {
+            // Only a rejected transaction proves no process was spawned. An ambiguous reply
+            // must not cause a state-changing command or startup script to be replayed.
+            if (!retryOnSpawnFailure && it !is UnsupportedNewProcessTransaction) throw it
+        }.getOrNull()?.let { return it }
         val context = requireNotNull(appContext) { "ShizukuProcesses is not initialized" }
         val current = synchronized(monitor) {
             binding?.takeIf { it.ready.count > 0 || it.service?.asBinder()?.pingBinder() == true } ?: Binding().also { state ->
@@ -112,7 +117,9 @@ object ShizukuProcesses {
             data.writeStringArray(args)
             data.writeStringArray(environment)
             data.writeString(directory)
-            check(binder.transact(7, data, reply, 0)) { "newProcess transact rejected" }
+            if (!binder.transact(7, data, reply, 0)) {
+                throw UnsupportedNewProcessTransaction()
+            }
             reply.readException()
             val remote = IRemoteProcess.Stub.asInterface(reply.readStrongBinder())
             return fromRemoteProcess(requireNotNull(remote) { "newProcess returned an empty binder" })

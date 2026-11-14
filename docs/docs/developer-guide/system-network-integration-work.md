@@ -50,3 +50,7 @@ Signed preflight `40656397962` exposed another independent consumer, `lintVitalA
 AppOps package/operation/UID/permission reads use a read-only transport retry after a failed native/UserService result or exception, with cancellation preserved. A successful shell retry selects that transport for subsequent commands until reconnection. Writes retain their original single attempt and verification behavior; no write is replayed. UserService closes command stdin and serializes commands to avoid concurrent reads starving its two pipe-draining workers.
 
 Validation results and physical Android 17 limitations are recorded with the change; compilation alone does not establish OnePlus/Shizuku interoperability.
+
+The AppOps shell path opts out of the shared engine's root/spawn retry after an ambiguous failure.
+A rejected unsupported `newProcess` transaction may select UserService before spawning; a lost
+reply may not replay a write or startup script. Other shared-engine callers retain their defaults.

@@ -6,6 +6,8 @@ on:
     paths:
       - 'libs/appops-next/**'
       - 'services/network/**'
+      - 'core/ktx/src/main/java/de/mm20/launcher2/ktx/TelosShellEngine.kt'
+      - 'core/ktx/src/main/java/de/mm20/launcher2/ktx/ShizukuProcesses.kt'
       - 'app/ui/src/androidTest/java/de/mm20/launcher2/ui/system/FreezeDeskGridTest.kt'
       - 'app/ui/src/main/java/de/mm20/launcher2/ui/system/**'
       - 'app/ui/src/main/java/de/mm20/launcher2/ui/network/**'
@@ -40,7 +42,7 @@ jobs:
       - name: Compile embedded suite and test AppOps transactions, parsers, templates and history
         run: |
           BUILD_STATUS=0
-          bash ./gradlew :libs:appops-next:testDebugUnitTest :services:network:testDebugUnitTest :app:ui:assembleDefaultDebugAndroidTest --no-daemon --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process -Dorg.gradle.jvmargs=-Xmx3072m --stacktrace > "$RUNNER_TEMP/system-compile.log" 2>&1 || BUILD_STATUS=$?
+          bash ./gradlew :libs:appops-next:testDebugUnitTest :services:network:testDebugUnitTest :services:app-management:testDebugUnitTest :app:ui:assembleDefaultDebugAndroidTest --no-daemon --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process -Dorg.gradle.jvmargs=-Xmx3072m --stacktrace > "$RUNNER_TEMP/system-compile.log" 2>&1 || BUILD_STATUS=$?
           cat "$RUNNER_TEMP/system-compile.log"
           if [ "$BUILD_STATUS" -ne 0 ]; then
             python3 - <<'PY'

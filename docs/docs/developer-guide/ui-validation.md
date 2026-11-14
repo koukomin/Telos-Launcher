@@ -26,6 +26,8 @@ passed **328 AppOps and 75 Network tests**, with zero failures/errors/skips. Thi
 cancellation, both-transports-failed handling, stdin EOF/concurrent pipe draining, and explicit
 firewall targets without Internet permission/shared-UID siblings. Route/manifest validation scripts
 also passed. Final UI compilation and the two device layout tests run in `validate-appops.yml`.
+The final shell identity change also runs the app-management suite (including startup scripts)
+and disables root/spawn replay for AppOps commands after an ambiguous Shizuku failure.
 
 The local full UI build is blocked by HTTP 403 from JitPack for the existing Tesseract dependency.
 The cloud has no KVM/desktop capability; no physical OnePlus Android 17 service command or visual

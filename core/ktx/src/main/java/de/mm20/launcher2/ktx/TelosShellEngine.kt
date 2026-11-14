@@ -128,12 +128,14 @@ object TelosShellEngine {
 
     /**
      * Executes a direct argument vector via Shizuku (or Root shell fallback with strict single-quoting)
-     * without shell interpolation risks.
+     * without shell interpolation risks. Set [retryAfterFailure] to false for writes that must
+     * not be replayed after a failed or missing Shizuku response.
      */
     suspend fun execArgsResult(
         args: Array<String>,
         timeoutMs: Long = 30_000L,
         maxOutputBytes: Int = DEFAULT_MAX_OUTPUT_BYTES,
+        retryAfterFailure: Boolean = true,
     ): ShellResult = withContext(Dispatchers.IO) {
         if (args.isEmpty()) {
             return@withContext ShellResult(-1, "", "Empty command arguments")
@@ -142,11 +144,12 @@ object TelosShellEngine {
         concurrencyGate.withPermit {
             if (ShizukuProcesses.available()) {
                 val shizukuRes = runCatching {
-                    val proc = ShizukuProcesses.start(args)
+                    val proc = ShizukuProcesses.start(args, retryOnSpawnFailure = retryAfterFailure)
                     executeAndCollect(proc, timeoutMs = timeoutMs, maxOutputBytes = maxOutputBytes)
                 }.getOrNull()
-                if (shizukuRes != null && shizukuRes.isSuccess) {
+                if (!retryAfterFailure || shizukuRes?.isSuccess == true) {
                     return@withPermit shizukuRes
+                        ?: ShellResult(-1, "", "Shizuku command failed; command was not retried")
                 }
             }
 

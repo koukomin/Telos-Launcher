@@ -516,7 +516,7 @@ class PrivilegedServiceClient(
         if (!shellBackend && service == null && nativeGateway == null) {
             activateShellBackend()
         }
-        val res = TelosShellEngine.execArgsResult(arguments.toTypedArray())
+        val res = TelosShellEngine.execArgsResult(arguments.toTypedArray(), retryAfterFailure = false)
         return ShellCommandResult(
             exitCode = res.exitCode,
             stdout = res.stdout,
