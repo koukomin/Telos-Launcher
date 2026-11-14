@@ -99,6 +99,7 @@ class PrivilegedServiceClient(
                         apiLevel = connectedService.apiLevel,
                         backendType = PrivilegedBackendType.USER_SERVICE,
                     )
+                    shellBackend = false
                     service = connectedService
                     mutableState.value = PrivilegedServiceState.Connected(
                         serviceInfo,
@@ -359,7 +360,7 @@ class PrivilegedServiceClient(
     override suspend fun getPackageOps(packageName: String): ShellCommandResult =
         withContext(Dispatchers.IO) {
             readWithShellFallback(AppOpsCommands.getPackageOps(packageName)) {
-                executeNative { it.getPackageOps(packageName) } ?: service?.getPackageOps(packageName)
+                executeNative { it.getPackageOps(packageName) } ?: service?.takeUnless { shellBackend }?.getPackageOps(packageName)
             }
         }
 
@@ -370,35 +371,35 @@ class PrivilegedServiceClient(
         withContext(Dispatchers.IO) {
             readWithShellFallback(AppOpsCommands.getPackageOp(packageName, operationName)) {
                 executeNative { it.getPackageOp(packageName, operationName) }
-                    ?: service?.getPackageOp(packageName, operationName)
+                    ?: service?.takeUnless { shellBackend }?.getPackageOp(packageName, operationName)
             }
         }
 
     override suspend fun getUidOps(uid: Int): ShellCommandResult =
         withContext(Dispatchers.IO) {
             readWithShellFallback(AppOpsCommands.getUidOps(uid)) {
-                executeNative { it.getUidOps(uid) } ?: service?.getUidOps(uid)
+                executeNative { it.getUidOps(uid) } ?: service?.takeUnless { shellBackend }?.getUidOps(uid)
             }
         }
 
     override suspend fun getUidStates(packageName: String): ShellCommandResult =
         withContext(Dispatchers.IO) {
             readWithShellFallback(AppOpsCommands.getUidStates(packageName)) {
-                executeNative { it.getUidStates(packageName) } ?: service?.getUidStates(packageName)
+                executeNative { it.getUidStates(packageName) } ?: service?.takeUnless { shellBackend }?.getUidStates(packageName)
             }
         }
 
     override suspend fun getOpStates(operationName: String): ShellCommandResult =
         withContext(Dispatchers.IO) {
             readWithShellFallback(AppOpsCommands.getOpStates(operationName)) {
-                executeNative { it.getOpStates(operationName) } ?: service?.getOpStates(operationName)
+                executeNative { it.getOpStates(operationName) } ?: service?.takeUnless { shellBackend }?.getOpStates(operationName)
             }
         }
 
     override suspend fun getWatchers(): ShellCommandResult =
         withContext(Dispatchers.IO) {
             val result = executeNative { it.getWatchers() }
-                ?: service?.getWatchers()
+                ?: service?.takeUnless { shellBackend }?.getWatchers()
                 ?: executeShell(AppOpsCommands.getWatchers())
             result.copy(stdout = WatcherResponseCodec.decode(result.stdout))
         }
@@ -408,7 +409,7 @@ class PrivilegedServiceClient(
     ): ShellCommandResult =
         withContext(Dispatchers.IO) {
             executeNative { it.getHistory(operationName) }
-                ?: service?.getHistory(operationName)
+                ?: service?.takeUnless { shellBackend }?.getHistory(operationName)
                 ?: executeShell(AppOpsCommands.getHistory(operationName)).let { result ->
                     result.copy(
                         stdout = AppOpsHistoryOutputExtractor.extract(
@@ -424,7 +425,7 @@ class PrivilegedServiceClient(
     ): ShellCommandResult =
         withContext(Dispatchers.IO) {
             readWithShellFallback(AppOpsCommands.getPackagePermissions(packageName)) {
-                executeNative { it.getPackagePermissions(packageName) } ?: service?.getPackagePermissions(packageName)
+                executeNative { it.getPackagePermissions(packageName) } ?: service?.takeUnless { shellBackend }?.getPackagePermissions(packageName)
             }
         }
 
@@ -438,7 +439,7 @@ class PrivilegedServiceClient(
             executeNative {
                 it.setRevokedCompat(userId, packageName, permissionName, revoked)
             }
-                ?: service?.setRevokedCompat(
+                ?: service?.takeUnless { shellBackend }?.setRevokedCompat(
                     userId,
                     packageName,
                     permissionName,
@@ -460,7 +461,7 @@ class PrivilegedServiceClient(
         mode: AppOpMode,
     ): ShellCommandResult =
         withContext(Dispatchers.IO) {
-            executeNative { it.setPackageOpMode(packageName, operationName, mode) } ?: service?.setPackageOpMode(
+            executeNative { it.setPackageOpMode(packageName, operationName, mode) } ?: service?.takeUnless { shellBackend }?.setPackageOpMode(
                     packageName,
                     operationName,
                     mode.shellValue,
@@ -476,7 +477,7 @@ class PrivilegedServiceClient(
         mode: AppOpMode,
     ): ShellCommandResult =
         withContext(Dispatchers.IO) {
-            executeNative { it.setUidOpMode(packageName, operationName, mode) } ?: service?.setUidOpMode(
+            executeNative { it.setUidOpMode(packageName, operationName, mode) } ?: service?.takeUnless { shellBackend }?.setUidOpMode(
                     packageName,
                     operationName,
                     mode.shellValue,
@@ -493,7 +494,14 @@ class PrivilegedServiceClient(
         read: suspend () -> ShellCommandResult?,
     ): ShellCommandResult = dev.izumi.appopsnext.appops.command.readWithFallback(
         primary = read,
-        fallback = { executeShell(arguments) },
+        fallback = {
+            executeShell(arguments).also { result ->
+                if (result.exitCode == 0 && !result.timedOut) {
+                    // Future writes use this verified transport once; no write is replayed.
+                    shellBackend = true
+                }
+            }
+        },
         onFailure = { result, error ->
             diagnosticLog.warning(
                 source = LOG_SOURCE,
@@ -520,6 +528,7 @@ class PrivilegedServiceClient(
     private suspend fun executeNative(
         action: suspend (NativeDaemonGateway) -> ShellCommandResult,
     ): ShellCommandResult? {
+        if (shellBackend) return null
         val gateway = nativeGateway ?: return null
         try {
             return action(gateway)

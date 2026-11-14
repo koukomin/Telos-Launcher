@@ -5,10 +5,13 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
+import androidx.test.platform.app.InstrumentationRegistry
+import de.mm20.launcher2.i18n.R as I18nR
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -51,6 +54,16 @@ class FreezeDeskGridTest {
                 }
             }
         }
+        compose
+            .onNodeWithText("Application 0")
+            .assert(
+                SemanticsMatcher.expectValue(
+                    SemanticsProperties.StateDescription,
+                    InstrumentationRegistry.getInstrumentation()
+                        .targetContext
+                        .getString(I18nR.string.hf_freeze_frozen),
+                )
+            )
         compose.onNodeWithText("Application 0").performClick()
         compose.runOnIdle { assertEquals("test.app0", selected) }
         compose.onNodeWithText("List").performClick()

@@ -10,7 +10,7 @@ Search names or package IDs, filter frozen/running/user/system/bloat apps, or en
 
 Opening firewall for one package resolves its shared UID even when the package has no Internet permission. The general firewall list still shows Internet-capable apps only. The installed-app directory includes disabled apps and refreshes on returning to the screen and on package changes. Network rules remain UID-based and can affect shared-UID siblings.
 
-AppOps reads retry through the privileged shell after a native/UserService failure. This requires an available authorized privileged transport. Failures remain visible if both transports fail; diagnostics record the first command's exit status, timeout and bounded error text. Mode-changing commands are never retried automatically.
+AppOps reads retry through the privileged shell after a native/UserService failure. This requires an available authorized privileged transport. Failures remain visible if both transports fail; diagnostics record the first command's exit status, timeout and bounded error text. After a successful retry, subsequent commands use that working transport until reconnection. Mode-changing commands are never retried automatically.
 
 ## Built-in Shizuku
 

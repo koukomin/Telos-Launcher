@@ -47,6 +47,6 @@ Signed preflight `40656397962` exposed another independent consumer, `lintVitalA
 
 `AppEntry.isFirewallCandidate` keeps Internet filtering for the general list while explicit package links resolve any matching UID entry, including shared UID siblings. `DefaultAppDirectory` queries disabled components, refreshes off Main, observes package-changed broadcasts and preserves cancellation. The firewall refreshes on resume and stops showing a loading indicator when an empty refresh completes.
 
-AppOps package/operation/UID/permission reads use a read-only transport retry after a failed native/UserService result or exception, with cancellation preserved. Writes retain their original single attempt and verification behavior. UserService closes command stdin and serializes commands to avoid concurrent reads starving its two pipe-draining workers.
+AppOps package/operation/UID/permission reads use a read-only transport retry after a failed native/UserService result or exception, with cancellation preserved. A successful shell retry selects that transport for subsequent commands until reconnection. Writes retain their original single attempt and verification behavior; no write is replayed. UserService closes command stdin and serializes commands to avoid concurrent reads starving its two pipe-draining workers.
 
 Validation results and physical Android 17 limitations are recorded with the change; compilation alone does not establish OnePlus/Shizuku interoperability.

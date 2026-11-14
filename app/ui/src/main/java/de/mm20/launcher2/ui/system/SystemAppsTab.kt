@@ -189,14 +189,14 @@ fun SystemAppsTab(onOpenDetails: (String) -> Unit) {
             Column {
                 Column(
                     Modifier.fillMaxWidth()
-                        .padding(horizontal = UiSpacing.Content, vertical = UiSpacing.Small)
+                        .padding(vertical = UiSpacing.Small)
                         .telosTechSurface(borderColor = TelosCyber.NeonCyan)
                         .padding(UiSpacing.Content),
                     verticalArrangement = Arrangement.spacedBy(UiSpacing.Small),
                 ) {
                     Text(
                         text = stringResource(I18nR.string.freeze_desk_title),
-                        style = MaterialTheme.typography.titleMedium,
+                        style = MaterialTheme.typography.headlineSmall,
                         fontWeight = FontWeight.Bold,
                     )
                     TelosDotMatrixText(
@@ -303,10 +303,12 @@ fun SystemAppsTab(onOpenDetails: (String) -> Unit) {
             ) {
                 Column(Modifier.padding(UiSpacing.Content)) {
                     Row(
-                        Modifier.fillMaxWidth().clickable {
-                            selectedPackage = null
-                            onOpenDetails(app.pkg)
-                        },
+                        Modifier.fillMaxWidth()
+                            .sizeIn(minHeight = UiSpacing.TouchTarget)
+                            .clickable {
+                                selectedPackage = null
+                                onOpenDetails(app.pkg)
+                            },
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         AppIcon(app.pkg, app.label, 48)
