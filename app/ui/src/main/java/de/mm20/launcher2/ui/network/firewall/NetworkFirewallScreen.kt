@@ -58,6 +58,7 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.network.api.AppDirectory
 import de.mm20.launcher2.network.api.AppEntry
+import de.mm20.launcher2.network.api.isFirewallCandidate
 import de.mm20.launcher2.network.api.AppRule
 import de.mm20.launcher2.network.api.FirewallController
 import de.mm20.launcher2.ui.R
@@ -111,6 +112,7 @@ fun NetworkFirewallScreen(packageName: String? = null) {
     val universal by fw.universalRules.collectAsState()
     val detection by fw.backgroundDetection.collectAsState()
 
+    var refreshing by remember { mutableStateOf(true) }
     var query by rememberSaveable { mutableStateOf("") }
     var filter by rememberSaveable { mutableIntStateOf(FILTER_ALL) }
     var category by rememberSaveable { mutableStateOf<Int?>(null) }
@@ -130,7 +132,13 @@ fun NetworkFirewallScreen(packageName: String? = null) {
     val lifecycle = LocalLifecycleOwner.current.lifecycle
     DisposableEffect(lifecycle) {
         val observer = LifecycleEventObserver { _, event ->
-            if (event == Lifecycle.Event.ON_RESUME) fw.refreshBackgroundDetection()
+            if (event == Lifecycle.Event.ON_RESUME) {
+                fw.refreshBackgroundDetection()
+                scope.launch {
+                    refreshing = true
+                    try { directory.refresh() } finally { refreshing = false }
+                }
+            }
         }
         lifecycle.addObserver(observer)
         onDispose { lifecycle.removeObserver(observer) }
@@ -138,7 +146,10 @@ fun NetworkFirewallScreen(packageName: String? = null) {
 
     val shown = remember(apps, rules, query, filter, category, packageName) {
         apps.filter { app ->
-            app.hasInternet && (packageName == null || packageName in app.packages) &&
+            if (packageName != null) {
+                app.isFirewallCandidate(packageName)
+            } else {
+                app.isFirewallCandidate(null) &&
                 (category == null || category == app.category) &&
                 de.mm20.launcher2.comms.search.TelosSearch.matches(query, app.label, app.packages.joinToString(" "), app.appId.toString()) &&
                 when (filter) {
@@ -149,6 +160,7 @@ fun NetworkFirewallScreen(packageName: String? = null) {
                     FILTER_BLOCKED -> rules[app.appId]?.blockAll == true
                     else -> true
                 }
+            }
         }
     }
 
@@ -278,7 +290,7 @@ fun NetworkFirewallScreen(packageName: String? = null) {
         }
         if (shown.isEmpty() && query.isNotBlank()) {
             item { de.mm20.launcher2.ui.component.SearchEmptyState(query.trim()) }
-        } else if (shown.isEmpty() && apps.isEmpty()) {
+        } else if (shown.isEmpty() && refreshing) {
             // the app list is read in the background: show progress instead of a false "no apps"
             item {
                 Row(

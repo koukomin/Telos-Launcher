@@ -47,3 +47,7 @@ interface AppDirectory {
     /** Reads the package list again. Called automatically on package changes. */
     suspend fun refresh()
 }
+
+/** Explicit package navigation must also resolve offline apps and shared-UID siblings. */
+fun AppEntry.isFirewallCandidate(targetPackage: String?): Boolean =
+    if (targetPackage == null) hasInternet else targetPackage in packages

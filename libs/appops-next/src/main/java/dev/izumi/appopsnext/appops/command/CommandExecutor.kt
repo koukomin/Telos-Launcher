@@ -8,8 +8,11 @@ import java.util.concurrent.TimeUnit
 class CommandExecutor {
     private val streamExecutor: ExecutorService = Executors.newFixedThreadPool(2)
 
+    @Synchronized
     fun execute(arguments: List<String>): ShellCommandResult {
         val process = ProcessBuilder(arguments).start()
+        // cmd receives no input; leaving this pipe open can stall vendor shell commands.
+        process.outputStream.close()
         val stdout = streamExecutor.submit<String> {
             process.inputStream.bufferedReader().use { it.readText() }
         }

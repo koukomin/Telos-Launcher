@@ -40,3 +40,13 @@ PR preflight release builds now have a separate concurrency group from serialize
 ### Complete generated-asset wiring
 
 Signed preflight `40656397962` exposed another independent consumer, `lintVitalAnalyzeRelease`. The initial lint-model dependency alone was insufficient. The daemon task now declares its output as a `DirectoryProperty` annotated `OutputDirectory`, and AGP registers it through `addGeneratedSourceDirectory` rather than a static source folder. This carries the producer to all asset consumers and removes the task-name workaround. ARM32 still does not register the ARM64 asset. The corrected signed preflight remains required; no APK from the failed run is a deliverable.
+
+## System Apps grid and package firewall routing
+
+`FreezeDeskGrid` is a stateless adaptive grid/list with a full-span scrolling controls item and stable package keys. Its action sheet reuses the existing FreezeManager operations and package routes. Resources reuse translated host strings. The Thor screenshot supplied by the user informs the tile layout; no Thor source, assets or dependencies were imported.
+
+`AppEntry.isFirewallCandidate` keeps Internet filtering for the general list while explicit package links resolve any matching UID entry, including shared UID siblings. `DefaultAppDirectory` queries disabled components, refreshes off Main, observes package-changed broadcasts and preserves cancellation. The firewall refreshes on resume and stops showing a loading indicator when an empty refresh completes.
+
+AppOps package/operation/UID/permission reads use a read-only transport retry after a failed native/UserService result or exception, with cancellation preserved. Writes retain their original single attempt and verification behavior. UserService closes command stdin and serializes commands to avoid concurrent reads starving its two pipe-draining workers.
+
+Validation results and physical Android 17 limitations are recorded with the change; compilation alone does not establish OnePlus/Shizuku interoperability.

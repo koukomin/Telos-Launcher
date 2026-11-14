@@ -2,6 +2,16 @@
 
 Telos System is a virtual app: CPU, RAM, network addresses, processes, AppOps, tweaks, Privacy Shield, and the **built-in Shizuku server**. Saved Wi-Fi passwords live under **Telos Network → Settings**. Open System from the app grid or search for System.
 
+## Apps and frozen apps
+
+The Apps tab offers a rounded icon grid inspired by the Thor freezer layout, with a snowflake badge for frozen apps and a dot for observed running processes. Status is also exposed to accessibility services. Running-process visibility is limited by Android; absence of a dot does not prove an app is stopped.
+
+Search names or package IDs, filter frozen/running/user/system/bloat apps, or enable **Show apps in a list**. Tap a tile to open its action sheet: freeze/unfreeze, AppOps, firewall, and the app-details heading. Existing backend protection and exclusion rules still apply. Controls scroll with the apps in short windows; large text increases the minimum tile width.
+
+Opening firewall for one package resolves its shared UID even when the package has no Internet permission. The general firewall list still shows Internet-capable apps only. The installed-app directory includes disabled apps and refreshes on returning to the screen and on package changes. Network rules remain UID-based and can affect shared-UID siblings.
+
+AppOps reads retry through the privileged shell after a native/UserService failure. This requires an available authorized privileged transport. Failures remain visible if both transports fail; diagnostics record the first command's exit status, timeout and bounded error text. Mode-changing commands are never retried automatically.
+
 ## Built-in Shizuku
 
 Telos ships the Shizuku-Next server classes and native starter (`libshizuku.so`) inside the launcher APK (`:libs:shizuku-next`, Apache-2.0). The starter is built as a CMake executable named `libshizuku.so` and extracted on install so Telos System → Shizuku can exec it. You do not need the `moe.shizuku.privileged.api` app. Freeze, Store privileged install, Network Wi-Fi DNS, call recording `CAPTURE_AUDIO_OUTPUT`, and Files privileged paths use this binder.

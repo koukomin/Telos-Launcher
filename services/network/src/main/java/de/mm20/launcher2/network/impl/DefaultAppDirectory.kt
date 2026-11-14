@@ -20,6 +20,8 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 
@@ -45,6 +47,7 @@ internal class DefaultAppDirectory(private val context: Context) : AppDirectory 
             addAction(Intent.ACTION_PACKAGE_ADDED)
             addAction(Intent.ACTION_PACKAGE_REMOVED)
             addAction(Intent.ACTION_PACKAGE_REPLACED)
+            addAction(Intent.ACTION_PACKAGE_CHANGED)
             addDataScheme("package")
         }
         val receiver = object : BroadcastReceiver() {
@@ -77,12 +80,14 @@ internal class DefaultAppDirectory(private val context: Context) : AppDirectory 
         }
     }
 
-    override suspend fun refresh() {
+    override suspend fun refresh() = withContext(Dispatchers.IO) {
         mutex.withLock {
             val list = try {
                 load()
+            } catch (e: CancellationException) {
+                throw e
             } catch (e: Exception) {
-                return
+                return@withContext
             }
             byAppId = list.associateBy { it.appId }
             byPackageName = buildMap { list.forEach { e -> e.packages.forEach { put(it, e) } } }
@@ -94,9 +99,9 @@ internal class DefaultAppDirectory(private val context: Context) : AppDirectory 
     private fun load(): List<AppEntry> {
         val pm = context.packageManager
         val packages: List<PackageInfo> = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            pm.getInstalledPackages(PackageManager.PackageInfoFlags.of(0))
+            pm.getInstalledPackages(PackageManager.PackageInfoFlags.of(PackageManager.MATCH_DISABLED_COMPONENTS.toLong()))
         } else {
-            pm.getInstalledPackages(0)
+            pm.getInstalledPackages(PackageManager.MATCH_DISABLED_COMPONENTS)
         }
         return packages
             .mapNotNull { info -> info.applicationInfo?.let { info to it } }

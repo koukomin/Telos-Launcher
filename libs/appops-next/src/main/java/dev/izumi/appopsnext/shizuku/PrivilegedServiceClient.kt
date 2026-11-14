@@ -358,9 +358,9 @@ class PrivilegedServiceClient(
 
     override suspend fun getPackageOps(packageName: String): ShellCommandResult =
         withContext(Dispatchers.IO) {
-            executeNative { it.getPackageOps(packageName) }
-                ?: service?.getPackageOps(packageName)
-                ?: executeShell(AppOpsCommands.getPackageOps(packageName))
+            readWithShellFallback(AppOpsCommands.getPackageOps(packageName)) {
+                executeNative { it.getPackageOps(packageName) } ?: service?.getPackageOps(packageName)
+            }
         }
 
     override suspend fun getPackageOp(
@@ -368,30 +368,31 @@ class PrivilegedServiceClient(
         operationName: String,
     ): ShellCommandResult =
         withContext(Dispatchers.IO) {
-            executeNative { it.getPackageOp(packageName, operationName) }
-                ?: service?.getPackageOp(packageName, operationName)
-                ?: executeShell(AppOpsCommands.getPackageOp(packageName, operationName))
+            readWithShellFallback(AppOpsCommands.getPackageOp(packageName, operationName)) {
+                executeNative { it.getPackageOp(packageName, operationName) }
+                    ?: service?.getPackageOp(packageName, operationName)
+            }
         }
 
     override suspend fun getUidOps(uid: Int): ShellCommandResult =
         withContext(Dispatchers.IO) {
-            executeNative { it.getUidOps(uid) }
-                ?: service?.getUidOps(uid)
-                ?: executeShell(AppOpsCommands.getUidOps(uid))
+            readWithShellFallback(AppOpsCommands.getUidOps(uid)) {
+                executeNative { it.getUidOps(uid) } ?: service?.getUidOps(uid)
+            }
         }
 
     override suspend fun getUidStates(packageName: String): ShellCommandResult =
         withContext(Dispatchers.IO) {
-            executeNative { it.getUidStates(packageName) }
-                ?: service?.getUidStates(packageName)
-                ?: executeShell(AppOpsCommands.getUidStates(packageName))
+            readWithShellFallback(AppOpsCommands.getUidStates(packageName)) {
+                executeNative { it.getUidStates(packageName) } ?: service?.getUidStates(packageName)
+            }
         }
 
     override suspend fun getOpStates(operationName: String): ShellCommandResult =
         withContext(Dispatchers.IO) {
-            executeNative { it.getOpStates(operationName) }
-                ?: service?.getOpStates(operationName)
-                ?: executeShell(AppOpsCommands.getOpStates(operationName))
+            readWithShellFallback(AppOpsCommands.getOpStates(operationName)) {
+                executeNative { it.getOpStates(operationName) } ?: service?.getOpStates(operationName)
+            }
         }
 
     override suspend fun getWatchers(): ShellCommandResult =
@@ -422,9 +423,9 @@ class PrivilegedServiceClient(
         packageName: String,
     ): ShellCommandResult =
         withContext(Dispatchers.IO) {
-            executeNative { it.getPackagePermissions(packageName) }
-                ?: service?.getPackagePermissions(packageName)
-                ?: executeShell(AppOpsCommands.getPackagePermissions(packageName))
+            readWithShellFallback(AppOpsCommands.getPackagePermissions(packageName)) {
+                executeNative { it.getPackagePermissions(packageName) } ?: service?.getPackagePermissions(packageName)
+            }
         }
 
     override suspend fun setRevokedCompat(
@@ -484,6 +485,24 @@ class PrivilegedServiceClient(
                     AppOpsCommands.setUidOpMode(packageName, operationName, mode),
                 )
         }
+
+    // Read commands may safely retry through Shizuku's shell transport. Never retry writes:
+    // a lost Binder response does not prove that a mode change was not applied.
+    private suspend fun readWithShellFallback(
+        arguments: List<String>,
+        read: suspend () -> ShellCommandResult?,
+    ): ShellCommandResult = dev.izumi.appopsnext.appops.command.readWithFallback(
+        primary = read,
+        fallback = { executeShell(arguments) },
+        onFailure = { result, error ->
+            diagnosticLog.warning(
+                source = LOG_SOURCE,
+                message = "AppOps read failed; retrying privileged shell. " +
+                    "exit=${result?.exitCode}, timeout=${result?.timedOut}, " +
+                    "stderr=${result?.stderr?.take(512)}, error=${error?.javaClass?.simpleName}",
+            )
+        },
+    )
 
     private suspend fun executeShell(arguments: List<String>): ShellCommandResult {
         if (!shellBackend && service == null && nativeGateway == null) {
