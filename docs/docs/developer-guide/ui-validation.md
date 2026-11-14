@@ -11,6 +11,28 @@ no new production library or replacement design framework is introduced.
 
 ## Execution evidence
 
+### System Apps freezer grid and AppOps/firewall fixes (2026-11-14)
+
+The System Apps tab now uses `FreezeDeskGrid`: adaptive rounded icon tiles, running/frozen badges,
+list mode and a scrolling full-span search/filter header. Tapping opens the existing management
+actions in an opaque sheet. `FreezeDeskGridTest` checks three columns at 360 dp, selected package
+callbacks, list switching, accessible frozen status and scrolling in a 320 × 280 dp window at
+font scale 2.0. The test supplies placeholder icon content to isolate layout from Koin and package
+lookups; it is not evidence that all installed-app icons were visually reviewed.
+
+Local command on parent revision `710294d2d`:
+`./gradlew :libs:appops-next:testDebugUnitTest :services:network:testDebugUnitTest --no-configuration-cache --no-daemon --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process -Dorg.gradle.jvmargs=-Xmx3072m`
+passed **328 AppOps and 75 Network tests**, with zero failures/errors/skips. This includes read retry,
+cancellation, both-transports-failed handling, stdin EOF/concurrent pipe draining, and explicit
+firewall targets without Internet permission/shared-UID siblings. Route/manifest validation scripts
+also passed. Final UI compilation and the two device layout tests run in `validate-appops.yml`.
+
+The local full UI build is blocked by HTTP 403 from JitPack for the existing Tesseract dependency.
+The cloud has no KVM/desktop capability; no physical OnePlus Android 17 service command or visual
+review is claimed. Remaining visual coverage includes real icons, wallpaper contrast, IME,
+enlarged display size, medium/expanded windows and the full font-size matrix. The UI work must not
+be treated as fully visually certified from unit tests alone.
+
 ### ART filter scrolling regression after v1.44.19
 
 A OnePlus Android 17 report identifies a crash when scrolling down the ART optimizer to

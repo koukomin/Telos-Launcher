@@ -35,7 +35,7 @@ internal fun FreezeDeskGrid(
     LazyVerticalGrid(
         columns =
             if (listView) GridCells.Fixed(1)
-            else GridCells.Adaptive(112.dp * fontScale.coerceAtLeast(1f)),
+            else GridCells.Adaptive(100.dp * fontScale.coerceAtLeast(1f)),
         modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(start = 16.dp, end = 16.dp, bottom = 96.dp, top = 8.dp),
         horizontalArrangement = Arrangement.spacedBy(12.dp),

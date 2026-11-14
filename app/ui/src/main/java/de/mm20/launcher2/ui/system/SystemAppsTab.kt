@@ -21,7 +21,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledTonalButton
-import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
@@ -45,6 +44,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.role
+import androidx.compose.ui.semantics.selected
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -240,6 +243,11 @@ fun SystemAppsTab(onOpenDetails: (String) -> Unit) {
                                                 I18nR.string.freeze_desk_filter_bloat
                                         }
                                     ),
+                                modifier =
+                                    Modifier.sizeIn(minHeight = UiSpacing.TouchTarget).semantics {
+                                        selected = filter == pill
+                                        role = Role.Tab
+                                    },
                                 isSelected = filter == pill,
                                 onClick = { filterOrdinal = pill.ordinal },
                                 accentColor =
@@ -260,12 +268,15 @@ fun SystemAppsTab(onOpenDetails: (String) -> Unit) {
                         verticalArrangement = Arrangement.spacedBy(4.dp),
                     ) {
                         AppOpsNextButton()
-                        FilterChip(
-                            selected = listView,
+                        TelosTechPill(
+                            text = stringResource(I18nR.string.preference_grid_list_style),
+                            isSelected = listView,
                             onClick = { listView = !listView },
-                            label = {
-                                Text(stringResource(I18nR.string.preference_grid_list_style))
-                            },
+                            modifier =
+                                Modifier.sizeIn(minHeight = UiSpacing.TouchTarget).semantics {
+                                    selected = listView
+                                    role = Role.Tab
+                                },
                         )
                     }
                 }

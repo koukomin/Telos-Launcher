@@ -54,6 +54,11 @@ class FreezeDeskGridTest {
                 }
             }
         }
+        assertEquals(
+            compose.onNodeWithText("Application 0").fetchSemanticsNode().boundsInRoot.top,
+            compose.onNodeWithText("Application 2").fetchSemanticsNode().boundsInRoot.top,
+            1f,
+        )
         compose
             .onNodeWithText("Application 0")
             .assert(
