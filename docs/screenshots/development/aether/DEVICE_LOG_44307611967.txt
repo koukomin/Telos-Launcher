@@ -1,0 +1,1277 @@
+--------- beginning of main
+11-18 13:15:55.084  1350  1360 W .apps.wellbeing: ApkAssets: Deleting an ApkAssets object '<empty> and /apex/com.android.uwb/priv-app/ServiceUwbResourcesGoogle@350820300/ServiceUwbResourcesGoogle.apk' with 1 weak references
+11-18 13:15:55.084  1350  1360 W .apps.wellbeing: ApkAssets: Deleting an ApkAssets object '<empty> and /apex/com.android.wifi/priv-app/ServiceWifiResourcesGoogle@350820300/ServiceWifiResourcesGoogle.apk' with 1 weak references
+11-18 13:15:55.084  1350  1360 W .apps.wellbeing: ApkAssets: Deleting an ApkAssets object '<empty> and /system_ext/priv-app/ThemePicker/ThemePicker.apk' with 1 weak references
+11-18 13:15:55.084  1350  1360 W .apps.wellbeing: ApkAssets: Deleting an ApkAssets object '<empty> and /system_ext/priv-app/WallpaperPickerGoogleRelease/WallpaperPickerGoogleRelease.apk' with 1 weak references
+11-18 13:15:55.084  1350  1360 W .apps.wellbeing: ApkAssets: Deleting an ApkAssets object '<empty> and /product/priv-app/OdadPrebuilt/OdadPrebuilt.apk' with 1 weak references
+11-18 13:15:55.084  1350  1360 W .apps.wellbeing: ApkAssets: Deleting an ApkAssets object '<empty> and /system/priv-app/TeleService/TeleService.apk' with 1 weak references
+11-18 13:15:55.084  1350  1360 W .apps.wellbeing: ApkAssets: Deleting an ApkAssets object '/vendor/overlay/TeleService__sdk_gphone64_x86_64__auto_generated_rro_vendor.apk' with 1 weak references
+11-18 13:15:55.084  1350  1360 W .apps.wellbeing: ApkAssets: Deleting an ApkAssets object '/product/overlay/TeleService__sdk_gphone64_x86_64__auto_generated_rro_product.apk' with 1 weak references
+11-18 13:15:55.084  1350  1360 W .apps.wellbeing: ApkAssets: Deleting an ApkAssets object '<empty> and /system/priv-app/Shell/Shell.apk' with 1 weak references
+11-18 13:15:55.084  1350  1360 W .apps.wellbeing: ApkAssets: Deleting an ApkAssets object '<empty> and /system/priv-app/BlockedNumberProvider/BlockedNumberProvider.apk' with 1 weak references
+11-18 13:15:55.085  1350  1360 W .apps.wellbeing: ApkAssets: Deleting an ApkAssets object '<empty> and /system/priv-app/UserDictionaryProvider/UserDictionaryProvider.apk' with 1 weak references
+11-18 13:15:55.085  1350  1360 W .apps.wellbeing: ApkAssets: Deleting an ApkAssets object '<empty> and /system_ext/app/EmergencyInfoGoogleNoUi/EmergencyInfoGoogleNoUi.apk' with 1 weak references
+11-18 13:15:55.085  1350  1360 W .apps.wellbeing: ApkAssets: Deleting an ApkAssets object '<empty> and /product/overlay/NavigationBarModeGestural/NavigationBarModeGesturalOverlay.apk' with 1 weak references
+11-18 13:15:55.085  1350  1360 W .apps.wellbeing: ApkAssets: Deleting an ApkAssets object '<empty> and /system/priv-app/FusedLocation/FusedLocation.apk' with 1 weak references
+11-18 13:15:55.085  1350  1360 W .apps.wellbeing: ApkAssets: Deleting an ApkAssets object '<empty> and /system_ext/priv-app/SystemUIGoogle/SystemUIGoogle.apk' with 1 weak references
+11-18 13:15:55.085  1350  1360 W .apps.wellbeing: ApkAssets: Deleting an ApkAssets object '/vendor/overlay/SystemUIGoogle__sdk_gphone64_x86_64__auto_generated_rro_vendor.apk' with 1 weak references
+11-18 13:15:55.085  1350  1360 W .apps.wellbeing: ApkAssets: Deleting an ApkAssets object '/product/overlay/SystemUIGoogle__sdk_gphone64_x86_64__auto_generated_rro_product.apk' with 1 weak references
+11-18 13:15:55.085  1350  1360 W .apps.wellbeing: ApkAssets: Deleting an ApkAssets object '/product/overlay/SystemUIEmulationPixel7/SystemUIEmulationPixel7Overlay.apk' with 1 weak references
+11-18 13:15:55.085  1350  1360 W .apps.wellbeing: ApkAssets: Deleting an ApkAssets object '<empty> and /product/app/YouTubeMusicPrebuilt/YouTubeMusicPrebuilt.apk' with 1 weak references
+11-18 13:15:55.085  1350  1360 W .apps.wellbeing: ApkAssets: Deleting an ApkAssets object '<empty> and /system/app/BluetoothMidiService/BluetoothMidiService.apk' with 1 weak references
+11-18 13:15:55.085  1350  1360 W .apps.wellbeing: ApkAssets: Deleting an ApkAssets object '<empty> and /system/app/Traceur/Traceur.apk' with 1 weak references
+11-18 13:15:55.085  1350  1360 W .apps.wellbeing: ApkAssets: Deleting an ApkAssets object '<empty> and /apex/com.android.cellbroadcast/priv-app/GoogleCellBroadcastApp@350820300/GoogleCellBroadcastApp.apk' with 1 weak references
+11-18 13:15:55.086  1350  1360 W .apps.wellbeing: ApkAssets: Deleting an ApkAssets object '<empty> and /system/priv-app/ContactsProvider/ContactsProvider.apk' with 1 weak references
+11-18 13:15:55.086  1350  1360 W .apps.wellbeing: ApkAssets: Deleting an ApkAssets object '/product/overlay/ContactsProvider__sdk_gphone64_x86_64__auto_generated_rro_product.apk' with 1 weak references
+11-18 13:15:55.086  1350  1360 W .apps.wellbeing: ApkAssets: Deleting an ApkAssets object '<empty> and /product/app/LatinIMEGooglePrebuilt/LatinIMEGooglePrebuilt.apk' with 1 weak references
+11-18 13:15:55.086  1350  1360 W .apps.wellbeing: ApkAssets: Deleting an ApkAssets object '<empty> and /product/priv-app/GoogleRestorePrebuilt-v526684/GoogleRestorePrebuilt-v526684.apk' with 1 weak references
+11-18 13:15:55.088   556   818 E WifiStaIfaceAidlImpl: getTwtCapabilities failed with service-specific exception: android.os.ServiceSpecificException:  (code 4)
+11-18 13:15:55.088   556   818 E WifiChipAidlImpl: getUsableChannels failed with service-specific exception: android.os.ServiceSpecificException:  (code 4)
+11-18 13:15:55.089   556   818 I WifiNative: Successfully switched to connectivity mode on iface=Iface:{Name=wlan0,Id=1,Type=STA_CONNECTIVITY}
+11-18 13:15:55.089   556   818 D WifiClientModeManager[184214:wlan0]: entering ConnectModeState, starting ClientModeImpl
+--------- beginning of kernel
+11-18 13:15:55.218     0     0 I servicemanager: Caller(pid=556,uid=1000,sid=u:r:system_server:s0) Found android.hardware.wifi.IWifi/default in device VINTF manifest.
+11-18 13:15:55.091   556   818 D WifiNative: enableVerboseLogging false hal false
+11-18 13:15:55.092   556   818 D WifiScoreReport: setShouldReduceNetworkScore=false mNetworkAgent is null? true
+11-18 13:15:55.092   556   818 D WifiScanRequestProxy: Sending scan available broadcast: true
+11-18 13:15:55.092   556   818 I WifiScanRequestProxy: Scanning is enabled
+11-18 13:15:55.092   556   818 I WifiScanRequestProxy: Scanning for hidden networks is enabled
+11-18 13:15:55.093   556   818 E WifiChipAidlImpl: setMultiStaUseCase failed with service-specific exception: android.os.ServiceSpecificException:  (code 4)
+11-18 13:15:55.095   556   822 I WifiScanningService: Received a request to enable scanning, UID = 1000
+11-18 13:15:55.096   358   397 I netd    : tetherGetStats() -> {[]} <1.04ms>
+11-18 13:15:55.097   556   818 E WifiChipAidlImpl: setMultiStaPrimaryConnection failed with service-specific exception: android.os.ServiceSpecificException:  (code 4)
+11-18 13:15:55.098   556   822 E WifiStaIfaceAidlImpl: getBackgroundScanCapabilities failed with service-specific exception: android.os.ServiceSpecificException:  (code 4)
+--------- beginning of system
+11-18 13:15:55.106   358   383 E NetlinkEvent: NetlinkEvent::FindParam(): Parameter 'INTERFACE' not found
+11-18 13:15:55.106   358   383 E NetlinkEvent: NetlinkEvent::FindParam(): Parameter 'STATE' not found
+11-18 13:15:55.106   358   383 E NetlinkEvent: NetlinkEvent::FindParam(): Parameter 'TIME_NS' not found
+11-18 13:15:55.106   358   383 E NetlinkEvent: NetlinkEvent::FindParam(): Parameter 'UID' not found
+11-18 13:15:55.106  1605  1874 I A       : NGA enabled in interactor.
+11-18 13:15:55.107  1605  1874 I A       : (REDACTED) Nga state changed to %s
+11-18 13:15:55.107  1605  1874 I A       : (REDACTED) isTngActive=%s
+11-18 13:15:55.107   358   397 I netd    : idletimerAddInterface(eth0, 10, 102) <3.34ms>
+11-18 13:15:55.111  1483  1518 I A       : Initializing all components
+11-18 13:15:55.114  1483  2021 I A       : (REDACTED) onIsEnabledChanged, isEnabled: %s
+11-18 13:15:55.115   556   822 I WifiScanningService: Created a new impl for wlan0
+11-18 13:15:55.115   556   822 I WifiScanningService: wifi driver loaded with scan capabilities: max buckets=16
+11-18 13:15:55.115  1483  2021 W A       : Disposing empty manager. Did you forgot to subscribe observables?
+11-18 13:15:55.115  1483  2021 W A       : Disposing empty manager. Did you forgot to subscribe observables?
+11-18 13:15:55.120   978  4576 D TrafficStats: tagSocket(109) with statsTag=0xffffff81, statsUid=-1
+11-18 13:15:55.123   978  4577 D TrafficStats: tagSocket(110) with statsTag=0xffffff81, statsUid=-1
+11-18 13:15:55.124  3312  3520 W Bugle   : TextClassifierLibManagerImpl: Reclaiming memory at level: 40
+11-18 13:15:55.125   556   825 D ConnectivityService: Switching to new default network for: uid/pid:1000/556 activeRequest: 16 callbackRequest: 16 [NetworkRequest [ TRACK_DEFAULT id=16, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VPN&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED Uid: 10136 RequestorUid: 1000 RequestorPkg: android UnderlyingNetworks: Null] ], NetworkRequest [ REQUEST id=17, [ Transports: SATELLITE Capabilities: INTERNET&TRUSTED&NOT_VPN&NOT_VCN_MANAGED Uid: 10136 UnderlyingNetworks: Null] ]] callback flags: 0 order: 40 isUidTracked: false using NetworkAgentInfo{network{102}  handle{441492361229}  ni{MOBILE[HSPA] CONNECTED extra: fast.t-mobile.com} created=2026-11-18T13:15:54.784Z Score(Policies :  ; KeepConnected : 0)  created 184508  lp{{InterfaceName: eth0 LinkAddresses: [ 10.0.2.15/24 ] DnsAddresses: [ /10.0.2.3 ] Domains: null MTU: 1500 TcpBufferSizes: 2097152,6291456,16777216,512000,2097152,8388608 Routes: [ 0.0.0.0/0 -> 10.0.2.2 eth0 mtu 1500,10.0.2.0/24 -> 0.0.0.0 eth0 mtu 0 ]}}  nc{[ Transports: CELLULAR Capabilities: MMS&SUPL&IA&XCAP&INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VPN&NOT_ROAMING&FOREGROUND&NOT_CONGESTED&NOT_SUSPENDED&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED LinkUpBandwidth>=14Kbps LinkDnBandwidth>=14Kbps Specifier: <TelephonyNetworkSpecifier [mSubId = 1]> SubscriptionIds: {1} UnderlyingNetworks: Null]}  factorySerialNumber=4}
+11-18 13:15:55.126   358   397 I netd    : networkAddUidRangesParcel(NativeUidRangeConfig{netId: 102, uidRanges: [UidRangeParcel{start: 10136, stop: 10136}], subPriority: 40}) <0.10ms>
+11-18 13:15:55.126   358   397 I netd    : networkRemoveUidRangesParcel(NativeUidRangeConfig{netId: 52, uidRanges: [UidRangeParcel{start: 10136, stop: 10136}], subPriority: 40}) <0.06ms>
+11-18 13:15:55.127   556   825 D ConnectivityService: Switching to new default network for: uid/pid:1000/556 activeRequest: 1 callbackRequest: 1 [NetworkRequest [ REQUEST id=1, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VPN&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED RequestorUid: 1000 RequestorPkg: android UnderlyingNetworks: Null] ]] callback flags: 1 order: 2147483647 isUidTracked: false using NetworkAgentInfo{network{102}  handle{441492361229}  ni{MOBILE[HSPA] CONNECTED extra: fast.t-mobile.com} created=2026-11-18T13:15:54.784Z Score(Policies :  ; KeepConnected : 0)  created 184508  lp{{InterfaceName: eth0 LinkAddresses: [ 10.0.2.15/24 ] DnsAddresses: [ /10.0.2.3 ] Domains: null MTU: 1500 TcpBufferSizes: 2097152,6291456,16777216,512000,2097152,8388608 Routes: [ 0.0.0.0/0 -> 10.0.2.2 eth0 mtu 1500,10.0.2.0/24 -> 0.0.0.0 eth0 mtu 0 ]}}  nc{[ Transports: CELLULAR Capabilities: MMS&SUPL&IA&XCAP&INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VPN&NOT_ROAMING&FOREGROUND&NOT_CONGESTED&NOT_SUSPENDED&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED LinkUpBandwidth>=14Kbps LinkDnBandwidth>=14Kbps Specifier: <TelephonyNetworkSpecifier [mSubId = 1]> SubscriptionIds: {1} UnderlyingNetworks: Null]}  factorySerialNumber=4}
+11-18 13:15:55.127   358   397 I netd    : networkSetDefault(102) <0.43ms>
+11-18 13:15:55.127   358   397 I netd    : setTcpRWmemorySize(2097152 6291456 16777216, 512000 2097152 8388608) <0.13ms>
+11-18 13:15:55.128   978  4577 D TrafficStats: tagSocket(111) with statsTag=0xffffff81, statsUid=-1
+11-18 13:15:55.129  1483  2021 W A       : Disposing empty manager. Did you forgot to subscribe observables?
+11-18 13:15:55.130  1483  2021 W A       : Disposing empty manager. Did you forgot to subscribe observables?
+11-18 13:15:55.130  1483  2021 W A       : Disposing empty manager. Did you forgot to subscribe observables?
+11-18 13:15:55.130  1483  2021 W A       : Disposing empty manager. Did you forgot to subscribe observables?
+11-18 13:15:55.130   556   818 D WifiCountryCode: evaluateAllCmmStateAndApplyIfAllReady: {ConcreteClientModeManager{id=184214 iface=wlan0 role=ROLE_CLIENT_PRIMARY}=true}
+11-18 13:15:55.131  1483  2021 W A       : Disposing empty manager. Did you forgot to subscribe observables?
+11-18 13:15:55.131   556   818 D WifiCountryCode: updateCountryCode to US
+11-18 13:15:55.131   556   818 D WifiCountryCode: setCountryCodeNative: US, isClientModeOnly: true mDriverCountryCode: null
+11-18 13:15:55.131  1483  2021 W A       : Disposing empty manager. Did you forgot to subscribe observables?
+11-18 13:15:55.131  1483  2021 W A       : Disposing empty manager. Did you forgot to subscribe observables?
+11-18 13:15:55.131  1483  2021 W A       : Disposing empty manager. Did you forgot to subscribe observables?
+11-18 13:15:55.131  1483  2021 W A       : Disposing empty manager. Did you forgot to subscribe observables?
+11-18 13:15:55.133   978  4576 D TrafficStats: tagSocket(109) with statsTag=0xffffff81, statsUid=-1
+11-18 13:15:55.133   556   818 D WifiNative: onSetCountryCodeSucceeded: US
+11-18 13:15:55.133   556   818 I WifiCountryCode: Receive onSetCountryCodeSucceeded US
+11-18 13:15:55.133   498   498 I wificond: Receive notifyCountryCodeChanged
+11-18 13:15:55.133   498   498 I wificond: UpdateBandInfo
+11-18 13:15:55.134  1483  2021 I A       : (REDACTED) Setting session to type: %s
+11-18 13:15:55.275     0     0 W binder_debug: 36 callbacks suppressed
+11-18 13:15:55.134  1483  2021 W A       : Disposing empty manager. Did you forgot to subscribe observables?
+11-18 13:15:55.275     0     0 I binder  : undelivered TRANSACTION_COMPLETE
+11-18 13:15:55.134  1483  2021 W A       : Disposing empty manager. Did you forgot to subscribe observables?
+11-18 13:15:55.134  1483  2021 W A       : Disposing empty manager. Did you forgot to subscribe observables?
+11-18 13:15:55.134  1483  2021 W A       : Disposing empty manager. Did you forgot to subscribe observables?
+11-18 13:15:55.134  1483  2021 W A       : Disposing empty manager. Did you forgot to subscribe observables?
+11-18 13:15:55.134  1483  2021 W A       : Disposing empty manager. Did you forgot to subscribe observables?
+11-18 13:15:55.134  1483  2021 I A       : (REDACTED) setNavBarVisible: %s
+11-18 13:15:55.138   498   498 I wificond: 2.4Ghz frequencies: 2412 2417 2422 2427 2432 2437 2442 2447 2452 2457 2462 2467 2472 2484
+11-18 13:15:55.138   498   498 I wificond: 5Ghz non-DFS frequencies:
+11-18 13:15:55.138   498   498 I wificond: 5Ghz DFS frequencies: 5180 5200 5220 5240 5260 5280 5300 5320 5500 5520 5540 5560 5580 5600 5620 5640 5660 5680 5700 5745 5765 5785 5805 5825
+11-18 13:15:55.138   498   498 I wificond: 6Ghz frequencies:
+11-18 13:15:55.138   498   498 I wificond: 60Ghz frequencies:
+11-18 13:15:55.139   556   818 I WifiNl80211Manager: Receive country code change to US
+11-18 13:15:55.277     0     0 I binder  : undelivered transaction 474865, process died.
+11-18 13:15:55.142   438   438 I adbd    : Remote process closed the socket (on MSG_PEEK)
+11-18 13:15:55.142   556  1094 V ActivityManager: Got obituary of 4321:de.mm20.launcher2.ui.test
+11-18 13:15:55.142   362   362 I Zygote  : Process 4321 exited due to signal 9 (Killed)
+11-18 13:15:55.143   556   818 D WifiScanRequestProxy: Sending scan available broadcast: true
+11-18 13:15:55.144  1483  1934 I A       : (REDACTED) Nga on-device enabled based on TNG:MA active state: %b
+11-18 13:15:55.146   358  4583 I resolv  : ResNSendHandler::run: 0 / {102 983142 102 983142 1073 1}
+11-18 13:15:55.147   556   822 I WifiScanningService: Received a request to enable scanning, UID = 1000
+11-18 13:15:55.147   556   822 I WifiScanningService: scanner impls already exists
+11-18 13:15:55.147   556   822 E WifiScanningService: wifi driver loaded received while already loaded
+11-18 13:15:55.147   358  4584 I resolv  : ResNSendHandler::run: 0 / {102 983142 102 983142 1073 1}
+11-18 13:15:55.147   556   818 I WifiScanRequestProxy: Scanning is enabled
+11-18 13:15:55.147   556   818 I WifiScanRequestProxy: Scanning for hidden networks is enabled
+11-18 13:15:55.148  1483  2021 W A       : Disposing empty manager. Did you forgot to subscribe observables?
+11-18 13:15:55.148   358  4583 I resolv  : res_nsend: used send_dg 63 terrno: 0
+11-18 13:15:55.148  1483  2021 W A       : Disposing empty manager. Did you forgot to subscribe observables?
+11-18 13:15:55.149   556   818 D WifiConnectivityHelper: Firmware supported feature set: 19d81c8b8000019
+11-18 13:15:55.150   556   818 D WifiConnectivityHelper: Firmware roaming is not supported
+11-18 13:15:55.150   556   818 D WakeupController: onWifiEnabled()
+11-18 13:15:55.152   358  4584 I resolv  : res_nsend: used send_dg 160 terrno: 0
+11-18 13:15:55.153   358   397 I netd    : tetherGetStats() -> {[]} <1.06ms>
+11-18 13:15:55.155   978   978 D TrafficStats: tagSocket(109) with statsTag=0xffffffff, statsUid=-1
+11-18 13:15:55.156  1483  2021 W A       : Disposing empty manager. Did you forgot to subscribe observables?
+11-18 13:15:55.156  1483  2021 W A       : Disposing empty manager. Did you forgot to subscribe observables?
+11-18 13:15:55.156  1483  2021 W A       : Disposing empty manager. Did you forgot to subscribe observables?
+11-18 13:15:55.156  1483  2021 W A       : Disposing empty manager. Did you forgot to subscribe observables?
+11-18 13:15:55.157   978  4577 D NetworkMonitor/102: PROBE_DNS connectivitycheck.gstatic.com 35ms OK 142.251.150.120
+11-18 13:15:55.159   556   825 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.162   556   825 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.163   978  1044 D UpstreamNetworkMonitor: New default Internet network: 102
+11-18 13:15:55.163   556   825 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.163   556   825 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.164   556   825 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.164   556   825 D ConnectivityService: Sending CONNECTED broadcast for type 0 [102 CELLULAR] isDefaultNetwork=true
+11-18 13:15:55.164   556   825 W ContextImpl: Calling a method in the system process without a qualified user: android.app.ContextImpl.sendStickyBroadcast:1655 android.net.connectivity.com.android.server.ConnectivityService.sendStickyBroadcast:3944 android.net.connectivity.com.android.server.ConnectivityService.sendGeneralBroadcast:3914 android.net.connectivity.com.android.server.ConnectivityService.sendConnectedBroadcast:3887 android.net.connectivity.com.android.server.ConnectivityService.sendLegacyNetworkBroadcast:11497 
+11-18 13:15:55.168   556   853 D NetworkTimeUpdateService: New default network 102; checking time.
+11-18 13:15:55.172   978   978 D TrafficStats: tagSocket(109) with statsTag=0xffffffff, statsUid=-1
+11-18 13:15:55.174   556   818 D WifiClientModeImpl[184554:wlan0]: entering ConnectableState: ifaceName = wlan0
+11-18 13:15:55.182   978   978 D TrafficStats: tagSocket(109) with statsTag=0xffffffff, statsUid=-1
+11-18 13:15:55.184   556   818 I WifiClientModeImpl[184554:wlan0]: disconnectedstate enter
+11-18 13:15:55.184   358   397 I netd    : interfaceSetEnableIPv6(wlan0, false) <0.03ms>
+11-18 13:15:55.185   358   397 I netd    : interfaceClearAddrs(wlan0) <0.39ms>
+11-18 13:15:55.186   358   397 I netd    : setProcSysNet(6, 1, wlan0, accept_ra, 2) <0.02ms>
+11-18 13:15:55.187   358   397 I netd    : setProcSysNet(6, 1, wlan0, accept_ra_defrtr, 1) <0.02ms>
+11-18 13:15:55.188   556   825 D ConnectivityService: NetReassign [69 : null → 102, 66 : null → 102, 32 : null → 102, 75 : null → 102, 106 : null → 102, 38 : null → 102, 134 : null → 102, 124 : null → 102, 34 : null → 102, 29 : null → 102, 6 : null → 102, 61 : null → 102, 103 : null → 102, 41 : null → 102, 96 : null → 102, 16 : 52 → 102, 109 : null → 102, 64 : null → 102, 83 : null → 102, 85 : null → 102, 19 : null → 102, 28 : null → 102, 1 : null → 102, 78 : null → 102, 21 : null → 102, 14 : null → 102, 88 : null → 102, 116 : null → 102, 100 : null → 102, 71 : null → 102, 90 : null → 102, 2 : null → 102, 51 : null → 102, 94 : null → 102, 47 : null → 102, 45 : null → 102, 139 : null → 102, 23 : null → 102, 56 : null → 102, 49 : null → 102, 58 : null → 102, 112 : null → 102, 26 : null → 102] [c 8] [a 70] [i 0]
+11-18 13:15:55.189   358   397 I netd    : setProcSysNet(6, 1, wlan0, accept_ra_min_lft, 0) <0.02ms>
+11-18 13:15:55.190   358  4590 I resolv  : GetAddrInfoHandler::run: {102 983142 102 983142 1073 1}
+11-18 13:15:55.190   358  4591 I resolv  : res_nmkquery: (QUERY, IN, A)
+11-18 13:15:55.190   358  4591 I resolv  : resolv_cache_lookup: FOUND IN CACHE entry=0x7c98b0911690
+11-18 13:15:55.190   358  4591 I resolv  : doQuery: rcode=0, ancount=1, return value=63
+11-18 13:15:55.191   978  4577 D TrafficStats: tagSocket(116) with statsTag=0xffffff81, statsUid=-1
+11-18 13:15:55.193  3622  3688 I BugleRcsEngine: handleMessage processing message:[NOTIFY_UPTIME_IGNORE_STATE_CHANGED] with [non-null]:RcsEngineImpl reference [CONTEXT log_prefix="RcsEngineImpl[DUAL_REG]:[a3f71aaf-6db2]>Handler" thread_id=62 ]
+11-18 13:15:55.194  1483  2021 I A       : (REDACTED) Nga on-device enabled based on TNG:MA active state: %b
+11-18 13:15:55.198  3622  3653 I BugleRcsEngine: Connected state: [1], networkType: [MOBILE] [CONTEXT thread_id=55 ]
+11-18 13:15:55.199   978   978 D TrafficStats: tagSocket(117) with statsTag=0xffffffff, statsUid=-1
+11-18 13:15:55.200   556   818 E WifiScoringParams: Invalid frequency(-1), using 5G as default rssi array
+11-18 13:15:55.203   978   978 D TrafficStats: tagSocket(120) with statsTag=0xffffffff, statsUid=-1
+11-18 13:15:55.204   556   591 I libprocessgroup: Removed cgroup /sys/fs/cgroup/uid_10210/pid_4321
+11-18 13:15:55.208  3622  3653 I BugleRcsEngine: Connected state: [1], networkType: [MOBILE] [CONTEXT thread_id=55 ]
+11-18 13:15:55.209  3622  3688 I BugleRcsEngine: No RCS Configuration was found in Bugle for simID: redacted-pii:sim_id[chars:20,last3:897] [CONTEXT log_prefix="ProvisioningEngineDataRetriever" thread_id=62 ]
+11-18 13:15:55.210   978   978 D TrafficStats: tagSocket(117) with statsTag=0xffffffff, statsUid=-1
+11-18 13:15:55.213   556   825 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.214   556   825 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.214   556   816 D NetworkStatsObservers: Registering observer for RequestInfo from pid/uid:556/1000(android) for DataUsageRequest [ requestId=11, networkTemplate=NetworkTemplate: matchRule=MOBILE, matchSubscriberIds=[310260...], matchWifiNetworkKeys=[], metered=YES, defaultNetwork=NO, thresholdInBytes=3553525 ] accessLevel:3
+11-18 13:15:55.215   358   397 I netd    : bandwidthSetInterfaceQuota(eth0, 9223372036854775807) <0.66ms>
+11-18 13:15:55.220   556   825 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.220   978   978 D TrafficStats: tagSocket(117) with statsTag=0xffffffff, statsUid=-1
+11-18 13:15:55.220   556   825 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.220   556   825 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.221  3622  3688 I BugleRcsEngine: handleMessage processing message:[NOTIFY_UPTIME_IGNORE_STATE_CHANGED] with [non-null]:RcsEngineImpl reference [CONTEXT log_prefix="RcsEngineImpl[DUAL_REG]:[a3f71aaf-6db2]>Handler" thread_id=62 ]
+11-18 13:15:55.222   556   825 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+11-18 13:15:55.222   978   978 D TrafficStats: tagSocket(117) with statsTag=0xffffffff, statsUid=-1
+11-18 13:15:55.223   978   978 D TrafficStats: tagSocket(117) with statsTag=0xffffffff, statsUid=-1
+11-18 13:15:55.224   556   825 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+11-18 13:15:55.225   978  4576 D NetworkMonitor/102: PROBE_DNS www.google.com 104ms OK 142.251.155.119,142.251.154.119,142.251.151.119,142.251.153.119,142.251.150.119,142.251.157.119,142.251.152.119,142.251.156.119
+11-18 13:15:55.233   358  4599 I resolv  : GetAddrInfoHandler::run: {102 983142 102 983142 1073 1}
+11-18 13:15:55.234   556   825 D InetDiagMessage: Destroyed live tcp sockets for uids={10210} in 12ms
+11-18 13:15:55.234   556   825 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+11-18 13:15:55.234   556   825 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+11-18 13:15:55.234   556   825 D InetDiagMessage: Destroyed live tcp sockets for uids={20210} in 0ms
+11-18 13:15:55.235   358  4600 I resolv  : res_nmkquery: (QUERY, IN, A)
+11-18 13:15:55.235   358  4600 I resolv  : resolv_cache_lookup: FOUND IN CACHE entry=0x7c987090a490
+11-18 13:15:55.235   358  4600 I resolv  : doQuery: rcode=0, ancount=8, return value=160
+11-18 13:15:55.236   978  4576 D TrafficStats: tagSocket(117) with statsTag=0xffffff81, statsUid=-1
+11-18 13:15:55.246   358   397 I netd    : tetherGetStats() -> {[]} <2.74ms>
+11-18 13:15:55.249  3622  3688 I BugleRcsEngine: No RCS Configuration was found in Bugle for simID: redacted-pii:sim_id[chars:20,last3:897] [CONTEXT log_prefix="ProvisioningEngineDataRetriever" thread_id=62 ]
+11-18 13:15:55.253   358  4602 I resolv  : GetAddrInfoHandler::run: {102 786534 102 983142 10143 0}
+11-18 13:15:55.254   358  4603 I resolv  : res_nmkquery: (QUERY, IN, A)
+11-18 13:15:55.256   358  4603 I resolv  : res_nsend: used send_dg 107 terrno: 0
+11-18 13:15:55.256   358  4603 I resolv  : doQuery: rcode=0, ancount=2, return value=107
+11-18 13:15:55.258   556   818 D WifiClientModeImpl[184554:wlan0]: setupClientMode() ifacename = wlan0
+11-18 13:15:55.260  1483  2021 I A       : Initialize
+11-18 13:15:55.260   556   818 I WifiVendorHal: Driver: 1.0 Firmware: 1.0
+11-18 13:15:55.261   556   818 D WifiDiags: startLogging() iface list is {wlan0} after adding wlan0
+11-18 13:15:55.266   358   397 I netd    : bandwidthRemoveInterfaceQuota(eth0) <1.05ms>
+11-18 13:15:55.266   358   397 I netd    : bandwidthSetInterfaceQuota(eth0, 9223372036854775807) <0.34ms>
+11-18 13:15:55.268   556   818 D WifiConnectivityHelper: Firmware supported feature set: 19d81c8b8000019
+11-18 13:15:55.269   556   818 D WifiConnectivityHelper: Firmware roaming is not supported
+11-18 13:15:55.269  1160  1472 D TrafficStats: tagSocket(-1) with statsTag=0x30000407, statsUid=-1
+11-18 13:15:55.269  1160  1472 I TrafficStats: tagSocketFd(-1, 805307399, -1) failed with errno-9
+11-18 13:15:55.269  1160  1472 D TrafficStats: tagSocket(222) with statsTag=0x30000407, statsUid=-1
+11-18 13:15:55.277   556   818 I WifiService: Receive onDriverCountryCodeChanged to US, update available channel list
+11-18 13:15:55.278  1483  2021 I A       : (REDACTED) stopListening(%s, %s)
+11-18 13:15:55.281   556   818 E WifiChipAidlImpl: getUsableChannels failed with service-specific exception: android.os.ServiceSpecificException:  (code 4)
+11-18 13:15:55.417     0     0 I servicemanager: Caller(pid=556,uid=1000,sid=u:r:system_server:s0) Found android.hardware.wifi.IWifi/default in device VINTF manifest.
+11-18 13:15:55.283   556   818 D WifiP2pService: Wifi enabled=true, P2P disallowed by admin=false, D2D allowed when infra sta is disabled=false
+11-18 13:15:55.287  1483  2021 I NgaEntryPointEventSendr: setupConnection
+11-18 13:15:55.288   358   397 I netd    : bandwidthRemoveInterfaceQuota(eth0) <1.14ms>
+11-18 13:15:55.289   358   397 I netd    : bandwidthSetInterfaceQuota(eth0, 9223372036854775807) <0.76ms>
+11-18 13:15:55.289   358   358 I netd    : interfaceGetCfg(wlan0) -> {InterfaceConfigurationParcel{ifName: wlan0, hwAddr: 02:15:b2:00:00:00, ipv4Addr: 0.0.0.0, prefixLength: 0, flags: [up, broadcast, multicast]}} <0.08ms>
+11-18 13:15:55.291  1483  1934 I ALT.ARCProvider: (REDACTED) #audio# activating audio request client(%s)
+11-18 13:15:55.291  1483  1934 I ALT.ClientsRegy: (REDACTED) #audio# activating audio client(token(%d), %s)
+11-18 13:15:55.292   978  4577 D NetworkMonitor/102: PROBE_HTTP http://connectivitycheck.gstatic.com/generate_204 time=113ms ret=204 request={Connection=[close], User-Agent=[Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.32 Safari/537.36]} headers={null=[HTTP/1.1 204 No Content], Connection=[close], Content-Length=[0], Cross-Origin-Resource-Policy=[cross-origin], Date=[Wed, 18 Nov 2026 13:15:55 GMT], X-Android-Received-Millis=[1795007755292], X-Android-Response-Source=[NETWORK 204], X-Android-Selected-Protocol=[http/1.1], X-Android-Sent-Millis=[1795007755255]}
+11-18 13:15:55.293  1483  1934 I ALT.ClientsRegy: (REDACTED) #audio# enforcing concurrency state on a new client(%s, token(%d))
+11-18 13:15:55.294  1483  1934 I ALT.AudioRoutesRegy: (REDACTED) #audio# initializing the default route(%d) for %s
+11-18 13:15:55.295   358   358 I netd    : bandwidthRemoveInterfaceQuota(eth0) <0.60ms>
+11-18 13:15:55.295   358   358 I netd    : bandwidthSetInterfaceQuota(eth0, 9223372036854775807) <0.40ms>
+11-18 13:15:55.296  1483  1934 I ALT.ARClient: (REDACTED) #audio# routing audio request client(token(%d)) to(%s)
+11-18 13:15:55.296  1483  1934 I ALT.HotwordRoutesRegy: (REDACTED) #audio# initializing the default route(%s) for hotword
+11-18 13:15:55.296  1483  1934 I ALT.AudioRoutesRegy: (REDACTED) #audio# updating to audio route(token(%d), %s) for %s
+11-18 13:15:55.297  1483  1934 I ALT.AudioRoutesRegy: (REDACTED) #audio# audio route(token(%d), %s) OK to update
+11-18 13:15:55.297  1483  1934 I ALT.AudioRoutesRegy: (REDACTED) #audio# enforcing concurrency state on a new audio route of %s
+11-18 13:15:55.298  1483  1934 I ALT.AudioRoutesRegy: (REDACTED) #audio# disconnecting(%s) audio %s for %s
+11-18 13:15:55.299  1483  1934 I ALT.AudioRoutesRegy: (REDACTED) #audio# starting connection to audio route(token(%d), %s) for %s
+11-18 13:15:55.300  1483  1934 I A       : (REDACTED) State changed: %s => %s by %s and %s with %s
+11-18 13:15:55.300  1483  1934 I A       : (REDACTED) Recognizer choice: (recognizer_type: %s, recognizer_mode: %s, choice_reason: %s)
+11-18 13:15:55.302  1483  1934 I A       : (REDACTED) onActiveStateChangeEvent: %s => %s
+11-18 13:15:55.306  1483  2021 I NgaEntryPointEventSendr: (REDACTED) State changed: %s => %s
+11-18 13:15:55.309  1483  1934 W A       : (REDACTED) Missing generator mapping for generator %s
+11-18 13:15:55.309  1483  1934 W A       : (REDACTED) Missing generator mapping for generator %s
+11-18 13:15:55.309  1483  1934 W A       : (REDACTED) Missing generator mapping for generator %s
+11-18 13:15:55.309  1483  2021 I NgaEntryPointEventSendr: onServiceConnected
+11-18 13:15:55.309  1605  3218 I A       : Calling beginBinderSession().
+11-18 13:15:55.310  1160  2136 W AlarmManager: alarm window unlikely to be respected [CONTEXT service_id=231 ]
+11-18 13:15:55.310  1160  2136 W AlarmManager: java.lang.IllegalArgumentException: alarm "NetworkLocationLocator" has short window length
+11-18 13:15:55.310  1160  2136 W AlarmManager: 	at boaw.b(:com.google.android.gms@242335041@24.23.35 (190800-646585959):52)
+11-18 13:15:55.310  1160  2136 W AlarmManager: 	at ehbk.f(:com.google.android.gms@242335041@24.23.35 (190800-646585959):119)
+11-18 13:15:55.310  1160  2136 W AlarmManager: 	at egxu.q(:com.google.android.gms@242335041@24.23.35 (190800-646585959):107)
+11-18 13:15:55.310  1160  2136 W AlarmManager: 	at egxu.j(:com.google.android.gms@242335041@24.23.35 (190800-646585959):1231)
+11-18 13:15:55.310  1160  2136 W AlarmManager: 	at egxu.h(:com.google.android.gms@242335041@24.23.35 (190800-646585959):70)
+11-18 13:15:55.310  1160  2136 W AlarmManager: 	at ehje.C(:com.google.android.gms@242335041@24.23.35 (190800-646585959):11)
+11-18 13:15:55.310  1160  2136 W AlarmManager: 	at ehit.C(:com.google.android.gms@242335041@24.23.35 (190800-646585959):22)
+11-18 13:15:55.310  1160  2136 W AlarmManager: 	at ehal.c(:com.google.android.gms@242335041@24.23.35 (190800-646585959):29)
+11-18 13:15:55.310  1160  2136 W AlarmManager: 	at ehad.run(:com.google.android.gms@242335041@24.23.35 (190800-646585959):782)
+11-18 13:15:55.310  1160  2136 W AlarmManager: 	at android.os.Handler.handleCallback(Handler.java:959)
+11-18 13:15:55.310  1160  2136 W AlarmManager: 	at android.os.Handler.dispatchMessage(Handler.java:100)
+11-18 13:15:55.310  1160  2136 W AlarmManager: 	at bphk.nR(:com.google.android.gms@242335041@24.23.35 (190800-646585959):1)
+11-18 13:15:55.310  1160  2136 W AlarmManager: 	at bphk.dispatchMessage(:com.google.android.gms@242335041@24.23.35 (190800-646585959):138)
+11-18 13:15:55.310  1160  2136 W AlarmManager: 	at android.os.Looper.loopOnce(Looper.java:232)
+11-18 13:15:55.310  1160  2136 W AlarmManager: 	at android.os.Looper.loop(Looper.java:317)
+11-18 13:15:55.310  1160  2136 W AlarmManager: 	at android.os.HandlerThread.run(HandlerThread.java:85)
+11-18 13:15:55.312  1483  1934 I A       : (REDACTED) #onActiveStateChangeEvent, newState: %s, previousState: %s.
+11-18 13:15:55.313  1605  3218 I A       : beginBinderSession(): calling binder
+11-18 13:15:55.313  1483  2021 I NgaEntryPointEventSendr: (REDACTED) State changed: %s => %s
+11-18 13:15:55.314  1483  1934 I A       : (REDACTED) on opa visibility changed %s
+11-18 13:15:55.315  1483  1934 I A       : (REDACTED) on opa visibility changed %s
+11-18 13:15:55.317  1483  1934 I ALT.RefManager: (REDACTED) #audio# referencing(%s) to(%s), (%s)
+11-18 13:15:55.317  1483  1934 I INV.SystemUI: showGestureNav
+11-18 13:15:55.317  1483  1934 I INV.SystemUI: (REDACTED) setUiHints(hints = %s)
+11-18 13:15:55.318   556  1563 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.318  1483  1934 I A       : (REDACTED) #audio# audio routing(%s) took %d(ms)
+11-18 13:15:55.318  1483  1934 I ALT.AudioEventsHolder: (REDACTED) #audio# route(%s) for audio request client(token(%d)) updated with status(%s)
+11-18 13:15:55.319   556  1563 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.325   978  4576 D NetworkMonitor/102: PROBE_HTTPS https://www.google.com/generate_204 time=94ms ret=204 request={Connection=[close], User-Agent=[Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.32 Safari/537.36]} headers={null=[HTTP/1.1 204 No Content], Alt-Svc=[h3=":443"; ma=2592000,h3-29=":443"; ma=2592000], Connection=[close], Content-Length=[0], Cross-Origin-Resource-Policy=[cross-origin], Date=[Wed, 18 Nov 2026 13:15:55 GMT], X-Android-Received-Millis=[1795007755325], X-Android-Response-Source=[NETWORK 204], X-Android-Selected-Protocol=[http/1.1], X-Android-Sent-Millis=[1795007755307]}
+11-18 13:15:55.329  1483  2021 I A       : Successfully initialized all components
+11-18 13:15:55.331   556  1563 D ActivityManager: sync unfroze 1374 com.google.android.gms for 4
+11-18 13:15:55.335   978  4575 D NetworkMonitor/102: isCaptivePortal: isSuccessful()=true isPortal()=false RedirectUrl=null isPartialConnectivity()=false Time=220ms
+11-18 13:15:55.337   358  4615 I resolv  : GetAddrInfoHandler::run: {102 786534 102 983142 10143 0}
+11-18 13:15:55.337   358  4616 I resolv  : res_nmkquery: (QUERY, IN, A)
+11-18 13:15:55.337   358  4614 I resolv  : GetAddrInfoHandler::run: {102 786534 102 983142 10143 0}
+11-18 13:15:55.337   358  4617 I resolv  : res_nmkquery: (QUERY, IN, A)
+11-18 13:15:55.338   978   988 I rkstack.process: Background concurrent mark compact GC freed 2997KB AllocSpace bytes, 8(160KB) LOS objects, 49% free, 3148KB/6297KB, paused 70us,482us total 207.220ms
+11-18 13:15:55.338   358  4616 I resolv  : res_nsend: used send_dg 178 terrno: 0
+11-18 13:15:55.338   358  4616 I resolv  : doQuery: rcode=0, ancount=8, return value=178
+11-18 13:15:55.338   358  4617 I resolv  : res_nsend: used send_dg 176 terrno: 0
+11-18 13:15:55.338   358  4617 I resolv  : doQuery: rcode=0, ancount=8, return value=176
+11-18 13:15:55.347   556   825 I ConnectivityService: Update score for net 102 : +EVER_EVALUATED
+11-18 13:15:55.347   556   825 D ConnectivityService: [102 CELLULAR] validation passed
+11-18 13:15:55.347   556   825 I ConnectivityService: Update capabilities for net 102 : +VALIDATED
+11-18 13:15:55.347   556   825 I ConnectivityService: Update score for net 102 : +EVER_VALIDATED+IS_VALIDATED
+11-18 13:15:55.347  1160  2329 I NearbyDiscovery: FastPairHandler: Received action android.net.conn.CONNECTIVITY_CHANGE [CONTEXT service_id=265 ]
+11-18 13:15:55.348  1061  1261 D com.android.ons.ONSProfileActivator: Internet connection available
+11-18 13:15:55.349   556   577 I GnssNetworkConnectivityHandler: updateNetworkState, state=CLOSED, connected=true, network=102, capabilityFlags=2, availableNetworkCount: 1
+11-18 13:15:55.351  1374  4138 D TrafficStats: tagSocket(81) with statsTag=0x30002500, statsUid=-1
+11-18 13:15:55.351   556   825 D ConnectivityService: NetReassign [no changes] [c 0] [a 0] [i 4]
+11-18 13:15:55.352  1374  4273 D TrafficStats: tagSocket(84) with statsTag=0x30002500, statsUid=-1
+11-18 13:15:55.352  1374  4269 D TrafficStats: tagSocket(105) with statsTag=0x30002500, statsUid=-1
+11-18 13:15:55.355  1160  2136 I ActivityScheduler: nextTriggerTime: 361780, in 176960ms, detectorType: 39, FULL_TYPE alarmWindowMillis: 30000
+11-18 13:15:55.359  1374  1374 I NearbySharing: SharingTileService created. [CONTEXT service_id=194 ]
+11-18 13:15:55.361  1374  2915 D TrafficStats: tagSocket(83) with statsTag=0x30002500, statsUid=-1
+11-18 13:15:55.362  1374  4621 D TrafficStats: tagSocket(111) with statsTag=0x30004901, statsUid=10143
+11-18 13:15:55.362  1374  4622 D TrafficStats: tagSocket(113) with statsTag=0x30002500, statsUid=-1
+11-18 13:15:55.364  1374  4138 W Conscrypt: Could not set socket write timeout: java.net.SocketException: Socket closed
+11-18 13:15:55.365   556   825 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.365   556   825 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.366  1374  4273 W Conscrypt: Could not set socket write timeout: java.net.SocketException: Socket closed
+11-18 13:15:55.366  1374  4273 W Conscrypt: 	at com.google.android.gms.org.conscrypt.Platform.setSocketWriteTimeout(:com.google.android.gms@242335041@24.23.35 (190800-646585959):204)
+11-18 13:15:55.366  1374  4273 W Conscrypt: 	at com.google.android.gms.org.conscrypt.ConscryptFileDescriptorSocket.setSoWriteTimeout(:com.google.android.gms@242335041@24.23.35 (190800-646585959):4)
+11-18 13:15:55.368  1374  4269 W Conscrypt: Could not set socket write timeout: java.net.SocketException: Socket closed
+11-18 13:15:55.371  1374  4269 W Conscrypt: 	at com.google.android.gms.org.conscrypt.Platform.setSocketWriteTimeout(:com.google.android.gms@242335041@24.23.35 (190800-646585959):204)
+11-18 13:15:55.371  1374  4269 W Conscrypt: 	at com.google.android.gms.org.conscrypt.ConscryptFileDescriptorSocket.setSoWriteTimeout(:com.google.android.gms@242335041@24.23.35 (190800-646585959):4)
+11-18 13:15:55.377  1483  1934 I A       : (REDACTED) Nga on-device enabled based on TNG:MA active state: %b
+11-18 13:15:55.377   556   825 D ConnectivityService: Setting DNS servers for network 102 to [/10.0.2.3]
+11-18 13:15:55.378  1374  1374 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.common.BIND_SHARED_PREFS pkg=com.google.android.gms }
+11-18 13:15:55.379  3622  3688 I BugleRcsEngine: handleMessage processing message:[NOTIFY_UPTIME_IGNORE_STATE_CHANGED] with [non-null]:RcsEngineImpl reference [CONTEXT log_prefix="RcsEngineImpl[DUAL_REG]:[a3f71aaf-6db2]>Handler" thread_id=62 ]
+11-18 13:15:55.381   556   825 D DnsManager: sendDnsConfigurationForNetwork(102, [10.0.2.3], [], 1800, 25, 8, 64, 0, 0, , [10.0.2.3], [0], true, [eth0])
+11-18 13:15:55.382   358   358 I resolv  : setDoh: No suitable DoH server found
+11-18 13:15:55.383  3622  3653 I BugleRcsEngine: Connected state: [1], networkType: [MOBILE] [CONTEXT thread_id=55 ]
+11-18 13:15:55.383   358   358 I netd    : setResolverConfiguration(ResolverParamsParcel{netId: 102, sampleValiditySeconds: 1800, successThreshold: 25, minSamples: 8, maxSamples: 64, baseTimeoutMsec: 0, retryCount: 0, servers: [10.0.2.3], domains: [], tlsName: , tlsServers: [10.0.2.3], tlsFingerprints: [], caCertificate: , tlsConnectTimeoutMs: 0, resolverOptions: (null), transportTypes: [0], meteredNetwork: true, dohParams: (null), interfaceNames: [eth0]}) <0.32ms>
+11-18 13:15:55.383   358  4627 W resolv  : Validating DnsTlsServer {10.0.2.3/} with mark 0xf0066
+11-18 13:15:55.383   358  4627 I resolv  : Connecting to {10.0.2.3/} with mark 0xf0066
+11-18 13:15:55.383   358  4627 I resolv  :  SSL_connect returned -1 with mark 0xf0066
+11-18 13:15:55.393  1374  4273 W Conscrypt: Could not set socket write timeout: java.net.SocketException: Socket closed
+11-18 13:15:55.393   358  4627 I resolv  :  SSL_connect returned -1 with mark 0xf0066
+11-18 13:15:55.393   358  4627 W resolv  : SSL_connect ssl error =5, mark 0xf0066: Connection refused
+11-18 13:15:55.393   358  4627 W resolv  : TLS Handshake failed
+11-18 13:15:55.393   358  4627 W resolv  : query failed
+11-18 13:15:55.393   358  4627 W resolv  : validateDnsTlsServer returned 0 for {10.0.2.3/}
+11-18 13:15:55.393   358  4627 W resolv  : Validation failed
+11-18 13:15:55.398  3622  3688 I BugleRcsEngine: No RCS Configuration was found in Bugle for simID: redacted-pii:sim_id[chars:20,last3:897] [CONTEXT log_prefix="ProvisioningEngineDataRetriever" thread_id=62 ]
+11-18 13:15:55.399  1374  4273 W Conscrypt: 	at com.google.android.gms.org.conscrypt.Platform.setSocketWriteTimeout(:com.google.android.gms@242335041@24.23.35 (190800-646585959):204)
+11-18 13:15:55.399  1374  4273 W Conscrypt: 	at com.google.android.gms.org.conscrypt.ConscryptFileDescriptorSocket.setSoWriteTimeout(:com.google.android.gms@242335041@24.23.35 (190800-646585959):4)
+11-18 13:15:55.401   556   589 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.401   556   589 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.401   556   589 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.401   556   589 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.401   556   589 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.401   556   589 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.401   556   589 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.401   556   589 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.401   556   589 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.401   556   589 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.401   556   589 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.401   556   589 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.401   556   589 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.401   556   589 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.401   556   589 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.401   556   589 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.401   556   589 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.401   556   589 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.401   556   589 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.401   556   589 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.401   556   589 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.401   556   589 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.401   556   589 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.401   556   589 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.401   556   589 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.401   556   589 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.401   556   589 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.401   556   589 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.401   556   589 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.401   556   589 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.401   556   589 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.401   556   589 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.401   556   589 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.401   556   589 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.401   556   589 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.401   556   589 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.401   556   589 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.401   556   589 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.402   556   825 W ContextImpl: Calling a method in the system process without a qualified user: android.app.ContextImpl.sendStickyBroadcast:1655 android.net.connectivity.com.android.server.ConnectivityService.sendStickyBroadcast:3944 android.net.connectivity.com.android.server.ConnectivityService.sendGeneralBroadcast:3914 android.net.connectivity.com.android.server.ConnectivityService.sendInetConditionBroadcast:3891 android.net.connectivity.com.android.server.ConnectivityService.updateInetCondition:11152 
+11-18 13:15:55.412  1374  2915 W Conscrypt: Could not set socket write timeout: java.net.SocketException: Socket closed
+11-18 13:15:55.413  1374  2915 W Conscrypt: 	at com.google.android.gms.org.conscrypt.Platform.setSocketWriteTimeout(:com.google.android.gms@242335041@24.23.35 (190800-646585959):204)
+11-18 13:15:55.413  1374  2915 W Conscrypt: 	at com.google.android.gms.org.conscrypt.ConscryptFileDescriptorSocket.setSoWriteTimeout(:com.google.android.gms@242335041@24.23.35 (190800-646585959):4)
+11-18 13:15:55.413   556   613 I AppsFilter: interaction: PackageSetting{52e1522 com.android.microdroid.empty_payload/10192} -> PackageSetting{b4416fc de.mm20.launcher2.ui.test/10210} BLOCKED
+11-18 13:15:55.414  1374  4622 W Conscrypt: Could not set socket write timeout: java.net.SocketException: Socket closed
+11-18 13:15:55.414  1374  4622 W Conscrypt: 	at com.google.android.gms.org.conscrypt.Platform.setSocketWriteTimeout(:com.google.android.gms@242335041@24.23.35 (190800-646585959):204)
+11-18 13:15:55.414  1374  4622 W Conscrypt: 	at com.google.android.gms.org.conscrypt.ConscryptFileDescriptorSocket.setSoWriteTimeout(:com.google.android.gms@242335041@24.23.35 (190800-646585959):4)
+11-18 13:15:55.414  1374  4138 W Conscrypt: 	at com.google.android.gms.org.conscrypt.Platform.setSocketWriteTimeout(:com.google.android.gms@242335041@24.23.35 (190800-646585959):204)
+11-18 13:15:55.414  1374  4138 W Conscrypt: 	at com.google.android.gms.org.conscrypt.ConscryptFileDescriptorSocket.setSoWriteTimeout(:com.google.android.gms@242335041@24.23.35 (190800-646585959):4)
+11-18 13:15:55.420   556   589 I ActivityManager: Force stopping de.mm20.launcher2.ui.test appid=10210 user=-1: deletePackageX
+11-18 13:15:55.420  1374  4269 W Conscrypt: Could not set socket write timeout: java.net.SocketException: Socket closed
+11-18 13:15:55.421  1374  4269 W Conscrypt: 	at com.google.android.gms.org.conscrypt.Platform.setSocketWriteTimeout(:com.google.android.gms@242335041@24.23.35 (190800-646585959):204)
+11-18 13:15:55.421  1374  4269 W Conscrypt: 	at com.google.android.gms.org.conscrypt.ConscryptFileDescriptorSocket.setSoWriteTimeout(:com.google.android.gms@242335041@24.23.35 (190800-646585959):4)
+11-18 13:15:55.429  1483  2021 I INV.SystemUI: setUiHints: finished successfully
+11-18 13:15:55.435  1605  2017 W A       : (REDACTED) Queue length for executor %s is now %d. Perhaps some tasks are too long, or the pool is too small.
+11-18 13:15:55.439  1605  1605 I BgTaskExecutorImpl: (REDACTED) Starting %s background task %s.
+11-18 13:15:55.444  1374  4622 W Conscrypt: Could not set socket write timeout: java.net.SocketException: Socket closed
+11-18 13:15:55.444  1374  4622 W Conscrypt: 	at com.google.android.gms.org.conscrypt.Platform.setSocketWriteTimeout(:com.google.android.gms@242335041@24.23.35 (190800-646585959):204)
+11-18 13:15:55.444  1374  4622 W Conscrypt: 	at com.google.android.gms.org.conscrypt.ConscryptFileDescriptorSocket.setSoWriteTimeout(:com.google.android.gms@242335041@24.23.35 (190800-646585959):4)
+11-18 13:15:55.448  1374  4138 W Conscrypt: Could not set socket write timeout: java.net.SocketException: Socket closed
+11-18 13:15:55.448  1374  4138 W Conscrypt: 	at com.google.android.gms.org.conscrypt.Platform.setSocketWriteTimeout(:com.google.android.gms@242335041@24.23.35 (190800-646585959):204)
+11-18 13:15:55.448  1374  4138 W Conscrypt: 	at com.google.android.gms.org.conscrypt.ConscryptFileDescriptorSocket.setSoWriteTimeout(:com.google.android.gms@242335041@24.23.35 (190800-646585959):4)
+11-18 13:15:55.450  1374  2915 W Conscrypt: Could not set socket write timeout: java.net.SocketException: Socket closed
+11-18 13:15:55.451  1374  2915 W Conscrypt: 	at com.google.android.gms.org.conscrypt.Platform.setSocketWriteTimeout(:com.google.android.gms@242335041@24.23.35 (190800-646585959):204)
+11-18 13:15:55.451  1374  2915 W Conscrypt: 	at com.google.android.gms.org.conscrypt.ConscryptFileDescriptorSocket.setSoWriteTimeout(:com.google.android.gms@242335041@24.23.35 (190800-646585959):4)
+11-18 13:15:55.457  1483  1518 V ClearcutMetricXmitter: Transmission is done.
+11-18 13:15:55.459   171   171 I keystore2: system/security/keystore2/src/maintenance.rs:341 - clearNamespace(r#APP, nspace=10210)
+11-18 13:15:55.461  3312  4588 D MddListenableWorkerFactory: createWorker for class: com.google.android.libraries.mdi.download.workmanager.workers.PeriodicWorker
+11-18 13:15:55.463  3312  3312 D MddPeriodicWorker: PeriodicWorker: startWork
+11-18 13:15:55.464  3312  4580 E PhFileGroupPop: Failed to add file group 
+11-18 13:15:55.464  3312  4580 E PhFileGroupPop: Failed to add file group 
+11-18 13:15:55.464  3312  4580 E PhFileGroupPop: Failed to add file group 
+11-18 13:15:55.465  3312  4580 E PhFileGroupPop: Failed to add file group 
+11-18 13:15:55.465  3312  4580 E PhFileGroupPop: Failed to add file group 
+11-18 13:15:55.465  3312  4580 E PhFileGroupPop: Failed to add file group 
+11-18 13:15:55.465  3312  4580 E PhFileGroupPop: Failed to add file group 
+11-18 13:15:55.465  3312  4580 E PhFileGroupPop: Failed to add file group 
+11-18 13:15:55.465  3312  4580 E PhFileGroupPop: Failed to add file group 
+11-18 13:15:55.465  3312  4580 E PhFileGroupPop: Failed to add file group 
+11-18 13:15:55.465  3312  4580 E PhFileGroupPop: Failed to add file group 
+11-18 13:15:55.465  3312  4580 E PhFileGroupPop: Failed to add file group 
+11-18 13:15:55.465  3312  4580 E PhFileGroupPop: Failed to add file group 
+11-18 13:15:55.465  3312  4580 E PhFileGroupPop: Failed to add file group 
+11-18 13:15:55.465  3312  4580 E PhFileGroupPop: Failed to add file group 
+11-18 13:15:55.465  3312  4580 E PhFileGroupPop: Failed to add file group 
+11-18 13:15:55.465  3312  4580 E PhFileGroupPop: Failed to add file group 
+11-18 13:15:55.467  3312  4634 E MDD     : FileGroupManager: Trying to add expired group webref-model-local-index.
+11-18 13:15:55.467  3312  4634 W MDD     : MDDManager class cxev
+11-18 13:15:55.468  3312  4634 E PhFileGroupPop: Failed to add file group
+11-18 13:15:55.468  3312  4634 E PhFileGroupPop: cxev
+11-18 13:15:55.468  3312  4634 E PhFileGroupPop: 	at cxns.a(PG:941)
+11-18 13:15:55.468  3312  4634 E PhFileGroupPop: 	at dkqe.a(PG:13)
+11-18 13:15:55.468  3312  4634 E PhFileGroupPop: 	at dqoh.d(PG:3)
+11-18 13:15:55.468  3312  4634 E PhFileGroupPop: 	at dqoj.run(PG:42)
+11-18 13:15:55.468  3312  4634 E PhFileGroupPop: 	at dqso.run(PG:76)
+11-18 13:15:55.468  3312  4634 E PhFileGroupPop: 	at crzm.run(PG:3)
+11-18 13:15:55.468  3312  4634 E PhFileGroupPop: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+11-18 13:15:55.468  3312  4634 E PhFileGroupPop: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+11-18 13:15:55.468  3312  4634 E PhFileGroupPop: 	at cryq.run(PG:6)
+11-18 13:15:55.468  3312  4634 E PhFileGroupPop: 	at java.lang.Thread.run(Thread.java:1012)
+11-18 13:15:55.468  3312  4634 E PhFileGroupPop: 	at csaw.run(PG:64)
+11-18 13:15:55.468  3312  4580 E dqod    : RuntimeException while executing runnable dqra{dkqj@b6375f3} with executor MoreExecutors.directExecutor()
+11-18 13:15:55.468  3312  4580 E dqod    : java.lang.NullPointerException: Attempt to read from field 'java.lang.String cwru.b' on a null object reference in method 'void cyar.b(java.lang.Object)'
+11-18 13:15:55.468  3312  4580 E dqod    : 	at cyar.b(PG:11)
+11-18 13:15:55.468  3312  4580 E dqod    : 	at dkqj.b(PG:13)
+11-18 13:15:55.468  3312  4580 E dqod    : 	at dqra.run(PG:30)
+11-18 13:15:55.468  3312  4580 E dqod    : 	at dqqd.execute(PG:1)
+11-18 13:15:55.468  3312  4580 E dqod    : 	at dqod.o(PG:1)
+11-18 13:15:55.468  3312  4580 E dqod    : 	at dqod.b(PG:41)
+11-18 13:15:55.468  3312  4580 E dqod    : 	at dqrh.s(PG:9)
+11-18 13:15:55.468  3312  4580 E dqod    : 	at dksz.l(PG:5)
+11-18 13:15:55.468  3312  4580 E dqod    : 	at cyat.a(PG:138)
+11-18 13:15:55.468  3312  4580 E dqod    : 	at bilp.a(PG:29)
+11-18 13:15:55.468  3312  4580 E dqod    : 	at cwzc.r(PG:24)
+11-18 13:15:55.468  3312  4580 E dqod    : 	at cwzc.v(PG:1)
+11-18 13:15:55.468  3312  4580 E dqod    : 	at cwzc.g(PG:90)
+11-18 13:15:55.468  3312  4580 E dqod    : 	at cyeb.a(PG:7)
+11-18 13:15:55.468  3312  4580 E dqod    : 	at dkqd.a(PG:13)
+11-18 13:15:55.468  3312  4580 E dqod    : 	at dqsx.a(PG:3)
+11-18 13:15:55.468  3312  4580 E dqod    : 	at dqrv.run(PG:21)
+11-18 13:15:55.468  3312  4580 E dqod    : 	at dqsz.run(PG:5)
+11-18 13:15:55.468  3312  4580 E dqod    : 	at crzm.run(PG:3)
+11-18 13:15:55.468  3312  4580 E dqod    : 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+11-18 13:15:55.468  3312  4580 E dqod    : 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+11-18 13:15:55.468  3312  4580 E dqod    : 	at cryq.run(PG:6)
+11-18 13:15:55.468  3312  4580 E dqod    : 	at java.lang.Thread.run(Thread.java:1012)
+11-18 13:15:55.468  3312  4580 E dqod    : 	at csaw.run(PG:64)
+11-18 13:15:55.468  3312  4580 E dqod    : RuntimeException while executing runnable dqra{dkqj@e61a529} with executor MoreExecutors.directExecutor()
+11-18 13:15:55.468  3312  4580 E dqod    : java.lang.NullPointerException: Attempt to read from field 'java.lang.String cwru.b' on a null object reference in method 'void cyar.b(java.lang.Object)'
+11-18 13:15:55.468  3312  4580 E dqod    : 	at cyar.b(PG:11)
+11-18 13:15:55.468  3312  4580 E dqod    : 	at dkqj.b(PG:13)
+11-18 13:15:55.468  3312  4580 E dqod    : 	at dqra.run(PG:30)
+11-18 13:15:55.468  3312  4580 E dqod    : 	at dqqd.execute(PG:1)
+11-18 13:15:55.468  3312  4580 E dqod    : 	at dqod.o(PG:1)
+11-18 13:15:55.468  3312  4580 E dqod    : 	at dqod.b(PG:41)
+11-18 13:15:55.468  3312  4580 E dqod    : 	at dqrh.s(PG:9)
+11-18 13:15:55.468  3312  4580 E dqod    : 	at dksz.l(PG:5)
+11-18 13:15:55.468  3312  4580 E dqod    : 	at cyat.a(PG:138)
+11-18 13:15:55.468  3312  4580 E dqod    : 	at bilp.a(PG:29)
+11-18 13:15:55.468  3312  4580 E dqod    : 	at cwzc.r(PG:24)
+11-18 13:15:55.468  3312  4580 E dqod    : 	at cwzc.v(PG:1)
+11-18 13:15:55.468  3312  4580 E dqod    : 	at cwzc.g(PG:90)
+11-18 13:15:55.468  3312  4580 E dqod    : 	at cyeb.a(PG:7)
+11-18 13:15:55.468  3312  4580 E dqod    : 	at dkqd.a(PG:13)
+11-18 13:15:55.468  3312  4580 E dqod    : 	at dqsx.a(PG:3)
+11-18 13:15:55.468  3312  4580 E dqod    : 	at dqrv.run(PG:21)
+11-18 13:15:55.468  3312  4580 E dqod    : 	at dqsz.run(PG:5)
+11-18 13:15:55.468  3312  4580 E dqod    : 	at crzm.run(PG:3)
+11-18 13:15:55.468  3312  4580 E dqod    : 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+11-18 13:15:55.468  3312  4580 E dqod    : 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+11-18 13:15:55.468  3312  4580 E dqod    : 	at cryq.run(PG:6)
+11-18 13:15:55.468  3312  4580 E dqod    : 	at java.lang.Thread.run(Thread.java:1012)
+11-18 13:15:55.468  3312  4580 E dqod    : 	at csaw.run(PG:64)
+11-18 13:15:55.469  3312  4580 E dqod    : RuntimeException while executing runnable dqra{dkqj@d357e4f} with executor MoreExecutors.directExecutor()
+11-18 13:15:55.469  3312  4580 E dqod    : java.lang.NullPointerException: Attempt to read from field 'java.lang.String cwru.b' on a null object reference in method 'void cyar.b(java.lang.Object)'
+11-18 13:15:55.469  3312  4580 E dqod    : 	at cyar.b(PG:11)
+11-18 13:15:55.469  3312  4580 E dqod    : 	at dkqj.b(PG:13)
+11-18 13:15:55.469  3312  4580 E dqod    : 	at dqra.run(PG:30)
+11-18 13:15:55.469  3312  4580 E dqod    : 	at dqqd.execute(PG:1)
+11-18 13:15:55.469  3312  4580 E dqod    : 	at dqod.o(PG:1)
+11-18 13:15:55.469  3312  4580 E dqod    : 	at dqod.b(PG:41)
+11-18 13:15:55.469  3312  4580 E dqod    : 	at dqrh.s(PG:9)
+11-18 13:15:55.469  3312  4580 E dqod    : 	at dksz.l(PG:5)
+11-18 13:15:55.469  3312  4580 E dqod    : 	at cyat.a(PG:138)
+11-18 13:15:55.469  3312  4580 E dqod    : 	at bilp.a(PG:29)
+11-18 13:15:55.469  3312  4580 E dqod    : 	at cwzc.r(PG:24)
+11-18 13:15:55.469  3312  4580 E dqod    : 	at cwzc.v(PG:1)
+11-18 13:15:55.469  3312  4580 E dqod    : 	at cwzc.g(PG:90)
+11-18 13:15:55.469  3312  4580 E dqod    : 	at cyeb.a(PG:7)
+11-18 13:15:55.469  3312  4580 E dqod    : 	at dkqd.a(PG:13)
+11-18 13:15:55.469  3312  4580 E dqod    : 	at dqsx.a(PG:3)
+11-18 13:15:55.469  3312  4580 E dqod    : 	at dqrv.run(PG:21)
+11-18 13:15:55.469  3312  4580 E dqod    : 	at dqsz.run(PG:5)
+11-18 13:15:55.469  3312  4580 E dqod    : 	at crzm.run(PG:3)
+11-18 13:15:55.469  3312  4580 E dqod    : 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+11-18 13:15:55.469  3312  4580 E dqod    : 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+11-18 13:15:55.469  3312  4580 E dqod    : 	at cryq.run(PG:6)
+11-18 13:15:55.469  3312  4580 E dqod    : 	at java.lang.Thread.run(Thread.java:1012)
+11-18 13:15:55.469  3312  4580 E dqod    : 	at csaw.run(PG:64)
+11-18 13:15:55.471  3312  3481 W MDD     : GddFileGroupPopulator: Account was not provided, skipping private sync for corpus: GDD_BUGLE_EMOJIFY, configuration: GddBugleEmojify
+11-18 13:15:55.471  3312  3481 W GellerSyncSchedulerImpl: Corpus: GDD_BUGLE_EMOJIFY is disabled
+11-18 13:15:55.480   358  4640 I resolv  : GetAddrInfoHandler::run: {102 786534 102 983142 10136 0}
+11-18 13:15:55.481   358  4641 I resolv  : res_nmkquery: (QUERY, IN, A)
+11-18 13:15:55.483   358  4641 I resolv  : res_nsend: used send_dg 161 terrno: 0
+11-18 13:15:55.617     0     0 I logd    : start watching /data/system/packages.list ...
+11-18 13:15:55.619     0     0 I logd    : ReadPackageList, total packages: 217
+11-18 13:15:55.483   358  4641 I resolv  : doQuery: rcode=0, ancount=8, return value=161
+11-18 13:15:55.484  3312  4634 D PhFileGroupPop: Added file groups smart_actions_grammars
+11-18 13:15:55.485  3312  4634 D PhFileGroupPop: Added file groups smart_actions_ml_models
+11-18 13:15:55.485   556   613 D PackageManager: Instant App installer not found with android.intent.action.INSTALL_INSTANT_APP_PACKAGE
+11-18 13:15:55.486   556   613 D PackageManager: Clear ephemeral installer activity
+11-18 13:15:55.487  3312  4634 D PhFileGroupPop: Added file groups text_classifier
+11-18 13:15:55.487  1160  4351 D TrafficStats: tagSocket(234) with statsTag=0x30000407, statsUid=-1
+11-18 13:15:55.488  3312  4634 D PhFileGroupPop: Added file groups smart_actions_emotive_models
+11-18 13:15:55.489   556  2831 E TaskPersister: File error accessing recents directory (directory doesn't exist?).
+11-18 13:15:55.492  3312  4634 D PhFileGroupPop: Added file groups smarts_expressive_content_scoped_v1
+11-18 13:15:55.492  3312  4634 D PhFileGroupPop: Added file groups smart_actions_sensitive_classifier_models
+11-18 13:15:55.493  3312  4637 D TrafficStats: tagSocket(139) with statsTag=0xffffffff, statsUid=-1
+11-18 13:15:55.493  3312  4634 D PhFileGroupPop: Added file groups scripted_reply
+11-18 13:15:55.493  3312  4634 D PhFileGroupPop: Added file groups multitask_experiment
+11-18 13:15:55.493  3312  4634 D PhFileGroupPop: Added file groups spam_verdict_enforcement_policy_config
+11-18 13:15:55.494  3312  4634 D PhFileGroupPop: Added file groups smart_suggestion_reranker_models
+11-18 13:15:55.502  3312  4634 D PhFileGroupPop: Added file groups supersort_us_grammars
+11-18 13:15:55.505   556   613 I ActivityManager: Force stopping de.mm20.launcher2.ui.test appid=10210 user=0: pkg removed
+11-18 13:15:55.507  1605  2366 I MicroDetectionState: (REDACTED) Updating hotword opa ineligibility to %b
+11-18 13:15:55.511   556   613 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.513   556   613 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.513   556   613 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.513   556   613 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.516   556   613 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.516   556   613 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.516   556   613 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.516   556   613 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.516   556   613 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.516   556   613 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.516   556   613 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.516   556   613 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.516   556   613 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.516   556   613 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.516   556   613 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.516   556   613 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.516   556   613 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.516   556   613 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.516   556   613 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.516   556   613 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.516   556   613 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.516   556   613 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.516   556   613 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.516   556   613 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.516   556   613 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.516   556   613 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.516   556   613 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.516   556   613 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.516   556   613 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.516   556   613 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.516   556   613 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.516   556   613 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.516   556   613 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.517   556   613 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.517   556   613 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.517   556   613 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.517   556   613 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.517   556   613 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.520  1160  1521 I NearbySharing: A new client has bound to the NearbySharingService ClientBridge for calling package com.google.android.gms and PID 1374 [CONTEXT service_id=194 ]
+11-18 13:15:55.526  1605  2366 I A       : getLocaleToModelSpecsMap
+11-18 13:15:55.526  1605  2366 I A       : Fetching latest config from MDD...
+11-18 13:15:55.527  1605  2366 I A       : (REDACTED) Found map of size: %d
+11-18 13:15:55.530  3312  4634 D PhFileGroupPop: Added file groups nudge
+11-18 13:15:55.530   556   687 V StorageManagerService: Package de.mm20.launcher2.ui.test does not have legacy storage
+11-18 13:15:55.537   556   682 I InputMethodManagerService: Input method uninstalled, disabling: ComponentInfo{de.mm20.launcher2.ui.test/de.mm20.launcher2.ui.keyboard.TelosKeyboardService}
+11-18 13:15:55.538   556   852 I AppWidgetServiceImpl: Received broadcast: android.intent.action.PACKAGE_REMOVED on user 0
+11-18 13:15:55.538   556   852 I AppWidgetServiceImpl: calling removeHostsAndProvidersForPackageLocked() because package removed permanently. extras=Bundle[{android.intent.extra.REMOVED_FOR_ALL_USERS=true, android.intent.extra.DONT_KILL_APP=false, android.intent.extra.UID=10210, android.intent.extra.SYSTEM_UPDATE_UNINSTALL=false, android.intent.extra.USER_INITIATED=true, android.intent.extra.DATA_REMOVED=true, android.intent.extra.user_handle=0}] isReplacing=false isArchival=false
+11-18 13:15:55.538   556   852 I AppWidgetServiceImpl: removeHostsAndProvidersForPackageLocked() pkg=de.mm20.launcher2.ui.test userId=0
+11-18 13:15:55.538   556   852 I AppWidgetServiceImpl: deleteWidgetsLocked() provider=Provider{ProviderId{user:0, app:10210, cmp:ComponentInfo{de.mm20.launcher2.ui.test/de.mm20.launcher2.ui.comms.DirectCallWidgetProvider}}} userId=-1
+11-18 13:15:55.538   556   852 I AppWidgetServiceImpl: cancelBroadcastsLocked() for Provider{ProviderId{user:0, app:10210, cmp:ComponentInfo{de.mm20.launcher2.ui.test/de.mm20.launcher2.ui.comms.DirectCallWidgetProvider}}}
+11-18 13:15:55.538   556   852 I AppWidgetServiceImpl: deleteWidgetsLocked() provider=Provider{ProviderId{user:0, app:10210, cmp:ComponentInfo{de.mm20.launcher2.ui.test/de.mm20.launcher2.ui.comms.RecentsWidgetProvider}}} userId=-1
+11-18 13:15:55.538   556   852 I AppWidgetServiceImpl: cancelBroadcastsLocked() for Provider{ProviderId{user:0, app:10210, cmp:ComponentInfo{de.mm20.launcher2.ui.test/de.mm20.launcher2.ui.comms.RecentsWidgetProvider}}}
+11-18 13:15:55.538   556   852 D AppWidgetServiceImpl: Trying to notify widget providers changed
+11-18 13:15:55.539   556   866 D ShortcutService: received package broadcast intent: Intent { act=android.intent.action.PACKAGE_REMOVED dat=package: flg=0x4000010 (has extras) }
+11-18 13:15:55.539   556   866 D ShortcutService: removing package: de.mm20.launcher2.ui.test userId0
+11-18 13:15:55.539   556   866 D ShortcutService: handlePackageRemoved: de.mm20.launcher2.ui.test user=0
+11-18 13:15:55.540   556   992 I AppWidgetServiceImpl: getInstalledProvidersForProfiles() 0
+11-18 13:15:55.540   358   358 I netd    : networkClearPermissionForUser([10210, 20210]) <0.01ms>
+11-18 13:15:55.541   358   358 I netd    : networkClearPermissionForUser([]) <0.00ms>
+11-18 13:15:55.544   556   655 I RollbackManager: broadcast=ACTION_PACKAGE_FULLY_REMOVED pkg=de.mm20.launcher2.ui.test
+11-18 13:15:55.550  1061  1061 D CarrierSvcBindHelper: onPackageRemoved: de.mm20.launcher2.ui.test
+11-18 13:15:55.550   556   588 I CredentialManager: updateProvidersWhenPackageRemoved
+11-18 13:15:55.557  3312  4634 D PhFileGroupPop: Added file groups calendar_appointment_grammar
+11-18 13:15:55.560   556   818 W WifiService: Couldn't get PackageInfo for package:de.mm20.launcher2.ui.test
+11-18 13:15:55.561   556   818 D WifiService: Remove settings for package:de.mm20.launcher2.ui.test
+11-18 13:15:55.561   556   818 D WifiConfigManager: Remove all networks for app ApplicationInfo{c97af78 de.mm20.launcher2.ui.test}
+11-18 13:15:55.561  1444  4562 I AiAiEcho: Settings changed for uri: content://settings/secure/credential_service_primary
+11-18 13:15:55.563   556   818 I PasspointManager: No app ops listener found for de.mm20.launcher2.ui.test
+11-18 13:15:55.563   556   818 W WifiService: Couldn't get PackageInfo for package:de.mm20.launcher2.ui.test
+11-18 13:15:55.563   556   818 D WifiService: Remove settings for package:de.mm20.launcher2.ui.test
+11-18 13:15:55.563   556   818 D WifiConfigManager: Remove all networks for app ApplicationInfo{2dc7651 de.mm20.launcher2.ui.test}
+11-18 13:15:55.563   556   818 I PasspointManager: No app ops listener found for de.mm20.launcher2.ui.test
+11-18 13:15:55.563  1061  1061 D CarrierSvcBindHelper: No carrier app for: 0
+11-18 13:15:55.565   556   831 E AppOps  : attributionTag VCN not declared in manifest of android
+11-18 13:15:55.566   556   992 W ParceledListSlice: Element #25 is 19764 bytes.
+11-18 13:15:55.567   556   992 W ParceledListSlice: Element #26 is 19800 bytes.
+11-18 13:15:55.567  3312  4634 D PhFileGroupPop: Added file groups birthday_suggestion
+11-18 13:15:55.567   556   589 D ActivityManager: sync unfroze 2775 com.google.android.documentsui for 3
+11-18 13:15:55.569  1444  1827 I AiAiEcho: Predicting[0]:  [CONTEXT sampling_count=5 ]
+11-18 13:15:55.569  1444  1827 I AiAiEcho: EchoTargets: 
+11-18 13:15:55.569  1444  1827 I AiAiEcho: Filtered by AiAi flag check: 
+11-18 13:15:55.569  1444  1827 I AiAiEcho: [CONTEXT ratelimit_period="10 SECONDS" ]
+11-18 13:15:55.569  1444  1827 I AiAiEcho: Ranked targets strategy: SORT, count: 0, ranking metadata:  [CONTEXT ratelimit_period="10 SECONDS" ]
+11-18 13:15:55.569  1444  1827 I AiAiEcho: #remoteViewsTwiddler: feature disabled.
+11-18 13:15:55.569  1444  1827 I AiAiEcho: Predicting[0]:  [CONTEXT sampling_count=5 ]
+11-18 13:15:55.569  1444  1827 I AiAiEcho: EchoTargets: 
+11-18 13:15:55.569  1444  1827 I AiAiEcho: Filtered by AiAi flag check: 
+11-18 13:15:55.569  1444  1827 I AiAiEcho: [CONTEXT ratelimit_period="10 SECONDS" ]
+11-18 13:15:55.569  1444  1827 I AiAiEcho: Ranked targets strategy: SORT, count: 0, ranking metadata:  [CONTEXT ratelimit_period="10 SECONDS" ]
+11-18 13:15:55.569  1444  1827 I AiAiEcho: #remoteViewsTwiddler: feature disabled.
+11-18 13:15:55.571   556  1567 W ParceledListSlice: Element #27 is 19644 bytes.
+11-18 13:15:55.571   556  1567 W ParceledListSlice: Element #28 is 19552 bytes.
+11-18 13:15:55.571   556  1567 W ParceledListSlice: Element #29 is 19664 bytes.
+11-18 13:15:55.574  3312  4634 D PhFileGroupPop: Added file groups birthday_grammars
+11-18 13:15:55.578  1444  4562 I AiAiEcho: Settings changed for uri: content://settings/secure/credential_service
+11-18 13:15:55.580  1193  1230 W PackageManager: Failure retrieving text 0x7f130786 in package com.android.systemui
+11-18 13:15:55.580  1193  1230 W PackageManager: android.content.res.Resources$NotFoundException: String resource ID #0x7f130786
+11-18 13:15:55.580  1193  1230 W PackageManager: 	at android.content.res.Resources.getText(Resources.java:466)
+11-18 13:15:55.580  1193  1230 W PackageManager: 	at android.app.ApplicationPackageManager.getText(ApplicationPackageManager.java:2405)
+11-18 13:15:55.580  1193  1230 W PackageManager: 	at android.appwidget.AppWidgetProviderInfo.loadDescription(AppWidgetProviderInfo.java:484)
+11-18 13:15:55.580  1193  1230 W PackageManager: 	at com.android.launcher3.model.WidgetItem.<init>(go/retraceme 31f9979659277bb965985aff1272c33e3c3c9e755b77166d20a2465454178f2c:4)
+11-18 13:15:55.580  1193  1230 W PackageManager: 	at com.android.launcher3.model.WidgetsModel.update(go/retraceme 31f9979659277bb965985aff1272c33e3c3c9e755b77166d20a2465454178f2c:72)
+11-18 13:15:55.580  1193  1230 W PackageManager: 	at com.android.launcher3.p0.execute(go/retraceme 31f9979659277bb965985aff1272c33e3c3c9e755b77166d20a2465454178f2c:16)
+11-18 13:15:55.580  1193  1230 W PackageManager: 	at com.android.launcher3.LauncherModel.a(go/retraceme 31f9979659277bb965985aff1272c33e3c3c9e755b77166d20a2465454178f2c:27)
+11-18 13:15:55.580  1193  1230 W PackageManager: 	at com.android.launcher3.t0.run(go/retraceme 31f9979659277bb965985aff1272c33e3c3c9e755b77166d20a2465454178f2c:12)
+11-18 13:15:55.580  1193  1230 W PackageManager: 	at android.os.Handler.handleCallback(Handler.java:959)
+11-18 13:15:55.580  1193  1230 W PackageManager: 	at android.os.Handler.dispatchMessage(Handler.java:100)
+11-18 13:15:55.580  1193  1230 W PackageManager: 	at android.os.Looper.loopOnce(Looper.java:232)
+11-18 13:15:55.580  1193  1230 W PackageManager: 	at android.os.Looper.loop(Looper.java:317)
+11-18 13:15:55.580  1193  1230 W PackageManager: 	at android.os.HandlerThread.run(HandlerThread.java:85)
+11-18 13:15:55.580   556   992 I AppWidgetServiceImpl: getWidgetPreview() 0
+11-18 13:15:55.582   556   992 I AppWidgetServiceImpl: getWidgetPreview() 0
+11-18 13:15:55.594  2775  2775 I ProvidersCache: Updating roots due to change on user 0at content://com.android.externalstorage.documents/
+11-18 13:15:55.595  1444  1827 I AiAiEcho: #postPredictionTargets: Sending updates to UISurface lockscreen with targets# 0 (types=[])
+11-18 13:15:55.601   902   902 W PageIndicator: Total number of pages invalid: 0. Assuming 1 page.
+11-18 13:15:55.606  1444  1827 I AiAiEcho: #postPredictionTargets: Sending updates to UISurface home with targets# 0 (types=[])
+11-18 13:15:55.609  2775  2775 I ProvidersCache: Updating roots due to change on user 0at content://com.android.externalstorage.documents/
+11-18 13:15:55.615   556   589 D ActivityManager: sync unfroze 2704 com.android.chrome for 3
+11-18 13:15:55.617  1444  1827 I AiAiEcho: Predicting[0]:  [CONTEXT sampling_count=5 ]
+11-18 13:15:55.617  1444  1827 I AiAiEcho: EchoTargets: 
+11-18 13:15:55.617  1444  1827 I AiAiEcho: Filtered by AiAi flag check: 
+11-18 13:15:55.617  1444  1827 I AiAiEcho: [CONTEXT ratelimit_period="10 SECONDS" ]
+11-18 13:15:55.617  1444  1827 I AiAiEcho: Ranked targets strategy: SORT, count: 0, ranking metadata:  [CONTEXT ratelimit_period="10 SECONDS" ]
+11-18 13:15:55.617  1444  1827 I AiAiEcho: #remoteViewsTwiddler: feature disabled.
+11-18 13:15:55.617  1444  1827 I AiAiEcho: Predicting[0]:  [CONTEXT sampling_count=5 ]
+11-18 13:15:55.617  1444  1827 I AiAiEcho: EchoTargets: 
+11-18 13:15:55.617  1444  1827 I AiAiEcho: Filtered by AiAi flag check: 
+11-18 13:15:55.617  1444  1827 I AiAiEcho: [CONTEXT ratelimit_period="10 SECONDS" ]
+11-18 13:15:55.617  1444  1827 I AiAiEcho: Ranked targets strategy: SORT, count: 0, ranking metadata:  [CONTEXT ratelimit_period="10 SECONDS" ]
+11-18 13:15:55.617  1444  1827 I AiAiEcho: #remoteViewsTwiddler: feature disabled.
+11-18 13:15:55.623   556  1417 W ActivityManager: Unable to start service Intent { cmp=com.google.android.apps.tachyon/.clientapi.ClientApiService } U=0: not found
+11-18 13:15:55.624  1605  2366 W A       : (REDACTED) %s task was not run. Callback from Service received after client was disposed.
+11-18 13:15:55.626  1605  2366 W A       : (REDACTED) %s task was not run. Callback from Service received after client was disposed.
+11-18 13:15:55.626  1605  2366 W A       : (REDACTED) %s task was not run. Callback from Service received after client was disposed.
+11-18 13:15:55.626  1605  2366 W A       : (REDACTED) %s task was not run. Callback from Service received after client was disposed.
+11-18 13:15:55.626  1605  2366 W A       : (REDACTED) %s task was not run. Callback from Service received after client was disposed.
+11-18 13:15:55.626  1605  2366 W A       : (REDACTED) %s task was not run. Callback from Service received after client was disposed.
+11-18 13:15:55.626  1605  2366 W A       : (REDACTED) %s task was not run. Callback from Service received after client was disposed.
+11-18 13:15:55.632  2775  2784 W oid.documentsui: ApkAssets: Deleting an ApkAssets object '<empty> and /system/priv-app/ExternalStorageProvider/ExternalStorageProvider.apk' with 1 weak references
+11-18 13:15:55.634  2775  2784 W oid.documentsui: ApkAssets: Deleting an ApkAssets object '<empty> and /system/priv-app/DownloadProvider/DownloadProvider.apk' with 1 weak references
+11-18 13:15:55.634  2775  2784 W oid.documentsui: ApkAssets: Deleting an ApkAssets object '<empty> and /system/priv-app/MtpService/MtpService.apk' with 1 weak references
+11-18 13:15:55.640   556   556 D ActivityManager: sync unfroze 2967 com.android.dynsystem:dynsystem for 10
+11-18 13:15:55.640   556   556 D ActivityManager: sync unfroze 2946 com.android.dynsystem for 10
+11-18 13:15:55.640   556   556 D ActivityManager: sync unfroze 1698 com.android.keychain for 10
+11-18 13:15:55.640   556   556 D ActivityManager: sync unfroze 1907 com.android.localtransport for 10
+11-18 13:15:55.644  1193  1193 D SsBaseTemplateCard: No text view can be set up
+11-18 13:15:55.644  1193  1193 D SsBaseTemplateCard: Passed-in item info is null
+11-18 13:15:55.644  1193  1193 D SsBaseTemplateCard: Passed-in item info is null
+11-18 13:15:55.644  1193  1193 D SsBaseTemplateCard: Passed-in item info is null
+11-18 13:15:55.644  1193  1193 I SsBaseTemplateCard: Secondary card pane is null
+11-18 13:15:55.645  1479  1479 W MediaProvider: WorkProfileOwnerApps cache is empty
+11-18 13:15:55.645  1479  1479 D PickerSyncLockManager: Trying to acquire lock com.android.providers.media.photopicker.sync.CloseableReentrantLock@86d9fb9[Unlocked]. Lock Name = CLOUD_PROVIDER_LOCK. Threads that may be waiting to acquire this lock = []
+11-18 13:15:55.645  1479  1479 D CloseableReentrantLock: Successfully acquired lock com.android.providers.media.photopicker.sync.CloseableReentrantLock@86d9fb9[Locked by thread main]. Lock Name = CLOUD_PROVIDER_LOCK. Threads that may be waiting to acquire this lock = []
+11-18 13:15:55.645  1479  1479 D CloseableReentrantLock: Successfully released lock com.android.providers.media.photopicker.sync.CloseableReentrantLock@86d9fb9[Unlocked]. Lock Name = CLOUD_PROVIDER_LOCK. Threads that may be waiting to acquire this lock = []
+11-18 13:15:55.647  2775  2784 W oid.documentsui: ApkAssets: Deleting an ApkAssets object '<empty> and /apex/com.android.mediaprovider/priv-app/MediaProviderGoogle@350820300/MediaProviderGoogle.apk' with 1 weak references
+11-18 13:15:55.652  1061  1061 E SmsApplication: com.google.android.apps.messaging lost android:read_cell_broadcasts:  (fixing)
+11-18 13:15:55.652   556  1567 W AppOpService: Ignored setUidMode call for runtime permission app op: uid = 10136, code = READ_CELL_BROADCASTS, mode = allow, callingUid = 1001, oldMode = allow
+11-18 13:15:55.652  1483  2021 I NgaEntryPointEventSendr: (REDACTED) State changed: %s => %s (%s)
+11-18 13:15:55.659  1444  1827 I AiAiEcho: #postPredictionTargets: Sending updates to UISurface lockscreen with targets# 0 (types=[])
+11-18 13:15:55.669   902   902 W PageIndicator: Total number of pages invalid: 0. Assuming 1 page.
+11-18 13:15:55.659  1444  1827 I AiAiEcho: #postPredictionTargets: Sending updates to UISurface home with targets# 0 (types=[])
+11-18 13:15:55.676  1193  1193 D SsBaseTemplateCard: No text view can be set up
+11-18 13:15:55.676  1193  1193 D SsBaseTemplateCard: Passed-in item info is null
+11-18 13:15:55.676  1193  1193 D SsBaseTemplateCard: Passed-in item info is null
+11-18 13:15:55.676  1193  1193 D SsBaseTemplateCard: Passed-in item info is null
+11-18 13:15:55.676  1193  1193 I SsBaseTemplateCard: Secondary card pane is null
+11-18 13:15:55.677   556  1417 W JobInfo : Job 'com.google.android.providers.media.module/com.android.providers.media.MediaService#-300' has a deadline with no functional constraints. The deadline won't improve job execution latency. Consider removing the deadline.
+11-18 13:15:55.687   556   866 D ShortcutService: Saving package item com.google.android.as to /data/system_ce/0/shortcut_service/launchers/com.google.android.as0.xml
+11-18 13:15:55.689  3312  4634 D PhFileGroupPop: Added file groups animated_emoji
+11-18 13:15:55.701  1605  4281 I NetworkRecognitionRnr: Using pair HTTP connection
+11-18 13:15:55.710   556   556 I Telecom : CarModeTracker: Package de.mm20.launcher2.ui.test is not tracked.: SSH.oR@ARE🔒
+11-18 13:15:55.713  1605  2366 W A       : (REDACTED) %s task was not run. Callback from Service received after client was disposed.
+11-18 13:15:55.713  1605  2366 I MicroDetectionWorker: (REDACTED) Initializing MicroDataManager InitializeType-%d, isForced-%b, isActivePhoneEnrollment-%b isActiveGoogleHomeEnrollment-%b
+11-18 13:15:55.716  1160  1810 I NetworkScheduler.Stats: Task com.google.android.gms/com.google.android.gms.ipa.base.IpaGcmTaskService started execution. cause:8 exec_start_elapsed_seconds: 185 [CONTEXT service_id=218 ]
+11-18 13:15:55.719   556   663 I RoleService: Granting default roles...
+11-18 13:15:55.720  1605  2393 I A       : [Upload] Connected
+11-18 13:15:55.720  1605  2393 I NetworkRecognitionRnr: Using pair HTTP connection
+11-18 13:15:55.721  1605  2616 I A       : [Upload] Connected
+11-18 13:15:55.721  1605  2366 I A       : getLocaleToModelSpecsMap
+11-18 13:15:55.721  1605  2366 I A       : Fetching latest config from MDD...
+11-18 13:15:55.721  1605  2366 I A       : (REDACTED) Found map of size: %d
+11-18 13:15:55.723  1605  2366 I MicroDataManager: (REDACTED) Location for model with model type: %s and locale: %s, is : %s
+11-18 13:15:55.728  1605  2366 I MicroDetectionState: (REDACTED) #takeChangeMicroDetectorMode [mIsBargeInEnabled: %b, mCurrentDetectionMode: %s]
+11-18 13:15:55.731  1605  2366 I MicroDetectionState: (REDACTED) Should stop hotword detection immediately - %b
+11-18 13:15:55.733  1605  1605 E A       : onError
+11-18 13:15:55.733  1605  1605 E A       : com.google.android.apps.gsa.shared.speech.b.l: errorCode: 65561, engine: 2
+11-18 13:15:55.733  1605  1605 E A       : 	at com.google.android.apps.gsa.staticplugins.bp.a.f.a(PG:23)
+11-18 13:15:55.733  1605  1605 E A       : 	at com.google.android.apps.gsa.s3.o.hi(PG:13)
+11-18 13:15:55.733  1605  1605 E A       : 	at com.google.ci.g.a.f.e(PG:9)
+11-18 13:15:55.733  1605  1605 E A       : 	at com.google.android.apps.gsa.speech.k.a.g.d(PG:162)
+11-18 13:15:55.733  1605  1605 E A       : 	at com.google.android.apps.gsa.speech.k.a.g.iO(PG:26)
+11-18 13:15:55.733  1605  1605 E A       : 	at com.google.android.apps.gsa.s3.p.c(PG:102)
+11-18 13:15:55.733  1605  1605 E A       : 	at com.google.android.apps.gsa.s3.q.run(PG:1)
+11-18 13:15:55.733  1605  1605 E A       : 	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:487)
+11-18 13:15:55.733  1605  1605 E A       : 	at java.util.concurrent.FutureTask.run(FutureTask.java:264)
+11-18 13:15:55.733  1605  1605 E A       : 	at com.google.android.apps.gsa.shared.util.c.a.e.run(PG:12)
+11-18 13:15:55.733  1605  1605 E A       : 	at com.google.android.apps.gsa.shared.util.c.a.bg.run(PG:3)
+11-18 13:15:55.733  1605  1605 E A       : 	at com.google.android.apps.gsa.shared.util.c.a.bg.run(PG:3)
+11-18 13:15:55.733  1605  1605 E A       : 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+11-18 13:15:55.733  1605  1605 E A       : 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+11-18 13:15:55.733  1605  1605 E A       : 	at java.lang.Thread.run(Thread.java:1012)
+11-18 13:15:55.733  1605  1605 E A       : 	at com.google.android.apps.gsa.shared.util.c.a.l.run(PG:42)
+11-18 13:15:55.733  1605  1605 E A       : Caused by: com.google.android.apps.gsa.shared.speech.b.n: errorCode: 65586, engine: 2
+11-18 13:15:55.733  1605  1605 E A       : 	at com.google.android.apps.gsa.s3.o.hi(PG:6)
+11-18 13:15:55.733  1605  1605 E A       : 	... 14 more
+11-18 13:15:55.733  1605  1605 E A       : Caused by: com.google.android.apps.gsa.shared.speech.b.j: errorCode: 401, engine: 2
+11-18 13:15:55.733  1605  1605 E A       : 	at com.google.android.apps.gsa.assistant.shared.n.i.b(PG:30)
+11-18 13:15:55.733  1605  1605 E A       : 	at com.google.android.apps.gsa.s3.producers.j.hs(PG:11)
+11-18 13:15:55.733  1605  1605 E A       : 	at com.google.android.apps.gsa.speech.k.a.g.d(PG:135)
+11-18 13:15:55.733  1605  1605 E A       : 	... 12 more
+11-18 13:15:55.759  1605  1605 W A       : Failed to sync device settings.
+11-18 13:15:55.759  1605  1605 I A       : Retrying to sync device settings.
+11-18 13:15:55.761  1374  2595 I Icing   : IndexChimeraService.getServiceInterface callingPackage=com.google.android.googlequicksearchbox componentName=null serviceId=36
+11-18 13:15:55.762   556   569 W system_server: Suspending all threads took: 14.912ms
+11-18 13:15:55.776   556  1007 W Role    : Default holder doesn't have required signing certificate: com.google.android.retaildemo:6547c73dee150c103980bfdffe55cc9a011d785dd694a5f99afd8205bcaf1f80
+11-18 13:15:55.781   556  1007 E RoleControllerServiceImpl: Default/fallback role holder package doesn't qualify for the role, package: com.google.android.gms.supervision, role: android.app.role.SYSTEM_SUPERVISION
+11-18 13:15:55.782   556   579 I DropBoxManagerService: add tag=system_server_strictmode isTagEnabled=true flags=0x2
+11-18 13:15:55.923     0     0 I binder  : 4661:2775 dead process or thread
+11-18 13:15:55.924     0     0 I binder  : 2775:4661 transaction call to 2261:0 failed 477356/29202/0, size 336-16 line 3977
+11-18 13:15:55.787   556   556 I Telecom : InCallController: updateCarModeForConnections: car mode apps: : SSH.oR@ARE🔒
+11-18 13:15:55.789   556   589 D ActivityManager: pid 2261 com.android.externalstorage received sync transactions while frozen, killing
+11-18 13:15:55.789   556   589 I ActivityManager: Killing 2261:com.android.externalstorage/u0a104 (adj 905): Sync transaction while in frozen state
+11-18 13:15:55.789   556   589 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.790   556   589 W ProcessStats: Tracking association SourceState{e70a37c com.google.android.documentsui/10096 Receivr #7531} whose proc state 10 is better than process ProcessState{f777c83 com.android.externalstorage/10104 pkg=com.android.externalstorage} proc state 15 (0 skipped)
+11-18 13:15:55.790  2775  4661 W IPCThreadState: Transaction failed because process frozen.
+11-18 13:15:55.790  2775  4661 E IPCThreadState: Binder transaction failure. id: 477356, BR_*: 29202, error: 0 (Success)
+11-18 13:15:55.790  2775  4661 E JavaBinder: !!! FAILED BINDER TRANSACTION !!!  (parcel size = 336)
+11-18 13:15:55.791  2775  4661 I ActivityThread: Removing dead content provider:android.content.ContentProviderProxy@50e2d01
+11-18 13:15:55.791  1061  1061 E CellBroadcastUtils: getDefaultCellBroadcastReceiverPackageName: no package found
+11-18 13:15:55.791   556  1560 W ActivityManager: pid 2775 com.google.android.documentsui sent binder code 1 with flags 2 to frozen apps and got error -2147483646
+11-18 13:15:55.791   556  1417 W AppOpService: Ignored setUidMode call for runtime permission app op: uid = 1001, code = READ_SMS, mode = allow, callingUid = 1001, oldMode = allow
+11-18 13:15:55.793   902   902 D ControlsListingControllerImpl: ServiceConfig reloaded, count: 0
+11-18 13:15:55.793   556  1007 W Role    : Default holder doesn't have required signing certificate: com.google.android.apps.work.clouddpc:23962F4B43B9857638EA66F4D419518EAE282491ACDA4B94707BD59003C45E58
+11-18 13:15:55.931     0     0 I binder  : 1563:556 dead process or thread
+11-18 13:15:55.932     0     0 I binder  : 556:1563 transaction call to 2261:0 failed 477413/29202/0, size 0-0 line 3977
+11-18 13:15:55.939     0     0 I binder  : undelivered transaction 475087, process died.
+11-18 13:15:55.940     0     0 I binder  : undelivered transaction 475160, process died.
+11-18 13:15:55.941     0     0 I binder  : undelivered transaction 476409, process died.
+11-18 13:15:55.806  1160  1810 I NetworkScheduler.Stats: Task com.google.android.gms/com.google.android.gms.droidguard.DroidGuardGcmTaskService started execution. cause:8 exec_start_elapsed_seconds: 185 [CONTEXT service_id=218 ]
+11-18 13:15:55.806  1160  4351 I AlarmManager: setExactAndAllowWhileIdle [name: GCM_HB_ALARM type: 2 triggerAtMillis: 1895189]
+11-18 13:15:55.806   362   362 I Zygote  : Process 2261 exited due to signal 9 (Killed)
+11-18 13:15:55.807   556   556 I Telecom : InCallController: update carmode current:UserHandle{0} parent:null: SSH.oR@ARE🔒
+11-18 13:15:55.942     0     0 I binder  : undelivered transaction 476732, process died.
+11-18 13:15:55.810   556   556 W Looper  : Slow dispatch took 158ms main h=android.app.ActivityThread$H c=android.app.LoadedApk$ReceiverDispatcher$Args$$ExternalSyntheticLambda0@842ce8b m=0
+11-18 13:15:55.811  1605  1605 W JobInfo : Job 'com.google.android.googlequicksearchbox/com.google.android.apps.gsa.tasks.BackgroundTasksJobService#-353' has a deadline with functional constraints and an extremely short time window of 0 ms (delay=120000, deadline=120000). The functional constraints are not likely to be satisfied when the job runs.
+11-18 13:15:55.813   556   992 W AppOpService: Ignored setUidMode call for runtime permission app op: uid = 1001, code = RECEIVE_SMS, mode = allow, callingUid = 1001, oldMode = allow
+11-18 13:15:55.817   556  1557 W AppOpService: Ignored setUidMode call for runtime permission app op: uid = 1001, code = RECEIVE_WAP_PUSH, mode = allow, callingUid = 1001, oldMode = allow
+11-18 13:15:55.818   556  1563 W IPCThreadState: Transaction failed because process frozen.
+11-18 13:15:55.818   556  1563 E IPCThreadState: Binder transaction failure. id: 477413, BR_*: 29202, error: 0 (Success)
+11-18 13:15:55.819   556  1575 W JobInfo : Job 'com.google.android.googlequicksearchbox/com.google.android.apps.gsa.tasks.BackgroundTasksJobService#-353' has a deadline with functional constraints and an extremely short time window of 0 ms (delay=120000, deadline=120000). The functional constraints are not likely to be satisfied when the job runs.
+11-18 13:15:55.819   556   578 D DisplayManagerService: Drop pending events for gone uid 10104
+11-18 13:15:55.821   556  1563 W AppOpService: Ignored setUidMode call for runtime permission app op: uid = 1001, code = SEND_SMS, mode = allow, callingUid = 1001, oldMode = allow
+11-18 13:15:55.821   556  1575 W JobInfo : Job 'com.google.android.googlequicksearchbox/com.google.android.apps.gsa.tasks.BackgroundTasksJobService#-353' has a deadline with functional constraints and an extremely short time window of 0 ms (delay=120000, deadline=120000). The functional constraints are not likely to be satisfied when the job runs.
+11-18 13:15:55.821   556   556 W Looper  : Slow delivery took 270ms main h=android.app.ActivityThread$H c=android.app.LoadedApk$ReceiverDispatcher$Args$$ExternalSyntheticLambda0@fbf3ebd m=0
+11-18 13:15:55.821  2775  4661 W ProvidersCache: Failed to load some roots from com.android.externalstorage.documents
+11-18 13:15:55.821  2775  4661 W ProvidersCache: android.os.DeadObjectException: Transaction failed on small parcel; remote process probably died, but this could also be caused by running out of binder buffer space
+11-18 13:15:55.821  2775  4661 W ProvidersCache: 	at android.os.BinderProxy.transactNative(Native Method)
+11-18 13:15:55.821  2775  4661 W ProvidersCache: 	at android.os.BinderProxy.transact(BinderProxy.java:586)
+11-18 13:15:55.821  2775  4661 W ProvidersCache: 	at android.content.ContentProviderProxy.query(ContentProviderNative.java:493)
+11-18 13:15:55.821  2775  4661 W ProvidersCache: 	at android.content.ContentProviderClient.query(ContentProviderClient.java:196)
+11-18 13:15:55.821  2775  4661 W ProvidersCache: 	at android.content.ContentProviderClient.query(ContentProviderClient.java:178)
+11-18 13:15:55.821  2775  4661 W ProvidersCache: 	at android.content.ContentProviderClient.query(ContentProviderClient.java:168)
+11-18 13:15:55.821  2775  4661 W ProvidersCache: 	at com.android.documentsui.roots.ProvidersCache.loadRootsForAuthority(ProvidersCache.java:366)
+11-18 13:15:55.821  2775  4661 W ProvidersCache: 	at com.android.documentsui.roots.ProvidersCache.-$$Nest$mloadRootsForAuthority(ProvidersCache.java:0)
+11-18 13:15:55.821  2775  4661 W ProvidersCache: 	at com.android.documentsui.roots.ProvidersCache$MultiProviderUpdateTask.handleDocumentsProvider(ProvidersCache.java:647)
+11-18 13:15:55.821  2775  4661 W ProvidersCache: 	at com.android.documentsui.roots.ProvidersCache$MultiProviderUpdateTask.startSingleProviderUpdateTask(ProvidersCache.java:623)
+11-18 13:15:55.821  2775  4661 W ProvidersCache: 	at com.android.documentsui.roots.ProvidersCache$MultiProviderUpdateTask.lambda$doInBackground$0(ProvidersCache.java:569)
+11-18 13:15:55.821  2775  4661 W ProvidersCache: 	at com.android.documentsui.roots.ProvidersCache$MultiProviderUpdateTask.$r8$lambda$mnJpmgdZARm40VapREkQeOExLF8(ProvidersCache.java:0)
+11-18 13:15:55.821  2775  4661 W ProvidersCache: 	at com.android.documentsui.roots.ProvidersCache$MultiProviderUpdateTask$$ExternalSyntheticLambda0.run(R8$$SyntheticClass:0)
+11-18 13:15:55.821  2775  4661 W ProvidersCache: 	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:487)
+11-18 13:15:55.821  2775  4661 W ProvidersCache: 	at java.util.concurrent.FutureTask.run(FutureTask.java:264)
+11-18 13:15:55.821  2775  4661 W ProvidersCache: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+11-18 13:15:55.821  2775  4661 W ProvidersCache: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+11-18 13:15:55.821  2775  4661 W ProvidersCache: 	at java.lang.Thread.run(Thread.java:1012)
+11-18 13:15:55.823  1605  2366 I MicroDetectionState: (REDACTED) #takeChangeMicroDetectorMode [mIsBargeInEnabled: %b, mCurrentDetectionMode: %s]
+11-18 13:15:55.823   556   591 I libprocessgroup: Removed cgroup /sys/fs/cgroup/uid_10104/pid_2261
+11-18 13:15:55.824  1605  2366 I MicroDetectionState: (REDACTED) Should stop hotword detection immediately - %b
+11-18 13:15:55.824   556  1563 W AppOpService: Ignored setUidMode call for runtime permission app op: uid = 1001, code = READ_CELL_BROADCASTS, mode = allow, callingUid = 1001, oldMode = allow
+11-18 13:15:55.824   556   579 I DropBoxManagerService: add tag=system_server_strictmode isTagEnabled=true flags=0x2
+11-18 13:15:55.824   556   579 I DropBoxManagerService: add tag=system_server_strictmode isTagEnabled=true flags=0x2
+11-18 13:15:55.825   556   579 I DropBoxManagerService: add tag=system_server_strictmode isTagEnabled=true flags=0x2
+11-18 13:15:55.825   556   579 I DropBoxManagerService: add tag=system_server_strictmode isTagEnabled=true flags=0x2
+11-18 13:15:55.825   556   579 I DropBoxManagerService: add tag=system_server_strictmode isTagEnabled=true flags=0x2
+11-18 13:15:55.825   556   579 I DropBoxManagerService: add tag=system_server_strictmode isTagEnabled=true flags=0x2
+11-18 13:15:55.825   556   579 I DropBoxManagerService: add tag=system_server_strictmode isTagEnabled=true flags=0x2
+11-18 13:15:55.825   556   579 I DropBoxManagerService: add tag=system_server_strictmode isTagEnabled=true flags=0x2
+11-18 13:15:55.825  1605  2366 W A       : (REDACTED) %s task was not run. Callback from Service received after client was disposed.
+11-18 13:15:55.829  1605  2366 W A       : (REDACTED) %s task was not run. Callback from Service received after client was disposed.
+11-18 13:15:55.830   556  1575 W JobScheduler: Job didn't exist in JobStore: f3a89d #u0a144/-353 com.google.android.googlequicksearchbox/com.google.android.apps.gsa.tasks.BackgroundTasksJobService
+11-18 13:15:55.831   556   569 I system_server: Background concurrent mark compact GC freed 20MB AllocSpace bytes, 51(1268KB) LOS objects, 46% free, 27MB/51MB, paused 16.932ms,2.055ms total 342.076ms
+11-18 13:15:55.832   556   570 I BpBinder: onLastStrongRef automatically unlinking death recipients: 
+11-18 13:15:55.836   556   588 W MagnificationConnectionManager: requestConnection duplicated request: connect=false, mConnectionState=DISCONNECTED
+11-18 13:15:55.837  1605  2615 I PBSessionCacheImpl: (REDACTED) Deleted sessionId[%d] from persistence.
+11-18 13:15:55.837  1605  2366 W A       : (REDACTED) %s task was not run. Callback from Service received after client was disposed.
+11-18 13:15:55.842  1605  2366 W SearchServiceCore: Abort, client detached.
+11-18 13:15:55.842  1605  2366 W SearchServiceCore: Abort, client detached.
+11-18 13:15:55.843  1605  2366 W SearchServiceCore: Abort, client detached.
+11-18 13:15:55.844  3312  4634 D PhFileGroupPop: Added file groups voice_moods
+11-18 13:15:55.849   556   571 W system_server: ApkAssets: Deleting an ApkAssets object '<empty> and /product/app/LatinIMEGooglePrebuilt/LatinIMEGooglePrebuilt.apk' with 1 weak references
+11-18 13:15:55.849   556   571 W system_server: ApkAssets: Deleting an ApkAssets object '<empty> and /product/app/GoogleTTS/GoogleTTS.apk' with 1 weak references
+11-18 13:15:55.850   556   571 W system_server: ApkAssets: Deleting an ApkAssets object '<empty> and /system/priv-app/InputDevices/InputDevices.apk' with 1 weak references
+11-18 13:15:55.850   556   571 W system_server: ApkAssets: Deleting an ApkAssets object '<empty> and /system_ext/app/AccessibilityMenu/AccessibilityMenu.apk' with 1 weak references
+11-18 13:15:55.850   556   571 W system_server: ApkAssets: Deleting an ApkAssets object '/product/overlay/AccessibilityMenu__sdk_gphone64_x86_64__auto_generated_rro_product.apk' with 1 weak references
+11-18 13:15:55.855  1160  4351 I AlarmManager: setExactAndAllowWhileIdle [name: GCM_HB_ALARM type: 2 triggerAtMillis: 1895320]
+11-18 13:15:55.861  1193  1193 I OverviewComponentObserver: updateOverviewTargets: mIsHomeDisabled=false, isDefaultHomeNull=false, mIsDefaultHome=true
+11-18 13:15:55.861  1193  1193 I OverviewComponentObserver: updateOverviewTargets: mIsHomeDisabled=false, isDefaultHomeNull=false, mIsDefaultHome=true
+11-18 13:15:55.861   556   556 I ConditionProviders: Disallowing condition provider de.mm20.launcher2.ui.test (userSet: true)
+11-18 13:15:55.869   556   589 D ActivityManager: sync unfroze 906 com.google.android.permissioncontroller for 3
+11-18 13:15:55.873  1160  4629 I NetworkScheduler.Stats: Task com.google.android.gms/com.google.android.gms.ipa.base.IpaGcmTaskService finished executing. cause:8 result: 1 elapsed_millis: 300 uptime_millis: 300 exec_start_elapsed_seconds: 185 [CONTEXT service_id=218 ]
+11-18 13:15:55.873  3312  4634 D PhFileGroupPop: Added file groups screen_effects
+11-18 13:15:55.894   358   358 I netd    : tetherGetStats() -> {[]} <2.22ms>
+11-18 13:15:55.894  1698  4676 W KeyChain: Creating new DB.
+11-18 13:15:55.906   556  1553 D ActivityManager: sync unfroze 2263 com.google.android.gms.unstable for 6
+11-18 13:15:55.913  1698  4676 W KeyChain: Existing alias: com.android.server.locksettings.recoverablekeystore/application/0/10143/com.google.android.gms.auth.folsom/v1/1795007636478/D89F91BFE2DDCF263692A0BD6ACE8D24
+11-18 13:15:55.913  1698  4676 W KeyChain: Marking as selectable: com.android.server.locksettings.recoverablekeystore/application/0/10143/com.google.android.gms.auth.folsom/v1/1795007636478/D89F91BFE2DDCF263692A0BD6ACE8D24
+11-18 13:15:55.916  1698  4676 W KeyChain: Existing alias: com.android.server.locksettings.recoverablekeystore/platform/0/1001000/decrypt
+11-18 13:15:55.916  1698  4676 W KeyChain: Marking as selectable: com.android.server.locksettings.recoverablekeystore/platform/0/1001000/decrypt
+11-18 13:15:55.916  1698  4676 W KeyChain: Existing alias: com.android.server.locksettings.recoverablekeystore/platform/0/1001000/encrypt
+11-18 13:15:55.916  1698  4676 W KeyChain: Marking as selectable: com.android.server.locksettings.recoverablekeystore/platform/0/1001000/encrypt
+11-18 13:15:55.923   556   556 W IPCThreadState: Sending oneway calls to frozen process.
+11-18 13:15:55.925  1479  2196 I MediaProvider: Begin Intent { act=android.intent.action.PACKAGE_FULLY_REMOVED dat=package: flg=0x5000010 cmp=com.google.android.providers.media.module/com.android.providers.media.MediaService (has extras) }
+11-18 13:15:55.925  1479  2196 D MediaProvider: Deleted 0 Android/media items belonging to de.mm20.launcher2.ui.test on /data/user/0/com.google.android.providers.media.module/databases/external.db
+11-18 13:15:55.926  1479  2196 D MediaProvider: Couldn't get uid for package: de.mm20.launcher2.ui.test
+11-18 13:15:55.926  1479  2196 D MediaProvider: Orphaned 1 items belonging to de.mm20.launcher2.ui.test on /data/user/0/com.google.android.providers.media.module/databases/external.db
+11-18 13:15:55.929  1374  1374 D BoundBrokerSvc: onBind: Intent { act=com.google.android.gms.common.BIND_SHARED_PREFS pkg=com.google.android.gms }
+11-18 13:15:55.930  1605  2366 I MicroDetectionState: (REDACTED) #takeChangeMicroDetectorMode [mIsBargeInEnabled: %b, mCurrentDetectionMode: %s]
+11-18 13:15:55.930  1374  1374 D BoundBrokerSvc: Loading bound service for intent: Intent { act=com.google.android.gms.common.BIND_SHARED_PREFS pkg=com.google.android.gms }
+11-18 13:15:55.932   556   866 D ShortcutService: Saving package item com.google.android.apps.nexuslauncher to /data/system_ce/0/shortcut_service/launchers/com.google.android.apps.nexuslauncher0.xml
+11-18 13:15:55.933  1605  2366 I MicroDetectionState: (REDACTED) Should stop hotword detection immediately - %b
+11-18 13:15:55.935  1605  2366 I A       : getLocaleToModelSpecsMap
+11-18 13:15:55.935  1605  2366 I A       : Fetching latest config from MDD...
+11-18 13:15:55.935  1605  2366 I A       : (REDACTED) Found map of size: %d
+11-18 13:15:55.936  1479  2196 D MediaGrants: Removed 0 media_grants for 0 user for [de.mm20.launcher2.ui.test]. Reason: Package orphaned
+11-18 13:15:55.938   556   588 D ShortcutService: Getting shortcuts for launcher= com.google.android.asuser=0 pkg=de.mm20.launcher2.ui.test
+11-18 13:15:55.939  1479  2196 I MediaProvider: End Intent { act=android.intent.action.PACKAGE_FULLY_REMOVED dat=package: flg=0x5000010 cmp=com.google.android.providers.media.module/com.android.providers.media.MediaService (has extras) }
+11-18 13:15:55.940   556   588 D ShortcutService: getShortcutsInnerLocked() returned empty results because de.mm20.launcher2.ui.test isn't loaded
+11-18 13:15:55.940   556   588 D ShortcutService: Getting shortcuts for launcher= com.android.systemuiuser=0 pkg=de.mm20.launcher2.ui.test
+11-18 13:15:55.940   556   588 D ShortcutService: getShortcutsInnerLocked() returned empty results because de.mm20.launcher2.ui.test isn't loaded
+11-18 13:15:55.940   556   588 D ShortcutService: Getting shortcuts for launcher= com.google.android.apps.nexuslauncheruser=0 pkg=de.mm20.launcher2.ui.test
+11-18 13:15:55.940   556   588 D ShortcutService: getShortcutsInnerLocked() returned empty results because de.mm20.launcher2.ui.test isn't loaded
+11-18 13:15:55.940   556   589 D ActivityManager: sync unfroze 1904 android.process.media for 3
+11-18 13:15:55.940   556   588 I CredentialManager: CredentialManagerServiceImpl constructed for: com.google.android.gms/com.google.android.gms.auth.api.credentials.credman.service.PasswordAndPasskeyService
+11-18 13:15:55.940   556   588 I CredentialManager: newServiceInfoLocked, mInfo null, com.google.android.gms/com.google.android.gms.auth.api.credentials.credman.service.PasswordAndPasskeyService
+11-18 13:15:55.941  1193  1193 I OverviewComponentObserver: updateOverviewTargets: mIsHomeDisabled=false, isDefaultHomeNull=false, mIsDefaultHome=true
+11-18 13:15:55.941  1193  1193 I OverviewComponentObserver: updateOverviewTargets: mIsHomeDisabled=false, isDefaultHomeNull=false, mIsDefaultHome=true
+11-18 13:15:55.941  1193  1193 I OverviewComponentObserver: updateOverviewTargets: mIsHomeDisabled=false, isDefaultHomeNull=false, mIsDefaultHome=true
+11-18 13:15:55.941  1193  1193 I OverviewComponentObserver: updateOverviewTargets: mIsHomeDisabled=false, isDefaultHomeNull=false, mIsDefaultHome=true
+11-18 13:15:55.942  1193  1193 I OverviewComponentObserver: updateOverviewTargets: mIsHomeDisabled=false, isDefaultHomeNull=false, mIsDefaultHome=true
+11-18 13:15:55.942  1193  1193 I OverviewComponentObserver: updateOverviewTargets: mIsHomeDisabled=false, isDefaultHomeNull=false, mIsDefaultHome=true
+11-18 13:15:55.942  1193  1193 D LauncherAppsCallbackImpl: package removed received de.mm20.launcher2.ui.test
+11-18 13:15:55.942  1193  1230 D PackageUpdatedTask: Package updated: mOp=REMOVE packages=[de.mm20.launcher2.ui.test]
+11-18 13:15:55.944  3312  4634 D PhFileGroupPop: Added file groups screen_effect_suggestions
+11-18 13:15:55.946  1193  1230 D PackageUpdatedTask: REMOVE: removing package=de.mm20.launcher2.ui.test
+11-18 13:15:55.947  1193  1193 D StatsLog: LAUNCHER_ALLAPPS_COUNT
+11-18 13:15:55.949  1193  1230 D PackageUpdatedTask: OP_REMOVE: removing packages=[de.mm20.launcher2.ui.test]
+11-18 13:15:55.949  1193  1230 D ModelWriter: removing items from db . Reason: [removed because the corresponding package or component is removed. mOp=3 removedPackages=[de.mm20.launcher2.ui.test] removedComponents=[]]
+11-18 13:15:55.950  3312  4634 D PhFileGroupPop: Added file groups selfie_gif_grammars
+11-18 13:15:55.954   556   556 W Looper  : Drained
+11-18 13:15:55.960  1444  1444 I AiAiEcho: AppFetcherImplV2 onPackageRemoved de.mm20.launcher2.ui.test.
+11-18 13:15:55.965  1319  1677 I DeviceStatusMonitor: DeviceStatusMonitor.handleBroadcast():123 onReceive() : Action = android.net.conn.CONNECTIVITY_CHANGE
+11-18 13:15:55.970   358   358 I netd    : bandwidthRemoveInterfaceQuota(eth0) <1.99ms>
+11-18 13:15:55.971   556  1007 E RoleControllerServiceImpl: Default/fallback role holder package doesn't qualify for the role, package: com.google.android.gms, role: android.app.role.WALLET
+11-18 13:15:55.974  1444  4562 I AiAiEcho: Settings changed for uri: content://settings/secure/accessibility_enabled
+11-18 13:15:55.975   358   358 I netd    : bandwidthSetInterfaceQuota(eth0, 9223372036854775807) <1.24ms>
+11-18 13:15:55.979   358   358 I netd    : tetherGetStats() -> {[]} <0.29ms>
+11-18 13:15:55.980  1193  1193 D Launcher.Workspace: addInScreenFromBind: hotseat inflation with x = 3 and y = 0
+11-18 13:15:55.981  1319  1677 I DeviceStatusMonitor: DeviceStatusMonitor.notifyIfNetworkChanged():180 notifyIfNetworkChanged: newState = METERED, airplaneModeOn = false, notifyAnyway = false
+11-18 13:15:55.981  1319  1677 I NetworkInfoNotification: NetworkInfoNotification$Listener.onReceive():107 onNetworkAvailable: networkState = METERED, isAirplaneModeOn = false
+11-18 13:15:55.981  1319  1319 I NetworkInfoNotification: NetworkInfoNotification$Listener.onReceive():107 onNetworkAvailable: networkState = METERED, isAirplaneModeOn = false
+11-18 13:15:55.982  1319  1319 I NetworkInfoNotification: NetworkInfoNotification$Listener.onReceive():107 onNetworkAvailable: networkState = METERED, isAirplaneModeOn = false
+11-18 13:15:55.982  1319  1319 I NetworkInfoNotification: NetworkInfoNotification$Listener.onReceive():107 onNetworkAvailable: networkState = METERED, isAirplaneModeOn = false
+11-18 13:15:55.982  1319  1714 I NetworkInfoNotification: NetworkInfoNotification$Listener.onReceive():107 onNetworkAvailable: networkState = METERED, isAirplaneModeOn = false
+11-18 13:15:55.982  1319  1319 I HandwritingOnlineSuperpacks: HandwritingOnlineSuperpacks$1.onNetworkAvailable():72 onNetworkAvailable
+11-18 13:15:55.984  1444  1827 I AiAiEcho: Predicting[0]:  [CONTEXT sampling_count=5 ]
+11-18 13:15:55.984  1444  1827 I AiAiEcho: EchoTargets: 
+11-18 13:15:55.984  1444  1827 I AiAiEcho: Filtered by AiAi flag check: 
+11-18 13:15:55.984  1444  1827 I AiAiEcho: [CONTEXT ratelimit_period="10 SECONDS" ]
+11-18 13:15:55.984  1444  1827 I AiAiEcho: Ranked targets strategy: SORT, count: 0, ranking metadata:  [CONTEXT ratelimit_period="10 SECONDS" ]
+11-18 13:15:55.985  1444  1827 I AiAiEcho: #remoteViewsTwiddler: feature disabled.
+11-18 13:15:55.985  1444  1827 I AiAiEcho: Predicting[0]:  [CONTEXT sampling_count=5 ]
+11-18 13:15:55.985  1444  1827 I AiAiEcho: EchoTargets: 
+11-18 13:15:55.985  1444  1827 I AiAiEcho: Filtered by AiAi flag check: 
+11-18 13:15:55.985  1444  1827 I AiAiEcho: [CONTEXT ratelimit_period="10 SECONDS" ]
+11-18 13:15:55.985  1444  1827 I AiAiEcho: Ranked targets strategy: SORT, count: 0, ranking metadata:  [CONTEXT ratelimit_period="10 SECONDS" ]
+11-18 13:15:55.985  1444  1827 I AiAiEcho: #remoteViewsTwiddler: feature disabled.
+11-18 13:15:55.985  1319  1319 I HandwritingSuperpacks: HandwritingSuperpacks.register():273 register(): version '86', url 'https://dl.google.com/handwriting/models/handwriting_release.superpack_manifest.20231127.json' [ONLINE]
+11-18 13:15:55.985  1319  1319 I NetworkInfoNotification: NetworkInfoNotification$Listener.onReceive():107 onNetworkAvailable: networkState = METERED, isAirplaneModeOn = false
+11-18 13:15:55.985  1319  1319 I NetworkInfoNotification: NetworkInfoNotification$Listener.onReceive():107 onNetworkAvailable: networkState = METERED, isAirplaneModeOn = false
+11-18 13:15:55.985  1319  1319 I NetworkInfoNotification: NetworkInfoNotification$Listener.onReceive():107 onNetworkAvailable: networkState = METERED, isAirplaneModeOn = false
+11-18 13:15:55.989   556  1007 E RoleControllerServiceImpl: Default/fallback role holder package doesn't qualify for the role, package: com.google.android.devicelockcontroller, role: android.app.role.SYSTEM_FINANCED_DEVICE_CONTROLLER
+11-18 13:15:55.992  1319  1646 I SP      : Registering handwriting_recognition.86, url: https://dl.google.com/handwriting/models/handwriting_release.superpack_manifest.20231127.json, constraints: m:*:*:*, flags: fg, requested: 86, current: 86
+11-18 13:15:56.006  3312  4636 I BugleRcsEngine: No RCS Configuration was found in Bugle for simID: redacted-pii:sim_id[chars:20,last3:897] [CONTEXT log_prefix="ProvisioningEngineDataRetriever" thread_id=129 ]
+11-18 13:15:56.006  3312  4636 I BugleTransport: Tachygram is disabled because the RCS Configuration is empty [CONTEXT ratelimit_period="5 SECONDS" ]
+11-18 13:15:56.007  3312  4636 I BugleTransport: Enabled chat transport is TRANSPORT_RCS [CONTEXT group_by="TRANSPORT_RCS" ratelimit_period="5 SECONDS" ]
+11-18 13:15:56.014   556   866 D ShortcutService: Saving package item com.android.systemui to /data/system_ce/0/shortcut_service/launchers/com.android.systemui0.xml
+11-18 13:15:56.024   556  1553 I AppWidgetServiceImpl: getInstalledProvidersForProfiles() 0
+11-18 13:15:56.031  1444  1827 I AiAiEcho: #postPredictionTargets: Sending updates to UISurface lockscreen with targets# 0 (types=[])
+11-18 13:15:56.032  1444  1827 I AiAiEcho: #postPredictionTargets: Sending updates to UISurface home with targets# 0 (types=[])
+11-18 13:15:56.032  1444  1827 I AiAiEcho: [pnb-agg] Reload pnb aggregation on events deleted
+11-18 13:15:56.032  1444  1827 I AiAiEcho: [pnb-agg] pnb aggregation disabled.
+11-18 13:15:56.035  1483  1483 I GsaVoiceInteractionSrv: (REDACTED) O received %s
+11-18 13:15:56.035  1319  1713 I HandwritingOnlineSuperpacks: HandwritingOnlineSuperpacks$2.apply():184 syncPackMapping()
+11-18 13:15:56.036   556  1568 D SafetySourceDataValidat: No cert check requested for package com.google.android.permissioncontroller
+11-18 13:15:56.036   556   637 W ParceledListSlice: Element #25 is 19764 bytes.
+11-18 13:15:56.036   556   637 W ParceledListSlice: Element #26 is 19800 bytes.
+11-18 13:15:56.037   556   637 W ParceledListSlice: Element #27 is 19644 bytes.
+11-18 13:15:56.037   556   637 W ParceledListSlice: Element #28 is 19552 bytes.
+11-18 13:15:56.037   556   637 W ParceledListSlice: Element #29 is 19664 bytes.
+11-18 13:15:56.039   902   902 W PageIndicator: Total number of pages invalid: 0. Assuming 1 page.
+11-18 13:15:56.049  1444  2035 W PackageManager: Failure retrieving text 0x7f130786 in package com.android.systemui
+11-18 13:15:56.049  1444  2035 W PackageManager: android.content.res.Resources$NotFoundException: String resource ID #0x7f130786
+11-18 13:15:56.049  1444  2035 W PackageManager: 	at android.content.res.Resources.getText(Resources.java:466)
+11-18 13:15:56.049  1444  2035 W PackageManager: 	at android.app.ApplicationPackageManager.getText(ApplicationPackageManager.java:2405)
+11-18 13:15:56.049  1444  2035 W PackageManager: 	at android.appwidget.AppWidgetProviderInfo.loadDescription(AppWidgetProviderInfo.java:484)
+11-18 13:15:56.049  1444  2035 W PackageManager: 	at kml.a(PG:341)
+11-18 13:15:56.049  1444  2035 W PackageManager: 	at kmg.b(PG:82)
+11-18 13:15:56.049  1444  2035 W PackageManager: 	at aaer.g(PG:13)
+11-18 13:15:56.049  1444  2035 W PackageManager: 	at kotlinx.coroutines.DispatchedTask.run(PG:114)
+11-18 13:15:56.049  1444  2035 W PackageManager: 	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:487)
+11-18 13:15:56.049  1444  2035 W PackageManager: 	at wqm.a(PG:3)
+11-18 13:15:56.049  1444  2035 W PackageManager: 	at wpo.run(PG:21)
+11-18 13:15:56.049  1444  2035 W PackageManager: 	at wqn.run(PG:5)
+11-18 13:15:56.049  1444  2035 W PackageManager: 	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:487)
+11-18 13:15:56.049  1444  2035 W PackageManager: 	at java.util.concurrent.FutureTask.run(FutureTask.java:264)
+11-18 13:15:56.049  1444  2035 W PackageManager: 	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:307)
+11-18 13:15:56.049  1444  2035 W PackageManager: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+11-18 13:15:56.049  1444  2035 W PackageManager: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+11-18 13:15:56.049  1444  2035 W PackageManager: 	at hqv.run(PG:221)
+11-18 13:15:56.049  1444  2035 W PackageManager: 	at java.lang.Thread.run(Thread.java:1012)
+11-18 13:15:56.053  1444  2035 I AiAiEcho: EchoSearch: WidgetFetcherImpl is initialized with [35] widgets [reason=package removed for userId: 0]
+11-18 13:15:56.069   906   906 D PersistedStoragePackageUninstalledReceiver: Received android.intent.action.PACKAGE_FULLY_REMOVED for de.mm20.launcher2.ui.test for u0
+11-18 13:15:56.085   358  4707 I resolv  : GetAddrInfoHandler::run: {102 786534 102 983142 10143 0}
+11-18 13:15:56.089   358  4709 I resolv  : res_nmkquery: (QUERY, IN, A)
+11-18 13:15:56.095  1193  1639 D EGL_emulation: app_time_stats: avg=383.81ms min=63.71ms max=718.25ms count=3
+11-18 13:15:56.096   358  4708 I resolv  : res_nmkquery: (QUERY, IN, AAAA)
+11-18 13:15:56.096   358  4708 I resolv  : res_nsend: used send_dg 260 terrno: 0
+11-18 13:15:56.096   358  4708 I resolv  : doQuery: rcode=0, ancount=8, return value=260
+11-18 13:15:56.226     0     0 I servicemanager: Caller(pid=556,uid=1000,sid=u:r:system_server:s0) Since 'android.system.virtualizationmaintenance' could not be found trying to start it as a lazy AIDL service. (if it's not configured to be a lazy service, it may be stuck starting or still starting).
+11-18 13:15:56.103  1319  1646 I HandwritingSlicingStrategy: HandwritingSlicingStrategy.getSlices():44 getSlices(): handwriting_recognition.86 useForeground=true
+11-18 13:15:56.110   358  4709 I resolv  : res_nsend: used send_dg 164 terrno: 0
+11-18 13:15:56.110   358  4709 I resolv  : doQuery: rcode=0, ancount=8, return value=164
+11-18 13:15:56.115  3312  4634 D PhFileGroupPop: Added file groups spam_fm_templates
+11-18 13:15:56.123  1319  1646 I HandwritingSlicingStrategy: HandwritingSlicingStrategy.getSlices():103 getSlices(): result {slices=[{handwriting_recognition:pack_mapping_v1_lstm_20231127, m:*:*:*, fg}, {handwriting_recognition:transformer_latin_tflite_20231010_zip, m:*:*:*, fg}, {handwriting_recognition:qrnn_en_us_reco_20231010_fst_20230613_recospec_zip, m:*:*:*, fg}, {handwriting_recognition:transformer_latin_conf_tflite_20231010_zip, m:*:*:*, fg}, {handwriting_recognition:transformer_latin_seg_tflite_20231010_zip, m:*:*:*, fg}, {handwriting_recognition:en_us_20230613_compact_fst_zip, m:*:*:*, fg}, {handwriting_recognition:scribe_latin_20231123_tflite_zip, m:*:*:*, fg}, {handwriting_recognition:scribe_latin_20231123_recospec_zip, m:*:*:*, fg}], last batch=true, sync metadata=false}
+11-18 13:15:56.123  1319  1646 I SP      : Syncing handwriting_recognition (86) with slices: [{pack_mapping_v1_lstm_20231127, m:*:*:*, fg}, {transformer_latin_tflite_20231010_zip, m:*:*:*, fg}, {qrnn_en_us_reco_20231010_fst_20230613_recospec_zip, m:*:*:*, fg}, {transformer_latin_conf_tflite_20231010_zip, m:*:*:*, fg}, {transformer_latin_seg_tflite_20231010_zip, m:*:*:*, fg}, {en_us_20230613_compact_fst_zip, m:*:*:*, fg}, {scribe_latin_20231123_tflite_zip, m:*:*:*, fg}, {scribe_latin_20231123_recospec_zip, m:*:*:*, fg}], metadata: false
+11-18 13:15:56.133  1160  4351 I AlarmManager: setExactAndAllowWhileIdle [name: GCM_HB_ALARM type: 2 triggerAtMillis: 1895598]
+11-18 13:15:56.249     0     0 I init    : starting service 'virtualizationservice'...
+11-18 13:15:56.135  2263  2660 D TrafficStats: tagSocket(98) with statsTag=0x1803, statsUid=10143
+11-18 13:15:56.136  1160  4702 I ProximityAuth: [RecentAppsMediator] Package removed: (user=UserHandle{0}) de.mm20.launcher2.ui.test
+11-18 13:15:56.144  1193  1193 I OverviewComponentObserver: updateOverviewTargets: mIsHomeDisabled=false, isDefaultHomeNull=false, mIsDefaultHome=true
+11-18 13:15:56.148  1193  1193 I OverviewComponentObserver: updateOverviewTargets: mIsHomeDisabled=false, isDefaultHomeNull=false, mIsDefaultHome=true
+11-18 13:15:56.156  1374  4688 I Blockstore: [DataStoreImpl] Clearing all the restore credential for 1 packages [CONTEXT service_id=258 ]
+11-18 13:15:56.156  1374  4688 W Blockstore: [DataStoreImpl] Does not contain gms package key space. [CONTEXT service_id=258 ]
+11-18 13:15:56.156  1374  4688 I Blockstore: [PackageIntentOperation] Deleted restore credential for package de.mm20.launcher2.ui.test is successful: true [CONTEXT service_id=258 ]
+11-18 13:15:56.164  1374  4688 I Blockstore: [DataStoreImpl] Clearing all the Blockstore Data for package de.mm20.launcher2.ui.test [CONTEXT service_id=258 ]
+11-18 13:15:56.164  1374  4688 I Blockstore: [DataStoreImpl] Clearing all the Blockstore Data for 1 packages [CONTEXT service_id=258 ]
+11-18 13:15:56.164  1374  4688 I Blockstore: [DataStoreImpl] Removing Blockstore data for packages [de.mm20.launcher2.ui.test] [CONTEXT service_id=258 ]
+11-18 13:15:56.171  1193  1193 I OverviewComponentObserver: updateOverviewTargets: mIsHomeDisabled=false, isDefaultHomeNull=false, mIsDefaultHome=true
+11-18 13:15:56.172  1193  1193 I OverviewComponentObserver: updateOverviewTargets: mIsHomeDisabled=false, isDefaultHomeNull=false, mIsDefaultHome=true
+11-18 13:15:56.174  1193  1193 I OverviewComponentObserver: updateOverviewTargets: mIsHomeDisabled=false, isDefaultHomeNull=false, mIsDefaultHome=true
+11-18 13:15:56.177  1193  1193 I OverviewComponentObserver: updateOverviewTargets: mIsHomeDisabled=false, isDefaultHomeNull=false, mIsDefaultHome=true
+11-18 13:15:56.179  1193  1193 D SsBaseTemplateCard: No text view can be set up
+11-18 13:15:56.179  1193  1193 D SsBaseTemplateCard: Passed-in item info is null
+11-18 13:15:56.179  1193  1193 D SsBaseTemplateCard: Passed-in item info is null
+11-18 13:15:56.179  1193  1193 D SsBaseTemplateCard: Passed-in item info is null
+11-18 13:15:56.179  1193  1193 I SsBaseTemplateCard: Secondary card pane is null
+11-18 13:15:56.179  1160  4712 I Fitness : FitCleanupIntentOperation received Intent android.intent.action.PACKAGE_REMOVED [CONTEXT service_id=17 ]
+11-18 13:15:56.207  1479  1479 D WM-DelayedWorkTracker: Scheduling work b8cde515-b6cc-411b-a341-18a2b28bc6d6
+11-18 13:15:56.207  1479  1479 D WM-GreedyScheduler: Starting tracking for b8cde515-b6cc-411b-a341-18a2b28bc6d6
+11-18 13:15:56.360     0     0 I init    : ... started service 'virtualizationservice' has pid 4717
+11-18 13:15:56.362     0     0 I init    : Control message: Processed ctl.interface_start for 'aidl/android.system.virtualizationmaintenance' from pid: 147 (/system/bin/servicemanager)
+11-18 13:15:56.306  1479  1695 D WM-ConstraintTracker: BatteryNotLowTracker: initial state = true
+11-18 13:15:56.306  1479  1695 D WM-BrdcstRcvrCnstrntTrc: BatteryNotLowTracker: registering receiver
+11-18 13:15:56.306  1479  1695 D WM-GreedyScheduler: Constraints met: Scheduling work ID WorkGenerationalId(workSpecId=b8cde515-b6cc-411b-a341-18a2b28bc6d6, generation=0)
+11-18 13:15:56.334  1479  1695 D WM-Processor: Processor: processing WorkGenerationalId(workSpecId=b8cde515-b6cc-411b-a341-18a2b28bc6d6, generation=0)
+11-18 13:15:56.341  1479  1479 D WM-WorkerWrapper: Starting work for com.android.providers.media.photopicker.sync.ProactiveSyncWorker
+11-18 13:15:56.343  1479  4722 I PSyncWorker: Starting proactive picker sync from sync source: 1
+11-18 13:15:56.348  1479  4722 I PickerSyncTracker: Created new sync future java.util.concurrent.CompletableFuture@3b8df3d[Not completed, 1 dependents]. Future map: {b8cde515-b6cc-411b-a341-18a2b28bc6d6=java.util.concurrent.CompletableFuture@3b8df3d[Not completed, 1 dependents]}
+11-18 13:15:56.360  1479  4722 D PickerSyncController: syncAllMediaFromProvider() LOCAL, auth=com.android.providers.media.photopicker, retry=true
+11-18 13:15:56.365  1479  4722 D PickerSyncController: getSyncRequestParams() LOCAL, auth=com.android.providers.media.photopicker
+11-18 13:15:56.373  4717  4717 I VirtualizationService: virtualizationservice::maintenance: Failed to find a Secretkeeper instance; skipping secret management
+11-18 13:15:56.374  4717  4717 I AidlLazyServiceRegistrar: Registering service android.system.virtualizationservice
+11-18 13:15:56.504     0     0 I servicemanager: Caller(pid=4717,uid=1000,sid=u:r:virtualizationservice:s0) Could not find android.hardware.security.secretkeeper.ISecretkeeper/default in the VINTF manifest. No alternative instances declared in VINTF.
+11-18 13:15:56.378  4717  4717 I VirtualizationService: virtualizationservice: Registered Binder service android.system.virtualizationservice.
+11-18 13:15:56.387  4717  4717 I AidlLazyServiceRegistrar: Registering service android.system.virtualizationmaintenance
+11-18 13:15:56.519     0     0 I servicemanager: Caller(pid=4717,uid=1000,sid=u:r:virtualizationservice:s0) Could not find android.hardware.security.keymint.IRemotelyProvisionedComponent/avf in the VINTF manifest. VINTF declared instances: default.
+11-18 13:15:56.390  4717  4717 I VirtualizationService: virtualizationservice: Registered Binder service android.system.virtualizationmaintenance.
+11-18 13:15:56.390  4717  4725 I AidlLazyServiceRegistrar: Process has 1 (of 2 available) client(s) in use after notification android.system.virtualizationmaintenance has clients: 1
+11-18 13:15:56.525     0     0 I servicemanager: Notifying android.system.virtualizationmaintenance they do (previously: don't) have clients when service is guaranteed to be in use
+11-18 13:15:56.394  4717  4725 I VirtualizationService: virtualizationservice::aidl: ignoring packageRemoved(user_id=0, app_id=10210)
+11-18 13:15:56.529     0     0 I BpBinder: onLastStrongRef automatically unlinking death recipients:
+11-18 13:15:56.397   556   579 I DropBoxManagerService: add tag=system_server_strictmode isTagEnabled=true flags=0x2
+11-18 13:15:56.437   556  1566 I RemoteProvisionSysSvc: getRegistration(android.hardware.security.keymint.IRemotelyProvisionedComponent/default)
+11-18 13:15:56.563     0     0 I servicemanager: Caller(pid=171,uid=1017,sid=u:r:keystore:s0) Found android.hardware.security.keymint.IRemotelyProvisionedComponent/default in device VINTF manifest.
+11-18 13:15:56.440   556  1566 D ActivityManager: sync unfroze 2754 com.google.android.rkpdapp for 6
+11-18 13:15:56.442  1479  4722 D PickerSyncController:    Latest ID/Gen=1409:e6416689-f3a6-4cba-8da4-d9a9945b3473:external_primary/13
+11-18 13:15:56.442  1479  4722 D PickerSyncController:    Cached ID/Gen=null/-1
+11-18 13:15:56.442  1479  4722 D PickerSyncController:    RESULT=SyncRequestParams{type=MEDIA_FULL_WITH_RESET, gen=0, latest=Bundle[{last_media_sync_generation=13, media_collection_id=1409:e6416689-f3a6-4cba-8da4-d9a9945b3473:external_primary}], pageSize=1000}
+11-18 13:15:56.443  1479  4722 I PickerSyncController: Executing SyncReset. isLocal: true. authority: com.android.providers.media.photopicker
+11-18 13:15:56.467  1479  4722 D PickerNotificationSender: Sending a notification for media update
+11-18 13:15:56.469  1061  1061 D TelephonyManager: requestModemActivityInfo: Sending result to app: ModemActivityInfo{ mTimestamp=185910 mSleepTimeMs=0 mIdleTimeMs=185874 mActivityStatsTechSpecificInfo=[{mRat=UNKNOWN,mFrequencyRange=UNKNOWN,mTxTimeMs[]=[0, 0, 0, 0, 0],mRxTimeMs=0}]}
+11-18 13:15:56.471  1479  4722 D PickerNotificationSender: Sending a notification for merged album media update Favorites
+11-18 13:15:56.471  1479  4722 D PickerNotificationSender: Sending a notification for album media update Favorites
+11-18 13:15:56.487   556   556 I RegistrationProxy: onServiceConnected: com.android.rkpdapp.service.RemoteProvisioningService
+11-18 13:15:56.502  1479  4722 D PickerNotificationSender: Sending a notification for merged album media update Videos
+11-18 13:15:56.502  1479  4722 D PickerNotificationSender: Sending a notification for album media update Videos
+11-18 13:15:56.512  1479  4722 I PickerSyncController: SyncReset. isLocal:true. authority: com.android.providers.media.photopicker. result count: 0
+11-18 13:15:56.527  1479  4722 I PickerSyncController: Executing SyncAdd. isLocal: true. authority: com.android.providers.media.photopicker
+11-18 13:15:56.539  1479  4722 D PickerSyncLockManager: Trying to acquire lock com.android.providers.media.photopicker.sync.CloseableReentrantLock@86d9fb9[Unlocked]. Lock Name = CLOUD_PROVIDER_LOCK. Threads that may be waiting to acquire this lock = [] with timeout.
+11-18 13:15:56.539  1479  4722 D CloseableReentrantLock: Successfully acquired lock com.android.providers.media.photopicker.sync.CloseableReentrantLock@86d9fb9[Locked by thread pool-3-thread-1]. Lock Name = CLOUD_PROVIDER_LOCK. Threads that may be waiting to acquire this lock = []
+11-18 13:15:56.539  1479  4722 D CloseableReentrantLock: Successfully released lock com.android.providers.media.photopicker.sync.CloseableReentrantLock@86d9fb9[Unlocked]. Lock Name = CLOUD_PROVIDER_LOCK. Threads that may be waiting to acquire this lock = []
+11-18 13:15:56.539  1479  4722 D ExternalDbFacade: Token received for queryMedia = null
+11-18 13:15:56.665     0     0 I servicemanager: Caller(pid=2754,uid=10184,sid=u:r:rkpdapp:s0:c184,c256,c512,c768) Found android.hardware.security.keymint.IRemotelyProvisionedComponent/default in device VINTF manifest.
+11-18 13:15:56.556  1479  4722 D PickerSyncLockManager: Trying to acquire lock com.android.providers.media.photopicker.sync.CloseableReentrantLock@86d9fb9[Unlocked]. Lock Name = CLOUD_PROVIDER_LOCK. Threads that may be waiting to acquire this lock = [] with timeout.
+11-18 13:15:56.556  1479  4722 D CloseableReentrantLock: Successfully acquired lock com.android.providers.media.photopicker.sync.CloseableReentrantLock@86d9fb9[Locked by thread pool-3-thread-1]. Lock Name = CLOUD_PROVIDER_LOCK. Threads that may be waiting to acquire this lock = []
+11-18 13:15:56.556  1479  4722 D PickerSyncController: Saving next page token: 1795007754000|1000000019 for key: local_provider:media_add:resume
+11-18 13:15:56.558   556  1560 I RegistrationProxy: IGetRegistrationCallback.onSuccess
+11-18 13:15:56.566  1479  4722 D CloseableReentrantLock: Successfully released lock com.android.providers.media.photopicker.sync.CloseableReentrantLock@86d9fb9[Unlocked]. Lock Name = CLOUD_PROVIDER_LOCK. Threads that may be waiting to acquire this lock = []
+11-18 13:15:56.568  1160  4704 W .gms.persistent: Long monitor contention with owner netscheduler-queue-handler (2315) at void dbyt.o(int)(:com.google.android.gms@242335041@24.23.35 (190800-646585959):27) waiters=0 in void dbyt.t(boolean, bpmd) for 518ms
+11-18 13:15:56.568   556  1560 I RemoteProvisionSysSvc: Fetching key 10143 for client 81947743
+11-18 13:15:56.571   556  1560 I RegistrationProxy: getKeyAsync operation started with callback 31934124
+11-18 13:15:56.571  2754  4730 I RkpdRegistrationBinder: Key requested for : android.hardware.security.keymint.IRemotelyProvisionedComponent/default, clientUid: 1017, keyId: 10143, callback: 12749171
+11-18 13:15:56.571  1479  4722 D PickerNotificationSender: Sending a notification for media update
+11-18 13:15:56.576  1479  4722 D PickerNotificationSender: Sending a notification for merged album media update Favorites
+11-18 13:15:56.576  1479  4722 D PickerNotificationSender: Sending a notification for album media update Favorites
+11-18 13:15:56.579  1479  4722 D PickerNotificationSender: Sending a notification for merged album media update Videos
+11-18 13:15:56.579  1479  4722 D PickerNotificationSender: Sending a notification for album media update Videos
+11-18 13:15:56.582  1479  4722 D ExternalDbFacade: Token received for queryMedia = 1795007754000|1000000019
+11-18 13:15:56.588  1160  4629 W .gms.persistent: Long monitor contention with owner lowpool[22] (4631) at void bciz.j(bcio)(:com.google.android.gms@242335041@24.23.35 (190800-646585959):22) waiters=0 in epbl bciz.h() for 466ms
+11-18 13:15:56.589  1479  4722 D PickerSyncLockManager: Trying to acquire lock com.android.providers.media.photopicker.sync.CloseableReentrantLock@86d9fb9[Unlocked]. Lock Name = CLOUD_PROVIDER_LOCK. Threads that may be waiting to acquire this lock = [] with timeout.
+11-18 13:15:56.589  1479  4722 D CloseableReentrantLock: Successfully acquired lock com.android.providers.media.photopicker.sync.CloseableReentrantLock@86d9fb9[Locked by thread pool-3-thread-1]. Lock Name = CLOUD_PROVIDER_LOCK. Threads that may be waiting to acquire this lock = []
+11-18 13:15:56.589  1479  4722 D PickerSyncController: Clearing next page token for key: local_provider:media_add:resume
+11-18 13:15:56.589  1479  4722 D CloseableReentrantLock: Successfully released lock com.android.providers.media.photopicker.sync.CloseableReentrantLock@86d9fb9[Unlocked]. Lock Name = CLOUD_PROVIDER_LOCK. Threads that may be waiting to acquire this lock = []
+11-18 13:15:56.589  1479  4722 D PickerNotificationSender: Sending a notification for media update
+11-18 13:15:56.592  2754  4730 I RkpdRegistrationBinder: Key successfully assigned to client
+11-18 13:15:56.592   556   556 I RemoteProvisionSysSvc: Successfully fetched key for client 81947743
+11-18 13:15:56.614  1479  4722 D PickerNotificationSender: Sending a notification for merged album media update Favorites
+11-18 13:15:56.615  1479  4722 D PickerNotificationSender: Sending a notification for album media update Favorites
+11-18 13:15:56.615  1479  4722 D PickerNotificationSender: Sending a notification for merged album media update Videos
+11-18 13:15:56.615  1479  4722 D PickerNotificationSender: Sending a notification for album media update Videos
+11-18 13:15:56.615  1479  4722 I PickerSyncController: Paged sync successful. QueryArgs: Bundle[{android.provider.extra.PAGE_TOKEN=1795007754000|1000000019, android.provider.extra.PAGE_SIZE=1000}] Total Rows: 1
+11-18 13:15:56.615  1479  4722 I PickerSyncTracker: Marked sync future complete for work id: b8cde515-b6cc-411b-a341-18a2b28bc6d6. Future map: {}
+11-18 13:15:56.615  1479  4722 I PSyncWorker: Completed picker proactive sync complete from local provider.
+11-18 13:15:56.627   175   175 D SoftKeymaster: system/keymaster/km_openssl/certificate_utils.cpp, Line 148: Using TAG_CERTIFICATE_NOT_BEFORE: 0
+11-18 13:15:56.627   175   175 D SoftKeymaster: system/keymaster/km_openssl/certificate_utils.cpp, Line 154: Using TAG_CERTIFICATE_NOT_AFTER: 2461449600000
+11-18 13:15:56.627   175   175 D SoftKeymaster: system/keymaster/km_openssl/certificate_utils.cpp, Line 159: Got certificate date params:  NotBefore = 0, NotAfter = 2461449600000
+11-18 13:15:56.627   175   175 D SoftKeymaster: system/keymaster/km_openssl/certificate_utils.cpp, Line 273: Setting notBefore to 0
+11-18 13:15:56.627   175   175 D SoftKeymaster: system/keymaster/km_openssl/certificate_utils.cpp, Line 282: Setting notAfter to 2461449600
+11-18 13:15:56.753     0     0 I servicemanager: Caller(pid=171,uid=1017,sid=u:r:keystore:s0) Found android.hardware.security.keymint.IRemotelyProvisionedComponent/default in device VINTF manifest.
+11-18 13:15:56.640  1479  1695 I WM-WorkerWrapper: Worker result SUCCESS for Work [ id=b8cde515-b6cc-411b-a341-18a2b28bc6d6, tags={ com.android.providers.media.photopicker.sync.ProactiveSyncWorker } ]
+11-18 13:15:56.641  1479  1479 D WM-Processor: Processor b8cde515-b6cc-411b-a341-18a2b28bc6d6 executed; reschedule = false
+11-18 13:15:56.641  1479  1479 D WM-GreedyScheduler: Stopping tracking for WorkGenerationalId(workSpecId=b8cde515-b6cc-411b-a341-18a2b28bc6d6, generation=0)
+11-18 13:15:56.658  1479  1695 D WM-GreedyScheduler: Cancelling work ID b8cde515-b6cc-411b-a341-18a2b28bc6d6
+11-18 13:15:56.693   556  1568 D BiometricService: Sensor ID(0), oemStrength: 15, updatedStrength: 15, modality 2, state: 0, cookie: 0, sensorId 0, hasEnrollments: false cannot participate in Keystore operations
+11-18 13:15:56.694   556  1568 D BiometricService: Sensor ID(4), oemStrength: 15, updatedStrength: 15, modality 8, state: 0, cookie: 0, sensorId 4, hasEnrollments: false cannot participate in Keystore operations
+11-18 13:15:56.716  3312  4636 E PhFileGroupPop: Failed to add file group 
+11-18 13:15:56.749  1160  4629 I NetworkScheduler.Stats: Task com.google.android.gms/com.google.android.gms.droidguard.DroidGuardGcmTaskService finished executing. cause:8 result: 1 elapsed_millis: 1004 uptime_millis: 1004 exec_start_elapsed_seconds: 185 [CONTEXT service_id=218 ]
+11-18 13:15:56.750  1479  1695 D WM-GreedyScheduler: Ignoring {WorkSpec: 736c4d15-1f21-43c3-8f85-2572a963c89b}. Requires device idle.
+11-18 13:15:56.768  1479  1695 D WM-GreedyScheduler: Ignoring {WorkSpec: f4f9b316-4064-412d-82de-98fd1ba37c12}. Requires device idle.
+11-18 13:15:56.768  1479  1695 D WM-BrdcstRcvrCnstrntTrc: BatteryNotLowTracker: unregistering receiver
+11-18 13:15:56.791  2263  4699 W libc    : Access denied finding property "persist.adb.tls_server.enable"
+11-18 13:15:56.791  2263  4699 W libc    : Access denied finding property "service.adb.tls.port"
+11-18 13:15:56.784  2263  2263 W IntentService[D: type=1400 audit(0.0:63): avc:  denied  { read } for  name="u:object_r:system_adbd_prop:s0" dev="tmpfs" ino=318 scontext=u:r:gmscore_app:s0:c512,c768 tcontext=u:object_r:system_adbd_prop:s0 tclass=file permissive=0 app=com.google.android.gms
+11-18 13:15:56.801  3312  4636 E PhFileGroupPop: Failed to add file group 
+11-18 13:15:56.801  3312  4636 E PhFileGroupPop: Failed to add file group 
+11-18 13:15:56.801  3312  4636 E PhFileGroupPop: Failed to add file group 
+11-18 13:15:56.801  3312  4636 E PhFileGroupPop: Failed to add file group 
+11-18 13:15:56.801  3312  4636 E PhFileGroupPop: Failed to add file group 
+11-18 13:15:56.801  3312  4636 E PhFileGroupPop: Failed to add file group 
+11-18 13:15:56.801  3312  4636 E PhFileGroupPop: Failed to add file group 
+11-18 13:15:56.801  3312  4636 E PhFileGroupPop: Failed to add file group 
+11-18 13:15:56.801  3312  4636 E PhFileGroupPop: Failed to add file group 
+11-18 13:15:56.801  3312  4636 E PhFileGroupPop: Failed to add file group 
+11-18 13:15:56.801  3312  4636 E PhFileGroupPop: Failed to add file group 
+11-18 13:15:56.801  3312  4636 E PhFileGroupPop: Failed to add file group 
+11-18 13:15:56.801  3312  4636 E PhFileGroupPop: Failed to add file group 
+11-18 13:15:56.801  3312  4636 E PhFileGroupPop: Failed to add file group 
+11-18 13:15:56.802  3312  4636 E PhFileGroupPop: Failed to add file group 
+11-18 13:15:56.802  3312  4636 E PhFileGroupPop: Failed to add file group 
+11-18 13:15:56.802  3312  4636 E dqod    : RuntimeException while executing runnable dqra{dkqj@28e7e0} with executor MoreExecutors.directExecutor()
+11-18 13:15:56.802  3312  4636 E dqod    : java.lang.NullPointerException: Attempt to read from field 'java.lang.String cwru.b' on a null object reference in method 'void cyar.b(java.lang.Object)'
+11-18 13:15:56.802  3312  4636 E dqod    : 	at cyar.b(PG:11)
+11-18 13:15:56.802  3312  4636 E dqod    : 	at dkqj.b(PG:13)
+11-18 13:15:56.802  3312  4636 E dqod    : 	at dqra.run(PG:30)
+11-18 13:15:56.802  3312  4636 E dqod    : 	at dqqd.execute(PG:1)
+11-18 13:15:56.802  3312  4636 E dqod    : 	at dqod.o(PG:1)
+11-18 13:15:56.802  3312  4636 E dqod    : 	at dqod.b(PG:41)
+11-18 13:15:56.802  3312  4636 E dqod    : 	at dqrh.s(PG:9)
+11-18 13:15:56.802  3312  4636 E dqod    : 	at dksz.l(PG:5)
+11-18 13:15:56.802  3312  4636 E dqod    : 	at cyat.a(PG:138)
+11-18 13:15:56.802  3312  4636 E dqod    : 	at bilp.a(PG:29)
+11-18 13:15:56.802  3312  4636 E dqod    : 	at cwzc.r(PG:24)
+11-18 13:15:56.802  3312  4636 E dqod    : 	at cwws.a(PG:5)
+11-18 13:15:56.802  3312  4636 E dqod    : 	at dkqe.a(PG:13)
+11-18 13:15:56.802  3312  4636 E dqod    : 	at dqoh.d(PG:3)
+11-18 13:15:56.802  3312  4636 E dqod    : 	at dqoj.run(PG:42)
+11-18 13:15:56.802  3312  4636 E dqod    : 	at dqso.run(PG:76)
+11-18 13:15:56.802  3312  4636 E dqod    : 	at crzm.run(PG:3)
+11-18 13:15:56.802  3312  4636 E dqod    : 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+11-18 13:15:56.802  3312  4636 E dqod    : 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+11-18 13:15:56.802  3312  4636 E dqod    : 	at cryq.run(PG:6)
+11-18 13:15:56.802  3312  4636 E dqod    : 	at java.lang.Thread.run(Thread.java:1012)
+11-18 13:15:56.802  3312  4636 E dqod    : 	at csaw.run(PG:64)
+11-18 13:15:56.802  3312  4636 E dqod    : RuntimeException while executing runnable dqra{dkqj@bdff15e} with executor MoreExecutors.directExecutor()
+11-18 13:15:56.802  3312  4636 E dqod    : java.lang.NullPointerException: Attempt to read from field 'java.lang.String cwru.b' on a null object reference in method 'void cyar.b(java.lang.Object)'
+11-18 13:15:56.802  3312  4636 E dqod    : 	at cyar.b(PG:11)
+11-18 13:15:56.802  3312  4636 E dqod    : 	at dkqj.b(PG:13)
+11-18 13:15:56.802  3312  4636 E dqod    : 	at dqra.run(PG:30)
+11-18 13:15:56.802  3312  4636 E dqod    : 	at dqqd.execute(PG:1)
+11-18 13:15:56.802  3312  4636 E dqod    : 	at dqod.o(PG:1)
+11-18 13:15:56.802  3312  4636 E dqod    : 	at dqod.b(PG:41)
+11-18 13:15:56.802  3312  4636 E dqod    : 	at dqrh.s(PG:9)
+11-18 13:15:56.802  3312  4636 E dqod    : 	at dksz.l(PG:5)
+11-18 13:15:56.802  3312  4636 E dqod    : 	at cyat.a(PG:138)
+11-18 13:15:56.802  3312  4636 E dqod    : 	at bilp.a(PG:29)
+11-18 13:15:56.802  3312  4636 E dqod    : 	at cwzc.r(PG:24)
+11-18 13:15:56.802  3312  4636 E dqod    : 	at cwws.a(PG:5)
+11-18 13:15:56.802  3312  4636 E dqod    : 	at dkqe.a(PG:13)
+11-18 13:15:56.802  3312  4636 E dqod    : 	at dqoh.d(PG:3)
+11-18 13:15:56.802  3312  4636 E dqod    : 	at dqoj.run(PG:42)
+11-18 13:15:56.802  3312  4636 E dqod    : 	at dqso.run(PG:76)
+11-18 13:15:56.802  3312  4636 E dqod    : 	at crzm.run(PG:3)
+11-18 13:15:56.802  3312  4636 E dqod    : 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+11-18 13:15:56.802  3312  4636 E dqod    : 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+11-18 13:15:56.802  3312  4636 E dqod    : 	at cryq.run(PG:6)
+11-18 13:15:56.802  3312  4636 E dqod    : 	at java.lang.Thread.run(Thread.java:1012)
+11-18 13:15:56.802  3312  4636 E dqod    : 	at csaw.run(PG:64)
+11-18 13:15:56.802  3312  4636 E dqod    : RuntimeException while executing runnable dqra{dkqj@364a20c} with executor MoreExecutors.directExecutor()
+11-18 13:15:56.802  3312  4636 E dqod    : java.lang.NullPointerException: Attempt to read from field 'java.lang.String cwru.b' on a null object reference in method 'void cyar.b(java.lang.Object)'
+11-18 13:15:56.802  3312  4636 E dqod    : 	at cyar.b(PG:11)
+11-18 13:15:56.802  3312  4636 E dqod    : 	at dkqj.b(PG:13)
+11-18 13:15:56.802  3312  4636 E dqod    : 	at dqra.run(PG:30)
+11-18 13:15:56.802  3312  4636 E dqod    : 	at dqqd.execute(PG:1)
+11-18 13:15:56.802  3312  4636 E dqod    : 	at dqod.o(PG:1)
+11-18 13:15:56.802  3312  4636 E dqod    : 	at dqod.b(PG:41)
+11-18 13:15:56.802  3312  4636 E dqod    : 	at dqrh.s(PG:9)
+11-18 13:15:56.802  3312  4636 E dqod    : 	at dksz.l(PG:5)
+11-18 13:15:56.802  3312  4636 E dqod    : 	at cyat.a(PG:138)
+11-18 13:15:56.802  3312  4636 E dqod    : 	at bilp.a(PG:29)
+11-18 13:15:56.802  3312  4636 E dqod    : 	at cwzc.r(PG:24)
+11-18 13:15:56.802  3312  4636 E dqod    : 	at cwws.a(PG:5)
+11-18 13:15:56.802  3312  4636 E dqod    : 	at dkqe.a(PG:13)
+11-18 13:15:56.802  3312  4636 E dqod    : 	at dqoh.d(PG:3)
+11-18 13:15:56.802  3312  4636 E dqod    : 	at dqoj.run(PG:42)
+11-18 13:15:56.802  3312  4636 E dqod    : 	at dqso.run(PG:76)
+11-18 13:15:56.802  3312  4636 E dqod    : 	at crzm.run(PG:3)
+11-18 13:15:56.802  3312  4636 E dqod    : 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+11-18 13:15:56.802  3312  4636 E dqod    : 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+11-18 13:15:56.802  3312  4636 E dqod    : 	at cryq.run(PG:6)
+11-18 13:15:56.802  3312  4636 E dqod    : 	at java.lang.Thread.run(Thread.java:1012)
+11-18 13:15:56.802  3312  4636 E dqod    : 	at csaw.run(PG:64)
+11-18 13:15:56.803  3312  4636 E MDD     : FileGroupManager: Trying to add expired group webref-model-local-index.
+11-18 13:15:56.803  3312  4636 W MDD     : MDDManager class cxev
+11-18 13:15:56.803  3312  4636 E PhFileGroupPop: Failed to add file group
+11-18 13:15:56.803  3312  4636 E PhFileGroupPop: cxev
+11-18 13:15:56.803  3312  4636 E PhFileGroupPop: 	at cxns.a(PG:941)
+11-18 13:15:56.803  3312  4636 E PhFileGroupPop: 	at dkqe.a(PG:13)
+11-18 13:15:56.803  3312  4636 E PhFileGroupPop: 	at dqoh.d(PG:3)
+11-18 13:15:56.803  3312  4636 E PhFileGroupPop: 	at dqoj.run(PG:42)
+11-18 13:15:56.803  3312  4636 E PhFileGroupPop: 	at dqso.run(PG:76)
+11-18 13:15:56.803  3312  4636 E PhFileGroupPop: 	at crzm.run(PG:3)
+11-18 13:15:56.803  3312  4636 E PhFileGroupPop: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+11-18 13:15:56.803  3312  4636 E PhFileGroupPop: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+11-18 13:15:56.803  3312  4636 E PhFileGroupPop: 	at cryq.run(PG:6)
+11-18 13:15:56.803  3312  4636 E PhFileGroupPop: 	at java.lang.Thread.run(Thread.java:1012)
+11-18 13:15:56.803  3312  4636 E PhFileGroupPop: 	at csaw.run(PG:64)
+11-18 13:15:56.821  3312  4636 D PhFileGroupPop: Added file groups smart_actions_grammars
+11-18 13:15:56.821  3312  4636 D PhFileGroupPop: Added file groups smart_actions_ml_models
+11-18 13:15:56.822  3312  4636 D PhFileGroupPop: Added file groups text_classifier
+11-18 13:15:56.823  3312  4636 D PhFileGroupPop: Added file groups smart_actions_emotive_models
+11-18 13:15:56.838  3312  4636 D PhFileGroupPop: Added file groups smarts_expressive_content_scoped_v1
+11-18 13:15:56.784  2263  2263 W IntentService[D: type=1400 audit(0.0:64): avc:  denied  { read } for  name="u:object_r:adbd_prop:s0" dev="tmpfs" ino=63 scontext=u:r:gmscore_app:s0:c512,c768 tcontext=u:object_r:adbd_prop:s0 tclass=file permissive=0 app=com.google.android.gms
+11-18 13:15:56.838  3312  4636 D PhFileGroupPop: Added file groups smart_actions_sensitive_classifier_models
+11-18 13:15:56.840  3312  4636 D PhFileGroupPop: Added file groups scripted_reply
+11-18 13:15:56.841  3312  4636 D PhFileGroupPop: Added file groups multitask_experiment
+11-18 13:15:56.842  3312  4636 D PhFileGroupPop: Added file groups spam_verdict_enforcement_policy_config
+11-18 13:15:56.852  3312  3520 W MDD     : GddFileGroupPopulator: Account was not provided, skipping private sync for corpus: GDD_BUGLE_EMOJIFY, configuration: GddBugleEmojify
+11-18 13:15:56.853  3312  3520 W GellerSyncSchedulerImpl: Corpus: GDD_BUGLE_EMOJIFY is disabled
+11-18 13:15:56.863  3312  4636 D PhFileGroupPop: Added file groups smart_suggestion_reranker_models
+11-18 13:15:56.870  1374  2406 E WakeLock: DG:service ** IS FORCE-RELEASED ON TIMEOUT **
+11-18 13:15:56.874  1160  4629 I NetworkScheduler.Stats: Task com.google.android.gms/com.google.android.gms.tapandpay.gcmtask.TapAndPayGcmTaskService started execution. cause:5 exec_start_elapsed_seconds: 185 [CONTEXT service_id=218 ]
+11-18 13:15:56.874  1160  4629 I NetworkScheduler.Stats: Task com.google.android.gms/com.google.android.gms.tapandpay.gcmtask.TapAndPayGcmTaskService finished executing. cause:5 result: 1 elapsed_millis: 677 uptime_millis: 677 exec_start_elapsed_seconds: 185 [CONTEXT service_id=218 ]
+11-18 13:15:56.887  3312  4636 D PhFileGroupPop: Added file groups supersort_us_grammars
+11-18 13:15:56.887  3312  4636 D PhFileGroupPop: Added file groups nudge
+11-18 13:15:56.887  3312  4636 D PhFileGroupPop: Added file groups calendar_appointment_grammar
+11-18 13:15:56.887  3312  4636 D PhFileGroupPop: Added file groups birthday_suggestion
+11-18 13:15:56.887  3312  4636 D PhFileGroupPop: Added file groups birthday_grammars
+11-18 13:15:56.891  3312  4636 D PhFileGroupPop: Added file groups animated_emoji
+11-18 13:15:56.891  3312  4636 D PhFileGroupPop: Added file groups voice_moods
+11-18 13:15:56.891  3312  4636 D PhFileGroupPop: Added file groups screen_effects
+11-18 13:15:56.891  3312  4636 D PhFileGroupPop: Added file groups screen_effect_suggestions
+11-18 13:15:56.891  3312  4636 D PhFileGroupPop: Added file groups selfie_gif_grammars
+11-18 13:15:56.891  3312  4636 D PhFileGroupPop: Added file groups spam_fm_templates
+11-18 13:15:56.900  3312  4636 I WM-WorkerWrapper: Worker result SUCCESS for Work [ id=86cf2fbf-0bc7-4cce-bb09-c2dafa092182, tags={ com.google.android.libraries.mdi.download.workmanager.workers.PeriodicWorker,MDD.CELLULAR.CHARGING.PERIODIC.TASK } ]
+11-18 13:15:56.903  1374  1374 D BoundBrokerSvc: onBind: Intent { act=com.google.android.gms.feedback.internal.IFeedbackService dat=chimera-action:/... cmp=com.google.android.gms/.chimera.GmsBoundBrokerService }
+11-18 13:15:56.904  1374  1374 D BoundBrokerSvc: Loading bound service for intent: Intent { act=com.google.android.gms.feedback.internal.IFeedbackService dat=chimera-action:/... cmp=com.google.android.gms/.chimera.GmsBoundBrokerService }
+11-18 13:15:56.917  1444  2135 I AiAiTextClassifier: [VisualCortexAdapter]: provideRegistration: Registered Prominent Screen Entities for updates.
+11-18 13:15:56.917  1374  4688 W SQLiteLog: (28) double-quoted string literal: "de.mm20.launcher2.ui.test"
+11-18 13:15:56.923  1444  2135 I AiAiTextClassifier: [VisualCortexAdapter]: provideRegistration: Registered Prominent Screen Entities for updates.
+11-18 13:15:56.926  1319  1646 I SP      : Sync for handwriting_recognition succeeded in 867 ms: no changes
+11-18 13:15:56.927  1319  1646 I SP      : GC for 'handwriting_recognition' (10) with ttl of 0 ms took 0 ms (0/0/0)
+11-18 13:15:56.927  1319  1722 I HandwritingOnlineSuperpacks: HandwritingOnlineSuperpacks.lambda$syncInternal$1():204 syncInternal(): syncing packs
+11-18 13:15:56.927  1319  1722 I HandwritingOnlineSuperpacks: HandwritingOnlineSuperpacks$3.onSyncSuccess():252 syncInternal(): complete {old=[en_us_20230613_compact_fst_zip, pack_mapping_v1_lstm_20231127, qrnn_en_us_reco_20231010_fst_20230613_recospec_zip, scribe_latin_20231123_recospec_zip, scribe_latin_20231123_tflite_zip, transformer_latin_conf_tflite_20231010_zip, transformer_latin_seg_tflite_20231010_zip, transformer_latin_tflite_20231010_zip], new=[en_us_20230613_compact_fst_zip, pack_mapping_v1_lstm_20231127, qrnn_en_us_reco_20231010_fst_20230613_recospec_zip, scribe_latin_20231123_recospec_zip, scribe_latin_20231123_tflite_zip, transformer_latin_conf_tflite_20231010_zip, transformer_latin_seg_tflite_20231010_zip, transformer_latin_tflite_20231010_zip], metadata=false, last batch=true}
+11-18 13:15:56.928  1444  2135 I AiAiTextClassifier: [VisualCortexAdapter]: provideRegistration: Registered Prominent Screen Entities for updates.
+11-18 13:15:56.929  1319  1714 E HandwritingSuperpacksUtil: HandwritingSuperpacksUtil.getPackMappingPackName():40 No pack mapping pack found in []
+11-18 13:15:56.929  1319  1714 I HandwritingSuperpacks: HandwritingSuperpacks.lambda$reloadCache$0():237 updatePackMappingsCache(): pack mapping pack unavailable [OFFLINE]
+11-18 13:15:56.932  1374  4677 I Icing   : Usage reports ok 1, Failed Usage reports 0, indexed 0, rejected 0
+11-18 13:15:56.933  1374  4677 I Icing   : doRemovePackageData de.mm20.launcher2.ui.test
+11-18 13:15:56.959  1374  2595 I Icing   : IndexChimeraService.getServiceInterface callingPackage=com.google.android.gms componentName=null serviceId=30
+11-18 13:15:56.967  1374  4677 I Icing   : Usage reports ok 0, Failed Usage reports 0, indexed 0, rejected 0
+11-18 13:15:56.969  1374  4138 I ChimeraConfigurator: Starting update, reason: 1 urgentFeatures: 
+11-18 13:15:56.973  2263  4699 W SystemServiceRegistry: No service published for: persistent_data_block
+11-18 13:15:56.983  2263  4699 I EGL_emulation: Opening libGLESv1_CM_emulation.so
+11-18 13:15:56.984   902   902 D TileServices: Couldn't find tile for ComponentInfo{com.google.android.apps.wellbeing/com.google.android.apps.wellbeing.focusmode.quicksettings.FocusModeTileService}(0)
+11-18 13:15:56.986   358  4733 I resolv  : GetAddrInfoHandler::run: {102 786534 102 983142 10143 0}
+11-18 13:15:56.986  2263  4692 D TrafficStats: tagSocket(118) with statsTag=0x1809, statsUid=-1
+11-18 13:15:56.988  2263  4699 I EGL_emulation: Opening libGLESv2_emulation.so
+11-18 13:15:56.993  1160  4629 I NetworkScheduler.Stats: Task com.google.android.gms/com.google.android.gms.auth.account.be.legacy.AuthCronService started execution. cause:5 exec_start_elapsed_seconds: 186 [CONTEXT service_id=218 ]
+11-18 13:15:56.993  1160  4629 I NetworkScheduler.Stats: Task com.google.android.gms/com.google.android.gms.chimera.container.ConfigService started execution. cause:5 exec_start_elapsed_seconds: 186 [CONTEXT service_id=218 ]
+11-18 13:15:56.999  2263  4692 W libc    : Access denied finding property "persist.adb.tls_server.enable"
+11-18 13:15:56.999  2263  4692 W libc    : Access denied finding property "service.adb.tls.port"
+11-18 13:15:56.988  2263  2263 W binder:2263_8: type=1400 audit(0.0:65): avc:  denied  { read } for  name="u:object_r:system_adbd_prop:s0" dev="tmpfs" ino=318 scontext=u:r:gmscore_app:s0:c512,c768 tcontext=u:object_r:system_adbd_prop:s0 tclass=file permissive=0 app=com.google.android.gms
+11-18 13:15:56.996  2263  2263 W binder:2263_8: type=1400 audit(0.0:66): avc:  denied  { read } for  name="u:object_r:adbd_prop:s0" dev="tmpfs" ino=63 scontext=u:r:gmscore_app:s0:c512,c768 tcontext=u:object_r:adbd_prop:s0 tclass=file permissive=0 app=com.google.android.gms
+11-18 13:15:57.041   358   358 I netd    : tetherGetStats() -> {[]} <1.43ms>
+11-18 13:15:57.051   556  1563 D FileUtils: Rounded bytes from 2593198080 to 4000000000
+11-18 13:15:57.065  1350  1360 W .apps.wellbeing: ApkAssets: Deleting an ApkAssets object '<empty> and /product/app/YouTube/YouTube.apk' with 1 weak references
+11-18 13:15:57.066  1350  1360 W .apps.wellbeing: ApkAssets: Deleting an ApkAssets object '<empty> and /product/overlay/DisplayCutoutEmulationCorner/DisplayCutoutEmulationCornerOverlay.apk' with 1 weak references
+11-18 13:15:57.066  1350  1360 W .apps.wellbeing: ApkAssets: Deleting an ApkAssets object '<empty> and /apex/com.android.extservices/priv-app/GoogleExtServices@350820300/GoogleExtServices.apk' with 1 weak references
+11-18 13:15:57.066  1350  1360 W .apps.wellbeing: ApkAssets: Deleting an ApkAssets object '<empty> and /product/overlay/DisplayCutoutEmulationDouble/DisplayCutoutEmulationDoubleOverlay.apk' with 1 weak references
+11-18 13:15:57.067  1350  1360 W .apps.wellbeing: ApkAssets: Deleting an ApkAssets object '<empty> and /system/priv-app/TelephonyProvider/TelephonyProvider.apk' with 1 weak references
+11-18 13:15:57.067  1350  1360 W .apps.wellbeing: ApkAssets: Deleting an ApkAssets object '/product/overlay/TelephonyProvider__sdk_gphone64_x86_64__auto_generated_rro_product.apk' with 1 weak references
+11-18 13:15:57.067  1350  1360 W .apps.wellbeing: ApkAssets: Deleting an ApkAssets object '<empty> and /system/priv-app/DynamicSystemInstallationService/DynamicSystemInstallationService.apk' with 1 weak references
+11-18 13:15:57.067  1350  1360 W .apps.wellbeing: ApkAssets: Deleting an ApkAssets object '<empty> and /product/priv-app/Velvet/Velvet.apk' with 1 weak references
+11-18 13:15:57.067  1350  1360 W .apps.wellbeing: ApkAssets: Deleting an ApkAssets object '<empty> and /system/priv-app/CalendarProvider/CalendarProvider.apk' with 1 weak references
+11-18 13:15:57.068  1350  1360 W .apps.wellbeing: ApkAssets: Deleting an ApkAssets object '<empty> and /product/priv-app/GoogleOneTimeInitializer/GoogleOneTimeInitializer.apk' with 1 weak references
+11-18 13:15:57.068  1350  1360 W .apps.wellbeing: ApkAssets: Deleting an ApkAssets object '<empty> and /system/app/GoogleExtShared/GoogleExtShared.apk' with 1 weak references
+11-18 13:15:57.068  1350  1360 W .apps.wellbeing: ApkAssets: Deleting an ApkAssets object '<empty> and /system/priv-app/ExternalStorageProvider/ExternalStorageProvider.apk' with 1 weak references
+11-18 13:15:57.068  1350  1360 W .apps.wellbeing: ApkAssets: Deleting an ApkAssets object '<empty> and /system/app/HTMLViewer/HTMLViewer.apk' with 1 weak references
+11-18 13:15:57.068  1350  1360 W .apps.wellbeing: ApkAssets: Deleting an ApkAssets object '<empty> and /system/app/CompanionDeviceManager/CompanionDeviceManager.apk' with 1 weak references
+11-18 13:15:57.068  1350  1360 W .apps.wellbeing: ApkAssets: Deleting an ApkAssets object '<empty> and /system/priv-app/DownloadProvider/DownloadProvider.apk' with 1 weak references
+11-18 13:15:57.068  1350  1360 W .apps.wellbeing: ApkAssets: Deleting an ApkAssets object '<empty> and /product/priv-app/PrebuiltBugle/PrebuiltBugle.apk' with 1 weak references
+11-18 13:15:57.068  1350  1360 W .apps.wellbeing: ApkAssets: Deleting an ApkAssets object '<empty> and /data/app/~~rzOe49BKLIzKIoMCnkmH9w==/com.dimitris.telos.debug-Jb-8wJhYS6cNjK5-YDOLDg==/base.apk' with 1 weak references
+11-18 13:15:57.068  1160  1875 W GmsUrlRequestImpl: Content-Type header is overwritten.
+11-18 13:15:57.077   358  4735 I resolv  : GetAddrInfoHandler::run: {102 786534 102 983142 10143 0}
+11-18 13:15:57.077   358  4737 I resolv  : res_nmkquery: (QUERY, IN, A)
+11-18 13:15:57.078   358  4736 I resolv  : res_nmkquery: (QUERY, IN, AAAA)
+11-18 13:15:57.080   358  4736 I resolv  : res_nsend: used send_dg 264 terrno: 0
+11-18 13:15:57.080   358  4736 I resolv  : doQuery: rcode=0, ancount=8, return value=264
+11-18 13:15:57.081   358  4737 I resolv  : res_nsend: used send_dg 168 terrno: 0
+11-18 13:15:57.082   358  4737 I resolv  : doQuery: rcode=0, ancount=8, return value=168
+11-18 13:15:57.089  1160  2157 D TrafficStats: tagSocket(245) with statsTag=0x401, statsUid=10143
