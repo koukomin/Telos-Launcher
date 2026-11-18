@@ -342,7 +342,7 @@ jobs:
             Copy-Item (Join-Path 'tools/windows-qemu-android' $file) $stage
           }
           Copy-Item tools/windows-qemu-android/scripts/first-boot-lock.sh (Join-Path $stage 'scripts')
-          Copy-Item LICENSE, THIRD_PARTY_NOTICES.md $stage
+          Copy-Item LICENSE.txt, THIRD_PARTY_NOTICES.md $stage
           Copy-Item "$env:RUNNER_TEMP/vm-apk/telos-x86_64.apk" $stage
           & (Join-Path $stage 'fetch-toolchain.ps1') -SkipIso
           foreach ($tool in @('vendor/qemu/qemu-system-x86_64.exe', 'vendor/qemu/qemu-img.exe', 'vendor/scrcpy/adb.exe', 'vendor/scrcpy/scrcpy.exe')) {
