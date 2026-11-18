@@ -46,7 +46,7 @@ object TelosPrivilegedDaemon {
         if (ShizukuProcesses.available()) return Mode.InternalUserService
         val binder = runCatching { Shizuku.pingBinder() }.getOrDefault(false)
         if (binder) return Mode.ShizukuBinder
-        if (TelosShellEngine.isPrivilegedAvailable()) return Mode.Root
+        if (TelosShellEngine.isRootAvailableCached()) return Mode.Root
         return Mode.None
     }
 

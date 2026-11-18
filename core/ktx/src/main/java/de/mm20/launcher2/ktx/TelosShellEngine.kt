@@ -58,6 +58,9 @@ object TelosShellEngine {
         return ShizukuProcesses.available()
     }
 
+    /** Non-blocking status for synchronous UI callers; never starts a root process. */
+    fun isRootAvailableCached(): Boolean = cachedRootAvailable == true
+
     suspend fun isRootAvailable(): Boolean = withContext(Dispatchers.IO) {
         cachedRootAvailable?.let { if (it) return@withContext true }
         val granted = concurrencyGate.withPermit {
