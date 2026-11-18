@@ -1,49 +1,61 @@
-name: Check final dependency review and VM download
-on:
+name: Preflight exact Windows VM staging
+'on':
   push:
-    branches: ['codex/aether-diagnostics']
+    branches:
+    - codex/aether-diagnostics
 permissions:
   contents: read
 jobs:
-  review:
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    steps:
-      - name: Review integrated candidate and verify VM download
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          python3 - <<'PYCODE'
-          import json, os, subprocess
-          repo=os.environ['GITHUB_REPOSITORY']
-          path='repos/'+repo+'/dependency-graph/compare/v1.45.69...224a9b99171cdd00fa2724adb03258e0714ffdc6'
-          data=json.loads(subprocess.check_output(['gh','api',path],text=True))
-          vulnerable=[d for d in data if d.get('change_type')=='added' and d.get('vulnerabilities')]
-          print('::notice title=Integrated dependency review::'+json.dumps({'changes':len(data),'added_vulnerable':vulnerable})[:3900])
-          if vulnerable:raise SystemExit('Added vulnerable components detected')
-          PYCODE
-          curl --fail --location --head --retry 2 'https://qemu.weilnetz.de/w64/2026/qemu-w64-setup-20260811.exe'
-  windows-vm-preflight:
+  windows-vm:
     runs-on: windows-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
     steps:
-      - uses: actions/checkout@v7
-        with:
-          ref: '224a9b99171cdd00fa2724adb03258e0714ffdc6'
-          persist-credentials: false
-      - uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: '8.0.x'
-      - name: Verify actual Windows publication and packaged toolchain
-        shell: pwsh
-        run: |
-          $ErrorActionPreference = 'Stop'
-          dotnet publish tools/windows-qemu-android/src/TelosAndroidVm/TelosAndroidVm.csproj -c Release -r win-x64 --self-contained -p:PublishSingleFile=true -p:Version=1.45.71 --output "$env:RUNNER_TEMP/vm-publish"
-          if ($LASTEXITCODE -ne 0) { throw 'Windows VM launcher compilation failed' }
-          & tools/windows-qemu-android/fetch-toolchain.ps1 -SkipIso
-          foreach ($tool in @('qemu/qemu-system-x86_64.exe', 'qemu/qemu-img.exe', 'scrcpy/adb.exe', 'scrcpy/scrcpy.exe')) {
-            $binary = Join-Path 'tools/windows-qemu-android/vendor' $tool
-            if (-not (Test-Path -LiteralPath $binary -PathType Leaf)) { throw "Missing packaged tool: $tool" }
-            if ($tool.EndsWith('adb.exe')) { & $binary version } else { & $binary --version }
-            if ($LASTEXITCODE -ne 0) { throw "Packaged tool failed: $tool" }
-          }
+    - uses: actions/checkout@v7
+      with:
+        ref: a48e12f0abc7387b0e780e5b72b8a3f6e34a6d32
+        persist-credentials: false
+    - uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+    - name: Publish Windows VM launcher
+      shell: pwsh
+      run: '$version = (Get-Content version.properties | Where-Object { $_.StartsWith(''versionName='') }).Split(''='')[1]
+
+        dotnet publish tools/windows-qemu-android/src/TelosAndroidVm/TelosAndroidVm.csproj -c Release -r win-x64 --self-contained
+        -p:PublishSingleFile=true "-p:Version=$version" --output "$env:RUNNER_TEMP/vm-publish"
+
+        if ($LASTEXITCODE -ne 0) { throw ''Windows VM launcher compilation failed'' }
+
+        '
+    - name: Create an explicitly synthetic APK staging fixture (never published)
+      shell: pwsh
+      run: 'New-Item -ItemType Directory -Force "$env:RUNNER_TEMP/vm-apk" | Out-Null
+
+        Set-Content -LiteralPath "$env:RUNNER_TEMP/vm-apk/telos-x86_64.apk" -Value ''STAGING TEST FIXTURE - NOT AN ANDROID
+        APK'''
+    - name: Assemble a clean Windows VM bundle
+      shell: pwsh
+      run: "$ErrorActionPreference = 'Stop'\n$stage = Join-Path $env:RUNNER_TEMP 'vm-stage'\n$output = Join-Path $env:RUNNER_TEMP\
+        \ 'vm-out'\nNew-Item -ItemType Directory -Force -Path $stage, $output, (Join-Path $stage 'scripts') | Out-Null\nCopy-Item\
+        \ -Recurse -Force \"$env:RUNNER_TEMP/vm-publish/*\" $stage\nforeach ($file in @('fetch-toolchain.ps1', 'prepare-qcow2.ps1',\
+        \ 'blissos.lock.json', 'README.md')) {\n  Copy-Item (Join-Path 'tools/windows-qemu-android' $file) $stage\n}\nCopy-Item\
+        \ tools/windows-qemu-android/scripts/first-boot-lock.sh (Join-Path $stage 'scripts')\nCopy-Item LICENSE.txt, THIRD_PARTY_NOTICES.md\
+        \ $stage\nCopy-Item \"$env:RUNNER_TEMP/vm-apk/telos-x86_64.apk\" $stage\n& (Join-Path $stage 'fetch-toolchain.ps1')\
+        \ -SkipIso\nforeach ($tool in @('vendor/qemu/qemu-system-x86_64.exe', 'vendor/qemu/qemu-img.exe', 'vendor/scrcpy/adb.exe',\
+        \ 'vendor/scrcpy/scrcpy.exe')) {\n  $binary = Join-Path $stage $tool\n  if (-not (Test-Path -LiteralPath $binary -PathType\
+        \ Leaf)) { throw \"Missing packaged tool: $tool\" }\n  if ($tool.EndsWith('adb.exe')) { & $binary version } else {\
+        \ & $binary --version }\n  if ($LASTEXITCODE -ne 0) { throw \"Packaged tool failed its version check: $tool\" }\n\
+        }\n$downloads = Join-Path $stage 'vendor/dl'\nif (Test-Path $downloads) { Remove-Item -Recurse -Force $downloads }\n\
+        if (Test-Path (Join-Path $stage '.git')) { throw 'Repository metadata must not enter the VM bundle' }\n$version =\
+        \ (Get-Content version.properties | Where-Object { $_.StartsWith('versionName=') }).Split('=')[1]\nCompress-Archive\
+        \ -Path (Join-Path $stage '*') -DestinationPath (Join-Path $output \"telos-android-vm-windows-x64-$version.zip\")\n"
+    - name: Verify staged archive contents without publishing the fixture
+      shell: pwsh
+      run: "$zip = Get-ChildItem \"$env:RUNNER_TEMP/vm-out/*.zip\" | Select-Object -First 1\nif (-not $zip) { throw 'No staged\
+        \ archive' }\nAdd-Type -AssemblyName System.IO.Compression.FileSystem\n$archive = [System.IO.Compression.ZipFile]::OpenRead($zip.FullName)\n\
+        try {\n  $paths = @($archive.Entries | ForEach-Object { $_.FullName.Replace('\\','/') })\n  foreach ($required in\
+        \ @('TelosAndroidVm.exe','telos-x86_64.apk','LICENSE.txt','THIRD_PARTY_NOTICES.md','blissos.lock.json','scripts/first-boot-lock.sh','vendor/qemu/qemu-system-x86_64.exe','vendor/scrcpy/adb.exe'))\
+        \ {\n    if ($required -notin $paths) { throw \"Archive missing $required\" }\n  }\n  if (@($paths | Where-Object\
+        \ { $_ -match '(^|/)\\.git(/|$)|vendor/dl/' }).Count) { throw 'Archive contains forbidden staging debris' }\n  Write-Host\
+        \ \"::notice title=Windows VM staging preflight::Published launcher and toolchain archived successfully; synthetic\
+        \ APK fixture was not uploaded. Entries=$($paths.Count) Bytes=$($zip.Length)\"\n} finally { $archive.Dispose() }"
