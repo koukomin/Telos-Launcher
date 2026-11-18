@@ -34,3 +34,30 @@ jobs:
               item={'number':a['number'],'rule':rule.get('id'),'severity':rule.get('security_severity_level') or rule.get('severity'),'description':rule.get('description'),'location':instance.get('location'),'message':instance.get('message'),'ref':instance.get('ref'),'commit':instance.get('commit_sha')}
               print('::notice title=Open code scanning alert::'+json.dumps(item).replace('%','%25').replace('\r','%0D').replace('\n','%0A')[:3900])
           PY
+      - name: Read precise dataflow for the existing high-severity findings
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python3 - <<'PY'
+          import json, os, subprocess
+          repo='repos/'+os.environ['GITHUB_REPOSITORY']
+          analyses=json.loads(subprocess.check_output(['gh','api',repo+'/code-scanning/analyses?ref=refs/heads/main&per_page=100'],text=True))
+          candidates=[a for a in analyses if a.get('category')=='/language:java-kotlin' and not a.get('error') and a.get('results_count',0)>0]
+          if not candidates:
+              print('::notice title=Code scanning flow::No older successful analysis with findings found')
+              raise SystemExit(0)
+          analysis=max(candidates,key=lambda a:a['created_at'])
+          data=json.loads(subprocess.check_output(['gh','api','-H','Accept: application/sarif+json',repo+'/code-scanning/analyses/'+str(analysis['id'])],text=True))
+          for run in data.get('runs',[]):
+              for result in run.get('results',[]):
+                  if result.get('ruleId') not in ['java/android/implicit-pendingintents','java/zipslip']:continue
+                  steps=[]
+                  for flow in result.get('codeFlows',[]):
+                      for thread in flow.get('threadFlows',[]):
+                          for step in thread.get('locations',[]):
+                              loc=step.get('location',{});p=loc.get('physicalLocation',{})
+                              steps.append({'path':p.get('artifactLocation',{}).get('uri'),'line':p.get('region',{}).get('startLine'),'message':loc.get('message',{}).get('text')})
+                  out=json.dumps({'rule':result['ruleId'],'locations':result.get('locations'),'flow':steps})
+                  for offset in range(0,len(out),3300):
+                      print('::notice title=Existing security dataflow::'+out[offset:offset+3300].replace('%','%25').replace('\r','%0D').replace('\n','%0A'))
+          PY
