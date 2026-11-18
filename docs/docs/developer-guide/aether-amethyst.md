@@ -72,14 +72,18 @@ artifact on Android compile/runtime classpaths and its JRE artifact for tools.
 graphs in both builds and compares affected components against advisory minima.
 [Dependency review](https://github.com/koukomin/Telos-Launcher/actions/runs/44355647038)
 reports zero added vulnerable components against v1.45.69 for `6837a4661`.
-Compilation and tests are being revalidated; the rendering evidence below
-records the earlier tested application revision, not a claim of completed
-security validation for the follow-up.
+The integrated candidate at `224a9b991`, including the latest main-branch changes,
+was also reviewed in [run 44407609261](https://github.com/koukomin/Telos-Launcher/actions/runs/44407609261):
+635 dependency changes, zero added vulnerable components against v1.45.69.
+The follow-up at `3853e1a9f` changes only synchronous shell-status handling;
+its actual plugin/runtime security graphs and compilation passed the validation
+run below. This is dependency-review evidence, not a claim that the private
+Dependabot alert list is empty.
 
 ## Validation
 
-[Run 44336725713](https://github.com/koukomin/Telos-Launcher/actions/runs/44336725713)
-validated application revision `e8ef99978`:
+[Run 44408135991](https://github.com/koukomin/Telos-Launcher/actions/runs/44408135991)
+validated application revision `3853e1a9f`, after incorporating main at `4912fb056`:
 
 - Actual ARM64 Telos debug and minified/resource-shrunk release APK builds passed.
 - The library suite executed 1,526 tests: no failures/errors, nine upstream skips.
@@ -89,12 +93,16 @@ validated application revision `e8ef99978`:
   switching to the first, settings navigation and restoring both accounts after
   force-stop/relaunch. It also captured settings at system font scale 2.0 in
   portrait and landscape. No real private keys or publication were used.
-- The resolved Dokka security graph passed. Release helper tests and the static
-  Pages build also passed locally; see the Dependabot guide for the unpatched
+- Shell, communications, app-management and freeze unit-test tasks passed. A
+  suspend-call compilation error introduced on main was corrected with a
+  non-blocking cached root-status query; real root probing stays asynchronous.
+- Both builds' resolved plugin/runtime security checks and the Dokka graph passed.
+  Release helper tests and the static Pages build also passed locally; see the Dependabot guide for the unpatched
   docs-tool advisory and the scoped review of upstream scanner fixtures.
 
-The first device attempt was blocked by a Pixel Launcher ANR dialog in the
-emulator. Retrying the unchanged application revision on a fresh emulator passed.
+An earlier revision's first device attempt was blocked by a Pixel Launcher ANR
+dialog; retrying that unchanged revision on a fresh emulator passed. The final
+run above passed its device checks on the first attempt.
 The earlier administrative PR-creation job was removed: this repository does not
 permit GitHub Actions to create or approve pull requests.
 
@@ -109,6 +117,7 @@ They establish this rendering scope, not the full wallpaper/theme/locale matrix.
 | Screen | Evidence |
 | --- | --- |
 | Aether login | [Capture](../../screenshots/development/aether/aether-login.png) |
+| Feed with the read-only fixture (no live relay data) | [Capture](../../screenshots/development/aether/aether-feed.png) |
 | Account settings | [Capture](../../screenshots/development/aether/aether-settings.png) |
 | Settings at font scale 2.0 | [Capture](../../screenshots/development/aether/aether-settings-large-font.png) |
 | Font scale 2.0 in landscape | [Capture](../../screenshots/development/aether/aether-settings-large-font-landscape.png) |
@@ -117,8 +126,9 @@ They establish this rendering scope, not the full wallpaper/theme/locale matrix.
 
 APK jobs retain separate Gradle task-output caches so library cache writes do
 not discard launcher compilation outputs. The device APK is x86_64 solely for
-validation; shipping APKs remain ARM-specific. Captures go through MediaStore
-and survive test-APK removal. The evidence branch records the tested revision.
+validation. The release pipeline additionally builds ARM64, ARMv7 and x86_64
+APKs; these captures establish the x86_64 debug rendering scope. Captures go
+through MediaStore and survive test-APK removal. The evidence branch records the tested revision.
 
 Live relay interoperability, signing/publication, external signers, physical
 OnePlus/Android 17 behavior and the complete theme/font/wallpaper matrix are not

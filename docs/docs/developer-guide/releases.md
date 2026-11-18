@@ -147,3 +147,9 @@ failed with the exact `SQLiteException: unknown error (code 0 SQLITE_OK)` at the
 mmap statement in `AppDatabase.onOpen`; after the cursor fix,
 `DatabaseStartupTest.productionDatabaseOpensAndReopensWithoutLosingData` passed.
 The CI startup instrumentation matrix also covers API 26 and API 35.
+
+The 1.45.71 Windows VM preflight
+([run 44407609261](https://github.com/koukomin/Telos-Launcher/actions/runs/44407609261))
+published the actual self-contained win-x64 launcher and downloaded/extracted
+QEMU and scrcpy on Windows. All four packaged executables passed their version
+checks. This verifies compilation and toolchain assembly, not an Android guest boot.

@@ -13,12 +13,14 @@ no new production library or replacement design framework is introduced.
 
 ### Embedded Aether (2026-11-18)
 
-Application revision `e8ef99978` passed the ARM64 debug/R8 release builds, library
+Application revision `3853e1a9f`, including main through `4912fb056`, passed the
+ARM64 debug/R8 release builds, resolved plugin/runtime security checks, shell/
+communications/app-management/freeze unit-test tasks, library
 suite (1,526 tests, zero failures/errors, nine skips), all four storage/notification
 device tests and the real-Telos multi-account UI/process-restart scenario in
-[run 44336725713](https://github.com/koukomin/Telos-Launcher/actions/runs/44336725713).
-A first attempt was blocked by a Pixel Launcher ANR dialog; the unchanged source
-passed when retried on a fresh emulator.
+[run 44408135991](https://github.com/koukomin/Telos-Launcher/actions/runs/44408135991).
+An earlier revision required a retry after a Pixel Launcher ANR dialog. The final
+run passed on its first device attempt.
 
 [Reviewed captures](./aether-amethyst#reviewed-captures) show the Aether login
 without the erroneous internal-task URI toast, normal/2.0-font settings, landscape
