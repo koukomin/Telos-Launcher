@@ -1,0 +1,13 @@
+{
+  "telos_source": "a48e12f0abc7387b0e780e5b72b8a3f6e34a6d32",
+  "arti_source": "a71097fdf7b141b56d1eb3709628ee38d232c9d1",
+  "rustls": "0.23.46",
+  "rustc": "rustc 1.98.1 (48a229cea 2026-09-01)",
+  "sha256": {
+    "libs/amethyst/amethyst/src/main/jniLibs/arm64-v8a/libarti_android.so": "2c798d9939adf83bfb646f89b56d010cb97f18420b462831f71dbaf1ea85463a",
+    "libs/amethyst/amethyst/src/main/jniLibs/armeabi-v7a/libarti_android.so": "2e795a1652c76828529044cb081210097b0bcaa2c1763b170583f03c2160dd97",
+    "libs/amethyst/amethyst/src/main/jniLibs/x86_64/libarti_android.so": "215fa6ed74e82159adde3e0b3fea0c1b30d8a7382dfdc30031ebbad314a39910",
+    "libs/amethyst/amethyst/src/main/jniLibs/x86/libarti_android.so": "b9f06cab954639c9799aaf363945753761fff12b8bfde3aab1604e71565144ca",
+    "libs/amethyst/amethyst/src/test/native-libs/x86_64-linux/libarti_android.so": "91475bdb4e1173dea8049aea1e334fbf8da02e6db4ebc957263d6f4911e211b0"
+  }
+}
