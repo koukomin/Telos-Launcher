@@ -1,0 +1,36 @@
+name: Review final code scanning alerts
+on:
+  push:
+    branches: ['codex/aether-security-review']
+permissions:
+  contents: read
+  security-events: read
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Read open code scanning alerts for the final candidate
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python3 - <<'PY'
+          import json, os, subprocess
+          path='repos/'+os.environ['GITHUB_REPOSITORY']+'/code-scanning/alerts?state=open&ref=refs/heads/main&per_page=100'
+          result=subprocess.run(['gh','api','--paginate','--slurp',path],capture_output=True,text=True)
+          if result.returncode:
+              print('::warning title=Code scanning API unavailable::'+result.stderr.strip().replace('\n',' ')[:1500])
+              raise SystemExit(0)
+          analyses=subprocess.run(['gh','api','repos/'+os.environ['GITHUB_REPOSITORY']+'/code-scanning/analyses?ref=refs/heads/main&per_page=6'],capture_output=True,text=True)
+          if analyses.returncode==0:
+              for a in json.loads(analyses.stdout):
+                  fields={k:a.get(k) for k in ['id','commit_sha','results_count','category','error','warning']}
+                  print('::notice title=Recent main analysis::'+json.dumps(fields)[:3000])
+          alerts=[a for page in json.loads(result.stdout) for a in page]
+          print('::notice title=Open code scanning alert count::'+str(len(alerts)))
+          for a in alerts:
+              rule=a.get('rule',{})
+              instance=a.get('most_recent_instance',{})
+              item={'number':a['number'],'rule':rule.get('id'),'severity':rule.get('security_severity_level') or rule.get('severity'),'description':rule.get('description'),'location':instance.get('location'),'message':instance.get('message'),'ref':instance.get('ref'),'commit':instance.get('commit_sha')}
+              print('::notice title=Open code scanning alert::'+json.dumps(item).replace('%','%25').replace('\r','%0D').replace('\n','%0A')[:3900])
+          PY
