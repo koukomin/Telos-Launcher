@@ -1,34 +1,157 @@
-name: Inspect and retry managed dependency submission
+name: Rebuild locked Arti native binaries
 on:
   push:
     branches: ['codex/aether-diagnostics']
 permissions:
   contents: read
-  actions: write
 jobs:
-  inspect:
+  lock:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 20
     steps:
-      - name: Read the failed immutable run and retry only its failed jobs once
+      - uses: actions/checkout@v7
+        with:
+          ref: a48e12f0abc7387b0e780e5b72b8a3f6e34a6d32
+      - name: Normalize the dependency update against the actual patched Arti source
+        working-directory: libs/amethyst/tools/arti-build
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
+          set -euo pipefail
+          rustup show
+          # Load upstream setup functions from their own directory without compiling.
+          sed '$d' build-arti.sh > .ci-build-functions.sh
+          source .ci-build-functions.sh
+          rm .ci-build-functions.sh
+          clone_or_update_arti
+          setup_wrapper
+          cargo update --manifest-path "$ARTI_SOURCE_DIR/arti-android-wrapper/Cargo.toml" -p rustls --precise 0.23.46
+          cargo metadata --locked --format-version 1 --manifest-path "$ARTI_SOURCE_DIR/arti-android-wrapper/Cargo.toml" > "$RUNNER_TEMP/arti-metadata.json"
+          cp "$ARTI_SOURCE_DIR/arti-android-wrapper/Cargo.lock" Cargo.lock
+          mkdir -p "$RUNNER_TEMP/arti-lock"
+          cp Cargo.lock "$RUNNER_TEMP/arti-lock/"
           python3 - <<'PY'
-          import json, os, subprocess, io, zipfile
-          repo='repos/'+os.environ['GITHUB_REPOSITORY']
-          run='44415622395'
-          logs=subprocess.check_output(['gh','api',repo+'/actions/runs/'+run+'/logs'])
-          with zipfile.ZipFile(io.BytesIO(logs)) as archive:
-              for name in archive.namelist():
-                  if not name.endswith('.txt'):continue
-                  lines=archive.read(name).decode(errors='replace').splitlines()
-                  if not any('Gradle validation failed' in x or 'BUILD FAILED' in x for x in lines):continue
-                  text='\n'.join(lines[-110:])[-15000:]
-                  for offset in range(0,len(text),3300):
-                      part=text[offset:offset+3300].replace('%','%25').replace('\r','%0D').replace('\n','%0A')
-                      print('::notice title=Managed submission failure details::'+part)
-          result=subprocess.run(['gh','api','--method','POST',repo+'/actions/runs/'+run+'/rerun-failed-jobs'],capture_output=True,text=True)
-          if result.returncode:raise SystemExit(result.stderr)
-          print('::notice title=Managed submission retry::Requested one retry of failed jobs for run '+run)
+          import json, os, subprocess, pathlib, tomllib
+          lock=tomllib.loads(pathlib.Path('Cargo.lock').read_text())
+          versions=[p['version'] for p in lock['package'] if p['name']=='rustls']
+          assert versions==['0.23.46'],versions
+          sha=subprocess.check_output(['git','-C','/tmp/amethyst-arti-build/.arti-source','rev-parse','HEAD'],text=True).strip()
+          data={'telos_source':'a48e12f0abc7387b0e780e5b72b8a3f6e34a6d32','arti_source':sha,'rustls':versions[0],'rustc':subprocess.check_output(['rustc','--version'],text=True).strip()}
+          pathlib.Path(os.environ['RUNNER_TEMP']+'/arti-lock/provenance.json').write_text(json.dumps(data,indent=2)+'\n')
+          print('::notice title=Arti dependency lock::'+json.dumps(data))
           PY
+          gh api 'advisories?ecosystem=rust&affects=rustls%400.23.44' --jq '.[] | {ghsa_id,severity,summary}' || true
+      - uses: actions/upload-artifact@v7
+        with:
+          name: arti-lock
+          path: ${{ runner.temp }}/arti-lock/
+          if-no-files-found: error
+  native:
+    needs: lock
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - target: aarch64-linux-android
+            abi: arm64-v8a
+          - target: armv7-linux-androideabi
+            abi: armeabi-v7a
+          - target: x86_64-linux-android
+            abi: x86_64
+          - target: i686-linux-android
+            abi: x86
+          - target: host
+            abi: x86_64-linux
+    env:
+      CARGO_BUILD_JOBS: '2'
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: a48e12f0abc7387b0e780e5b72b8a3f6e34a6d32
+      - uses: actions/download-artifact@v8
+        with:
+          name: arti-lock
+          path: ${{ runner.temp }}/arti-lock
+      - uses: android-actions/setup-android@v4
+        if: matrix.target != 'host'
+      - name: Build the exact locked dependency graph with upstream's pinned toolchains
+        working-directory: libs/amethyst/tools/arti-build
+        env:
+          TARGET: ${{ matrix.target }}
+          ABI: ${{ matrix.abi }}
+        run: |
+          set -euo pipefail
+          cp "$RUNNER_TEMP/arti-lock/Cargo.lock" Cargo.lock
+          rustup show
+          if [ "$TARGET" != host ]; then
+            NDK_VERSION=$(tr -d '[:space:]' < ANDROID_NDK_VERSION)
+            sdkmanager "ndk;$NDK_VERSION" > "$RUNNER_TEMP/arti-ndk.log" 2>&1
+            export ANDROID_NDK_HOME="$ANDROID_HOME/ndk/$NDK_VERSION"
+            cargo install cargo-ndk --version "$(tr -d '[:space:]' < CARGO_NDK_VERSION)" --locked
+            bash build-arti.sh "--target=$TARGET"
+            LIB="../../amethyst/src/main/jniLibs/$ABI/libarti_android.so"
+          else
+            sed '$d' build-arti.sh > .ci-build-functions.sh
+            source .ci-build-functions.sh
+            rm .ci-build-functions.sh
+            clone_or_update_arti
+            setup_wrapper
+            bash build-arti-host.sh
+            LIB=../../amethyst/src/test/native-libs/x86_64-linux/libarti_android.so
+          fi
+          EXPECTED=$(python3 -c "import json;print(json.load(open('$RUNNER_TEMP/arti-lock/provenance.json'))['arti_source'])")
+          test "$(git -C /tmp/amethyst-arti-build/.arti-source rev-parse HEAD)" = "$EXPECTED"
+          strings "$LIB" > "$RUNNER_TEMP/arti-strings.txt"
+          grep -F 'rustls-0.23.46' "$RUNNER_TEMP/arti-strings.txt" >/dev/null
+          if grep -F 'rustls-0.23.44' "$RUNNER_TEMP/arti-strings.txt" >/dev/null; then exit 1; fi
+          mkdir -p "$RUNNER_TEMP/arti-out"
+          cp "$LIB" "$RUNNER_TEMP/arti-out/libarti_android.so"
+          sha256sum "$LIB"
+      - uses: actions/upload-artifact@v7
+        with:
+          name: arti-${{ matrix.abi }}
+          path: ${{ runner.temp }}/arti-out/
+          if-no-files-found: error
+  collect:
+    needs: [lock, native]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: a48e12f0abc7387b0e780e5b72b8a3f6e34a6d32
+      - uses: actions/download-artifact@v8
+        with:
+          pattern: arti-*
+          path: ${{ runner.temp }}/arti-artifacts
+      - name: Verify and record every rebuilt binary for review
+        run: |
+          python3 - <<'PY'
+          import pathlib, os, shutil, json, hashlib, importlib.util
+          root=pathlib.Path('libs/amethyst')
+          artifacts=pathlib.Path(os.environ['RUNNER_TEMP'])/'arti-artifacts'
+          provenance=json.loads((artifacts/'arti-lock/provenance.json').read_text())
+          spec=importlib.util.spec_from_file_location('native_check','tools/release-shizuku-native-check.py')
+          module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+          hashes={}
+          for abi in ['arm64-v8a','armeabi-v7a','x86_64','x86','x86_64-linux']:
+              src=artifacts/('arti-'+abi)/'libarti_android.so'
+              data=src.read_bytes();assert data.startswith(b'\x7fELF')
+              assert b'rustls-0.23.46' in data and b'rustls-0.23.44' not in data
+              if abi=='arm64-v8a':module.check_arm64(data,str(src))
+              dest=root/'amethyst/src'/('test/native-libs' if abi=='x86_64-linux' else 'main/jniLibs')/abi/'libarti_android.so'
+              shutil.copyfile(src,dest)
+              hashes[str(dest)]=hashlib.sha256(data).hexdigest()
+          shutil.copyfile(artifacts/'arti-lock/Cargo.lock',root/'tools/arti-build/Cargo.lock')
+          provenance['sha256']=hashes
+          (root/'tools/arti-build/TELOS_NATIVE_BUILD.json').write_text(json.dumps(provenance,indent=2)+'\n')
+          print('::notice title=Rebuilt native binaries::'+json.dumps(provenance))
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add libs/amethyst/amethyst/src/main/jniLibs/*/libarti_android.so libs/amethyst/amethyst/src/test/native-libs/x86_64-linux/libarti_android.so libs/amethyst/tools/arti-build/Cargo.lock libs/amethyst/tools/arti-build/TELOS_NATIVE_BUILD.json
+          git commit -m 'fix(aether): rebuild all Android Tor binaries with the updated locked Rustls'
+          git push origin HEAD:refs/heads/codex/aether-native-evidence
