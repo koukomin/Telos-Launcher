@@ -1,63 +1,35 @@
-name: Review final code scanning alerts
+name: Validate final Aether security candidate
 on:
   push:
     branches: ['codex/aether-security-review']
 permissions:
   contents: read
   security-events: read
+  actions: write
 jobs:
-  review:
+  dispatch:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - name: Read open code scanning alerts for the final candidate
+      - name: Start CodeQL on the complete feature revision
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api --method POST repos/${{ github.repository }}/actions/workflows/codeql-security-scan.yml/dispatches -f ref=codex/aether-amethyst-embedded
+          echo '::notice title=Security candidate::CodeQL dispatched for codex/aether-amethyst-embedded'
+      - name: Check current Dependabot access
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           python3 - <<'PY'
-          import json, os, subprocess
-          path='repos/'+os.environ['GITHUB_REPOSITORY']+'/code-scanning/alerts?state=open&ref=refs/heads/main&per_page=100'
-          result=subprocess.run(['gh','api','--paginate','--slurp',path],capture_output=True,text=True)
-          if result.returncode:
-              print('::warning title=Code scanning API unavailable::'+result.stderr.strip().replace('\n',' ')[:1500])
-              raise SystemExit(0)
-          analyses=subprocess.run(['gh','api','repos/'+os.environ['GITHUB_REPOSITORY']+'/code-scanning/analyses?ref=refs/heads/main&per_page=6'],capture_output=True,text=True)
-          if analyses.returncode==0:
-              for a in json.loads(analyses.stdout):
-                  fields={k:a.get(k) for k in ['id','commit_sha','results_count','category','error','warning']}
-                  print('::notice title=Recent main analysis::'+json.dumps(fields)[:3000])
-          alerts=[a for page in json.loads(result.stdout) for a in page]
-          print('::notice title=Open code scanning alert count::'+str(len(alerts)))
-          for a in alerts:
-              rule=a.get('rule',{})
-              instance=a.get('most_recent_instance',{})
-              item={'number':a['number'],'rule':rule.get('id'),'severity':rule.get('security_severity_level') or rule.get('severity'),'description':rule.get('description'),'location':instance.get('location'),'message':instance.get('message'),'ref':instance.get('ref'),'commit':instance.get('commit_sha')}
-              print('::notice title=Open code scanning alert::'+json.dumps(item).replace('%','%25').replace('\r','%0D').replace('\n','%0A')[:3900])
-          PY
-      - name: Read precise dataflow for the existing high-severity findings
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          python3 - <<'PY'
-          import json, os, subprocess
-          repo='repos/'+os.environ['GITHUB_REPOSITORY']
-          analyses=json.loads(subprocess.check_output(['gh','api',repo+'/code-scanning/analyses?ref=refs/heads/main&per_page=100'],text=True))
-          candidates=[a for a in analyses if a.get('category')=='/language:java-kotlin' and not a.get('error') and a.get('results_count',0)>0]
-          if not candidates:
-              print('::notice title=Code scanning flow::No older successful analysis with findings found')
-              raise SystemExit(0)
-          analysis=max(candidates,key=lambda a:a['created_at'])
-          data=json.loads(subprocess.check_output(['gh','api','-H','Accept: application/sarif+json',repo+'/code-scanning/analyses/'+str(analysis['id'])],text=True))
-          for run in data.get('runs',[]):
-              for result in run.get('results',[]):
-                  if result.get('ruleId') not in ['java/android/implicit-pendingintents','java/zipslip']:continue
-                  steps=[]
-                  for flow in result.get('codeFlows',[]):
-                      for thread in flow.get('threadFlows',[]):
-                          for step in thread.get('locations',[]):
-                              loc=step.get('location',{});p=loc.get('physicalLocation',{})
-                              steps.append({'path':p.get('artifactLocation',{}).get('uri'),'line':p.get('region',{}).get('startLine'),'message':loc.get('message',{}).get('text')})
-                  out=json.dumps({'rule':result['ruleId'],'locations':result.get('locations'),'flow':steps})
-                  for offset in range(0,len(out),3300):
-                      print('::notice title=Existing security dataflow::'+out[offset:offset+3300].replace('%','%25').replace('\r','%0D').replace('\n','%0A'))
+          import os, subprocess, json
+          r=subprocess.run(['gh','api','repos/'+os.environ['GITHUB_REPOSITORY']+'/dependabot/alerts?state=open&per_page=100'],capture_output=True,text=True)
+          if r.returncode:
+              print('::warning title=Dependabot API access::'+r.stderr.strip().replace('\n',' ')[:1500])
+          else:
+              data=json.loads(r.stdout)
+              for a in data:
+                  out={k:a.get(k) for k in ['number','dependency','security_advisory','security_vulnerability']}
+                  print('::notice title=Open Dependabot alert::'+json.dumps(out)[:3800])
+              print('::notice title=Dependabot alert count::'+str(len(data)))
           PY
