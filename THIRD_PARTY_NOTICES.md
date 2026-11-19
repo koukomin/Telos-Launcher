@@ -463,3 +463,11 @@ Arti retains its upstream MIT/Apache-2.0 licenses and Rustls its upstream
 Apache-2.0/ISC/MIT licenses. The Android ABI binaries and Linux JNI test fixture,
 locked dependency graph and pinned Rust/NDK build inputs are recorded in
 `libs/amethyst/tools/arti-build/TELOS_NATIVE_BUILD.json`.
+
+The security rebuild also selects ctutils 0.4.4, Tokio 1.53.3, rustix 1.1.6,
+rustls-webpki 0.103.17, zstd 0.14.3, zstd-safe 8.2.0 and zstd-sys 2.1.2.
+Their upstream notices remain in the source distributions.
+The Rust interoperability fixtures are development tools and are not Android
+APK components. See the Dependabot guide for maintenance advisories and the
+scoped RSA/SQLite trust-boundary review; this notice does not assert that every
+locked optional dependency is compiled or that all upstream advisories are patched.

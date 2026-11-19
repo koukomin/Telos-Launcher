@@ -197,3 +197,54 @@ Android ABIs and the Linux test fixture. Native provenance checks bind the
 actual `.so` files to the patched-source dependency lock and pinned toolchains;
 updating only `Cargo.lock` now fails the release gate. See the Aether integration
 record for build evidence and the additional code-scanning fixes.
+
+### Retired graph snapshots and Cargo review (2026-11-19)
+
+The public SBOM still contained old Maven versions from the retired custom
+`Submit Gradle dependency graph` job. Its last main snapshot was source
+`4912fb056`, with correlator `submit_gradle_dependency_graph-dependency-submission`.
+The authoritative managed submission on current main `a48e12f0a`
+([run 44415622395](https://github.com/koukomin/Telos-Launcher/actions/runs/44415622395))
+contains 1,597 resolved packages and the patched FreeMarker, Guava, Bouncy Castle,
+OpenTelemetry, Commons Lang, HttpClient, jose4j and JDOM versions. Removing a
+workflow does not remove its historical dependency snapshot.
+[Run 44475873501](https://github.com/koukomin/Telos-Launcher/actions/runs/44475873501)
+verified those patched versions and retired only the old detector/correlator
+with an empty snapshot (accepted snapshot ID 124650838). It did not dismiss
+alerts or remove the managed graph. The follow-up SBOM in run 44476101576
+contains 2,581 package URLs and no longer lists the superseded Maven versions.
+
+An OSV batch audit of 2,584 package URLs in the combined public SBOM also exposed
+Cargo findings. The older `anyhow` version belongs to the optional Rust
+interoperability test workspace; the shipped Tor lock already selected 1.0.104.
+Both workspaces need review independently. Compatible Tor fixes select ctutils
+0.4.4, Tokio 1.53.3, rustix 1.1.6, rustls-webpki 0.103.17, zstd 0.14.3,
+zstd-safe 8.2.0 and zstd-sys 2.1.2. Interoperability fixtures also update anyhow,
+Tokio, quinn-udp and WebPKI roots. The native provenance gate checks patched
+version floors in addition to binary/input hashes.
+[Run 44474665043](https://github.com/koukomin/Telos-Launcher/actions/runs/44474665043)
+rebuilt all four Android ABIs and the Linux JNI fixture with these selections.
+
+The raw Cargo advisory count also includes maintenance notices for bincode,
+chrono, humantime, paste, rustls-pemfile and test-only audiopus_sys. Those notices
+have no patched versions. The selected feature graph and inherited source-level risks require scoped review:
+
+- crypto-bigint 0.5.5 appears in the lock through optional P-256/P-384/P-521
+  dependencies of the SSH key-format crate. On the actual client
+  feature graph, both `cargo tree --locked --target aarch64-linux-android -i crypto-bigint`
+  and `--target all` report no selected dependency. [Run 44477062642](https://github.com/koukomin/Telos-Launcher/actions/runs/44477062642)
+  records the feature traces. This establishes the selected build, not
+  that the optional crate itself is patched.
+- `rsa` 0.9.10: RSA timing advisories concern secret-dependent
+  operations. The pinned Arti RSA wrapper explicitly documents that Tor clients
+  never need RSA private keys; this build enables client functionality. This is
+  not a claim that the affected crates are patched or suitable for a relay or
+  RSA-signing service.
+- Bundled SQLite in libsqlite3-sys 0.37.0: CVE-2026-119375 needs an attacker-written
+  database/WAL pair. Arti opens its own `dir.sqlite3` under the isolated private
+  Tor cache and, on Android, checks directory/file permissions with `fs_mistrust`; Aether
+  provides no external SQLite/WAL import. Upstream's patched libsqlite3-sys 0.39
+  requires a different rusqlite dependency line. This records the current trust
+  boundary, not a patched SQLite claim.
+
+No Cargo advisory or private Dependabot alert is dismissed by this review.

@@ -163,3 +163,20 @@ UNFREEZE action. The provider now shares an explicit, package-checked intent
 contract that retains the documented action and data. Android contract tests
 exercise freeze/unfreeze and foreign-target rejection without installing Island
 or freezing applications; they do not certify an actual managed-profile freeze.
+
+
+[Run 44471949876](https://github.com/koukomin/Telos-Launcher/actions/runs/44471949876)
+completed full CodeQL analysis of the final Java/Kotlin source revision
+`d79b5fc77`. Both Java/Kotlin and Actions analyses report zero raw findings,
+no analysis errors or warnings, and zero open branch alerts, verified by
+[run 44477062642](https://github.com/koukomin/Telos-Launcher/actions/runs/44477062642).
+No alert was dismissed or suppressed. This includes the corrected Island intent
+contract and the inherited authentication, reply-intent and extraction findings.
+
+The subsequent compatible Cargo security refresh was rebuilt for all five native
+targets in [run 44474665043](https://github.com/koukomin/Telos-Launcher/actions/runs/44474665043).
+The same pinned Arti source and JNI API are retained; the provenance record binds
+the new binaries to both the lockfile and build inputs. The native gate now also
+rejects dependency versions below the patched compatible floors. See the
+[Cargo review](./dependabot#retired-graph-snapshots-and-cargo-review-2026-11-19)
+for the selected features and remaining upstream maintenance/trust-boundary scope.

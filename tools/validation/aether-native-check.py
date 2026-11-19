@@ -22,6 +22,14 @@ BINARIES = {
 }
 BINARIES["libs/amethyst/amethyst/src/test/native-libs/x86_64-linux/libarti_android.so"] = (2, 62)
 
+# Compatible patched releases for the dependency lines in the pinned Arti build.
+# A lockfile hash alone also accepts a faithfully rebuilt vulnerable graph.
+SECURITY_FLOORS = {
+    "anyhow": (1, 0, 103), "ctutils": (0, 4, 4), "tokio": (1, 53, 3),
+    "rustls": (0, 23, 46), "rustls-webpki": (0, 103, 16),
+    "zstd": (0, 14, 3), "zstd-safe": (8, 2, 0), "zstd-sys": (2, 1, 2),
+}
+
 
 def verify(root, metadata=None):
     root = Path(root)
@@ -36,6 +44,16 @@ def verify(root, metadata=None):
                 raise ValueError(f"Stale Arti build input or binary: {path}; rebuild before release")
 
     lock = tomllib.loads((root / ARTI / "Cargo.lock").read_text())
+    for package in lock["package"]:
+        name = package["name"]
+        if name not in SECURITY_FLOORS and name != "rustix":
+            continue
+        version = tuple(int(part) for part in package["version"].split("+")[0].split("."))
+        floor = SECURITY_FLOORS.get(name)
+        if name == "rustix" and version[0] == 1:
+            floor = (1, 1, 6)
+        if floor and version < floor:
+            raise ValueError(f"Vulnerable Arti dependency: {name} {package['version']}; minimum {'.'.join(map(str, floor))}")
     versions = [p["version"] for p in lock["package"] if p["name"] == "rustls"]
     if versions != [metadata["rustls"]]:
         raise ValueError(f"Rustls lock and native provenance disagree: {versions}")

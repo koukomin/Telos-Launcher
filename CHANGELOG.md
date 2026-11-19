@@ -5,6 +5,9 @@
 - Rebuild every Android Tor native ABI with Rustls 0.23.46; verify binary and
   locked-source provenance before packaging so dependency-only updates cannot
   silently leave old native code in the APK.
+- Update compatible Tor TLS-verification, Tokio, rustix and Zstandard dependencies;
+  refresh the separate Rust interoperability fixtures and retire the stale duplicate
+  graph snapshot that still advertised superseded Maven dependencies.
 - Bind Aether biometric/credential approval to Keystore cryptographic proofs,
   target reply notifications explicitly, and use fixed archive output suffixes.
 - Preserve Island's freeze/unfreeze action when targeting its resolved activity;
