@@ -19,38 +19,8 @@ jobs:
           python3 - <<'PYCODE'
           import subprocess,json,os
           base='repos/'+os.environ['GITHUB_REPOSITORY']
-          for endpoint in ['/pulls?state=open&per_page=100', '/actions/runs?status=in_progress&per_page=100', '/actions/runs?status=queued&per_page=100', '/dependabot/alerts?state=open&per_page=100']:
-              p=subprocess.run(['gh','api',base+endpoint],capture_output=True,text=True)
-              if p.returncode:
-                  print('::notice title=Access boundary::'+endpoint+' '+p.stderr[:400].replace('\n',' '));continue
-              d=json.loads(p.stdout)
-              if isinstance(d,dict):d=d.get('workflow_runs',[])
-              print('::notice title=Repository review::'+endpoint+' count='+str(len(d)))
-              for x in d:
-                  out={k:x.get(k) for k in ['id','number','name','title','status','conclusion','head_branch','head_sha','created_at','updated_at','html_url']}
-                  if 'head' in x:out['head']=x['head']['sha']
-                  print('::notice title=Repository item::'+json.dumps(out))
-          retry=subprocess.run(['gh','api','--method','POST',base+'/actions/jobs/135382703352/rerun'],capture_output=True,text=True)
-          print('::notice title=Disposable emulator retry::'+str(retry.returncode)+' '+retry.stdout[:1000]+' '+retry.stderr[:1000].replace('\n',' '))
-          import urllib.request,urllib.error
-          sbom=json.loads(subprocess.check_output(['gh','api',base+'/dependency-graph/sbom'],text=True))['sbom']
-          packages=[]
-          for p in sbom['packages']:
-              refs=[r['referenceLocator'] for r in p.get('externalRefs',[]) if r.get('referenceType')=='purl']
-              if refs:packages.append(refs[0])
-          print('::notice title=SBOM audit::'+str(len(packages))+' package URLs')
-          packages=sorted(set(p for p in packages if p.startswith(('pkg:maven/','pkg:cargo/','pkg:npm/','pkg:pypi/','pkg:nuget/','pkg:golang/'))))
-          total=0
-          for offset in range(0,len(packages),500):
-              queries=[{'package':{'purl':p}} for p in packages[offset:offset+500]]
-              try:
-                  req=urllib.request.Request('https://api.osv.dev/v1/querybatch',data=json.dumps({'queries':queries}).encode(),headers={'Content-Type':'application/json'})
-                  result=json.load(urllib.request.urlopen(req,timeout=120))
-                  for q,r in zip(queries,result['results']):
-                      if r.get('vulns'):
-                          total+=1
-                          print('::notice title=SBOM advisory match::'+json.dumps({'package':q['package']['purl'],'advisories':r['vulns']}))
-              except urllib.error.HTTPError as e:
-                  print('::notice title=SBOM audit boundary::'+str(e)+' '+e.read().decode()[:1000]);raise
-          print('::notice title=SBOM audit result::Packages with advisory matches='+str(total)+' / '+str(len(packages)))
+          for job in ['135389378081','135389526578']:
+              logs=subprocess.check_output(['gh','api',base+'/actions/jobs/'+job+'/logs'],text=True)
+              lines=[line for line in logs.splitlines() if ('::notice title=SBOM ' in line or '::notice title=Disposable emulator retry::' in line) and 'print(' not in line]
+              print('::notice title=Audit and retry evidence::'+json.dumps({'job':job,'lines':lines}).replace('%','%25').replace('\n','%0A')[:30000])
           PYCODE
