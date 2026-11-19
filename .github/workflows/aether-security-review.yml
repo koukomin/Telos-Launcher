@@ -10,7 +10,7 @@ permissions:
 jobs:
   inspect:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 100
     steps:
       - name: Read open PRs, active checks and security access
         env:
@@ -27,7 +27,30 @@ jobs:
                   p=subprocess.run(['gh','api','--method','POST',base+'/actions/runs/'+str(r['id'])+'/cancel'],capture_output=True,text=True)
                   cancelled.append({'run':r['id'],'branch':r['head_branch'],'result':p.returncode})
           print('::notice title=Redundant helper snapshots::'+json.dumps(cancelled))
-          response=subprocess.run(['gh','api','--method','POST',base+'/actions/runs/44517601117/rerun-failed-jobs'],capture_output=True,text=True)
-          print('::notice title=Pages unchanged-source retry::'+json.dumps({'returncode':response.returncode,'response':response.stdout,'error':response.stderr}))
-          assert response.returncode==0
+          sha='a01618b532c704fabcf1783406fe8dbf9d74594e'
+          runs=json.loads(subprocess.check_output(['gh','api',base+'/actions/runs?head_sha='+sha+'&per_page=100'],text=True))['workflow_runs']
+          print('::notice title=Final release workflows::'+json.dumps([{k:r[k] for k in ['id','name','status','conclusion','event','head_branch']} for r in runs]))
+          for r in runs:
+              if r['name'] not in ['Release Android and Linux','CodeQL Security Scan']:continue
+              data=json.loads(subprocess.check_output(['gh','api',base+'/actions/runs/'+str(r['id'])+'/jobs?per_page=100'],text=True))
+              jobs=[{'id':j['id'],'name':j['name'],'status':j['status'],'conclusion':j['conclusion'],'active':[t['name'] for t in j['steps'] if t['status']=='in_progress']} for j in data['jobs']]
+              print('::notice title=Final build jobs::'+json.dumps({'run':r['id'],'name':r['name'],'jobs':jobs}))
+          pr=json.loads(subprocess.check_output(['gh','api',base+'/pulls/131'],text=True))
+          print('::notice title=Latest open PR integrated::'+json.dumps({k:pr[k] for k in ['number','state','merged','merge_commit_sha']}));assert pr['merged']
+          import time
+          for _ in range(100):
+              scan=json.loads(subprocess.check_output(['gh','api',base+'/actions/runs/44517601102'],text=True))
+              if scan['status']=='completed':
+                  assert scan['conclusion']=='success',scan['conclusion']
+                  break
+              time.sleep(50)
+          else:
+              raise SystemExit('Main CodeQL still pending')
+          analyses=json.loads(subprocess.check_output(['gh','api',base+'/code-scanning/analyses?ref=refs/heads/main&per_page=100'],text=True))
+          matching=[{k:a.get(k) for k in ['id','commit_sha','results_count','category','error','warning']} for a in analyses if a['commit_sha']==sha]
+          print('::notice title=Final main analysis::'+json.dumps(matching))
+          if {'/language:java-kotlin','/language:actions'} <= {a.get('category') for a in matching}:
+              assert not any(a['error'] for a in matching)
+              alerts=json.loads(subprocess.check_output(['gh','api',base+'/code-scanning/alerts?state=open&ref=refs/heads/main&per_page=100'],text=True))
+              print('::notice title=Final main open alerts::'+json.dumps([{'number':a['number'],'rule':a['rule']['id']} for a in alerts]));assert not alerts
           PYCODE
