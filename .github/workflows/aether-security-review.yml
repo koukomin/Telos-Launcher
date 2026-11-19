@@ -3,7 +3,7 @@ on:
   push:
     branches: ['codex/aether-security-review']
 permissions:
-  contents: write
+  contents: read
   actions: write
   pull-requests: read
   security-events: read
@@ -27,29 +27,30 @@ jobs:
                   p=subprocess.run(['gh','api','--method','POST',base+'/actions/runs/'+str(r['id'])+'/cancel'],capture_output=True,text=True)
                   cancelled.append({'run':r['id'],'branch':r['head_branch'],'result':p.returncode})
           print('::notice title=Redundant helper snapshots::'+json.dumps(cancelled))
-          import io,zipfile
-          run='44415622395'
-          info=json.loads(subprocess.check_output(['gh','api',base+'/actions/runs/'+run],text=True))
-          print('::notice title=Managed main graph source::'+json.dumps({k:info[k] for k in ['id','head_sha','status','conclusion']}))
-          artifacts=json.loads(subprocess.check_output(['gh','api',base+'/actions/runs/'+run+'/artifacts'],text=True))['artifacts']
-          for a in artifacts:
-              if a['expired'] or 'dependency' not in a['name'].lower():continue
-              z=zipfile.ZipFile(io.BytesIO(subprocess.check_output(['gh','api','--allow-escape-sequences',base+'/actions/artifacts/'+str(a['id'])+'/zip'])))
-              for file in z.namelist():
-                  if not file.endswith('.json'):continue
-                  d=json.loads(z.read(file));purls=[v.get('package_url','') for m in d.get('manifests',{}).values() for v in m.get('resolved',{}).values()]
-                  selected=[p for p in purls if any(k in p for k in ['/guava@','/freemarker@','/bcprov-jdk18on@','/bcpkix-jdk18on@','/commons-lang3@','/httpclient@','/jose4j@','/jdom2@','/opentelemetry-api@'])]
-                  print('::notice title=Managed main resolved pins::'+json.dumps({'artifact':a['id'],'source':d.get('sha'),'job':d.get('job'),'detector':d.get('detector'),'packages':len(purls),'selected':sorted(set(selected))}))
-          required={'pkg:maven/org.freemarker/freemarker@2.3.35','pkg:maven/com.google.guava/guava@33.8.0-android','pkg:maven/com.google.guava/guava@33.8.0-jre','pkg:maven/org.bouncycastle/bcprov-jdk18on@1.87','pkg:maven/io.opentelemetry/opentelemetry-api@1.68.0'}
-          assert required <= set(purls)
-          forbidden=['@33.3.1-android','@33.4.0-jre','/freemarker@2.3.32','/bcprov-jdk18on@1.80.2','/bcpkix-jdk18on@1.80.2','/opentelemetry-api@1.41.0','/commons-lang3@3.16.0','/commons-lang3@3.17.0','/httpclient@4.5.6','/jose4j@0.9.5','/jdom2@2.0.6?']
-          assert not any(any(bad in p for bad in forbidden) for p in purls)
-          assert len(purls)>1500 and info['conclusion']=='success'
-          main=json.loads(subprocess.check_output(['gh','api',base+'/git/ref/heads/main'],text=True))['object']['sha']
-          assert main==info['head_sha'], 'Refresh managed evidence after new main changes'
-          from datetime import datetime,timezone
-          retired={'version':0,'sha':main,'ref':'refs/heads/main','scanned':datetime.now(timezone.utc).isoformat(),'job':{'id':os.environ['GITHUB_RUN_ID'],'correlator':'submit_gradle_dependency_graph-dependency-submission','html_url':'https://github.com/'+os.environ['GITHUB_REPOSITORY']+'/actions/runs/'+os.environ['GITHUB_RUN_ID']},'detector':{'name':'GitHub Dependency Graph Gradle Plugin','version':'1.5.1','url':'https://github.com/gradle/github-dependency-graph-gradle-plugin'},'metadata':{'reason':'Retire duplicate workflow snapshot superseded by verified Automatic Dependency Submission; no alerts dismissed'},'manifests':{}}
-          response=subprocess.run(['gh','api','--method','POST',base+'/dependency-graph/snapshots','--input','-'],input=json.dumps(retired),capture_output=True,text=True)
-          print('::notice title=Retired duplicate graph submission::'+json.dumps({'status':response.returncode,'response':response.stdout,'error':response.stderr}))
-          assert response.returncode==0
+          sbom=json.loads(subprocess.check_output(['gh','api',base+'/dependency-graph/sbom'],text=True))['sbom']
+          purls=[r['referenceLocator'] for p in sbom['packages'] for r in p.get('externalRefs',[]) if r.get('referenceType')=='purl']
+          selected=[p for p in purls if any(k in p for k in ['/guava@','/freemarker@','/bcprov-jdk18on@','/bcpkix-jdk18on@','/commons-lang3@','/httpclient@','/jose4j@','/jdom2@','/opentelemetry-api@'])]
+          print('::notice title=SBOM after duplicate retirement::'+json.dumps({'packages':len(purls),'selected':sorted(set(selected))}))
+          PYCODE
+      - uses: actions/checkout@v7
+        with:
+          ref: d79b5fc776d23b2fa9321ef248278dc52396b9df
+      - name: Trace selected crypto dependencies without compiling native binaries
+        working-directory: libs/amethyst/tools/arti-build
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          sed '$d' build-arti.sh > .ci-build-functions.sh
+          source .ci-build-functions.sh
+          rm .ci-build-functions.sh
+          clone_or_update_arti
+          setup_wrapper
+          cargo tree --locked --manifest-path "$ARTI_SOURCE_DIR/arti-android-wrapper/Cargo.toml" --target aarch64-linux-android -i crypto-bigint > "$RUNNER_TEMP/crypto-tree.txt" 2>&1
+          cargo tree --locked --manifest-path "$ARTI_SOURCE_DIR/arti-android-wrapper/Cargo.toml" --target aarch64-linux-android -e features -i ssh-key-fork-arti > "$RUNNER_TEMP/ssh-features.txt" 2>&1
+          python3 - <<'PYCODE'
+          import os,json
+          from pathlib import Path
+          for name in ['crypto-tree.txt','ssh-features.txt']:
+              print('::notice title=Selected native crypto features::'+json.dumps({'file':name,'contents':(Path(os.environ['RUNNER_TEMP'])/name).read_text()[:18000]}))
           PYCODE
