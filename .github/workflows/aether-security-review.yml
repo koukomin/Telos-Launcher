@@ -27,10 +27,7 @@ jobs:
                   p=subprocess.run(['gh','api','--method','POST',base+'/actions/runs/'+str(r['id'])+'/cancel'],capture_output=True,text=True)
                   cancelled.append({'run':r['id'],'branch':r['head_branch'],'result':p.returncode})
           print('::notice title=Redundant helper snapshots::'+json.dumps(cancelled))
-          import re
-          raw=subprocess.check_output(['gh','api','--allow-escape-sequences',base+'/actions/jobs/135537562099/logs'],text=True)
-          lines=re.sub(r'\x1b\[[0-9;]*[A-Za-z]','',raw).splitlines()
-          start=next((i for i,l in enumerate(lines) if 'FAILURE: Build failed' in l),max(0,len(lines)-120))
-          selected=lines[start:start+90]+[l for l in lines if 'Caused by:' in l][:12]
-          print('::notice title=Pages Dokka failure evidence::'+json.dumps(selected)[:28000])
+          response=subprocess.run(['gh','api','--method','POST',base+'/actions/runs/44517601117/rerun-failed-jobs'],capture_output=True,text=True)
+          print('::notice title=Pages unchanged-source retry::'+json.dumps({'returncode':response.returncode,'response':response.stdout,'error':response.stderr}))
+          assert response.returncode==0
           PYCODE
