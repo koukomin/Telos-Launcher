@@ -161,3 +161,5 @@ files named by the actual version code. It checks that the tag agrees with
 It replaces the old metadata updater, which wrote unused paths and ignored a
 failed push from a detached tag checkout. Release workflows do not manufacture
 metadata commits after tagging or silently report that a failed push succeeded.
+
+Stable Compose artifacts resolve from Maven Central. The retired JetBrains Space development repository is omitted so availability of that endpoint cannot interrupt Android APK builds.
