@@ -1,6 +1,7 @@
 package de.mm20.launcher2.ui.performance
 
 import android.content.Context
+import android.os.Build
 import android.os.Process
 import android.util.Log
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
@@ -20,11 +21,17 @@ object TelosSelfOptimizer {
     private val runMutex = Mutex()
     private val backgroundRunStarted = AtomicBoolean(false)
 
-    /**
-     * Call this from MainActivity.onCreate() on the main thread.
-     * Sets the UI thread priority to the highest possible value for display rendering.
-     */
+    private val useSystemTransitionScheduling =
+        listOf(Build.MANUFACTURER, Build.BRAND).any { identity ->
+            identity.equals("OnePlus", ignoreCase = true) ||
+                identity.equals("OPPO", ignoreCase = true) ||
+                identity.equals("OPLUS", ignoreCase = true) ||
+                identity.equals("realme", ignoreCase = true)
+        }
+
+    /** Boost the launcher UI thread where the OEM transition scheduler permits it. */
     fun boostUiThreadPriority() {
+        if (useSystemTransitionScheduling) return
         try {
             Process.setThreadPriority(Process.THREAD_PRIORITY_URGENT_DISPLAY)
             Log.i(TAG, "UI Thread Priority boosted to URGENT_DISPLAY")
@@ -116,13 +123,16 @@ object TelosSelfOptimizer {
         // 2. Anti-Kill & Whitelist
         try {
             Log.i(TAG, "Applying OS Whitelist and Anti-Kill protection...")
+            // Let ColorOS manage launcher process importance during task transitions.
+            val oomAdjustment = if (useSystemTransitionScheduling) "" else
+                "echo -800 > /proc/$pid/oom_score_adj 2>/dev/null || true"
             val antiKillCmd = """
                 dumpsys deviceidle whitelist +$packageName >/dev/null 2>&1
                 am set-standby-bucket $packageName active >/dev/null 2>&1
                 cmd appops set $packageName RUN_IN_BACKGROUND allow >/dev/null 2>&1
                 cmd appops set $packageName RUN_ANY_IN_BACKGROUND allow >/dev/null 2>&1
                 cmd appops set $packageName SYSTEM_ALERT_WINDOW allow >/dev/null 2>&1
-                echo -800 > /proc/$pid/oom_score_adj 2>/dev/null || true
+                $oomAdjustment
             """.trimIndent()
 
             val result = TelosShellEngine.execResult(

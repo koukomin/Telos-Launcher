@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.45.74
+
+- Keep system-managed launcher scheduling on ColorOS-family devices during app switching and Recents.
+- Use the installed host icon as the Aether web shortcut fallback so the library builds without an application mipmap.
+
 ## 1.45.71
 
 - Rebuild every Android Tor native ABI with Rustls 0.23.46; verify binary and

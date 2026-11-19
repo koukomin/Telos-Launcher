@@ -9,6 +9,15 @@ profile is hand-written, not measured on a device.
 
 Settings > Advanced > **Performance** (summary: "Animations, search speed, caching").
 
+## ColorOS app switching and Recents
+
+On OnePlus, OPPO and realme devices, Telos leaves UI thread scheduling and
+launcher process importance to Android. Earlier builds applied manual priority
+overrides during launcher startup. Starting with 1.45.74, those overrides are
+skipped on ColorOS-family devices to improve compatibility with system task
+animations. ART compilation and the normal Android task history are retained.
+Device verification of the reported black or empty Recents screen is pending.
+
 ## Graphics API (Vulkan / OpenGL)
 
 Settings > Advanced, at the top of the screen. Forces Android’s HWUI renderer with `debug.hwui.renderer` (`skiavk` for Vulkan, `skiagl` for OpenGL), the same switch used by [GAMA](https://github.com/palincat/gama). Telos does not copy GAMA code. Vulkan often uses less power; OpenGL is the fallback if Vulkan glitches. The **active renderer** is shown here and in Telos System.

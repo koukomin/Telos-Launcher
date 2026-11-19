@@ -28,7 +28,6 @@ import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
 import androidx.core.graphics.scale
 import com.vitorpamplona.amethyst.Amethyst
-import com.vitorpamplona.amethyst.R
 import com.vitorpamplona.amethyst.commons.browser.BrowserChrome
 import com.vitorpamplona.amethyst.commons.favorites.FavoriteApp
 import com.vitorpamplona.crypto.sha2.sha256
@@ -115,7 +114,9 @@ object WebShortcuts {
         return if (bitmap != null) {
             IconCompat.createWithBitmap(if (bitmap.width < ICON_PX) bitmap.scale(ICON_PX, ICON_PX, filter = false) else bitmap)
         } else {
-            IconCompat.createWithResource(context, R.mipmap.ic_launcher)
+            val icon = context.applicationInfo.icon.takeIf { it != 0 }
+                ?: android.R.drawable.sym_def_app_icon
+            IconCompat.createWithResource(context, icon)
         }
     }
 

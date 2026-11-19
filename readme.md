@@ -1555,3 +1555,5 @@ Aether's Tor native binaries use Rustls 0.23.46 and compatible TLS, async-runtim
 and compression security updates, with checked version floors and a build-input/binary
 provenance record. See [embedded Aether validation](docs/docs/developer-guide/aether-amethyst.md)
 for native build evidence and the inherited code-scanning hardening.
+
+On ColorOS-family devices, Telos leaves launcher scheduling and process importance to Android for app switching and Recents. See the [performance guide](docs/docs/user-guide/telos/launcher/performance.md#coloros-app-switching-and-recents).
