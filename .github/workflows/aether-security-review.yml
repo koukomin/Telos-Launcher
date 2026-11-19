@@ -27,7 +27,25 @@ jobs:
                   p=subprocess.run(['gh','api','--method','POST',base+'/actions/runs/'+str(r['id'])+'/cancel'],capture_output=True,text=True)
                   cancelled.append({'run':r['id'],'branch':r['head_branch'],'result':p.returncode})
           print('::notice title=Redundant helper snapshots::'+json.dumps(cancelled))
-          response=subprocess.run(['gh','api','--allow-escape-sequences',base+'/actions/jobs/135389526578/logs'],capture_output=True,text=True)
-          lines=[line for line in response.stdout.splitlines() if '::notice title=Disposable emulator retry::' in line and 'print(' not in line]
-          print('::notice title=Emulator retry request::'+json.dumps({'returncode':response.returncode,'stderr':response.stderr[:500],'lines':lines}))
+          for run in ['44474665043','44471767507','44471949876']:
+              data=json.loads(subprocess.check_output(['gh','api',base+'/actions/runs/'+run+'/jobs?per_page=100'],text=True))
+              jobs=[{'id':j['id'],'name':j['name'],'status':j['status'],'conclusion':j['conclusion'],'active':[t['name'] for t in j['steps'] if t['status']=='in_progress']} for j in data['jobs']]
+              print('::notice title=Current validation jobs::'+json.dumps({'run':run,'jobs':jobs}))
+          q='query { repository(owner:"koukomin",name:"Telos-Launcher") { dependencyGraphManifests(first:30) { nodes { filename blobPath } } } }'
+          response=subprocess.run(['gh','api','graphql','-f','query='+q],capture_output=True,text=True)
+          print('::notice title=Dependency manifest ownership::'+response.stdout[:14000]+' '+response.stderr[:1000].replace('\n',' '))
+          PYCODE
+      - name: Inspect pinned upstream crypto and database entry points
+        run: |
+          git clone --depth 1 --branch arti-v2.6.0 https://gitlab.torproject.org/tpo/core/arti.git /tmp/arti-review >/dev/null 2>&1
+          python3 - <<'PYCODE'
+          from pathlib import Path
+          import json
+          root=Path('/tmp/arti-review/crates')
+          rows=[]
+          for name in ['tor-llcrypto','tor-netdoc','tor-proto','tor-dirmgr','tor-consdiff','tor-persist']:
+              for f in (root/name).rglob('*.rs'):
+                  for i,line in enumerate(f.read_text().splitlines(),1):
+                      if any(k in line for k in ['RsaPrivateKey','RsaPublicKey','SqliteStore::','Connection::open','open_with_flags']):rows.append(str(f.relative_to(root))+':'+str(i)+':'+line.strip())
+          print('::notice title=Upstream crypto and database sites::'+json.dumps(rows)[:28000])
           PYCODE
