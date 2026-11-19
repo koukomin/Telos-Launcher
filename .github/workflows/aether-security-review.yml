@@ -27,13 +27,11 @@ jobs:
                   p=subprocess.run(['gh','api','--method','POST',base+'/actions/runs/'+str(r['id'])+'/cancel'],capture_output=True,text=True)
                   cancelled.append({'run':r['id'],'branch':r['head_branch'],'result':p.returncode})
           print('::notice title=Redundant helper snapshots::'+json.dumps(cancelled))
-          import re
-          job='135909339800'
-          response=subprocess.run(['gh','api','--allow-escape-sequences',base+'/actions/jobs/'+job+'/logs'],capture_output=True,text=True,check=True)
-          lines=re.sub(r'\x1b\[[0-9;]*[A-Za-z]','',response.stdout).splitlines()
-          key=[l for l in lines if re.search(r'error|failed|could not|what went wrong|exit value|disappear|no space|timeout',l,re.I)]
-          for offset in range(0,min(len(key),30),8):
-              print('::notice title=ARM64 failure::'+json.dumps(key[-30:][offset:offset+8])[:3500])
-          info=json.loads(subprocess.check_output(['gh','api',base+'/actions/runs/44618689623', '--jq','{status,conclusion,run_attempt}'],text=True))
-          print('::notice title=Current attempt::'+json.dumps(info))
+          run=base+'/actions/runs/44618689623'
+          info=json.loads(subprocess.check_output(['gh','api',run],text=True))
+          if info['status']=='completed' and info['conclusion']=='failure' and info['run_attempt']==1:
+              subprocess.run(['gh','api','--method','POST',run+'/rerun-failed-jobs'],check=True)
+              print('::notice title=Release retry::Requested failed jobs only for v1.45.76')
+          else:
+              print('::notice title=Release attempt::'+json.dumps({k:info[k] for k in ['status','conclusion','run_attempt']}))
           PYCODE
