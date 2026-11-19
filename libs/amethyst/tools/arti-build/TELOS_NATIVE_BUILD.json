@@ -9,5 +9,21 @@
     "libs/amethyst/amethyst/src/main/jniLibs/x86_64/libarti_android.so": "215fa6ed74e82159adde3e0b3fea0c1b30d8a7382dfdc30031ebbad314a39910",
     "libs/amethyst/amethyst/src/main/jniLibs/x86/libarti_android.so": "b9f06cab954639c9799aaf363945753761fff12b8bfde3aab1604e71565144ca",
     "libs/amethyst/amethyst/src/test/native-libs/x86_64-linux/libarti_android.so": "91475bdb4e1173dea8049aea1e334fbf8da02e6db4ebc957263d6f4911e211b0"
+  },
+  "arti_tag": "arti-v2.6.0",
+  "ndk": "30.0.16248370",
+  "cargo_ndk": "4.1.2",
+  "build_workflow_run": "https://github.com/koukomin/Telos-Launcher/actions/runs/44421180096",
+  "build_inputs": {
+    "libs/amethyst/tools/arti-build/ANDROID_NDK_VERSION": "22cc9c939be82ae6f6ae560606b8b90662301a8da60517042442bbf80b2b9df4",
+    "libs/amethyst/tools/arti-build/ARTI_VERSION": "9b826f9636eb8cd4b0e5f2d547a02ddcefd95819b7d8c790d806d6a44ddab1f2",
+    "libs/amethyst/tools/arti-build/CARGO_NDK_VERSION": "b3bb6f691586de9019e3cc79bc93f052fe628911cf38bff77319a05242cc7fec",
+    "libs/amethyst/tools/arti-build/Cargo.lock": "84133ba95a51c2888ba02f45e5b5d4cbf458e53b6bd66fb8ab903b1473285272",
+    "libs/amethyst/tools/arti-build/Cargo.toml": "b1c9a28bb2f8dea69d2de5a85a1f8a74ef73d9c8c5b1eebc59503bc3e4e93433",
+    "libs/amethyst/tools/arti-build/build-arti-host.sh": "192f24cf4d249a385e08078e32b5e2dc690cd5a01e7aa65b7f1e12041361800b",
+    "libs/amethyst/tools/arti-build/build-arti.sh": "7cdc56e8337d880fd6fca4bc5cc77652015471ce596bb5ac96aea3b79db04fcd",
+    "libs/amethyst/tools/arti-build/repro-env.sh": "748ab7bafd5f63c5ef53e37444e61bdec21a8352e7acc2052e6eb00aba79db80",
+    "libs/amethyst/tools/arti-build/rust-toolchain.toml": "223869359462e6b40089cf2bbabe984ac5cd303adc64834d64f8c6577d0e79f6",
+    "libs/amethyst/tools/arti-build/src/lib.rs": "f4ad1c4c03de9c23afd5cef4a337f1cdbf1a2b544c4d25a773858d85902231f9"
   }
 }

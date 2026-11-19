@@ -134,3 +134,25 @@ Live relay interoperability, signing/publication, external signers, physical
 OnePlus/Android 17 behavior and the complete theme/font/wallpaper matrix are not
 established by these automated checks. The shipped distribution is the full
 F-Droid client; proprietary Play-only integrations are not included.
+
+## Native and code-scanning follow-up
+
+[Run 44421180096](https://github.com/koukomin/Telos-Launcher/actions/runs/44421180096)
+rebuilt Arti for all four Android ABIs and the Linux x86_64 JNI test fixture
+with Rustls 0.23.46. The dependency lock is resolved against the same patched
+Arti source used by the build scripts, rather than registry replacements for
+local workspace crates. `TELOS_NATIVE_BUILD.json` records source, compiler,
+NDK, input and binary hashes. `tools/validation/aether-native-check.py` rejects
+stale lockfiles, wrapper sources, toolchains or binaries before validation and
+release packaging; positive checks and deliberately mismatched input/binary
+hashes were exercised locally.
+
+Inherited code-scanning findings 26–28 are addressed by binding biometric
+approval to the returned, request-specific Keystore cipher, checking credential
+fallback with an authentication-required key, constructing reply intents with
+an explicit receiver, and using only literal archive output suffixes. Proof
+keys are separate from account encryption keys; upstream behavior without a
+configured device screen lock is retained. Android JNI, intent-routing and
+emulator-only Keystore boundary regressions accompany the changes. Their final
+Actions validation is required before publication; live Tor bootstrap and
+physical biometric prompts are not certified by these tests.

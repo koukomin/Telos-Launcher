@@ -454,3 +454,12 @@ license notices remain in their distributed packages.
 The included Amethyst build also applies the launcher's patched transitive
 versions to its own plugin and project classpaths. OpenTelemetry Java API and
 context are aligned at 1.68.0 (Apache-2.0). Existing third-party notices remain preserved.
+
+### Embedded Arti rebuild
+
+Telos rebuilds Amethyst's Arti JNI wrapper against Arti tag `arti-v2.6.0`
+(commit `a71097fdf7b141b56d1eb3709628ee38d232c9d1`) with Rustls 0.23.46.
+Arti retains its upstream MIT/Apache-2.0 licenses and Rustls its upstream
+Apache-2.0/ISC/MIT licenses. The Android ABI binaries and Linux JNI test fixture,
+locked dependency graph and pinned Rust/NDK build inputs are recorded in
+`libs/amethyst/tools/arti-build/TELOS_NATIVE_BUILD.json`.

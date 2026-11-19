@@ -24,6 +24,8 @@ jobs:
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v7
+      - name: Reject stale Tor native binaries or build inputs
+        run: python3 tools/validation/aether-native-check.py
       - uses: actions/setup-java@v6
         with:
           distribution: temurin
@@ -178,7 +180,7 @@ jobs:
       - name: Compile storage device tests
         run: |
           set -o pipefail
-          ./gradlew -p libs/amethyst :amethyst:assembleFdroidDebugAndroidTest \
+          ./gradlew -p libs/amethyst :amethyst:assembleFdroidDebugAndroidTest :commonsUI:assembleAndroidDeviceTest \
             --no-daemon --max-workers=1 --console=plain \
             -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process \
             '-Dorg.gradle.jvmargs=-Xmx6g -Dfile.encoding=UTF-8' 2>&1 | tee /tmp/aether-storage-build.log
@@ -206,11 +208,9 @@ jobs:
           profile: pixel_7
           disable-animations: true
           emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim
-          script: >-
-            ./gradlew -p libs/amethyst :amethyst:connectedFdroidDebugAndroidTest
-            -Pandroid.testInstrumentationRunnerArguments.class=com.vitorpamplona.amethyst.AetherStorageContextTest
-            --no-daemon --max-workers=1 --console=plain -Dorg.gradle.parallel=false
-            -Pkotlin.compiler.execution.strategy=in-process '-Dorg.gradle.jvmargs=-Xmx6g -Dfile.encoding=UTF-8'
+          script: |
+            ./gradlew -p libs/amethyst :amethyst:connectedFdroidDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.vitorpamplona.amethyst.AetherStorageContextTest,com.vitorpamplona.amethyst.ArtiNativeSmokeTest,com.vitorpamplona.amethyst.NotificationReplyIntentTest --no-configuration-cache --no-daemon --max-workers=1 --console=plain -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process '-Dorg.gradle.jvmargs=-Xmx6g -Dfile.encoding=UTF-8'
+            ./gradlew -p libs/amethyst :commonsUI:connectedAndroidDeviceTest -Pandroid.testInstrumentationRunnerArguments.class=com.vitorpamplona.amethyst.commons.ui.privacylock.DeviceAuthenticationKeysTest --no-configuration-cache --no-daemon --max-workers=1 --console=plain -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process '-Dorg.gradle.jvmargs=-Xmx6g -Dfile.encoding=UTF-8'
       - name: Verify all storage regressions executed
         if: always()
         run: |
@@ -224,6 +224,24 @@ jobs:
           level = 'notice' if passed else 'error'
           print(f'::{level} title=Aether storage device tests::executed={len(cases)}, expected=4, all_passed={passed}')
           if not passed: raise SystemExit('All four Aether storage regressions must pass without skips')
+          native = []
+          for path in Path('libs/amethyst/amethyst/build/outputs/androidTest-results').rglob('TEST-*.xml'):
+              native.extend(c for c in ET.parse(path).getroot().iter('testcase') if c.get('classname') == 'com.vitorpamplona.amethyst.ArtiNativeSmokeTest')
+          passed = len(native) == 1 and all(c.find('failure') is None and c.find('error') is None and c.find('skipped') is None for c in native)
+          level = 'notice' if passed else 'error'
+          print(f'::{level} title=Aether native JNI smoke test::executed={len(native)}, expected=1, all_passed={passed}')
+          if not passed: raise SystemExit('The actual Android Arti JNI smoke test must pass without skips')
+          for directory, classname in [
+              ('amethyst', 'com.vitorpamplona.amethyst.NotificationReplyIntentTest'),
+              ('commonsUI', 'com.vitorpamplona.amethyst.commons.ui.privacylock.DeviceAuthenticationKeysTest'),
+          ]:
+              tests = []
+              for path in Path(f'libs/amethyst/{directory}/build/outputs/androidTest-results').rglob('TEST-*.xml'):
+                  tests.extend(c for c in ET.parse(path).getroot().iter('testcase') if c.get('classname') == classname)
+              passed = len(tests) == 1 and all(c.find('failure') is None and c.find('error') is None and c.find('skipped') is None for c in tests)
+              level = 'notice' if passed else 'error'
+              print(f'::{level} title=Aether security boundary test::{classname}: executed={len(tests)}, expected=1, all_passed={passed}')
+              if not passed: raise SystemExit(f'{classname} must execute successfully without skips')
           PYCODE
       - uses: actions/upload-artifact@v7
         if: always()
@@ -233,6 +251,8 @@ jobs:
           path: |
             libs/amethyst/amethyst/build/outputs/androidTest-results/
             libs/amethyst/amethyst/build/reports/androidTests/
+            libs/amethyst/commonsUI/build/outputs/androidTest-results/
+            libs/amethyst/commonsUI/build/reports/androidTests/
 
   aether-client-device:
     if: github.event_name != 'pull_request' || github.event.action != 'closed'

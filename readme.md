@@ -1549,3 +1549,7 @@ emulator checks remain. The duplicate Linux/auto-changelog workflows are removed
 See [workflow ownership](docs/docs/developer-guide/releases.md#avoiding-duplicate-and-obsolete-runs).
 
 SQLite startup config reads the result of `PRAGMA mmap_size` through a cursor, preventing the `SQLITE_OK` startup crash while preserving existing launcher data. Android instrumentation checks fresh database opening and reopening with retained records.
+
+Aether's Tor native binaries use Rustls 0.23.46 with a checked build-input/binary
+provenance record. See [embedded Aether validation](docs/docs/developer-guide/aether-amethyst.md)
+for native build evidence and the inherited code-scanning hardening.

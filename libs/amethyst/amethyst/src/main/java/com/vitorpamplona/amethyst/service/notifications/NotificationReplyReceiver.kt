@@ -262,8 +262,7 @@ class NotificationReplyReceiver : BroadcastReceiver() {
         source: Intent,
     ): PendingIntent {
         val intent =
-            Intent(source).apply {
-                setClass(applicationContext, NotificationReplyReceiver::class.java)
+            notificationReplyIntent(applicationContext, source).apply {
                 putExtra(NotificationUtils.KEY_REPLY_TEXT, replyText)
             }
 

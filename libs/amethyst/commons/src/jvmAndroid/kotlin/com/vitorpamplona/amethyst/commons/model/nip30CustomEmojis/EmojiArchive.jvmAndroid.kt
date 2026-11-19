@@ -58,7 +58,20 @@ fun extractEmojiArchive(
             while (true) {
                 val entry = stream.nextEntry ?: break
                 val name = EmojiImport.baseName(entry.name)
-                val isImage = !entry.isDirectory && !entry.name.startsWith("__MACOSX/") && !name.startsWith(".") && EmojiImport.isImageFileName(name)
+                // Archive names remain display metadata. Only literal suffixes reach the filesystem.
+                val suffix = when (EmojiImport.extensionOf(name)) {
+                    "png" -> ".png"
+                    "jpg" -> ".jpg"
+                    "jpeg" -> ".jpeg"
+                    "gif" -> ".gif"
+                    "webp" -> ".webp"
+                    "avif" -> ".avif"
+                    "apng" -> ".apng"
+                    "svg" -> ".svg"
+                    "bmp" -> ".bmp"
+                    else -> null
+                }
+                val isImage = !entry.isDirectory && !entry.name.startsWith("__MACOSX/") && !name.startsWith(".") && suffix != null
                 if (!isImage) {
                     drain(stream, buffer, budget)
                     continue
@@ -68,7 +81,7 @@ fun extractEmojiArchive(
                     break
                 }
 
-                val file = File.createTempFile("amethyst_emoji_", "." + EmojiImport.extensionOf(name), tempDir)
+                val file = File.createTempFile("amethyst_emoji_", suffix, tempDir)
                 current = file
                 // Counted as read rather than trusting the entry's declared size, which a crafted archive can fake.
                 val size = copyAtMost(stream, file, EmojiArchiveLimits.MAX_ENTRY_BYTES, buffer, budget)

@@ -507,11 +507,13 @@ object NotificationUtils {
         notId: Int,
         intent: Intent,
     ): NotificationCompat.Action {
+        // RemoteInput needs mutability, but the receiver must never be fill-in controlled.
+        val explicitIntent = notificationReplyIntent(applicationContext, intent)
         val replyPendingIntent =
             PendingIntent.getBroadcast(
                 applicationContext,
                 notId,
-                intent,
+                explicitIntent,
                 PendingIntent.FLAG_MUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
             )
         return NotificationCompat.Action

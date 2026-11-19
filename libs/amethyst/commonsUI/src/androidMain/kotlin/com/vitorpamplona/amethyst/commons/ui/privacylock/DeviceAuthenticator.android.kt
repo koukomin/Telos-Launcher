@@ -43,6 +43,8 @@ import com.vitorpamplona.amethyst.commons.resources.biometric_authentication_fai
 import com.vitorpamplona.amethyst.commons.resources.biometric_authentication_failed_explainer
 import com.vitorpamplona.amethyst.commons.resources.biometric_authentication_failed_explainer_with_error
 import com.vitorpamplona.amethyst.commons.ui.stringRes
+import java.security.SecureRandom
+import java.util.concurrent.atomic.AtomicBoolean
 
 /** The action waiting on the keyguard activity, which only its result may run or replace. */
 private class PendingApproval {
@@ -66,17 +68,21 @@ actual fun rememberDeviceAuthenticator(): DeviceAuthenticator {
 
     return remember(context, labels, keyguardLauncher) {
         DeviceAuthenticator { title, onApproved, onError ->
-            pending.action = onApproved
+            pending.action = null
             authenticate(
                 title = title,
                 context = context,
                 labels = labels,
                 keyguardLauncher = keyguardLauncher,
+                pending = pending,
                 onApproved = {
                     pending.action = null
                     onApproved()
                 },
-                onError = onError,
+                onError = { errorTitle, message ->
+                    pending.action = null
+                    onError(errorTitle, message)
+                },
             )
         }
     }
@@ -119,12 +125,13 @@ private fun authenticate(
     context: Context,
     labels: AuthPromptLabels,
     keyguardLauncher: ManagedActivityResultLauncher<Intent, ActivityResult>,
+    pending: PendingApproval,
     onApproved: () -> Unit,
     onError: (String, String) -> Unit,
 ) {
-    val fragmentContext = context.findFragmentActivity() ?: return onApproved()
+    val fragmentContext = context.findFragmentActivity()
     val keyguardManager =
-        fragmentContext.getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
+        context.getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
 
     if (!keyguardManager.isDeviceSecure) {
         onApproved()
@@ -133,16 +140,27 @@ private fun authenticate(
 
     @Suppress("DEPRECATION")
     fun keyguardPrompt() {
-        val intent =
-            keyguardManager.createConfirmDeviceCredentialIntent(
-                labels.appName,
-                title,
-            )
-
-        keyguardLauncher.launch(intent)
+        try {
+            val key = DeviceAuthenticationKeys.credentialKey()
+            val challenge = ByteArray(32).also { SecureRandom().nextBytes(it) }
+            val intent = keyguardManager.createConfirmDeviceCredentialIntent(labels.appName, title)
+                ?: return onError(labels.failedTitle, labels.failedExplainer)
+            pending.action = {
+                try {
+                    DeviceAuthenticationKeys.confirmCredential(key, challenge)
+                    onApproved()
+                } catch (_: Exception) {
+                    onError(labels.failedTitle, labels.failedExplainer)
+                }
+            }
+            keyguardLauncher.launch(intent)
+        } catch (_: Exception) {
+            pending.action = null
+            onError(labels.failedTitle, labels.failedExplainer)
+        }
     }
 
-    if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
+    if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q || fragmentContext == null) {
         keyguardPrompt()
         return
     }
@@ -159,6 +177,15 @@ private fun authenticate(
             .setSubtitle(title)
             .setAllowedAuthenticators(authenticators)
             .build()
+
+    val cipher = try {
+        DeviceAuthenticationKeys.biometricCipher()
+    } catch (_: Exception) {
+        keyguardPrompt()
+        return
+    }
+    val challenge = ByteArray(32).also { SecureRandom().nextBytes(it) }
+    val completed = AtomicBoolean(false)
 
     val biometricPrompt =
         BiometricPrompt(
@@ -179,6 +206,10 @@ private fun authenticate(
                             keyguardPrompt()
                         }
 
+                        BiometricPrompt.ERROR_LOCKOUT_PERMANENT -> {
+                            keyguardPrompt()
+                        }
+
                         else -> {
                             onError(
                                 labels.failedTitle,
@@ -196,13 +227,27 @@ private fun authenticate(
 
                 override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                     super.onAuthenticationSucceeded(result)
-                    onApproved()
+                    if (!completed.compareAndSet(false, true)) return
+                    try {
+                        val authenticatedCipher = result.cryptoObject?.cipher ?: error("Missing authentication proof")
+                        check(authenticatedCipher === cipher) { "Authentication proof does not match this request" }
+                        authenticatedCipher.doFinal(challenge)
+                        onApproved()
+                    } catch (_: Exception) {
+                        onError(labels.failedTitle, labels.failedExplainer)
+                    }
                 }
             },
         )
 
     when (biometricManager.canAuthenticate(authenticators)) {
-        BiometricManager.BIOMETRIC_SUCCESS -> biometricPrompt.authenticate(promptInfo)
+        BiometricManager.BIOMETRIC_SUCCESS -> {
+            try {
+                biometricPrompt.authenticate(promptInfo, BiometricPrompt.CryptoObject(cipher))
+            } catch (_: Exception) {
+                keyguardPrompt()
+            }
+        }
         else -> keyguardPrompt()
     }
 }

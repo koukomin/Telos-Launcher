@@ -185,3 +185,9 @@ runtime resolution in both builds. The [follow-up dependency review](https://git
 reports zero added vulnerable components against v1.45.69 for source revision
 `6837a4661`. Compile/test validation is still pending; no alert has been dismissed
 and no claim that the private alert list is empty is made. The picomatch advisory discussed above is a separate docs-tool issue.
+
+The embedded Tor JNI binaries are rebuilt with Rustls 0.23.46, including all four
+Android ABIs and the Linux test fixture. Native provenance checks bind the
+actual `.so` files to the patched-source dependency lock and pinned toolchains;
+updating only `Cargo.lock` now fails the release gate. See the Aether integration
+record for build evidence and the additional code-scanning fixes.

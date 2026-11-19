@@ -32,6 +32,30 @@ import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue
 
 class EmojiArchiveTest {
+    @Test
+    fun archivePathsNeverBecomeOutputPaths() {
+        val dir = Files.createTempDirectory("emoji-path-test").toFile()
+        try {
+            val result = extractEmojiArchive(
+                ByteArrayInputStream(zipOf(
+                    "../../escape.png" to byteArrayOf(1),
+                    "C:\\outside\\escape.jpeg" to byteArrayOf(2),
+                    "/absolute/escape.svg" to byteArrayOf(3),
+                    "bad.png/escape.txt" to byteArrayOf(4),
+                )),
+                dir,
+            )
+            assertEquals(listOf("escape.png", "escape.jpeg", "escape.svg"), result.files.map { it.fileName })
+            assertEquals(listOf("png", "jpeg", "svg"), result.files.map { it.path.toFile().extension })
+            result.files.forEach {
+                assertEquals(dir.canonicalFile, it.path.toFile().canonicalFile.parentFile)
+                assertTrue(it.path.toFile().name.startsWith("amethyst_emoji_"))
+            }
+        } finally {
+            dir.deleteRecursively()
+        }
+    }
+
     private fun zipOf(vararg entries: Pair<String, ByteArray?>): ByteArray {
         val out = ByteArrayOutputStream()
         ZipOutputStream(out).use { zip ->

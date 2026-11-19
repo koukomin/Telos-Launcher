@@ -53,6 +53,9 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
+      - name: Verify locked Tor native provenance before packaging
+        run: python3 tools/validation/aether-native-check.py
+
       - name: Set up JDK 21
         uses: actions/setup-java@v6
         with:
