@@ -27,9 +27,20 @@ jobs:
                   p=subprocess.run(['gh','api','--method','POST',base+'/actions/runs/'+str(r['id'])+'/cancel'],capture_output=True,text=True)
                   cancelled.append({'run':r['id'],'branch':r['head_branch'],'result':p.returncode})
           print('::notice title=Redundant helper snapshots::'+json.dumps(cancelled))
-          import re
-          for job in ['135836886814','135835855860','135835862404']:
-              result=subprocess.run(['gh','api','--allow-escape-sequences',base+'/actions/jobs/'+job+'/logs'],text=True,capture_output=True)
-              lines=[l for l in result.stdout.splitlines() if re.search(r'What went wrong|Could not |error:|FAILURE:| e: |Unresolved reference|failed for task',l,re.I)]
-              print('::notice title=Release failure '+job+'::'+json.dumps(lines[-16:])[:3800]+result.stderr[:300])
+          import time
+          ids=['44606407391','44606407214','44606407412']
+          pulls=json.loads(subprocess.check_output(['gh','api',base+'/pulls?state=open'],text=True))
+          print('::notice title=Open PRs::'+json.dumps([{'number':p['number'],'title':p['title']} for p in pulls]))
+          for _ in range(72):
+              runs=[json.loads(subprocess.check_output(['gh','api',base+'/actions/runs/'+i],text=True)) for i in ids]
+              if all(r['status']=='completed' for r in runs):break
+              time.sleep(50)
+          print('::notice title=Android release checks::'+json.dumps([{k:r[k] for k in ['id','name','status','conclusion']} for r in runs]))
+          release=json.loads(subprocess.check_output(['gh','api',base+'/releases/tags/v1.45.74'],text=True))
+          assets={a['name']:a['size'] for a in release['assets']}
+          print('::notice title=Published Android assets::'+json.dumps(assets))
+          assert not release['draft']
+          for abi in ['arm64-v8a','armeabi-v7a']:
+              for suffix in ['apk','apk.idsig']:
+                  assert assets['telos-'+abi+'.'+suffix]>0
           PYCODE
