@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.media.stremio
 
+import de.mm20.launcher2.ui.component.telosTechCard
 import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
@@ -584,7 +585,7 @@ private fun CyberTechStremioTabStrip(
                     .weight(1f)
                     .clip(shape)
                     .background(containerColor)
-                    .de.mm20.launcher2.ui.component.telosTechCard(
+                    .telosTechCard(
                         borderColor = borderColor,
                         shape = shape,
                         borderWidth = if (isSelected) 2.dp else 1.dp,
@@ -926,7 +927,7 @@ private fun InlineStreamsSection(vm: StremioViewModel, meta: Meta) {
                         },
                         shape = RoundedCornerShape(12.dp),
                         color = MaterialTheme.colorScheme.surfaceContainerHigh,
-                        modifier = Modifier.fillMaxWidth().de.mm20.launcher2.ui.component.telosTechCard(
+                        modifier = Modifier.fillMaxWidth().telosTechCard(
                             borderColor = if (s.streamKey() == state?.lastUsed) de.mm20.launcher2.ui.component.TelosCyber.NeonCyan else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f),
                             shape = RoundedCornerShape(12.dp),
                             borderWidth = 1.dp,

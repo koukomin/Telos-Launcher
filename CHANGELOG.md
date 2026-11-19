@@ -1,6 +1,11 @@
 # Changelog
 
-## 1.45.74
+## 1.45.75
+
+- Fix Kotlin compilation of the Cyber-Tech changes in Music, Stremio and Video.
+- Include the ColorOS and Aether changes from the 1.45.74 build candidate.
+
+## 1.45.74 (build candidate)
 
 - Keep system-managed launcher scheduling on ColorOS-family devices during app switching and Recents.
 - Use the installed host icon as the Aether web shortcut fallback so the library builds without an application mipmap.

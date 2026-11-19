@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.media.video
 
+import de.mm20.launcher2.ui.component.telosTechCard
 import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
@@ -419,7 +420,7 @@ private fun CyberTechVideoTabStrip(
                 modifier = Modifier
                     .clip(shape)
                     .background(containerColor)
-                    .de.mm20.launcher2.ui.component.telosTechCard(
+                    .telosTechCard(
                         borderColor = borderColor,
                         shape = shape,
                         borderWidth = if (isSelected) 2.dp else 1.dp,

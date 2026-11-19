@@ -302,8 +302,8 @@ class MusicViewModel : ViewModel() {
             _loading.value = true
             try {
                 val commsSettings = org.koin.mp.KoinPlatform.getKoin().get<de.mm20.launcher2.preferences.comms.CommsSettings>()
-                val folder = kotlinx.coroutines.flow.first(commsSettings.mediaMusicFolder)
-                val includeHidden = kotlinx.coroutines.flow.first(commsSettings.mediaIncludeHiddenAndNomedia)
+                val folder = commsSettings.mediaMusicFolder.first()
+                val includeHidden = commsSettings.mediaIncludeHiddenAndNomedia.first()
                 _tracks.value = MusicLibrary.load(context, folder, includeHidden)
             } catch (e: kotlinx.coroutines.CancellationException) {
                 throw e

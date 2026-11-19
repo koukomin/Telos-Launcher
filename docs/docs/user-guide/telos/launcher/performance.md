@@ -13,7 +13,7 @@ Settings > Advanced > **Performance** (summary: "Animations, search speed, cachi
 
 On OnePlus, OPPO and realme devices, Telos leaves UI thread scheduling and
 launcher process importance to Android. Earlier builds applied manual priority
-overrides during launcher startup. Starting with 1.45.74, those overrides are
+overrides during launcher startup. Starting with 1.45.75, those overrides are
 skipped on ColorOS-family devices to improve compatibility with system task
 animations. ART compilation and the normal Android task history are retained.
 Device verification of the reported black or empty Recents screen is pending.

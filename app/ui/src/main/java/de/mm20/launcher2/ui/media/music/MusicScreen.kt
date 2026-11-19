@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.media.music
 
+import de.mm20.launcher2.ui.component.telosTechCard
 import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
@@ -260,7 +261,7 @@ fun MusicScreen(
                         },
                         shape = RoundedCornerShape(12.dp),
                         color = MaterialTheme.colorScheme.surfaceContainerHigh,
-                        modifier = Modifier.fillMaxWidth().de.mm20.launcher2.ui.component.telosTechCard(
+                        modifier = Modifier.fillMaxWidth().telosTechCard(
                             de.mm20.launcher2.ui.component.TelosCyber.NeonCyan, RoundedCornerShape(12.dp), 1.dp, 0.6f
                         ),
                     ) {
@@ -282,7 +283,7 @@ fun MusicScreen(
                         },
                         shape = RoundedCornerShape(12.dp),
                         color = MaterialTheme.colorScheme.surfaceContainerLow,
-                        modifier = Modifier.fillMaxWidth().de.mm20.launcher2.ui.component.telosTechCard(
+                        modifier = Modifier.fillMaxWidth().telosTechCard(
                             de.mm20.launcher2.ui.component.TelosCyber.NeonGreen, RoundedCornerShape(12.dp), 1.dp, 0.4f
                         ),
                     ) {
@@ -320,7 +321,7 @@ fun MusicScreen(
                     commsSettings.setMediaMusicFirstTimeAsked(true)
                     showFirstTimeDialog = false
                     viewModel.loadLibrary(context)
-                }) { Text(stringResource(BaseR.string.hc_ok)) }
+                }) { Text(stringResource(android.R.string.ok)) }
             },
         )
     }
@@ -525,9 +526,9 @@ private fun CyberTechMusicTabStrip(
 ) {
     val tabs = remember {
         listOf(
-            Triple(0, BaseR.drawable.grid_view_24px, I18nR.string.au10_music_tab_home),
+            Triple(0, BaseR.drawable.home_24px, I18nR.string.au10_music_tab_home),
             Triple(1, BaseR.drawable.music_note_24px, I18nR.string.au_music_tab_songs),
-            Triple(2, BaseR.drawable.album_24px, I18nR.string.hc_albums),
+            Triple(2, BaseR.drawable.music_note_24px, I18nR.string.hc_albums),
             Triple(3, BaseR.drawable.person_24px, I18nR.string.au_music_tab_artists),
         )
     }
@@ -549,7 +550,7 @@ private fun CyberTechMusicTabStrip(
                     .weight(1f)
                     .clip(shape)
                     .background(containerColor)
-                    .de.mm20.launcher2.ui.component.telosTechCard(
+                    .telosTechCard(
                         borderColor = borderColor,
                         shape = shape,
                         borderWidth = if (isSelected) 1.5.dp else 1.dp,

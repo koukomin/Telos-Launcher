@@ -1,0 +1,1 @@
+ColorOS compatibility: Android manages launcher scheduling for app switching and Recents. Fixed an embedded Aether shortcut icon reference that prevented the Android release build. Fixed compilation of the Cyber-Tech updates in Music, Stremio and Video.
