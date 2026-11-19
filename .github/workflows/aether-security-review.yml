@@ -1,44 +1,33 @@
-name: Validate Aether emoji archive security boundary
+name: Inspect Aether restore failure
 on:
   push:
     branches: ['codex/aether-security-review']
 permissions:
   contents: read
+  actions: read
 jobs:
-  emoji-regression:
+  inspect:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v7
-        with:
-          ref: codex/aether-amethyst-embedded
-          persist-credentials: false
-      - uses: actions/setup-java@v6
-        with:
-          distribution: temurin
-          java-version: '21'
-      - uses: gradle/actions/setup-gradle@v6
-        with:
-          cache-provider: basic
-      - name: Run archive traversal and extraction regressions
-        run: |
-          ./gradlew -p libs/amethyst :commons:jvmTest --tests com.vitorpamplona.amethyst.commons.model.nip30CustomEmojis.EmojiArchiveTest --no-configuration-cache --no-daemon --max-workers=1 --console=plain -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process '-Dorg.gradle.jvmargs=-Xmx6g -Dfile.encoding=UTF-8' > "$RUNNER_TEMP/emoji-tests.log" 2>&1 || { tail -70 "$RUNNER_TEMP/emoji-tests.log"; exit 1; }
-      - name: Require the traversal regression and all extraction cases to run
-        if: always()
+      - name: Read the completed UI job's runtime evidence
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           python3 - <<'PY'
-          import pathlib, xml.etree.ElementTree as ET
-          tests=[]
-          for p in pathlib.Path('libs/amethyst/commons/build/test-results').rglob('TEST-*.xml'):
-              tests.extend(c for c in ET.parse(p).getroot().iter('testcase') if c.get('classname')=='com.vitorpamplona.amethyst.commons.model.nip30CustomEmojis.EmojiArchiveTest')
-          assert any(c.get('name','').startswith('archivePathsNeverBecomeOutputPaths') for c in tests), 'Traversal regression did not run'
-          assert tests and all(not any(c.find(x) is not None for x in ['failure','error','skipped']) for c in tests), 'Archive regression failed/skipped'
-          print('::notice title=Emoji archive security tests::'+str(len(tests))+' tests passed, including traversal/Windows/absolute paths')
+          import subprocess,json,io,zipfile,os
+          base='repos/'+os.environ['GITHUB_REPOSITORY']
+          artifacts=json.loads(subprocess.check_output(['gh','api',base+'/actions/runs/44463126501/artifacts'],text=True))['artifacts']
+          selected=next(a for a in artifacts if a['name']=='aether-client-device-results')
+          data=subprocess.check_output(['gh','api',base+'/actions/artifacts/'+str(selected['id'])+'/zip'])
+          with zipfile.ZipFile(io.BytesIO(data)) as archive:
+              for name in archive.namelist():
+                  if not name.endswith('aether-client-logcat.txt'):continue
+                  lines=archive.read(name).decode(errors='replace').splitlines()
+                  markers=[i for i,l in enumerate(lines) if 'Force stopping com.dimitris.telos' in l]
+                  start=markers[-1] if markers else max(0,len(lines)-2000)
+                  selected=[l for l in lines[max(0,start-15):] if any(x in l for x in ['ActivityTaskManager','ActivityManager','AndroidRuntime','AetherRuntime','am_crash','am_anr','FATAL','Fatal signal','Abort message','Background activity','BAL_'])]
+                  out='\n'.join(selected[-160:])
+                  for offset in range(0,len(out),3300):
+                      print('::notice title=Restore runtime evidence::'+out[offset:offset+3300].replace('%','%25').replace('\r','%0D').replace('\n','%0A'))
           PY
-      - uses: actions/upload-artifact@v7
-        if: always()
-        with:
-          name: emoji-security-results
-          path: |
-            ${{ runner.temp }}/emoji-tests.log
-            libs/amethyst/commons/build/test-results/
