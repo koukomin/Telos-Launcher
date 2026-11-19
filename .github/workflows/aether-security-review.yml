@@ -27,21 +27,10 @@ jobs:
                   p=subprocess.run(['gh','api','--method','POST',base+'/actions/runs/'+str(r['id'])+'/cancel'],capture_output=True,text=True)
                   cancelled.append({'run':r['id'],'branch':r['head_branch'],'result':p.returncode})
           print('::notice title=Redundant helper snapshots::'+json.dumps(cancelled))
-          sha='a01618b532c704fabcf1783406fe8dbf9d74594e'
-          runs=json.loads(subprocess.check_output(['gh','api',base+'/actions/runs?head_sha='+sha+'&per_page=100'],text=True))['workflow_runs']
-          print('::notice title=Final release workflows::'+json.dumps([{k:r[k] for k in ['id','name','status','conclusion','event','head_branch']} for r in runs]))
-          for r in runs:
-              if r['name'] not in ['Release Android and Linux','CodeQL Security Scan']:continue
-              data=json.loads(subprocess.check_output(['gh','api',base+'/actions/runs/'+str(r['id'])+'/jobs?per_page=100'],text=True))
-              jobs=[{'id':j['id'],'name':j['name'],'status':j['status'],'conclusion':j['conclusion'],'active':[t['name'] for t in j['steps'] if t['status']=='in_progress']} for j in data['jobs']]
-              print('::notice title=Final build jobs::'+json.dumps({'run':r['id'],'name':r['name'],'jobs':jobs}))
-          pr=json.loads(subprocess.check_output(['gh','api',base+'/pulls/131'],text=True))
-          print('::notice title=Latest open PR integrated::'+json.dumps({k:pr[k] for k in ['number','state','merged','merge_commit_sha']}));assert pr['merged']
-          analyses=json.loads(subprocess.check_output(['gh','api',base+'/code-scanning/analyses?ref=refs/heads/main&per_page=100'],text=True))
-          matching=[{k:a.get(k) for k in ['id','commit_sha','results_count','category','error','warning']} for a in analyses if a['commit_sha']==sha]
-          print('::notice title=Final main analysis::'+json.dumps(matching))
-          if {'/language:java-kotlin','/language:actions'} <= {a.get('category') for a in matching}:
-              assert not any(a['error'] for a in matching)
-              alerts=json.loads(subprocess.check_output(['gh','api',base+'/code-scanning/alerts?state=open&ref=refs/heads/main&per_page=100'],text=True))
-              print('::notice title=Final main open alerts::'+json.dumps([{'number':a['number'],'rule':a['rule']['id']} for a in alerts]));assert not alerts
+          import re
+          raw=subprocess.check_output(['gh','api','--allow-escape-sequences',base+'/actions/jobs/135537562099/logs'],text=True)
+          lines=re.sub(r'\x1b\[[0-9;]*[A-Za-z]','',raw).splitlines()
+          start=next((i for i,l in enumerate(lines) if 'FAILURE: Build failed' in l),max(0,len(lines)-120))
+          selected=lines[start:start+90]+[l for l in lines if 'Caused by:' in l][:12]
+          print('::notice title=Pages Dokka failure evidence::'+json.dumps(selected)[:28000])
           PYCODE
