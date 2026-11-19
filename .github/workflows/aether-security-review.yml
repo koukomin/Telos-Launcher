@@ -19,17 +19,15 @@ jobs:
           python3 - <<'PYCODE'
           import subprocess,json,os
           base='repos/'+os.environ['GITHUB_REPOSITORY']
-          q='query { repository(owner:"koukomin",name:"Telos-Launcher") { dependencyGraphManifests(first:100) { nodes { filename blobPath dependencies(first:100) { nodes { packageName packageManager requirements } } } } } }'
-          result=subprocess.run(['gh','api','graphql','-f','query='+q],capture_output=True,text=True)
-          if result.returncode:print('::notice title=GraphQL access::'+result.stderr[:2000].replace('\n',' '))
-          else:
-              data=json.loads(result.stdout)
-              wanted=['guava','opentelemetry-api','commons-lang3','httpclient','jose4j','bcprov-jdk18on','bcpkix-jdk18on','jdom2','freemarker']
-              for m in data['data']['repository']['dependencyGraphManifests']['nodes']:
-                  deps=[d for d in m['dependencies']['nodes'] if any(p in d['packageName'] for p in wanted)]
-                  if deps:print('::notice title=Manifest graph::'+json.dumps({'file':m['filename'],'path':m['blobPath'],'deps':deps}))
-          for job in ['135389526578']:
-              response=subprocess.run(['gh','api','--allow-escape-sequences',base+'/actions/jobs/'+job+'/logs'],capture_output=True,text=True)
-              lines=[line for line in response.stdout.splitlines() if '::notice title=Disposable emulator retry::' in line and 'print(' not in line]
-              print('::notice title=Emulator retry request::'+json.dumps({'returncode':response.returncode,'stderr':response.stderr[:500],'lines':lines}))
+          own={'codex/aether-security-review','codex/aether-diagnostics','codex/aether-native-evidence','codex/aether-ui-evidence'}
+          runs=json.loads(subprocess.check_output(['gh','api',base+'/actions/runs?per_page=100'],text=True))['workflow_runs']
+          cancelled=[]
+          for r in runs:
+              if r['name']=='Automatic Dependency Submission (Gradle)' and r['head_branch'] in own and r['status'] in ('queued','in_progress','waiting','pending'):
+                  p=subprocess.run(['gh','api','--method','POST',base+'/actions/runs/'+str(r['id'])+'/cancel'],capture_output=True,text=True)
+                  cancelled.append({'run':r['id'],'branch':r['head_branch'],'result':p.returncode})
+          print('::notice title=Redundant helper snapshots::'+json.dumps(cancelled))
+          response=subprocess.run(['gh','api','--allow-escape-sequences',base+'/actions/jobs/135389526578/logs'],capture_output=True,text=True)
+          lines=[line for line in response.stdout.splitlines() if '::notice title=Disposable emulator retry::' in line and 'print(' not in line]
+          print('::notice title=Emulator retry request::'+json.dumps({'returncode':response.returncode,'stderr':response.stderr[:500],'lines':lines}))
           PYCODE
