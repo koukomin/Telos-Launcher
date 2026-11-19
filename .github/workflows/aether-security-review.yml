@@ -1,40 +1,18 @@
-name: Review patched Aether CodeQL results
+name: Scan the final resolved Island protocol fix
 on:
   push:
     branches: ['codex/aether-security-review']
 permissions:
   contents: read
-  security-events: read
+  actions: write
 jobs:
-  inspect:
+  scan:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - name: Verify actual source analysis and open findings on the patched branch
+      - name: Run full CodeQL on the final candidate
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          python3 - <<'PY'
-          import subprocess,json,os
-          base='repos/'+os.environ['GITHUB_REPOSITORY']+'/code-scanning'
-          ref='refs/heads/codex/aether-amethyst-embedded'
-          analyses=json.loads(subprocess.check_output(['gh','api',base+'/analyses?ref='+ref+'&per_page=100'],text=True))
-          matching=[a for a in analyses if a['commit_sha'].startswith('af60ca296')]
-          assert {'/language:java-kotlin','/language:actions'} <= {a.get('category') for a in matching}, 'Both analyses must exist'
-          for a in matching:
-              out={k:a.get(k) for k in ['id','commit_sha','results_count','category','error','warning']}
-              print('::notice title=Patched source analysis::'+json.dumps(out))
-              assert not a.get('error'),out
-          alerts=json.loads(subprocess.check_output(['gh','api',base+'/alerts?state=open&ref='+ref+'&per_page=100'],text=True))
-          print('::notice title=Patched branch open findings::'+str(len(alerts)))
-          for a in alerts:
-              out={'number':a['number'],'rule':a['rule'],'instance':a.get('most_recent_instance')}
-              print('::notice title=Remaining CodeQL finding::'+json.dumps(out).replace('%','%25').replace('\n','%0A')[:3900])
-          for a in matching:
-              if a.get('category')!='/language:java-kotlin' or not a.get('results_count'):continue
-              data=json.loads(subprocess.check_output(['gh','api','-H','Accept: application/sarif+json',base+'/analyses/'+str(a['id'])],text=True))
-              for run in data.get('runs',[]):
-                  for r in run.get('results',[]):
-                      out={k:r.get(k) for k in ['ruleId','level','message','locations']}
-                      print('::notice title=Patched SARIF result::'+json.dumps(out).replace('%','%25').replace('\n','%0A')[:3900])
-          PY
+          gh api --method POST repos/${{ github.repository }}/actions/workflows/codeql-security-scan.yml/dispatches -f ref=codex/aether-amethyst-embedded
+          echo '::notice title=Final protocol scan::Full CodeQL requested for the final freeze intent fix and Aether client'
