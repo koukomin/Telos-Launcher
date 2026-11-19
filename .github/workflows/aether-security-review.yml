@@ -27,13 +27,25 @@ jobs:
                   p=subprocess.run(['gh','api','--method','POST',base+'/actions/runs/'+str(r['id'])+'/cancel'],capture_output=True,text=True)
                   cancelled.append({'run':r['id'],'branch':r['head_branch'],'result':p.returncode})
           print('::notice title=Redundant helper snapshots::'+json.dumps(cancelled))
-          for run in ['44474665043','44471767507','44471949876']:
-              data=json.loads(subprocess.check_output(['gh','api',base+'/actions/runs/'+run+'/jobs?per_page=100'],text=True))
-              jobs=[{'id':j['id'],'name':j['name'],'status':j['status'],'conclusion':j['conclusion'],'active':[t['name'] for t in j['steps'] if t['status']=='in_progress']} for j in data['jobs']]
-              print('::notice title=Current validation jobs::'+json.dumps({'run':run,'jobs':jobs}))
-          q='query { repository(owner:"koukomin",name:"Telos-Launcher") { dependencyGraphManifests(first:30) { nodes { filename blobPath } } } }'
-          response=subprocess.run(['gh','api','graphql','-f','query='+q],capture_output=True,text=True)
-          print('::notice title=Dependency manifest ownership::'+response.stdout[:14000]+' '+response.stderr[:1000].replace('\n',' '))
+          data=json.loads(subprocess.check_output(['gh','api',base+'/actions/workflows/dependency-graph.yml/runs?per_page=100'],text=True))
+          old=[r for r in data['workflow_runs'] if r['name']=='Submit Gradle dependency graph' and r['head_branch']=='main' and r['conclusion']=='success']
+          print('::notice title=Retired graph runs::'+json.dumps([{k:r[k] for k in ['id','head_sha','created_at','name']} for r in old[:5]]))
+          import io,zipfile
+          for r in old[:2]:
+              artifacts=json.loads(subprocess.check_output(['gh','api',base+'/actions/runs/'+str(r['id'])+'/artifacts'],text=True))['artifacts']
+              print('::notice title=Retired graph artifacts::'+json.dumps([{'id':a['id'],'name':a['name'],'expired':a['expired']} for a in artifacts]))
+              for a in artifacts:
+                  if a['expired'] or 'dependency' not in a['name'].lower():continue
+                  content=subprocess.check_output(['gh','api','--allow-escape-sequences',base+'/actions/artifacts/'+str(a['id'])+'/zip'])
+                  z=zipfile.ZipFile(io.BytesIO(content))
+                  for file in z.namelist():
+                      if not file.endswith('.json'):continue
+                      try:d=json.loads(z.read(file))
+                      except ValueError:continue
+                      out={k:d.get(k) for k in ['job','sha','ref','detector','scanned']}
+                      if d.get('manifests'):
+                          out['manifests']={k:len(v.get('resolved',{})) for k,v in d['manifests'].items()}
+                          print('::notice title=Retired graph snapshot::'+json.dumps(out))
           PYCODE
       - name: Inspect pinned upstream crypto and database entry points
         run: |
@@ -48,4 +60,7 @@ jobs:
                   for i,line in enumerate(f.read_text().splitlines(),1):
                       if any(k in line for k in ['RsaPrivateKey','RsaPublicKey','SqliteStore::','Connection::open','open_with_flags']):rows.append(str(f.relative_to(root))+':'+str(i)+':'+line.strip())
           print('::notice title=Upstream crypto and database sites::'+json.dumps(rows)[:28000])
+          for f,start,end in [('tor-llcrypto/src/pk/rsa.rs',200,280),('tor-dirmgr/src/storage/sqlite.rs',175,245)]:
+              lines=(root/f).read_text().splitlines()
+              print('::notice title=Upstream trust boundary::'+json.dumps({'file':f,'source':'\\n'.join(str(i+1)+':'+lines[i] for i in range(start-1,min(end,len(lines))))}))
           PYCODE
