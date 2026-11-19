@@ -1,7 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="au22_stremio_fork_intro">A Stremio Fork összekapcsolja Stremio-fiókodat a Telos Mediával: böngészhetsz a katalógusokban, filmekben és sorozatokban, használhatod a kiegészítőidet és a könyvtáradat, valamint láthatod a Stremio és a csatlakoztatott Trakt-fiók megtekintési jelöléseit. Ez egy független, nem hivatalos kliens, amely nem áll kapcsolatban a Stremióval. A kezdéshez jelentkezz be alább.</string>
-    <string name="au22_stremio_watched_sources">✓ Megtekintve · %s</string>
     <string name="files_archive_split">ZIP felosztása részekre</string>
     <string name="files_archive_split_invalid">Adj meg egy egész számot 1 és 4194304 MiB között.</string>
     <string name="files_archive_split_note">Tartsd az összes .z01, .z02… részt a végső .zip fájl mellett. A .zip fájlt megnyitva böngészheted vagy kibonthatod az archívumot.</string>
@@ -151,17 +149,4 @@
     <string name="telos_youtube_searching">Keresés…</string>
     <string name="telos_youtube_store_description">Keress a YouTube-on, és játssz le videókat vagy zenét közvetlenül a Telos Mediában. Nincs szükség fiókra.</string>
     <string name="telos_youtube_store_features">Lejátszás a háttérben · Közös hang-/videólejátszó · Videóhivatkozások</string>
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
 </resources>

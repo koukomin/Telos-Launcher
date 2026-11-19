@@ -1,7 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="au22_stremio_fork_intro">Stremio Fork kobler Stremio-kontoen din til Telos Media: bla gjennom kataloger, filmer og serier, bruk tilleggene og biblioteket ditt, og se markeringer for sette titler fra Stremio og den tilkoblede Trakt-kontoen din. Dette er en uavhengig, uoffisiell klient uten tilknytning til Stremio. Logg inn nedenfor for å komme i gang.</string>
-    <string name="au22_stremio_watched_sources">✓ Sett · %s</string>
     <string name="files_archive_split">Del ZIP i deler</string>
     <string name="files_archive_split_invalid">Angi et heltall fra 1 til 4194304 MiB.</string>
     <string name="files_archive_split_note">Behold alle .z01, .z02…-deler ved siden av den siste .zip-filen. Åpne .zip-filen for å bla i eller pakke ut arkivet.</string>
@@ -151,17 +149,4 @@
     <string name="telos_youtube_searching">Søker…</string>
     <string name="telos_youtube_store_description">Søk på YouTube og spill av videoer eller musikk direkte i Telos Media. Ingen konto kreves.</string>
     <string name="telos_youtube_store_features">Bakgrunnsavspilling · Felles lyd-/videospiller · Videolenker</string>
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
 </resources>

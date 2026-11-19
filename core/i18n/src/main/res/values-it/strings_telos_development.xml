@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="telos_torrent_connecting">Connessione al torrent</string>
     <string name="telos_torrent_peers">Peer: %1$d · Seed: %2$d</string>
@@ -54,19 +54,4 @@
     <string name="telos_youtube_store_description">Cerca su YouTube e riproduci video o musica direttamente in Telos Media. Non serve un account.</string>
     <string name="telos_youtube_store_features">Riproduzione in background · Player audio/video condiviso · Link video</string>
     <string name="telos_media_store_description">Ascolta musica locale, radio e YouTube Music, guarda video locali o YouTube ed esplora TV e Stremio Fork.</string>
-    <string name="au22_stremio_fork_intro">Stremio Fork integra il tuo account Stremio in Telos Media: esplora cataloghi, film e serie, usa i tuoi componenti aggiuntivi e la libreria e visualizza i contenuti già visti su Stremio e sul tuo account Trakt collegato. È un client indipendente e non ufficiale, non affiliato a Stremio. Accedi qui sotto per iniziare.</string>
-    <string name="au22_stremio_watched_sources">✓ Visto · %s</string>
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
 </resources>

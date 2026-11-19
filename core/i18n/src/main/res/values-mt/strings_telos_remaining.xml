@@ -1,7 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="au22_stremio_fork_intro">Stremio Fork iġib il-kont Stremio tiegħek f’Telos Media: esplora katalgi, films u sensiliet, uża l-add-ons u l-librerija tiegħek, u ara l-marki ta’ dak li rajt minn Stremio u mill-kont Trakt konness tiegħek. Dan huwa klijent indipendenti u mhux uffiċjali, u mhuwiex affiljat ma’ Stremio. Idħol hawn taħt biex tibda.</string>
-    <string name="au22_stremio_watched_sources">✓ Rajtu · %s</string>
     <string name="files_archive_split">Aqsam ZIP f’partijiet</string>
     <string name="files_archive_split_invalid">Daħħal numru sħiħ minn 1 sa 4194304 MiB.</string>
     <string name="files_archive_split_note">Żomm kull parti .z01, .z02… ħdejn il-fajl .zip finali. Iftaħ il-fajl .zip biex tfittex jew tiġbed il-kontenut tal-arkivju.</string>
@@ -151,17 +149,4 @@
     <string name="telos_youtube_searching">Qed ifittex…</string>
     <string name="telos_youtube_store_description">Fittex fuq YouTube u doqq vidjows jew mużika direttament f’Telos Media. M’hemmx bżonn kont.</string>
     <string name="telos_youtube_store_features">Daqq fl-isfond · Player komuni għall-awdjo u l-vidjo · Links tal-vidjows</string>
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
 </resources>

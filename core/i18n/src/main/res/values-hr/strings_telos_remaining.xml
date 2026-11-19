@@ -1,7 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="au22_stremio_fork_intro">Stremio Fork povezuje vaš Stremio račun s Telos Media: pregledavajte kataloge, filmove i serije, koristite dodatke i biblioteku te oznake gledanja iz Stremija i povezanog Trakt računa. Ovo je neovisan, neslužben klijent koji nije povezan sa Stremijem. Prijavite se u nastavku da biste počeli.</string>
-    <string name="au22_stremio_watched_sources">✓ Odgledano · %s</string>
     <string name="files_archive_split">Podijeli ZIP na dijelove</string>
     <string name="files_archive_split_invalid">Unesite cijeli broj od 1 do 4194304 MiB.</string>
     <string name="files_archive_split_note">Sve dijelove .z01, .z02… držite uz završnu .zip datoteku. Otvorite .zip datoteku da biste pregledali ili raspakirali arhivu.</string>
@@ -151,17 +149,4 @@
     <string name="telos_youtube_searching">Pretraživanje…</string>
     <string name="telos_youtube_store_description">Pretražujte YouTube i reproducirajte videozapise ili glazbu izravno u Telos Media. Račun nije potreban.</string>
     <string name="telos_youtube_store_features">Reprodukcija u pozadini · Zajednički audio/videoplayer · Poveznice videozapisa</string>
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
 </resources>

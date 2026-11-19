@@ -1,7 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="au22_stremio_fork_intro">Stremio Fork আপনার Stremio অ্যাকাউন্টকে Telos Media-তে নিয়ে আসে: ক্যাটালগ, চলচ্চিত্র ও সিরিজ দেখুন, অ্যাড-অন ও লাইব্রেরি ব্যবহার করুন এবং Stremio ও সংযুক্ত Trakt অ্যাকাউন্টের দেখা হয়েছে চিহ্নগুলো দেখুন। এটি একটি স্বাধীন, অনানুষ্ঠানিক ক্লায়েন্ট এবং Stremio-এর সঙ্গে সংশ্লিষ্ট নয়। শুরু করতে নিচে সাইন ইন করুন।</string>
-    <string name="au22_stremio_watched_sources">✓ দেখা হয়েছে · %s</string>
     <string name="files_archive_split">ZIP ভাগ করুন</string>
     <string name="files_archive_split_invalid">1 থেকে 4194304 MiB-এর মধ্যে একটি পূর্ণসংখ্যা লিখুন।</string>
     <string name="files_archive_split_note">প্রতিটি .z01, .z02… অংশ শেষের .zip ফাইলের পাশে রাখুন। আর্কাইভ দেখতে বা নিষ্কাশন করতে .zip ফাইলটি খুলুন।</string>
@@ -151,17 +149,4 @@
     <string name="telos_youtube_searching">খোঁজা হচ্ছে…</string>
     <string name="telos_youtube_store_description">YouTube-এ খুঁজুন এবং Telos Media-তে সরাসরি ভিডিও বা গান চালান। অ্যাকাউন্টের প্রয়োজন নেই।</string>
     <string name="telos_youtube_store_features">ব্যাকগ্রাউন্ডে চালানো · একই অডিও/ভিডিও প্লেয়ার · ভিডিও লিংক</string>
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
 </resources>

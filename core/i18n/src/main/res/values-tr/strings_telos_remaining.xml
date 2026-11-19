@@ -1,7 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="au22_stremio_fork_intro">Stremio Fork, Stremio hesabınızı Telos Media’ya taşır: kataloglara, filmlere ve dizilere göz atın, eklentilerinizi ve kitaplığınızı kullanın, Stremio ve bağlı Trakt hesabınızdan izlenme işaretlerini görün. Bu, Stremio ile bağlantısı olmayan bağımsız ve gayriresmî bir istemcidir. Başlamak için aşağıdan oturum açın.</string>
-    <string name="au22_stremio_watched_sources">✓ İzlendi · %s</string>
     <string name="files_archive_split">ZIP’i parçalara böl</string>
     <string name="files_archive_split_invalid">1 ile 4194304 MiB arasında bir tam sayı girin.</string>
     <string name="files_archive_split_note">Tüm .z01, .z02… parçalarını son .zip dosyasının yanında tutun. Arşive göz atmak veya çıkarmak için .zip dosyasını açın.</string>
@@ -151,17 +149,4 @@
     <string name="telos_youtube_searching">Aranıyor…</string>
     <string name="telos_youtube_store_description">YouTube’da arayın ve video ya da müziği doğrudan Telos Media’da oynatın. Hesap gerekmez.</string>
     <string name="telos_youtube_store_features">Arka planda oynatma · Ortak ses/video oynatıcı · Video bağlantıları</string>
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
 </resources>

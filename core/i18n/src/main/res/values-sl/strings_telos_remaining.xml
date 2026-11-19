@@ -1,7 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="au22_stremio_fork_intro">Stremio Fork omogoča dostop do vašega računa Stremio v Telos Media: brskajte po katalogih, filmih in serijah, uporabljajte dodatke in knjižnico ter spremljajte oznake ogledanih vsebin iz Stremio in povezanega računa Trakt. To je neodvisen, neuraden odjemalec, ki ni povezan s Stremio. Za začetek se prijavite spodaj.</string>
-    <string name="au22_stremio_watched_sources">✓ Ogledano · %s</string>
     <string name="files_archive_split">Razdeli ZIP na dele</string>
     <string name="files_archive_split_invalid">Vnesite celo število od 1 do 4194304 MiB.</string>
     <string name="files_archive_split_note">Vse dele .z01, .z02… hranite ob končni datoteki .zip. Odprite datoteko .zip za brskanje po arhivu ali njegovo razširjanje.</string>
@@ -151,17 +149,4 @@
     <string name="telos_youtube_searching">Iskanje…</string>
     <string name="telos_youtube_store_description">Iščite v YouTube in predvajajte videoposnetke ali glasbo neposredno v Telos Media. Račun ni potreben.</string>
     <string name="telos_youtube_store_features">Predvajanje v ozadju · Skupni predvajalnik zvoka in videa · Povezave do videoposnetkov</string>
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
 </resources>

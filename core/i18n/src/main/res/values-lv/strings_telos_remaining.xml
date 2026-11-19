@@ -1,7 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="au22_stremio_fork_intro">Stremio Fork savieno jūsu Stremio kontu ar Telos Media: pārlūkojiet katalogus, filmas un seriālus, izmantojiet papildinājumus un bibliotēku un skatiet noskatīšanās atzīmes no Stremio un pievienotā Trakt konta. Šis ir neatkarīgs, neoficiāls klients, kas nav saistīts ar Stremio. Lai sāktu, pierakstieties tālāk.</string>
-    <string name="au22_stremio_watched_sources">✓ Noskatīts · %s</string>
     <string name="files_archive_split">Sadalīt ZIP daļās</string>
     <string name="files_archive_split_invalid">Ievadiet veselu skaitli no 1 līdz 4194304 MiB.</string>
     <string name="files_archive_split_note">Glabājiet visas .z01, .z02… daļas blakus pēdējam .zip failam. Lai pārlūkotu vai izpakotu arhīvu, atveriet .zip failu.</string>
@@ -151,17 +149,4 @@
     <string name="telos_youtube_searching">Meklē…</string>
     <string name="telos_youtube_store_description">Meklējiet YouTube un atskaņojiet videoklipus vai mūziku tieši Telos Media. Konts nav nepieciešams.</string>
     <string name="telos_youtube_store_features">Atskaņošana fonā · Kopīgs audio/video atskaņotājs · Videoklipu saites</string>
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
 </resources>

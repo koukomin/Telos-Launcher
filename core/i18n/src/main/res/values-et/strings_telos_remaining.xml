@@ -1,7 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="au22_stremio_fork_intro">Stremio Fork toob sinu Stremio konto Telos Mediasse: sirvi katalooge, filme ja sarju, kasuta lisasid ja oma kogu ning vaata Stremio ja ühendatud Trakti konto vaatamismärke. See on sõltumatu mitteametlik klient, mis ei ole Stremioga seotud. Alustamiseks logi allpool sisse.</string>
-    <string name="au22_stremio_watched_sources">✓ Vaadatud · %s</string>
     <string name="files_archive_split">Jaga ZIP osadeks</string>
     <string name="files_archive_split_invalid">Sisesta täisarv vahemikus 1–4194304 MiB.</string>
     <string name="files_archive_split_note">Hoia kõik .z01, .z02… osad lõpliku .zip-faili kõrval. Arhiivi sirvimiseks või lahtipakkimiseks ava .zip-fail.</string>
@@ -151,17 +149,4 @@
     <string name="telos_youtube_searching">Otsimine…</string>
     <string name="telos_youtube_store_description">Otsi YouTube’ist ja esita videoid või muusikat otse Telos Medias. Kontot pole vaja.</string>
     <string name="telos_youtube_store_features">Taasesitus taustal · Ühine heli- ja videopleier · Videolingid</string>
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
 </resources>

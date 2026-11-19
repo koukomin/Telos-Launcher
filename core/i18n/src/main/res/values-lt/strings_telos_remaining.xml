@@ -1,7 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="au22_stremio_fork_intro">Stremio Fork susieja jūsų Stremio paskyrą su Telos Media: naršykite katalogus, filmus ir serialus, naudokitės priedais bei biblioteka ir matykite peržiūrėtų kūrinių žymas iš Stremio ir susietos Trakt paskyros. Tai nepriklausomas, neoficialus klientas, nesusijęs su Stremio. Norėdami pradėti, prisijunkite žemiau.</string>
-    <string name="au22_stremio_watched_sources">✓ Peržiūrėta · %s</string>
     <string name="files_archive_split">Padalyti ZIP į dalis</string>
     <string name="files_archive_split_invalid">Įveskite sveikąjį skaičių nuo 1 iki 4194304 MiB.</string>
     <string name="files_archive_split_note">Visas .z01, .z02… dalis laikykite šalia galutinio .zip failo. Norėdami naršyti ar išskleisti archyvą, atverkite .zip failą.</string>
@@ -151,17 +149,4 @@
     <string name="telos_youtube_searching">Ieškoma…</string>
     <string name="telos_youtube_store_description">Ieškokite YouTube ir atkurkite vaizdo įrašus ar muziką tiesiogiai Telos Media. Paskyra nereikalinga.</string>
     <string name="telos_youtube_store_features">Atkūrimas fone · Bendras garso ir vaizdo leistuvas · Vaizdo įrašų nuorodos</string>
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
 </resources>

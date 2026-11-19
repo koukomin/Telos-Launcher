@@ -1,7 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="au22_stremio_fork_intro">Tugann Stremio Fork do chuntas Stremio isteach in Telos Media: brabhsáil catalóga, scannáin agus sraitheanna, úsáid do bhreiseáin agus do leabharlann, agus féach ar mharcanna féachana ó Stremio agus ón gcuntas Trakt atá nasctha agat. Is cliant neamhspleách, neamhoifigiúil é seo agus níl sé cleamhnaithe le Stremio. Sínigh isteach thíos chun tosú.</string>
-    <string name="au22_stremio_watched_sources">✓ Feicthe · %s</string>
     <string name="files_archive_split">Roinn ZIP ina chodanna</string>
     <string name="files_archive_split_invalid">Cuir isteach slánuimhir ó 1 go 4194304 MiB.</string>
     <string name="files_archive_split_note">Coinnigh gach cuid .z01, .z02… in aice leis an gcomhad .zip deiridh. Oscail an comhad .zip chun an chartlann a bhrabhsáil nó a bhaint amach.</string>
@@ -151,17 +149,4 @@
     <string name="telos_youtube_searching">Ag cuardach…</string>
     <string name="telos_youtube_store_description">Cuardaigh YouTube agus seinn físeáin nó ceol go díreach in Telos Media. Níl cuntas ag teastáil.</string>
     <string name="telos_youtube_store_features">Athsheinm sa chúlra · Seinnteoir fuaime/físeáin comhroinnte · Naisc físeáin</string>
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
 </resources>

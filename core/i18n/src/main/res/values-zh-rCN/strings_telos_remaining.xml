@@ -1,7 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="au22_stremio_fork_intro">Stremio Fork 将您的 Stremio 账号接入 Telos Media：浏览目录、电影和剧集，使用您的扩展和媒体库，并查看来自 Stremio 及已连接 Trakt 账号的已观看标记。这是独立的非官方客户端，与 Stremio 无隶属关系。请在下方登录以开始使用。</string>
-    <string name="au22_stremio_watched_sources">✓ 已观看 · %s</string>
     <string name="files_archive_split">将 ZIP 拆分为多个分卷</string>
     <string name="files_archive_split_invalid">请输入 1 至 4194304 MiB 之间的整数。</string>
     <string name="files_archive_split_note">请将所有 .z01、.z02… 分卷与最后的 .zip 文件放在同一目录中。打开 .zip 文件即可浏览或解压归档。</string>
@@ -151,17 +149,4 @@
     <string name="telos_youtube_searching">正在搜索…</string>
     <string name="telos_youtube_store_description">搜索 YouTube 并直接在 Telos Media 播放视频或音乐。无需账号。</string>
     <string name="telos_youtube_store_features">后台播放 · 共用音频/视频播放器 · 视频链接</string>
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
 </resources>

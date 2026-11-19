@@ -1,7 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="au22_stremio_fork_intro">Stremio Fork sprístupňuje váš účet Stremio v Telos Media: prezerajte katalógy, filmy a seriály, používajte doplnky a knižnicu a sledujte označenia pozretých položiek zo Stremio a pripojeného účtu Trakt. Ide o nezávislého, neoficiálneho klienta, ktorý nie je spojený so Stremio. Začnite prihlásením nižšie.</string>
-    <string name="au22_stremio_watched_sources">✓ Pozreté · %s</string>
     <string name="files_archive_split">Rozdeliť ZIP na časti</string>
     <string name="files_archive_split_invalid">Zadajte celé číslo od 1 do 4194304 MiB.</string>
     <string name="files_archive_split_note">Ponechajte všetky časti .z01, .z02… vedľa konečného súboru .zip. Otvorte súbor .zip na prezeranie alebo rozbalenie archívu.</string>
@@ -151,17 +149,4 @@
     <string name="telos_youtube_searching">Hľadanie…</string>
     <string name="telos_youtube_store_description">Hľadajte na YouTube a prehrávajte videá alebo hudbu priamo v Telos Media. Účet nie je potrebný.</string>
     <string name="telos_youtube_store_features">Prehrávanie na pozadí · Spoločný prehrávač zvuku a videa · Odkazy na videá</string>
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
 </resources>
