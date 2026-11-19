@@ -52,5 +52,19 @@ jobs:
           import os,json
           from pathlib import Path
           for name in ['crypto-tree.txt','ssh-features.txt']:
-              print('::notice title=Selected native crypto features::'+json.dumps({'file':name,'contents':(Path(os.environ['RUNNER_TEMP'])/name).read_text()[:18000]}))
+              text=(Path(os.environ['RUNNER_TEMP'])/name).read_text()
+              selected=[line for line in text.splitlines() if not any(t in line for t in ['Downloaded ','Downloading ','info:','warn:','Updating crates.io'])]
+              if name=='ssh-features.txt':selected=sorted(set(line[line.index('ssh-key-fork-arti feature'):].strip() for line in selected if 'ssh-key-fork-arti feature' in line))
+              print('::notice title=Selected native crypto features::'+json.dumps({'file':name,'lines':selected[:25]}))
+          PYCODE
+          python3 - <<'PYCODE'
+          from pathlib import Path
+          import json
+          root=Path('/tmp/amethyst-arti-build/.arti-source/crates')
+          for name in ['tor-key-forge','tor-keymgr']:
+              lines=(root/name/'Cargo.toml').read_text().splitlines()
+              selected=[]
+              for i,l in enumerate(lines):
+                  if 'ssh-key' in l:selected.extend(lines[max(0,i-1):min(len(lines),i+7)])
+              print('::notice title=Upstream key-format dependencies::'+json.dumps({'crate':name,'lines':selected}))
           PYCODE
