@@ -31,9 +31,9 @@ internal object DeviceAuthenticationKeys {
     }
 
     fun credentialKey(): SecretKey {
-        val key = key(CREDENTIAL_ALIAS, credential = true)
+        val credentialKey = key(CREDENTIAL_ALIAS, credential = true)
         try {
-            cipher(key)
+            cipher(credentialKey)
         } catch (_: UserNotAuthenticatedException) {
             // Expected before showing the credential prompt; the key itself is still valid.
         } catch (_: KeyPermanentlyInvalidatedException) {
@@ -41,7 +41,7 @@ internal object DeviceAuthenticationKeys {
             KeyStore.getInstance(STORE).apply { load(null); deleteEntry(CREDENTIAL_ALIAS) }
             return key(CREDENTIAL_ALIAS, credential = true)
         }
-        return key
+        return credentialKey
     }
 
     fun confirmCredential(key: SecretKey, challenge: ByteArray) {
