@@ -72,7 +72,7 @@ dokka {
     }
 }
 
-val javadocJar by tasks.registering(Jar::class) {
+val javadocJar = tasks.register<Jar>("javadocJar") {
     archiveClassifier.set("javadoc")
     from(tasks.dokkaGeneratePublicationHtml)
 }

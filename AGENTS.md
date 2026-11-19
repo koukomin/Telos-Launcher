@@ -15,6 +15,12 @@ To ensure seamless crash recovery and zero context loss across IDE restarts or l
 1. **At Session Start**: Every AI agent **MUST** inspect `.artifacts/SESSION_TRACKER.md` to check where previous work left off and read recorded user prompts.
 2. **During Session**: Every AI agent **MUST** log incoming user prompts, key decisions, active tasks, and completed steps into `.artifacts/SESSION_TRACKER.md` before and after major modifications.
 
+## Pre-Release Security & Automated Workflow Monitoring (Mandatory for all agents)
+
+Before merging or creating a release:
+1. **Pre-Release Security Audit**: All AI agents **MUST** inspect GitHub for security & secrets issues (Dependabot alerts, CodeQL scans, secret scanning) and automatically remediate any vulnerabilities or exposed secrets before releasing.
+2. **Real-time Workflow & PR Monitoring**: During merge/release operations, AI agents **MUST** actively monitor GitHub Actions workflows and PR builds in real-time. If any action or PR fails or hangs, the agent **MUST** automatically diagnose and fix the issue, re-triggering or pushing fixes until the entire build & release process is 100% completed.
+
 ## Project
 
 Telos — a search-focused, free and open source Android launcher (package `de.mm20.launcher2`). Kotlin/Gradle multi-module Android project. Licensed under GPL-3.0, except `plugins/sdk` and `core/shared` which are Apache-2.0.

@@ -31,7 +31,7 @@ abstract class NativeDaemonAssetTask : Exec() {
     abstract val assetsDirectory: DirectoryProperty
 }
 
-val buildNativeDaemon by tasks.registering(NativeDaemonAssetTask::class) {
+val buildNativeDaemon = tasks.register<NativeDaemonAssetTask>("buildNativeDaemon") {
     workingDir = file("daemon")
     inputs.files(fileTree("daemon") { include("**/*.go", "go.mod") })
     assetsDirectory.set(layout.buildDirectory.dir("native-daemon/main"))
