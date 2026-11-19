@@ -22,12 +22,13 @@ jobs:
           data=subprocess.check_output(['gh','api',base+'/actions/artifacts/'+str(selected['id'])+'/zip'])
           with zipfile.ZipFile(io.BytesIO(data)) as archive:
               for name in archive.namelist():
-                  if not name.endswith('aether-client-logcat.txt'):continue
+                  if 'logcat' not in name.lower():continue
+                  print('::notice title=Runtime evidence file::'+name)
                   lines=archive.read(name).decode(errors='replace').splitlines()
                   markers=[i for i,l in enumerate(lines) if 'Force stopping com.dimitris.telos' in l]
                   start=markers[-1] if markers else max(0,len(lines)-2000)
                   selected=[l for l in lines[max(0,start-15):] if any(x in l for x in ['ActivityTaskManager','ActivityManager','AndroidRuntime','AetherRuntime','am_crash','am_anr','FATAL','Fatal signal','Abort message','Background activity','BAL_'])]
-                  out='\n'.join(selected[-160:])
+                  out='\n'.join(selected[-260:])
                   for offset in range(0,len(out),3300):
                       print('::notice title=Restore runtime evidence::'+out[offset:offset+3300].replace('%','%25').replace('\r','%0D').replace('\n','%0A'))
           PY
