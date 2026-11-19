@@ -4,7 +4,7 @@ on:
     branches: ['codex/aether-security-review']
 permissions:
   contents: read
-  actions: read
+  actions: write
   pull-requests: read
   security-events: read
 jobs:
@@ -30,6 +30,8 @@ jobs:
                   out={k:x.get(k) for k in ['id','number','name','title','status','conclusion','head_branch','head_sha','created_at','updated_at','html_url']}
                   if 'head' in x:out['head']=x['head']['sha']
                   print('::notice title=Repository item::'+json.dumps(out))
+          retry=subprocess.run(['gh','api','--method','POST',base+'/actions/jobs/135382703352/rerun'],capture_output=True,text=True)
+          print('::notice title=Disposable emulator retry::'+str(retry.returncode)+' '+retry.stdout[:1000]+' '+retry.stderr[:1000].replace('\n',' '))
           import urllib.request,urllib.error
           sbom=json.loads(subprocess.check_output(['gh','api',base+'/dependency-graph/sbom'],text=True))['sbom']
           packages=[]
