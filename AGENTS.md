@@ -75,11 +75,9 @@ Search is the core feature. `core/base` defines the common `Searchable`/`Savable
 
 External apps can extend Kvaesitso (weather, file/contact/places search, calendar) by implementing content providers using `plugins/sdk`, without needing the launcher's internal modules. `:data:plugins` holds low-level plugin APIs/access control; `:services:plugins` is the higher-level plugin management service (enable/disable/list). See `docs/docs/developer-guide/plugins/` for the plugin type contracts and `docs/docs/developer-guide/plugins/access-control.md` for the security model.
 
-## Telos Desktop — pending phases (do not forget)
+## Telos Target Platform
 
-Gradle module `:desktop-linux` hosts **Telos Desktop** (Compose for Desktop JVM). Linux labwc/niri session + vault-as-`$HOME` are in tree. Windows UberJar is a portable Host Home shell; macOS Intel/ARM ships only after Linux + Windows play correctly. See `docs/docs/developer-guide/desktop-roadmap.md` and `.github/workflows/build-desktop-binaries.yml`.
-
-If the user asks what is still pending for the Linux session stack: **none of P0–P4, Helix, Surface, or Wayland W0–W3**. Spec: `docs/docs/developer-guide/telos-wayland-shell.md`. Spec: `docs/docs/developer-guide/telos-helix.md`. Never depend `:app:app` on `:desktop-linux`. `:app:ui` may use `:ui-kmp`.
+Telos is exclusively an Android Launcher (`package de.mm20.launcher2`). Desktop (Windows/Linux/JVM) build workflows and release targets are retired to ensure 100% focus and rapid, reliable Android APK releases.
 
 ## Python tooling (do not scatter scripts)
 

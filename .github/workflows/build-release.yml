@@ -1,4 +1,4 @@
-name: Release Android and Linux
+name: Release Telos Android
 
 on:
   pull_request:
@@ -10,7 +10,6 @@ on:
       - 'version.properties'
       - 'app/app/src/main/baseline-prof.txt'
       - 'app/app/build.gradle.kts'
-      - 'desktop-linux/**'
       - 'ui-kmp/**'
   push:
     tags: ['v*']
@@ -49,7 +48,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        abi: [arm64-v8a, armeabi-v7a, x86_64]
+        abi: [arm64-v8a, armeabi-v7a]
     steps:
       - uses: actions/checkout@v7
 
@@ -100,7 +99,6 @@ jobs:
           echo "KS_KEY_PASS=$SIGNING_KEY_PASSWORD" >> "$GITHUB_ENV"
 
       - name: Download SIP native libraries
-        if: matrix.abi != 'x86_64'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -119,14 +117,12 @@ jobs:
           -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process
           '-Dorg.gradle.jvmargs=-Xmx7g -Dfile.encoding=UTF-8'
 
-
       - name: Verify packaged native ABIs
         env:
           EXPECTED_ABI: ${{ matrix.abi }}
         run: python3 tools/release-apk-check.py
 
       - name: Verify Shizuku payloads and 16 KB ELF alignment
-        if: matrix.abi != 'x86_64'
         run: python3 tools/release-shizuku-native-check.py
 
       - name: Align and Sign APK with v1/v2/v3/v4 & 16KB Page Alignment
@@ -169,7 +165,6 @@ jobs:
           [[ "$BADGING" == *"versionName='$VERSION_NAME'"* ]]
           [[ "$BADGING" == *"versionCode='$VERSION_CODE'"* ]]
 
-
       - name: Upload APK artifact
         if: github.event_name != 'pull_request'
         uses: actions/upload-artifact@v7
@@ -186,186 +181,6 @@ jobs:
           name: mapping-${{ matrix.abi }}
           path: app/app/build/outputs/mapping/defaultRelease/mapping.txt
           retention-days: 90
-
-  linux:
-    if: false
-    needs: version
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-java@v6
-        with:
-          java-version: '21'
-          distribution: 'temurin'
-      - uses: gradle/actions/setup-gradle@v6
-        with:
-          cache-provider: basic
-      - name: Test and build Linux
-        run: ./gradlew :ui-kmp:test :desktop-linux:test :desktop-linux:packageUberJarForCurrentOS --stacktrace
-      - name: Package Linux artifacts
-        run: |
-          mkdir -p linux-out
-          mapfile -t JARS < <(find desktop-linux/build/compose/jars -maxdepth 1 -name '*.jar')
-          test "${#JARS[@]}" -eq 1
-          VERSION_NAME=$(sed -n 's/^versionName=//p' version.properties)
-          cp "${JARS[0]}" linux-out/telos-linux-desktop.jar
-          cp "${JARS[0]}" "linux-out/telos-desktop-linux-x64-${VERSION_NAME}.jar"
-          unzip -p linux-out/telos-linux-desktop.jar META-INF/MANIFEST.MF | grep -F "Implementation-Version: $VERSION_NAME"
-          cp tools/start-telos-desktop.sh linux-out/
-          tar -czf linux-out/telos-linux-session.tar.gz -C desktop-linux session
-          tar -czf linux-out/telos-desktop-linux-session-x64.tar.gz -C desktop-linux session
-      - uses: actions/upload-artifact@v7
-        with:
-          name: telos-linux
-          path: linux-out/*
-          if-no-files-found: error
-
-  windows:
-    if: false
-    needs: version
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-java@v6
-        with:
-          java-version: '21'
-          distribution: 'temurin'
-      - uses: gradle/actions/setup-gradle@v6
-        with:
-          cache-provider: basic
-      - name: Install WiX 3 (required for Compose packageExe / jpackage)
-        shell: pwsh
-        run: |
-          # Prefer preinstalled WiX on windows-latest; only choco-install when missing.
-          $ErrorActionPreference = 'Stop'
-          $candidates = @(
-            "${env:ProgramFiles(x86)}\WiX Toolset v3.14\bin",
-            "${env:ProgramFiles}\WiX Toolset v3.14\bin",
-            "${env:ProgramFiles(x86)}\WiX Toolset v3.11\bin"
-          )
-          $candidates += @(
-            Get-ChildItem -Path "${env:ProgramFiles(x86)}" -Filter 'WiX Toolset v3*' -Directory -ErrorAction SilentlyContinue |
-              ForEach-Object { Join-Path $_.FullName 'bin' }
-          )
-          $wix = $candidates |
-            Where-Object { $_ -and (Test-Path (Join-Path $_ 'light.exe')) } |
-            Select-Object -First 1
-          if (-not $wix) {
-            choco install wixtoolset -y --no-progress
-            if ($LASTEXITCODE -ne 0) { throw "choco install wixtoolset failed: $LASTEXITCODE" }
-            $candidates += @(
-              Get-ChildItem -Path "${env:ProgramFiles(x86)}" -Filter 'WiX Toolset v3*' -Directory -ErrorAction SilentlyContinue |
-                ForEach-Object { Join-Path $_.FullName 'bin' }
-            )
-            $wix = $candidates |
-              Where-Object { $_ -and (Test-Path (Join-Path $_ 'light.exe')) } |
-              Select-Object -First 1
-          }
-          if (-not $wix) { throw 'WiX light.exe not found (install WiX Toolset 3.x)' }
-          Add-Content -Path $env:GITHUB_PATH -Value $wix
-          Write-Host "WiX bin on PATH: $wix"
-          exit 0
-      - name: Test and build Windows UberJar + Exe
-        shell: bash
-        run: |
-          ./gradlew :ui-kmp:test :desktop-linux:test \
-            :desktop-linux:packageUberJarForCurrentOS \
-            :desktop-linux:createDistributable \
-            :desktop-linux:packageExe \
-            --stacktrace
-      - name: Package Windows artifacts
-        shell: bash
-        run: |
-          mkdir -p win-out
-          VERSION_NAME=$(sed -n 's/^versionName=//p' version.properties)
-          mapfile -t JARS < <(find desktop-linux/build/compose/jars -maxdepth 1 -name '*.jar')
-          test "${#JARS[@]}" -eq 1
-          cp "${JARS[0]}" "win-out/telos-desktop-windows-x64-${VERSION_NAME}.jar"
-
-          mapfile -t SETUP_EXES < <(find desktop-linux/build/compose/binaries -type f -name '*.exe' \
-            ! -path '*/app/*' 2>/dev/null | sort)
-          if [ "${#SETUP_EXES[@]}" -lt 1 ]; then
-            mapfile -t SETUP_EXES < <(find desktop-linux/build/compose -type f -name '*.exe' \
-              ! -path '*/runtime/*' ! -path '*/app/telos-desktop/*' 2>/dev/null | sort)
-          fi
-          test "${#SETUP_EXES[@]}" -ge 1
-          cp "${SETUP_EXES[0]}" "win-out/telos-desktop-windows-x64-${VERSION_NAME}-setup.exe"
-          cp "win-out/telos-desktop-windows-x64-${VERSION_NAME}-setup.exe" \
-            "win-out/telos-desktop-windows-x64-setup.exe"
-
-          APP_DIR=$(find desktop-linux/build/compose/binaries -type d -path '*/app/telos-desktop' 2>/dev/null | head -1)
-          test -n "$APP_DIR"
-          PORTABLE_ZIP="$GITHUB_WORKSPACE/win-out/telos-desktop-windows-x64-${VERSION_NAME}-portable.zip"
-          APP_DIR_WIN=$(cygpath -w "$APP_DIR" 2>/dev/null || echo "$APP_DIR")
-          PORTABLE_ZIP_WIN=$(cygpath -w "$PORTABLE_ZIP" 2>/dev/null || echo "$PORTABLE_ZIP")
-          powershell.exe -NoProfile -Command \
-            "Compress-Archive -Path '$APP_DIR_WIN' -DestinationPath '$PORTABLE_ZIP_WIN' -Force"
-          test -s "win-out/telos-desktop-windows-x64-${VERSION_NAME}-portable.zip"
-
-          cat > win-out/README-WINDOWS.txt <<EOF
-          Telos Desktop (Windows x64)
-          Prefer telos-desktop-windows-x64-${VERSION_NAME}-setup.exe (bundled JRE).
-          Portable: unzip *-portable.zip and run telos-desktop.exe in that folder.
-          UberJar fallback (JDK 21+): java -jar telos-desktop-windows-x64-*.jar
-          Defaults to Portable Data. macOS builds deferred. Unsigned CI builds.
-          EOF
-      - uses: actions/upload-artifact@v7
-        with:
-          name: telos-windows
-          path: win-out/*
-          if-no-files-found: error
-
-  windows-vm:
-    if: false
-    needs: [version, build]
-    runs-on: windows-latest
-    timeout-minutes: 45
-    steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-dotnet@v6
-        with:
-          dotnet-version: '8.0.x'
-      - name: Publish Windows VM launcher
-        shell: pwsh
-        run: |
-          $version = (Get-Content version.properties | Where-Object { $_.StartsWith('versionName=') }).Split('=')[1]
-          dotnet publish tools/windows-qemu-android/src/TelosAndroidVm/TelosAndroidVm.csproj -c Release -r win-x64 --self-contained -p:PublishSingleFile=true "-p:Version=$version" --output "$env:RUNNER_TEMP/vm-publish"
-          if ($LASTEXITCODE -ne 0) { throw 'Windows VM launcher compilation failed' }
-      - uses: actions/download-artifact@v8
-        with:
-          name: telos-x86_64
-          path: ${{ runner.temp }}/vm-apk
-      - name: Assemble a clean Windows VM bundle
-        shell: pwsh
-        run: |
-          $ErrorActionPreference = 'Stop'
-          $stage = Join-Path $env:RUNNER_TEMP 'vm-stage'
-          $output = Join-Path $env:RUNNER_TEMP 'vm-out'
-          New-Item -ItemType Directory -Force -Path $stage, $output, (Join-Path $stage 'scripts') | Out-Null
-          Copy-Item -Recurse -Force "$env:RUNNER_TEMP/vm-publish/*" $stage
-          foreach ($file in @('fetch-toolchain.ps1', 'prepare-qcow2.ps1', 'blissos.lock.json', 'README.md')) {
-            Copy-Item (Join-Path 'tools/windows-qemu-android' $file) $stage
-          }
-          Copy-Item tools/windows-qemu-android/scripts/first-boot-lock.sh (Join-Path $stage 'scripts')
-          Copy-Item LICENSE.txt, THIRD_PARTY_NOTICES.md $stage
-          Copy-Item "$env:RUNNER_TEMP/vm-apk/telos-x86_64.apk" $stage
-          & (Join-Path $stage 'fetch-toolchain.ps1') -SkipIso
-          foreach ($tool in @('vendor/qemu/qemu-system-x86_64.exe', 'vendor/qemu/qemu-img.exe', 'vendor/scrcpy/adb.exe', 'vendor/scrcpy/scrcpy.exe')) {
-            $binary = Join-Path $stage $tool
-            if (-not (Test-Path -LiteralPath $binary -PathType Leaf)) { throw "Missing packaged tool: $tool" }
-            if ($tool.EndsWith('adb.exe')) { & $binary version } else { & $binary --version }
-            if ($LASTEXITCODE -ne 0) { throw "Packaged tool failed its version check: $tool" }
-          }
-          $downloads = Join-Path $stage 'vendor/dl'
-          if (Test-Path $downloads) { Remove-Item -Recurse -Force $downloads }
-          if (Test-Path (Join-Path $stage '.git')) { throw 'Repository metadata must not enter the VM bundle' }
-          $version = (Get-Content version.properties | Where-Object { $_.StartsWith('versionName=') }).Split('=')[1]
-          Compress-Archive -Path (Join-Path $stage '*') -DestinationPath (Join-Path $output "telos-android-vm-windows-x64-$version.zip")
-      - uses: actions/upload-artifact@v7
-        with:
-          name: telos-windows-vm
-          path: ${{ runner.temp }}/vm-out/*.zip
-          if-no-files-found: error
 
   release:
     permissions:
