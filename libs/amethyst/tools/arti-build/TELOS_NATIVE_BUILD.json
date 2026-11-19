@@ -1,29 +1,30 @@
 {
-  "telos_source": "a48e12f0abc7387b0e780e5b72b8a3f6e34a6d32",
+  "telos_source": "d79b5fc776d23b2fa9321ef248278dc52396b9df",
   "arti_source": "a71097fdf7b141b56d1eb3709628ee38d232c9d1",
   "rustls": "0.23.46",
   "rustc": "rustc 1.98.1 (48a229cea 2026-09-01)",
   "sha256": {
-    "libs/amethyst/amethyst/src/main/jniLibs/arm64-v8a/libarti_android.so": "2c798d9939adf83bfb646f89b56d010cb97f18420b462831f71dbaf1ea85463a",
-    "libs/amethyst/amethyst/src/main/jniLibs/armeabi-v7a/libarti_android.so": "2e795a1652c76828529044cb081210097b0bcaa2c1763b170583f03c2160dd97",
-    "libs/amethyst/amethyst/src/main/jniLibs/x86_64/libarti_android.so": "215fa6ed74e82159adde3e0b3fea0c1b30d8a7382dfdc30031ebbad314a39910",
-    "libs/amethyst/amethyst/src/main/jniLibs/x86/libarti_android.so": "b9f06cab954639c9799aaf363945753761fff12b8bfde3aab1604e71565144ca",
-    "libs/amethyst/amethyst/src/test/native-libs/x86_64-linux/libarti_android.so": "91475bdb4e1173dea8049aea1e334fbf8da02e6db4ebc957263d6f4911e211b0"
+    "libs/amethyst/amethyst/src/main/jniLibs/arm64-v8a/libarti_android.so": "bae7abc1ea9c56825de24092f715be0402d364d06a8cf95fc3f7607d62ba03db",
+    "libs/amethyst/amethyst/src/main/jniLibs/armeabi-v7a/libarti_android.so": "50fa8cca38b81250be03e24db5615fd66e459e4d714ca4ecf47d991666dd67cb",
+    "libs/amethyst/amethyst/src/main/jniLibs/x86_64/libarti_android.so": "ddb01f15fb4e802a1b90a747c6f1b8f3213118608d2864f16931f6d9862747ba",
+    "libs/amethyst/amethyst/src/main/jniLibs/x86/libarti_android.so": "445e921cc9f89b0c31fd6e7b84a5d6d26aa2e1bdf10aff4b70ecfe7de43e7ea1",
+    "libs/amethyst/amethyst/src/test/native-libs/x86_64-linux/libarti_android.so": "3450004e78e78de9365b5acffe8037087d7cd4bc5078e7450b7b0af9ad2d73d4"
   },
   "arti_tag": "arti-v2.6.0",
   "ndk": "30.0.16248370",
   "cargo_ndk": "4.1.2",
-  "build_workflow_run": "https://github.com/koukomin/Telos-Launcher/actions/runs/44421180096",
+  "build_workflow_run": "https://github.com/koukomin/Telos-Launcher/actions/runs/44474665043",
   "build_inputs": {
     "libs/amethyst/tools/arti-build/ANDROID_NDK_VERSION": "22cc9c939be82ae6f6ae560606b8b90662301a8da60517042442bbf80b2b9df4",
     "libs/amethyst/tools/arti-build/ARTI_VERSION": "9b826f9636eb8cd4b0e5f2d547a02ddcefd95819b7d8c790d806d6a44ddab1f2",
     "libs/amethyst/tools/arti-build/CARGO_NDK_VERSION": "b3bb6f691586de9019e3cc79bc93f052fe628911cf38bff77319a05242cc7fec",
-    "libs/amethyst/tools/arti-build/Cargo.lock": "84133ba95a51c2888ba02f45e5b5d4cbf458e53b6bd66fb8ab903b1473285272",
+    "libs/amethyst/tools/arti-build/Cargo.lock": "63f1e4e7209e72c99d89e61f18dc8c57056c02c4536aa23387baf2b6c6380566",
     "libs/amethyst/tools/arti-build/Cargo.toml": "b1c9a28bb2f8dea69d2de5a85a1f8a74ef73d9c8c5b1eebc59503bc3e4e93433",
     "libs/amethyst/tools/arti-build/build-arti-host.sh": "192f24cf4d249a385e08078e32b5e2dc690cd5a01e7aa65b7f1e12041361800b",
     "libs/amethyst/tools/arti-build/build-arti.sh": "7cdc56e8337d880fd6fca4bc5cc77652015471ce596bb5ac96aea3b79db04fcd",
     "libs/amethyst/tools/arti-build/repro-env.sh": "748ab7bafd5f63c5ef53e37444e61bdec21a8352e7acc2052e6eb00aba79db80",
     "libs/amethyst/tools/arti-build/rust-toolchain.toml": "223869359462e6b40089cf2bbabe984ac5cd303adc64834d64f8c6577d0e79f6",
     "libs/amethyst/tools/arti-build/src/lib.rs": "f4ad1c4c03de9c23afd5cef4a337f1cdbf1a2b544c4d25a773858d85902231f9"
-  }
+  },
+  "anyhow": "1.0.104"
 }
