@@ -20,7 +20,9 @@ jobs:
           import subprocess,json,os
           base='repos/'+os.environ['GITHUB_REPOSITORY']
           for job in ['135389378081','135389526578']:
-              logs=subprocess.check_output(['gh','api',base+'/actions/jobs/'+job+'/logs'],text=True)
+              response=subprocess.run(['gh','api',base+'/actions/jobs/'+job+'/logs'],capture_output=True,text=True)
+              print('::notice title=Log endpoint access::'+str(response.returncode)+' '+response.stderr[:2000].replace('\n',' '))
+              logs=response.stdout
               lines=[line for line in logs.splitlines() if ('::notice title=SBOM ' in line or '::notice title=Disposable emulator retry::' in line) and 'print(' not in line]
               print('::notice title=Audit and retry evidence::'+json.dumps({'job':job,'lines':lines}).replace('%','%25').replace('\n','%0A')[:30000])
           PYCODE
