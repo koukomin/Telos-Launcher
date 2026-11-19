@@ -24,6 +24,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.animation.animateContentSize
 import androidx.compose.ui.draw.blur
@@ -357,10 +358,9 @@ fun VideoScreen() {
             return@Column
         }
 
-        PillTabs(
-            titles = listOf(I18nR.string.au_video_tab_library, I18nR.string.au_video_tab_movies, I18nR.string.au_video_tab_series, I18nR.string.au7_vidfolders_tab_other, I18nR.string.au_video_tab_folders).map { stringResource(it) },
-            selected = tab,
-            onSelect = { tab = it },
+        CyberTechVideoTabStrip(
+            selectedTab = tab,
+            onTabSelected = { tab = it },
         )
         when {
             loading -> VideoSkeleton()
@@ -383,6 +383,74 @@ fun VideoScreen() {
         }
     }
     }
+    }
+}
+
+@Composable
+private fun CyberTechVideoTabStrip(
+    selectedTab: Int,
+    onTabSelected: (Int) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val tabs = remember {
+        listOf(
+            Triple(0, BaseR.drawable.video_library_24px, I18nR.string.au_video_tab_library),
+            Triple(1, BaseR.drawable.movie_24px, I18nR.string.au_video_tab_movies),
+            Triple(2, BaseR.drawable.tv_24px, I18nR.string.au_video_tab_series),
+            Triple(3, BaseR.drawable.folder_24px, I18nR.string.au7_vidfolders_tab_other),
+            Triple(4, BaseR.drawable.folder_24px, I18nR.string.au_video_tab_folders),
+        )
+    }
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .horizontalScroll(rememberScrollState())
+            .padding(horizontal = 16.dp, vertical = 6.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        tabs.forEach { (index, iconRes, labelRes) ->
+            val isSelected = selectedTab == index
+            val accent = de.mm20.launcher2.ui.component.TelosCyber.accentFor(index)
+            val borderColor = if (isSelected) accent else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f)
+            val containerColor = if (isSelected) accent.copy(alpha = 0.18f) else MaterialTheme.colorScheme.surfaceContainerLow.copy(alpha = 0.6f)
+            val shape = RoundedCornerShape(12.dp)
+
+            Box(
+                modifier = Modifier
+                    .clip(shape)
+                    .background(containerColor)
+                    .de.mm20.launcher2.ui.component.telosTechCard(
+                        borderColor = borderColor,
+                        shape = shape,
+                        borderWidth = if (isSelected) 2.dp else 1.dp,
+                        alpha = if (isSelected) 0.9f else 0.4f,
+                    )
+                    .clickable { onTabSelected(index) }
+                    .padding(vertical = 8.dp, horizontal = 14.dp),
+                contentAlignment = Alignment.Center,
+            ) {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center,
+                ) {
+                    Icon(
+                        painter = painterResource(iconRes),
+                        contentDescription = stringResource(labelRes),
+                        modifier = Modifier.size(20.dp),
+                        tint = if (isSelected) accent else MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                    Spacer(Modifier.height(4.dp))
+                    Text(
+                        text = stringResource(labelRes),
+                        style = MaterialTheme.typography.labelSmall,
+                        fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
+                        color = if (isSelected) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.onSurfaceVariant,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                }
+            }
+        }
     }
 }
 

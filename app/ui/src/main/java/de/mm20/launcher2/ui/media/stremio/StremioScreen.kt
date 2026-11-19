@@ -12,22 +12,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.FlowRow
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.horizontalScroll
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -566,6 +552,73 @@ private fun StremioWatchedCalendar(
     }
 }
 
+@Composable
+private fun CyberTechStremioTabStrip(
+    selectedTab: Int,
+    onTabSelected: (Int) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val tabs = remember {
+        listOf(
+            Triple(0, BaseR.drawable.movie_24px, I18nR.string.au22_stremio_home),
+            Triple(1, BaseR.drawable.video_library_24px, I18nR.string.au22_stremio_library),
+            Triple(3, BaseR.drawable.search_24px, I18nR.string.au22_stremio_discover),
+            Triple(2, BaseR.drawable.schedule_24px, I18nR.string.au22_stremio_calendar),
+        )
+    }
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 6.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        tabs.forEach { (index, iconRes, labelRes) ->
+            val isSelected = selectedTab == index
+            val accent = de.mm20.launcher2.ui.component.TelosCyber.accentFor(index)
+            val borderColor = if (isSelected) accent else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f)
+            val containerColor = if (isSelected) accent.copy(alpha = 0.18f) else MaterialTheme.colorScheme.surfaceContainerLow.copy(alpha = 0.6f)
+            val shape = RoundedCornerShape(12.dp)
+
+            Box(
+                modifier = Modifier
+                    .weight(1f)
+                    .clip(shape)
+                    .background(containerColor)
+                    .de.mm20.launcher2.ui.component.telosTechCard(
+                        borderColor = borderColor,
+                        shape = shape,
+                        borderWidth = if (isSelected) 2.dp else 1.dp,
+                        alpha = if (isSelected) 0.9f else 0.4f,
+                    )
+                    .clickable { onTabSelected(index) }
+                    .padding(vertical = 8.dp, horizontal = 4.dp),
+                contentAlignment = Alignment.Center,
+            ) {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center,
+                ) {
+                    Icon(
+                        painter = painterResource(iconRes),
+                        contentDescription = stringResource(labelRes),
+                        modifier = Modifier.size(20.dp),
+                        tint = if (isSelected) accent else MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                    Spacer(Modifier.height(4.dp))
+                    Text(
+                        text = stringResource(labelRes),
+                        style = MaterialTheme.typography.labelSmall,
+                        fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
+                        color = if (isSelected) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.onSurfaceVariant,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                }
+            }
+        }
+    }
+}
+
 /** Home/Library/Calendar and search share one row, even with large fonts and narrow windows. */
 @Composable
 internal fun StremioBrowseControls(
@@ -576,11 +629,8 @@ internal fun StremioBrowseControls(
 ) {
     Column {
         Row(Modifier.fillMaxWidth().padding(horizontal = 8.dp), verticalAlignment = Alignment.CenterVertically) {
-            Row(Modifier.weight(1f).horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                FilterChip(selected = tab == 0, onClick = { onTab(0) }, label = { Text(stringResource(I18nR.string.au22_stremio_home)) }, shape = MaterialTheme.shapes.large)
-                FilterChip(selected = tab == 1, onClick = { onTab(1) }, label = { Text(stringResource(I18nR.string.au22_stremio_library)) }, shape = MaterialTheme.shapes.large)
-                FilterChip(selected = tab == 3, onClick = { onTab(3) }, label = { Text(stringResource(I18nR.string.au22_stremio_discover)) }, shape = MaterialTheme.shapes.large)
-                FilterChip(selected = tab == 2, onClick = { onTab(2) }, label = { Text(stringResource(I18nR.string.au22_stremio_calendar)) }, shape = MaterialTheme.shapes.large)
+            Box(Modifier.weight(1f)) {
+                CyberTechStremioTabStrip(selectedTab = tab, onTabSelected = onTab)
             }
             if (tab == 0) de.mm20.launcher2.ui.media.MediaSearchAction(searchExpanded, query.isNotBlank()) {
                 if (searchExpanded) onQuery("")
@@ -590,15 +640,15 @@ internal fun StremioBrowseControls(
 
         if (tab == 0) {
             Row(
-                Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 2.dp).horizontalScroll(rememberScrollState()),
+                Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 2.dp).horizontalScroll(rememberScrollState()),
                 horizontalArrangement = Arrangement.spacedBy(6.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                listOf("All", "Movies", "Series").forEach { t ->
+                listOf("All" to I18nR.string.au22_stremio_filter_all, "Movies" to I18nR.string.au22_stremio_type_movie, "Series" to I18nR.string.au22_stremio_type_series).forEach { (t, res) ->
                     FilterChip(
                         selected = typeFilter == t,
                         onClick = { onTypeFilter(t) },
-                        label = { Text(t) },
+                        label = { Text(stringResource(res)) },
                         shape = MaterialTheme.shapes.small
                     )
                 }
@@ -607,7 +657,7 @@ internal fun StremioBrowseControls(
                     FilterChip(
                         selected = yearFilter == y,
                         onClick = { onYearFilter(y) },
-                        label = { Text(y) },
+                        label = { Text(if (y == "All") stringResource(I18nR.string.au22_stremio_filter_all) else y) },
                         shape = MaterialTheme.shapes.small
                     )
                 }
@@ -782,6 +832,13 @@ private fun DetailPage(vm: StremioViewModel, d: DetailState) {
                     meta.description?.let { Text(it, style = MaterialTheme.typography.bodyMedium) }
                     if (meta.cast.isNotEmpty()) Text(meta.cast.take(8).joinToString(", "), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     if (meta.isSeries) Episodes(vm, meta)
+                    
+                    LaunchedEffect(meta.id) {
+                        if (!meta.isSeries) {
+                            vm.showStreams(meta, null)
+                        }
+                    }
+                    InlineStreamsSection(vm = vm, meta = meta)
                 }
                 Spacer(Modifier.height(96.dp))
             }
@@ -816,6 +873,84 @@ private fun Episodes(vm: StremioViewModel, meta: Meta) {
                     Text(listOfNotNull(v.episode?.toString(), v.title).joinToString(". "), style = MaterialTheme.typography.bodyLarge, maxLines = 2, overflow = TextOverflow.Ellipsis)
                     WatchMark(vm, meta.id, v.id, videoOrder, v.season, v.episode)
                     v.overview?.let { Text(it, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 2, overflow = TextOverflow.Ellipsis) }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun InlineStreamsSection(vm: StremioViewModel, meta: Meta) {
+    val context = LocalContext.current
+    val state by vm.streams.collectAsStateWithLifecycle()
+    val preferences by androidx.compose.runtime.produceState<de.mm20.launcher2.comms.stremio.StremioPlaybackSettings?>(null) {
+        value = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+            de.mm20.launcher2.comms.stremio.StremioPlaybackSettings.load(context)
+        }
+    }
+
+    val items = state?.items.orEmpty()
+    val visibleStreams = remember(items, preferences) {
+        preferences?.let { de.mm20.launcher2.comms.stremio.StremioStreamFilter.apply(items, it) } ?: items
+    }
+    val loading = state?.loading == true
+
+    Column(Modifier.fillMaxWidth().padding(top = 12.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Icon(painterResource(BaseR.drawable.play_arrow_24px), contentDescription = null, tint = de.mm20.launcher2.ui.component.TelosCyber.NeonCyan, modifier = Modifier.size(20.dp))
+            Spacer(Modifier.width(8.dp))
+            TelosCyberHeading { Text(stringResource(I18nR.string.au22_stremio_inline_streams)) }
+        }
+
+        when {
+            loading -> {
+                Row(Modifier.fillMaxWidth().padding(vertical = 12.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center) {
+                    CircularProgressIndicator(Modifier.size(20.dp), strokeWidth = 2.dp)
+                    Spacer(Modifier.width(12.dp))
+                    Text(stringResource(I18nR.string.au22_stremio_streams), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
+            }
+            state != null && visibleStreams.isEmpty() -> {
+                Text(stringResource(I18nR.string.au22_stremio_no_streams), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(vertical = 8.dp))
+            }
+            state != null -> {
+                visibleStreams.take(15).forEach { s ->
+                    val supported = s.kind != StreamItem.Kind.Unsupported
+                    Surface(
+                        onClick = {
+                            if (supported) {
+                                vm.play(context, s, state!!) { opened ->
+                                    if (!opened) Toast.makeText(context, I18nR.string.au22_stremio_unsupported, Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                        },
+                        shape = RoundedCornerShape(12.dp),
+                        color = MaterialTheme.colorScheme.surfaceContainerHigh,
+                        modifier = Modifier.fillMaxWidth().de.mm20.launcher2.ui.component.telosTechCard(
+                            borderColor = if (s.streamKey() == state?.lastUsed) de.mm20.launcher2.ui.component.TelosCyber.NeonCyan else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f),
+                            shape = RoundedCornerShape(12.dp),
+                            borderWidth = 1.dp,
+                            alpha = 0.5f,
+                        )
+                    ) {
+                        Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Text(s.name ?: s.addonName, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold, modifier = Modifier.weight(1f), maxLines = 1, overflow = TextOverflow.Ellipsis)
+                                Icon(painterResource(BaseR.drawable.play_arrow_24px), contentDescription = null, tint = de.mm20.launcher2.ui.component.TelosCyber.NeonCyan, modifier = Modifier.size(18.dp))
+                            }
+                            s.description?.let { Text(it, style = MaterialTheme.typography.bodySmall, maxLines = 2, overflow = TextOverflow.Ellipsis) }
+                            Text(
+                                when (s.kind) {
+                                    StreamItem.Kind.Torrent -> stringResource(I18nR.string.au22_stremio_p2p_warning)
+                                    StreamItem.Kind.External -> stringResource(I18nR.string.au22_stremio_opens_browser)
+                                    StreamItem.Kind.Unsupported -> stringResource(I18nR.string.au22_stremio_unsupported)
+                                    else -> s.addonName
+                                },
+                                style = MaterialTheme.typography.labelSmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                        }
+                    }
                 }
             }
         }

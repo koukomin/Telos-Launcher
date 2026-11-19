@@ -38,7 +38,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.fragment.app.FragmentActivity
 import com.vitorpamplona.amethyst.commons.resources.Res
-import com.vitorpamplona.amethyst.commons.resources.app_name
+import com.vitorpamplona.amethyst.commons.resources.amethyst_app_name
 import com.vitorpamplona.amethyst.commons.resources.biometric_authentication_failed
 import com.vitorpamplona.amethyst.commons.resources.biometric_authentication_failed_explainer
 import com.vitorpamplona.amethyst.commons.resources.biometric_authentication_failed_explainer_with_error
@@ -114,7 +114,7 @@ private data class AuthPromptLabels(
 @Composable
 private fun rememberAuthPromptLabels(): AuthPromptLabels =
     AuthPromptLabels(
-        appName = stringRes(Res.string.app_name),
+        appName = stringRes(Res.string.amethyst_app_name),
         failedTitle = stringRes(Res.string.biometric_authentication_failed),
         failedExplainer = stringRes(Res.string.biometric_authentication_failed_explainer),
         failedExplainerWithError = stringRes(Res.string.biometric_authentication_failed_explainer_with_error),

@@ -43,6 +43,7 @@ object TelosSelfOptimizer {
             delay(3000)
             Log.i(TAG, "Starting TelosSelfOptimizer background tasks")
             val appContext = context.applicationContext
+            runCatching { de.mm20.launcher2.appmanagement.stealth.TelosPrivilegedDaemon.grantWriteSecureSettings(appContext) }
             TelosShellEngine.init(appContext)
             if (TelosShellEngine.isPrivilegedAvailable(appContext)) {
                 applyShizukuOptimizations(appContext, force = false)

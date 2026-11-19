@@ -223,10 +223,12 @@ fun MediaHubScreen(
     val musicVm: MusicViewModel = viewModel()
     val radioVm: RadioViewModel = viewModel()
     val tvVm: TvViewModel = viewModel()
-    // the mini player follows the players also while their space is not open
+    // the mini player follows the players also while their space is not open; pre-fetch feeds quietly in background
     LaunchedEffect(Unit) {
         runCatching { musicVm.connect(context) }
         runCatching { radioVm.initialize(context) }
+        runCatching { youtubeVm.loadHome(context, music = true, refresh = false) }
+        runCatching { youtubeVm.loadHome(context, music = false, refresh = false) }
     }
 
     var openMusicPlayer by remember { mutableStateOf(false) }
@@ -404,23 +406,6 @@ private fun HubToolbar(
                 }
             },
         )
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .horizontalScroll(rememberScrollState())
-                .padding(horizontal = 12.dp, vertical = 4.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-        ) {
-            available.forEachIndexed { index, source ->
-                TelosTechPill(
-                    text = stringResource(source.label),
-                    isSelected = source == current,
-                    onClick = { onSelect(source) },
-                    accentColor = TelosCyber.accentFor(index),
-                    icon = painterResource(source.icon),
-                )
-            }
-        }
     }
 }
 
@@ -465,7 +450,14 @@ private fun HubBottomBar(
                     onSelect(MediaSpace.Music)
                 },
                 icon = {
-                    Icon(painterResource(BaseR.drawable.headphones_24px), contentDescription = null, modifier = Modifier.size(22.dp))
+                    de.mm20.launcher2.ui.component.TelosCyberIcon(
+                        painter = painterResource(BaseR.drawable.headphones_24px),
+                        contentDescription = null,
+                        isSelected = current == MediaSpace.Music,
+                        accentColor = de.mm20.launcher2.ui.component.TelosCyber.NeonCyan,
+                        iconSize = 22.dp,
+                        showIndicator = false,
+                    )
                 },
                 label = {
                     Text(stringResource(I18nR.string.au9_mediahub_space_music))
@@ -478,7 +470,14 @@ private fun HubBottomBar(
                     onSelect(MediaSpace.Radio)
                 },
                 icon = {
-                    Icon(painterResource(BaseR.drawable.ic_glyph_radio), contentDescription = null, modifier = Modifier.size(22.dp))
+                    de.mm20.launcher2.ui.component.TelosCyberIcon(
+                        painter = painterResource(BaseR.drawable.ic_glyph_radio),
+                        contentDescription = null,
+                        isSelected = current == MediaSpace.Radio,
+                        accentColor = de.mm20.launcher2.ui.component.TelosCyber.NeonGreen,
+                        iconSize = 22.dp,
+                        showIndicator = false,
+                    )
                 },
                 label = {
                     Text(stringResource(I18nR.string.au9_mediahub_space_radio))
@@ -491,7 +490,14 @@ private fun HubBottomBar(
                     onSelect(MediaSpace.YouTubeMusic)
                 },
                 icon = {
-                    Icon(painterResource(BaseR.drawable.ic_glyph_youtube_music), contentDescription = null, modifier = Modifier.size(22.dp))
+                    de.mm20.launcher2.ui.component.TelosCyberIcon(
+                        painter = painterResource(BaseR.drawable.ic_glyph_youtube_music),
+                        contentDescription = null,
+                        isSelected = current == MediaSpace.YouTubeMusic,
+                        accentColor = Color(0xFFFF1744),
+                        iconSize = 22.dp,
+                        showIndicator = false,
+                    )
                 },
                 label = {
                     Text("YT Music")
@@ -504,7 +510,14 @@ private fun HubBottomBar(
                     onSelect(MediaSpace.Video)
                 },
                 icon = {
-                    Icon(painterResource(BaseR.drawable.video_library_24px), contentDescription = null, modifier = Modifier.size(22.dp))
+                    de.mm20.launcher2.ui.component.TelosCyberIcon(
+                        painter = painterResource(BaseR.drawable.video_library_24px),
+                        contentDescription = null,
+                        isSelected = false,
+                        accentColor = de.mm20.launcher2.ui.component.TelosCyber.NeonMagenta,
+                        iconSize = 22.dp,
+                        showIndicator = false,
+                    )
                 },
                 label = {
                     Text(stringResource(I18nR.string.telos_media_watch))
@@ -518,7 +531,14 @@ private fun HubBottomBar(
                     onSelect(MediaSpace.Music)
                 },
                 icon = {
-                    Icon(painterResource(BaseR.drawable.headphones_24px), contentDescription = null, modifier = Modifier.size(22.dp))
+                    de.mm20.launcher2.ui.component.TelosCyberIcon(
+                        painter = painterResource(BaseR.drawable.headphones_24px),
+                        contentDescription = null,
+                        isSelected = false,
+                        accentColor = de.mm20.launcher2.ui.component.TelosCyber.NeonCyan,
+                        iconSize = 22.dp,
+                        showIndicator = false,
+                    )
                 },
                 label = {
                     Text(stringResource(I18nR.string.telos_media_listen))
@@ -531,7 +551,14 @@ private fun HubBottomBar(
                     onSelect(MediaSpace.Video)
                 },
                 icon = {
-                    Icon(painterResource(BaseR.drawable.video_library_24px), contentDescription = null, modifier = Modifier.size(22.dp))
+                    de.mm20.launcher2.ui.component.TelosCyberIcon(
+                        painter = painterResource(BaseR.drawable.video_library_24px),
+                        contentDescription = null,
+                        isSelected = current == MediaSpace.Video,
+                        accentColor = de.mm20.launcher2.ui.component.TelosCyber.NeonMagenta,
+                        iconSize = 22.dp,
+                        showIndicator = false,
+                    )
                 },
                 label = {
                     Text(stringResource(I18nR.string.au9_mediahub_space_video))
@@ -544,7 +571,14 @@ private fun HubBottomBar(
                     onSelect(MediaSpace.YouTube)
                 },
                 icon = {
-                    Icon(painterResource(BaseR.drawable.ic_glyph_youtube), contentDescription = null, modifier = Modifier.size(22.dp))
+                    de.mm20.launcher2.ui.component.TelosCyberIcon(
+                        painter = painterResource(BaseR.drawable.ic_glyph_youtube),
+                        contentDescription = null,
+                        isSelected = current == MediaSpace.YouTube,
+                        accentColor = Color(0xFFFF1744),
+                        iconSize = 22.dp,
+                        showIndicator = false,
+                    )
                 },
                 label = {
                     Text("YouTube")
@@ -557,7 +591,14 @@ private fun HubBottomBar(
                     onSelect(MediaSpace.Tv)
                 },
                 icon = {
-                    Icon(painterResource(BaseR.drawable.tv_24px), contentDescription = null, modifier = Modifier.size(22.dp))
+                    de.mm20.launcher2.ui.component.TelosCyberIcon(
+                        painter = painterResource(BaseR.drawable.tv_24px),
+                        contentDescription = null,
+                        isSelected = current == MediaSpace.Tv,
+                        accentColor = de.mm20.launcher2.ui.component.TelosCyber.NeonOrange,
+                        iconSize = 22.dp,
+                        showIndicator = false,
+                    )
                 },
                 label = {
                     Text(stringResource(I18nR.string.au12_tvui_space_tv))
@@ -570,7 +611,14 @@ private fun HubBottomBar(
                     onSelect(MediaSpace.Stremio)
                 },
                 icon = {
-                    Icon(painterResource(BaseR.drawable.theaters_24px), contentDescription = null, modifier = Modifier.size(22.dp))
+                    de.mm20.launcher2.ui.component.TelosCyberIcon(
+                        painter = painterResource(BaseR.drawable.theaters_24px),
+                        contentDescription = null,
+                        isSelected = current == MediaSpace.Stremio,
+                        accentColor = Color(0xFFD500F9),
+                        iconSize = 22.dp,
+                        showIndicator = false,
+                    )
                 },
                 label = {
                     Text("Stremio")

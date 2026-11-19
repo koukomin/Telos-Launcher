@@ -186,6 +186,7 @@ import com.vitorpamplona.amethyst.service.uploads.blossom.BlossomSyncForegroundS
 import com.vitorpamplona.amethyst.service.uploads.nip95.Nip95CacheFactory
 import com.vitorpamplona.amethyst.service.wot.TrustNetworkSyncWorker
 import com.vitorpamplona.amethyst.ui.resourceCacheInit
+import com.vitorpamplona.amethyst.ui.tor.TorBackend
 import com.vitorpamplona.amethyst.ui.tor.TorManager
 import com.vitorpamplona.amethyst.ui.tor.TorProgressNotifier
 import com.vitorpamplona.amethyst.ui.tor.TorService
@@ -394,7 +395,7 @@ class AppModules(
         UiSettingsState(uiPrefs.value, connManager.isMobileOrFalse, applicationIOScope)
     }
 
-    private val torService = TorService(appContext, applicationIOScope)
+    private val torService: TorBackend = com.vitorpamplona.amethyst.ui.tor.TorBackendBridge.provider?.invoke() ?: TorService(appContext, applicationIOScope)
     val torManager = TorManager(torPrefs, torService, applicationIOScope)
 
     // Opt-in Tor startup-progress notification (TorSettings.progressNotification). Watches the

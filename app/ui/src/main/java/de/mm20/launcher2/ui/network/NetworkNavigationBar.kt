@@ -1,11 +1,12 @@
 package de.mm20.launcher2.ui.network
 import de.mm20.launcher2.i18n.R as I18nR
 
-import androidx.compose.material3.Icon
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.AdaptiveNavigationBar
 import de.mm20.launcher2.ui.component.AdaptiveNavigationItem
@@ -46,7 +47,22 @@ internal fun NetworkNavigationBar(selected: NetworkSection) {
                         backStack.add(route)
                     }
                 }
-            }, icon = { Icon(painterResource(glyph), null) }, label = { Text(stringResource(title)) })
+            }, icon = {
+                de.mm20.launcher2.ui.component.TelosCyberIcon(
+                    painter = painterResource(glyph),
+                    contentDescription = null,
+                    isSelected = section == selected,
+                    accentColor = when (section) {
+                        NetworkSection.Home -> de.mm20.launcher2.ui.component.TelosCyber.NeonCyan
+                        NetworkSection.Stats -> de.mm20.launcher2.ui.component.TelosCyber.NeonGreen
+                        NetworkSection.Logs -> de.mm20.launcher2.ui.component.TelosCyber.NeonOrange
+                        NetworkSection.Apps -> de.mm20.launcher2.ui.component.TelosCyber.NeonMagenta
+                        NetworkSection.Settings -> de.mm20.launcher2.ui.component.TelosCyber.NeonCyan
+                    },
+                    iconSize = 22.dp,
+                    showIndicator = false,
+                )
+            }, label = { Text(stringResource(title)) })
         }
     }
 }

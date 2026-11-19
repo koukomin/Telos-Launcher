@@ -83,7 +83,7 @@ import com.vitorpamplona.amethyst.commons.hashtags.Amethyst
 import com.vitorpamplona.amethyst.commons.hashtags.CustomHashTagIcons
 import com.vitorpamplona.amethyst.commons.icons.symbols.MaterialSymbol
 import com.vitorpamplona.amethyst.commons.resources.Res
-import com.vitorpamplona.amethyst.commons.resources.app_name
+import com.vitorpamplona.amethyst.commons.resources.amethyst_app_name
 import com.vitorpamplona.amethyst.commons.resources.connect_via_tor2
 import com.vitorpamplona.amethyst.commons.resources.ic_tor
 import com.vitorpamplona.amethyst.commons.resources.login_or
@@ -286,7 +286,7 @@ private fun BrandMark(
         )
         Spacer(Modifier.height(if (large) 24.dp else 12.dp))
         Text(
-            text = stringRes(Res.string.app_name),
+            text = stringRes(Res.string.amethyst_app_name),
             style = if (large) MaterialTheme.typography.displaySmall else MaterialTheme.typography.headlineMedium,
             fontWeight = FontWeight.Bold,
         )
@@ -307,7 +307,7 @@ private fun CompactBrandMark() {
         )
         Spacer(Modifier.width(12.dp))
         Text(
-            text = stringRes(Res.string.app_name),
+            text = stringRes(Res.string.amethyst_app_name),
             style = MaterialTheme.typography.headlineSmall,
             fontWeight = FontWeight.Bold,
         )

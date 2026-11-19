@@ -70,8 +70,11 @@ kotlin {
     // is warm: 60 s with it against 88 s without on an M5 Pro. If the symbol
     // error ever comes back, re-add the workaround from git history and point
     // it at the Kotlin version it was verified against.
-    iosArm64()
-    iosSimulatorArm64()
+    val enableIosTargets = providers.gradleProperty("enableIosTargets").orNull?.toBoolean() == true
+    if (enableIosTargets) {
+        iosArm64()
+        iosSimulatorArm64()
+    }
 
     sourceSets {
         commonMain {
@@ -229,14 +232,6 @@ kotlin {
             }
         }
 
-        // iOS intermediate so iosArm64Main and iosSimulatorArm64Main share code.
-        val iosMain =
-            create("iosMain") {
-                dependsOn(commonMain.get())
-            }
-        getByName("iosArm64Main").dependsOn(iosMain)
-        getByName("iosSimulatorArm64Main").dependsOn(iosMain)
-
         // Skiko-backed targets (desktop JVM + iOS) share pixel-format helpers
         // (org.jetbrains.skia.* resolves on both through Compose). Android is
         // deliberately NOT in this set — it renders through android.graphics.
@@ -250,7 +245,17 @@ kotlin {
                 }
             }
         getByName("jvmMain").dependsOn(skikoMain)
-        iosMain.dependsOn(skikoMain)
+
+        // iOS intermediate so iosArm64Main and iosSimulatorArm64Main share code.
+        if (enableIosTargets) {
+            val iosMain =
+                create("iosMain") {
+                    dependsOn(commonMain.get())
+                }
+            getByName("iosArm64Main").dependsOn(iosMain)
+            getByName("iosSimulatorArm64Main").dependsOn(iosMain)
+            iosMain.dependsOn(skikoMain)
+        }
 
         getByName("androidHostTest") {
             dependencies {

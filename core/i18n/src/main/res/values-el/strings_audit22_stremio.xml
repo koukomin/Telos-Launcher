@@ -36,34 +36,53 @@
     <string name="au22_stremio_sort_featured">Προτεινόμενα</string>
     <string name="au22_stremio_sort_trakt">Trakt</string>
     <string name="au22_stremio_genre_all">Όλα τα είδη</string>
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-<string name="au22_stremio_upcoming">Προσεχώς</string>
-<string name="au22_stremio_calendar">Ημερολόγιο / Ιστορικό</string>
-<string name="au22_stremio_history">Ιστορικό παρακολούθησης</string>
-<string name="au22_stremio_history_empty">Δεν έχει καταγραφεί ιστορικό παρακολούθησης.</string>
-<string name="au22_stremio_watched_on">Παρακολουθήθηκε στις %s</string>
-<string name="au22_stremio_notify_episodes">Ειδοποίηση όταν προβάλλεται επεισόδιο της βιβλιοθήκης</string>
-<string name="au22_stremio_episode_aired">Νέο επεισόδιο</string>
-<string name="au22_stremio_episode_aired_text">%1$s · %2$s</string>
-<string name="au22_stremio_remaining_min">%d λεπτά ακόμα</string>
-<string name="au22_stremio_remaining_hm">%1$d ώρες %2$d λεπτά ακόμα</string>
-<string name="au22_stremio_percent">%d%%</string>
-<string name="au22_stremio_configure">Ρύθμιση</string>
-<string name="au22_stremio_server_connected">Ο streaming server είναι συνδεδεμένος</string>
-<string name="au22_stremio_test_server">Δοκιμή streaming server</string>
-<string name="au22_stremio_profiles">Προφίλ</string>
-<string name="au22_stremio_profile_anonymous">Ανώνυμο</string>
-<string name="au22_stremio_profile_name">Όνομα προφίλ</string>
+    <string name="au22_stremio_genre_action">Δράση</string>
+    <string name="au22_stremio_genre_animation">Κινούμενα Σχέδια</string>
+    <string name="au22_stremio_genre_comedy">Κωμωδία</string>
+    <string name="au22_stremio_genre_crime">Εγκληματικό</string>
+    <string name="au22_stremio_genre_documentary">Ντοκιμαντέρ</string>
+    <string name="au22_stremio_genre_drama">Δράμα</string>
+    <string name="au22_stremio_genre_family">Οικογενειακό</string>
+    <string name="au22_stremio_genre_fantasy">Φαντασία</string>
+    <string name="au22_stremio_genre_horror">Τρόμου</string>
+    <string name="au22_stremio_genre_mystery">Μυστήριο</string>
+    <string name="au22_stremio_genre_romance">Ρομαντικό</string>
+    <string name="au22_stremio_genre_scifi">Επιστημονικής Φαντασίας</string>
+    <string name="au22_stremio_genre_thriller">Θρίλερ</string>
+    <string name="au22_stremio_genre_western">Γουέστερν</string>
+    <string name="au22_stremio_filter_year">Έτος</string>
+    <string name="au22_stremio_filter_genre">Είδος</string>
+    <string name="au22_stremio_filter_addon">Πρόσθετο</string>
+    <string name="au22_stremio_filter_all">Όλα</string>
+    <string name="au22_stremio_inline_streams">Διαθέσιμες Ροές Αναπαραγωγής</string>
+    <string name="au22_stremio_upcoming">Προσεχώς</string>
+    <string name="au22_stremio_calendar">Ημερολόγιο / Ιστορικό</string>
+    <string name="au22_stremio_history">Ιστορικό παρακολούθησης</string>
+    <string name="au22_stremio_history_empty">Δεν έχει καταγραφεί ιστορικό παρακολούθησης.</string>
+    <string name="au22_stremio_watched_on">Παρακολουθήθηκε στις %s</string>
+    <string name="au22_stremio_notify_episodes">Ειδοποίηση όταν προβάλλεται επεισόδιο της βιβλιοθήκης</string>
+    <string name="au22_stremio_episode_aired">Νέο επεισόδιο</string>
+    <string name="au22_stremio_episode_aired_text">%1$s · %2$s</string>
+    <string name="au22_stremio_remaining_min">%d λεπτά ακόμα</string>
+    <string name="au22_stremio_remaining_hm">%1$d ώρες %2$d λεπτά ακόμα</string>
+    <string name="au22_stremio_percent">%d%%</string>
+    <string name="au22_stremio_configure">Ρύθμιση</string>
+    <string name="au22_stremio_server_connected">Ο streaming server είναι συνδεδεμένος</string>
+    <string name="au22_stremio_test_server">Δοκιμή streaming server</string>
+    <string name="au22_stremio_profiles">Προφίλ</string>
+    <string name="au22_stremio_profile_anonymous">Ανώνυμο</string>
+    <string name="au22_stremio_profile_name">Όνομα προφίλ</string>
+    <string name="au22_stremio_label">Stremio Fork</string>
+    <string name="au22_stremio_account">Stremio account</string>
+    <string name="au22_stremio_account_intro">Sign in with your Stremio account to keep your add-ons, library and continue watching in step with it. Your password is sent only to Stremio (api.strem.io) and is not stored. This uses Stremio\'s account service, which Stremio can change or block at any time. Telos is not affiliated with Stremio.</string>
+    <string name="au22_stremio_email">Email</string>
+    <string name="au22_stremio_password">Password</string>
+    <string name="au22_stremio_sign_in">Sign in</string>
+    <string name="au22_stremio_signed_in">Signed in as %s</string>
+    <string name="au22_stremio_sync_now">Sync now</string>
+    <string name="au22_stremio_sign_out">Sign out</string>
+    <string name="au22_stremio_synced">Synced</string>
+    <string name="au22_stremio_directory">Browse add-ons</string>
+    <string name="au22_stremio_directory_hint">Add-ons listed by your installed add-ons and by Stremio\'s public list. They are made by others and are not checked by Telos or Stremio.</string>
+    <string name="au22_stremio_directory_empty">No add-ons found</string>
 </resources>

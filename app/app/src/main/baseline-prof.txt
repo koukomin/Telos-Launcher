@@ -12,7 +12,7 @@ Lde/mm20/launcher2/LauncherApplication;
 
 Lde/mm20/launcher2/memory/TelosMemoryTrimmer;
 
-Lde/mm20/launcher2/art/TelosSelfOptimizer;
+Lde/mm20/launcher2/ui/performance/TelosSelfOptimizer;
 
 Lde/mm20/launcher2/ktx/TelosShellEngine;
 

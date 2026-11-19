@@ -749,6 +749,24 @@ class CommsSettings internal constructor(
         }
     }
 
+    val mediaMusicFolder
+        get() = dataStore.data.map { it.comms.mediaMusicFolder }
+    fun setMediaMusicFolder(folder: String) {
+        dataStore.update { it.copy(comms = it.comms.copy(mediaMusicFolder = folder)) }
+    }
+
+    val mediaMusicFirstTimeAsked
+        get() = dataStore.data.map { it.comms.mediaMusicFirstTimeAsked }
+    fun setMediaMusicFirstTimeAsked(asked: Boolean) {
+        dataStore.update { it.copy(comms = it.comms.copy(mediaMusicFirstTimeAsked = asked)) }
+    }
+
+    val mediaIncludeHiddenAndNomedia
+        get() = dataStore.data.map { it.comms.mediaIncludeHiddenAndNomedia }
+    fun setMediaIncludeHiddenAndNomedia(include: Boolean) {
+        dataStore.update { it.copy(comms = it.comms.copy(mediaIncludeHiddenAndNomedia = include)) }
+    }
+
     val snapshot
         get() = dataStore.data.map { it.comms }
 

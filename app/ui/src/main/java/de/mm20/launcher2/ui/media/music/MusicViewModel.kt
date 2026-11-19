@@ -22,6 +22,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import de.mm20.launcher2.comms.media.LyricsClient
 import de.mm20.launcher2.comms.media.Lyrics
+import kotlinx.coroutines.flow.first
+import org.koin.core.component.KoinComponent
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -299,7 +301,10 @@ class MusicViewModel : ViewModel() {
         viewModelScope.launch {
             _loading.value = true
             try {
-                _tracks.value = MusicLibrary.load(context)
+                val commsSettings = org.koin.mp.KoinPlatform.getKoin().get<de.mm20.launcher2.preferences.comms.CommsSettings>()
+                val folder = kotlinx.coroutines.flow.first(commsSettings.mediaMusicFolder)
+                val includeHidden = kotlinx.coroutines.flow.first(commsSettings.mediaIncludeHiddenAndNomedia)
+                _tracks.value = MusicLibrary.load(context, folder, includeHidden)
             } catch (e: kotlinx.coroutines.CancellationException) {
                 throw e
             } catch (e: Exception) {

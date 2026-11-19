@@ -188,6 +188,7 @@ jobs:
           retention-days: 90
 
   linux:
+    if: false
     needs: version
     runs-on: ubuntu-latest
     steps:
@@ -220,6 +221,7 @@ jobs:
           if-no-files-found: error
 
   windows:
+    if: false
     needs: version
     runs-on: windows-latest
     steps:
@@ -314,8 +316,8 @@ jobs:
           if-no-files-found: error
 
   windows-vm:
+    if: false
     needs: [version, build]
-    if: needs.version.outputs.publish == 'true'
     runs-on: windows-latest
     timeout-minutes: 45
     steps:
@@ -368,7 +370,7 @@ jobs:
   release:
     permissions:
       contents: write
-    needs: [version, build, linux, windows, windows-vm]
+    needs: [version, build]
     if: needs.version.outputs.publish == 'true'
     runs-on: ubuntu-latest
     env:
@@ -385,14 +387,9 @@ jobs:
           merge-multiple: true
       - name: Publish complete release
         run: |
-          # Android ABIs + Linux + Windows desktop jar + Windows setup exe required.
-          for FILE in telos-arm64-v8a.apk telos-armeabi-v7a.apk telos-linux-desktop.jar start-telos-desktop.sh telos-linux-session.tar.gz; do
+          for FILE in telos-arm64-v8a.apk telos-armeabi-v7a.apk; do
             test -s "release-assets/$FILE"
           done
-          test -n "$(ls release-assets/telos-desktop-windows-x64-*.jar 2>/dev/null | head -1)"
-          test -n "$(ls release-assets/telos-desktop-windows-x64-*-setup.exe 2>/dev/null | head -1)"
-          test -n "$(ls release-assets/telos-x86_64.apk 2>/dev/null | head -1)"
-          test -n "$(ls release-assets/telos-android-vm-windows-x64-*.zip 2>/dev/null | head -1)"
           # Tags must still point at the commit whose binaries were built.
           REMOTE_COMMIT=$(git ls-remote origin "refs/tags/$TAG" "refs/tags/$TAG^{}" | tail -n 1 | cut -f1)
           test "$REMOTE_COMMIT" = "$GITHUB_SHA"
@@ -401,8 +398,8 @@ jobs:
           bash tools/release-notes.sh "$TAG" "$RUNNER_TEMP/notes.md"
           if ! gh release view "$TAG" >/dev/null 2>&1; then
             gh release create "$TAG" --draft --target "$GITHUB_SHA" \
-              --title "Telos $TAG (Android & Desktop)" --notes-file "$RUNNER_TEMP/notes.md"
+              --title "Telos $TAG" --notes-file "$RUNNER_TEMP/notes.md"
           fi
           gh release upload "$TAG" release-assets/* --clobber
           gh release edit "$TAG" --draft=false --latest \
-            --title "Telos $TAG (Android & Desktop)" --notes-file "$RUNNER_TEMP/notes.md"
+            --title "Telos $TAG" --notes-file "$RUNNER_TEMP/notes.md"

@@ -238,7 +238,7 @@ class CallForegroundService : Service() {
 
         return NotificationCompat
             .Builder(this, CHANNEL_ID)
-            .setContentTitle(getString(R.string.app_name))
+            .setContentTitle(getString(R.string.amethyst_app_name))
             .setContentText(contentText)
             .setSmallIcon(com.vitorpamplona.amethyst.ui.AetherHostBridge.notificationSmallIcon ?: R.drawable.amethyst)
             .setOngoing(true)

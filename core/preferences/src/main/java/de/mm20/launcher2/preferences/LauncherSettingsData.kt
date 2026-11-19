@@ -1438,6 +1438,12 @@ data class CommsGroup(
     val mediaHubCompactList: Boolean = true,
     /** Live FFT waveform on the Music library; default on. */
     val mediaMusicSpectrum: Boolean = true,
+    /** Specific music folder path; empty = scan entire device */
+    val mediaMusicFolder: String = "",
+    /** Whether user was asked for first-time music scan choice */
+    val mediaMusicFirstTimeAsked: Boolean = false,
+    /** Include hidden files (.) and .nomedia folders; default false */
+    val mediaIncludeHiddenAndNomedia: Boolean = false,
     /** Phone bottom bar SMS dest. When [phoneShowSmsTabUserSet] is false, hide if Telos is not the default SMS app. */
     val phoneShowSmsTab: Boolean = true,
     val phoneShowSmsTabUserSet: Boolean = false,

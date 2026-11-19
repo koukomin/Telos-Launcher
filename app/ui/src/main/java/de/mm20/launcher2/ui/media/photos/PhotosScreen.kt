@@ -306,12 +306,30 @@ fun PhotosScreen(
                 NavigationBar(modifier = Modifier.virtualAppGlass(blur, bar), containerColor = androidx.compose.ui.graphics.Color.Transparent) {
                     NavigationBarItem(
                         selected = tab == 0, onClick = { tab = 0 },
-                        icon = { Icon(painterResource(BaseR.drawable.photo_24px), contentDescription = null) },
+                        icon = {
+                            de.mm20.launcher2.ui.component.TelosCyberIcon(
+                                painter = painterResource(BaseR.drawable.photo_24px),
+                                contentDescription = null,
+                                isSelected = tab == 0,
+                                accentColor = de.mm20.launcher2.ui.component.TelosCyber.NeonCyan,
+                                iconSize = 22.dp,
+                                showIndicator = false,
+                            )
+                        },
                         label = { Text(stringResource(I18nR.string.hc_photos)) },
                     )
                     NavigationBarItem(
                         selected = tab == 1, onClick = { tab = 1 },
-                        icon = { Icon(painterResource(BaseR.drawable.crop_square_24px), contentDescription = null) },
+                        icon = {
+                            de.mm20.launcher2.ui.component.TelosCyberIcon(
+                                painter = painterResource(BaseR.drawable.crop_square_24px),
+                                contentDescription = null,
+                                isSelected = tab == 1,
+                                accentColor = de.mm20.launcher2.ui.component.TelosCyber.NeonMagenta,
+                                iconSize = 22.dp,
+                                showIndicator = false,
+                            )
+                        },
                         label = { Text(stringResource(I18nR.string.hc_albums)) },
                     )
                 }

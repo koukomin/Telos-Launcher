@@ -418,10 +418,18 @@ fun CommsDashboardScreen(
                                     if (tab == CommsTab.Messages) {
                                         DefaultSmsLauncherIcon()
                                     } else {
-                                        Icon(
+                                        de.mm20.launcher2.ui.component.TelosCyberIcon(
                                             painter = painterResource(icon),
                                             contentDescription = null,
-                                            modifier = Modifier.size(24.dp)
+                                            isSelected = selectedTab == tab,
+                                            accentColor = when (tab) {
+                                                CommsTab.Recents -> de.mm20.launcher2.ui.component.TelosCyber.NeonGreen
+                                                CommsTab.Contacts -> de.mm20.launcher2.ui.component.TelosCyber.NeonCyan
+                                                CommsTab.Messages -> de.mm20.launcher2.ui.component.TelosCyber.NeonMagenta
+                                                else -> de.mm20.launcher2.ui.component.TelosCyber.NeonCyan
+                                            },
+                                            iconSize = 22.dp,
+                                            showIndicator = false,
                                         )
                                     }
                                 },

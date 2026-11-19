@@ -65,10 +65,13 @@ kotlin {
     }
 
     // iOS targets — Phase 2 spike. Compile-only for now (no framework binary
-    // configured yet). Reveals which transitive deps need iOS variants and
-    // which commonMain files still reach for platform-only APIs.
-    iosArm64()
-    iosSimulatorArm64()
+    // configured yet). Gated by property so IDE sync on non-iOS / Android builds
+    // does not trigger KMP native distribution commonization errors.
+    val enableIosTargets = providers.gradleProperty("enableIosTargets").orNull?.toBoolean() == true
+    if (enableIosTargets) {
+        iosArm64()
+        iosSimulatorArm64()
+    }
 
     sourceSets {
         commonMain {
@@ -212,12 +215,14 @@ kotlin {
         }
 
         // iOS intermediate so iosArm64Main and iosSimulatorArm64Main share code.
-        val iosMain =
-            create("iosMain") {
-                dependsOn(commonMain.get())
-            }
-        getByName("iosArm64Main").dependsOn(iosMain)
-        getByName("iosSimulatorArm64Main").dependsOn(iosMain)
+        if (enableIosTargets) {
+            val iosMain =
+                create("iosMain") {
+                    dependsOn(commonMain.get())
+                }
+            getByName("iosArm64Main").dependsOn(iosMain)
+            getByName("iosSimulatorArm64Main").dependsOn(iosMain)
+        }
 
         getByName("androidHostTest") {
             dependencies {

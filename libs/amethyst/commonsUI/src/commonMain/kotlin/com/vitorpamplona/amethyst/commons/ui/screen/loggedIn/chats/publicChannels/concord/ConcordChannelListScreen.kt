@@ -76,7 +76,7 @@ import com.vitorpamplona.amethyst.commons.model.concord.ConcordCommunitySession
 import com.vitorpamplona.amethyst.commons.model.navigation.Route
 import com.vitorpamplona.amethyst.commons.relayClient.user.observeUserName
 import com.vitorpamplona.amethyst.commons.resources.Res
-import com.vitorpamplona.amethyst.commons.resources.app_name
+import com.vitorpamplona.amethyst.commons.resources.amethyst_app_name
 import com.vitorpamplona.amethyst.commons.resources.cancel
 import com.vitorpamplona.amethyst.commons.resources.concord_channel_access_role_label
 import com.vitorpamplona.amethyst.commons.resources.concord_channel_create
@@ -198,7 +198,7 @@ fun ConcordChannelListScreen(
     val communityName =
         state?.metadata?.name
             ?: session?.entry?.name?.ifBlank { null }
-            ?: stringRes(Res.string.app_name)
+            ?: stringRes(Res.string.amethyst_app_name)
 
     // Owner from the list entry, not the folded authority: a community whose relays are dead never
     // folds a Control Plane, and that is exactly the case where leaving matters most.

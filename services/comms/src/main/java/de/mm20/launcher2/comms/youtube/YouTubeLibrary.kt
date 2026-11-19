@@ -33,6 +33,20 @@ class YouTubeLibrary(context: Context) {
     val playlists = MutableStateFlow(readPlaylists())
     val lastMusic = MutableStateFlow(readEntries("last_music").firstOrNull())
     val lastVideo = MutableStateFlow(readEntries("last_video").firstOrNull())
+    val cachedMusicHome = MutableStateFlow(readEntries("cached_music_home"))
+    val cachedVideoHome = MutableStateFlow(readEntries("cached_video_home"))
+
+    fun cacheMusicHome(entries: List<YouTubeEntry>) {
+        if (entries.isEmpty()) return
+        cachedMusicHome.value = entries
+        preferences.edit().putString("cached_music_home", encode(entries).toString()).apply()
+    }
+
+    fun cacheVideoHome(entries: List<YouTubeEntry>) {
+        if (entries.isEmpty()) return
+        cachedVideoHome.value = entries
+        preferences.edit().putString("cached_video_home", encode(entries).toString()).apply()
+    }
 
     fun remember(entry: YouTubeEntry, music: Boolean) {
         val target = if (music) lastMusic else lastVideo

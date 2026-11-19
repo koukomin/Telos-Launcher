@@ -20,14 +20,10 @@ class PackageReplacedReceiver : BroadcastReceiver() {
             }
             context.startActivity(launchIntent)
 
-            // Trigger background self-optimization (ART speed compile) if Shizuku/root is available
-            de.mm20.launcher2.art.TelosSelfOptimizer.checkAndSelfCompileAsync(
-                context = context,
-                scope = kotlinx.coroutines.CoroutineScope(kotlinx.coroutines.Dispatchers.IO + kotlinx.coroutines.SupervisorJob()),
-            )
             val pending = goAsync()
             kotlinx.coroutines.CoroutineScope(kotlinx.coroutines.Dispatchers.IO).launch {
                 try {
+                    de.mm20.launcher2.ui.performance.TelosSelfOptimizer.runBackgroundOptimizations(context)
                     kotlinx.coroutines.delay(2_000)
                     de.mm20.launcher2.wallpapers.WallpaperRestorer.restoreAfterUpgrade(context)
                 } finally {

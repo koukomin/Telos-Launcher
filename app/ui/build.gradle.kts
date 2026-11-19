@@ -88,6 +88,9 @@ android {
     lint {
         abortOnError = false
     }
+    testOptions {
+        unitTests.isIncludeAndroidResources = true
+    }
     namespace = "de.mm20.launcher2.ui"
 }
 

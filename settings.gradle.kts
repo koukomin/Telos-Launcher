@@ -169,10 +169,11 @@ include(":libs:shizuku-next")
 
 include(":ui-kmp")
 
-val isFdroidBuild = providers.gradleProperty("fdroidBuild").orNull?.toBoolean() == true
-if (!isFdroidBuild) {
-    include(":desktop-linux")
-}
+// Telos Desktop / Linux build targets are retired; keeping Android Launcher build target only.
+// val isFdroidBuild = providers.gradleProperty("fdroidBuild").orNull?.toBoolean() == true
+// if (!isFdroidBuild) {
+//     include(":desktop-linux")
+// }
 include(":services:keepasstl")
 
 // The full Aether client is compiled from source into the Telos APK.

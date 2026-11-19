@@ -21,7 +21,7 @@
 package com.vitorpamplona.amethyst.commons.tor
 
 data class TorSettings(
-    val torType: TorType = TorType.INTERNAL,
+    val torType: TorType = TorType.EXTERNAL,
     val externalSocksPort: Int = 9050,
     val onionRelaysViaTor: Boolean = true,
     val dmRelaysViaTor: Boolean = true,
@@ -58,9 +58,9 @@ enum class TorType(
 fun parseTorType(code: Int?): TorType =
     when (code) {
         TorType.OFF.screenCode -> TorType.OFF
-        TorType.INTERNAL.screenCode -> TorType.INTERNAL
+        TorType.INTERNAL.screenCode -> TorType.EXTERNAL
         TorType.EXTERNAL.screenCode -> TorType.EXTERNAL
-        else -> TorType.INTERNAL
+        else -> TorType.EXTERNAL
     }
 
 enum class TorPresetType(

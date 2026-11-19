@@ -10,7 +10,11 @@ import kotlinx.coroutines.withContext
 /** Reads the music on the device from the Android media store. */
 object MusicLibrary {
 
-    suspend fun load(context: Context): List<MusicTrack> = withContext(Dispatchers.IO) {
+    suspend fun load(
+        context: Context,
+        folder: String = "",
+        includeHiddenAndNomedia: Boolean = false,
+    ): List<MusicTrack> = withContext(Dispatchers.IO) {
         val collection = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             MediaStore.Audio.Media.getContentUri(MediaStore.VOLUME_EXTERNAL)
         } else {
@@ -27,6 +31,7 @@ object MusicLibrary {
             MediaStore.Audio.Media.TRACK,
             MediaStore.Audio.Media.YEAR,
             MediaStore.Audio.Media.DATE_ADDED,
+            MediaStore.Audio.Media.DATA,
             if (withGenre) MediaStore.Audio.Media.GENRE else null,
         ).toTypedArray()
         val selection = "${MediaStore.Audio.Media.IS_MUSIC} != 0 AND ${MediaStore.Audio.Media.DURATION} > 0"
@@ -48,8 +53,20 @@ object MusicLibrary {
                 val trackCol = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.TRACK)
                 val yearCol = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.YEAR)
                 val addedCol = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATE_ADDED)
+                val dataCol = cursor.getColumnIndex(MediaStore.Audio.Media.DATA)
                 val genreCol = if (withGenre) cursor.getColumnIndex(MediaStore.Audio.Media.GENRE) else -1
+                val cleanFolder = folder.trim().lowercase()
                 while (cursor.moveToNext()) {
+                    val filePath = if (dataCol >= 0) cursor.getString(dataCol).orEmpty() else ""
+                    if (filePath.isNotBlank()) {
+                        val lowerPath = filePath.lowercase()
+                        if (!includeHiddenAndNomedia) {
+                            if (lowerPath.contains("/.") || lowerPath.contains(".nomedia")) continue
+                        }
+                        if (cleanFolder.isNotBlank()) {
+                            if (!lowerPath.contains(cleanFolder)) continue
+                        }
+                    }
                     val id = cursor.getLong(idCol)
                     val artist = cursor.getString(artistCol).orEmpty()
                     tracks += MusicTrack(

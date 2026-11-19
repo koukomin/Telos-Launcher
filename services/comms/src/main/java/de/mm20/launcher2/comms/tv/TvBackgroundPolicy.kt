@@ -12,11 +12,11 @@ object TvBackgroundPolicy {
     fun pauseWhenLeaving(keepInBackground: Boolean, screenOff: Boolean = false): Boolean = !keepInBackground && !screenOff
 
     /**
-     * Video is switched off only while the app is in the background with background playback on and the
-     * screen is still on. Turning the screen off keeps the video track so a live HLS/DASH stream is not torn down.
+     * Video is switched off while the app is in the background with background playback on, or when the screen is off.
+     * Disabling the video track when screen is off prevents ExoPlayer surface rendering errors while display is off.
      */
     fun videoDisabled(keepInBackground: Boolean, inBackground: Boolean, screenOff: Boolean = false): Boolean =
-        keepInBackground && inBackground && !screenOff
+        (keepInBackground && inBackground) || screenOff
 
     /**
      * True when the service should stop and release TV: nothing is playing or loading and it has been

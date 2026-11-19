@@ -31,7 +31,7 @@ class TorController internal constructor(private val context: Context, private v
     private val mutableError = MutableStateFlow<String?>(null)
     val error: StateFlow<String?> = mutableError
     private var nextStartAt = 0L
-    @Volatile internal var ready = false
+    @Volatile var ready = false
         private set
     @Volatile private var requested = false
     private var tunnel: Tunnel? = null
@@ -66,7 +66,7 @@ class TorController internal constructor(private val context: Context, private v
     }
 
     /** Called without blocking a DNS callback. The first request is blocked; the app may retry. */
-    internal fun requestForOnion() {
+    fun requestForOnion() {
         if (settings.current.torEnabled && settings.current.torAutoStart) requested = true
     }
 

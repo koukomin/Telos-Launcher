@@ -187,9 +187,22 @@ fun MusicScreen(
             searchExpanded = !searchExpanded
         }
         val commsSettings = koinInject<de.mm20.launcher2.preferences.comms.CommsSettings>()
-        val spectrumOn by commsSettings.mediaMusicSpectrum.collectAsState(true)
+        val spectrumOn by commsSettingsEarly.mediaMusicSpectrum.collectAsState(true)
+        val musicFolderPref by commsSettingsEarly.mediaMusicFolder.collectAsState("")
+        val includeHiddenPref by commsSettingsEarly.mediaIncludeHiddenAndNomedia.collectAsState(false)
+        val firstTimeAskedPref by commsSettingsEarly.mediaMusicFirstTimeAsked.collectAsState(false)
+        var showFolderChooserHeader by remember { mutableStateOf(false) }
+
+        IconButton(onClick = { showFolderChooserHeader = true }) {
+            Icon(
+                painterResource(BaseR.drawable.folder_24px),
+                contentDescription = stringResource(I18nR.string.au7_vidfolders_action),
+                tint = if (musicFolderPref.isNotBlank()) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+        }
+
         IconButton(onClick = {
-            commsSettings.setMediaMusicSpectrum(!spectrumOn)
+            commsSettingsEarly.setMediaMusicSpectrum(!spectrumOn)
             de.mm20.launcher2.comms.media.PlaybackSpectrum.setCaptureEnabled(!spectrumOn)
         }) {
             Icon(
@@ -204,6 +217,189 @@ fun MusicScreen(
             Icon(painterResource(BaseR.drawable.settings_24px), contentDescription = stringResource(I18nR.string.hc_scrobbling))
         }
     }) {
+    val commsSettings = koinInject<de.mm20.launcher2.preferences.comms.CommsSettings>()
+    val musicFolder by commsSettings.mediaMusicFolder.collectAsState("")
+    val includeHidden by commsSettings.mediaIncludeHiddenAndNomedia.collectAsState(false)
+    var showFolderChooser by remember { mutableStateOf(false) }
+    var showFirstTimeDialog by remember { mutableStateOf(false) }
+
+    val firstTimeAsked by commsSettings.mediaMusicFirstTimeAsked.collectAsState(false)
+    LaunchedEffect(hasPermission, firstTimeAsked) {
+        if (hasPermission && !firstTimeAsked) {
+            showFirstTimeDialog = true
+        }
+    }
+
+    if (showFirstTimeDialog) {
+        AlertDialog(
+            onDismissRequest = {
+                commsSettings.setMediaMusicFirstTimeAsked(true)
+                showFirstTimeDialog = false
+            },
+            title = {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Icon(painterResource(BaseR.drawable.headphones_24px), contentDescription = null, tint = de.mm20.launcher2.ui.component.TelosCyber.NeonCyan)
+                    Spacer(Modifier.width(8.dp))
+                    TelosCyberHeading { Text("Telos Music Setup") }
+                }
+            },
+            text = {
+                Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                    Text(
+                        "Choose how Telos Music scans your audio files:",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+
+                    Surface(
+                        onClick = {
+                            commsSettings.setMediaMusicFolder("")
+                            commsSettings.setMediaMusicFirstTimeAsked(true)
+                            showFirstTimeDialog = false
+                            viewModel.loadLibrary(context)
+                        },
+                        shape = RoundedCornerShape(12.dp),
+                        color = MaterialTheme.colorScheme.surfaceContainerHigh,
+                        modifier = Modifier.fillMaxWidth().de.mm20.launcher2.ui.component.telosTechCard(
+                            de.mm20.launcher2.ui.component.TelosCyber.NeonCyan, RoundedCornerShape(12.dp), 1.dp, 0.6f
+                        ),
+                    ) {
+                        Row(Modifier.padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
+                            Icon(painterResource(BaseR.drawable.folder_24px), contentDescription = null, tint = de.mm20.launcher2.ui.component.TelosCyber.NeonCyan)
+                            Spacer(Modifier.width(12.dp))
+                            Column {
+                                Text("Scan Entire Device", style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold)
+                                Text("Scan all music files on storage (Default)", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                            }
+                        }
+                    }
+
+                    Surface(
+                        onClick = {
+                            commsSettings.setMediaMusicFirstTimeAsked(true)
+                            showFirstTimeDialog = false
+                            showFolderChooser = true
+                        },
+                        shape = RoundedCornerShape(12.dp),
+                        color = MaterialTheme.colorScheme.surfaceContainerLow,
+                        modifier = Modifier.fillMaxWidth().de.mm20.launcher2.ui.component.telosTechCard(
+                            de.mm20.launcher2.ui.component.TelosCyber.NeonGreen, RoundedCornerShape(12.dp), 1.dp, 0.4f
+                        ),
+                    ) {
+                        Row(Modifier.padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
+                            Icon(painterResource(BaseR.drawable.folder_zip_24px), contentDescription = null, tint = de.mm20.launcher2.ui.component.TelosCyber.NeonGreen)
+                            Spacer(Modifier.width(12.dp))
+                            Column {
+                                Text("Select Specific Folder", style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold)
+                                Text("Limit scan to a specific music directory", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                            }
+                        }
+                    }
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth().padding(top = 4.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Switch(
+                            checked = includeHidden,
+                            onCheckedChange = {
+                                commsSettings.setMediaIncludeHiddenAndNomedia(it)
+                                viewModel.loadLibrary(context)
+                            },
+                        )
+                        Spacer(Modifier.width(12.dp))
+                        Column {
+                            Text("Include hidden & .nomedia", style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.Medium)
+                            Text("Off by default (excludes .nomedia folders)", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        }
+                    }
+                }
+            },
+            confirmButton = {
+                TextButton(onClick = {
+                    commsSettings.setMediaMusicFirstTimeAsked(true)
+                    showFirstTimeDialog = false
+                    viewModel.loadLibrary(context)
+                }) { Text(stringResource(BaseR.string.hc_ok)) }
+            },
+        )
+    }
+
+    if (showFolderChooser) {
+        var customInput by remember { mutableStateOf(musicFolder) }
+        val commonFolders = listOf("Music", "Download", "Audio", "Podcasts", "DCIM", "Documents")
+        AlertDialog(
+            onDismissRequest = { showFolderChooser = false },
+            title = {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Icon(painterResource(BaseR.drawable.folder_24px), contentDescription = null, tint = de.mm20.launcher2.ui.component.TelosCyber.NeonCyan)
+                    Spacer(Modifier.width(8.dp))
+                    TelosCyberHeading { Text("Music Folder Settings") }
+                }
+            },
+            text = {
+                Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                    Text("Select a folder to scan for music:", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    
+                    OutlinedTextField(
+                        value = customInput,
+                        onValueChange = { customInput = it },
+                        label = { Text("Folder Path / Name") },
+                        placeholder = { Text("e.g. Music or Music/Rock") },
+                        singleLine = true,
+                        modifier = Modifier.fillMaxWidth(),
+                    )
+
+                    Text("Common Folders:", style = MaterialTheme.typography.labelMedium, fontWeight = FontWeight.Bold)
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        modifier = Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()),
+                    ) {
+                        FilterChip(
+                            selected = customInput.isBlank(),
+                            onClick = { customInput = "" },
+                            label = { Text("All Device") },
+                        )
+                        commonFolders.forEach { f ->
+                            FilterChip(
+                                selected = customInput.equals(f, ignoreCase = true),
+                                onClick = { customInput = f },
+                                label = { Text(f) },
+                            )
+                        }
+                    }
+
+                    HorizontalDivider(Modifier.padding(vertical = 4.dp))
+
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Switch(
+                            checked = includeHidden,
+                            onCheckedChange = {
+                                commsSettings.setMediaIncludeHiddenAndNomedia(it)
+                                viewModel.loadLibrary(context)
+                            },
+                        )
+                        Spacer(Modifier.width(12.dp))
+                        Column {
+                            Text("Include hidden & .nomedia", style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.Medium)
+                            Text("Default: Off", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        }
+                    }
+                }
+            },
+            confirmButton = {
+                TextButton(onClick = {
+                    commsSettings.setMediaMusicFolder(customInput.trim())
+                    showFolderChooser = false
+                    viewModel.loadLibrary(context)
+                }) { Text(stringResource(I18nR.string.hc_save)) }
+            },
+            dismissButton = {
+                TextButton(onClick = { showFolderChooser = false }) { Text(stringResource(I18nR.string.hc_cancel)) }
+            },
+        )
+    }
+
     Box(Modifier.fillMaxSize()) {
         Column(Modifier.fillMaxSize()) {
             if (!hasPermission) {
@@ -240,15 +436,7 @@ fun MusicScreen(
                         onShareTrack = { shareTrack(it) },
                     )
                 } else {
-                    androidx.compose.foundation.lazy.LazyRow(contentPadding = PaddingValues(horizontal = 16.dp),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        val labels = listOf(I18nR.string.au10_music_tab_home, I18nR.string.au_music_tab_songs, I18nR.string.hc_albums, I18nR.string.au_music_tab_artists)
-                        items(labels.size) { i ->
-                            de.mm20.launcher2.ui.media.MediaFilterButton(
-                                selected = tab == i, onClick = { tab = i }, label = stringResource(labels[i]),
-                            )
-                        }
-                    }
+                    CyberTechMusicTabStrip(selectedTab = tab, onTabSelected = { tab = it })
                     when {
                         loading -> MusicHomeSkeleton(reduceAnimations)
                         tracks.isEmpty() -> MusicEmptyState(stringResource(I18nR.string.hc_no_music_found_on_this_device), Modifier.fillMaxSize())
@@ -326,6 +514,73 @@ fun MusicScreen(
             NowPlayingScreen(viewModel, tracks, reduceAnimations, onClose = { showNowPlaying = false })
         }
     }
+    }
+}
+
+@Composable
+private fun CyberTechMusicTabStrip(
+    selectedTab: Int,
+    onTabSelected: (Int) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val tabs = remember {
+        listOf(
+            Triple(0, BaseR.drawable.grid_view_24px, I18nR.string.au10_music_tab_home),
+            Triple(1, BaseR.drawable.music_note_24px, I18nR.string.au_music_tab_songs),
+            Triple(2, BaseR.drawable.album_24px, I18nR.string.hc_albums),
+            Triple(3, BaseR.drawable.person_24px, I18nR.string.au_music_tab_artists),
+        )
+    }
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 6.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        tabs.forEach { (index, iconRes, labelRes) ->
+            val isSelected = selectedTab == index
+            val accent = de.mm20.launcher2.ui.component.TelosCyber.accentFor(index)
+            val borderColor = if (isSelected) accent else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f)
+            val containerColor = if (isSelected) accent.copy(alpha = 0.18f) else MaterialTheme.colorScheme.surfaceContainerLow.copy(alpha = 0.6f)
+            val shape = RoundedCornerShape(12.dp)
+
+            Box(
+                modifier = Modifier
+                    .weight(1f)
+                    .clip(shape)
+                    .background(containerColor)
+                    .de.mm20.launcher2.ui.component.telosTechCard(
+                        borderColor = borderColor,
+                        shape = shape,
+                        borderWidth = if (isSelected) 1.5.dp else 1.dp,
+                        alpha = if (isSelected) 0.9f else 0.4f,
+                    )
+                    .clickable { onTabSelected(index) }
+                    .padding(vertical = 8.dp, horizontal = 4.dp),
+                contentAlignment = Alignment.Center,
+            ) {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center,
+                ) {
+                    Icon(
+                        painter = painterResource(iconRes),
+                        contentDescription = stringResource(labelRes),
+                        modifier = Modifier.size(20.dp),
+                        tint = if (isSelected) accent else MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                    Spacer(Modifier.height(4.dp))
+                    Text(
+                        text = stringResource(labelRes),
+                        style = MaterialTheme.typography.labelSmall,
+                        fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
+                        color = if (isSelected) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.onSurfaceVariant,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                }
+            }
+        }
     }
 }
 

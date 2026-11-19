@@ -158,13 +158,37 @@ class YouTubeViewModel : ViewModel(), KoinComponent {
     }
 
     fun loadHome(context: Context, music: Boolean = false, refresh: Boolean = false) {
-        if (!refresh && results.value[music]?.isNotEmpty() == true) return
+        val cached = if (music) library.cachedMusicHome.value else library.cachedVideoHome.value
+        if (results.value[music].isNullOrEmpty() && cached.isNotEmpty()) {
+            results.value = results.value + (music to cached)
+        }
+        if (!refresh && results.value[music]?.isNotEmpty() == true && cached.isNotEmpty()) {
+            viewModelScope.launch {
+                try {
+                    val fresh = if (music) repository.fetchMusicHome() else repository.fetchHomeFeed()
+                    if (fresh.isNotEmpty()) {
+                        results.value = results.value + (music to fresh)
+                        if (music) library.cacheMusicHome(fresh) else library.cacheVideoHome(fresh)
+                    }
+                } catch (_: Exception) {}
+            }
+            return
+        }
         searchJob?.cancel()
         searchJob = viewModelScope.launch {
-            searching.value = true; message.value = null
-            try { results.value = results.value + (music to if (music) repository.fetchMusicHome() else repository.fetchHomeFeed()) }
+            if (results.value[music].isNullOrEmpty()) searching.value = true
+            message.value = null
+            try {
+                val fresh = if (music) repository.fetchMusicHome() else repository.fetchHomeFeed()
+                results.value = results.value + (music to fresh)
+                if (music) library.cacheMusicHome(fresh) else library.cacheVideoHome(fresh)
+            }
             catch (cancelled: CancellationException) { throw cancelled }
-            catch (_: Exception) { message.value = context.getString(I18nR.string.telos_youtube_search_failed) }
+            catch (_: Exception) {
+                if (results.value[music].isNullOrEmpty()) {
+                    message.value = context.getString(I18nR.string.telos_youtube_search_failed)
+                }
+            }
             finally { searching.value = false }
         }
     }

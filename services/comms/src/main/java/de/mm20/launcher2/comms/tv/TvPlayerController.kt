@@ -204,7 +204,7 @@ class TvPlayerController(
         // always: the notification with the controls exists whenever TV plays; the setting only decides
         // whether leaving the app pauses it
         // started from the foreground; Media3 promotes it to a foreground service once the session plays
-        runCatching { app.startService(Intent(app, TvPlaybackService::class.java)) }
+        runCatching { ContextCompat.startForegroundService(app, Intent(app, TvPlaybackService::class.java)) }
     }
 
     private fun registerLeaveWatchers() {
@@ -276,6 +276,7 @@ class TvPlayerController(
             p.seekToDefaultPosition()
             p.prepare()
         }
+        startServiceIfEnabled()
         p.play()
     }
 

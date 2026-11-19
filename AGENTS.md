@@ -9,6 +9,12 @@ Read this file only. Do not create or keep parallel instruction files
 `.cursor/rules/`, `CODEX.md`, `.windsurfrules`, Aider rule files, or extra
 `*-instructions.md`). Put every shared rule here so all agents stay in sync.
 
+## Session Prompt & Progress Tracker (Mandatory for all agents)
+
+To ensure seamless crash recovery and zero context loss across IDE restarts or login session resets:
+1. **At Session Start**: Every AI agent **MUST** inspect `.artifacts/SESSION_TRACKER.md` to check where previous work left off and read recorded user prompts.
+2. **During Session**: Every AI agent **MUST** log incoming user prompts, key decisions, active tasks, and completed steps into `.artifacts/SESSION_TRACKER.md` before and after major modifications.
+
 ## Project
 
 Telos — a search-focused, free and open source Android launcher (package `de.mm20.launcher2`). Kotlin/Gradle multi-module Android project. Licensed under GPL-3.0, except `plugins/sdk` and `core/shared` which are Apache-2.0.
@@ -197,11 +203,13 @@ The wallpaper blur belongs to the single shared root. Material container roles
 (lowest/low/normal/high/highest) inside virtual apps are opaque tonal surfaces;
 never apply another per-card alpha or use transparent surface as a text/icon
 color. Clear only root alpha, retaining its RGB tone for legacy opacity restoration.
-ListPreference, AlertDialog and other pickers over glass use `virtualAppPopup()`
-(`surfaceContainer` at alpha 1). Preference rows use opaque `surfaceContainerLow`.
+ListPreference, AlertDialog, Dialog, Scaffold, and other pickers/bars over glass use `virtualAppPopup()`
+(`surfaceContainer` at alpha 1) or `MaterialTheme.colorScheme.background`. Never leave Scaffolds, top bars,
+bottom bars, or dialogs transparent without an explicit container color.
+Preference rows use opaque `surfaceContainerLow`.
 Settings → Appearance (theme, shapes, transparency, dynamic-color source) must stay
 as frosted as other Telos surfaces; do not leave dialogs on the cleared root `surface`. Any scoped MaterialTheme must also provide LocalContentColor from its
-own onSurface. Radio's default appearance inherits the launcher palette. Its explicit appearance
+own onSurface. Embedded subprojects (like Aether/Amethyst) must NEVER define `app_name` or `ic_launcher` resources that collide with Telos Launcher's icon or label. Telos virtual app labels must remain clean in the UI (e.g. "Phone", "Network", "Store", "Files", "Fit"), while `TelosAppKeywords` retains `telos` as a search keyword so searching "Telos" lists all virtual apps. Push notifications in embedded apps must default to internal background connections without prompting for third-party UnifiedPush apps. Radio's default appearance inherits the launcher palette. Its explicit appearance
 override, station bar, popups and mini players must obey the same foreground/background pairing. Full-screen camera,
 video and screen-light content may intentionally own black or illuminated pixels.
 Keep zoom and utility actions compact in landscape without shrinking touch targets.
@@ -222,6 +230,7 @@ All Telos virtual apps, mini players, and launcher controls must adhere to the C
 - **Telemetry & Dot Matrix**: Header labels, status HUDs, and technical metrics must use `TelosDotMatrixText` and `TelosRadialGauge` / `CyberGauges` for visual hierarchy and high-tech telemetry readouts.
 - **Command HUD (mandatory for list apps)**: Search, filters and bulk actions (update all, pause all, refresh) use `TelosCommandHud` / `TelosHudIcon` in `app/ui/.../TelosCommandHud.kt`. Search is an icon until opened. Filters are 48dp icons with `contentDescription` and long-press `Tooltip` labels. Counts use badges. Status (last check, scanning) uses `TelosDotMatrixText` under the strip. Do not add a full-width search field plus a Filters button plus an Update-all button as three stacked rows. Categories that are names may be 1–2 letter `TelosTechPill`s with tooltip of the full name. Apply this in Store, Downloads, Freeze, ART Optimizer, and any new list/filter dashboard. Keep 48dp targets and font scale.
 - **Morphe-Style Tech Pills**: Destination tabs and short named modes still use `TelosTechPill`. Filter *rows* of many options belong on the command HUD, not a second chip row.
+- **Cyber-Tech Icon System**: All virtual app navigation bars, bottom bars, and icon controls must use `TelosCyberIcon`. When Cyber-Tech style is enabled, icons MUST dynamically use category neon accent colors (Neon Cyan `#00F0FF`, Neon Green `#00E676`, Neon Magenta `#FF007F`, Neon Orange `#FF9100`, Red `#FF1744`, Purple `#D500F9`), ambient halo glow, active scale micro-animations, and bracket/dot indicators instead of plain flat tinting.
 - **Mini Player Surface**: The mini player across Telos Media, Radio, Music, TV, and Stremio must feature `telosTechCard` translucent glass borders, neon playback status indicators, marquee titles, and instant full-surface touch controls.
 - **Opaque Popups Over Glass**: All dialogs, pickers, and popups over glass must use `virtualAppPopup()` (`surfaceContainer` at alpha 1) with opaque background tones to prevent background text bleed.
 
@@ -268,6 +277,52 @@ Weather.
   catalog, user-guide and this catalog, in the same change.
 - No gloss, gradients, brand logos, baked squircles, or Material Icons
   Extended. Honor a user-selected icon pack on launcher surfaces.
+
+## Mandatory Feature Reuse & Built-in Capabilities Catalog (All Coding Agents)
+
+Every AI coding agent (Claude, Codex, Copilot, Cursor, Devin, ChatGPT, Gemini, Grok) working in this repository MUST comply with the following rule:
+**NEVER write redundant or duplicate code from scratch when a built-in feature, service, or UI component already exists in Telos.** When implementing new requirements or capabilities, agents MUST inspect this index, reuse existing implementations via Koin DI / KMP interfaces, or extend and improve the built-in feature.
+
+### Comprehensive Telos Feature & Module Index
+
+1. **Search & Navigation (`:services:search`, `:core:base`, `:app:ui`)**:
+   - Tiered match ranking (exact > prefix > substring > fuzzy search across apps, files, contacts, calendar, notes, web, actions).
+   - 4 Cyber-Tech App Drawer animation styles (Classic Slide, Cyber-Matrix Reveal, Holo-Portal Expansion, Command Deck HUD) with live demo preview.
+   - Desktop Mode & Linux labwc/niri shell integration (`:services:desktop-mode`, `:desktop-linux`).
+
+2. **Phone & Communications (`:services:comms`, `:data:contacts`)**:
+   - Telos Phone: Dialer, recents, contacts, dual SIM support, call recording (VOICE_CALL, silence retry, Shizuku/root CAPTURE_AUDIO_OUTPUT), call screening (prefix/regex/outgoing, max priority), SIP.
+   - Telos Messages: Default SMS/MMS conversations, scheduled messaging, spam repository.
+
+3. **File Management & Storage (`:data:files`, `:libs:webdav`, `:libs:nextcloud`, `:libs:owncloud`)**:
+   - Telos Files: Local/USB/remote storage, ISO/ZIP navigation, RAW/HEIC/HEVC previews, SMB by name/IP, archives, Cryptomator vaults, SSH keygen, Shizuku storage access, cross-storage search, direct network audio/video streaming.
+
+4. **Media Suite (`:services:music`, `:services:feed`, `:app:ui`)**:
+   - Telos Media: Central hub for Music, Radio, YouTube Music, local Video, YouTube, TV, and Stremio Fork. Features Listen/Watch/Live tabs, source chip memory, unified mini player, brightness/volume gesture rails.
+   - Telos TV: Live IPTV channels (iptv-org), M3U import, playlist failover, Greek EPG & playlists, background playback, reconnecting & TV static effects.
+   - Stremio Fork: Add-on manager & protocol client, stream discovery (web, torrent, YouTube), subtitles, Trakt watch sync, library/continue watching.
+   - Telos Music & Video & Radio: Local library, artwork-tinted Now Playing, scrobbling, lyrics, tag editor, stream recording, Media3 + NextLib FFmpeg decoders (AC3, DTS, TrueHD).
+
+5. **Network, Firewall & Tor (`:services:network`)**:
+   - Telos Network: Rethink DNS VPN firewall engine, NextDNS profile analytics, allow/deny lists, DNS rewrites, Android system Private DNS via Shizuku, per-app/connection-type firewall, WireGuard per app, LibreSpeed network test.
+   - Centralized Tor Service (`TorController`): Manages global Guardian Project Tor Android daemon (`org.torproject.jni.TorService`) with SOCKS5 & DNS proxy routing. Embedded modules (like Aether/Amethyst) MUST reuse `TorController` via `TorBackendBridge` instead of spinning separate native Arti instances.
+
+6. **Store, App Management & Smart Freeze (`:services:store`, `:services:freeze`, `:services:app-management`)**:
+   - Telos Store: GitHub, F-Droid & Play Store app manager. Unfreeze & update pipeline.
+   - Smart Freeze: Shizuku, root, Device Owner, and Island app freezing/hiding directly from launcher home screen.
+   - ART Optimizer: Background compilation / profile optimization via Shizuku/root.
+
+7. **Tools & Virtual Apps**:
+   - Ermis (`:services:comms`): Native IMAP/SMTP email client with verified TLS, offline HTML rendering, folder management, Cc/Bcc, attachment support.
+   - Telos Calendar (`:data:calendar`), Calculator (`:data:calculator`), Viewer (Photos & Documents), Camera (`:data:locations`), Voice Recorder, Notes, Screenshot & Screen Recorder, Keyboard (`:core:compat`).
+   - Telos System (`:app:ui/system`): System HUD (CPU, RAM, IP addresses, processes, saved Wi-Fi, AppOps, tweaks, Privacy Shield, screen-off battery governor, built-in Shizuku server).
+
+8. **Cyber-Tech UI Design System (`app/ui/.../component`)**:
+   - `Modifier.telosTechCard(...)` / `telosTechSurface(...)` for neon border glass cards.
+   - `TelosTechPill` for capsule tabs and mode choices.
+   - `TelosDotMatrixText` and `CyberGauges` / `TelosRadialGauge` for telemetry HUDs and metrics.
+   - `TelosCommandHud` / `TelosHudIcon` for search, filter strips, and bulk action HUDs.
+   - `virtualAppPopup()` for opaque popups over glass.
 
 ### Delivery gates
 

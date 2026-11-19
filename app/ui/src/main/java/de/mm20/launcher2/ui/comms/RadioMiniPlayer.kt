@@ -22,6 +22,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import android.text.format.Formatter
@@ -66,13 +67,13 @@ fun RadioMiniPlayer(modifier: Modifier = Modifier) {
             .padding(horizontal = 16.dp, vertical = 8.dp)
     ) {
         Surface(
-            shape = RoundedCornerShape(16.dp),
+            shape = RoundedCornerShape(18.dp),
             color = androidx.compose.ui.graphics.Color.Transparent,
             modifier = Modifier
                 .fillMaxWidth()
                 .telosTechSurface(
                     borderColor = if (isPlaying) TelosCyber.NeonGreen else TelosCyber.NeonCyan,
-                    shape = RoundedCornerShape(16.dp),
+                    shape = RoundedCornerShape(18.dp),
                 )
         ) {
             Row(
@@ -82,22 +83,22 @@ fun RadioMiniPlayer(modifier: Modifier = Modifier) {
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                // Radio Icon
+                // Radio Icon with Neon Tint
                 Box(
                     modifier = Modifier
                         .size(40.dp)
                         .clip(RoundedCornerShape(12.dp))
-                        .background(MaterialTheme.colorScheme.primaryContainer),
+                        .background(if (isPlaying) TelosCyber.NeonGreen.copy(alpha = 0.16f) else MaterialTheme.colorScheme.primaryContainer),
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
-                        painter = painterResource(BaseR.drawable.music_note_24px), // Fallback icon
+                        painter = painterResource(BaseR.drawable.music_note_24px),
                         contentDescription = stringResource(I18nR.string.hc_radio),
-                        tint = MaterialTheme.colorScheme.onPrimaryContainer
+                        tint = if (isPlaying) TelosCyber.NeonGreen else MaterialTheme.colorScheme.onPrimaryContainer
                     )
                 }
 
-                // Metadata Column
+                // Metadata Column with Cyber-Tech Telemetry HUD
                 Column(
                     modifier = Modifier.weight(1f),
                     verticalArrangement = Arrangement.Center
@@ -123,19 +124,19 @@ fun RadioMiniPlayer(modifier: Modifier = Modifier) {
                         }
                         stringResource(I18nR.string.au2_radio2_rec_status, clock, Formatter.formatShortFileSize(context, it.bytes))
                     }
-                    Text(
-                        text = (recText?.let { "$it  ·  " }.orEmpty()) +
-                            ((if (reconnecting) stringResource(if (waitingForNetwork) I18nR.string.au16_reconnect_waiting else I18nR.string.au16_reconnect_label) else null)
-                            ?: error?.let { stringResource(it) } ?: nowPlaying.ifEmpty { stringResource(I18nR.string.au_radio_streaming_live) }) + sleepSuffix,
-                        style = MaterialTheme.typography.labelSmall,
-                        color = if ((error != null && !reconnecting) || recText != null) MaterialTheme.colorScheme.error
-                        else MaterialTheme.colorScheme.onSurfaceVariant,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
+                    val statusText = (recText?.let { "$it  ·  " }.orEmpty()) +
+                        ((if (reconnecting) stringResource(if (waitingForNetwork) I18nR.string.au16_reconnect_waiting else I18nR.string.au16_reconnect_label) else null)
+                        ?: error?.let { stringResource(it) } ?: nowPlaying.ifEmpty { stringResource(I18nR.string.au_radio_streaming_live) }) + sleepSuffix
+
+                    de.mm20.launcher2.ui.component.TelosDotMatrixText(
+                        text = statusText.uppercase(),
+                        color = if (error != null && !reconnecting || recText != null) TelosCyber.NeonMagenta else TelosCyber.NeonCyan,
+                        fontSize = 10.sp,
+                        modifier = Modifier.padding(top = 2.dp)
                     )
                 }
 
-                // Controls
+                // Cyber Controls with Neon Tints
                 IconButton(onClick = {
                     viewModel.toggleRecording(context)?.let {
                         Toast.makeText(context, context.getString(it), Toast.LENGTH_SHORT).show()
@@ -144,14 +145,14 @@ fun RadioMiniPlayer(modifier: Modifier = Modifier) {
                     Icon(
                         painter = painterResource(if (recState != null) BaseR.drawable.radio_button_checked_24px else BaseR.drawable.radio_button_unchecked_24px),
                         contentDescription = stringResource(if (recState != null) I18nR.string.au2_radio2_stop_recording else I18nR.string.au2_radio2_record),
-                        tint = if (recState != null) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurface
+                        tint = if (recState != null) TelosCyber.NeonMagenta else MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
                 IconButton(onClick = { viewModel.togglePlayPause() }) {
                     Icon(
                         painter = painterResource(if (isPlaying) BaseR.drawable.pause_24px else BaseR.drawable.play_arrow_24px),
                         contentDescription = if (isPlaying) stringResource(I18nR.string.au_radio_pause) else stringResource(I18nR.string.hc_play),
-                        tint = MaterialTheme.colorScheme.onSurface
+                        tint = if (isPlaying) TelosCyber.NeonGreen else MaterialTheme.colorScheme.onSurface
                     )
                 }
 
@@ -159,7 +160,7 @@ fun RadioMiniPlayer(modifier: Modifier = Modifier) {
                     Icon(
                         painter = painterResource(BaseR.drawable.close_24px),
                         contentDescription = stringResource(I18nR.string.hc_stop),
-                        tint = MaterialTheme.colorScheme.onSurface
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
             }

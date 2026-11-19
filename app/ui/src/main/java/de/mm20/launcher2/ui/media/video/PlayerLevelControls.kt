@@ -45,6 +45,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import de.mm20.launcher2.ui.R
 import kotlinx.coroutines.delay
 import kotlin.math.roundToInt
@@ -174,10 +175,10 @@ private fun LevelRail(
         },
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Text(
-            "${(value * 100).roundToInt()}",
-            color = Color.White,
-            style = MaterialTheme.typography.labelLarge,
+        de.mm20.launcher2.ui.component.TelosDotMatrixText(
+            text = "${(value * 100).roundToInt()}%",
+            color = fill,
+            fontSize = 12.sp,
         )
         Box(
             Modifier
@@ -185,20 +186,20 @@ private fun LevelRail(
                 .width(28.dp)
                 .height(height)
                 .clip(RoundedCornerShape(16.dp))
-                .background(Color.Black.copy(alpha = 0.38f)),
+                .background(Color.Black.copy(alpha = 0.45f)),
             contentAlignment = Alignment.BottomCenter,
         ) {
             Box(
                 Modifier
                     .fillMaxSize()
-                    .padding(5.dp)
+                    .padding(4.dp)
                     .clip(RoundedCornerShape(12.dp))
                     .background(Color.White.copy(alpha = 0.12f)),
             )
             Box(
                 Modifier
-                    .padding(5.dp)
-                    .width(18.dp)
+                    .padding(4.dp)
+                    .width(20.dp)
                     .height(height * value.coerceIn(0.04f, 1f))
                     .clip(RoundedCornerShape(12.dp))
                     .background(Brush.verticalGradient(listOf(fill, fill.copy(alpha = 0.7f)))),
@@ -206,12 +207,12 @@ private fun LevelRail(
         }
         Box(
             Modifier
-                .size(32.dp)
+                .size(36.dp)
                 .clip(CircleShape)
-                .background(Color.Black.copy(alpha = 0.38f)),
+                .background(Color.Black.copy(alpha = 0.45f)),
             contentAlignment = Alignment.Center,
         ) {
-            Icon(painterResource(icon), contentDescription = label, tint = Color.White, modifier = Modifier.size(18.dp))
+            Icon(painterResource(icon), contentDescription = label, tint = fill, modifier = Modifier.size(20.dp))
         }
     }
 }
