@@ -1,4 +1,4 @@
-name: Rebuild locked Arti native binaries
+name: Rebuild Arti with patched TLS, async and compression dependencies
 on:
   push:
     branches: ['codex/aether-diagnostics']
@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
         with:
-          ref: a48e12f0abc7387b0e780e5b72b8a3f6e34a6d32
+          ref: d79b5fc776d23b2fa9321ef248278dc52396b9df
       - name: Normalize the dependency update against the actual patched Arti source
         working-directory: libs/amethyst/tools/arti-build
         env:
@@ -26,17 +26,29 @@ jobs:
           clone_or_update_arti
           setup_wrapper
           cargo update --manifest-path "$ARTI_SOURCE_DIR/arti-android-wrapper/Cargo.toml" -p rustls --precise 0.23.46
+          cargo update --manifest-path "$ARTI_SOURCE_DIR/arti-android-wrapper/Cargo.toml" -p anyhow --precise 1.0.104
+          for spec in 'ctutils 0.4.4' 'tokio 1.53.3' 'rustix@1.1.4 1.1.6' 'rustls-webpki 0.103.17' 'zstd 0.14.3' 'zstd-safe 8.2.0' 'zstd-sys 2.1.2'; do
+            read -r package version <<< "$spec"
+            cargo update --manifest-path "$ARTI_SOURCE_DIR/arti-android-wrapper/Cargo.toml" -p "$package" --precise "$version"
+          done
           cargo metadata --locked --format-version 1 --manifest-path "$ARTI_SOURCE_DIR/arti-android-wrapper/Cargo.toml" > "$RUNNER_TEMP/arti-metadata.json"
           cp "$ARTI_SOURCE_DIR/arti-android-wrapper/Cargo.lock" Cargo.lock
           mkdir -p "$RUNNER_TEMP/arti-lock"
+          HANG_MANIFEST="$GITHUB_WORKSPACE/libs/amethyst/nestsClient/tests/hang-interop/Cargo.toml"
+          for spec in 'anyhow 1.0.104' 'tokio 1.53.3' 'quinn-udp 0.5.16' 'webpki-roots 1.0.10' 'webpki-root-certs 1.0.10'; do
+            read -r package version <<< "$spec"
+            cargo update --manifest-path "$HANG_MANIFEST" -p "$package" --precise "$version"
+          done
+          cp "${HANG_MANIFEST%Cargo.toml}Cargo.lock" "$RUNNER_TEMP/arti-lock/hang-Cargo.lock"
           cp Cargo.lock "$RUNNER_TEMP/arti-lock/"
           python3 - <<'PY'
           import json, os, subprocess, pathlib, tomllib
           lock=tomllib.loads(pathlib.Path('Cargo.lock').read_text())
           versions=[p['version'] for p in lock['package'] if p['name']=='rustls']
           assert versions==['0.23.46'],versions
+          assert [p['version'] for p in lock['package'] if p['name']=='anyhow']==['1.0.104']
           sha=subprocess.check_output(['git','-C','/tmp/amethyst-arti-build/.arti-source','rev-parse','HEAD'],text=True).strip()
-          data={'telos_source':'a48e12f0abc7387b0e780e5b72b8a3f6e34a6d32','arti_source':sha,'rustls':versions[0],'rustc':subprocess.check_output(['rustc','--version'],text=True).strip()}
+          data={'telos_source':'d79b5fc776d23b2fa9321ef248278dc52396b9df','arti_source':sha,'rustls':versions[0],'anyhow':'1.0.104','rustc':subprocess.check_output(['rustc','--version'],text=True).strip()}
           pathlib.Path(os.environ['RUNNER_TEMP']+'/arti-lock/provenance.json').write_text(json.dumps(data,indent=2)+'\n')
           print('::notice title=Arti dependency lock::'+json.dumps(data))
           PY
@@ -69,7 +81,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
         with:
-          ref: a48e12f0abc7387b0e780e5b72b8a3f6e34a6d32
+          ref: d79b5fc776d23b2fa9321ef248278dc52396b9df
       - uses: actions/download-artifact@v8
         with:
           name: arti-lock
@@ -122,7 +134,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
         with:
-          ref: a48e12f0abc7387b0e780e5b72b8a3f6e34a6d32
+          ref: d79b5fc776d23b2fa9321ef248278dc52396b9df
       - uses: actions/download-artifact@v8
         with:
           pattern: arti-*
@@ -146,12 +158,18 @@ jobs:
               shutil.copyfile(src,dest)
               hashes[str(dest)]=hashlib.sha256(data).hexdigest()
           shutil.copyfile(artifacts/'arti-lock/Cargo.lock',root/'tools/arti-build/Cargo.lock')
-          provenance['sha256']=hashes
-          (root/'tools/arti-build/TELOS_NATIVE_BUILD.json').write_text(json.dumps(provenance,indent=2)+'\n')
+          prior=json.loads((root/'tools/arti-build/TELOS_NATIVE_BUILD.json').read_text())
+          prior.update(provenance)
+          prior['sha256']=hashes
+          prior['build_inputs']={path:hashlib.sha256(pathlib.Path(path).read_bytes()).hexdigest() for path in prior['build_inputs']}
+          shutil.copyfile(artifacts/'arti-lock/hang-Cargo.lock',root/'nestsClient/tests/hang-interop/Cargo.lock')
+          prior['build_workflow_run']='https://github.com/'+os.environ['GITHUB_REPOSITORY']+'/actions/runs/'+os.environ['GITHUB_RUN_ID']
+          (root/'tools/arti-build/TELOS_NATIVE_BUILD.json').write_text(json.dumps(prior,indent=2)+'\n')
           print('::notice title=Rebuilt native binaries::'+json.dumps(provenance))
           PY
+          python3 tools/validation/aether-native-check.py
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add libs/amethyst/amethyst/src/main/jniLibs/*/libarti_android.so libs/amethyst/amethyst/src/test/native-libs/x86_64-linux/libarti_android.so libs/amethyst/tools/arti-build/Cargo.lock libs/amethyst/tools/arti-build/TELOS_NATIVE_BUILD.json
-          git commit -m 'fix(aether): rebuild all Android Tor binaries with the updated locked Rustls'
-          git push origin HEAD:refs/heads/codex/aether-native-evidence
+          git add libs/amethyst/amethyst/src/main/jniLibs/*/libarti_android.so libs/amethyst/amethyst/src/test/native-libs/x86_64-linux/libarti_android.so libs/amethyst/tools/arti-build/Cargo.lock libs/amethyst/tools/arti-build/TELOS_NATIVE_BUILD.json libs/amethyst/nestsClient/tests/hang-interop/Cargo.lock
+          git commit -m 'fix(aether): rebuild Tor with patched TLS, async and compression dependencies'
+          git push origin HEAD:refs/heads/codex/aether-native-anyhow-evidence
