@@ -3,7 +3,7 @@ on:
   push:
     branches: ['codex/aether-security-review']
 permissions:
-  contents: read
+  contents: write
   actions: write
   pull-requests: read
   security-events: read
@@ -40,5 +40,16 @@ jobs:
                   d=json.loads(z.read(file));purls=[v.get('package_url','') for m in d.get('manifests',{}).values() for v in m.get('resolved',{}).values()]
                   selected=[p for p in purls if any(k in p for k in ['/guava@','/freemarker@','/bcprov-jdk18on@','/bcpkix-jdk18on@','/commons-lang3@','/httpclient@','/jose4j@','/jdom2@','/opentelemetry-api@'])]
                   print('::notice title=Managed main resolved pins::'+json.dumps({'artifact':a['id'],'source':d.get('sha'),'job':d.get('job'),'detector':d.get('detector'),'packages':len(purls),'selected':sorted(set(selected))}))
-          PYCODE
+          required={'pkg:maven/org.freemarker/freemarker@2.3.35','pkg:maven/com.google.guava/guava@33.8.0-android','pkg:maven/com.google.guava/guava@33.8.0-jre','pkg:maven/org.bouncycastle/bcprov-jdk18on@1.87','pkg:maven/io.opentelemetry/opentelemetry-api@1.68.0'}
+          assert required <= set(purls)
+          forbidden=['@33.3.1-android','@33.4.0-jre','/freemarker@2.3.32','/bcprov-jdk18on@1.80.2','/bcpkix-jdk18on@1.80.2','/opentelemetry-api@1.41.0','/commons-lang3@3.16.0','/commons-lang3@3.17.0','/httpclient@4.5.6','/jose4j@0.9.5','/jdom2@2.0.6?']
+          assert not any(any(bad in p for bad in forbidden) for p in purls)
+          assert len(purls)>1500 and info['conclusion']=='success'
+          main=json.loads(subprocess.check_output(['gh','api',base+'/git/ref/heads/main'],text=True))['object']['sha']
+          assert main==info['head_sha'], 'Refresh managed evidence after new main changes'
+          from datetime import datetime,timezone
+          retired={'version':0,'sha':main,'ref':'refs/heads/main','scanned':datetime.now(timezone.utc).isoformat(),'job':{'id':os.environ['GITHUB_RUN_ID'],'correlator':'submit_gradle_dependency_graph-dependency-submission','html_url':'https://github.com/'+os.environ['GITHUB_REPOSITORY']+'/actions/runs/'+os.environ['GITHUB_RUN_ID']},'detector':{'name':'GitHub Dependency Graph Gradle Plugin','version':'1.5.1','url':'https://github.com/gradle/github-dependency-graph-gradle-plugin'},'metadata':{'reason':'Retire duplicate workflow snapshot superseded by verified Automatic Dependency Submission; no alerts dismissed'},'manifests':{}}
+          response=subprocess.run(['gh','api','--method','POST',base+'/dependency-graph/snapshots','--input','-'],input=json.dumps(retired),capture_output=True,text=True)
+          print('::notice title=Retired duplicate graph submission::'+json.dumps({'status':response.returncode,'response':response.stdout,'error':response.stderr}))
+          assert response.returncode==0
           PYCODE
