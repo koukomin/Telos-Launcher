@@ -153,3 +153,11 @@ The 1.45.71 Windows VM preflight
 published the actual self-contained win-x64 launcher and downloaded/extracted
 QEMU and scrcpy on Windows. All four packaged executables passed their version
 checks. This verifies compilation and toolchain assembly, not an Android guest boot.
+
+
+The tag-time changelog check reads the committed English and Greek Fastlane
+files named by the actual version code. It checks that the tag agrees with
+`version.properties` and that both notes are present and within 500 characters.
+It replaces the old metadata updater, which wrote unused paths and ignored a
+failed push from a detached tag checkout. Release workflows do not manufacture
+metadata commits after tagging or silently report that a failed push succeeded.

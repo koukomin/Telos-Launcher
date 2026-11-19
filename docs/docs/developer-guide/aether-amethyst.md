@@ -82,17 +82,22 @@ Dependabot alert list is empty.
 
 ## Validation
 
-[Run 44408135991](https://github.com/koukomin/Telos-Launcher/actions/runs/44408135991)
-validated application revision `3853e1a9f`, after incorporating main at `4912fb056`:
+[Run 44477312223](https://github.com/koukomin/Telos-Launcher/actions/runs/44477312223)
+validated runtime revision `1303431d3`, after incorporating main at `a48e12f0a`,
+PR #131 and the rebuilt native security dependencies:
 
 - Actual ARM64 Telos debug and minified/resource-shrunk release APK builds passed.
 - The library suite executed 1,526 tests: no failures/errors, nine upstream skips.
+  All seven focused emoji archive JVM regressions also passed.
 - All four Android encrypted-storage, namespace/editor, database-path and
-  notification-isolation regressions passed without skips.
+  notification-isolation regressions passed without skips. The rebuilt Android JNI
+  smoke test, explicit notification-intent boundary and real Keystore credential
+  proof test also passed: seven device cases in total.
 - The real-Telos external UI driver passed public-key login, adding two accounts,
   switching to the first, settings navigation and restoring both accounts after
   force-stop/relaunch. It also captured settings at system font scale 2.0 in
-  portrait and landscape. No real private keys or publication were used.
+  portrait and landscape. Three Android Island protocol cases also passed.
+  No real private keys, publication or managed-profile freeze were used.
 - Shell, communications, app-management and freeze unit-test tasks passed. A
   suspend-call compilation error introduced on main was corrected with a
   non-blocking cached root-status query; real root probing stays asynchronous.
@@ -100,9 +105,13 @@ validated application revision `3853e1a9f`, after incorporating main at `4912fb0
   Release helper tests and the static Pages build also passed locally; see the Dependabot guide for the dated
   docs-tool audit history and the scoped review of upstream scanner fixtures.
 
-An earlier revision's first device attempt was blocked by a Pixel Launcher ANR
-dialog; retrying that unchanged revision on a fresh emulator passed. The final
-run above passed its device checks on the first attempt.
+Earlier revisions encountered a stock Pixel Launcher ANR before login, and a
+separate driver ordering failure after HOME/configuration changes. The driver
+now waits for those transitions before force-stop/relaunch. The final native
+candidate above passed all four jobs and its UI/device checks on the first
+attempt; no application assertions were bypassed. The reviewed captures record
+that runtime revision; subsequent release-metadata/docs changes do not change
+application code or native binaries.
 The earlier administrative PR-creation job was removed: this repository does not
 permit GitHub Actions to create or approve pull requests.
 

@@ -11,16 +11,21 @@ no new production library or replacement design framework is introduced.
 
 ## Execution evidence
 
-### Embedded Aether (2026-11-18)
+### Embedded Aether (2026-11-19)
 
-Application revision `3853e1a9f`, including main through `4912fb056`, passed the
-ARM64 debug/R8 release builds, resolved plugin/runtime security checks, shell/
-communications/app-management/freeze unit-test tasks, library
-suite (1,526 tests, zero failures/errors, nine skips), all four storage/notification
-device tests and the real-Telos multi-account UI/process-restart scenario in
-[run 44408135991](https://github.com/koukomin/Telos-Launcher/actions/runs/44408135991).
-An earlier revision required a retry after a Pixel Launcher ANR dialog. The final
-run passed on its first device attempt.
+Runtime revision `1303431d3`, including main through `a48e12f0a`, PR #131 and
+the rebuilt native security dependencies, passed all four jobs in
+[run 44477312223](https://github.com/koukomin/Telos-Launcher/actions/runs/44477312223):
+ARM64 debug/R8 release builds, resolved plugin/runtime security checks,
+shell/communications/app-management/freeze units, the library suite (1,526 tests,
+zero failures/errors, nine upstream skips), seven emoji archive JVM tests,
+seven storage/JNI/notification/Keystore Android cases, and the real-Telos
+multi-account UI/process-restart scenario plus three Island intent cases.
+Earlier revisions encountered a stock Pixel Launcher ANR and an ordering issue
+between HOME/configuration dispatch and process death. The driver now waits for
+those transitions; the final native candidate passed on its first device attempt.
+The seven captures identify that runtime revision; later release-metadata/docs
+changes do not change application code or native binaries.
 
 [Reviewed captures](./aether-amethyst#reviewed-captures) show the Aether login
 without the erroneous internal-task URI toast, normal/2.0-font settings, landscape

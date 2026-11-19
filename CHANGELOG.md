@@ -16,6 +16,8 @@
 - Include the latest merged root/Shizuku, self-optimization, shell and VM changes.
 - Remove redundant Linux/release-note workflows and duplicate graph submission;
   cancel obsolete closed-PR/older-main checks while retaining release history.
+- Validate the committed version-code release notes instead of silently ignoring
+  a metadata push failure from a detached tag checkout.
 - Repair Windows VM archive staging and keep its toolchain/setup files out of
   the repository-wide ZIP that the previous workflow attempted to publish.
 

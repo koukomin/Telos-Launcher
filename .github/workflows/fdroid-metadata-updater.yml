@@ -1,35 +1,33 @@
-# Automated F-Droid Metadata & Build Recipe Updater for Telos Launcher
-
-name: F-Droid Metadata Updater
+# Release metadata is committed before tagging; a detached tag job must not write main.
+name: Validate release changelog metadata
 
 on:
   push:
-    tags:
-      - 'v*'
+    tags: ['v*']
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
-  update-fdroid-metadata:
+  verify-release-metadata:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v7
-
-      - name: Update F-Droid Recipe & Version Metadata
+      - name: Verify the committed release notes for the actual version code
         run: |
-          TAG_NAME="${GITHUB_REF_NAME:-v1.43.68}"
-          VERSION_NAME="${TAG_NAME#v}"
-          
-          mkdir -p metadata/en-US/changelogs
-          mkdir -p metadata/el-GR/changelogs
-          
-          echo "Automated F-Droid changelog entry for $TAG_NAME" > "metadata/en-US/changelogs/${VERSION_NAME}.txt"
-          echo "Αυτόματη ενημέρωση F-Droid για την έκδοση $TAG_NAME" > "metadata/el-GR/changelogs/${VERSION_NAME}.txt"
-          
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add metadata/
-          git commit -m "chore(fdroid): Update F-Droid metadata and changelogs for $TAG_NAME" || echo "No changes"
-          git push origin main || echo "No push"
+          python3 - <<'PY'
+          import os
+          from pathlib import Path
+          version = dict(line.split('=', 1) for line in Path('version.properties').read_text().splitlines() if '=' in line and not line.startswith('#'))
+          code = version['versionCode']
+          assert code.isdigit(), 'Release versionCode must be numeric'
+          if os.environ['GITHUB_REF'].startswith('refs/tags/'):
+              assert os.environ['GITHUB_REF_NAME'] == 'v' + version['versionName'], 'Tag and committed version disagree'
+          for locale in ['en-US', 'el-GR']:
+              path = Path('fastlane/metadata/android') / locale / 'changelogs' / (code + '.txt')
+              text = path.read_text().strip()
+              assert text and len(text) <= 500, f'{path}: expected 1–500 characters'
+              print(f'Verified {locale} release changelog: {version["versionName"]} ({code})')
+          PY

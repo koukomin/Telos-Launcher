@@ -1545,7 +1545,8 @@ Dependabot version updates in repository settings. See the
 
 CI keeps one stable publisher and one dependency-graph writer. Superseded PR/main
 checks are cancelled automatically; unique Linux ARM64, AAB, F-Droid, native and
-emulator checks remain. The duplicate Linux/auto-changelog workflows are removed.
+emulator checks remain. The duplicate Linux/auto-changelog workflows are removed. Release metadata is
+validated from committed Fastlane notes instead of an ignored detached-tag push.
 See [workflow ownership](docs/docs/developer-guide/releases.md#avoiding-duplicate-and-obsolete-runs).
 
 SQLite startup config reads the result of `PRAGMA mmap_size` through a cursor, preventing the `SQLITE_OK` startup crash while preserving existing launcher data. Android instrumentation checks fresh database opening and reopening with retained records.
