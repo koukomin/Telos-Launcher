@@ -65,7 +65,9 @@ object TelosShellEngine {
         cachedRootAvailable?.let { if (it) return@withContext true }
         val granted = concurrencyGate.withPermit {
             runCatching {
-                val proc = ProcessBuilder("su", "-c", "id").start()
+                val proc = ProcessBuilder("su").start()
+                proc.outputStream.write(("id" + "\nexit\n").toByteArray(Charsets.UTF_8))
+                proc.outputStream.flush()
                 val res = executeAndCollect(proc, timeoutMs = 5_000L, maxOutputBytes = 4_096)
                 res.isSuccess && res.stdout.contains("uid=0")
             }.getOrDefault(false)
@@ -110,7 +112,9 @@ object TelosShellEngine {
                     return@withPermit shizukuResult
                 }
                 val rootFallback = runCatching {
-                    val proc = ProcessBuilder("su", "-c", command).start()
+                    val proc = ProcessBuilder("su").start()
+                    proc.outputStream.write((command + "\nexit\n").toByteArray(Charsets.UTF_8))
+                    proc.outputStream.flush()
                     executeAndCollect(proc, timeoutMs = timeoutMs, maxOutputBytes = maxOutputBytes)
                 }.getOrNull()
                 return@withPermit rootFallback?.takeIf { it.isSuccess }
@@ -120,7 +124,9 @@ object TelosShellEngine {
             }
 
             runCatching {
-                val proc = ProcessBuilder("su", "-c", command).start()
+                val proc = ProcessBuilder("su").start()
+                proc.outputStream.write((command + "\nexit\n").toByteArray(Charsets.UTF_8))
+                proc.outputStream.flush()
                 executeAndCollect(proc, timeoutMs = timeoutMs, maxOutputBytes = maxOutputBytes)
             }.getOrElse { err ->
                 ShellResult(
@@ -151,7 +157,9 @@ object TelosShellEngine {
 
         concurrencyGate.withPermit {
             runCatching {
-                val proc = ProcessBuilder("su", "-c", command).start()
+                val proc = ProcessBuilder("su").start()
+                proc.outputStream.write((command + "\nexit\n").toByteArray(Charsets.UTF_8))
+                proc.outputStream.flush()
                 executeAndCollect(proc, timeoutMs = timeoutMs, maxOutputBytes = maxOutputBytes)
             }.getOrElse { err ->
                 ShellResult(
@@ -194,7 +202,9 @@ object TelosShellEngine {
             if (!allowRoot) return@withPermit ShellResult(-1, "", "Authorized Shizuku execution unavailable")
             val escapedCmd = args.joinToString(" ") { "'" + it.replace("'", "'\\''") + "'" }
             runCatching {
-                val proc = ProcessBuilder("su", "-c", escapedCmd).start()
+                val proc = ProcessBuilder("su").start()
+                proc.outputStream.write((escapedCmd + "\nexit\n").toByteArray(Charsets.UTF_8))
+                proc.outputStream.flush()
                 executeAndCollect(proc, timeoutMs = timeoutMs, maxOutputBytes = maxOutputBytes)
             }.getOrElse { err ->
                 ShellResult(-1, "", err.message ?: "Execution failed")
@@ -306,7 +316,10 @@ object TelosShellEngine {
             if (shizukuProc != null) return shizukuProc
         }
         return runCatching {
-            ProcessBuilder("su", "-c", command).start()
+            val proc = ProcessBuilder("su").start()
+            proc.outputStream.write((command + "\nexit\n").toByteArray(Charsets.UTF_8))
+            proc.outputStream.flush()
+            proc
         }.getOrNull()
     }
 
