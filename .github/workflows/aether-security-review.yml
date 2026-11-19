@@ -27,40 +27,18 @@ jobs:
                   p=subprocess.run(['gh','api','--method','POST',base+'/actions/runs/'+str(r['id'])+'/cancel'],capture_output=True,text=True)
                   cancelled.append({'run':r['id'],'branch':r['head_branch'],'result':p.returncode})
           print('::notice title=Redundant helper snapshots::'+json.dumps(cancelled))
-          data=json.loads(subprocess.check_output(['gh','api',base+'/actions/workflows/dependency-graph.yml/runs?per_page=100'],text=True))
-          old=[r for r in data['workflow_runs'] if r['name']=='Submit Gradle dependency graph' and r['head_branch']=='main' and r['conclusion']=='success']
-          print('::notice title=Retired graph runs::'+json.dumps([{k:r[k] for k in ['id','head_sha','created_at','name']} for r in old[:5]]))
           import io,zipfile
-          for r in old[:2]:
-              artifacts=json.loads(subprocess.check_output(['gh','api',base+'/actions/runs/'+str(r['id'])+'/artifacts'],text=True))['artifacts']
-              print('::notice title=Retired graph artifacts::'+json.dumps([{'id':a['id'],'name':a['name'],'expired':a['expired']} for a in artifacts]))
-              for a in artifacts:
-                  if a['expired'] or 'dependency' not in a['name'].lower():continue
-                  content=subprocess.check_output(['gh','api','--allow-escape-sequences',base+'/actions/artifacts/'+str(a['id'])+'/zip'])
-                  z=zipfile.ZipFile(io.BytesIO(content))
-                  for file in z.namelist():
-                      if not file.endswith('.json'):continue
-                      try:d=json.loads(z.read(file))
-                      except ValueError:continue
-                      out={k:d.get(k) for k in ['job','sha','ref','detector','scanned']}
-                      if d.get('manifests'):
-                          out['manifests']={k:len(v.get('resolved',{})) for k,v in d['manifests'].items()}
-                          print('::notice title=Retired graph snapshot::'+json.dumps(out))
+          run='44415622395'
+          info=json.loads(subprocess.check_output(['gh','api',base+'/actions/runs/'+run],text=True))
+          print('::notice title=Managed main graph source::'+json.dumps({k:info[k] for k in ['id','head_sha','status','conclusion']}))
+          artifacts=json.loads(subprocess.check_output(['gh','api',base+'/actions/runs/'+run+'/artifacts'],text=True))['artifacts']
+          for a in artifacts:
+              if a['expired'] or 'dependency' not in a['name'].lower():continue
+              z=zipfile.ZipFile(io.BytesIO(subprocess.check_output(['gh','api','--allow-escape-sequences',base+'/actions/artifacts/'+str(a['id'])+'/zip'])))
+              for file in z.namelist():
+                  if not file.endswith('.json'):continue
+                  d=json.loads(z.read(file));purls=[v.get('package_url','') for m in d.get('manifests',{}).values() for v in m.get('resolved',{}).values()]
+                  selected=[p for p in purls if any(k in p for k in ['/guava@','/freemarker@','/bcprov-jdk18on@','/bcpkix-jdk18on@','/commons-lang3@','/httpclient@','/jose4j@','/jdom2@','/opentelemetry-api@'])]
+                  print('::notice title=Managed main resolved pins::'+json.dumps({'artifact':a['id'],'source':d.get('sha'),'job':d.get('job'),'detector':d.get('detector'),'packages':len(purls),'selected':sorted(set(selected))}))
           PYCODE
-      - name: Inspect pinned upstream crypto and database entry points
-        run: |
-          git clone --depth 1 --branch arti-v2.6.0 https://gitlab.torproject.org/tpo/core/arti.git /tmp/arti-review >/dev/null 2>&1
-          python3 - <<'PYCODE'
-          from pathlib import Path
-          import json
-          root=Path('/tmp/arti-review/crates')
-          rows=[]
-          for name in ['tor-llcrypto','tor-netdoc','tor-proto','tor-dirmgr','tor-consdiff','tor-persist']:
-              for f in (root/name).rglob('*.rs'):
-                  for i,line in enumerate(f.read_text().splitlines(),1):
-                      if any(k in line for k in ['RsaPrivateKey','RsaPublicKey','SqliteStore::','Connection::open','open_with_flags']):rows.append(str(f.relative_to(root))+':'+str(i)+':'+line.strip())
-          print('::notice title=Upstream crypto and database sites::'+json.dumps(rows)[:28000])
-          for f,start,end in [('tor-llcrypto/src/pk/rsa.rs',200,280),('tor-dirmgr/src/storage/sqlite.rs',175,245)]:
-              lines=(root/f).read_text().splitlines()
-              print('::notice title=Upstream trust boundary::'+json.dumps({'file':f,'source':'\\n'.join(str(i+1)+':'+lines[i] for i in range(start-1,min(end,len(lines))))}))
           PYCODE
