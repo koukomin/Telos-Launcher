@@ -37,16 +37,18 @@ jobs:
               refs=[r['referenceLocator'] for r in p.get('externalRefs',[]) if r.get('referenceType')=='purl']
               if refs:packages.append(refs[0])
           print('::notice title=SBOM audit::'+str(len(packages))+' package URLs')
-          queries=[{'package':{'purl':p}} for p in sorted(set(packages))]
-          try:
-              req=urllib.request.Request('https://api.osv.dev/v1/querybatch',data=json.dumps({'queries':queries}).encode(),headers={'Content-Type':'application/json'})
-              result=json.load(urllib.request.urlopen(req,timeout=120))
-              total=0
-              for q,r in zip(queries,result['results']):
-                  if r.get('vulns'):
-                      total+=1
-                      print('::notice title=SBOM advisory match::'+json.dumps({'package':q['package']['purl'],'advisories':r['vulns']}))
-              print('::notice title=SBOM audit result::Packages with advisory matches='+str(total))
-          except Exception as e:
-              print('::notice title=SBOM audit boundary::'+str(e))
+          packages=sorted(set(p for p in packages if p.startswith(('pkg:maven/','pkg:cargo/','pkg:npm/','pkg:pypi/','pkg:nuget/','pkg:golang/'))))
+          total=0
+          for offset in range(0,len(packages),500):
+              queries=[{'package':{'purl':p}} for p in packages[offset:offset+500]]
+              try:
+                  req=urllib.request.Request('https://api.osv.dev/v1/querybatch',data=json.dumps({'queries':queries}).encode(),headers={'Content-Type':'application/json'})
+                  result=json.load(urllib.request.urlopen(req,timeout=120))
+                  for q,r in zip(queries,result['results']):
+                      if r.get('vulns'):
+                          total+=1
+                          print('::notice title=SBOM advisory match::'+json.dumps({'package':q['package']['purl'],'advisories':r['vulns']}))
+              except urllib.error.HTTPError as e:
+                  print('::notice title=SBOM audit boundary::'+str(e)+' '+e.read().decode()[:1000]);raise
+          print('::notice title=SBOM audit result::Packages with advisory matches='+str(total)+' / '+str(len(packages)))
           PYCODE
