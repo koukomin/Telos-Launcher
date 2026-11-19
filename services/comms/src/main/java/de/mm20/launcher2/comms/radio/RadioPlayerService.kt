@@ -149,10 +149,12 @@ class RadioPlayerService : MediaSessionService(), KoinComponent {
 
         mediaSession = MediaSession.Builder(this, stationSwitchingPlayer(exo))
             .setId("telos_radio")
+            .setCallback(de.mm20.launcher2.comms.media.HeadsetPlayback.callback(this))
             .setBitmapLoader(de.mm20.launcher2.comms.media.AlbumArtBitmapLoader(this))
             .setSessionActivity(de.mm20.launcher2.comms.media.MediaPlaybackNotifications.open(
                 this, "radio", de.mm20.launcher2.comms.media.MediaPlaybackNotifications.RADIO))
             .build()
+        mediaSession?.let { de.mm20.launcher2.comms.media.HeadsetPlayback.register(it, de.mm20.launcher2.comms.media.HeadsetPlayback.Source.Radio) }
     }
 
     /**
@@ -270,6 +272,7 @@ class RadioPlayerService : MediaSessionService(), KoinComponent {
     }
 
     override fun onDestroy() {
+        mediaSession?.let(de.mm20.launcher2.comms.media.HeadsetPlayback::unregister)
         PlaybackCoordinator.unregister(PlaybackCoordinator.KIND_RADIO)
         handler.removeCallbacks(idleStop)
         reconnectMirror?.cancel()

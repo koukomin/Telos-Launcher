@@ -390,7 +390,7 @@ private fun PlayerContent(
 
     // notification with play / pause / previous / next (also on the lock screen and Bluetooth)
     DisposableEffect(player) {
-        VideoSession.attach(context, player)
+        VideoSession.attach(context, player, stremio)
         onDispose { VideoSession.detach(context, player) }
     }
 

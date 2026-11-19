@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="telos_headset_playback_title">Αναπαραγωγή από ακουστικά</string>
+    <string name="telos_headset_playback_summary">Συνέχισε την τελευταία επιτρεπόμενη αναπαραγωγή Telos όταν το Android στείλει εντολή αναπαραγωγής από τα ακουστικά.</string>
+    <string name="telos_headset_playback_enable">Συνέχιση στο Telos Media από τα ακουστικά</string>
+    <string name="telos_headset_playback_save_failed">Δεν αποθηκεύτηκαν οι ρυθμίσεις ακουστικών.</string>
+</resources>

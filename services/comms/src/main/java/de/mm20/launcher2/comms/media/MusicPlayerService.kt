@@ -90,9 +90,11 @@ class MusicPlayerService : MediaSessionService() {
         handler.postDelayed(idleStop, IDLE_STOP_MS)
         mediaSession = MediaSession.Builder(this, player)
             .setId("telos_music") // Media3 throws "Session ID must be unique" when radio (default id) is alive in the same process
+            .setCallback(de.mm20.launcher2.comms.media.HeadsetPlayback.callback(this))
             .setBitmapLoader(AlbumArtBitmapLoader(this))
             .setSessionActivity(MediaPlaybackNotifications.open(this, "music", MediaPlaybackNotifications.MUSIC))
             .build()
+        mediaSession?.let { de.mm20.launcher2.comms.media.HeadsetPlayback.register(it, de.mm20.launcher2.comms.media.HeadsetPlayback.Source.Music) }
         MusicSleepTimer.onExpire = { player.pause() }
         scrobbler = runCatching { de.mm20.launcher2.comms.scrobble.ScrobbleTracker(this, player).also { it.attach() } }.getOrNull()
     }
@@ -164,6 +166,7 @@ class MusicPlayerService : MediaSessionService() {
     }
 
     override fun onDestroy() {
+        mediaSession?.let(de.mm20.launcher2.comms.media.HeadsetPlayback::unregister)
         PlaybackCoordinator.unregister(PlaybackCoordinator.KIND_MUSIC)
         mediaSession?.player?.let { saveState(it) }
         handler.removeCallbacks(idleStop)

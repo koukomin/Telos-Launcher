@@ -3,6 +3,7 @@ package de.mm20.launcher2.ui.media.video
 import android.app.PendingIntent
 import android.content.Intent
 import androidx.media3.common.Player
+import de.mm20.launcher2.comms.media.HeadsetPlayback
 import androidx.media3.session.MediaSession
 import androidx.media3.session.MediaSessionService
 
@@ -24,15 +25,16 @@ open class VideoPlaybackService : MediaSessionService() {
                 .build().apply { setSmallIcon(de.mm20.launcher2.search.VirtualAppAppearance.glyph("telos_video_app")!!) }
         )
         VideoSession.service = this
-        VideoSession.player?.let { open(it) }
+        VideoSession.player?.let { open(it, VideoSession.source) }
     }
 
-    internal fun open(player: Player) {
+    internal fun open(player: Player, source: HeadsetPlayback.Source) {
         if (session?.player === player) return
         close()
         session = runCatching {
             MediaSession.Builder(this, player)
                 .setId("telos_video")
+                .setCallback(HeadsetPlayback.callback(this))
                 .setSessionActivity(
                     PendingIntent.getActivity(
                         this, 0,
@@ -42,11 +44,15 @@ open class VideoPlaybackService : MediaSessionService() {
                 )
                 .build()
         }.getOrNull()
-        session?.let { runCatching { addSession(it) } }
+        session?.let {
+            HeadsetPlayback.register(it, source)
+            runCatching { addSession(it) }
+        }
     }
 
     internal fun close() {
         session?.let {
+            HeadsetPlayback.unregister(it)
             runCatching { removeSession(it) }
             runCatching { it.release() } // the player is released by the player screen
         }
@@ -70,13 +76,17 @@ object VideoSession {
     @Volatile internal var player: Player? = null
     @Volatile internal var service: VideoPlaybackService? = null
 
-    fun attach(context: android.content.Context, player: Player) {
+    internal var source = HeadsetPlayback.Source.Video
+        private set
+
+    fun attach(context: android.content.Context, player: Player, stremio: Boolean) {
+        source = if (stremio) HeadsetPlayback.Source.Stremio else HeadsetPlayback.Source.Video
         this.player = player
         val app = context.applicationContext
         val cls = if (de.mm20.launcher2.base.ProcessInfo.isolatedPlayer) IsolatedVideoPlaybackService::class.java
         else VideoPlaybackService::class.java
         val running = service
-        if (running != null) running.open(player) else runCatching { app.startService(Intent(app, cls)) }
+        if (running != null) running.open(player, source) else runCatching { app.startService(Intent(app, cls)) }
     }
 
     fun detach(context: android.content.Context, player: Player) {

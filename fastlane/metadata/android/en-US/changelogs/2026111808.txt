@@ -1,0 +1,1 @@
+Choose which Telos Media sources headset Play can resume. YouTube stays enabled by default. Local Video and Stremio are excluded by default.

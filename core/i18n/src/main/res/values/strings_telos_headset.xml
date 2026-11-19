@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="telos_headset_playback_title">Headset playback</string>
+    <string name="telos_headset_playback_summary">Resume the latest allowed Telos session when Android sends a headset play command.</string>
+    <string name="telos_headset_playback_enable">Route headset play to Telos Media</string>
+    <string name="telos_headset_playback_save_failed">Could not save headset settings.</string>
+</resources>

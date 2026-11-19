@@ -1,4 +1,18 @@
 package de.mm20.launcher2.ui.media.hub
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.selection.toggleable
+import androidx.compose.ui.semantics.Role
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.rememberCoroutineScope
+import de.mm20.launcher2.comms.media.HeadsetPlayback
+import de.mm20.launcher2.ui.component.virtualAppPopup
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
 
@@ -19,7 +33,6 @@ import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.horizontalScroll
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.FilterChip
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -98,7 +111,6 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -385,6 +397,8 @@ private fun HubToolbar(
     blurRadius: Int,
 ) {
     var menu by remember { mutableStateOf(false) }
+    var headsetSettings by rememberSaveable { mutableStateOf(false) }
+    if (headsetSettings) HeadsetSettingsDialog { headsetSettings = false }
     val t = MaterialTheme.transparency
     val glass = MaterialTheme.colorScheme.surface.copy(alpha = t.elevatedSurface)
     Column(Modifier.fillMaxWidth().hubGlass(haze, blurRadius, glass)) {
@@ -396,6 +410,10 @@ private fun HubToolbar(
             actions = actions,
             sourceMenu = {
                 androidx.compose.material3.DropdownMenu(expanded = menu, onDismissRequest = { menu = false }) {
+                    androidx.compose.material3.DropdownMenuItem(
+                        text = { Text(stringResource(I18nR.string.telos_headset_playback_title)) },
+                        onClick = { menu = false; headsetSettings = true },
+                    )
                     available.forEach { source ->
                         androidx.compose.material3.DropdownMenuItem(
                             text = { Text(stringResource(source.label)) },
@@ -816,3 +834,76 @@ private fun HubMiniPlayer(
 @Suppress("UNUSED_PARAMETER")
 private fun Modifier.hubGlass(haze: de.mm20.launcher2.ui.component.VirtualAppBlur, blur: Int, color: Color): Modifier =
     this.frostedGlass(color)
+
+@Composable
+private fun HeadsetSettingsDialog(onDismiss: () -> Unit) {
+    val context = LocalContext.current.applicationContext
+    val scope = rememberCoroutineScope()
+    var options by remember { mutableStateOf<HeadsetPlayback.Options?>(null) }
+    var saving by remember { mutableStateOf(false) }
+    var failed by remember { mutableStateOf(false) }
+    LaunchedEffect(context) {
+        options = withContext(Dispatchers.IO) { HeadsetPlayback.load(context) }
+    }
+    val current = options ?: return
+    AlertDialog(
+        onDismissRequest = { if (!saving) onDismiss() },
+        containerColor = virtualAppPopup(),
+        title = { Text(stringResource(I18nR.string.telos_headset_playback_title)) },
+        text = {
+            Column(Modifier.verticalScroll(rememberScrollState())) {
+                Text(stringResource(I18nR.string.telos_headset_playback_summary))
+                HeadsetOption(
+                    stringResource(I18nR.string.telos_headset_playback_enable),
+                    current.enabled,
+                    !saving,
+                ) { options = current.copy(enabled = it) }
+                HeadsetPlayback.Source.entries.forEach { source ->
+                    HeadsetOption(
+                        stringResource(MediaSpace.valueOf(source.name).label),
+                        source in current.sources,
+                        current.enabled && !saving,
+                    ) { checked ->
+                        options = current.copy(
+                            sources = if (checked) current.sources + source else current.sources - source,
+                        )
+                    }
+                }
+                if (failed) Text(stringResource(I18nR.string.telos_headset_playback_save_failed))
+            }
+        },
+        confirmButton = {
+            TextButton(enabled = !saving, onClick = {
+                saving = true
+                failed = false
+                scope.launch {
+                    try {
+                        withContext(Dispatchers.IO) { HeadsetPlayback.save(context, current) }
+                        onDismiss()
+                    } catch (_: java.io.IOException) {
+                        failed = true
+                    } finally {
+                        saving = false
+                    }
+                }
+            }) { Text(stringResource(android.R.string.ok)) }
+        },
+        dismissButton = {
+            TextButton(enabled = !saving, onClick = onDismiss) {
+                Text(stringResource(android.R.string.cancel))
+            }
+        },
+    )
+}
+
+@Composable
+private fun HeadsetOption(label: String, checked: Boolean, enabled: Boolean, onChange: (Boolean) -> Unit) {
+    Row(
+        Modifier.fillMaxWidth().toggleable(value = checked, enabled = enabled, role = Role.Checkbox, onValueChange = onChange)
+            .heightIn(min = 48.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Checkbox(checked = checked, onCheckedChange = null, enabled = enabled)
+        Text(label, Modifier.padding(start = 12.dp))
+    }
+}

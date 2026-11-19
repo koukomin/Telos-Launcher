@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.45.76
+
+- Route headset Play to the latest available allowed Telos Media session. Choose Music, Radio, TV, YouTube, YouTube Music, Video and Stremio independently. Video and Stremio start disabled.
+
 ## 1.45.75
 
 - Fix Kotlin compilation of the Cyber-Tech changes in Music, Stremio and Video.

@@ -107,12 +107,23 @@ class YouTubePlayerService : MediaSessionService(), KoinComponent {
             .putExtra(SettingsDeepLinkContract.EXTRA_ROUTE, SettingsDeepLinkContract.ROUTE_MEDIA)
             .putExtra(SettingsDeepLinkContract.EXTRA_MEDIA_SPACE, "youtube")
         session = MediaSession.Builder(this, player).setId("telos_youtube")
+            .setCallback(de.mm20.launcher2.comms.media.HeadsetPlayback.callback(this))
             .setBitmapLoader(de.mm20.launcher2.comms.media.AlbumArtBitmapLoader(this))
             .setSessionActivity(PendingIntent.getActivity(this, 2301, open, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)).build()
+        session?.let {
+            de.mm20.launcher2.comms.media.HeadsetPlayback.register(it) { current ->
+                if (current.currentMediaItem?.mediaMetadata?.extras?.getBoolean("audioOnly") == true) {
+                    de.mm20.launcher2.comms.media.HeadsetPlayback.Source.YouTubeMusic
+                } else {
+                    de.mm20.launcher2.comms.media.HeadsetPlayback.Source.YouTube
+                }
+            }
+        }
         handler.postDelayed(idleStop, 5 * 60 * 1000L)
     }
     override fun onGetSession(controllerInfo: MediaSession.ControllerInfo): MediaSession? = session
     override fun onDestroy() {
+        session?.let(de.mm20.launcher2.comms.media.HeadsetPlayback::unregister)
         playbackScope.cancel()
         handler.removeCallbacksAndMessages(null)
         runCatching { scrobbler?.release() }

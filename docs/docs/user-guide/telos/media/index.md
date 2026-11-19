@@ -258,3 +258,18 @@ When enabled, torrent playback uses the official Stremio server’s hash/file-in
 A running compatible streaming server is required. Telos cannot read another app’s sandbox or reinterpret a Media3 cache index as Stremio torrent data. Stremio builds that do not expose this API cannot share their private cache through this option. Server network/download policies are owned by that server. The settings read/write protocol is covered by a local HTTP integration test. Interoperability with an installed Stremio streaming server has not been verified.
 
 Delayed Trakt playback updates check remote watched history and newer resume timestamps before replaying. Completed offline updates retain their original watch time. Account credentials are initialized off the UI thread before choosing playback state. The integration is still undergoing final build and live-account validation.
+
+
+## Headset playback
+
+Open the Media source menu and choose **Headset playback**. The option is on by
+default. When Android delivers a play command from the headset, Telos resumes
+the most recently played, allowed session available in the receiving process.
+Music, Radio, TV, YouTube and YouTube Music are enabled by default. Local Video
+and Stremio can be enabled individually. Pause and track navigation retain
+their existing media-key routes.
+
+The headset firmware decides what its double tap sends to Android. If it sends
+Next Track, Android treats it as a skip. Telos uses the sessions that are still
+available, so a closed stream or a session in a different player process may
+need to be reopened from Media.

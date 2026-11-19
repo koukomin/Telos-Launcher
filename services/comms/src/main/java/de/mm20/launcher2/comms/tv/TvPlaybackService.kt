@@ -114,11 +114,13 @@ class TvPlaybackService : MediaSessionService(), KoinComponent {
             return
         }
         session = s
+        de.mm20.launcher2.comms.media.HeadsetPlayback.register(s, de.mm20.launcher2.comms.media.HeadsetPlayback.Source.Tv)
         runCatching { addSession(s) }
     }
 
     private fun releaseSession() {
         session?.let {
+            de.mm20.launcher2.comms.media.HeadsetPlayback.unregister(it)
             removeSession(it)
             // the ExoPlayer belongs to the controller: only the session and its wrapper are released
             it.release()
@@ -147,6 +149,12 @@ class TvPlaybackService : MediaSessionService(), KoinComponent {
     override fun onGetSession(controllerInfo: MediaSession.ControllerInfo): MediaSession? = session
 
     private inner class SessionCallback : MediaSession.Callback {
+        override fun onMediaButtonEvent(
+            session: MediaSession,
+            controllerInfo: MediaSession.ControllerInfo,
+            intent: Intent,
+        ): Boolean = de.mm20.launcher2.comms.media.HeadsetPlayback.handle(this@TvPlaybackService, session, controllerInfo, intent)
+
         override fun onConnect(
             session: MediaSession,
             controller: MediaSession.ControllerInfo,
