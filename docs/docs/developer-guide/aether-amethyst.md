@@ -97,8 +97,8 @@ validated application revision `3853e1a9f`, after incorporating main at `4912fb0
   suspend-call compilation error introduced on main was corrected with a
   non-blocking cached root-status query; real root probing stays asynchronous.
 - Both builds' resolved plugin/runtime security checks and the Dokka graph passed.
-  Release helper tests and the static Pages build also passed locally; see the Dependabot guide for the unpatched
-  docs-tool advisory and the scoped review of upstream scanner fixtures.
+  Release helper tests and the static Pages build also passed locally; see the Dependabot guide for the dated
+  docs-tool audit history and the scoped review of upstream scanner fixtures.
 
 An earlier revision's first device attempt was blocked by a Pixel Launcher ANR
 dialog; retrying that unchanged revision on a fresh emulator passed. The final

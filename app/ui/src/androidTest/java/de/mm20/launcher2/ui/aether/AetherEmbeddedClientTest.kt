@@ -62,7 +62,22 @@ class AetherEmbeddedClientTest {
 
     private fun openAether() {
         val result = shell("am start -W -n $target/de.mm20.launcher2.ui.settings.SettingsActivity --es de.mm20.launcher2.settings.ROUTE settings/aether")
+        android.util.Log.i("AetherUiDriver", "Open Aether result: $result")
         assertTrue(result, !result.contains("Error:"))
+    }
+
+    private fun backgroundBeforeProcessDeath() {
+        // Font/rotation dispatch and HOME focus are asynchronous system operations. Finish
+        // those transitions before force-stop so the subsequent cold launch is not overtaken
+        // by a pending HOME request. Account-restoration assertions remain unchanged.
+        automation.waitForIdle(500, 10_000)
+        val component = shell("cmd package resolve-activity --brief -a android.intent.action.MAIN -c android.intent.category.HOME")
+            .lineSequence().lastOrNull { '/' in it && '=' !in it }?.trim()
+        val homePackage = component?.substringBefore('/')
+        check(!homePackage.isNullOrBlank()) { "Could not resolve the emulator's HOME activity: $component" }
+        shell("input keyevent KEYCODE_HOME")
+        awaitNode("HOME before process death") { it.packageName?.toString() == homePackage }
+        automation.waitForIdle(500, 10_000)
     }
 
     private fun scrollToText(text: String): AccessibilityNodeInfo {
@@ -157,7 +172,7 @@ class AetherEmbeddedClientTest {
             shell("settings put system user_rotation $originalRotation")
             shell("settings put system accelerometer_rotation $originalAutoRotate")
             shell("settings put system font_scale $originalFont")
-            shell("input keyevent KEYCODE_HOME")
+            backgroundBeforeProcessDeath()
             shell("am force-stop $target")
             openAether()
             openAccounts()

@@ -46,6 +46,13 @@ jobs:
             --no-configuration-cache --no-daemon --max-workers=1 --console=plain \
             -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process \
             '-Dorg.gradle.jvmargs=-Xmx6g -Dfile.encoding=UTF-8' 2>&1 | tee -a /tmp/aether-build.log
+      - name: Test emoji archive extraction and path boundaries
+        run: |
+          set -o pipefail
+          ./gradlew -p libs/amethyst :commons:jvmTest --tests com.vitorpamplona.amethyst.commons.model.nip30CustomEmojis.EmojiArchiveTest \
+            --no-configuration-cache --no-daemon --max-workers=1 --console=plain \
+            -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process \
+            '-Dorg.gradle.jvmargs=-Xmx6g -Dfile.encoding=UTF-8' 2>&1 | tee -a /tmp/aether-build.log
       - name: Publish concise failure details
         if: failure()
         shell: bash
@@ -85,6 +92,7 @@ jobs:
             /tmp/aether-build.log
             libs/amethyst/amethyst/build/reports/tests/
             libs/amethyst/amethyst/build/test-results/
+            libs/amethyst/commons/build/test-results/
 
   telos-apk:
     if: github.event_name != 'pull_request' || github.event.action != 'closed'

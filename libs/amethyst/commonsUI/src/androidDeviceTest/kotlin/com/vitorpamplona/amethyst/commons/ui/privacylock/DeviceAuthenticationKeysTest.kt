@@ -26,7 +26,8 @@ class DeviceAuthenticationKeysTest {
     fun credentialProofRequiresAnActualSystemAuthentication() {
         assumeTrue(
             "Screen-lock test runs only on a disposable emulator",
-            Build.FINGERPRINT.contains("generic") || Build.MODEL.startsWith("sdk_gphone"),
+            Build.HARDWARE in setOf("ranchu", "goldfish") &&
+                (Build.FINGERPRINT.contains("generic") || Build.MODEL.startsWith("sdk_gphone")),
         )
         val context = InstrumentationRegistry.getInstrumentation().targetContext
         val keyguard = context.getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager

@@ -128,18 +128,18 @@ An additional Actions request with `security-events: read` also returned
 The local resolved Dokka security task passed on 2026-11-18: four sensitive
 packages verified across four root resolvers. `npm audit --package-lock-only`
 reported eight high entries, all propagated from **GHSA-fc5q-39xc-vjpf**
-(picomatch repeated extglob ReDoS, affected through 4.0.7). The npm registry's
-latest version is still 4.0.7 and audit reports no fix. The docs dependencies use
+(picomatch repeated extglob ReDoS, affected through 4.0.7). At that checkpoint the npm registry's
+latest version was 4.0.7 and audit reported no fix. The docs dependencies use
 repository-defined build/watch globs; the published static site does not execute
 picomatch or accept visitor-provided glob expressions. No global major override
-or audit suppression is added. This advisory remains open until a patched
-compatible release is available; eight entries are not eight independent flaws.
+or audit suppression is added. At that checkpoint the advisory had no compatible fix; the eight entries
+were not eight independent flaws.
 
 The docs SSR renderer is aligned with Vue 3.5.45. A forced 3.5.44 renderer had
 installed a second Vue runtime and produced `vitepress data not properly
 injected` errors despite a zero build exit status. After alignment, the Pages
 build renders successfully without those SSR errors. The lockfile removes the
-duplicate runtime; the unpatched picomatch advisory above remains unchanged.
+duplicate runtime; the picomatch warning was still present at that checkpoint.
 
 
 Gitleaks 8.30.1 scanned the complete Aether branch history relative to main.
@@ -152,9 +152,15 @@ only their exact import-commit/file/rule/line fingerprints with reasons, not a
 whole commit, path or rule. New credentials at those paths remain detectable.
 This does not claim that any upstream API identifier was rotated or revoked.
 
-After regenerating the deduplicated Vue lockfile, the final npm audit reports
-five high entries propagated from the same unpatched picomatch advisory, down
-from eight in the initial graph. No advisory is suppressed.
+After regenerating the deduplicated Vue lockfile on 2026-11-18, npm audit reported
+five high entries propagated from the same advisory, down from eight in the
+initial graph. No advisory was suppressed.
+
+Rechecking the unchanged lockfile on 2026-11-19 with
+`npm audit --include=dev --package-lock-only` reports **zero vulnerabilities**
+across 229 dependencies. The static Pages build also passes. The earlier
+paragraphs record the previous registry audit result; no claim about why the
+registry result changed is made.
 
 
 ### Included-build advisory follow-up (1.45.71)
