@@ -1,35 +1,44 @@
-name: Validate final Aether security candidate
+name: Validate Aether emoji archive security boundary
 on:
   push:
     branches: ['codex/aether-security-review']
 permissions:
   contents: read
-  security-events: read
-  actions: write
 jobs:
-  dispatch:
+  emoji-regression:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 45
     steps:
-      - name: Start CodeQL on the complete feature revision
-        env:
-          GH_TOKEN: ${{ github.token }}
+      - uses: actions/checkout@v7
+        with:
+          ref: codex/aether-amethyst-embedded
+          persist-credentials: false
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: '21'
+      - uses: gradle/actions/setup-gradle@v6
+        with:
+          cache-provider: basic
+      - name: Run archive traversal and extraction regressions
         run: |
-          gh api --method POST repos/${{ github.repository }}/actions/workflows/codeql-security-scan.yml/dispatches -f ref=codex/aether-amethyst-embedded
-          echo '::notice title=Security candidate::CodeQL dispatched for codex/aether-amethyst-embedded'
-      - name: Check current Dependabot access
-        env:
-          GH_TOKEN: ${{ github.token }}
+          ./gradlew -p libs/amethyst :commons:jvmTest --tests com.vitorpamplona.amethyst.commons.model.nip30CustomEmojis.EmojiArchiveTest --no-configuration-cache --no-daemon --max-workers=1 --console=plain -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process '-Dorg.gradle.jvmargs=-Xmx6g -Dfile.encoding=UTF-8' > "$RUNNER_TEMP/emoji-tests.log" 2>&1 || { tail -70 "$RUNNER_TEMP/emoji-tests.log"; exit 1; }
+      - name: Require the traversal regression and all extraction cases to run
+        if: always()
         run: |
           python3 - <<'PY'
-          import os, subprocess, json
-          r=subprocess.run(['gh','api','repos/'+os.environ['GITHUB_REPOSITORY']+'/dependabot/alerts?state=open&per_page=100'],capture_output=True,text=True)
-          if r.returncode:
-              print('::warning title=Dependabot API access::'+r.stderr.strip().replace('\n',' ')[:1500])
-          else:
-              data=json.loads(r.stdout)
-              for a in data:
-                  out={k:a.get(k) for k in ['number','dependency','security_advisory','security_vulnerability']}
-                  print('::notice title=Open Dependabot alert::'+json.dumps(out)[:3800])
-              print('::notice title=Dependabot alert count::'+str(len(data)))
+          import pathlib, xml.etree.ElementTree as ET
+          tests=[]
+          for p in pathlib.Path('libs/amethyst/commons/build/test-results').rglob('TEST-*.xml'):
+              tests.extend(c for c in ET.parse(p).getroot().iter('testcase') if c.get('classname')=='com.vitorpamplona.amethyst.commons.model.nip30CustomEmojis.EmojiArchiveTest')
+          assert any(c.get('name','').startswith('archivePathsNeverBecomeOutputPaths') for c in tests), 'Traversal regression did not run'
+          assert tests and all(not any(c.find(x) is not None for x in ['failure','error','skipped']) for c in tests), 'Archive regression failed/skipped'
+          print('::notice title=Emoji archive security tests::'+str(len(tests))+' tests passed, including traversal/Windows/absolute paths')
           PY
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: emoji-security-results
+          path: |
+            ${{ runner.temp }}/emoji-tests.log
+            libs/amethyst/commons/build/test-results/
