@@ -1,18 +1,33 @@
-name: Scan the final resolved Island protocol fix
+name: Review outstanding repository checks
 on:
   push:
     branches: ['codex/aether-security-review']
 permissions:
   contents: read
-  actions: write
+  actions: read
+  pull-requests: read
+  security-events: read
 jobs:
-  scan:
+  inspect:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - name: Run full CodeQL on the final candidate
+      - name: Read open PRs, active checks and security access
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh api --method POST repos/${{ github.repository }}/actions/workflows/codeql-security-scan.yml/dispatches -f ref=codex/aether-amethyst-embedded
-          echo '::notice title=Final protocol scan::Full CodeQL requested for the final freeze intent fix and Aether client'
+          python3 - <<'PYCODE'
+          import subprocess,json,os
+          base='repos/'+os.environ['GITHUB_REPOSITORY']
+          for endpoint in ['/pulls?state=open&per_page=100', '/actions/runs?status=in_progress&per_page=100', '/actions/runs?status=queued&per_page=100', '/dependabot/alerts?state=open&per_page=100']:
+              p=subprocess.run(['gh','api',base+endpoint],capture_output=True,text=True)
+              if p.returncode:
+                  print('::notice title=Access boundary::'+endpoint+' '+p.stderr[:400].replace('\n',' '));continue
+              d=json.loads(p.stdout)
+              if isinstance(d,dict):d=d.get('workflow_runs',[])
+              print('::notice title=Repository review::'+endpoint+' count='+str(len(d)))
+              for x in d:
+                  out={k:x.get(k) for k in ['id','number','name','title','status','conclusion','head_branch','head_sha','created_at','updated_at','html_url']}
+                  if 'head' in x:out['head']=x['head']['sha']
+                  print(json.dumps(out))
+          PYCODE
