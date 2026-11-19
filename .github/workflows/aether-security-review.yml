@@ -27,20 +27,7 @@ jobs:
                   p=subprocess.run(['gh','api','--method','POST',base+'/actions/runs/'+str(r['id'])+'/cancel'],capture_output=True,text=True)
                   cancelled.append({'run':r['id'],'branch':r['head_branch'],'result':p.returncode})
           print('::notice title=Redundant helper snapshots::'+json.dumps(cancelled))
-          import time
-          ids=['44610335581','44610335813','44610335736']
-          pulls=json.loads(subprocess.check_output(['gh','api',base+'/pulls?state=open'],text=True))
-          print('::notice title=Open PRs::'+json.dumps([{'number':p['number'],'title':p['title']} for p in pulls]))
-          for _ in range(72):
-              runs=[json.loads(subprocess.check_output(['gh','api',base+'/actions/runs/'+i],text=True)) for i in ids]
-              if all(r['status']=='completed' for r in runs):break
-              time.sleep(50)
-          print('::notice title=Android release checks::'+json.dumps([{k:r[k] for k in ['id','name','status','conclusion']} for r in runs]))
-          release=json.loads(subprocess.check_output(['gh','api',base+'/releases/tags/v1.45.75'],text=True))
-          assets={a['name']:a['size'] for a in release['assets']}
-          print('::notice title=Published Android assets::'+json.dumps(assets))
-          assert not release['draft']
-          for abi in ['arm64-v8a','armeabi-v7a']:
-              for suffix in ['apk','apk.idsig']:
-                  assert assets['telos-'+abi+'.'+suffix]>0
+          for id in ['44610335581','44610335813','44610335736']:
+              info=json.loads(subprocess.check_output(['gh','api',base+'/actions/runs/'+id+'/jobs'],text=True))
+              print('::notice title=Android status '+id+'::'+json.dumps([{'id':j['id'],'name':j['name'],'status':j['status'],'conclusion':j['conclusion'],'active':[x['name'] for x in j['steps'] if x['status']=='in_progress']} for j in info['jobs']]))
           PYCODE
