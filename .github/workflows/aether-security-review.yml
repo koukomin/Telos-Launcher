@@ -29,5 +29,24 @@ jobs:
               for x in d:
                   out={k:x.get(k) for k in ['id','number','name','title','status','conclusion','head_branch','head_sha','created_at','updated_at','html_url']}
                   if 'head' in x:out['head']=x['head']['sha']
-                  print(json.dumps(out))
+                  print('::notice title=Repository item::'+json.dumps(out))
           PYCODE
+          import urllib.request,urllib.error
+          sbom=json.loads(subprocess.check_output(['gh','api',base+'/dependency-graph/sbom'],text=True))['sbom']
+          packages=[]
+          for p in sbom['packages']:
+              refs=[r['referenceLocator'] for r in p.get('externalRefs',[]) if r.get('referenceType')=='purl']
+              if refs:packages.append(refs[0])
+          print('::notice title=SBOM audit::'+str(len(packages))+' package URLs')
+          queries=[{'package':{'purl':p}} for p in sorted(set(packages))]
+          try:
+              req=urllib.request.Request('https://api.osv.dev/v1/querybatch',data=json.dumps({'queries':queries}).encode(),headers={'Content-Type':'application/json'})
+              result=json.load(urllib.request.urlopen(req,timeout=120))
+              total=0
+              for q,r in zip(queries,result['results']):
+                  if r.get('vulns'):
+                      total+=1
+                      print('::notice title=SBOM advisory match::'+json.dumps({'package':q['package']['purl'],'advisories':r['vulns']}))
+              print('::notice title=SBOM audit result::Packages with advisory matches='+str(total))
+          except Exception as e:
+              print('::notice title=SBOM audit boundary::'+str(e))
