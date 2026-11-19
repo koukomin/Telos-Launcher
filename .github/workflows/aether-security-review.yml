@@ -19,17 +19,17 @@ jobs:
           python3 - <<'PYCODE'
           import subprocess,json,os
           base='repos/'+os.environ['GITHUB_REPOSITORY']
-          import urllib.request
-          sbom=json.loads(subprocess.check_output(['gh','api',base+'/dependency-graph/sbom'],text=True))['sbom']
-          packages=sorted(set(r['referenceLocator'] for p in sbom['packages'] for r in p.get('externalRefs',[]) if r.get('referenceType')=='purl' and r['referenceLocator'].startswith(('pkg:maven/','pkg:cargo/','pkg:npm/','pkg:pypi/','pkg:nuget/','pkg:golang/'))))
-          findings=[]
-          for offset in range(0,len(packages),500):
-              urls=packages[offset:offset+500]
-              req=urllib.request.Request('https://api.osv.dev/v1/querybatch',data=json.dumps({'queries':[{'package':{'purl':p}} for p in urls]}).encode(),headers={'Content-Type':'application/json'})
-              result=json.load(urllib.request.urlopen(req,timeout=120))
-              for p,r in zip(urls,result['results']):
-                  if r.get('vulns'):findings.append({'package':p,'ids':[v['id'] for v in r['vulns']]})
-          print('::notice title=Complete SBOM advisory audit::'+json.dumps({'checked':len(packages),'findings':findings}))
-          data=json.loads(subprocess.check_output(['gh','api',base+'/actions/runs/44471767507'],text=True))
-          print('::notice title=Runtime retry status::'+json.dumps({k:data[k] for k in ['status','conclusion','run_attempt']}))
+          q='query { repository(owner:"koukomin",name:"Telos-Launcher") { dependencyGraphManifests(first:100) { nodes { filename blobPath dependencies(first:100) { nodes { packageName packageManager requirements } } } } } }'
+          result=subprocess.run(['gh','api','graphql','-f','query='+q],capture_output=True,text=True)
+          if result.returncode:print('::notice title=GraphQL access::'+result.stderr[:2000].replace('\n',' '))
+          else:
+              data=json.loads(result.stdout)
+              wanted=['guava','opentelemetry-api','commons-lang3','httpclient','jose4j','bcprov-jdk18on','bcpkix-jdk18on','jdom2','freemarker']
+              for m in data['data']['repository']['dependencyGraphManifests']['nodes']:
+                  deps=[d for d in m['dependencies']['nodes'] if any(p in d['packageName'] for p in wanted)]
+                  if deps:print('::notice title=Manifest graph::'+json.dumps({'file':m['filename'],'path':m['blobPath'],'deps':deps}))
+          for job in ['135389526578']:
+              response=subprocess.run(['gh','api','--allow-escape-sequences',base+'/actions/jobs/'+job+'/logs'],capture_output=True,text=True)
+              lines=[line for line in response.stdout.splitlines() if '::notice title=Disposable emulator retry::' in line and 'print(' not in line]
+              print('::notice title=Emulator retry request::'+json.dumps({'returncode':response.returncode,'stderr':response.stderr[:500],'lines':lines}))
           PYCODE
