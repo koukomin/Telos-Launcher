@@ -27,56 +27,21 @@ jobs:
                   p=subprocess.run(['gh','api','--method','POST',base+'/actions/runs/'+str(r['id'])+'/cancel'],capture_output=True,text=True)
                   cancelled.append({'run':r['id'],'branch':r['head_branch'],'result':p.returncode})
           print('::notice title=Redundant helper snapshots::'+json.dumps(cancelled))
-          sbom=json.loads(subprocess.check_output(['gh','api',base+'/dependency-graph/sbom'],text=True))['sbom']
-          purls=[r['referenceLocator'] for p in sbom['packages'] for r in p.get('externalRefs',[]) if r.get('referenceType')=='purl']
-          selected=[p for p in purls if any(k in p for k in ['/guava@','/freemarker@','/bcprov-jdk18on@','/bcpkix-jdk18on@','/commons-lang3@','/httpclient@','/jose4j@','/jdom2@','/opentelemetry-api@'])]
-          print('::notice title=SBOM after duplicate retirement::'+json.dumps({'packages':len(purls),'selected':sorted(set(selected))}))
-          scan=base+'/code-scanning'
-          ref='refs/heads/codex/aether-amethyst-embedded'
-          analyses=json.loads(subprocess.check_output(['gh','api',scan+'/analyses?ref='+ref+'&per_page=100'],text=True))
-          matching=[a for a in analyses if a['commit_sha']=='d79b5fc776d23b2fa9321ef248278dc52396b9df']
-          assert {'/language:java-kotlin','/language:actions'} <= {a.get('category') for a in matching}
-          for a in matching:
-              out={k:a.get(k) for k in ['id','commit_sha','results_count','category','error','warning']}
-              print('::notice title=Final Java source analysis::'+json.dumps(out));assert not a.get('error')
-          alerts=json.loads(subprocess.check_output(['gh','api',scan+'/alerts?state=open&ref='+ref+'&per_page=100'],text=True))
-          print('::notice title=Final source open findings::'+json.dumps([{'number':a['number'],'rule':a['rule']} for a in alerts]));assert not alerts
-          data=json.loads(subprocess.check_output(['gh','api',base+'/actions/runs/44474665043/jobs?per_page=100'],text=True))
-          print('::notice title=Patched native rebuild progress::'+json.dumps([{'id':j['id'],'name':j['name'],'status':j['status'],'conclusion':j['conclusion'],'active':[t['name'] for t in j['steps'] if t['status']=='in_progress']} for j in data['jobs']]))
-          PYCODE
-      - uses: actions/checkout@v7
-        with:
-          ref: d79b5fc776d23b2fa9321ef248278dc52396b9df
-      - name: Trace selected crypto dependencies without compiling native binaries
-        working-directory: libs/amethyst/tools/arti-build
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          set -euo pipefail
-          sed '$d' build-arti.sh > .ci-build-functions.sh
-          source .ci-build-functions.sh
-          rm .ci-build-functions.sh
-          clone_or_update_arti
-          setup_wrapper
-          cargo tree --locked --manifest-path "$ARTI_SOURCE_DIR/arti-android-wrapper/Cargo.toml" --target all -i crypto-bigint > "$RUNNER_TEMP/crypto-tree.txt" 2>&1
-          cargo tree --locked --manifest-path "$ARTI_SOURCE_DIR/arti-android-wrapper/Cargo.toml" --target all -e features -i ssh-key-fork-arti > "$RUNNER_TEMP/ssh-features.txt" 2>&1
-          python3 - <<'PYCODE'
-          import os,json
-          from pathlib import Path
-          for name in ['crypto-tree.txt','ssh-features.txt']:
-              text=(Path(os.environ['RUNNER_TEMP'])/name).read_text()
-              selected=[line for line in text.splitlines() if not any(t in line for t in ['Downloaded ','Downloading ','info:','warn:','Updating crates.io'])]
-              if name=='ssh-features.txt':selected=sorted(set(line[line.index('ssh-key-fork-arti feature'):].strip() for line in selected if 'ssh-key-fork-arti feature' in line))
-              print('::notice title=Selected native crypto features::'+json.dumps({'file':name,'lines':selected[:25]}))
-          PYCODE
-          python3 - <<'PYCODE'
-          from pathlib import Path
-          import json
-          root=Path('/tmp/amethyst-arti-build/.arti-source/crates')
-          for name in ['tor-key-forge','tor-keymgr']:
-              lines=(root/name/'Cargo.toml').read_text().splitlines()
-              selected=[]
-              for i,l in enumerate(lines):
-                  if 'ssh-key' in l:selected.extend(lines[max(0,i-1):min(len(lines),i+7)])
-              print('::notice title=Upstream key-format dependencies::'+json.dumps({'crate':name,'lines':selected}))
+          sha='a01618b532c704fabcf1783406fe8dbf9d74594e'
+          runs=json.loads(subprocess.check_output(['gh','api',base+'/actions/runs?head_sha='+sha+'&per_page=100'],text=True))['workflow_runs']
+          print('::notice title=Final release workflows::'+json.dumps([{k:r[k] for k in ['id','name','status','conclusion','event','head_branch']} for r in runs]))
+          for r in runs:
+              if r['name'] not in ['Release Android and Linux','CodeQL Security Scan']:continue
+              data=json.loads(subprocess.check_output(['gh','api',base+'/actions/runs/'+str(r['id'])+'/jobs?per_page=100'],text=True))
+              jobs=[{'id':j['id'],'name':j['name'],'status':j['status'],'conclusion':j['conclusion'],'active':[t['name'] for t in j['steps'] if t['status']=='in_progress']} for j in data['jobs']]
+              print('::notice title=Final build jobs::'+json.dumps({'run':r['id'],'name':r['name'],'jobs':jobs}))
+          pr=json.loads(subprocess.check_output(['gh','api',base+'/pulls/131'],text=True))
+          print('::notice title=Latest open PR integrated::'+json.dumps({k:pr[k] for k in ['number','state','merged','merge_commit_sha']}));assert pr['merged']
+          analyses=json.loads(subprocess.check_output(['gh','api',base+'/code-scanning/analyses?ref=refs/heads/main&per_page=100'],text=True))
+          matching=[{k:a.get(k) for k in ['id','commit_sha','results_count','category','error','warning']} for a in analyses if a['commit_sha']==sha]
+          print('::notice title=Final main analysis::'+json.dumps(matching))
+          if {'/language:java-kotlin','/language:actions'} <= {a.get('category') for a in matching}:
+              assert not any(a['error'] for a in matching)
+              alerts=json.loads(subprocess.check_output(['gh','api',base+'/code-scanning/alerts?state=open&ref=refs/heads/main&per_page=100'],text=True))
+              print('::notice title=Final main open alerts::'+json.dumps([{'number':a['number'],'rule':a['rule']['id']} for a in alerts]));assert not alerts
           PYCODE
