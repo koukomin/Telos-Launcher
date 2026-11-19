@@ -30,7 +30,6 @@ jobs:
                   out={k:x.get(k) for k in ['id','number','name','title','status','conclusion','head_branch','head_sha','created_at','updated_at','html_url']}
                   if 'head' in x:out['head']=x['head']['sha']
                   print('::notice title=Repository item::'+json.dumps(out))
-          PYCODE
           import urllib.request,urllib.error
           sbom=json.loads(subprocess.check_output(['gh','api',base+'/dependency-graph/sbom'],text=True))['sbom']
           packages=[]
@@ -50,3 +49,4 @@ jobs:
               print('::notice title=SBOM audit result::Packages with advisory matches='+str(total))
           except Exception as e:
               print('::notice title=SBOM audit boundary::'+str(e))
+          PYCODE
