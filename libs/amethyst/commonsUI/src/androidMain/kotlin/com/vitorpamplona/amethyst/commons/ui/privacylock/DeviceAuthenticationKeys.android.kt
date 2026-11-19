@@ -8,6 +8,7 @@ import android.os.Build
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyPermanentlyInvalidatedException
 import android.security.keystore.KeyProperties
+import android.security.keystore.UserNotAuthenticatedException
 import java.security.KeyStore
 import javax.crypto.Cipher
 import javax.crypto.KeyGenerator
@@ -29,7 +30,19 @@ internal object DeviceAuthenticationKeys {
         }
     }
 
-    fun credentialKey(): SecretKey = key(CREDENTIAL_ALIAS, credential = true)
+    fun credentialKey(): SecretKey {
+        val key = key(CREDENTIAL_ALIAS, credential = true)
+        try {
+            cipher(key)
+        } catch (_: UserNotAuthenticatedException) {
+            // Expected before showing the credential prompt; the key itself is still valid.
+        } catch (_: KeyPermanentlyInvalidatedException) {
+            // Disabling/replacing the screen lock can invalidate a previous proof key.
+            KeyStore.getInstance(STORE).apply { load(null); deleteEntry(CREDENTIAL_ALIAS) }
+            return key(CREDENTIAL_ALIAS, credential = true)
+        }
+        return key
+    }
 
     fun confirmCredential(key: SecretKey, challenge: ByteArray) {
         // A forged RESULT_OK cannot use this key without a recent system credential unlock.
