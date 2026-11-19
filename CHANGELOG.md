@@ -2,6 +2,14 @@
 
 ## 1.45.71
 
+- Rebuild every Android Tor native ABI with Rustls 0.23.46; verify binary and
+  locked-source provenance before packaging so dependency-only updates cannot
+  silently leave old native code in the APK.
+- Bind Aether biometric/credential approval to Keystore cryptographic proofs,
+  target reply notifications explicitly, and use fixed archive output suffixes.
+- Preserve Island's freeze/unfreeze action when targeting its resolved activity;
+  reject foreign targets and cover the outgoing protocol without freezing apps.
+
 - Include the latest merged root/Shizuku, self-optimization, shell and VM changes.
 - Remove redundant Linux/release-note workflows and duplicate graph submission;
   cancel obsolete closed-PR/older-main checks while retaining release history.

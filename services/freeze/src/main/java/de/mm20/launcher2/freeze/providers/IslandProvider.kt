@@ -8,7 +8,6 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Process
 import android.util.Log
 import androidx.core.app.NotificationCompat
@@ -118,20 +117,14 @@ internal class IslandProvider(private val context: Context) {
         val action = if (suspended) ACTION_FREEZE else ACTION_UNFREEZE
         val probe = Intent(action).setPackage(ISLAND_PACKAGE)
         val resolved = probe.resolveActivity(context.packageManager) ?: return null
-        return Intent().apply {
-            setComponent(resolved)
-            setClassName(resolved.packageName, resolved.className)
-            setPackage(ISLAND_PACKAGE)
-            data = Uri.parse("packages:" + packageNames.joinToString(","))
-            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        }
+        return IslandIntentContract.create(resolved, packageNames, suspended)
     }
 
     companion object {
         private const val TAG = "IslandProvider"
-        private const val ISLAND_PACKAGE = "com.oasisfeng.island"
-        private const val ACTION_FREEZE = "com.oasisfeng.island.action.FREEZE"
-        private const val ACTION_UNFREEZE = "com.oasisfeng.island.action.UNFREEZE"
+        private const val ISLAND_PACKAGE = IslandIntentContract.PACKAGE
+        private const val ACTION_FREEZE = IslandIntentContract.FREEZE
+        private const val ACTION_UNFREEZE = IslandIntentContract.UNFREEZE
         private const val CHANNEL_ID = "freeze_island"
         private const val NOTIFICATION_ID = 4821
     }

@@ -156,3 +156,10 @@ configured device screen lock is retained. Android JNI, intent-routing and
 emulator-only Keystore boundary regressions accompany the changes. Their final
 Actions validation is required before publication; live Tor bootstrap and
 physical biometric prompts are not certified by these tests.
+
+The broader CodeQL SARIF review also reports an implicit intent in Island's
+freeze provider. The runtime intent already had a resolved component and package, but constructing a new blank intent had discarded the FREEZE or
+UNFREEZE action. The provider now shares an explicit, package-checked intent
+contract that retains the documented action and data. Android contract tests
+exercise freeze/unfreeze and foreign-target rejection without installing Island
+or freezing applications; they do not certify an actual managed-profile freeze.
