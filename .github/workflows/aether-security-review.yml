@@ -28,8 +28,9 @@ jobs:
                   cancelled.append({'run':r['id'],'branch':r['head_branch'],'result':p.returncode})
           print('::notice title=Redundant helper snapshots::'+json.dumps(cancelled))
           import re
-          for job in ['135851308799','135851164621','135851166071']:
+          for job in ['135851308799']:
               result=subprocess.run(['gh','api','--allow-escape-sequences',base+'/actions/jobs/'+job+'/logs'],text=True,capture_output=True)
-              lines=[l for l in result.stdout.splitlines() if re.search(r'What went wrong|Could not |error:|FAILURE:| e: |Unresolved reference|failed for task',l,re.I)]
-              print('::notice title=Release failure '+job+'::'+json.dumps(lines[-16:])[:3800]+result.stderr[:300])
+              rows=[l.split('/src/main/java/')[-1] for l in result.stdout.splitlines() if ' e: file:' in l]
+              for start in range(0,len(rows),12):
+                  print('::notice title=Kotlin errors '+str(start)+'::'+json.dumps(rows[start:start+12]))
           PYCODE
