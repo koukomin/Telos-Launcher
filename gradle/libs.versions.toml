@@ -12,7 +12,7 @@ targetSdk = "36"
 pluginSdk = "2.3.0"
 
 android-gradle-plugin = "9.5.1"
-ksp-gradle-plugin = "2.3.13"
+ksp-gradle-plugin = "2.3.14"
 
 kotlin = "2.4.21"
 kotlinx-coroutines = "1.11.0"
