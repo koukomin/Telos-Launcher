@@ -9,3 +9,5 @@ The 1.45.74 runs exposed 11 further Kotlin errors in Media. Corrected resource a
 2026-11-19: ARM64 v1.45.76 failed in Gradle remote artifact resolution. Requested failed-jobs retry on the original tag and removed the JetBrains Space fallback for future builds.
 
 2026-11-20: Reviewed PR #132. Fixed the streaming test fixture to model timed Process.waitFor and assert EOF before cleanup. Five JVM tests passed with a 64 MiB heap. The v1.45.76 release published both signed APK assets after retry.
+
+2026-11-20: PR #132 retry compiled, then hit the stock Pixel Launcher ANR before Aether login. Added a one-time, emulator-only recovery for that exact system dialog.
