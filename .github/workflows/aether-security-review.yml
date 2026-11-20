@@ -27,11 +27,9 @@ jobs:
                   p=subprocess.run(['gh','api','--method','POST',base+'/actions/runs/'+str(r['id'])+'/cancel'],capture_output=True,text=True)
                   cancelled.append({'run':r['id'],'branch':r['head_branch'],'result':p.returncode})
           print('::notice title=Redundant helper snapshots::'+json.dumps(cancelled))
-          run=base+'/actions/runs/44618689623'
-          info=json.loads(subprocess.check_output(['gh','api',run],text=True))
-          if info['status']=='completed' and info['conclusion']=='failure' and info['run_attempt']==1:
-              subprocess.run(['gh','api','--method','POST',run+'/rerun-failed-jobs'],check=True)
-              print('::notice title=Release retry::Requested failed jobs only for v1.45.76')
-          else:
-              print('::notice title=Release attempt::'+json.dumps({k:info[k] for k in ['status','conclusion','run_attempt']}))
+          raw=subprocess.check_output(['gh','api','--allow-escape-sequences',base+'/actions/jobs/136083507475/logs'],text=True)
+          lines=raw.splitlines()
+          for i,l in enumerate(lines):
+              if any(t in l for t in ['What went wrong','FAILED','OutOfMemory','AssertionError','Caused by:']):
+                  if 'BUILD SUCCESSFUL' not in l: print('::notice title=PR failure::'+json.dumps(lines[max(0,i-1):i+5])[:2400])
           PYCODE
