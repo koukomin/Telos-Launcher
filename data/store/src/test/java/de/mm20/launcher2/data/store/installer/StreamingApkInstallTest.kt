@@ -69,24 +69,31 @@ class StreamingApkInstallTest {
     @Test fun remotePipesAreDrainedBeforeProcessCleanup() = runBlocking {
         val apk = Files.createTempFile("telos-apk", ".apk").toFile()
         val finished = java.util.concurrent.CountDownLatch(1)
-        var destroyed = false
+        val drained = java.util.concurrent.atomic.AtomicBoolean(false)
+        val destroyed = java.util.concurrent.atomic.AtomicBoolean(false)
         val process = object : Process() {
             private val bytes = ByteArrayInputStream("Success\n".toByteArray())
             override fun getOutputStream() = java.io.ByteArrayOutputStream()
             override fun getInputStream(): InputStream = object : InputStream() {
                 override fun read(): Int {
                     check(finished.await(2, java.util.concurrent.TimeUnit.SECONDS))
-                    Thread.sleep(20)
-                    check(!destroyed) { "Remote pipe closed before final status was read" }
-                    return bytes.read()
+                    check(!destroyed.get()) { "Remote pipe closed before final status was read" }
+                    return bytes.read().also { if (it == -1) drained.set(true) }
                 }
             }
             override fun getErrorStream() = ByteArrayInputStream(ByteArray(0))
-            override fun waitFor(): Int { finished.countDown(); return 0 }
+            override fun waitFor(): Int = 0
+            override fun waitFor(timeout: Long, unit: java.util.concurrent.TimeUnit): Boolean {
+                finished.countDown()
+                return true
+            }
             override fun exitValue() = 0
-            override fun destroy() { destroyed = true }
+            override fun destroy() {
+                check(drained.get()) { "Remote pipe closed before EOF" }
+                destroyed.set(true)
+            }
         }
-        try { assertTrue(streamApkInstall(apk, process).first); assertTrue(destroyed) }
+        try { assertTrue(streamApkInstall(apk, process).first); assertTrue(destroyed.get()) }
         finally { apk.delete() }
     }
 }
