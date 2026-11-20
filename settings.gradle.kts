@@ -1,6 +1,10 @@
 pluginManagement {
     repositories {
-        google()
+        google {
+            // KSP publishes its marker and implementation to Maven Central.
+            // A failed lookup at Google Maven must not shadow those artifacts.
+            content { excludeGroup("com.google.devtools.ksp") }
+        }
         mavenCentral()
         gradlePluginPortal()
     }
