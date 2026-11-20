@@ -35,11 +35,28 @@ class AetherEmbeddedClientTest {
         return result
     }
 
-    private fun awaitNode(label: String, predicate: (AccessibilityNodeInfo) -> Boolean): AccessibilityNodeInfo {
+    private fun awaitNode(
+        label: String,
+        recoverStockHomeAnr: Boolean = false,
+        predicate: (AccessibilityNodeInfo) -> Boolean,
+    ): AccessibilityNodeInfo {
+        var recovered = false
         val until = SystemClock.uptimeMillis() + 60_000
         while (SystemClock.uptimeMillis() < until) {
             val current = nodes()
             current.firstOrNull { it.isVisibleToUser && predicate(it) }?.let { return it }
+            // A boot-time Pixel Launcher ANR can cover the first launch on the CI emulator.
+            // Recover once from this specific system dialog. A Telos ANR remains a test failure.
+            if (recoverStockHomeAnr && !recovered && Build.HARDWARE in setOf("ranchu", "goldfish") &&
+                current.any { it.packageName == "android" && it.text == "Pixel Launcher isn't responding" }
+            ) {
+                current.firstOrNull { it.packageName == "android" && it.text == "Close app" }?.let {
+                    recovered = true
+                    screenshot("emulator-home-anr")
+                    click(it)
+                    openAether()
+                }
+            }
             // The upstream F-Droid first-run flow offers an optional push distributor.
             // Keep the isolated offline test opted out, through its actual UI.
             if (current.any { it.text?.toString() == "Push Notification Setup" }) {
@@ -144,7 +161,7 @@ class AetherEmbeddedClientTest {
         try {
             shell("pm grant $target android.permission.POST_NOTIFICATIONS")
             openAether()
-            awaitNode("initial login form") { it.isEditable }
+            awaitNode("initial login form", recoverStockHomeAnr = true) { it.packageName == target && it.isEditable }
             screenshot("login")
             login("npub10xlxvlhemja6c4dqv22uapctqupfhlxm9h8z3k2e72q4k9hcz7vqpkge6d")
             screenshot("feed")
