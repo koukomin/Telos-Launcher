@@ -100,12 +100,12 @@ dependencies {
     implementation(project(":libs:appops-next"))
     implementation("cz.adaptech.tesseract4android:tesseract4android:4.9.0")
     // CameraX
-    implementation("androidx.camera:camera-core:1.6.2")
-    implementation("androidx.camera:camera-camera2:1.6.2")
-    implementation("androidx.camera:camera-lifecycle:1.6.2")
-    implementation("androidx.camera:camera-view:1.6.2")
-    implementation("androidx.camera:camera-video:1.6.2")
-    implementation("androidx.camera:camera-extensions:1.6.2")
+    implementation("androidx.camera:camera-core:1.7.0")
+    implementation("androidx.camera:camera-camera2:1.7.0")
+    implementation("androidx.camera:camera-lifecycle:1.7.0")
+    implementation("androidx.camera:camera-view:1.7.0")
+    implementation("androidx.camera:camera-video:1.7.0")
+    implementation("androidx.camera:camera-extensions:1.7.0")
     implementation("androidx.health.connect:connect-client:1.1.0")
 
     implementation(libs.bundles.kotlin)
