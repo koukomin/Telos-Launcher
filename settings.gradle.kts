@@ -176,6 +176,7 @@ include(":services:keepasstl")
 
 // The full Aether client is compiled from source into the Telos APK.
 includeBuild("libs/amethyst") {
+    name = "amethyst"
     dependencySubstitution {
         substitute(module("com.telos.amethyst:amethyst")).using(project(":amethyst"))
     }

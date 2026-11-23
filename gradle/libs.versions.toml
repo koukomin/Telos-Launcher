@@ -11,7 +11,7 @@ targetSdk = "36"
 
 pluginSdk = "2.3.0"
 
-android-gradle-plugin = "9.5.1"
+android-gradle-plugin = "9.5.2"
 ksp-gradle-plugin = "2.3.14"
 
 kotlin = "2.4.21"
@@ -31,7 +31,7 @@ androidx-activity = "1.13.0"
 androidx-navigation3 = "1.2.0"
 
 media3 = "1.11.1"
-nextlib = "1.11.1-0.18.0"
+nextlib = "1.11.1-0.19.0"
 
 # Careful, 2.10.0 seems to require some fixes, or jobs aren't executed
 androidx-work = "2.12.0"
@@ -80,7 +80,8 @@ taglib = "1.0.6"
 libtorrent4j = "2.1.0-39"
 youtubedl = "0.18.1"
 kotpass = "0.10.0"
-robolectric = "4.18"
+robolectric = "4.18.1"
+androidx-camera = "1.7.0"
 
 # Go network engine of Rethink DNS (MPL-2.0), pinned like Rethink pins it (firestackCommit)
 firestack = "c4a33649be"
@@ -90,6 +91,12 @@ annotation = "1.11.0"
 taglib = { group = "io.github.kyant0", name = "taglib", version.ref = "taglib" }
 sqlcipher-android = { group = "net.zetetic", name = "sqlcipher-android", version.ref = "sqlcipher" }
 mustache-compiler = { module = "com.github.spullara.mustache.java:compiler", version.ref = "mustache" }
+androidx-camera-core = { module = "androidx.camera:camera-core", version.ref = "androidx-camera" }
+androidx-camera-camera2 = { module = "androidx.camera:camera-camera2", version.ref = "androidx-camera" }
+androidx-camera-lifecycle = { module = "androidx.camera:camera-lifecycle", version.ref = "androidx-camera" }
+androidx-camera-view = { module = "androidx.camera:camera-view", version.ref = "androidx-camera" }
+androidx-camera-video = { module = "androidx.camera:camera-video", version.ref = "androidx-camera" }
+androidx-camera-extensions = { module = "androidx.camera:camera-extensions", version.ref = "androidx-camera" }
 
 jackson-core = { module = "com.fasterxml.jackson.core:jackson-core", version.ref = "jacksonCore" }
 jackson-annotations = { module = "com.fasterxml.jackson.core:jackson-annotations", version.ref = "jacksonAnnotations" }

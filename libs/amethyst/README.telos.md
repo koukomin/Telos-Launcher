@@ -14,7 +14,7 @@ selection, signing, minification and APK versions belong to the Telos host.
 ## Local adaptations
 
 - App module converted to AAR; host owns signing, versions and ABI splits.
-- Android Gradle plugin aligned to Telos 9.5.1.
+- Android Gradle plugin aligned to Telos 9.5.2.
 - Independent build includes only Android client dependencies and the test relay.
 - Application provides an IO initialization entry point for a future lazy host.
 - EmbeddedAether renders the original full client while inheriting host Material roles.
