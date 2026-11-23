@@ -19,6 +19,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -102,6 +103,7 @@ class TelosKeyboardService :
         mSavedStateRegistryController.performAttach()
         mSavedStateRegistryController.performRestore(null)
         mLifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_CREATE)
+        TelosKeyboardAppearance.load(applicationContext)
         TelosSystemSuggestions.extra = { input, _ ->
             TelosSystemSuggestions.fromUserDictionary(applicationContext, input)
         }
@@ -374,9 +376,9 @@ fun TelosKeyboardView(
     onVibrate: () -> Unit,
 ) {
     val state = TelosKeyboardState
-    val primaryColor = MaterialTheme.colorScheme.primary
+    val look = TelosKeyboardAppearance
+    val primaryColor = look.accent
     val surfaceColor = MaterialTheme.colorScheme.surfaceContainerHigh
-
     Column(
         modifier =
             Modifier.fillMaxWidth()
@@ -485,7 +487,8 @@ fun TelosKeyboardView(
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                items(TelosKeyboardBuffer.activeSuggestions.toList()) { sugWord ->
+                itemsIndexed(TelosKeyboardBuffer.activeSuggestions.toList()) { index, sugWord ->
+                    val lead = index == 0
                     Surface(
                         modifier =
                             Modifier.clip(RoundedCornerShape(12.dp)).clickable {
@@ -494,14 +497,18 @@ fun TelosKeyboardView(
                                 TelosKeyboardDictionary.learnWord(sugWord, state.privateMode)
                                 TelosKeyboardBuffer.clear()
                             },
-                        color = MaterialTheme.colorScheme.surfaceContainerHighest,
+                        color = if (lead) primaryColor.copy(alpha = 0.22f)
+                        else MaterialTheme.colorScheme.surfaceContainerHighest,
                     ) {
                         Text(
                             text = sugWord,
-                            fontSize = 14.sp,
-                            fontWeight = FontWeight.SemiBold,
-                            color = MaterialTheme.colorScheme.primary,
-                            modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
+                            fontSize = if (lead) 16.sp else 13.sp,
+                            fontWeight = if (lead) FontWeight.Bold else FontWeight.SemiBold,
+                            color = primaryColor,
+                            modifier = Modifier.padding(
+                                horizontal = if (lead) 16.dp else 12.dp,
+                                vertical = if (lead) 8.dp else 6.dp,
+                            ),
                         )
                     }
                 }
@@ -651,7 +658,7 @@ fun LetterKeyboardGrid(
             Surface(
                 modifier =
                     Modifier.weight(1.3f)
-                        .heightIn(min = 48.dp)
+                        .heightIn(min = TelosKeyboardAppearance.scaledKeyHeightDp().dp)
                         .clip(RoundedCornerShape(8.dp))
                         .clickable {
                             onVibrate()
@@ -686,7 +693,7 @@ fun LetterKeyboardGrid(
             Surface(
                 modifier =
                     Modifier.weight(1.3f)
-                        .heightIn(min = 48.dp)
+                        .heightIn(min = TelosKeyboardAppearance.scaledKeyHeightDp().dp)
                         .clip(RoundedCornerShape(8.dp))
                         .clickable {
                             onVibrate()
@@ -710,7 +717,7 @@ fun LetterKeyboardGrid(
             Surface(
                 modifier =
                     Modifier.weight(1.5f)
-                        .heightIn(min = 48.dp)
+                        .heightIn(min = TelosKeyboardAppearance.scaledKeyHeightDp().dp)
                         .clip(RoundedCornerShape(8.dp))
                         .clickable {
                             onVibrate()
@@ -727,7 +734,7 @@ fun LetterKeyboardGrid(
             Surface(
                 modifier =
                     Modifier.weight(1f)
-                        .heightIn(min = 48.dp)
+                        .heightIn(min = TelosKeyboardAppearance.scaledKeyHeightDp().dp)
                         .clip(RoundedCornerShape(8.dp))
                         .clickable {
                             onVibrate()
@@ -750,7 +757,7 @@ fun LetterKeyboardGrid(
             Surface(
                 modifier =
                     Modifier.weight(4.5f)
-                        .heightIn(min = 48.dp)
+                        .heightIn(min = TelosKeyboardAppearance.scaledKeyHeightDp().dp)
                         .clip(RoundedCornerShape(8.dp))
                         .clickable {
                             onVibrate()
@@ -778,7 +785,7 @@ fun LetterKeyboardGrid(
             Surface(
                 modifier =
                     Modifier.weight(1.8f)
-                        .heightIn(min = 48.dp)
+                        .heightIn(min = TelosKeyboardAppearance.scaledKeyHeightDp().dp)
                         .clip(RoundedCornerShape(8.dp))
                         .clickable {
                             onVibrate()
@@ -815,7 +822,7 @@ fun KeyboardKey(
     Surface(
         modifier =
             modifier
-                .heightIn(min = 52.dp)
+                .heightIn(min = TelosKeyboardAppearance.scaledKeyHeightDp().dp)
                 .onGloballyPositioned { coords ->
                     val box = coords.boundsInRoot()
                     TelosKeyboardHits.remember(
@@ -835,7 +842,7 @@ fun KeyboardKey(
         Box(contentAlignment = Alignment.Center) {
             Text(
                 text = displayText,
-                fontSize = 18.sp,
+                fontSize = TelosKeyboardAppearance.scaledFontSp().sp,
                 fontWeight = FontWeight.Medium,
                 color = MaterialTheme.colorScheme.onSurface,
             )
@@ -892,7 +899,7 @@ fun SymbolKeyboardGrid(
             Surface(
                 modifier =
                     Modifier.weight(1.5f)
-                        .heightIn(min = 48.dp)
+                        .heightIn(min = TelosKeyboardAppearance.scaledKeyHeightDp().dp)
                         .clip(RoundedCornerShape(8.dp))
                         .clickable {
                             onVibrate()
@@ -908,7 +915,7 @@ fun SymbolKeyboardGrid(
             Surface(
                 modifier =
                     Modifier.weight(1.5f)
-                        .heightIn(min = 48.dp)
+                        .heightIn(min = TelosKeyboardAppearance.scaledKeyHeightDp().dp)
                         .clip(RoundedCornerShape(8.dp))
                         .clickable {
                             onVibrate()
@@ -929,7 +936,7 @@ fun SymbolKeyboardGrid(
             Surface(
                 modifier =
                     Modifier.weight(4f)
-                        .heightIn(min = 48.dp)
+                        .heightIn(min = TelosKeyboardAppearance.scaledKeyHeightDp().dp)
                         .clip(RoundedCornerShape(8.dp))
                         .clickable {
                             onVibrate()
@@ -943,7 +950,7 @@ fun SymbolKeyboardGrid(
             Surface(
                 modifier =
                     Modifier.weight(1.5f)
-                        .heightIn(min = 48.dp)
+                        .heightIn(min = TelosKeyboardAppearance.scaledKeyHeightDp().dp)
                         .clip(RoundedCornerShape(8.dp))
                         .clickable {
                             onVibrate()

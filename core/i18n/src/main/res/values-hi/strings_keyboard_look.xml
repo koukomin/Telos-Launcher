@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="keyboard_look_category">Look</string>
+    <string name="keyboard_accent_title">Accent color</string>
+    <string name="keyboard_scale_title">Keyboard size</string>
+    <string name="keyboard_key_height_title">Key height</string>
+    <string name="keyboard_key_font_title">Key text size</string>
+</resources>

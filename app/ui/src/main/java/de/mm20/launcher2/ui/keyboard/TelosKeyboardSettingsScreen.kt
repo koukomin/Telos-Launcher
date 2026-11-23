@@ -2,12 +2,19 @@ package de.mm20.launcher2.ui.keyboard
 
 import android.content.Intent
 import android.provider.Settings
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.ui.draw.clip
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
@@ -43,7 +50,7 @@ fun TelosKeyboardSettingsScreen() {
 
     VirtualAppWindow {
         Column(
-            modifier = Modifier.fillMaxSize().padding(16.dp),
+            modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             Row(
@@ -120,6 +127,79 @@ fun TelosKeyboardSettingsScreen() {
                     summary = stringResource(I18nR.string.preference_private_keyboard_summary),
                     value = TelosKeyboardState.isIncognitoMode,
                     onValueChanged = { TelosKeyboardState.isIncognitoMode = it },
+                )
+            }
+
+            TelosCyberSectionLabel(
+                stringResource(I18nR.string.keyboard_look_category),
+                accent = TelosCyber.NeonMagenta,
+            )
+            androidx.compose.runtime.LaunchedEffect(Unit) { TelosKeyboardAppearance.load(context) }
+            PreferenceCategory(title = stringResource(I18nR.string.keyboard_look_category)) {
+                Text(
+                    stringResource(I18nR.string.keyboard_accent_title),
+                    style = MaterialTheme.typography.titleSmall,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                )
+                Row(
+                    modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    TelosKeyboardAppearance.accentSwatches.forEach { argb ->
+                        val selected = TelosKeyboardAppearance.accentArgb == argb
+                        Box(
+                            modifier = Modifier
+                                .size(36.dp)
+                                .clip(RoundedCornerShape(18.dp))
+                                .background(androidx.compose.ui.graphics.Color(argb.toULong().toLong()))
+                                .clickable {
+                                    TelosKeyboardAppearance.accentArgb = argb
+                                    TelosKeyboardAppearance.save(context)
+                                },
+                            contentAlignment = Alignment.Center,
+                        ) {
+                            if (selected) {
+                                Text("✓", color = androidx.compose.ui.graphics.Color.Black)
+                            }
+                        }
+                    }
+                }
+                de.mm20.launcher2.ui.component.preferences.SliderPreference(
+                    title = stringResource(I18nR.string.keyboard_scale_title),
+                    value = TelosKeyboardAppearance.keyboardScale,
+                    min = 0.8f,
+                    max = 1.35f,
+                    step = 0.05f,
+                    onValueChanged = {
+                        TelosKeyboardAppearance.keyboardScale = it
+                        TelosKeyboardAppearance.save(context)
+                    },
+                    label = { v -> Text("%.0f%%".format(v * 100f)) },
+                )
+                de.mm20.launcher2.ui.component.preferences.SliderPreference(
+                    title = stringResource(I18nR.string.keyboard_key_height_title),
+                    value = TelosKeyboardAppearance.keyHeightDp,
+                    min = 44f,
+                    max = 72f,
+                    step = 2f,
+                    onValueChanged = {
+                        TelosKeyboardAppearance.keyHeightDp = it
+                        TelosKeyboardAppearance.save(context)
+                    },
+                    label = { v -> Text("%.0f dp".format(v)) },
+                )
+                de.mm20.launcher2.ui.component.preferences.SliderPreference(
+                    title = stringResource(I18nR.string.keyboard_key_font_title),
+                    value = TelosKeyboardAppearance.keyFontSp,
+                    min = 14f,
+                    max = 26f,
+                    step = 1f,
+                    onValueChanged = {
+                        TelosKeyboardAppearance.keyFontSp = it
+                        TelosKeyboardAppearance.save(context)
+                    },
+                    label = { v -> Text("%.0f sp".format(v)) },
                 )
             }
         }

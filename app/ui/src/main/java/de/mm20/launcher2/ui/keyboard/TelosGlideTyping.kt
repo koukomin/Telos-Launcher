@@ -44,7 +44,7 @@ fun GlideTypingCanvas(
     onWordRecognized: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val pathColor = MaterialTheme.colorScheme.primary
+    val pathColor = TelosKeyboardAppearance.accent
 
     Canvas(
         modifier = modifier
@@ -81,7 +81,7 @@ fun GlideTypingCanvas(
                 path = path,
                 color = pathColor,
                 style = Stroke(
-                    width = 6.dp.toPx(),
+                    width = 8.dp.toPx(),
                     cap = StrokeCap.Round,
                     join = StrokeJoin.Round
                 )

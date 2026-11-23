@@ -6,6 +6,11 @@
     <string name="keyboard_enable_action">Open input settings</string>
     <string name="keyboard_settings_category">Keyboard settings</string>
     <string name="keyboard_incognito_title">Incognito mode</string>
+    <string name="keyboard_look_category">Look</string>
+    <string name="keyboard_accent_title">Accent color</string>
+    <string name="keyboard_scale_title">Keyboard size</string>
+    <string name="keyboard_key_height_title">Key height</string>
+    <string name="keyboard_key_font_title">Key text size</string>
     <string name="keepass_title">KeePassTL</string>
     <string name="aether_title">Telos Aether</string>
     <string name="backup_group_keepass">KeePassTL Vault</string>
