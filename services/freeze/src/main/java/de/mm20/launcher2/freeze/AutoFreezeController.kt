@@ -291,42 +291,42 @@ class AutoFreezeController internal constructor(
      * When [blockNetwork] is true and Telos Network VPN is on, those apps cannot use the internet
      * until the user opens them.
      */
-    fun pauseForPlayUpdates(
+    suspend fun pauseForPlayUpdates(
         packages: Collection<String>,
         durationMs: Long = PLAY_UPDATE_PAUSE_MS,
         blockNetwork: Boolean = false,
     ) {
-        scope.launch {
-            val vending = CompanionRules.PLAY_STORE
-            val playWasFrozen = freezeManager.isFrozen(vending)
-            if (playWasFrozen) freezeManager.unfreeze(vending, fromUser = false)
-            val thawed = packages.filter { freezeManager.isFrozen(it) }.toSet()
-            thawed.forEach { freezeManager.unfreeze(it, fromUser = false) }
-            val watch = thawed.ifEmpty { emptySet() }
-            val baselines = watch.associateWith { versionCode(it) }
-            val until = System.currentTimeMillis() + durationMs
-            val netBlocked = if (blockNetwork && networkEngine.state.value is NetState.On && watch.isNotEmpty()) {
-                applyPlayNetworkBlock(watch)
-            } else emptyMap()
-            settings.startPlayUpdatePause(
-                packages = watch,
-                untilMillis = until,
-                baselines = baselines,
-                netBlocked = netBlocked,
-                playStoreHeld = playWasFrozen,
-            )
-            val am = context.getSystemService<AlarmManager>()
-            val pi = PendingIntent.getBroadcast(
-                context,
-                1,
-                Intent(ACTION_PLAY_UPDATE_REFREEZE).setPackage(context.packageName),
-                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
-            )
-            if (watch.isNotEmpty() || playWasFrozen) {
-                am?.setAndAllowWhileIdle(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + durationMs, pi)
-                notifyPlayUpdatePause(watch.size + if (playWasFrozen) 1 else 0, durationMs)
-                startPlayWatch(until)
-            }
+        val vending = CompanionRules.PLAY_STORE
+        val playWasFrozen = freezeManager.isFrozen(vending)
+        val thawed = packages.filter { freezeManager.isFrozen(it) }.toSet()
+        freezeManager.unfreeze(
+            (thawed + if (playWasFrozen) setOf(vending) else emptySet()).toList(),
+            fromUser = false,
+        )
+        val watch = thawed.ifEmpty { emptySet() }
+        val baselines = watch.associateWith { versionCode(it) }
+        val until = System.currentTimeMillis() + durationMs
+        val netBlocked = if (blockNetwork && networkEngine.state.value is NetState.On && watch.isNotEmpty()) {
+            applyPlayNetworkBlock(watch)
+        } else emptyMap()
+        settings.startPlayUpdatePause(
+            packages = watch,
+            untilMillis = until,
+            baselines = baselines,
+            netBlocked = netBlocked,
+            playStoreHeld = playWasFrozen,
+        )
+        val am = context.getSystemService<AlarmManager>()
+        val pi = PendingIntent.getBroadcast(
+            context,
+            1,
+            Intent(ACTION_PLAY_UPDATE_REFREEZE).setPackage(context.packageName),
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
+        )
+        if (watch.isNotEmpty() || playWasFrozen) {
+            am?.setAndAllowWhileIdle(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + durationMs, pi)
+            notifyPlayUpdatePause(watch.size + if (playWasFrozen) 1 else 0, durationMs)
+            startPlayWatch(until)
         }
     }
 

@@ -95,8 +95,6 @@ class TelosPackageInstaller(
         val archive = context.packageManager.getPackageArchiveInfo(apk.path, 0)
             ?: return failed(IllegalArgumentException("Invalid APK"))
         if (archive?.packageName != packageName) return failed(IllegalArgumentException("APK package does not match the selected app"))
-        if (freezeManager.isFrozen(packageName) && !options.global.value.updateFrozenApps)
-            return InstallResult.Failed(context.getString(de.mm20.launcher2.i18n.R.string.store_update_frozen))
         val selected = options.global.value.installer
         val selectedBackend = when (selected) { "shizuku" -> shizuku; "root" -> root; else -> null }
         for (backend in listOfNotNull(selectedBackend)) {

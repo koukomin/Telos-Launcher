@@ -201,12 +201,21 @@ class FreezeManager internal constructor(
         packageName: String,
         userId: Int = Process.myUid() / 100000,
         fromUser: Boolean = true,
+    ): Set<String> = unfreeze(listOf(packageName), userId, fromUser)
+
+    suspend fun unfreeze(
+        packageNames: List<String>,
+        userId: Int = Process.myUid() / 100000,
+        fromUser: Boolean = false,
     ): Set<String> {
+        if (packageNames.isEmpty()) return emptySet()
         if (_activeBackend.value == null) refreshBackendState()
-        val result = setSuspended(listOf(packageName), false, userId)
-        if (fromUser && packageName in result) {
-            if (userId == Process.myUid() / 100000) settings.trackRecentsThaw(packageName)
-            onUserUnfreeze?.invoke(packageName)
+        val result = setSuspended(packageNames, false, userId)
+        if (fromUser) {
+            for (packageName in result) {
+                if (userId == Process.myUid() / 100000) settings.trackRecentsThaw(packageName)
+                onUserUnfreeze?.invoke(packageName)
+            }
         }
         return result
     }

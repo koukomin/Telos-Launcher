@@ -144,36 +144,32 @@ object PlayStoreInventory {
     const val ACCRESCENT_PACKAGE = "app.accrescent.client"
     const val ORION_PACKAGE = "com.orion.store"
 
-    suspend fun unfreezeAppsForStore(context: Context, freezeManager: de.mm20.launcher2.freeze.FreezeManager, storePackageName: String) {
+    suspend fun unfreezeAppsForStore(context: Context, freezeManager: de.mm20.launcher2.freeze.FreezeManager, storePackageName: String): List<String> {
         val pm = context.packageManager
-        if (freezeManager.isFrozen(storePackageName)) {
-            freezeManager.unfreeze(storePackageName)
-        }
         val flags = PackageManager.MATCH_UNINSTALLED_PACKAGES or PackageManager.MATCH_DISABLED_COMPONENTS
         val apps = pm.getInstalledApplications(flags)
+        val toThaw = ArrayList<String>()
+        if (freezeManager.isFrozen(storePackageName)) toThaw += storePackageName
         for (info in apps) {
-            if (freezeManager.isFrozen(info.packageName)) {
-                val installer = runCatching {
-                    PackageManagerCompat.getInstallSource(pm, info.packageName).installingPackageName
-                        ?: PackageManagerCompat.getInstallSource(pm, info.packageName).initiatingPackageName
-                }.getOrNull()
-
-                val isInstalledByStore = when (storePackageName) {
-                    PLAY_PACKAGE -> installer == PLAY_PACKAGE
-                    AURORA_PACKAGE -> installer == AURORA_PACKAGE
-                    OBTAINIUM_PACKAGE -> installer == OBTAINIUM_PACKAGE
-                    FDROID_PACKAGE -> installer == FDROID_PACKAGE || installer == "org.fdroid.fdroid.privileged"
-                    DROIDIFY_PACKAGE -> installer == DROIDIFY_PACKAGE
-                    ACCRESCENT_PACKAGE -> installer == ACCRESCENT_PACKAGE
-                    ORION_PACKAGE -> installer == ORION_PACKAGE || installer == "org.orion.store"
-                    else -> installer == storePackageName
-                }
-
-                if (isInstalledByStore) {
-                    freezeManager.unfreeze(info.packageName)
-                }
+            if (!freezeManager.isFrozen(info.packageName)) continue
+            val installer = runCatching {
+                PackageManagerCompat.getInstallSource(pm, info.packageName).installingPackageName
+                    ?: PackageManagerCompat.getInstallSource(pm, info.packageName).initiatingPackageName
+            }.getOrNull()
+            val isInstalledByStore = when (storePackageName) {
+                PLAY_PACKAGE -> installer == PLAY_PACKAGE
+                AURORA_PACKAGE -> installer == AURORA_PACKAGE
+                OBTAINIUM_PACKAGE -> installer == OBTAINIUM_PACKAGE
+                FDROID_PACKAGE -> installer == FDROID_PACKAGE || installer == "org.fdroid.fdroid.privileged"
+                DROIDIFY_PACKAGE -> installer == DROIDIFY_PACKAGE
+                ACCRESCENT_PACKAGE -> installer == ACCRESCENT_PACKAGE
+                ORION_PACKAGE -> installer == ORION_PACKAGE || installer == "org.orion.store"
+                else -> installer == storePackageName
             }
+            if (isInstalledByStore) toThaw += info.packageName
         }
+        freezeManager.unfreeze(toThaw, fromUser = false)
+        return toThaw
     }
 
     suspend fun openPreferredStoreUpdates(context: Context, freezeManager: de.mm20.launcher2.freeze.FreezeManager? = null) {
@@ -184,8 +180,14 @@ object PlayStoreInventory {
         }
 
         if (freezeManager != null) {
-            runCatching {
+            val thawed = runCatching {
                 unfreezeAppsForStore(context, freezeManager, targetPkg)
+            }.getOrDefault(emptyList())
+            val deadline = System.currentTimeMillis() + 20_000L
+            while (System.currentTimeMillis() < deadline) {
+                val stillFrozen = thawed.any { freezeManager.isFrozen(it) } || freezeManager.isFrozen(targetPkg)
+                if (!stillFrozen) break
+                kotlinx.coroutines.delay(200)
             }
         }
 

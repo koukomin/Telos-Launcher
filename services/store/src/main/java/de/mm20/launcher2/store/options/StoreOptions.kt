@@ -42,7 +42,7 @@ data class GlobalOptions(
     val autoInstall: Boolean = true,
     /** Run up to three Store updates concurrently instead of one at a time */
     val parallelUpdates: Boolean = true,
-    val updateFrozenApps: Boolean = false,
+    val updateFrozenApps: Boolean = true,
     /** session, shizuku, root, or external:<package>. */
     val installer: String = "session",
     /**
