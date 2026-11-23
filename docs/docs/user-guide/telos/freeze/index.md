@@ -190,7 +190,7 @@ the current foreground app from automatic and manual freeze operations. It requi
 without it Telos cannot reliably identify that app. Other existing notification, media and core
 system-package protections remain separate. The check applies to the current Android profile.
 
-Frozen application targets assigned to icon shutters and folder children use the same app-lock and verified thaw-before-launch path as drawer and dock icons. An authorized freeze backend is required to thaw an app.
+Frozen, disabled or force-stopped (standby) targets assigned to icon shutters and folder children use the same thaw-before-launch path as drawer and dock icons. That applies to every package, including OEM galleries used as a camera shutter. An authorized freeze backend is required to thaw an app.
 
 ## Foreground permission and notification
 

@@ -253,6 +253,7 @@ internal class AppRepositoryImpl(
             apps.add(app)
             seenPackages.add(pkg)
         }
+        collapseIconAliases(apps)
 
         // 2. Only for the primary user, query PackageManager for disabled/frozen components
         // whose LauncherActivityInfo is null because they were disabled via pm disable.
@@ -329,6 +330,28 @@ internal class AppRepositoryImpl(
             )
         ) return null
         return LauncherApp(context, launcherActivityInfo)
+    }
+
+    /** Packages with several launcher aliases keep the one Android currently resolves. */
+    private fun collapseIconAliases(apps: MutableList<LauncherApp>) {
+        if (apps.size < 2) return
+        val pm = context.packageManager
+        val grouped = apps.groupBy { it.user to it.componentName.packageName }
+        val keep = HashSet<Pair<UserHandle, ComponentName>>()
+        for ((key, group) in grouped) {
+            if (group.size == 1) {
+                keep += group[0].user to group[0].componentName
+                continue
+            }
+            val intent = Intent(Intent.ACTION_MAIN)
+                .addCategory(Intent.CATEGORY_LAUNCHER)
+                .setPackage(key.second)
+            val resolved = runCatching { pm.resolveActivity(intent, 0)?.activityInfo }.getOrNull()
+            val resolvedName = resolved?.let { ComponentName(it.packageName, it.name) }
+            val match = group.firstOrNull { it.componentName == resolvedName } ?: group.first()
+            keep += match.user to match.componentName
+        }
+        apps.removeAll { (it.user to it.componentName) !in keep }
     }
 
     override fun findOne(

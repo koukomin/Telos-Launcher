@@ -113,7 +113,7 @@ class TelosPackageInstaller(
             var lease: String? = null
             try {
                 lease = freezeManager.beginFrozenUpdate(packageName,
-                    if (backend === shizuku) "Shizuku" else "Root", thawFirst = true)
+                    if (backend === shizuku) "Shizuku" else "Root", thawFirst = false)
                 result = backend.install(apk, packageName, allowDowngrade = options.global.value.allowDowngrade)
             } catch (cancelled: kotlinx.coroutines.CancellationException) {
                 throw cancelled

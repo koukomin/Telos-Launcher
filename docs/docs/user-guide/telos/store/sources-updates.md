@@ -196,9 +196,9 @@ non-Play apps follow that setting. Turn off automatic installation in Store
 settings to stop all automatic installs, or disable it for individual apps.
 
 When Shizuku or root is authorized, Store uses that installer even if the preference is still
-**Session**. Updates then skip the extra confirmation dialog and do not need the system Package
-Installer prompt. Frozen or disabled apps are thawed before the APK is written. Session remains
-the fallback when the privileged path fails.
+**Session**. Updates then skip the extra confirmation dialog. Frozen, disabled or standby apps
+are updated in place (`pm install -r --skip-enable`) and stay frozen. Session remains the
+fallback and still thaws first, because the unprivileged installer cannot write a disabled package.
 Existing saved settings are preserved. Play-managed installs are excluded from
 automatic installation even if a separate source is tracked. Wi-Fi, battery and
 background check settings still apply. Android confirmation is required with the

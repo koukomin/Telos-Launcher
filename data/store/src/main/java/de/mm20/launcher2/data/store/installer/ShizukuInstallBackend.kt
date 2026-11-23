@@ -67,7 +67,7 @@ internal class ShizukuInstallBackend(private val context: android.content.Contex
                 installPrivilegedSession(
                     apk = apk,
                     userId = android.os.Process.myUid() / 100000,
-                    preserveEnabled = android.os.Build.VERSION.SDK_INT >= 34,
+                    preserveEnabled = true,
                     allowDowngrade = allowDowngrade,
                 ) { command, input ->
                     runInstallCommand(input, de.mm20.launcher2.ktx.ShizukuProcesses.start(command.toTypedArray()))

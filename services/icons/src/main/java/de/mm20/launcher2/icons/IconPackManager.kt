@@ -313,14 +313,15 @@ class IconPackManager(
             }
 
             drawable is AdaptiveIconDrawable -> {
+                val missingPlate = adaptiveBackgroundIsMissing(drawable.background)
                 return StaticLauncherIcon(
                     foregroundLayer = drawable.foreground?.let {
                         StaticIconLayer(
                             icon = it,
-                            scale = 1.5f,
+                            scale = if (missingPlate) 1f else 1.5f,
                         )
                     } ?: TransparentLayer,
-                    backgroundLayer = drawable.background?.let {
+                    backgroundLayer = if (missingPlate) TransparentLayer else drawable.background?.let {
                         StaticIconLayer(
                             icon = it,
                             scale = 1.5f,

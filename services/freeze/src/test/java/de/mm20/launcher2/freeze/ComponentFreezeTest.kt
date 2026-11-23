@@ -5,6 +5,7 @@ import org.junit.Test
 
 class ComponentFreezeTest {
     @Test fun inactiveAliasWithActiveLauncherIsNotFrozen() { assertFalse(isComponentFreeze(true, true)) }
+    @Test fun unusedIconAliasMustNotCountAsFrozen() { assertFalse(isComponentFreeze(hasEnabledLauncher = true, hasDisabledComponents = true)) }
     @Test fun allLaunchersDisabledIsFrozen() { assertTrue(isComponentFreeze(false, true)) }
     @Test fun headlessAppAloneIsNotFrozen() { assertFalse(isComponentFreeze(false, false)) }
 }

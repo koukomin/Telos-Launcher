@@ -511,6 +511,27 @@ class FreezeManager internal constructor(
         return freezeState(packageName, userId) != AppFreezeState.Normal
     }
 
+    /** True when launch must thaw first: freeze, disable, or force-stop/standby. */
+    fun needsLaunchThaw(packageName: String, userId: Int = Process.myUid() / 100000): Boolean {
+        return try {
+            val flags = PackageManager.MATCH_DISABLED_COMPONENTS or PackageManager.MATCH_UNINSTALLED_PACKAGES
+            val info = if (userId == Process.myUid() / 100000) {
+                context.packageManager.getApplicationInfo(packageName, flags)
+            } else {
+                val user = UserHandle.getUserHandleForUid(userId * 100000)
+                val apps = context.getSystemService(LauncherApps::class.java) ?: return isFrozen(packageName, userId)
+                apps.getApplicationInfo(packageName, flags, user)
+            }
+            needsLaunchThaw(
+                enabled = info.enabled,
+                suspended = info.flags and ApplicationInfo.FLAG_SUSPENDED != 0,
+                stopped = info.flags and ApplicationInfo.FLAG_STOPPED != 0,
+            ) || isFrozen(packageName, userId)
+        } catch (_: Exception) {
+            isFrozen(packageName, userId)
+        }
+    }
+
     /**
      * Live read of the OS-level state, distinguishing *how* an app is frozen - unlike [isFrozen],
      * which collapses suspended and disabled into one boolean. Reads PackageManager directly each
@@ -538,13 +559,18 @@ class FreezeManager internal constructor(
                 launcherIntent,
                 PackageManager.MATCH_DISABLED_COMPONENTS,
             )?.activityInfo
-            val hasEnabledLauncher = pm.queryIntentActivities(launcherIntent, 0).any { it.activityInfo?.enabled == true }
-            val isComponentDisabled = isComponentFreeze(hasEnabledLauncher, launcherActivity != null && (
-                !launcherActivity.enabled ||
+            // Icon aliases can report ActivityInfo.enabled=false while they are the current
+            // launcher. Any match without MATCH_DISABLED is an enabled launcher.
+            val hasEnabledLauncher = pm.queryIntentActivities(launcherIntent, 0).isNotEmpty()
+            val disabledSetting = launcherActivity != null && (
+                pm.getComponentEnabledSetting(
+                    ComponentName(launcherActivity.packageName, launcherActivity.name)
+                ) == PackageManager.COMPONENT_ENABLED_STATE_DISABLED ||
                     pm.getComponentEnabledSetting(
                         ComponentName(launcherActivity.packageName, launcherActivity.name)
-                    ) == PackageManager.COMPONENT_ENABLED_STATE_DISABLED
-                ))
+                    ) == PackageManager.COMPONENT_ENABLED_STATE_DISABLED_USER
+                )
+            val isComponentDisabled = isComponentFreeze(hasEnabledLauncher, disabledSetting)
             when {
                 !info.enabled || isComponentDisabled -> AppFreezeState.Disabled
                 (info.flags and ApplicationInfo.FLAG_SUSPENDED) != 0 -> AppFreezeState.Suspended

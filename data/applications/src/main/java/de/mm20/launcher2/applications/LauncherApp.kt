@@ -137,14 +137,15 @@ internal data class LauncherApp(
                         backgroundLayer = ColorLayer()
                     )
                 }
+                val missingPlate = de.mm20.launcher2.icons.adaptiveBackgroundIsMissing(icon.background)
                 return StaticLauncherIcon(
                     foregroundLayer = icon.foreground?.let {
                         StaticIconLayer(
                             icon = it,
-                            scale = 1.5f,
+                            scale = if (missingPlate) 1f else 1.5f,
                         )
                     } ?: TransparentLayer,
-                    backgroundLayer = icon.background?.let {
+                    backgroundLayer = if (missingPlate) TransparentLayer else icon.background?.let {
                         StaticIconLayer(
                             icon = it,
                             scale = 1.5f,
@@ -168,9 +169,6 @@ internal data class LauncherApp(
     override fun launch(context: Context, options: Bundle?): Boolean {
         de.mm20.launcher2.security.AppLaunchGate.notifyPreLaunch(context, componentName.packageName)
         val launcherApps = context.getSystemService<LauncherApps>()!!
-        if (isAtLeastApiLevel(31)) {
-            options?.putInt("android.activity.splashScreenStyle", 1)
-        }
         try {
             launcherApps.startMainActivity(
                 componentName,

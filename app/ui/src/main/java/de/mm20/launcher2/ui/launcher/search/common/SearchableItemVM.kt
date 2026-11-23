@@ -272,18 +272,19 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
             viewModelScope.launch(kotlinx.coroutines.NonCancellable) {
                 val pkg = searchable.componentName.packageName
                 try {
-                    // Read persisted rules for this launch. A WhileSubscribed StateFlow without
-                    // collectors stays at its initial empty value and silently skips companions.
-                    val needsThaw =
-                        kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
-                            searchable.isSuspended ||
-                                (searchable.user == android.os.Process.myUserHandle() &&
-                                    (freezeManager.isFrozen(pkg) ||
-                                        pkg in freezeSettings.companionEnabled.first()))
-                        }
-                    if (!needsThaw) {
+                    val currentUser = searchable.user == android.os.Process.myUserHandle()
+                    val userId = searchable.user.hashCode()
+                    val frozenNow = searchable.isSuspended ||
+                        freezeManager.needsLaunchThaw(pkg, if (currentUser) android.os.Process.myUid() / 100000 else userId)
+                    if (!frozenNow) {
                         if (searchable.launch(context, bundle)) reportUsage(searchable)
                         else favoritesService.reset(searchable)
+                        if (currentUser) {
+                            val companions = freezeSettings.companionEnabled.first()
+                            if (pkg in companions) {
+                                freezeManager.unfreezeCompanions(pkg, searchable.user.hashCode())
+                            }
+                        }
                         return@launch
                     }
                     freezeManager.unfreezeCompanions(pkg, searchable.user.hashCode())

@@ -36,7 +36,7 @@ internal class RootInstallBackend : InstallBackend {
                 installPrivilegedSession(
                     apk = apk,
                     userId = android.os.Process.myUid() / 100000,
-                    preserveEnabled = android.os.Build.VERSION.SDK_INT >= 34,
+                    preserveEnabled = true,
                     allowDowngrade = allowDowngrade,
                 ) { command, input ->
                     runInstallCommand(input, startRootShell(command))
