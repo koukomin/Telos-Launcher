@@ -14,6 +14,7 @@ class TelosPackageInstaller(
     private val context: Context,
     private val freezeManager: de.mm20.launcher2.freeze.FreezeManager,
     private val options: de.mm20.launcher2.store.options.StoreOptions,
+    private val autoFreeze: de.mm20.launcher2.freeze.AutoFreezeController,
 ) : AppInstaller {
 
     private val shizuku = ShizukuInstallBackend(context)
@@ -64,7 +65,21 @@ class TelosPackageInstaller(
 
     private suspend fun installOnIo(apk: File, packageName: String): InstallResult {
         if (freezeManager.hasPendingFrozenUpdate(packageName)) return InstallResult.Failed(context.getString(de.mm20.launcher2.i18n.R.string.hf_store_installing))
-        
+        val isolate = options.global.value.playUpdateBlockNetwork
+        if (isolate) autoFreeze.isolateNetworkForUpdate(packageName)
+        val result = try {
+            installApkOnIo(apk, packageName)
+        } catch (error: Exception) {
+            if (isolate) autoFreeze.endNetworkIsolation(packageName)
+            throw error
+        }
+        if (isolate && result !is InstallResult.Pending) {
+            autoFreeze.endNetworkIsolation(packageName)
+        }
+        return result
+    }
+
+    private suspend fun installApkOnIo(apk: File, packageName: String): InstallResult {
         StoreTerminalLogs.log("SECURITY", "Scanning APK $packageName...")
         val securityReport = de.mm20.launcher2.data.store.security.ApkSecurityScanner.scanApk(context, apk)
         if (securityReport != null) {

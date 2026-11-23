@@ -23,6 +23,7 @@ internal class VirtualClockApp(context: Context) : Application {
     override val key: String = "$Domain://clock"
     override val label: String = de.mm20.launcher2.search.TelosAppLabels.forDomain(context, "telos_clock_app")
     override val labelOverride: String? = null
+    override val keywords: List<String> = de.mm20.launcher2.search.TelosAppKeywords.forDomain(Domain)
     override val domain: String = Domain
     override val score: ResultScore = ResultScore.Unspecified
 
@@ -75,6 +76,7 @@ internal class VirtualAkouApp(context: Context) : Application {
     override val key: String = "$Domain://akou"
     override val label: String = de.mm20.launcher2.search.TelosAppLabels.forDomain(context, "telos_akou_app")
     override val labelOverride: String? = null
+    override val keywords: List<String> = de.mm20.launcher2.search.TelosAppKeywords.forDomain(Domain)
     override val domain: String = Domain
     override val score: ResultScore = ResultScore.Unspecified
 
@@ -127,6 +129,7 @@ internal class VirtualMagnifierApp(context: Context) : Application {
     override val key: String = "$Domain://magnifier"
     override val label: String = de.mm20.launcher2.search.TelosAppLabels.forDomain(context, "telos_magnifier_app")
     override val labelOverride: String? = null
+    override val keywords: List<String> = de.mm20.launcher2.search.TelosAppKeywords.forDomain(Domain)
     override val domain: String = Domain
     override val score: ResultScore = ResultScore.Unspecified
 
@@ -179,6 +182,7 @@ internal class VirtualFlashlightApp(context: Context) : Application {
     override val key: String = "$Domain://flashlight"
     override val label: String = de.mm20.launcher2.search.TelosAppLabels.forDomain(context, "telos_flashlight_app")
     override val labelOverride: String? = null
+    override val keywords: List<String> = de.mm20.launcher2.search.TelosAppKeywords.forDomain(Domain)
     override val domain: String = Domain
     override val score: ResultScore = ResultScore.Unspecified
 
@@ -231,6 +235,7 @@ internal class VirtualFitApp(context: Context) : Application {
     override val key: String = "$Domain://fit"
     override val label: String = de.mm20.launcher2.search.TelosAppLabels.forDomain(context, "telos_fit_app")
     override val labelOverride: String? = null
+    override val keywords: List<String> = de.mm20.launcher2.search.TelosAppKeywords.forDomain(Domain)
     override val domain: String = Domain
     override val score: ResultScore = ResultScore.Unspecified
 

@@ -25,6 +25,12 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.foundation.gestures.awaitEachGesture
+import androidx.compose.foundation.gestures.awaitFirstDown
+import androidx.compose.foundation.gestures.drag
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.layout.boundsInRoot
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.res.painterResource
@@ -96,6 +102,22 @@ class TelosKeyboardService :
         mSavedStateRegistryController.performAttach()
         mSavedStateRegistryController.performRestore(null)
         mLifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_CREATE)
+        TelosSystemSuggestions.extra = { input, _ ->
+            TelosSystemSuggestions.fromUserDictionary(applicationContext, input)
+        }
+    }
+
+    override fun onComputeInsets(outInsets: InputMethodService.Insets) {
+        super.onComputeInsets(outInsets)
+        val nav =
+            androidx.core.view.ViewCompat.getRootWindowInsets(window?.window?.decorView ?: return)
+                ?.getInsets(androidx.core.view.WindowInsetsCompat.Type.navigationBars())
+                ?.bottom ?: 0
+        outInsets.contentTopInsets = outInsets.visibleTopInsets
+        outInsets.touchableInsets = InputMethodService.Insets.TOUCHABLE_INSETS_CONTENT
+        if (nav > 0 && outInsets.contentTopInsets > nav) {
+            // Keep the reported IME height above the nav bar; keys already pad with navigationBarsPadding.
+        }
     }
 
     override fun onCreateInputView(): View {
@@ -107,6 +129,9 @@ class TelosKeyboardService :
         composeView?.let { old ->
             old.disposeComposition()
             (old.parent as? ViewGroup)?.removeView(old)
+        }
+        window?.window?.let { win ->
+            androidx.core.view.WindowCompat.setDecorFitsSystemWindows(win, false)
         }
         val view =
             ComposeView(this).also { host ->
@@ -352,7 +377,13 @@ fun TelosKeyboardView(
     val primaryColor = MaterialTheme.colorScheme.primary
     val surfaceColor = MaterialTheme.colorScheme.surfaceContainerHigh
 
-    Column(modifier = Modifier.fillMaxWidth().background(surfaceColor).padding(bottom = 6.dp)) {
+    Column(
+        modifier =
+            Modifier.fillMaxWidth()
+                .background(surfaceColor)
+                .navigationBarsPadding()
+                .padding(start = 4.dp, end = 4.dp, top = 6.dp, bottom = 4.dp)
+    ) {
         // Toolbar / Action Row
         Row(
             modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 4.dp),
@@ -551,7 +582,33 @@ fun LetterKeyboardGrid(
         }
 
     Column(
-        Modifier.fillMaxWidth().padding(horizontal = 4.dp),
+        Modifier.fillMaxWidth()
+            .padding(horizontal = 4.dp)
+            .pointerInput(state.currentLanguage) {
+                awaitEachGesture {
+                    val down = awaitFirstDown(requireUnconsumed = false)
+                    val start = down.position
+                    var dragging = false
+                    drag(down.id) { change ->
+                        val dist = (change.position - start).getDistance()
+                        if (!dragging && dist > 28f) {
+                            dragging = true
+                            TelosGlideTyping.startSwipe()
+                            TelosGlideTyping.addPoint(start)
+                        }
+                        if (dragging) {
+                            change.consume()
+                            TelosGlideTyping.addPoint(change.position)
+                        }
+                    }
+                    if (dragging) {
+                        TelosGlideTyping.finishSwipe(state.currentLanguage) { word ->
+                            onKeyTap(word)
+                            onSpace()
+                        }
+                    }
+                }
+            },
         verticalArrangement = Arrangement.spacedBy(6.dp),
     ) {
         // Number Row 0
@@ -757,8 +814,18 @@ fun KeyboardKey(
 
     Surface(
         modifier =
-            modifier.heightIn(min = 48.dp).clip(RoundedCornerShape(8.dp)).clickable { onClick() },
-        color = MaterialTheme.colorScheme.surface,
+            modifier
+                .heightIn(min = 52.dp)
+                .onGloballyPositioned { coords ->
+                    val box = coords.boundsInRoot()
+                    TelosKeyboardHits.remember(
+                        text,
+                        androidx.compose.ui.geometry.Rect(box.left, box.top, box.right, box.bottom),
+                    )
+                }
+                .clip(RoundedCornerShape(6.dp))
+                .clickable { onClick() },
+        color = MaterialTheme.colorScheme.surfaceContainerHighest,
         border =
             androidx.compose.foundation.BorderStroke(
                 0.7.dp,

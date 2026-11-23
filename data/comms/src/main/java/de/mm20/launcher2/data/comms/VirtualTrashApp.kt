@@ -21,8 +21,9 @@ import androidx.core.content.ContextCompat
 
 internal class VirtualTrashApp(context: Context) : Application {
     override val key: String = "$Domain://trash"
-    override val label: String = "Κάδος"
+    override val label: String = de.mm20.launcher2.search.TelosAppLabels.forDomain(context, Domain)
     override val labelOverride: String? = null
+    override val keywords: List<String> = de.mm20.launcher2.search.TelosAppKeywords.forDomain(Domain)
     override val domain: String = Domain
     override val score: ResultScore = ResultScore.Unspecified
 

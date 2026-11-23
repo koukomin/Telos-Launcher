@@ -49,7 +49,12 @@ class InstallResultReceiver : BroadcastReceiver() {
         val appContext = context.applicationContext
         containedScope(Dispatchers.IO).launch {
             try {
-                val freeze = org.koin.core.context.GlobalContext.get().get<de.mm20.launcher2.freeze.FreezeManager>()
+                val koin = org.koin.core.context.GlobalContext.get()
+                val freeze = koin.get<de.mm20.launcher2.freeze.FreezeManager>()
+                runCatching {
+                    koin.get<de.mm20.launcher2.freeze.AutoFreezeController>()
+                        .endNetworkIsolation(packageName)
+                }
                 val token = intent.getStringExtra(EXTRA_FREEZE_TOKEN)
                 if (token != null && !freeze.finishFrozenUpdate(packageName, token))
                     Log.w(TAG, "Freeze restoration pending for $packageName")

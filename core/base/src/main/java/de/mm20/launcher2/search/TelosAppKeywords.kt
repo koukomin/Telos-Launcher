@@ -96,6 +96,8 @@ object TelosAppKeywords {
         "telos_clock_app" to "Clock",
         "telos_weather_app" to "Weather",
         "telos_help_app" to "Help",
+        "telos_fit_app" to "Fit",
+        "telos_camera_app" to "Camera",
     )
 
     fun forDomain(domain: String): List<String> {

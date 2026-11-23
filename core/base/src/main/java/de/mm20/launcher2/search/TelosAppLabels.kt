@@ -48,8 +48,14 @@ object TelosAppLabels {
     }
 
     fun forDomain(context: Context, domain: String): String =
-        resourceForDomain(domain)?.let { context.getString(it) } ?: domain
+        displayName(resourceForDomain(domain)?.let { context.getString(it) } ?: domain)
 
     fun forKey(resources: Resources, key: String): String? =
-        resourceForDomain(key.substringBefore("://"))?.let { resources.getString(it) }
+        resourceForDomain(key.substringBefore("://"))?.let { displayName(resources.getString(it)) }
+
+    /** Launcher tiles stay "Phone", "Fit", "Network"; search still matches "Telos". */
+    fun displayName(raw: String): String = raw
+        .removePrefix("Telos ")
+        .removePrefix("TELOS ")
+        .ifBlank { raw }
 }

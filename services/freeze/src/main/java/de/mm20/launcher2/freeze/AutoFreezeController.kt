@@ -392,6 +392,36 @@ class AutoFreezeController internal constructor(
         }
     }
 
+    private val storeUpdateNetRestore = java.util.concurrent.ConcurrentHashMap<String, Boolean>()
+
+    suspend fun isolateNetworkForUpdate(packageName: String) {
+        val saved = blockNetworkForPackages(listOf(packageName))
+        storeUpdateNetRestore.putAll(saved)
+    }
+
+    suspend fun endNetworkIsolation(packageName: String) {
+        val previous = storeUpdateNetRestore.remove(packageName) ?: return
+        restoreNetworkForPackages(mapOf(packageName to previous))
+    }
+
+    suspend fun blockNetworkForPackages(packages: Collection<String>): Map<String, Boolean> {
+        if (packages.isEmpty()) return emptyMap()
+        if (networkEngine.state.value !is NetState.On) return emptyMap()
+        return applyPlayNetworkBlock(packages.toSet())
+    }
+
+    suspend fun restoreNetworkForPackages(saved: Map<String, Boolean>) {
+        if (saved.isEmpty()) return
+        for ((pkg, hadBlockAll) in saved) {
+            if (hadBlockAll) continue
+            val appId = apps.byPackage(pkg)?.appId ?: runCatching {
+                context.packageManager.getApplicationInfo(pkg, 0).uid % 100000
+            }.getOrNull() ?: continue
+            val existing = firewall.appRules.value[appId] ?: continue
+            if (existing.blockAll) firewall.setAppRule(existing.copy(blockAll = false))
+        }
+    }
+
     private suspend fun applyPlayNetworkBlock(packages: Set<String>): Map<String, Boolean> {
         val result = HashMap<String, Boolean>()
         for (pkg in packages) {

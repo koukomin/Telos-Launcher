@@ -39,7 +39,7 @@ val dataStoreModule = module {
     single<de.mm20.launcher2.store.icons.StoreIconResolver> {
         de.mm20.launcher2.data.store.icons.StoreIconResolverImpl(get())
     }
-    single<AppInstaller> { TelosPackageInstaller(context = androidContext(), freezeManager = get(), options = get()) }
+    single<AppInstaller> { TelosPackageInstaller(context = androidContext(), freezeManager = get(), options = get(), autoFreeze = get()) }
     single<Downloader> { KtorDownloader(context = androidContext(), httpClient = get()) }
     single<StoreRepository> { StoreRepositoryImpl(context = androidContext()) }
 

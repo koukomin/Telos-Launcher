@@ -32,11 +32,9 @@ object TelosGlideTyping {
             return
         }
 
-        // Heuristic swipe matcher: pick top suggestion or default word
-        val suggestions = TelosKeyboardDictionary.suggestions("καλη", lang)
-        val word = suggestions.firstOrNull() ?: if (lang == KeyboardLanguage.Greek) "καλημέρα" else "hello"
-        onWordRecognized(word)
+        val word = TelosKeyboardSwipe.recognize(currentPathPoints.toList(), TelosKeyboardHits.snapshot(), lang)
         currentPathPoints.clear()
+        if (!word.isNullOrBlank()) onWordRecognized(word)
     }
 }
 

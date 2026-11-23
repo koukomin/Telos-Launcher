@@ -176,7 +176,7 @@ fun FitDashboardScreen() {
                     title = {
                         TelosCyberHeading {
                             Row(verticalAlignment = Alignment.CenterVertically) {
-                                Text("Telos Fit", fontWeight = FontWeight.Bold)
+                                Text(stringResource(I18nR.string.fit_title), fontWeight = FontWeight.Bold)
                                 Spacer(modifier = Modifier.width(8.dp))
                                 TelosDotMatrixText(
                                     when {
