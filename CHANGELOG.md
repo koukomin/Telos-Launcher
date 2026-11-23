@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.45.77
+
+- App Ops reads ColorOS / Android 16+ `dumpsys appops` (`AppOps Service state:` and Uid Op State) and skips restriction history.
+- Store updates run concurrently; frozen FOSS apps thaw for install; Play unfreezes in bulk and waits before opening.
+- Freeze Desk lists Work, Dual and Private apps, freeze/unfreeze by user, and copies the Personal frozen list to other profiles.
+- Work/Dual/Private icons use the Personal icon pack and circular adaptive shape.
+- AGP 9.5.2, CameraX 1.7.0, nextlib 0.19.0, Robolectric 4.18.1. Gradle stays 9.9.1 (9.9.2 broke Aether).
+
 ## 1.45.76
 
 - Route headset Play to the latest available allowed Telos Media session. Choose Music, Radio, TV, YouTube, YouTube Music, Video and Stremio independently. Video and Stremio start disabled.
