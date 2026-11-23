@@ -507,8 +507,8 @@ class FreezeManager internal constructor(
     // === TELOS_PENDING_REVIEW_END: multi_user_freeze ===
 
     /** Live read of the OS-level frozen state (suspended OR disabled). */
-    fun isFrozen(packageName: String): Boolean {
-        return freezeState(packageName) != AppFreezeState.Normal
+    fun isFrozen(packageName: String, userId: Int = Process.myUid() / 100000): Boolean {
+        return freezeState(packageName, userId) != AppFreezeState.Normal
     }
 
     /**
@@ -518,7 +518,10 @@ class FreezeManager internal constructor(
      * even if the two have drifted apart (e.g. the method setting was changed after freezing,
      * without re-freezing).
      */
-    fun freezeState(packageName: String): AppFreezeState {
+    fun freezeState(packageName: String, userId: Int = Process.myUid() / 100000): AppFreezeState {
+        if (userId != Process.myUid() / 100000) {
+            return freezeStateForUser(packageName, userId)
+        }
         return try {
             val pm = context.packageManager
             val info = pm.getApplicationInfo(
@@ -561,6 +564,33 @@ class FreezeManager internal constructor(
                 AppFreezeState.Normal
             }
         }
+    }
+
+    private fun freezeStateForUser(packageName: String, userId: Int): AppFreezeState {
+        return try {
+            val user = UserHandle.getUserHandleForUid(userId * 100000)
+            val apps = context.getSystemService(LauncherApps::class.java) ?: return AppFreezeState.Normal
+            val flags = PackageManager.MATCH_DISABLED_COMPONENTS or PackageManager.MATCH_UNINSTALLED_PACKAGES
+            val info = apps.getApplicationInfo(packageName, flags, user)
+            when {
+                !info.enabled -> AppFreezeState.Disabled
+                (info.flags and ApplicationInfo.FLAG_SUSPENDED) != 0 -> AppFreezeState.Suspended
+                else -> AppFreezeState.Normal
+            }
+        } catch (_: Exception) {
+            AppFreezeState.Normal
+        }
+    }
+
+    suspend fun copyFrozenList(
+        sourceUserId: Int,
+        destinationUserId: Int,
+        destinationInstalled: Set<String>,
+        sourceFrozen: Set<String>,
+    ): Set<String> {
+        val packages = FreezeProfileCopy.packagesToApply(sourceFrozen, destinationInstalled).toList()
+        if (packages.isEmpty()) return emptySet()
+        return freeze(packages, destinationUserId)
     }
 
     /** Whether this app currently holds device owner status - only ever true after the user has

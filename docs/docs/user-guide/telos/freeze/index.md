@@ -127,6 +127,10 @@ Under **Settings > Advanced > Work profile**:
 Shizuku and root apply freezing to the user (profile) of the target app, so apps in a work profile can be targeted.
 Dhizuku and device owner act on the current user only.
 
+Freeze Desk (Telos System → Apps) lists Personal, Work, Private and Dual/clone apps with profile pills. Freeze and unfreeze use that profile’s user id. **Copy frozen list to other profiles** freezes, on Work / Dual / Private, the same packages that are frozen on Personal when those packages are installed there.
+
+Work, Dual and Private launcher icons use the same icon pack, circular adaptive shape and theme as Personal. Profile identity is the briefcase, person or lock badge.
+
 ::: warning Experimental
 "Clone to Sandbox" in an app's menu copies the app's APK into the work profile through a small bridge service of Telos.
 It is new and <Badge type="warning" text="experimental" /> and <Badge type="info" text="untested" /> across devices.

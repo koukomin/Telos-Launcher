@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="apps_profile_clone">双开应用</string>
+    <string name="freeze_copy_list_to_profiles">将冻结列表复制到其他配置文件</string>
+    <string name="freeze_copy_list_result">已在其他配置文件冻结 %1$d 个应用</string>
+</resources>

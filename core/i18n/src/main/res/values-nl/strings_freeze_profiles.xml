@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="apps_profile_clone">Dual-apps</string>
+    <string name="freeze_copy_list_to_profiles">Bevroren lijst naar andere profielen kopiëren</string>
+    <string name="freeze_copy_list_result">Bevriezen toegepast op %1$d apps in andere profielen</string>
+</resources>

@@ -57,8 +57,13 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import de.mm20.launcher2.base.R as BaseR
+import android.content.pm.LauncherApps
+import android.os.Process
+import android.os.UserHandle
 import de.mm20.launcher2.freeze.BloatDescriptions
 import de.mm20.launcher2.freeze.FreezeManager
+import de.mm20.launcher2.profiles.Profile
+import de.mm20.launcher2.profiles.ProfileManager
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.preferences.freeze.FreezeSettings
 import de.mm20.launcher2.ui.component.TelosCyber
@@ -93,7 +98,11 @@ internal data class InstalledSystemRow(
     val system: Boolean,
     val running: Boolean,
     val bloat: Boolean,
-)
+    val userId: Int = Process.myUid() / 100000,
+    val profile: Profile.Type = Profile.Type.Personal,
+) {
+    val rowKey: String get() = "$userId:$pkg"
+}
 
 /** Telos System → Apps hub: Freeze Desk (search, filter pills, one-tap freeze). */
 @OptIn(ExperimentalLayoutApi::class, ExperimentalMaterial3Api::class)
@@ -105,6 +114,8 @@ fun SystemAppsTab(onOpenDetails: (String) -> Unit) {
     val freeze: FreezeManager = koinInject()
     val descriptions: BloatDescriptions = koinInject()
     val settings: FreezeSettings = koinInject()
+    val profileManager: ProfileManager = koinInject()
+    val profiles by profileManager.profiles.collectAsStateWithLifecycle(emptyList())
     val uad by descriptions.data.collectAsStateWithLifecycle()
     val backend by freeze.activeBackend.collectAsStateWithLifecycle()
     var listView by rememberSaveable { mutableStateOf(false) }
@@ -112,6 +123,7 @@ fun SystemAppsTab(onOpenDetails: (String) -> Unit) {
     var query by rememberSaveable { mutableStateOf("") }
     var filterOrdinal by rememberSaveable { mutableIntStateOf(FreezeDeskFilter.All.ordinal) }
     val filter = FreezeDeskFilter.entries.getOrElse(filterOrdinal) { FreezeDeskFilter.All }
+    var profileFilter by rememberSaveable { mutableIntStateOf(-1) }
     var apps by remember { mutableStateOf<List<InstalledSystemRow>>(emptyList()) }
     var revision by remember { mutableIntStateOf(0) }
     var loading by remember { mutableStateOf(true) }
@@ -125,41 +137,82 @@ fun SystemAppsTab(onOpenDetails: (String) -> Unit) {
         descriptions.entries()
         if (settings.bloatAutoUpdate.first()) descriptions.refresh()
     }
-    LaunchedEffect(revision, uad) {
+    LaunchedEffect(revision, uad, profiles) {
         loading = true
         apps =
             withContext(de.mm20.launcher2.coroutines.TelosDispatchers.Disk) {
                 freeze.refreshBackendState()
                 val pm = context.packageManager
+                val launcherApps = context.getSystemService<LauncherApps>()
                 val runningPkgs = runningPackageNames(context)
-                pm.getInstalledApplications(PackageManager.MATCH_DISABLED_COMPONENTS)
-                    .filter { it.packageName != context.packageName }
-                    .map { app ->
-                        val pkg = app.packageName
-                        InstalledSystemRow(
-                            pkg = pkg,
-                            label = runCatching { app.loadLabel(pm).toString() }.getOrDefault(pkg),
-                            size =
-                                android.text.format.Formatter.formatFileSize(
+                val listed = mutableListOf<InstalledSystemRow>()
+                val seen = HashSet<String>()
+                val profileRows = profiles.ifEmpty {
+                    listOf(Profile.fromContext(context))
+                }
+                for (profile in profileRows) {
+                    val userId = profile.userHandle.hashCode()
+                    val activities = runCatching {
+                        launcherApps?.getActivityList(null, profile.userHandle).orEmpty()
+                    }.getOrDefault(emptyList())
+                    if (activities.isNotEmpty()) {
+                        for (info in activities) {
+                            val pkg = info.applicationInfo.packageName
+                            if (pkg == context.packageName) continue
+                            val key = "$userId:$pkg"
+                            if (!seen.add(key)) continue
+                            listed += InstalledSystemRow(
+                                pkg = pkg,
+                                label = runCatching { info.label.toString() }.getOrDefault(pkg),
+                                size = android.text.format.Formatter.formatFileSize(
                                     context,
-                                    java.io.File(app.sourceDir).length(),
+                                    java.io.File(info.applicationInfo.sourceDir ?: "").length(),
                                 ),
-                            frozen = freeze.isFrozen(pkg),
-                            system = app.flags and ApplicationInfo.FLAG_SYSTEM != 0,
-                            running = pkg in runningPkgs,
-                            bloat = uad.containsKey(pkg),
-                        )
+                                frozen = freeze.isFrozen(pkg, userId),
+                                system = info.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM != 0,
+                                running = userId == Process.myUid() / 100000 && pkg in runningPkgs,
+                                bloat = uad.containsKey(pkg),
+                                userId = userId,
+                                profile = profile.type,
+                            )
+                        }
+                    } else if (profile.type == Profile.Type.Personal) {
+                        pm.getInstalledApplications(PackageManager.MATCH_DISABLED_COMPONENTS)
+                            .filter { it.packageName != context.packageName }
+                            .forEach { app ->
+                                val pkg = app.packageName
+                                val key = "$userId:$pkg"
+                                if (!seen.add(key)) return@forEach
+                                listed += InstalledSystemRow(
+                                    pkg = pkg,
+                                    label = runCatching { app.loadLabel(pm).toString() }.getOrDefault(pkg),
+                                    size = android.text.format.Formatter.formatFileSize(
+                                        context,
+                                        java.io.File(app.sourceDir).length(),
+                                    ),
+                                    frozen = freeze.isFrozen(pkg, userId),
+                                    system = app.flags and ApplicationInfo.FLAG_SYSTEM != 0,
+                                    running = pkg in runningPkgs,
+                                    bloat = uad.containsKey(pkg),
+                                    userId = userId,
+                                    profile = Profile.Type.Personal,
+                                )
+                            }
                     }
-                    .sortedBy { it.label.lowercase(java.util.Locale.ROOT) }
+                }
+                listed.sortedBy { it.label.lowercase(java.util.Locale.ROOT) }
             }
         loading = false
     }
 
     val frozenCount = remember(apps) { apps.count { it.frozen } }
+    val profileTypes = remember(apps) { apps.map { it.profile }.distinct() }
     val visible =
-        remember(apps, query, filter) {
+        remember(apps, query, filter, profileFilter) {
             val term = query.trim()
+            val selectedProfile = Profile.Type.entries.getOrNull(profileFilter)
             apps.filter { row ->
+                val matchesProfile = selectedProfile == null || row.profile == selectedProfile
                 val matchesFilter =
                     when (filter) {
                         FreezeDeskFilter.All -> true
@@ -169,7 +222,8 @@ fun SystemAppsTab(onOpenDetails: (String) -> Unit) {
                         FreezeDeskFilter.User -> !row.system
                         FreezeDeskFilter.Bloat -> row.bloat
                     }
-                matchesFilter &&
+                matchesProfile &&
+                    matchesFilter &&
                     (term.isBlank() ||
                         row.label.contains(term, ignoreCase = true) ||
                         row.pkg.contains(term, ignoreCase = true))
@@ -187,7 +241,7 @@ fun SystemAppsTab(onOpenDetails: (String) -> Unit) {
     FreezeDeskGrid(
         apps = visible,
         listView = listView,
-        onSelect = { selectedPackage = it.pkg },
+        onSelect = { selectedPackage = it.rowKey },
         header = {
             Column {
                 Column(
@@ -227,6 +281,34 @@ fun SystemAppsTab(onOpenDetails: (String) -> Unit) {
                         horizontalArrangement = Arrangement.spacedBy(8.dp),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
+                        if (profileTypes.size > 1) {
+                            TelosTechPill(
+                                text = stringResource(I18nR.string.filter_all),
+                                isSelected = profileFilter < 0,
+                                onClick = { profileFilter = -1 },
+                                accentColor = TelosCyber.NeonCyan,
+                            )
+                            profileTypes.forEach { type ->
+                                TelosTechPill(
+                                    text = stringResource(
+                                        when (type) {
+                                            Profile.Type.Personal -> I18nR.string.apps_profile_main
+                                            Profile.Type.Work -> I18nR.string.apps_profile_work
+                                            Profile.Type.Private -> I18nR.string.apps_profile_private
+                                            Profile.Type.Clone -> I18nR.string.apps_profile_clone
+                                        }
+                                    ),
+                                    isSelected = profileFilter == type.ordinal,
+                                    onClick = { profileFilter = type.ordinal },
+                                    accentColor = when (type) {
+                                        Profile.Type.Personal -> TelosCyber.NeonCyan
+                                        Profile.Type.Work -> TelosCyber.NeonOrange
+                                        Profile.Type.Private -> TelosCyber.NeonMagenta
+                                        Profile.Type.Clone -> TelosCyber.NeonGreen
+                                    },
+                                )
+                            }
+                        }
                         FreezeDeskFilter.entries.forEach { pill ->
                             TelosTechPill(
                                 text =
@@ -268,6 +350,42 @@ fun SystemAppsTab(onOpenDetails: (String) -> Unit) {
                         verticalArrangement = Arrangement.spacedBy(4.dp),
                     ) {
                         AppOpsNextButton()
+                        if (profileTypes.any { it != Profile.Type.Personal } &&
+                            apps.any { it.profile == Profile.Type.Personal && it.frozen }
+                        ) {
+                            FilledTonalButton(
+                                onClick = {
+                                    scope.launch {
+                                        val personalFrozen = apps.filter {
+                                            it.profile == Profile.Type.Personal && it.frozen
+                                        }.map { it.pkg }.toSet()
+                                        val dests = apps.filter { it.profile != Profile.Type.Personal }
+                                            .groupBy { it.userId }
+                                        var applied = 0
+                                        withContext(Dispatchers.IO) {
+                                            dests.forEach { (userId, rows) ->
+                                                val installed = rows.map { it.pkg }.toSet()
+                                                applied += freeze.copyFrozenList(
+                                                    Process.myUid() / 100000,
+                                                    userId,
+                                                    installed,
+                                                    personalFrozen,
+                                                ).size
+                                            }
+                                        }
+                                        outcome = context.getString(
+                                            I18nR.string.freeze_copy_list_result,
+                                            applied,
+                                        )
+                                        revision++
+                                    }
+                                },
+                                enabled = busyPkg == null,
+                                modifier = Modifier.sizeIn(minHeight = UiSpacing.TouchTarget),
+                            ) {
+                                Text(stringResource(I18nR.string.freeze_copy_list_to_profiles))
+                            }
+                        }
                         TelosTechPill(
                             text = stringResource(I18nR.string.preference_grid_list_style),
                             isSelected = listView,
@@ -300,7 +418,7 @@ fun SystemAppsTab(onOpenDetails: (String) -> Unit) {
         },
     )
     val selectedApp =
-        remember(apps, selectedPackage) { apps.firstOrNull { it.pkg == selectedPackage } }
+        remember(apps, selectedPackage) { apps.firstOrNull { it.rowKey == selectedPackage } }
     selectedApp?.let { app ->
         ModalBottomSheet(
             onDismissRequest = { selectedPackage = null },
@@ -398,8 +516,8 @@ fun SystemAppsTab(onOpenDetails: (String) -> Unit) {
                                     try {
                                         val ok =
                                             withContext(Dispatchers.IO) {
-                                                if (app.frozen) freeze.unfreeze(app.pkg)
-                                                else freeze.freeze(app.pkg)
+                                                if (app.frozen) freeze.unfreeze(app.pkg, app.userId)
+                                                else freeze.freeze(app.pkg, app.userId)
                                             }
                                         outcome =
                                             context.getString(

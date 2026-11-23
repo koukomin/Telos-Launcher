@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="apps_profile_clone">Dvojne aplikacije</string>
+    <string name="freeze_copy_list_to_profiles">Kopiraj zamrznjen seznam v druge profile</string>
+    <string name="freeze_copy_list_result">Zamrznjenih %1$d aplikacij v drugih profilih</string>
+</resources>

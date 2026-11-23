@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="apps_profile_clone">Çift uygulamalar</string>
+    <string name="freeze_copy_list_to_profiles">Donmuş listeyi diğer profillere kopyala</string>
+    <string name="freeze_copy_list_result">Diğer profillerde %1$d uygulama donduruldu</string>
+</resources>

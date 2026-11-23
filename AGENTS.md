@@ -21,13 +21,19 @@ Before merging or creating a release:
 1. **Pre-Release Security Audit**: All AI agents **MUST** inspect GitHub for security & secrets issues (Dependabot alerts, CodeQL scans, secret scanning) and automatically remediate any vulnerabilities or exposed secrets before releasing.
 2. **Real-time Workflow & PR Monitoring**: During merge/release operations, AI agents **MUST** actively monitor GitHub Actions workflows and PR builds in real-time. If any action or PR fails or hangs, the agent **MUST** automatically diagnose and fix the issue, re-triggering or pushing fixes until the entire build & release process is 100% completed.
 
+## Gradle & library versioning (Mandatory for all agents)
+
+1. **Prefer the newest stable Gradle and libraries.** Try the current stable Gradle wrapper (Gradle 10 when it is published; until then the newest 9.x) and the newest stable catalog pins in `gradle/libs.versions.toml` (and Amethyst’s catalog when that included build is touched). Prefer `tasks.register<Type>("name")` over `by tasks.registering(...)`.
+2. **Keep the last version that builds if the newest one fails.** If the latest Gradle, AGP, Compose, KSP, or an included-build library (Aether/Amethyst, AppOps, Nextlib) cannot resolve, compile, or pass the existing tests, **do not leave the tree broken**. Revert or pin that one artifact to the last known-good version, write the failure and the pin in `.artifacts/SESSION_TRACKER.md`, and keep using the working pin until a follow-up change lands the upgrade. Do not skip the newest version forever: retry it when the blocker is gone.
+3. **Do not mix an unproven Gradle jump with unrelated feature work.** Composite included builds (`libs/amethyst`) must still resolve (`com.telos.amethyst:amethyst`) after a wrapper bump. If they do not, keep the working wrapper.
+
 ## Project
 
 Telos — a search-focused, free and open source Android launcher (package `de.mm20.launcher2`). Kotlin/Gradle multi-module Android project. Licensed under GPL-3.0, except `plugins/sdk` and `core/shared` which are Apache-2.0.
 
 ## Build & common commands
 
-- Build environment: JDK 21 toolchain (see `gradle/gradle-daemon-jvm.properties`), Gradle 9.9.0 via wrapper.
+- Build environment: JDK 21 toolchain (see `gradle/gradle-daemon-jvm.properties`). Gradle version is whatever the wrapper currently ships (see `gradle/wrapper/gradle-wrapper.properties`); prefer the newest stable, keep the last working pin if a bump breaks Aether or the Android build.
 - Build variants are a combination of a build type (`debug`, `release`, `nightly`) and a product flavor (`default`, `fdroid`), e.g. `assembleDefaultDebug`, `assembleFdroidRelease`.
 - Build a debug APK: `./gradlew assembleDefaultDebug`
 - Install to a connected device/emulator: `./gradlew installDefaultDebug`

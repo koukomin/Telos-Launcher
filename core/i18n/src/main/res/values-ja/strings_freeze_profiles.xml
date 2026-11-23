@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="apps_profile_clone">デュアルアプリ</string>
+    <string name="freeze_copy_list_to_profiles">凍結リストを他のプロファイルへコピー</string>
+    <string name="freeze_copy_list_result">他のプロファイルで %1$d 個のアプリを凍結しました</string>
+</resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="apps_profile_clone">Dubbelappar</string>
+    <string name="freeze_copy_list_to_profiles">Kopiera frysta listan till andra profiler</string>
+    <string name="freeze_copy_list_result">Frysning tillämpad på %1$d appar på andra profiler</string>
+</resources>
