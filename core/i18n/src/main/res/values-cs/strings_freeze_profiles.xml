@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="apps_profile_clone">Duální aplikace</string>
+    <string name="freeze_copy_list_to_profiles">Kopírovat zmrazený seznam do dalších profilů</string>
+    <string name="freeze_copy_list_result">Zmrazeno %1$d aplikací v dalších profilech</string>
+</resources>

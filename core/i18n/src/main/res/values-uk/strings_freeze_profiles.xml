@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="apps_profile_clone">Подвійні програми</string>
+    <string name="freeze_copy_list_to_profiles">Копіювати заморожений список в інші профілі</string>
+    <string name="freeze_copy_list_result">Заморожено %1$d програм в інших профілях</string>
+</resources>

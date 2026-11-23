@@ -5,6 +5,7 @@ Linux package version and JAR Implementation-Version, and the GitHub release tag
 Release version codes are committed positive integers and must increase with each
 release; they are not generated from a workflow counter or date. The initial
 unified release retains a code above the previously committed 2026110505.
+Current published line is **v1.45.77** (`versionCode` 2026112301).
 
 1. Increase both values in `version.properties` and merge the reviewed PR into main.
 2. Push the matching tag (`v<versionName>`) at that main commit, or dispatch

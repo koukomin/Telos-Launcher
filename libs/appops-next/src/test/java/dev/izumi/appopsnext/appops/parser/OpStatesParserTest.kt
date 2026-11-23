@@ -157,5 +157,32 @@ class OpStatesParserTest {
         assertEquals(AppOpScope.PACKAGE, unknown.scope)
     }
 
+    @Test
+    fun `ColorOS uid op state header still yields current-user modes`() {
+        val result = OpStatesParser.parse(
+            """
+            AppOps Service state:
+              Settings:
+                top_state_settle_time=+5s0ms
+
+            AppOps Uid Op State
+              Uid u0a546:
+                state=cch
+                  CAMERA: mode=ignore
+                Package com.facebook.katana:
+                  CAMERA (allow):
+              Uid u10a546:
+                  CAMERA: mode=allow
+            """.trimIndent(),
+            "CAMERA",
+            0,
+        )
+        assertEquals(mapOf(10546 to "ignore"), result.uidModes)
+        assertEquals(
+            EffectiveOpState(AppOpMode.IGNORE, AppOpScope.UID),
+            result.effective(10546, "com.facebook.katana"),
+        )
+    }
+
     private fun parse(output: String) = OpStatesParser.parse(output.trimIndent().prependIndent("  "), "CAMERA", 0)
 }

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="apps_profile_clone">Kaksoissovellukset</string>
+    <string name="freeze_copy_list_to_profiles">Kopioi jäädytetty lista muihin profiileihin</string>
+    <string name="freeze_copy_list_result">Jäädytetty %1$d sovellusta muissa profiileissa</string>
+</resources>

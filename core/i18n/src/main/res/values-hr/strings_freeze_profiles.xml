@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="apps_profile_clone">Dualne aplikacije</string>
+    <string name="freeze_copy_list_to_profiles">Kopiraj smrznuti popis na druge profile</string>
+    <string name="freeze_copy_list_result">Smrznuto %1$d aplikacija na drugim profilima</string>
+</resources>

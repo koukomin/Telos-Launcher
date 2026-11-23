@@ -38,6 +38,7 @@ class StoreUpdatePolicyTest {
     @Test fun newInstallsEnableAutomaticUpdatesByDefault() {
         assertTrue(de.mm20.launcher2.store.options.GlobalOptions().autoInstall)
         assertTrue(de.mm20.launcher2.store.options.GlobalOptions().parallelUpdates)
+        assertTrue(de.mm20.launcher2.store.options.GlobalOptions().updateFrozenApps)
         val saved = kotlinx.serialization.json.Json.decodeFromString(
             de.mm20.launcher2.store.options.GlobalOptions.serializer(), """{"autoInstall":false}""",
         )

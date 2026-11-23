@@ -579,6 +579,19 @@ private fun StoreCommandHud(
     status: String? = null,
 ) {
     val actions = buildList {
+        if (updateCount > 0) {
+            add(
+                de.mm20.launcher2.ui.component.TelosHudAction(
+                    id = "update-all",
+                    icon = BaseR.drawable.ic_glyph_sync,
+                    label = stringResource(I18nR.string.hc_update_all_count, updateCount),
+                    selected = true,
+                    badge = "$updateCount",
+                    accent = TelosCyber.NeonOrange,
+                    onClick = onUpdateAll,
+                )
+            )
+        }
         filters.forEach { f ->
             add(
                 de.mm20.launcher2.ui.component.TelosHudAction(
@@ -605,19 +618,6 @@ private fun StoreCommandHud(
                         else -> TelosCyber.NeonCyan
                     },
                     onClick = { onFilter(f) },
-                )
-            )
-        }
-        if (updateCount > 0) {
-            add(
-                de.mm20.launcher2.ui.component.TelosHudAction(
-                    id = "update-all",
-                    icon = BaseR.drawable.ic_glyph_sync,
-                    label = stringResource(I18nR.string.hc_update_all_count, updateCount),
-                    selected = true,
-                    badge = "$updateCount",
-                    accent = TelosCyber.NeonOrange,
-                    onClick = onUpdateAll,
                 )
             )
         }

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="apps_profile_clone">Aplicații duale</string>
+    <string name="freeze_copy_list_to_profiles">Copiază lista înghețată pe celelalte profiluri</string>
+    <string name="freeze_copy_list_result">Înghețate %1$d aplicații pe celelalte profiluri</string>
+</resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="apps_profile_clone">Apps dual</string>
+    <string name="freeze_copy_list_to_profiles">Copiar lista congelada para outros perfis</string>
+    <string name="freeze_copy_list_result">Congeladas %1$d apps em outros perfis</string>
+</resources>

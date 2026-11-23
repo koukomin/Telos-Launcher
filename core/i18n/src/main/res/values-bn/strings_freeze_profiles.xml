@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="apps_profile_clone">ডুয়াল অ্যাপ</string>
+    <string name="freeze_copy_list_to_profiles">জমে থাকা তালিকা অন্য প্রোফাইলে কপি করুন</string>
+    <string name="freeze_copy_list_result">অন্য প্রোফাইলে %1$d অ্যাপ ফ্রিজ হয়েছে</string>
+</resources>

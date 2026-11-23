@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="apps_profile_clone">डुअल ऐप्स</string>
+    <string name="freeze_copy_list_to_profiles">जमी सूची अन्य प्रोफ़ाइल पर कॉपी करें</string>
+    <string name="freeze_copy_list_result">अन्य प्रोफ़ाइल पर %1$d ऐप फ्रीज़ किए</string>
+</resources>

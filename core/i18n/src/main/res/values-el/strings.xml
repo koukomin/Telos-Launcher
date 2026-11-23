@@ -300,6 +300,7 @@
     <string name="icon_picker_suggestions">Προτάσεις</string>
     <string name="apps_profile_main">Προσωπικό</string>
     <string name="apps_profile_work">Εργασίας</string>
+    <string name="apps_profile_clone">Διπλές εφαρμογές</string>
     <string name="favorites">Αγαπημένα</string>
     <string name="favorites_empty_tag">Δεν υπάρχουν στοιχεία με αυτήν την ετικέτα</string>
     <string name="frequently_used_show_in_favorites">Εμφάνιση στα αγαπημένα</string>

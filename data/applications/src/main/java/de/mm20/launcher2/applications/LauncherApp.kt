@@ -121,9 +121,10 @@ internal data class LauncherApp(
                     }
                 } ?: return null
 
-            if (!isMainProfile) {
-                icon = context.packageManager.getUserBadgedIcon(icon, user)
-            }
+            // Work / Dual / Private copies use the same AdaptiveIconDrawable (and icon-pack
+            // mask) as Personal. Profile identity is the briefcase / lock / person badge,
+            // not PackageManager.getUserBadgedIcon, which flattens adaptive icons to a
+            // bitmap and drops circular packs.
             // === TELOS_PENDING_REVIEW_END: dual_apps_and_multi_user_fix ===
 
             if (icon is AdaptiveIconDrawable) {

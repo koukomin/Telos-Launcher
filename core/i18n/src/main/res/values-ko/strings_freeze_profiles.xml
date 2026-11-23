@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="apps_profile_clone">듀얼 앱</string>
+    <string name="freeze_copy_list_to_profiles">동결 목록을 다른 프로필에 복사</string>
+    <string name="freeze_copy_list_result">다른 프로필에서 앱 %1$d개를 동결했습니다</string>
+</resources>

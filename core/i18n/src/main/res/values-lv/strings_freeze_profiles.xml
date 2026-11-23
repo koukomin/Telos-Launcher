@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="apps_profile_clone">Dubultās lietotnes</string>
+    <string name="freeze_copy_list_to_profiles">Kopēt sasaldēto sarakstu uz citiem profiliem</string>
+    <string name="freeze_copy_list_result">Sasaldētas %1$d lietotnes citos profilos</string>
+</resources>

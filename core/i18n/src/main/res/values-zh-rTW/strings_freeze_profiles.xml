@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="apps_profile_clone">雙開應用程式</string>
+    <string name="freeze_copy_list_to_profiles">將凍結清單複製到其他設定檔</string>
+    <string name="freeze_copy_list_result">已在其他設定檔凍結 %1$d 個應用程式</string>
+</resources>

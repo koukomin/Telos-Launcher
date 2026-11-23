@@ -26,4 +26,28 @@ class StoreUpdateOrderTest {
             listOf(launcher, other).sortedWith(storeBulkUpdateOrder(launcher.packageName)).map { it.id },
         )
     }
+
+    @Test
+    fun pendingUpdateTapsAccumulateWithoutDroppingTheFirst() {
+        val first = StoreItem(
+            id = "one",
+            packageName = "org.example.one",
+            displayName = "One",
+            source = AppSource.DirectApk("https://example.org/one.apk"),
+        )
+        val second = StoreItem(
+            id = "two",
+            packageName = "org.example.two",
+            displayName = "Two",
+            source = AppSource.DirectApk("https://example.org/two.apk"),
+        )
+        assertEquals(
+            listOf("one", "two"),
+            mergePendingStoreUpdates(listOf(first), listOf(second)).map { it.id },
+        )
+        assertEquals(
+            listOf("one"),
+            mergePendingStoreUpdates(listOf(first), listOf(first)).map { it.id },
+        )
+    }
 }
