@@ -1006,6 +1006,21 @@
             android:excludeFromRecents="true"
             android:exported="false"
             android:theme="@style/LauncherTheme" />
+
+        <activity
+            android:name=".fit.FitHealthRationaleActivity"
+            android:exported="true"
+            android:excludeFromRecents="true"
+            android:theme="@style/LauncherTheme"
+            android:label="@string/fit_title">
+            <intent-filter>
+                <action android:name="androidx.health.ACTION_SHOW_PERMISSIONS_RATIONALE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW_PERMISSION_USAGE" />
+                <category android:name="android.intent.category.HEALTH_PERMISSIONS" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

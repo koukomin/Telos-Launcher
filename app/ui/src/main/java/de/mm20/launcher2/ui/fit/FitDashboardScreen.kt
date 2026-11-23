@@ -21,10 +21,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.health.connect.client.HealthConnectClient
-import androidx.health.connect.client.records.StepsRecord
-import androidx.health.connect.client.request.AggregateRequest
-import androidx.health.connect.client.time.TimeRangeFilter
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.health.connect.client.PermissionController
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -45,13 +43,12 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
-import java.time.Instant
-import java.time.temporal.ChronoUnit
+
 
 @Serializable
 data object FitDashboardRoute : NavKey
 
-enum class FitTab { Dashboard, Nutrition }
+enum class FitTab { Dashboard, Nutrition, Sources }
 
 data class LoggedMeal(
     val name: String,
@@ -95,6 +92,13 @@ class FitViewModel : ViewModel() {
     private val _healthConnectSynced = MutableStateFlow(false)
     val healthConnectSynced: StateFlow<Boolean> = _healthConnectSynced.asStateFlow()
 
+    private val _calories = MutableStateFlow<Long?>(null)
+    val calories: StateFlow<Long?> = _calories.asStateFlow()
+    private val _distanceKm = MutableStateFlow<Double?>(null)
+    val distanceKm: StateFlow<Double?> = _distanceKm.asStateFlow()
+    private val _needsHealthPermission = MutableStateFlow(false)
+    val needsHealthPermission: StateFlow<Boolean> = _needsHealthPermission.asStateFlow()
+
     fun addWater() {
         _waterIntake.value += 250
     }
@@ -106,37 +110,32 @@ class FitViewModel : ViewModel() {
     fun loadHealthConnectData(context: Context) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val sdkStatus = HealthConnectClient.getSdkStatus(context)
-                if (sdkStatus == HealthConnectClient.SDK_AVAILABLE) {
-                    _isHealthConnectAvailable.value = true
-                    val client = HealthConnectClient.getOrCreate(context)
-                    val startTime = Instant.now().truncatedTo(ChronoUnit.DAYS)
-                    val endTime = Instant.now()
-                    val stepsResponse = client.aggregate(
-                        AggregateRequest(
-                            metrics = setOf(StepsRecord.COUNT_TOTAL),
-                            timeRangeFilter = TimeRangeFilter.between(startTime, endTime)
-                        )
-                    )
-                    val totalSteps = stepsResponse[StepsRecord.COUNT_TOTAL]
-                    withContext(Dispatchers.Main) {
-                        if (totalSteps != null) {
-                            _steps.value = totalSteps.toInt()
-                            _healthConnectSynced.value = true
-                        } else {
-                            _healthConnectSynced.value = false
-                        }
-                    }
-                } else {
-                    withContext(Dispatchers.Main) {
-                        _isHealthConnectAvailable.value = false
-                        _healthConnectSynced.value = false
-                    }
+                val available = FitHealthHub.sdkAvailable(context)
+                _isHealthConnectAvailable.value = available
+                if (!available) {
+                    _healthConnectSynced.value = false
+                    _needsHealthPermission.value = false
+                    return@launch
+                }
+                val granted = FitHealthHub.grantedPermissions(context)
+                val missing = FitHealthHub.readPermissions.any { it !in granted }
+                _needsHealthPermission.value = missing
+                if (missing) {
+                    _healthConnectSynced.value = false
+                    return@launch
+                }
+                val day = FitHealthHub.readToday(context)
+                withContext(Dispatchers.Main) {
+                    day.steps?.let { _steps.value = it.toInt() }
+                    day.heartRateBpm?.let { _heartRate.value = it.toInt() }
+                    day.sleepHours?.let { _sleepHours.value = it }
+                    day.weightKg?.let { _weight.value = it.toFloat() }
+                    _calories.value = day.caloriesKcal
+                    _distanceKm.value = day.distanceMeters?.div(1000.0)
+                    _healthConnectSynced.value = day.steps != null || day.caloriesKcal != null
                 }
             } catch (_: Exception) {
-                withContext(Dispatchers.Main) {
-                    _healthConnectSynced.value = false
-                }
+                _healthConnectSynced.value = false
             }
         }
     }
@@ -161,6 +160,12 @@ fun FitDashboardScreen() {
     val meals by viewModel.loggedMeals.collectAsStateWithLifecycle()
     val isHealthConnectAvailable by viewModel.isHealthConnectAvailable.collectAsStateWithLifecycle()
     val healthConnectSynced by viewModel.healthConnectSynced.collectAsStateWithLifecycle()
+    val calories by viewModel.calories.collectAsStateWithLifecycle()
+    val distanceKm by viewModel.distanceKm.collectAsStateWithLifecycle()
+    val needsHealthPermission by viewModel.needsHealthPermission.collectAsStateWithLifecycle()
+    val permissionLauncher = rememberLauncherForActivityResult(
+        PermissionController.createRequestPermissionResultContract()
+    ) { viewModel.loadHealthConnectData(context) }
 
     var showFoodSearch by remember { mutableStateOf(false) }
 
@@ -228,9 +233,26 @@ fun FitDashboardScreen() {
                         onClick = { viewModel.selectedTab.value = FitTab.Nutrition },
                         accentColor = neonCyan
                     )
+                    TelosTechPill(
+                        text = stringResource(I18nR.string.fit_sources_tab),
+                        isSelected = selectedTab == FitTab.Sources,
+                        onClick = { viewModel.selectedTab.value = FitTab.Sources },
+                        accentColor = neonOrange
+                    )
                 }
 
-                if (selectedTab == FitTab.Dashboard) {
+                if (selectedTab == FitTab.Sources) {
+                    FitSourcesPane(
+                        healthConnectAvailable = isHealthConnectAvailable,
+                        healthConnectSynced = healthConnectSynced,
+                        needsPermission = needsHealthPermission,
+                        onRequestHealthConnect = {
+                            permissionLauncher.launch(FitHealthHub.readPermissions)
+                        },
+                        onOpenHealthConnect = { FitHealthHub.openHealthConnectSettings(context) },
+                        onOpenVendor = { pkg -> FitHealthHub.openApp(context, pkg) },
+                    )
+                } else if (selectedTab == FitTab.Dashboard) {
                     LazyColumn(
                         modifier = Modifier
                             .fillMaxSize()
@@ -271,8 +293,16 @@ fun FitDashboardScreen() {
                                             size = 110.dp
                                         )
                                         Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                                            MetricRow(icon = "🔥", label = "Calories", value = "482 kcal")
-                                            MetricRow(icon = "📍", label = "Distance", value = "5.8 km")
+                                            MetricRow(
+                                                icon = "🔥",
+                                                label = "Calories",
+                                                value = calories?.let { "$it kcal" } ?: "—",
+                                            )
+                                            MetricRow(
+                                                icon = "📍",
+                                                label = "Distance",
+                                                value = distanceKm?.let { "%.1f km".format(it) } ?: "—",
+                                            )
                                             MetricRow(icon = "⏱️", label = "Active Time", value = "54 min")
                                         }
                                     }
@@ -454,6 +484,78 @@ fun FitDashboardScreen() {
                 showFoodSearch = false
             }
         )
+    }
+}
+
+@Composable
+private fun FitSourcesPane(
+    healthConnectAvailable: Boolean,
+    healthConnectSynced: Boolean,
+    needsPermission: Boolean,
+    onRequestHealthConnect: () -> Unit,
+    onOpenHealthConnect: () -> Unit,
+    onOpenVendor: (String) -> Unit,
+) {
+    val context = LocalContext.current
+    val neonCyan = Color(0xFF00F0FF)
+    LazyColumn(
+        modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp),
+    ) {
+        item {
+            Text(
+                stringResource(I18nR.string.fit_sources_intro),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+        }
+        items(FitHealthHub.vendors, key = { it.packageName }) { vendor ->
+            val installed = FitHealthHub.isInstalled(context, vendor.packageName)
+            val title = stringResource(
+                when (vendor.id) {
+                    FitHealthSourceId.HealthConnect -> I18nR.string.fit_source_health_connect
+                    FitHealthSourceId.GoogleFit -> I18nR.string.fit_source_google_fit
+                    FitHealthSourceId.Garmin -> I18nR.string.fit_source_garmin
+                    FitHealthSourceId.Samsung -> I18nR.string.fit_source_samsung
+                    FitHealthSourceId.Huawei -> I18nR.string.fit_source_huawei
+                }
+            )
+            val summary = when {
+                vendor.id == FitHealthSourceId.HealthConnect && healthConnectSynced ->
+                    stringResource(I18nR.string.fit_status_synced)
+                vendor.id == FitHealthSourceId.HealthConnect && needsPermission ->
+                    stringResource(I18nR.string.fit_source_grant)
+                vendor.id == FitHealthSourceId.HealthConnect && healthConnectAvailable ->
+                    stringResource(I18nR.string.fit_status_partial)
+                installed -> stringResource(I18nR.string.fit_source_installed_bridge)
+                else -> stringResource(I18nR.string.fit_source_not_installed)
+            }
+            Surface(
+                modifier = Modifier.fillMaxWidth().telosTechCard(borderColor = neonCyan),
+                shape = RoundedCornerShape(16.dp),
+            ) {
+                Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Text(title, fontWeight = FontWeight.Bold)
+                    Text(summary, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        if (vendor.id == FitHealthSourceId.HealthConnect) {
+                            FilledTonalButton(onClick = onRequestHealthConnect) {
+                                Text(stringResource(I18nR.string.fit_source_connect))
+                            }
+                            if (healthConnectAvailable) {
+                                OutlinedButton(onClick = onOpenHealthConnect) {
+                                    Text(stringResource(I18nR.string.fit_source_manage))
+                                }
+                            }
+                        } else if (installed) {
+                            FilledTonalButton(onClick = { onOpenVendor(vendor.packageName) }) {
+                                Text(stringResource(I18nR.string.fit_source_open_app))
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 
