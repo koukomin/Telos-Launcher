@@ -28,12 +28,12 @@ class TelosPackageInstaller(
         return true
     }
 
-    override suspend fun canInstallSilently(): Boolean = when (options.global.value.installer) {
-        "shizuku" -> shizuku.isAvailable() && shizuku.hasPermission()
-        "root" -> root.isAvailable() && root.hasPermission()
-        "session" -> isDeviceOwner()
-        else -> false
-    }
+    override suspend fun canInstallSilently(): Boolean = StoreInstallPolicy.canInstallSilently(
+        selected = options.global.value.installer,
+        shizukuReady = shizuku.isAvailable() && shizuku.hasPermission(),
+        rootReady = root.isAvailable() && root.hasPermission(),
+        deviceOwner = isDeviceOwner(),
+    )
 
     override fun externalInstallers(): List<de.mm20.launcher2.store.installer.InstallerChoice> =
         externalInstallerActivities(context).map { info ->
@@ -97,9 +97,17 @@ class TelosPackageInstaller(
         if (archive?.packageName != packageName) return failed(IllegalArgumentException("APK package does not match the selected app"))
         val selected = options.global.value.installer
         val selectedBackend = when (selected) { "shizuku" -> shizuku; "root" -> root; else -> null }
-        for (backend in listOfNotNull(selectedBackend)) {
-            if (!backend.isAvailable() || !backend.requestPermission())
-                return failed(IllegalStateException("$selected is not available or authorized"))
+        val shizukuReady = shizuku.isAvailable() && shizuku.hasPermission()
+        val rootReady = root.isAvailable() && root.hasPermission()
+        val privileged = StoreInstallPolicy.backends(selected, shizukuReady, rootReady).mapNotNull { id ->
+            when (id) {
+                "shizuku" -> shizuku
+                "root" -> root
+                else -> null
+            }
+        }.ifEmpty { listOfNotNull(selectedBackend) }
+        for (backend in privileged) {
+            if (!backend.isAvailable() || !backend.requestPermission()) continue
             var result: BackendInstallResult = BackendInstallResult.Failed("Install did not start")
             var restored = true
             var lease: String? = null
@@ -140,6 +148,9 @@ class TelosPackageInstaller(
         var lease: String? = null
         try {
             val frozen = freezeManager.isFrozen(packageName)
+            if (frozen) {
+                runCatching { freezeManager.unfreeze(packageName, fromUser = false) }
+            }
             val restorationBackend = if (frozen) freezeBackend()
                 ?: return InstallResult.Failed(context.getString(de.mm20.launcher2.i18n.R.string.freeze_no_backend_available))
                 else "DeviceOwner"

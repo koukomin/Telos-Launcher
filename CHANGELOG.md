@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.45.78
+
+- Store uses Shizuku/root for silent updates when they are authorized, even if the installer setting is Session. Frozen or disabled apps (for example Nova Video Player) are enabled before install. The extra confirmation is skipped when silent install is possible.
+
 ## 1.45.77
 
 - App Ops reads ColorOS / Android 16+ `dumpsys appops` (`AppOps Service state:` and Uid Op State) and skips restriction history.

@@ -194,6 +194,11 @@ Use the Store menu to import an Obtainium JSON export, a single app configuratio
 Automatic updates are enabled for new Store configurations and newly discovered
 non-Play apps follow that setting. Turn off automatic installation in Store
 settings to stop all automatic installs, or disable it for individual apps.
+
+When Shizuku or root is authorized, Store uses that installer even if the preference is still
+**Session**. Updates then skip the extra confirmation dialog and do not need the system Package
+Installer prompt. Frozen or disabled apps are thawed before the APK is written. Session remains
+the fallback when the privileged path fails.
 Existing saved settings are preserved. Play-managed installs are excluded from
 automatic installation even if a separate source is tracked. Wi-Fi, battery and
 background check settings still apply. Android confirmation is required with the

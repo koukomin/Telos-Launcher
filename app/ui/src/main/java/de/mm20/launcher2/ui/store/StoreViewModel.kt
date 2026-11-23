@@ -336,12 +336,16 @@ class StoreViewModel : ViewModel(), KoinComponent {
 
     private fun requestUpdates(targets: List<StoreItem>) {
         if (targets.isEmpty()) return
-        if (targets.any {
+        viewModelScope.launch {
+            val silent = runCatching { appInstaller.canInstallSilently() }.getOrDefault(false)
+            val needsConsent = !silent && targets.any {
                 !it.isTelosLauncher(context.packageName) &&
                     !(options.item(it.id).autoUpdate ?: global.value.autoInstall)
-            }) {
-            pendingUpdates.value = mergePendingStoreUpdates(pendingUpdates.value, targets)
-        } else performUpdates(targets)
+            }
+            if (needsConsent) {
+                pendingUpdates.value = mergePendingStoreUpdates(pendingUpdates.value, targets)
+            } else performUpdates(targets)
+        }
     }
 
     fun confirmUpdates(automatic: Boolean) {

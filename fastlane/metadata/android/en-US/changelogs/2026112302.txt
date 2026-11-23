@@ -1,0 +1,1 @@
+Shizuku updates without an extra prompt. Frozen apps such as Nova Video Player are enabled before install.
