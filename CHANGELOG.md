@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.45.79
+
+- Store: Shizuku/root silent updates, frozen apps stay frozen (`--skip-enable`), Network blocks then restores per-app rules during updates.
+- Fit: Health Connect hub for Google Fit/Health, Garmin Connect, Samsung Health and Huawei Health.
+- Keyboard: above the nav bar; accent color, size, key height and fonts; real swipe.
+- Virtual apps keep Rondo icons with an icon pack; labels drop a Telos prefix; search still matches “telos”.
+- Aether top and bottom bars use opaque `surfaceContainer`.
+
 ## 1.45.78
 
 - Store uses Shizuku/root for silent updates when they are authorized, even if the installer setting is Session. Frozen or disabled apps (for example Nova Video Player) are enabled before install. The extra confirmation is skipped when silent install is possible.
