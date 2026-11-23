@@ -7,7 +7,10 @@ import org.junit.Test
 class AppOpsCommandsTest {
     @Test
     fun `operation states use a single scoped dumpsys command`() {
-        assertEquals(listOf("/system/bin/dumpsys", "appops", "--op", "CAMERA"), AppOpsCommands.getOpStates("CAMERA"))
+        assertEquals(
+            listOf("/system/bin/dumpsys", "appops", "--no-restrictions", "--op", "CAMERA"),
+            AppOpsCommands.getOpStates("CAMERA"),
+        )
         listOf("", "CAMERA;id", "CAMERA extra", "../bad", "X".repeat(129)).forEach { op ->
             assertThrows(IllegalArgumentException::class.java) { AppOpsCommands.getOpStates(op) }
         }
@@ -38,6 +41,20 @@ class AppOpsCommandsTest {
         assertThrows(IllegalArgumentException::class.java) {
             AppOpsCommands.getUidOps(-1)
         }
+    }
+
+    @Test
+    fun `uid state dumps skip restriction history`() {
+        assertEquals(
+            listOf(
+                "/system/bin/dumpsys",
+                "appops",
+                "--no-restrictions",
+                "--package",
+                "com.facebook.katana",
+            ),
+            AppOpsCommands.getUidStates("com.facebook.katana"),
+        )
     }
 
     @Test

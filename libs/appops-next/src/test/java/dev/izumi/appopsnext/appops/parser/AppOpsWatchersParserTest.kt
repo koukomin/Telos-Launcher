@@ -31,7 +31,7 @@ class AppOpsWatchersParserTest {
     @Test fun `truncated callback and unsupported output remain unknown`() {
         val truncated = AppOpsWatchersParser.parse(dump().substringBeforeLast("NotedCallback"))
         assertEquals(WatchRegistration.UNKNOWN, truncated.registration(operations, kinds, 2000))
-        for (output in listOf("", "Unknown option: --watchers", "Permission Denial", "Current AppOps Service state:\n")) {
+        for (output in listOf("", "Unknown option: --watchers", "Permission Denial", "Current AppOps Service state:\n", "AppOps Service state:\n")) {
             assertEquals(WatchRegistration.UNKNOWN,
                 AppOpsWatchersParser.parse(output).registration(operations, kinds, 2000))
         }
@@ -93,6 +93,23 @@ class AppOpsWatchersParserTest {
         val snapshot = AppOpsWatchersParser.parse(longDump)
         assertEquals(WatchRegistration.CONFIRMED, snapshot.registration(operations, kinds, 2000))
         assertEquals(3, snapshot.accessWatchers.size)
+    }
+
+    @Test fun `ColorOS service header still recognizes mode watchers`() {
+        val snapshot = AppOpsWatchersParser.parse(
+            """
+            AppOps Service state:
+              Settings:
+                top_state_settle_time=+5s0ms
+
+            AppOps Watchers
+              Op mode watchers:
+                Op CAMERA:
+                  #0: ModeCallback{abc watchinguid=-1 flags=0x1 op=CAMERA from uid=u0a141 pid=4790}
+            """.trimIndent(),
+        )
+        assertTrue(snapshot.recognized)
+        assertEquals(1, snapshot.modeWatchers.size)
     }
 
     @Test fun `uid parser rejects overflow and invalid app id`() {

@@ -3,7 +3,13 @@ package dev.izumi.appopsnext.appops.command
 object AppOpsCommands {
     fun getOpStates(operationName: String): List<String> {
         validateOperationName(operationName)
-        return listOf(DUMPSYS_BINARY, APP_OPS_SERVICE, OPERATION_OPTION, operationName)
+        return listOf(
+            DUMPSYS_BINARY,
+            APP_OPS_SERVICE,
+            NO_RESTRICTIONS_OPTION,
+            OPERATION_OPTION,
+            operationName,
+        )
     }
 
     /** Ask the service to omit access history instead of truncating a full dump. */
@@ -60,6 +66,7 @@ object AppOpsCommands {
         return listOf(
             DUMPSYS_BINARY,
             APP_OPS_SERVICE,
+            NO_RESTRICTIONS_OPTION,
             PACKAGE_OPTION,
             packageName,
         )
@@ -175,6 +182,8 @@ object AppOpsCommands {
     private const val SET_COMMAND = "set"
     private const val UID_OPTION = "--uid"
     private const val PACKAGE_OPTION = "--package"
+    /** ColorOS/Android 16+ otherwise prepends tens of thousands of restriction lines. */
+    private const val NO_RESTRICTIONS_OPTION = "--no-restrictions"
     private const val HISTORY_OPTION = "--history"
     private const val INCLUDE_DISCRETE_OPTION = "--include-discrete"
     private const val NO_DISCRETE_LIMIT = "0"
