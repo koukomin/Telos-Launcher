@@ -117,7 +117,8 @@ fun ActionTopBar(
         },
         colors =
             TopAppBarDefaults.topAppBarColors(
-                containerColor = MaterialTheme.colorScheme.surface,
+                containerColor = MaterialTheme.colorScheme.surfaceContainer.copy(alpha = 1f),
+                scrolledContainerColor = MaterialTheme.colorScheme.surfaceContainer.copy(alpha = 1f),
             ),
     )
 }

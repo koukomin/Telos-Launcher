@@ -185,7 +185,7 @@ private fun RenderBottomMenu(
         modifier =
             Modifier
                 .fillMaxWidth()
-                .background(MaterialTheme.colorScheme.background)
+                .background(MaterialTheme.colorScheme.surfaceContainer.copy(alpha = 1f))
                 .windowInsetsPadding(windowInsets)
                 .consumeWindowInsets(windowInsets)
                 .height(AppBottomBarHeight),
@@ -195,7 +195,7 @@ private fun RenderBottomMenu(
         )
         NavigationBar(
             modifier = HorzPadding,
-            containerColor = MaterialTheme.colorScheme.background,
+            containerColor = MaterialTheme.colorScheme.surfaceContainer.copy(alpha = 1f),
             tonalElevation = Size0dp,
         ) {
             // Render in the user's saved order — built-ins, favorites and pinned groups interleaved.

@@ -61,7 +61,7 @@ fun AppNavigationRail(
     val reselectCoordinator = LocalTabReselectCoordinator.current
 
     NavigationRail(
-        containerColor = MaterialTheme.colorScheme.background,
+        containerColor = MaterialTheme.colorScheme.surfaceContainer.copy(alpha = 1f),
         header = {
             // Same affordance as the phone top bars: the account avatar opens the drawer.
             LoggedInUserPictureDrawer(accountViewModel, nav::openDrawer)

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="fit_sources_tab">Источники</string>
+    <string name="fit_sources_intro">Fit читает шаги, пульс, сон, вес, калории и дистанцию из Health Connect. Google Fit, Garmin Connect, Samsung Health и Huawei Health пишут туда; откройте эти приложения, включите Health Connect и дайте Fit доступ.</string>
+    <string name="fit_source_health_connect">Health Connect</string>
+    <string name="fit_source_google_fit">Google Fit / Google Health</string>
+    <string name="fit_source_garmin">Garmin Connect</string>
+    <string name="fit_source_samsung">Samsung Health</string>
+    <string name="fit_source_huawei">Huawei Health</string>
+    <string name="fit_source_connect">Подключить</string>
+    <string name="fit_source_manage">Управление</string>
+    <string name="fit_source_open_app">Открыть приложение</string>
+    <string name="fit_source_grant">Разрешить доступ Health Connect</string>
+    <string name="fit_source_installed_bridge">Установлено. Включите Health Connect в этом приложении, чтобы Fit читал данные.</string>
+    <string name="fit_source_not_installed">Не установлено на этом устройстве</string>
+</resources>

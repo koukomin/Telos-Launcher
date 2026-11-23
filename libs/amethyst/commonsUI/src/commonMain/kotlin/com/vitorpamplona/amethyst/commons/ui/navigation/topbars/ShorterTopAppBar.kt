@@ -23,6 +23,7 @@ package com.vitorpamplona.amethyst.commons.ui.navigation.topbars
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.TopAppBarDefaults
@@ -44,7 +45,11 @@ fun ShorterTopAppBar(
     actions: @Composable RowScope.() -> Unit = {},
     expandedHeight: Dp = TopBarSize,
     windowInsets: WindowInsets = TopAppBarDefaults.windowInsets,
-    colors: TopAppBarColors = TopAppBarDefaults.topAppBarColors(),
+    colors: TopAppBarColors =
+        TopAppBarDefaults.topAppBarColors(
+            containerColor = MaterialTheme.colorScheme.surfaceContainer.copy(alpha = 1f),
+            scrolledContainerColor = MaterialTheme.colorScheme.surfaceContainer.copy(alpha = 1f),
+        ),
     scrollBehavior: TopAppBarScrollBehavior? = null,
 ) = TopAppBar(
     { LocalHostChrome.current?.heading?.invoke(title) ?: title() },

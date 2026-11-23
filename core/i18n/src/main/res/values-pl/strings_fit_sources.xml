@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="fit_sources_tab">Źródła</string>
+    <string name="fit_sources_intro">Fit odczytuje kroki, tętno, sen, wagę, kalorie i dystans z Health Connect. Google Fit, Garmin Connect, Samsung Health i Huawei Health synchronizują tam dane; otwórz te aplikacje, włącz Health Connect i przyznaj dostęp Fit.</string>
+    <string name="fit_source_health_connect">Health Connect</string>
+    <string name="fit_source_google_fit">Google Fit / Google Health</string>
+    <string name="fit_source_garmin">Garmin Connect</string>
+    <string name="fit_source_samsung">Samsung Health</string>
+    <string name="fit_source_huawei">Huawei Health</string>
+    <string name="fit_source_connect">Połącz</string>
+    <string name="fit_source_manage">Zarządzaj</string>
+    <string name="fit_source_open_app">Otwórz aplikację</string>
+    <string name="fit_source_grant">Udziel dostępu do Health Connect</string>
+    <string name="fit_source_installed_bridge">Zainstalowana. Włącz Health Connect w tej aplikacji, aby Fit mógł odczytać dane.</string>
+    <string name="fit_source_not_installed">Nie zainstalowana na tym urządzeniu</string>
+</resources>
