@@ -32,6 +32,9 @@ import com.vitorpamplona.amethyst.commons.actions.SearchActions
 import com.vitorpamplona.amethyst.commons.actions.ZapActions
 import com.vitorpamplona.amethyst.commons.defaults.DefaultNIP65RelaySet
 import com.vitorpamplona.amethyst.commons.home.dal.HomeNewThreadFeedFilter
+import com.vitorpamplona.amethyst.commons.model.cache.EventCache
+import com.vitorpamplona.amethyst.commons.model.cache.observeEvents
+import com.vitorpamplona.amethyst.commons.model.cache.observeNotes
 import com.vitorpamplona.amethyst.commons.model.payments.PaymentSource
 import com.vitorpamplona.amethyst.commons.relayClient.subscriptions.SubPurpose
 import com.vitorpamplona.amethyst.commons.relayClient.subscriptions.taggedAs
