@@ -86,7 +86,6 @@ import kotlinx.collections.immutable.ImmutableMap
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import com.vitorpamplona.amethyst.commons.ui.navigation.bottombars.AppBottomBar as AppBottomBarImpl
 import com.vitorpamplona.amethyst.favorites.rememberManifestIconModel as AppRememberManifestIconModel
 import com.vitorpamplona.amethyst.favorites.rememberNappletIconModel as AppRememberNappletIconModel
 import com.vitorpamplona.amethyst.favorites.rememberWebAppIconModel as AppRememberWebAppIconModel
@@ -189,14 +188,6 @@ object AndroidAppPlatform : AppPlatform {
         val context = LocalContext.current
         return remember(context) { context.getLangPreferenceDropdownEntries() }
     }
-
-    @Composable
-    override fun AppBottomBar(
-        selectedRoute: Route?,
-        nav: INav,
-        accountViewModel: AccountViewModel,
-        onClick: (Route) -> Unit,
-    ) = AppBottomBarImpl(selectedRoute, nav, accountViewModel, onClick)
 
     @Composable
     override fun AroundMeLocationLabel() = AndroidAroundMeLocationLabel()
