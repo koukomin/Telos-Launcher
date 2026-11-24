@@ -1,6 +1,7 @@
 package de.mm20.launcher2.ui.launcher.scaffold
 
 import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -14,6 +15,7 @@ enum class ScaffoldAnimation {
     ZoomIn,
 }
 
+@Immutable
 internal data class ScaffoldGesture(
     val component: ScaffoldComponent,
     val animation: ScaffoldAnimation,
@@ -24,6 +26,7 @@ enum class SearchBarPosition {
     Bottom,
 }
 
+@Immutable
 internal data class ScaffoldConfiguration(
     /**
      * The main component

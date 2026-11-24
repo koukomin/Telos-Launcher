@@ -41,6 +41,7 @@ import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import androidx.compose.runtime.Immutable
 
 /** Per-item state of an in-progress/finished [StoreViewModel.onAppActionClicked] call. */
 enum class StoreInstallUiState {
@@ -60,6 +61,7 @@ enum class StoreInstallUiState {
 enum class StoreFilter { All, Updates, Installed, NotInstalled, TrackOnly }
 
 /** An app of the list together with its settings, ready to show. */
+@Immutable
 data class StoreRow(
     val item: StoreItem,
     val options: ItemOptions,
@@ -68,6 +70,7 @@ data class StoreRow(
 )
 
 /** An installed app that could be added to the Store. */
+@Immutable
 data class InstalledCandidate(val packageName: String, val label: String)
 
 /**
