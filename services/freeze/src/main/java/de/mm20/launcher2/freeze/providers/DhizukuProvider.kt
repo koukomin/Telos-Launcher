@@ -1,4 +1,3 @@
-// === TELOS_PENDING_REVIEW_START: thor_freezer_features ===
 package de.mm20.launcher2.freeze.providers
 
 import android.app.admin.DevicePolicyManager
@@ -137,4 +136,3 @@ internal class DhizukuProvider(private val context: Context) : PrivilegedAccessP
 
     override suspend fun clearCache(packageName: String, userId: Int): Boolean = false
 }
-// === TELOS_PENDING_REVIEW_END: thor_freezer_features ===

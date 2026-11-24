@@ -71,11 +71,9 @@ fun TelosTopPanel(
     Box(modifier.fillMaxWidth().height(36.dp).background(TelosColors.surfaceContainer)) {
         Row(Modifier.fillMaxWidth().height(36.dp).padding(horizontal = 8.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceBetween) {
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                // === TELOS_PENDING_REVIEW_START: telos_de_final_polish ===
                 Box(Modifier.clickable { DesktopChrome.toggleAppGrid() }.padding(4.dp)) {
                     CandyCyberIcon(CandyIcon.TelosLogo, 22.dp)
                 }
-                // === TELOS_PENDING_REVIEW_END: telos_de_final_polish ===
                 (0 until wm.workspaceCount).forEach { i ->
                     val active = wm.currentWorkspace == i
                     val dots = wm.windows.count { it.workspace == i }
@@ -87,13 +85,11 @@ fun TelosTopPanel(
                     )
                 }
                 Text(wm.windows.find { it.id == wm.focusedId }?.title ?: "Desktop", color = TelosColors.onSurface, fontSize = 12.sp)
-                // === TELOS_PENDING_REVIEW_START: telos_launcher_desktop_ui_parity ===
                 TelosVirtualApps.all.filter { it.domain in TelosVirtualApps.pinnedDefaults }.forEach { app ->
                     Box(Modifier.clickable { onOpenTelos(app.windowTitle) }.padding(horizontal = 2.dp)) {
                         CandyCyberIcon(app.icon, 18.dp)
                     }
                 }
-                // === TELOS_PENDING_REVIEW_END: telos_launcher_desktop_ui_parity ===
             }
             Text(
                 clock.format(DateTimeFormatter.ofPattern("EEE d MMM  HH:mm")),

@@ -4,7 +4,6 @@ import com.telos.desktop.linux.Sys
 import com.telos.desktop.vault.PortableEnvironmentIsolator
 import java.io.File
 
-// === TELOS_PENDING_REVIEW_START: telos_labwc_session_p0p1 ===
 object SessionNetGuard {
     fun allowlistFile(): File {
         val home = PortableEnvironmentIsolator.vaultHome
@@ -94,4 +93,3 @@ object SessionNetGuard {
         return groups.all { it.isEmpty() || (it.length <= 4 && it.all { c -> c in "0123456789abcdefABCDEF" }) }
     }
 }
-// === TELOS_PENDING_REVIEW_END: telos_labwc_session_p0p1 ===

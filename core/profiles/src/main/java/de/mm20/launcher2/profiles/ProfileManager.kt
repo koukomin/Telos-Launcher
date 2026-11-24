@@ -159,14 +159,12 @@ class ProfileManager(
     }
 
     private fun getProfileState(userHandle: UserHandle): Profile.State {
-        // === TELOS_PENDING_REVIEW_START: work_profile_quiet_mode_toggle ===
         val isQuietMode = if (isAtLeastApiLevel(24)) {
             userManager.isQuietModeEnabled(userHandle)
         } else {
             false
         }
         val locked = !userManager.isUserUnlocked(userHandle) || isQuietMode
-        // === TELOS_PENDING_REVIEW_END: work_profile_quiet_mode_toggle ===
         val hidden = if (isAtLeastApiLevel(36) && locked) {
             launcherApps.getLauncherUserInfo(userHandle)
                 ?.getUserConfig()

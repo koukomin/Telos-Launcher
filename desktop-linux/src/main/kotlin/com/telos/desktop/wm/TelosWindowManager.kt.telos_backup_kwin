@@ -35,7 +35,6 @@ class TelosWindowManager {
         private set
     var decoration by mutableStateOf(WindowDecorationTheme())
 
-    // === TELOS_PENDING_REVIEW_START: telos_kde_replacement_suite ===
     var workArea by mutableStateOf(WorkArea.of(1920f, 1080f))
     var currentWorkspace by mutableIntStateOf(0)
     val workspaceCount = 4
@@ -51,7 +50,6 @@ class TelosWindowManager {
         if (w.y + 36f > area.maxY) w.y = (area.maxY - 36f).coerceAtLeast(area.minY)
         w.x = w.x.coerceIn(area.minX - w.width + 80f, area.maxX - 80f)
     }
-    // === TELOS_PENDING_REVIEW_END: telos_kde_replacement_suite ===
 
     fun open(title: String, x: Float = 120f, y: Float = 80f, w: Float = 640f, h: Float = 420f): ManagedWindow {
         val existing = windows.find { it.title == title }
@@ -104,9 +102,7 @@ class TelosWindowManager {
         if (w.maximized) return
         w.x += delta.x
         w.y += delta.y
-        // === TELOS_PENDING_REVIEW_START: telos_kde_replacement_suite ===
         constrainToWorkArea(w)
-        // === TELOS_PENDING_REVIEW_END: telos_kde_replacement_suite ===
         bump(w)
     }
 
@@ -135,10 +131,8 @@ class TelosWindowManager {
             }
             else -> {}
         }
-        // === TELOS_PENDING_REVIEW_START: telos_kde_replacement_suite ===
         y = y.coerceAtLeast(workArea.minY)
         if (y + height > workArea.maxY) height = (workArea.maxY - y).coerceAtLeast(160f)
-        // === TELOS_PENDING_REVIEW_END: telos_kde_replacement_suite ===
         w.x = x
         w.y = y
         w.width = width
@@ -152,7 +146,6 @@ class TelosWindowManager {
         bump(w)
     }
 
-    // === TELOS_PENDING_REVIEW_START: telos_kde_replacement_suite ===
     private fun applySnap(w: ManagedWindow, zone: SnapZone) {
         val a = workArea
         w.snap = zone
@@ -189,7 +182,6 @@ class TelosWindowManager {
             }
         }
     }
-    // === TELOS_PENDING_REVIEW_END: telos_kde_replacement_suite ===
 
     fun toggleShade(id: Long) {
         val w = windows.find { it.id == id } ?: return

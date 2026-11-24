@@ -1,4 +1,3 @@
-// === TELOS_PENDING_REVIEW_START: desktop_wm_klassy_sweet_theming ===
 package de.mm20.launcher2.ui.desktopmode.cursor
 
 import androidx.compose.animation.core.*
@@ -354,4 +353,3 @@ private fun androidx.compose.ui.graphics.drawscope.DrawScope.drawLoadingRingCurs
         style = Stroke(width = 3.dp.toPx(), cap = StrokeCap.Round)
     )
 }
-// === TELOS_PENDING_REVIEW_END: desktop_wm_klassy_sweet_theming ===

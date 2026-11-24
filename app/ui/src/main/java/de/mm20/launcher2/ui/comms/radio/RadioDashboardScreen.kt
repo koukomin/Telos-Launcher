@@ -1,4 +1,3 @@
-// === TELOS_PENDING_REVIEW_START: radio_browser_ktor ===
 package de.mm20.launcher2.ui.comms.radio
 
 import de.mm20.launcher2.ui.component.TelosCyberHeading
@@ -567,4 +566,3 @@ private fun StationRow(
         }
     }
 }
-// === TELOS_PENDING_REVIEW_END: radio_browser_ktor ===

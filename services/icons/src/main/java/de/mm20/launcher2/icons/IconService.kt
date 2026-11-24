@@ -135,7 +135,6 @@ class IconService(
                         }
                     }
 
-                    // === TELOS_PENDING_REVIEW_START: ui_i18n_and_features_batch ===
                     for (fallbackPkg in settings.fallbackIconPacks) {
                         if (fallbackPkg.isNotBlank()) {
                             val pack = iconPackManager.getIconPack(fallbackPkg)
@@ -151,7 +150,6 @@ class IconService(
                             }
                         }
                     }
-                    // === TELOS_PENDING_REVIEW_END: ui_i18n_and_features_batch ===
 
                     providers.add(DynamicClockIconProvider(context, settings.themedIcons))
                     providers.add(FolderIconProvider(context, searchableRepository, this@IconService, settings.themedIcons))

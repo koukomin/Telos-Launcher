@@ -379,7 +379,6 @@ class SearchVM : ViewModel(), KoinComponent {
                 allApps
                     .combine(hiddenItemKeys) { results, hiddenKeys -> results to hiddenKeys }
                     .combine(freezeSettings.hideFromLauncher) { (results, hiddenKeys), hideFrozen -> Triple(results, hiddenKeys, hideFrozen) }
-                    // === TELOS_PENDING_REVIEW_START: ui_i18n_and_features_batch ===
                     .combine(searchUiSettings.moveFrozenAppsToEnd) { (results, hiddenKeys, hideFrozen), moveFrozenToEnd -> 
                         Triple(results, hiddenKeys, Pair(hideFrozen, moveFrozenToEnd)) 
                     }
@@ -415,7 +414,6 @@ class SearchVM : ViewModel(), KoinComponent {
                             privateApps = privateApps.sortedBy { it.isSuspended }
                         }
                         hiddenItems += hiddenPrivateApps
-                        // === TELOS_PENDING_REVIEW_END: ui_i18n_and_features_batch ===
                         previousResults = SearchResults(apps = apps)
 
                         searchActionResults.clear()

@@ -1,4 +1,3 @@
-// === TELOS_PENDING_REVIEW_START: radio_mini_player ===
 package de.mm20.launcher2.ui.comms
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
@@ -167,4 +166,3 @@ fun RadioMiniPlayer(modifier: Modifier = Modifier) {
         }
     }
 }
-// === TELOS_PENDING_REVIEW_END: radio_mini_player ===

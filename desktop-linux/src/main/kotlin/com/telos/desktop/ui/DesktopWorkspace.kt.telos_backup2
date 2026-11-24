@@ -109,11 +109,9 @@ fun DesktopWorkspace(
     BoxWithConstraints(Modifier.fillMaxSize().background(TelosColors.background)) {
         val wpx = with(density) { maxWidth.toPx() }
         val hpx = with(density) { maxHeight.toPx() }
-        // === TELOS_PENDING_REVIEW_START: telos_kde_replacement_suite ===
         LaunchedEffect(wpx, hpx) {
             wm.setScreen(wpx, hpx, WorkArea.DEFAULT_TOP_BAR_PX, WorkArea.DEFAULT_DOCK_PX, true)
         }
-        // === TELOS_PENDING_REVIEW_END: telos_kde_replacement_suite ===
         Box(
             Modifier
                 .fillMaxSize()
@@ -145,9 +143,7 @@ fun DesktopWorkspace(
                 when (win.title) {
                     "Settings" -> LinuxDesktopSettingsPanel(settings, icons, display) { wm.close(win.id); showSettings = false }
                     "Display" -> LinuxDesktopSettingsPanel(settings, icons, display) { wm.close(win.id); showDisplay = false }
-                    // === TELOS_PENDING_REVIEW_START: telos_kde_system_monitor ===
                     "System Monitor" -> TelosSystemMonitorWindow(telemetry, vault)
-                    // === TELOS_PENDING_REVIEW_END: telos_kde_system_monitor ===
                     else -> Text(win.title, color = TelosColors.onSurface, modifier = Modifier.padding(16.dp))
                 }
             }
@@ -181,7 +177,6 @@ fun DesktopWorkspace(
                     })
                 }
             }
-            // === TELOS_PENDING_REVIEW_START: telos_kde_replacement_suite ===
             TelosTopPanel(
                 wm = wm,
                 engine = telemetry,
@@ -204,7 +199,6 @@ fun DesktopWorkspace(
                     }
                 }
             }
-            // === TELOS_PENDING_REVIEW_END: telos_kde_replacement_suite ===
             toast?.let {
                 Text(it, color = TelosColors.primary, modifier = Modifier.align(Alignment.TopCenter).padding(top = 48.dp))
             }
@@ -232,7 +226,6 @@ private fun keyRefresh(refreshKey: Int, content: @Composable () -> Unit) {
     androidx.compose.runtime.key(refreshKey) { content() }
 }
 
-// === TELOS_PENDING_REVIEW_START: telos_kde_replacement_suite ===
 fun handleDesktopKeys(
     ev: androidx.compose.ui.input.key.KeyEvent,
     wm: TelosWindowManager,
@@ -292,4 +285,3 @@ fun handleDesktopKeys(
     }
     return false
 }
-// === TELOS_PENDING_REVIEW_END: telos_kde_replacement_suite ===

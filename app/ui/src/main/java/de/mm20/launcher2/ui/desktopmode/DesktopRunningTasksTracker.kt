@@ -1,4 +1,3 @@
-// === TELOS_PENDING_REVIEW_START: desktop_taskbar_running_apps ===
 package de.mm20.launcher2.ui.desktopmode
 
 import android.app.ActivityManager
@@ -65,4 +64,3 @@ class DesktopRunningTasksTracker(private val context: Context) {
         }
     }
 }
-// === TELOS_PENDING_REVIEW_END: desktop_taskbar_running_apps ===

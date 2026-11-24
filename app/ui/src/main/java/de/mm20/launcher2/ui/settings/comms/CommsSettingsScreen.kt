@@ -1,4 +1,3 @@
-// === TELOS_PENDING_REVIEW_START: comms_settings_engine ===
 package de.mm20.launcher2.ui.settings.comms
 
 import de.mm20.launcher2.ui.component.TelosCyberHeading
@@ -1122,4 +1121,3 @@ fun CommsSettingsScreen() {
         )
     }
 }
-// === TELOS_PENDING_REVIEW_END: comms_settings_engine ===

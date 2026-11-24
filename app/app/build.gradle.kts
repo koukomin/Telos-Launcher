@@ -175,9 +175,7 @@ android {
     }
     buildFeatures {
         buildConfig = true
-        // === TELOS_PENDING_REVIEW_START: sandbox_cloning_and_bridge ===
         aidl = true
-        // === TELOS_PENDING_REVIEW_END: sandbox_cloning_and_bridge ===
     }
 }
 
@@ -254,14 +252,10 @@ dependencies {
     implementation(project(":services:network"))
     implementation(project(":data:comms"))
 
-    // === TELOS_PENDING_REVIEW_START: smart_freeze_dependencies ===
     implementation(libs.shizuku.api)
     implementation(libs.shizuku.provider)
-    // === TELOS_PENDING_REVIEW_END: smart_freeze_dependencies ===
 
-    // === TELOS_PENDING_REVIEW_START: thor_freezer_features ===
     implementation(libs.dhizuku.api)
-    // === TELOS_PENDING_REVIEW_END: thor_freezer_features ===
 
     // Uncomment this if you want annoying notifications in your debug builds
     //debugImplementation(libs.leakcanary)

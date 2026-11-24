@@ -346,7 +346,6 @@ class LauncherApplication : Amethyst(), CoroutineScope, ImageLoaderFactory {
      */
     private suspend fun guardVirtualApps() {
         val settings = get<CommsSettings>()
-        // === TELOS_PENDING_REVIEW_START: tablet_telephony_detection ===
         val hasTelephony = packageManager.hasSystemFeature(PackageManager.FEATURE_TELEPHONY)
         if (!hasTelephony) {
             runCatching {
@@ -356,7 +355,6 @@ class LauncherApplication : Amethyst(), CoroutineScope, ImageLoaderFactory {
                 if ("telos_messages_app" !in current) settings.setVirtualAppEnabled("telos_messages_app", false)
             }
         }
-        // === TELOS_PENDING_REVIEW_END: tablet_telephony_detection ===
         val tripped = runCatching { VirtualAppGuard.collectTripped(this, GUARDED.keys) }.getOrDefault(emptyList())
         for (key in tripped) settings.setVirtualAppEnabled(key, false)
         if (tripped.isNotEmpty()) notifyTripped(tripped)

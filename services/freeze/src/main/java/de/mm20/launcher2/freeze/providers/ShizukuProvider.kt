@@ -92,8 +92,6 @@ internal class ShizukuProvider(private val ownPackage: String) : PrivilegedAcces
         }
     }
 
-    // === TELOS_PENDING_REVIEW_START: multi_user_freeze ===
-    // === TELOS_PENDING_REVIEW_START: thor_freezer_features ===
     override suspend fun setPackagesSuspended(
         packageNames: List<String>,
         suspended: Boolean,
@@ -146,7 +144,6 @@ internal class ShizukuProvider(private val ownPackage: String) : PrivilegedAcces
         ).isSuccess
     }
 
-    // === TELOS_PENDING_REVIEW_END: thor_freezer_features ===
 
     /**
      * Toggles the app's enabled setting. When disabling from adb-backed Shizuku we use
@@ -172,7 +169,6 @@ internal class ShizukuProvider(private val ownPackage: String) : PrivilegedAcces
         }
         return true
     }
-    // === TELOS_PENDING_REVIEW_END: multi_user_freeze ===
 
     @Volatile private var cachedPm: Any? = null
 
@@ -198,7 +194,6 @@ internal class ShizukuProvider(private val ownPackage: String) : PrivilegedAcces
     }
 
     /** @return true if the package ended up in the requested state. */
-    // === TELOS_PENDING_REVIEW_START: multi_user_freeze ===
     private fun setSuspended(pm: Any, packageName: String, suspended: Boolean, userId: Int): Boolean {
         val pkgs = arrayOf(packageName)
         val dialog = if (suspended && isAtLeastApiLevel(30)) runCatching {
@@ -266,5 +261,4 @@ internal class ShizukuProvider(private val ownPackage: String) : PrivilegedAcces
             true
         }.getOrDefault(false)
     }
-    // === TELOS_PENDING_REVIEW_END: multi_user_freeze ===
 }

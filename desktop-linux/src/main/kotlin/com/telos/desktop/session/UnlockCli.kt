@@ -8,7 +8,6 @@ import java.nio.file.Files
 import java.nio.file.attribute.PosixFilePermission
 import kotlin.system.exitProcess
 
-// === TELOS_PENDING_REVIEW_START: telos_labwc_session_p0p1 ===
 object UnlockCli {
     fun run(fromStdin: Boolean = false) {
         System.setProperty("telos.session", "1")
@@ -79,4 +78,3 @@ object LockCli {
         exitProcess(0)
     }
 }
-// === TELOS_PENDING_REVIEW_END: telos_labwc_session_p0p1 ===

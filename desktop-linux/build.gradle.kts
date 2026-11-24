@@ -28,7 +28,6 @@ java {
     targetCompatibility = JavaVersion.VERSION_21
 }
 
-// === TELOS_PENDING_REVIEW_START: telos_window_drag_and_ui_fix ===
 tasks.named<Copy>("processResources") {
     from(rootProject.file("core/i18n/src/main/res")) {
         include("values*/**/*.xml")
@@ -49,7 +48,6 @@ tasks.named<Copy>("processResources") {
         }
     }
 }
-// === TELOS_PENDING_REVIEW_END: telos_window_drag_and_ui_fix ===
 
 dependencies {
     implementation(project(":ui-kmp"))
@@ -58,9 +56,7 @@ dependencies {
     implementation(compose.materialIconsExtended)
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.11.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.11.0")
-    // === TELOS_PENDING_REVIEW_START: telos_elastic_sharded_pqc_vault ===
     implementation("org.bouncycastle:bcprov-jdk18on:1.87")
-    // === TELOS_PENDING_REVIEW_END: telos_elastic_sharded_pqc_vault ===
     implementation(libs.commons.compress)
     implementation(libs.tukaani.xz)
     implementation(libs.zip4j)
@@ -68,7 +64,6 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
 }
 
-// === TELOS_PENDING_REVIEW_START: fix_uberjar_signature ===
 tasks.withType<AbstractArchiveTask>().configureEach {
     isPreserveFileTimestamps = false
     isReproducibleFileOrder = true
@@ -136,7 +131,6 @@ tasks.matching { it.name == "packageUberJarForCurrentOS" }.configureEach {
         sessionDest.resolve("telos-greeter").setExecutable(true)
     }
 }
-// === TELOS_PENDING_REVIEW_END: fix_uberjar_signature ===
 
 compose.desktop {
     application {

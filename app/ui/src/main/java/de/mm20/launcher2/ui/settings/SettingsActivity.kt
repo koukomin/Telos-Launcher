@@ -296,9 +296,7 @@ open class SettingsActivity : BaseActivity() {
                 AppDetailsScreen(it.itemId)
             }
             entry<CommsDashboardRoute> {
-                // === TELOS_PENDING_REVIEW_START: comms_virtual_apps ===
                 CommsDashboardScreen(it.initialTab, it.initialNumber, it.initialBody, it.initialAttachments)
-                // === TELOS_PENDING_REVIEW_END: comms_virtual_apps ===
             }
             entry<de.mm20.launcher2.ui.files.remote.ConnectionsRoute> {
                 de.mm20.launcher2.ui.files.remote.ConnectionsScreen()
@@ -924,9 +922,7 @@ open class SettingsActivity : BaseActivity() {
         }
         return when(routeName) {
             ROUTE_WEATHER_INTEGRATION -> WeatherIntegrationSettingsRoute
-            // === TELOS_PENDING_REVIEW_START: desktop_context_menu_actions ===
             ROUTE_DESKTOP_MODE -> DesktopModeSettingsRoute
-            // === TELOS_PENDING_REVIEW_END: desktop_context_menu_actions ===
             ROUTE_MEDIA_INTEGRATION -> MediaIntegrationSettingsRoute
             ROUTE_SEARCH_ACTIONS -> SearchActionsSettingsRoute
             ROUTE_HIDDEN_ITEMS -> HiddenItemsSettingsRoute
@@ -936,7 +932,6 @@ open class SettingsActivity : BaseActivity() {
             ROUTE_WEB_APPS -> WebAppsSettingsRoute
             ROUTE_INTRUDER_PHOTOS -> IntruderPhotosRoute
             ROUTE_STORE -> StoreDashboardRoute(addUrl = intent.getStringExtra(SettingsDeepLinkContract.EXTRA_STORE_URL).orEmpty())
-            // === TELOS_PENDING_REVIEW_START: comms_virtual_apps ===
             ROUTE_COMMS -> {
                 val tab = intent.getStringExtra(SettingsDeepLinkContract.EXTRA_COMMS_TAB) ?: "recents"
                 val number = intent.getStringExtra(SettingsDeepLinkContract.EXTRA_DIAL_NUMBER).orEmpty()
@@ -1012,7 +1007,6 @@ open class SettingsActivity : BaseActivity() {
             "settings/search" -> SearchSettingsRoute
             "settings/gestures" -> GesturesSettingsRoute
             "settings/homescreen" -> HomescreenSettingsRoute
-            // === TELOS_PENDING_REVIEW_END: comms_virtual_apps ===
             ROUTE_CRASH_REPORT if (intent.hasExtra(EXTRA_CRASH_REPORT_PATH)) -> {
                 CrashReportRoute(intent.getStringExtra(EXTRA_CRASH_REPORT_PATH)!!)
             }
@@ -1030,12 +1024,9 @@ open class SettingsActivity : BaseActivity() {
         const val ROUTE_SECURITY_HUB = "settings/security-hub"
         const val ROUTE_WALLPAPER = "settings/wallpaper"
         const val ROUTE_WEB_APPS = "settings/webapps"
-        // === TELOS_PENDING_REVIEW_START: desktop_context_menu_actions ===
         const val ROUTE_DESKTOP_MODE = "settings/desktopmode"
-        // === TELOS_PENDING_REVIEW_END: desktop_context_menu_actions ===
         const val ROUTE_INTRUDER_PHOTOS = SettingsDeepLinkContract.ROUTE_INTRUDER_PHOTOS
         const val ROUTE_STORE = SettingsDeepLinkContract.ROUTE_STORE
-        // === TELOS_PENDING_REVIEW_START: comms_virtual_apps ===
         const val ROUTE_COMMS = SettingsDeepLinkContract.ROUTE_COMMS
         const val ROUTE_RADIO = SettingsDeepLinkContract.ROUTE_RADIO
         const val ROUTE_MUSIC = SettingsDeepLinkContract.ROUTE_MUSIC
@@ -1051,7 +1042,6 @@ open class SettingsActivity : BaseActivity() {
         const val ROUTE_CALENDAR = SettingsDeepLinkContract.ROUTE_CALENDAR
         const val ROUTE_DOWNLOADS = SettingsDeepLinkContract.ROUTE_DOWNLOADS
         const val ROUTE_NETWORK = SettingsDeepLinkContract.ROUTE_NETWORK
-        // === TELOS_PENDING_REVIEW_END: comms_virtual_apps ===
         const val ROUTE_CRASH_REPORT = "settings/debug/crashreport"
         const val EXTRA_CRASH_REPORT_PATH = "crash_report_path"
     }

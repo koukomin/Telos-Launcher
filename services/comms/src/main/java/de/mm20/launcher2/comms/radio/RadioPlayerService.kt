@@ -1,4 +1,3 @@
-// === TELOS_PENDING_REVIEW_START: sms_and_radio_engine ===
 package de.mm20.launcher2.comms.radio
 
 import de.mm20.launcher2.base.containedScope
@@ -295,4 +294,3 @@ class RadioPlayerService : MediaSessionService(), KoinComponent {
         super.onDestroy()
     }
 }
-// === TELOS_PENDING_REVIEW_END: sms_and_radio_engine ===

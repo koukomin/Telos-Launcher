@@ -65,7 +65,6 @@ import java.time.LocalDateTime
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
 
-// === TELOS_PENDING_REVIEW_START: telos_window_drag_and_ui_fix ===
 @Composable
 fun TelosNotesApp() {
     var text by remember { mutableStateOf("") }
@@ -1645,4 +1644,3 @@ private fun FlatpakPermissionsPane(
     }
 }
 
-// === TELOS_PENDING_REVIEW_END: telos_window_drag_and_ui_fix ===

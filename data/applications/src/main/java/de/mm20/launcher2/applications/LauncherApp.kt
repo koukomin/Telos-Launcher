@@ -107,7 +107,6 @@ internal data class LauncherApp(
         themed: Boolean,
     ): LauncherIcon? {
         try {
-            // === TELOS_PENDING_REVIEW_START: dual_apps_and_multi_user_fix ===
             var icon =
                 withContext(Dispatchers.IO) {
                     if (launcherActivityInfo != null) {
@@ -125,7 +124,6 @@ internal data class LauncherApp(
             // mask) as Personal. Profile identity is the briefcase / lock / person badge,
             // not PackageManager.getUserBadgedIcon, which flattens adaptive icons to a
             // bitmap and drops circular packs.
-            // === TELOS_PENDING_REVIEW_END: dual_apps_and_multi_user_fix ===
 
             if (icon is AdaptiveIconDrawable) {
                 if (themed && isAtLeastApiLevel(33) && icon.monochrome != null) {
@@ -322,7 +320,6 @@ internal data class LauncherApp(
             }
         }
 
-        // === TELOS_PENDING_REVIEW_START: dual_apps_and_multi_user_fix ===
         fun isSuspended(context: Context, packageName: String, user: UserHandle = Process.myUserHandle()): Boolean {
             return try {
                 val launcherApps = context.getSystemService<LauncherApps>()
@@ -340,7 +337,6 @@ internal data class LauncherApp(
                 false
             }
         }
-        // === TELOS_PENDING_REVIEW_END: dual_apps_and_multi_user_fix ===
 
         const val Domain = "app"
     }

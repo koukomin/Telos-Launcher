@@ -314,7 +314,6 @@ fun DockSettingsScreen() {
         AlertDialog(
             containerColor = de.mm20.launcher2.ui.component.virtualAppPopup(),
             onDismissRequest = { showChoiceDialog = false },
-            // === TELOS_PENDING_REVIEW_START: ui_i18n_and_features_batch ===
             title = { TelosCyberHeading {  Text(stringResource(I18nR.string.dock_pick_item_type))  } },
             text = { Text(stringResource(I18nR.string.dock_pick_item_message)) },
             confirmButton = {
@@ -343,7 +342,6 @@ fun DockSettingsScreen() {
                     }
                 }
             }
-            // === TELOS_PENDING_REVIEW_END: ui_i18n_and_features_batch ===
         )
     }
 

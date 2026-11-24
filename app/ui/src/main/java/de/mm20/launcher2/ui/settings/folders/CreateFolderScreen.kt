@@ -132,13 +132,11 @@ private fun AppCheckRow(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-        // === TELOS_PENDING_REVIEW_START: ui_i18n_and_features_batch ===
         ShapedLauncherIcon(
             size = 40.dp, 
             icon = { icon }, 
             frozen = app.isSuspended
         )
-        // === TELOS_PENDING_REVIEW_END: ui_i18n_and_features_batch ===
         Text(
             text = app.labelOverride ?: app.label,
             style = MaterialTheme.typography.bodyLarge,

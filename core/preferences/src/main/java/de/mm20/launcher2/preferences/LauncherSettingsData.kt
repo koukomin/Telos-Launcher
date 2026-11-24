@@ -77,9 +77,7 @@ data class LauncherSettingsData internal constructor(
     val agents: AgentsGroup = AgentsGroup(),
     val tweaks: TweaksGroup = TweaksGroup(),
     val battery: BatteryGroup = BatteryGroup(),
-    // === TELOS_PENDING_REVIEW_START: comms_settings_engine ===
     val comms: CommsGroup = CommsGroup(),
-    // === TELOS_PENDING_REVIEW_END: comms_settings_engine ===
 ) {
     constructor(
         context: Context,
@@ -203,10 +201,8 @@ enum class DrawerStyle {
 data class AppSearchGroup(
     val searchAllApps: Boolean = true,
     val appsShowDetails: Boolean = true,
-    // === TELOS_PENDING_REVIEW_START: ui_i18n_and_features_batch ===
     val moveFrozenAppsToEnd: Boolean = false,
     val drawerStyle: DrawerStyle = DrawerStyle.Classic,
-    // === TELOS_PENDING_REVIEW_END: ui_i18n_and_features_batch ===
 )
 
 @Serializable
@@ -362,9 +358,7 @@ data class IconsGroup(
     val iconsForceThemed: Boolean = false,
     val iconsCyberpunk: Boolean = false,
     val iconsPack: String? = null,
-    // === TELOS_PENDING_REVIEW_START: ui_i18n_and_features_batch ===
     val fallbackIconPacks: List<String> = emptyList(),
-    // === TELOS_PENDING_REVIEW_END: ui_i18n_and_features_batch ===
     @Deprecated("Use iconsThemed instead")
     val iconsPackThemed: Boolean = false,
 )
@@ -640,9 +634,7 @@ data class FreezeGroup(
      * remain fully manageable (freeze/unfreeze) from the Freeze Manager itself. Default off:
      * frozen apps stay visible (grayed out), matching prior behavior. */
     val freezeHideFromLauncher: Boolean = false,
-    // === TELOS_PENDING_REVIEW_START: ui_frozen_apps_style ===
     val frozenAppStyle: FrozenAppStyle = FrozenAppStyle.SnowflakeBadge,
-    // === TELOS_PENDING_REVIEW_END: ui_frozen_apps_style ===
     /** Epoch millis until auto-freeze is paused after a Play Store update session. 0 = not paused. */
     val playUpdatePauseUntil: Long = 0L,
     /** Packages thawed for a Play Store update; refrozen when the pause ends if still freeze candidates. */
@@ -1170,9 +1162,7 @@ enum class BatteryStatusVisibility {
 enum class FreezeBackendPreference {
     @SerialName("auto") Auto,
     @SerialName("shizuku") ShizukuOnly,
-    // === TELOS_PENDING_REVIEW_START: thor_freezer_features ===
     @SerialName("dhizuku") DhizukuOnly,
-    // === TELOS_PENDING_REVIEW_END: thor_freezer_features ===
     @SerialName("root") RootOnly,
     @SerialName("island") Island,
     @SerialName("device_owner") DeviceOwnerOnly,
@@ -1355,13 +1345,11 @@ enum class FreezeExclusionStrictness {
     @SerialName("relaxed") Relaxed,
 }
 
-// === TELOS_PENDING_REVIEW_START: ui_frozen_apps_style ===
 @Serializable
 enum class FrozenAppStyle {
     @SerialName("grayscale") Grayscale,
     @SerialName("snowflake_badge") SnowflakeBadge,
 }
-// === TELOS_PENDING_REVIEW_END: ui_frozen_apps_style ===
 
 @Serializable
 enum class FreezeMethod {
@@ -1377,7 +1365,6 @@ data class FreezeAppStats(
     val lastUnfrozenAt: Long? = null,
 )
 
-// === TELOS_PENDING_REVIEW_START: comms_settings_engine ===
 @Serializable
 data class CommsGroup(
     val showRecentsFavorites: Boolean = true,
@@ -1534,7 +1521,6 @@ data class CommsGroup(
     /** Allow Vulkan/OpenGL tap-switch on the System home widget. */
     val hwuiWidgetSwitch: Boolean = false,
 )
-// === TELOS_PENDING_REVIEW_END: comms_settings_engine ===
 
 @Serializable
 data class FrozenAppRestore(

@@ -92,14 +92,12 @@ class FreezeSettingsScreenVM : ViewModel(), KoinComponent {
     val backend = freezeSettings.backend
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), FreezeBackendPreference.Auto)
 
-    // === TELOS_PENDING_REVIEW_START: ui_frozen_apps_style ===
     val frozenAppStyle = freezeSettings.frozenAppStyle
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setFrozenAppStyle(style: FrozenAppStyle) {
         freezeSettings.setFrozenAppStyle(style)
     }
-    // === TELOS_PENDING_REVIEW_END: ui_frozen_apps_style ===
 
     fun setBackend(backend: FreezeBackendPreference) {
         freezeSettings.setBackend(backend)

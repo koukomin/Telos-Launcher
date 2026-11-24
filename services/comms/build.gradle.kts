@@ -93,7 +93,6 @@ dependencies {
     implementation(libs.shizuku.api)
     implementation(libs.taglib)
     
-    // === TELOS_PENDING_REVIEW_START: sms_and_radio_engine ===
     testImplementation(libs.bundles.tests)
     testImplementation("org.json:json:20260814")
     testImplementation("net.sf.kxml:kxml2:2.3.0")
@@ -103,5 +102,4 @@ dependencies {
     implementation(libs.androidx.media3.hls)
     implementation(libs.androidx.media3.dash)
     implementation(libs.nextlib) // official NextLib FFmpeg decoders (Maven Central, GPL-3.0)
-    // === TELOS_PENDING_REVIEW_END: sms_and_radio_engine ===
 }

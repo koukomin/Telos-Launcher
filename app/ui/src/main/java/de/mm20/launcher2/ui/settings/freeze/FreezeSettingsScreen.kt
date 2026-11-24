@@ -114,9 +114,7 @@ private fun FreezeSettingsContent(section: Int, tabs: @Composable () -> Unit) {
     val hideFromLauncher by viewModel.hideFromLauncher.collectAsStateWithLifecycle()
     val gameBoosterPackage by viewModel.gameBoosterPackage.collectAsStateWithLifecycle()
     val gameBoosterApps by viewModel.gameBoosterApps.collectAsStateWithLifecycle()
-    // === TELOS_PENDING_REVIEW_START: ui_frozen_apps_style ===
     val frozenAppStyle by viewModel.frozenAppStyle.collectAsStateWithLifecycle(FrozenAppStyle.SnowflakeBadge)
-    // === TELOS_PENDING_REVIEW_END: ui_frozen_apps_style ===
 
     val usageAccessGranted by viewModel.usageAccessGranted.collectAsStateWithLifecycle()
 
@@ -229,9 +227,7 @@ private fun FreezeSettingsContent(section: Int, tabs: @Composable () -> Unit) {
                         title = stringResource(
                             when (activeBackend) {
                                 FreezeBackendType.Shizuku -> I18nR.string.freeze_backend_shizuku
-                                // === TELOS_PENDING_REVIEW_START: thor_freezer_features ===
                                 FreezeBackendType.Dhizuku -> I18nR.string.telos_freeze_backend_dhizuku
-                                // === TELOS_PENDING_REVIEW_END: thor_freezer_features ===
                                 FreezeBackendType.Root -> I18nR.string.freeze_backend_root
                                 FreezeBackendType.Island -> I18nR.string.freeze_backend_island
                                 FreezeBackendType.DeviceOwner -> I18nR.string.freeze_backend_device_owner
@@ -432,7 +428,6 @@ private fun FreezeSettingsContent(section: Int, tabs: @Composable () -> Unit) {
                     value = hideFromLauncher,
                     onValueChanged = { viewModel.setHideFromLauncher(it) }
                 )
-                // === TELOS_PENDING_REVIEW_START: ui_frozen_apps_style ===
                 ListPreference(
                     title = stringResource(I18nR.string.preference_frozen_app_style),
                     items = listOf(
@@ -442,7 +437,6 @@ private fun FreezeSettingsContent(section: Int, tabs: @Composable () -> Unit) {
                     value = frozenAppStyle,
                     onValueChanged = { if (it != null) viewModel.setFrozenAppStyle(it) }
                 )
-                // === TELOS_PENDING_REVIEW_END: ui_frozen_apps_style ===
             }
         }
     }

@@ -494,10 +494,8 @@ Because `feed` and `smartspacerIntegration` test only for `release`, nightly bui
 
 ## Doubts and limits
 
-- The profile manager has no "clone" profile type. Cloned apps are handled only by the pending-review
+- The profile manager has no "clone" profile type. Cloned apps are handled only by the
   dual apps and Sandbox code.
-- Several features are wrapped in `TELOS_PENDING_REVIEW` markers (Sandbox, Work Mode toggle, Smart
-  Freeze). Their wording here may change after review.
 - The Wikipedia image switch exists as a stored setting but has no toggle on the Wikipedia page.
 
 ## Embedded application operations

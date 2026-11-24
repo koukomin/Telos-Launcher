@@ -1,4 +1,3 @@
-// === TELOS_PENDING_REVIEW_START: sandbox_cloning_and_bridge ===
 package de.mm20.launcher2.sandbox
 
 import android.app.PendingIntent
@@ -73,4 +72,3 @@ class SandboxBridgeService : Service() {
         return binder
     }
 }
-// === TELOS_PENDING_REVIEW_END: sandbox_cloning_and_bridge ===

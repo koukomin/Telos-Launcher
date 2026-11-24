@@ -26,11 +26,9 @@ class CreateFolderScreenVM : ViewModel(), KoinComponent {
     private val iconService: IconService by inject()
     private val uiSettings: UiSettings by inject()
 
-    // === TELOS_PENDING_REVIEW_START: ui_i18n_and_features_batch ===
     val apps: Flow<List<Application>> = appRepository.findMany().map { appList ->
         appList.sortedBy { it.labelOverride ?: it.label }
     }
-    // === TELOS_PENDING_REVIEW_END: ui_i18n_and_features_batch ===
 
     fun getIcon(app: Application, size: Int): Flow<LauncherIcon?> {
         return iconService.getIcon(app, size)
@@ -49,13 +47,11 @@ class CreateFolderScreenVM : ViewModel(), KoinComponent {
                 itemKeys = selectedKeys.toList(),
                 isCover = true,
             )
-            // === TELOS_PENDING_REVIEW_START: ui_i18n_and_features_batch ===
             searchableRepository.upsert(
                 folder,
                 visibility = VisibilityLevel.Default,
                 pinned = true
             )
-            // === TELOS_PENDING_REVIEW_END: ui_i18n_and_features_batch ===
 
             val dockPages = uiSettings.dockPages.first().toMutableList()
             // Auto dock (no custom pages): the folder is pinned, so it already shows up among the

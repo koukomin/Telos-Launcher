@@ -1,4 +1,3 @@
-// === TELOS_PENDING_REVIEW_START: sandbox_provisioning ===
 package de.mm20.launcher2.sandbox
 
 import android.app.admin.DeviceAdminReceiver
@@ -29,4 +28,3 @@ class SandboxDeviceAdminReceiver : DeviceAdminReceiver() {
         }
     }
 }
-// === TELOS_PENDING_REVIEW_END: sandbox_provisioning ===

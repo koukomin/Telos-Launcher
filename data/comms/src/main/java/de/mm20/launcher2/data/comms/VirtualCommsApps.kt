@@ -1,4 +1,3 @@
-// === TELOS_PENDING_REVIEW_START: comms_virtual_apps ===
 package de.mm20.launcher2.data.comms
 
 import android.content.ComponentName
@@ -1463,4 +1462,3 @@ internal class CommsVirtualAppProvider(private val context: Context) : VirtualAp
         VirtualHelpApp(context),
     )
 }
-// === TELOS_PENDING_REVIEW_END: comms_virtual_apps ===

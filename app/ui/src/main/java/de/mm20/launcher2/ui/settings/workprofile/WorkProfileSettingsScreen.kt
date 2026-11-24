@@ -96,7 +96,6 @@ fun WorkProfileSettingsScreen() {
                     ),
                     onClick = { openSystemUserSettings() },
                 )
-                // === TELOS_PENDING_REVIEW_START: sandbox_provisioning ===
                 if (workProfile == null) {
                     Preference(
                         icon = BaseR.drawable.add_24px,
@@ -110,7 +109,6 @@ fun WorkProfileSettingsScreen() {
                         }
                     )
                 }
-                // === TELOS_PENDING_REVIEW_END: sandbox_provisioning ===
             }
         }
         if (workProfile != null) {
@@ -125,7 +123,6 @@ fun WorkProfileSettingsScreen() {
                             }
                         },
                     ) {
-                        // === TELOS_PENDING_REVIEW_START: work_profile_quiet_mode_toggle ===
                         SwitchPreference(
                             title = stringResource(I18nR.string.preference_work_profile_pause),
                             summary = stringResource(I18nR.string.preference_work_profile_pause_summary),
@@ -133,7 +130,6 @@ fun WorkProfileSettingsScreen() {
                             value = workProfileState?.locked != true,
                             onValueChanged = { setPaused(!it) },
                         )
-                        // === TELOS_PENDING_REVIEW_END: work_profile_quiet_mode_toggle ===
                         SwitchPreference(
                             title = stringResource(I18nR.string.preference_app_lock_work_profile_toggle),
                             summary = stringResource(I18nR.string.preference_app_lock_work_profile_toggle_summary),

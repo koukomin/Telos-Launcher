@@ -119,7 +119,6 @@ fun AppearanceSettingsScreen() {
         }
         item {
             PreferenceCategory {
-                // === TELOS_PENDING_REVIEW_START: ui_i18n_and_features_batch ===
                 Preference(
                     icon = BaseR.drawable.wallpaper_24px,
                     title = stringResource(id = I18nR.string.wallpaper),
@@ -128,7 +127,6 @@ fun AppearanceSettingsScreen() {
                         backStack.add(WallpaperSettingsRoute)
                     }
                 )
-                // === TELOS_PENDING_REVIEW_END: ui_i18n_and_features_batch ===
                 
                 val theme by viewModel.colorScheme.collectAsState()
                 ListPreference(
@@ -305,13 +303,11 @@ private fun FontScalePreview(fontScale: Float) {
                     .background(MaterialTheme.colorScheme.primary),
                 contentAlignment = Alignment.Center
             ) {
-                // === TELOS_PENDING_REVIEW_START: ui_i18n_and_features_batch ===
                 androidx.compose.material3.Icon(
                     painter = androidx.compose.ui.res.painterResource(BaseR.drawable.photo_24px), // Fallback icon
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.onPrimary
                 )
-                // === TELOS_PENDING_REVIEW_END: ui_i18n_and_features_batch ===
             }
             CompositionLocalProvider(
                 LocalDensity provides Density(baseDensity.density, baseDensity.fontScale * fontScale),

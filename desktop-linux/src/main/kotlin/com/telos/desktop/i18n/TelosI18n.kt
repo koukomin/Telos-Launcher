@@ -6,7 +6,6 @@ import java.util.Locale
  * Reads the same Android string XML as `:core:i18n` (copied into the desktop jar).
  * Desktop UI uses those keys; it does not keep a second translation table.
  */
-// === TELOS_PENDING_REVIEW_START: telos_window_drag_and_ui_fix ===
 object TelosI18n {
     private val table: Map<String, String> by lazy { load() }
 
@@ -83,4 +82,3 @@ object TelosI18n {
         }
     }
 }
-// === TELOS_PENDING_REVIEW_END: telos_window_drag_and_ui_fix ===
