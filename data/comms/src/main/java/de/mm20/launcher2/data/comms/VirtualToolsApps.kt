@@ -14,10 +14,7 @@ import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchableSerializer
 import de.mm20.launcher2.search.VirtualAppProvider
 import de.mm20.launcher2.icons.LauncherIcon
-import de.mm20.launcher2.icons.StaticLauncherIcon
-import de.mm20.launcher2.icons.StaticIconLayer
-import de.mm20.launcher2.icons.TransparentLayer
-import androidx.core.content.ContextCompat
+import de.mm20.launcher2.search.VirtualAppIcon
 
 internal class VirtualClockApp(context: Context) : Application {
     override val key: String = "$Domain://clock"
@@ -56,14 +53,8 @@ internal class VirtualClockApp(context: Context) : Application {
         }
     }
 
-    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? {
-        val res = de.mm20.launcher2.search.TelosAppIcons.forDomain(Domain) ?: de.mm20.launcher2.base.R.drawable.schedule_24px
-        val drawable = ContextCompat.getDrawable(context, res) ?: return null
-        return StaticLauncherIcon(
-            foregroundLayer = StaticIconLayer(drawable, 1f),
-            backgroundLayer = TransparentLayer
-        )
-    }
+    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? =
+        VirtualAppIcon.tile(context, Domain, de.mm20.launcher2.base.R.drawable.schedule_24px)
 
     override fun getSerializer(): SearchableSerializer = NullSerializer()
 
@@ -109,14 +100,8 @@ internal class VirtualAkouApp(context: Context) : Application {
         }
     }
 
-    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? {
-        val res = de.mm20.launcher2.search.TelosAppIcons.forDomain(Domain) ?: de.mm20.launcher2.base.R.drawable.ic_app_akou_full
-        val drawable = ContextCompat.getDrawable(context, res) ?: return null
-        return StaticLauncherIcon(
-            foregroundLayer = StaticIconLayer(drawable, 1f),
-            backgroundLayer = TransparentLayer
-        )
-    }
+    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? =
+        VirtualAppIcon.tile(context, Domain, de.mm20.launcher2.base.R.drawable.ic_app_akou_full)
 
     override fun getSerializer(): SearchableSerializer = NullSerializer()
 
@@ -162,14 +147,8 @@ internal class VirtualMagnifierApp(context: Context) : Application {
         }
     }
 
-    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? {
-        val res = de.mm20.launcher2.search.TelosAppIcons.forDomain(Domain) ?: de.mm20.launcher2.base.R.drawable.search_24px
-        val drawable = ContextCompat.getDrawable(context, res) ?: return null
-        return StaticLauncherIcon(
-            foregroundLayer = StaticIconLayer(drawable, 1f),
-            backgroundLayer = TransparentLayer
-        )
-    }
+    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? =
+        VirtualAppIcon.tile(context, Domain, de.mm20.launcher2.base.R.drawable.search_24px)
 
     override fun getSerializer(): SearchableSerializer = NullSerializer()
 
@@ -215,14 +194,8 @@ internal class VirtualFlashlightApp(context: Context) : Application {
         }
     }
 
-    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? {
-        val res = de.mm20.launcher2.search.TelosAppIcons.forDomain(Domain) ?: de.mm20.launcher2.base.R.drawable.light_mode_24px
-        val drawable = ContextCompat.getDrawable(context, res) ?: return null
-        return StaticLauncherIcon(
-            foregroundLayer = StaticIconLayer(drawable, 1f),
-            backgroundLayer = TransparentLayer
-        )
-    }
+    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? =
+        VirtualAppIcon.tile(context, Domain, de.mm20.launcher2.base.R.drawable.light_mode_24px)
 
     override fun getSerializer(): SearchableSerializer = NullSerializer()
 
@@ -268,14 +241,8 @@ internal class VirtualFitApp(context: Context) : Application {
         }
     }
 
-    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? {
-        val res = de.mm20.launcher2.search.TelosAppIcons.forDomain(Domain) ?: de.mm20.launcher2.base.R.drawable.ic_app_fit_full
-        val drawable = ContextCompat.getDrawable(context, res) ?: return null
-        return StaticLauncherIcon(
-            foregroundLayer = StaticIconLayer(drawable, 1f),
-            backgroundLayer = TransparentLayer
-        )
-    }
+    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? =
+        VirtualAppIcon.tile(context, Domain, de.mm20.launcher2.base.R.drawable.ic_app_fit_full)
 
     override fun getSerializer(): SearchableSerializer = NullSerializer()
 

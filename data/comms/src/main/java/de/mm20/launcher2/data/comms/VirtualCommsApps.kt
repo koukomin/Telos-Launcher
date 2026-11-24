@@ -16,9 +16,7 @@ import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchableSerializer
 import de.mm20.launcher2.search.VirtualAppProvider
 import de.mm20.launcher2.icons.LauncherIcon
-import de.mm20.launcher2.icons.StaticLauncherIcon
-import de.mm20.launcher2.icons.StaticIconLayer
-import de.mm20.launcher2.icons.TransparentLayer
+import de.mm20.launcher2.search.VirtualAppIcon
 
 internal class VirtualPhoneApp(private val context: Context) : Application {
 
@@ -60,13 +58,8 @@ internal class VirtualPhoneApp(private val context: Context) : Application {
         }
     }
 
-    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? {
-        val drawable = androidx.core.content.ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.ic_app_phone_fg) ?: return null
-        return StaticLauncherIcon(
-            foregroundLayer = StaticIconLayer(drawable, 1f),
-            backgroundLayer = StaticIconLayer(android.graphics.drawable.ColorDrawable(0xFF0A2472.toInt()), 1f),
-        )
-    }
+    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? =
+        VirtualAppIcon.disc(context, de.mm20.launcher2.base.R.drawable.ic_app_phone_fg, 0xFF0A2472.toInt())
 
     override fun getSerializer(): SearchableSerializer = VirtualAppSerializer()
 
@@ -115,13 +108,8 @@ internal class VirtualMessagesApp(private val context: Context) : Application {
         }
     }
 
-    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? {
-        val drawable = androidx.core.content.ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.ic_app_messages_fg) ?: return null
-        return StaticLauncherIcon(
-            foregroundLayer = StaticIconLayer(drawable, 1f),
-            backgroundLayer = StaticIconLayer(android.graphics.drawable.ColorDrawable(0xFF00897B.toInt()), 1f),
-        )
-    }
+    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? =
+        VirtualAppIcon.disc(context, de.mm20.launcher2.base.R.drawable.ic_app_messages_fg, 0xFF00897B.toInt())
 
     override fun getSerializer(): SearchableSerializer = VirtualAppSerializer()
 
@@ -169,13 +157,8 @@ internal class VirtualRadioApp(private val context: Context) : Application {
         }
     }
 
-    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? {
-        val drawable = androidx.core.content.ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.ic_app_radio_fg) ?: return null
-        return StaticLauncherIcon(
-            foregroundLayer = StaticIconLayer(drawable, 1f),
-            backgroundLayer = StaticIconLayer(android.graphics.drawable.ColorDrawable(0xFF2E9E3F.toInt()), 1f),
-        )
-    }
+    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? =
+        VirtualAppIcon.disc(context, de.mm20.launcher2.base.R.drawable.ic_app_radio_fg, 0xFF2E9E3F.toInt())
 
     override fun getSerializer(): SearchableSerializer = VirtualAppSerializer()
 
@@ -223,13 +206,8 @@ internal class VirtualMusicApp(private val context: Context) : Application {
         }
     }
 
-    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? {
-        val drawable = androidx.core.content.ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.ic_app_music_fg) ?: return null
-        return StaticLauncherIcon(
-            foregroundLayer = StaticIconLayer(drawable, 1f),
-            backgroundLayer = StaticIconLayer(android.graphics.drawable.ColorDrawable(0xFF7B2FC9.toInt()), 1f),
-        )
-    }
+    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? =
+        VirtualAppIcon.disc(context, de.mm20.launcher2.base.R.drawable.ic_app_music_fg, 0xFF7B2FC9.toInt())
 
     override fun getSerializer(): SearchableSerializer = VirtualAppSerializer()
 
@@ -277,13 +255,8 @@ internal class VirtualYouTubeApp(private val context: Context) : Application {
         }
     }
 
-    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? {
-        val drawable = androidx.core.content.ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.ic_app_youtube_fg) ?: return null
-        return StaticLauncherIcon(
-            foregroundLayer = StaticIconLayer(drawable, 1f),
-            backgroundLayer = StaticIconLayer(android.graphics.drawable.ColorDrawable(0xFF00796B.toInt()), 1f),
-        )
-    }
+    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? =
+        VirtualAppIcon.disc(context, de.mm20.launcher2.base.R.drawable.ic_app_youtube_fg, 0xFF00796B.toInt())
 
     override fun getSerializer(): SearchableSerializer = VirtualAppSerializer()
 
@@ -331,13 +304,8 @@ internal class VirtualYouTubeMusicApp(private val context: Context) : Applicatio
         }
     }
 
-    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? {
-        val drawable = androidx.core.content.ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.ic_app_youtube_music_fg) ?: return null
-        return StaticLauncherIcon(
-            foregroundLayer = StaticIconLayer(drawable, 1f),
-            backgroundLayer = StaticIconLayer(android.graphics.drawable.ColorDrawable(0xFF7B2FC9.toInt()), 1f),
-        )
-    }
+    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? =
+        VirtualAppIcon.disc(context, de.mm20.launcher2.base.R.drawable.ic_app_youtube_music_fg, 0xFF7B2FC9.toInt())
 
     override fun getSerializer(): SearchableSerializer = VirtualAppSerializer()
 
@@ -385,13 +353,8 @@ internal class VirtualVideoApp(private val context: Context) : Application {
         }
     }
 
-    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? {
-        val drawable = androidx.core.content.ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.ic_app_video_fg) ?: return null
-        return StaticLauncherIcon(
-            foregroundLayer = StaticIconLayer(drawable, 1f),
-            backgroundLayer = StaticIconLayer(android.graphics.drawable.ColorDrawable(0xFFE53935.toInt()), 1f),
-        )
-    }
+    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? =
+        VirtualAppIcon.disc(context, de.mm20.launcher2.base.R.drawable.ic_app_video_fg, 0xFFE53935.toInt())
 
     override fun getSerializer(): SearchableSerializer = VirtualAppSerializer()
 
@@ -439,13 +402,8 @@ internal class VirtualTvApp(private val context: Context) : Application {
         }
     }
 
-    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? {
-        val drawable = androidx.core.content.ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.ic_app_tv_fg) ?: return null
-        return StaticLauncherIcon(
-            foregroundLayer = StaticIconLayer(drawable, 1f),
-            backgroundLayer = StaticIconLayer(android.graphics.drawable.ColorDrawable(0xFF3949AB.toInt()), 1f),
-        )
-    }
+    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? =
+        VirtualAppIcon.disc(context, de.mm20.launcher2.base.R.drawable.ic_app_tv_fg, 0xFF3949AB.toInt())
 
     override fun getSerializer(): SearchableSerializer = VirtualAppSerializer()
 
@@ -493,13 +451,8 @@ internal class VirtualStremioApp(private val context: Context) : Application {
         }
     }
 
-    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? {
-        val drawable = androidx.core.content.ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.ic_app_stremio_fg) ?: return null
-        return StaticLauncherIcon(
-            foregroundLayer = StaticIconLayer(drawable, 1f),
-            backgroundLayer = StaticIconLayer(android.graphics.drawable.ColorDrawable(0xFF7C4DFF.toInt()), 1f),
-        )
-    }
+    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? =
+        VirtualAppIcon.disc(context, de.mm20.launcher2.base.R.drawable.ic_app_stremio_fg, 0xFF7C4DFF.toInt())
 
     override fun getSerializer(): SearchableSerializer = VirtualAppSerializer()
 
@@ -547,13 +500,8 @@ internal class VirtualPhotosApp(private val context: Context) : Application {
         }
     }
 
-    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? {
-        val drawable = androidx.core.content.ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.ic_app_photos_fg) ?: return null
-        return StaticLauncherIcon(
-            foregroundLayer = StaticIconLayer(drawable, 1f),
-            backgroundLayer = StaticIconLayer(android.graphics.drawable.ColorDrawable(0xFFE91E63.toInt()), 1f),
-        )
-    }
+    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? =
+        VirtualAppIcon.disc(context, de.mm20.launcher2.base.R.drawable.ic_app_photos_fg, 0xFFE91E63.toInt())
 
     override fun getSerializer(): SearchableSerializer = VirtualAppSerializer()
 
@@ -601,13 +549,8 @@ internal class VirtualViewerApp(private val context: Context) : Application {
         }
     }
 
-    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? {
-        val drawable = androidx.core.content.ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.ic_app_viewer_fg) ?: return null
-        return StaticLauncherIcon(
-            foregroundLayer = StaticIconLayer(drawable, 1f),
-            backgroundLayer = StaticIconLayer(android.graphics.drawable.ColorDrawable(0xFF3F6BE8.toInt()), 1f),
-        )
-    }
+    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? =
+        VirtualAppIcon.disc(context, de.mm20.launcher2.base.R.drawable.ic_app_viewer_fg, 0xFF3F6BE8.toInt())
 
     override fun getSerializer(): SearchableSerializer = VirtualAppSerializer()
 
@@ -655,13 +598,8 @@ internal class VirtualFilesApp(private val context: Context) : Application {
         }
     }
 
-    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? {
-        val drawable = androidx.core.content.ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.ic_app_files_fg) ?: return null
-        return StaticLauncherIcon(
-            foregroundLayer = StaticIconLayer(drawable, 1f),
-            backgroundLayer = StaticIconLayer(android.graphics.drawable.ColorDrawable(0xFFF57C00.toInt()), 1f),
-        )
-    }
+    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? =
+        VirtualAppIcon.disc(context, de.mm20.launcher2.base.R.drawable.ic_app_files_fg, 0xFFF57C00.toInt())
 
     override fun getSerializer(): SearchableSerializer = VirtualAppSerializer()
 
@@ -709,13 +647,8 @@ internal class VirtualCalculatorApp(private val context: Context) : Application 
         }
     }
 
-    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? {
-        val drawable = androidx.core.content.ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.ic_app_calculator_fg) ?: return null
-        return StaticLauncherIcon(
-            foregroundLayer = StaticIconLayer(drawable, 1f),
-            backgroundLayer = StaticIconLayer(android.graphics.drawable.ColorDrawable(0xFF37474F.toInt()), 1f),
-        )
-    }
+    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? =
+        VirtualAppIcon.disc(context, de.mm20.launcher2.base.R.drawable.ic_app_calculator_fg, 0xFF37474F.toInt())
 
     override fun getSerializer(): SearchableSerializer = VirtualAppSerializer()
 
@@ -763,13 +696,8 @@ internal class VirtualVoiceRecorderApp(private val context: Context) : Applicati
         }
     }
 
-    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? {
-        val drawable = androidx.core.content.ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.ic_app_voice_recorder_fg) ?: return null
-        return StaticLauncherIcon(
-            foregroundLayer = StaticIconLayer(drawable, 1f),
-            backgroundLayer = StaticIconLayer(android.graphics.drawable.ColorDrawable(0xFF00838F.toInt()), 1f),
-        )
-    }
+    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? =
+        VirtualAppIcon.disc(context, de.mm20.launcher2.base.R.drawable.ic_app_voice_recorder_fg, 0xFF00838F.toInt())
 
     override fun getSerializer(): SearchableSerializer = VirtualAppSerializer()
 
@@ -817,13 +745,8 @@ internal class VirtualCameraApp(private val context: Context) : Application {
         }
     }
 
-    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? {
-        val drawable = androidx.core.content.ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.ic_app_camera_fg) ?: return null
-        return StaticLauncherIcon(
-            foregroundLayer = StaticIconLayer(drawable, 1f),
-            backgroundLayer = StaticIconLayer(android.graphics.drawable.ColorDrawable(0xFFE65100.toInt()), 1f),
-        )
-    }
+    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? =
+        VirtualAppIcon.disc(context, de.mm20.launcher2.base.R.drawable.ic_app_camera_fg, 0xFFE65100.toInt())
 
     override fun getSerializer(): SearchableSerializer = VirtualAppSerializer()
 
@@ -871,13 +794,8 @@ internal class VirtualScreenRecorderApp(private val context: Context) : Applicat
         }
     }
 
-    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? {
-        val drawable = androidx.core.content.ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.ic_app_screen_recorder_fg) ?: return null
-        return StaticLauncherIcon(
-            foregroundLayer = StaticIconLayer(drawable, 1f),
-            backgroundLayer = StaticIconLayer(android.graphics.drawable.ColorDrawable(0xFFF4511E.toInt()), 1f),
-        )
-    }
+    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? =
+        VirtualAppIcon.disc(context, de.mm20.launcher2.base.R.drawable.ic_app_screen_recorder_fg, 0xFFF4511E.toInt())
 
     override fun getSerializer(): SearchableSerializer = VirtualAppSerializer()
 
@@ -925,13 +843,8 @@ internal class VirtualScreenshotApp(private val context: Context) : Application 
         }
     }
 
-    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? {
-        val drawable = androidx.core.content.ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.ic_app_screenshot_fg) ?: return null
-        return StaticLauncherIcon(
-            foregroundLayer = StaticIconLayer(drawable, 1f),
-            backgroundLayer = StaticIconLayer(android.graphics.drawable.ColorDrawable(0xFF1A6DFF.toInt()), 1f),
-        )
-    }
+    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? =
+        VirtualAppIcon.disc(context, de.mm20.launcher2.base.R.drawable.ic_app_screenshot_fg, 0xFF1A6DFF.toInt())
 
     override fun getSerializer(): SearchableSerializer = VirtualAppSerializer()
 
@@ -979,13 +892,8 @@ internal class VirtualNotesApp(private val context: Context) : Application {
         }
     }
 
-    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? {
-        val drawable = androidx.core.content.ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.ic_app_notes_fg) ?: return null
-        return StaticLauncherIcon(
-            foregroundLayer = StaticIconLayer(drawable, 1f),
-            backgroundLayer = StaticIconLayer(android.graphics.drawable.ColorDrawable(0xFFF9A825.toInt()), 1f),
-        )
-    }
+    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? =
+        VirtualAppIcon.disc(context, de.mm20.launcher2.base.R.drawable.ic_app_notes_fg, 0xFFF9A825.toInt())
 
     override fun getSerializer(): SearchableSerializer = VirtualAppSerializer()
 
@@ -1030,13 +938,8 @@ internal class VirtualErmisApp(private val context: Context) : Application {
         }
     }
 
-    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? {
-        val drawable = androidx.core.content.ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.ic_app_messages_fg) ?: return null
-        return StaticLauncherIcon(
-            foregroundLayer = StaticIconLayer(drawable, 1f),
-            backgroundLayer = StaticIconLayer(android.graphics.drawable.ColorDrawable(0xFFD93025.toInt()), 1f),
-        )
-    }
+    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? =
+        VirtualAppIcon.disc(context, de.mm20.launcher2.base.R.drawable.ic_app_messages_fg, 0xFFD93025.toInt())
 
     override fun getSerializer(): SearchableSerializer = VirtualAppSerializer()
 
@@ -1084,13 +987,8 @@ internal class VirtualCalendarApp(private val context: Context) : Application {
         }
     }
 
-    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? {
-        val drawable = androidx.core.content.ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.ic_app_calendar_fg) ?: return null
-        return StaticLauncherIcon(
-            foregroundLayer = StaticIconLayer(drawable, 1f),
-            backgroundLayer = StaticIconLayer(android.graphics.drawable.ColorDrawable(0xFF1E88E5.toInt()), 1f),
-        )
-    }
+    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? =
+        VirtualAppIcon.disc(context, de.mm20.launcher2.base.R.drawable.ic_app_calendar_fg, 0xFF1E88E5.toInt())
 
     override fun getSerializer(): SearchableSerializer = VirtualAppSerializer()
 
@@ -1138,13 +1036,8 @@ internal class VirtualDownloadsApp(private val context: Context) : Application {
         }
     }
 
-    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? {
-        val drawable = androidx.core.content.ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.ic_app_downloads_fg) ?: return null
-        return StaticLauncherIcon(
-            foregroundLayer = StaticIconLayer(drawable, 1f),
-            backgroundLayer = StaticIconLayer(android.graphics.drawable.ColorDrawable(0xFF5E35B1.toInt()), 1f),
-        )
-    }
+    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? =
+        VirtualAppIcon.disc(context, de.mm20.launcher2.base.R.drawable.ic_app_downloads_fg, 0xFF5E35B1.toInt())
 
     override fun getSerializer(): SearchableSerializer = VirtualAppSerializer()
 
@@ -1192,13 +1085,8 @@ internal class VirtualMediaApp(private val context: Context) : Application {
         }
     }
 
-    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? {
-        val drawable = androidx.core.content.ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.ic_app_media_fg) ?: return null
-        return StaticLauncherIcon(
-            foregroundLayer = StaticIconLayer(drawable, 1f),
-            backgroundLayer = StaticIconLayer(android.graphics.drawable.ColorDrawable(0xFF5E35B1.toInt()), 1f),
-        )
-    }
+    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? =
+        VirtualAppIcon.disc(context, de.mm20.launcher2.base.R.drawable.ic_app_media_fg, 0xFF5E35B1.toInt())
 
     override fun getSerializer(): SearchableSerializer = VirtualAppSerializer()
 
@@ -1246,13 +1134,8 @@ internal class VirtualNetworkApp(private val context: Context) : Application {
         }
     }
 
-    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? {
-        val drawable = androidx.core.content.ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.ic_app_network_fg) ?: return null
-        return StaticLauncherIcon(
-            foregroundLayer = StaticIconLayer(drawable, 1f),
-            backgroundLayer = StaticIconLayer(android.graphics.drawable.ColorDrawable(0xFF0B6B4D.toInt()), 1f),
-        )
-    }
+    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? =
+        VirtualAppIcon.disc(context, de.mm20.launcher2.base.R.drawable.ic_app_network_fg, 0xFF0B6B4D.toInt())
 
     override fun getSerializer(): SearchableSerializer = VirtualAppSerializer()
 
@@ -1300,17 +1183,8 @@ internal class VirtualSystemApp(private val context: Context) : Application {
         }
     }
 
-    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? {
-        val drawable = androidx.core.content.ContextCompat.getDrawable(
-            context,
-            de.mm20.launcher2.search.TelosAppIcons.forDomain(Domain)
-                ?: de.mm20.launcher2.base.R.drawable.ic_app_system_full,
-        ) ?: return null
-        return StaticLauncherIcon(
-            foregroundLayer = StaticIconLayer(drawable, 1f),
-            backgroundLayer = TransparentLayer,
-        )
-    }
+    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? =
+        VirtualAppIcon.tile(context, Domain, de.mm20.launcher2.base.R.drawable.ic_app_system_full)
 
     override fun getSerializer(): SearchableSerializer = VirtualAppSerializer()
 
@@ -1352,13 +1226,8 @@ internal class VirtualHelpApp(private val context: Context) : Application {
             false
         }
     }
-    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? {
-        val drawable = androidx.core.content.ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.help_24px) ?: return null
-        return StaticLauncherIcon(
-            foregroundLayer = StaticIconLayer(drawable, 1f),
-            backgroundLayer = StaticIconLayer(android.graphics.drawable.ColorDrawable(0xFF102A43.toInt()), 1f),
-        )
-    }
+    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? =
+        VirtualAppIcon.disc(context, de.mm20.launcher2.base.R.drawable.help_24px, 0xFF102A43.toInt())
     override fun getSerializer(): SearchableSerializer = VirtualAppSerializer()
 
     companion object {
@@ -1405,17 +1274,8 @@ internal class VirtualBackupApp(private val context: Context) : Application {
         }
     }
 
-    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? {
-        val drawable = androidx.core.content.ContextCompat.getDrawable(
-            context,
-            de.mm20.launcher2.search.TelosAppIcons.forDomain(Domain)
-                ?: de.mm20.launcher2.base.R.drawable.ic_app_backup_full,
-        ) ?: return null
-        return StaticLauncherIcon(
-            foregroundLayer = StaticIconLayer(drawable, 1f),
-            backgroundLayer = StaticIconLayer(android.graphics.drawable.ColorDrawable(0xFF102A43.toInt()), 1f),
-        )
-    }
+    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? =
+        VirtualAppIcon.tileOnPlate(context, Domain, de.mm20.launcher2.base.R.drawable.ic_app_backup_full, 0xFF102A43.toInt())
 
     override fun getSerializer(): SearchableSerializer = VirtualAppSerializer()
 
@@ -1463,17 +1323,8 @@ internal class VirtualKeyboardApp(private val context: Context) : Application {
         }
     }
 
-    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? {
-        val drawable = androidx.core.content.ContextCompat.getDrawable(
-            context,
-            de.mm20.launcher2.search.TelosAppIcons.forDomain(Domain)
-                ?: de.mm20.launcher2.base.R.drawable.ic_app_keyboard_full,
-        ) ?: return null
-        return StaticLauncherIcon(
-            foregroundLayer = StaticIconLayer(drawable, 1f),
-            backgroundLayer = StaticIconLayer(android.graphics.drawable.ColorDrawable(0xFF102A43.toInt()), 1f),
-        )
-    }
+    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? =
+        VirtualAppIcon.tileOnPlate(context, Domain, de.mm20.launcher2.base.R.drawable.ic_app_keyboard_full, 0xFF102A43.toInt())
 
     override fun getSerializer(): SearchableSerializer = VirtualAppSerializer()
 
@@ -1521,17 +1372,8 @@ internal class VirtualKeePassApp(private val context: Context) : Application {
         }
     }
 
-    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? {
-        val drawable = androidx.core.content.ContextCompat.getDrawable(
-            context,
-            de.mm20.launcher2.search.TelosAppIcons.forDomain(Domain)
-                ?: de.mm20.launcher2.base.R.drawable.ic_app_keepass_full,
-        ) ?: return null
-        return StaticLauncherIcon(
-            foregroundLayer = StaticIconLayer(drawable, 1f),
-            backgroundLayer = StaticIconLayer(android.graphics.drawable.ColorDrawable(0xFF102A43.toInt()), 1f),
-        )
-    }
+    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? =
+        VirtualAppIcon.tileOnPlate(context, Domain, de.mm20.launcher2.base.R.drawable.ic_app_keepass_full, 0xFF102A43.toInt())
 
     override fun getSerializer(): SearchableSerializer = VirtualAppSerializer()
 
@@ -1579,17 +1421,8 @@ internal class VirtualAetherApp(private val context: Context) : Application {
         }
     }
 
-    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? {
-        val drawable = androidx.core.content.ContextCompat.getDrawable(
-            context,
-            de.mm20.launcher2.search.TelosAppIcons.forDomain(Domain)
-                ?: de.mm20.launcher2.base.R.drawable.ic_app_aether_full,
-        ) ?: return null
-        return StaticLauncherIcon(
-            foregroundLayer = StaticIconLayer(drawable, 1f),
-            backgroundLayer = StaticIconLayer(android.graphics.drawable.ColorDrawable(0xFF102A43.toInt()), 1f),
-        )
-    }
+    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? =
+        VirtualAppIcon.tileOnPlate(context, Domain, de.mm20.launcher2.base.R.drawable.ic_app_aether_full, 0xFF102A43.toInt())
 
     override fun getSerializer(): SearchableSerializer = VirtualAppSerializer()
 
