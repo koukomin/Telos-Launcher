@@ -21,7 +21,6 @@
 package com.vitorpamplona.amethyst.commons.model
 
 import androidx.compose.runtime.Stable
-import com.vitorpamplona.amethyst.commons.actions.ConcordActions
 import com.vitorpamplona.amethyst.commons.actions.DeletionActions
 import com.vitorpamplona.amethyst.commons.actions.EmojiPackActions
 import com.vitorpamplona.amethyst.commons.audio.VisualizerStyle
@@ -211,8 +210,6 @@ import com.vitorpamplona.amethyst.commons.wot.network.TrustNetworkState
 import com.vitorpamplona.amethyst.commons.wot.network.TrustNetworkStore
 import com.vitorpamplona.amethyst.commons.wot.network.TrustVerdicts
 import com.vitorpamplona.cordn.client.CordnBlobCipher
-import com.vitorpamplona.crypto.aes.AESGCM
-import com.vitorpamplona.crypto.aes.AES_GCM_NAME
 import com.vitorpamplona.crypto.random.RandomInstance
 import com.vitorpamplona.marmot.appComponents.agentTextStream.transport.MarmotQuicTransport
 import com.vitorpamplona.marmot.client.MarmotManager
@@ -222,11 +219,7 @@ import com.vitorpamplona.marmot.groups.MlsGroupStateStore
 import com.vitorpamplona.quartz.buzz.media.BuzzImeta
 import com.vitorpamplona.quartz.buzz.threading.buzzThread
 import com.vitorpamplona.quartz.buzz.threading.buzzThreadRootForReplyTo
-import com.vitorpamplona.quartz.concord.cord03Channels.ChannelChat
-import com.vitorpamplona.quartz.concord.cord03Channels.ConcordChannelId
 import com.vitorpamplona.quartz.concord.cord03Channels.ConcordChatEditEvent
-import com.vitorpamplona.quartz.concord.cord03Channels.ConcordDisappearing
-import com.vitorpamplona.quartz.concord.cord03Channels.ConcordTimerNoticeEvent
 import com.vitorpamplona.quartz.experimental.bounties.BountyAddValueEvent
 import com.vitorpamplona.quartz.experimental.edits.TextNoteModificationEvent
 import com.vitorpamplona.quartz.experimental.interactiveStories.InteractiveStoryBaseEvent
@@ -786,150 +779,35 @@ class Account(
 
     val concordChannelList = ConcordChannelListState(signer, cache, scope, settings)
 
+    internal val concordInbox by lazy { AccountConcordInbox(this) }
+
     /**
      * The live read-path for joined Concord Channels: one folding session per
      * community, fed by inbound kind-1059 plane wraps. Kept in step with
      * [concordChannelList] and consulted by the giftwrap decrypt path so a Concord
      * plane wrap routes here instead of being dropped as an undecryptable DM.
      */
-    val concordSessions = ConcordSessionManager(concordChannelList.liveCommunities, signer.pubKey, scope, ::consumeConcordRumorGated)
+    val concordSessions = ConcordSessionManager(
+        concordChannelList.liveCommunities,
+        signer.pubKey,
+        scope,
+        { communityId, channelIdHex, rumor, seenOnRelays ->
+            concordInbox.consumeConcordRumorGated(communityId, channelIdHex, rumor, seenOnRelays)
+        },
+    )
 
-    /**
-     * Sink for decrypted Concord rumors: drops a message whose author is banned in
-     * the community's current fold before it ever becomes a Note, then delegates to
-     * the cache. Bans that arrive *after* a message are handled by removing the
-     * author's existing notes on re-fold (see `refreshConcordChannelIndex`); this
-     * gate stops *new* posts from a banned author from appearing at all.
-     */
-    private fun consumeConcordRumorGated(
-        communityId: String,
-        channelIdHex: String,
-        rumor: Event,
-        seenOnRelays: Set<NormalizedRelayUrl>,
-    ) {
-        val authority =
-            concordSessions
-                .sessionFor(communityId)
-                ?.state
-                ?.value
-                ?.authority
-        if (authority?.isBanned(rumor.pubKey) == true) return
-        // CORD-08 §3: an already-expired rumor is never stored. The session refuses it first; this
-        // backs it up for any other caller of the sink.
-        if (ConcordDisappearing.isExpired(rumor)) return
-        registerConcordEncryptedImages(rumor)
-        cache.consumeConcordRumor(communityId, channelIdHex, rumor, seenOnRelays)
-    }
+    fun sweepExpiredConcordMessages(now: Long = TimeUtils.now()) =
+        concordInbox.sweepExpiredConcordMessages(now)
 
-    /**
-     * The CORD-08 §3 purge: drops every Concord rumor whose `expiration` has passed — its note, the
-     * note of the wrap that carried it, and the wrap in its session's buffer (so no re-projection can
-     * resurrect it). The rumor's own children (a reply, a reaction) are independent events and stay,
-     * as on a delete; they carry their own expiration when the timer was on. Scheduled on
-     * [ConcordSessionManager.nextExpiry], so it only ever runs when something is due.
-     */
-    fun sweepExpiredConcordMessages(now: Long = TimeUtils.now()) {
-        val expired = concordSessions.sweepExpired(now)
-        for (rumors in expired.values) {
-            for (gone in rumors) {
-                // Its attachments' decryption keys go with it: a cached key would keep the blob readable.
-                gone.attachmentUrls.forEach { encryptionKeyCache.remove(it) }
-                cache.getNoteIfExists(gone.rumorId)?.let { note ->
-                    note.detachFromChildren()
-                    cache.pruner.unlinkAndRemove(note)
-                }
-                cache.getNoteIfExists(gone.wrapId)?.let { cache.pruner.unlinkAndRemove(it) }
-            }
-        }
-    }
+    internal fun registerConcordEncryptedImages(rumor: Event) =
+        concordInbox.registerConcordEncryptedImages(rumor)
 
-    /** True for a Concord rumor whose own `expiration` has passed: never displayed (CORD-08 §3). */
-    private fun isConcordExpired(note: Note): Boolean {
-        val event = note.event ?: return false
-        if (note.inGatherers?.any { it is ConcordChannel } != true) return false
-        return ConcordDisappearing.isExpired(event)
-    }
+    fun refreshConcordChannelIndex() = concordInbox.refreshConcordChannelIndex()
 
-    /**
-     * True for a Concord timer notice (CORD-08 §4) that must not be shown: malformed, or authored by
-     * someone who does not hold MANAGE_METADATA in the community's current fold — anyone can spell
-     * the tag, only staff are believed about policy.
-     */
-    private fun isUnbelievedConcordTimerNotice(note: Note): Boolean {
-        val event = note.event as? ConcordTimerNoticeEvent ?: return false
-        val channel = note.inGatherers?.firstNotNullOfOrNull { it as? ConcordChannel } ?: return true
-        val authority =
-            concordSessions
-                .sessionFor(channel.channelId.communityId)
-                ?.state
-                ?.value
-                ?.authority ?: return true
-        return !ConcordDisappearing.isBelievedNotice(event, authority)
-    }
+    private fun isConcordExpired(note: Note) = concordInbox.isConcordExpired(note)
 
-    /**
-     * Register any encrypted image attachments on a Concord message ([ChannelChat.encryptedImagesOf])
-     * so the shared media pipeline can display them: the ciphertext blob's AES-256-GCM key/nonce go
-     * into [encryptionKeyCache], and the OkHttp EncryptedBlobInterceptor
-     * decrypts the blob transparently on fetch (keyed by URL) — the same path NIP-17 encrypted media
-     * uses. Runs for both inbound wraps and our own local echo, so a sent image renders immediately.
-     */
-    internal fun registerConcordEncryptedImages(rumor: Event) {
-        val images = ChannelChat.encryptedImagesOf(rumor)
-        if (images.isEmpty()) return
-        images.forEach { img ->
-            if (img.algo == AES_GCM_NAME) {
-                encryptionKeyCache.add(img.url, AESGCM(img.key, img.nonce), img.mimeType)
-            }
-        }
-    }
-
-    /**
-     * Copies each folded community's metadata (name/icon, channel flags, this account's
-     * membership) onto its [ConcordChannel] objects in the cache, and drops messages from
-     * authors banned since they loaded. Runs account-wide on every
-     * [com.vitorpamplona.amethyst.commons.model.concord.ConcordSessionManager] revision —
-     * NOT gated behind the Concord hub screen — so every surface (the Messages-tab
-     * community chip, the chat screen title) reflects the current fold, and bans apply,
-     * even when the hub was never opened.
-     */
-    fun refreshConcordChannelIndex() {
-        val myPubKey = signer.pubKey
-        val relaysByCommunity =
-            concordChannelList.liveCommunities.value.associate { entry ->
-                entry.id to entry.relays.mapNotNullTo(mutableSetOf()) { RelayUrlNormalizer.normalizeOrNull(it) }
-            }
-        for (session in concordSessions.sessions()) {
-            val state = session.state.value ?: continue
-            val communityId = session.entry.id
-            val relays = relaysByCommunity[communityId] ?: emptySet()
-            for (channelIdHex in state.channels.keys) {
-                val channel = cache.getOrCreateConcordChannel(ConcordChannelId(communityId, channelIdHex))
-                // Invalidate the channel's metadata flow only on a real change so the Messages-row
-                // name + community chip recompose when the fold first resolves them (they observe
-                // metadata.stateFlow via observeChannel), without churning every row every tick.
-                // A Private Channel is readable/postable only with its held key (CORD-03 §1).
-                val keyHeld = ConcordActions.canAccessChannel(session.entry, state, channelIdHex)
-                if (channel.updateFrom(state, relays, myPubKey, keyHeld)) channel.updateChannelInfo()
-            }
-            // Dropping a banned author's loaded notes walks every note of every channel, so it runs
-            // when the community's banlist moves, not on every fold tick. New notes from a banned
-            // author are already refused at ingest.
-            val banned = state.authority.bannedMembers()
-            if (banned.isNotEmpty() && concordBannedSwept[communityId] != banned) {
-                for (channelIdHex in state.channels.keys) {
-                    val channel = cache.getOrCreateConcordChannel(ConcordChannelId(communityId, channelIdHex))
-                    channel.notes
-                        .filter { _, note -> note.event?.pubKey?.let { state.authority.isBanned(it) } == true }
-                        .forEach { channel.removeNote(it) }
-                }
-            }
-            concordBannedSwept[communityId] = banned
-        }
-    }
-
-    /** The banlist each community's loaded notes were last swept against ([refreshConcordChannelIndex]). */
-    private val concordBannedSwept = HashMap<String, Set<HexKey>>()
+    private fun isUnbelievedConcordTimerNotice(note: Note) =
+        concordInbox.isUnbelievedConcordTimerNotice(note)
 
     val publicChatListDecryptionCache = PublicChatListDecryptionCache(signer)
     val publicChatList = PublicChatListState(signer, cache, publicChatListDecryptionCache, scope, settings)
@@ -4148,17 +4026,7 @@ class Account(
      * rest of the app uses. A ban that arrives after a message is applied on the
      * next feed pass.
      */
-    private fun isConcordBanned(note: Note): Boolean {
-        val channel = note.inGatherers?.firstNotNullOfOrNull { it as? ConcordChannel } ?: return false
-        val author = note.author?.pubkeyHex ?: note.event?.pubKey ?: return false
-        val authority =
-            concordSessions
-                .sessionFor(channel.channelId.communityId)
-                ?.state
-                ?.value
-                ?.authority ?: return false
-        return authority.isBanned(author)
-    }
+    private fun isConcordBanned(note: Note): Boolean = concordInbox.isConcordBanned(note)
 
     override fun isAcceptable(note: Note): Boolean {
         if (isConcordBanned(note)) return false
