@@ -16,9 +16,9 @@
 
     <string name="settings_keyboard">Tastiera</string>
     <string name="keepass_title">KeePassTL</string>
-    <string name="aether_title">Telos Aether</string>
+    <string name="aether_title">Aether</string>
     <string name="backup_group_keepass">Caveau KeePassTL</string>
     <string name="backup_group_keepass_summary">Password e credenziali salvate</string>
-    <string name="backup_group_aether">Telos Aether Nostr</string>
+    <string name="backup_group_aether">Aether Nostr</string>
     <string name="backup_group_aether_summary">Chiavi Nostr e configurazioni relay</string>
 </resources>

@@ -74,10 +74,10 @@
     <string name="voice_voice_recordings">Voice memos</string>
     <string name="settings_keyboard">키보드</string>
     <string name="keepass_title">KeePassTL</string>
-    <string name="aether_title">Telos Aether</string>
+    <string name="aether_title">Aether</string>
     <string name="backup_group_keepass">KeePassTL 보관함</string>
     <string name="backup_group_keepass_summary">저장된 비밀번호 및 자격 증명</string>
-    <string name="backup_group_aether">Telos Aether Nostr</string>
+    <string name="backup_group_aether">Aether Nostr</string>
     <string name="backup_group_aether_summary">Nostr keys and relay configurations</string>
     <string name="keepass_db_password">데이터베이스 비밀번호</string>
     <string name="keepass_wrong_password">잘못된 비밀번호이거나 유효하지 않은 파일입니다</string>

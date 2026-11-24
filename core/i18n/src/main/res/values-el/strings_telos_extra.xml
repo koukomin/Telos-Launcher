@@ -83,10 +83,10 @@
     <string name="keyboard_settings_category">Ρυθμίσεις πληκτρολογίου</string>
     <string name="keyboard_incognito_title">Λειτουργία Incognito</string>
     <string name="keepass_title">KeePassTL</string>
-    <string name="aether_title">Telos Aether</string>
+    <string name="aether_title">Aether</string>
     <string name="backup_group_keepass">Κωδικοί KeePassTL</string>
     <string name="backup_group_keepass_summary">Αποθηκευμένοι κωδικοί πρόσβασης και λογαριασμοί</string>
-    <string name="backup_group_aether">Telos Aether Nostr</string>
+    <string name="backup_group_aether">Aether Nostr</string>
     <string name="backup_group_aether_summary">Nostr κλειδιά και ρυθμίσεις relays</string>
     <string name="keepass_db_password">Κωδικός πρόσβασης βάσης δεδομένων</string>
     <string name="keepass_wrong_password">Λανθασμένος κωδικός ή μη έγκυρο αρχείο</string>

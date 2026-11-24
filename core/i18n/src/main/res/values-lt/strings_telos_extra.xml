@@ -74,10 +74,10 @@
     <string name="voice_voice_recordings">Voice memos</string>
     <string name="settings_keyboard">Keyboard</string>
     <string name="keepass_title">KeePassTL</string>
-    <string name="aether_title">Telos Aether</string>
+    <string name="aether_title">Aether</string>
     <string name="backup_group_keepass">KeePassTL Vault</string>
     <string name="backup_group_keepass_summary">Saved passwords and credentials</string>
-    <string name="backup_group_aether">Telos Aether Nostr</string>
+    <string name="backup_group_aether">Aether Nostr</string>
     <string name="backup_group_aether_summary">Nostr keys and relay configurations</string>
     <string name="keyboard_enable_title">Įjungti Telos Keyboard</string>
     <string name="keyboard_enable_summary">Įjunkite Telos Keyboard „Android“ įvesties nustatymuose ir pasirinkite jį kaip numatytąjį įvesties metodą.</string>

@@ -18,10 +18,10 @@
 
     <string name="settings_keyboard">Keyboard</string>
     <string name="keepass_title">KeePassTL</string>
-    <string name="aether_title">Telos Aether</string>
+    <string name="aether_title">Aether</string>
     <string name="backup_group_keepass">KeePassTL Vault</string>
     <string name="backup_group_keepass_summary">Saved passwords and credentials</string>
-    <string name="backup_group_aether">Telos Aether Nostr</string>
+    <string name="backup_group_aether">Aether Nostr</string>
     <string name="backup_group_aether_summary">Nostr keys and relay configurations</string>
     <string name="keyboard_enable_title">Ŝalti Telos Keyboard</string>
     <string name="keyboard_enable_summary">Ŝaltu Telos Keyboard en la enigaj agordoj de Android kaj elektu ĝin kiel defaŭltan enigmetodon.</string>

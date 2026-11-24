@@ -10,12 +10,4 @@ sidebar_position: 1
 - Clone the Git repository: `git clone https://github.com/MM2-0/Kvaesitso`
 - Open the project in Android Studio
 
-The optional Linux desktop shell is a separate Gradle module:
-
-```sh
-./gradlew :desktop-linux:packageUberJarForCurrentOS
-# Windows only (JDK 21 + WiX 3.14): setup .exe with bundled JRE
-./gradlew :desktop-linux:packageExe
-```
-
-Do not add `:desktop-linux` or `:ui-kmp` to `:app:app`. `:app:ui` may depend on `:ui-kmp`. Details: [Telos Linux Desktop](/docs/developer-guide/desktop-linux).
+Telos builds the Android launcher only. The JVM `:desktop-linux` module is retired and is not included in `settings.gradle.kts`. Do not add `:desktop-linux` to `:app:app`. `:app:ui` may depend on `:ui-kmp`.

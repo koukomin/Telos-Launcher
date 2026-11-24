@@ -74,10 +74,10 @@
     <string name="voice_voice_recordings">Voice memos</string>
     <string name="settings_keyboard">Clavier</string>
     <string name="keepass_title">KeePassTL</string>
-    <string name="aether_title">Telos Aether</string>
+    <string name="aether_title">Aether</string>
     <string name="backup_group_keepass">Coffre KeePassTL</string>
     <string name="backup_group_keepass_summary">Mots de passe et identifiants enregistrés</string>
-    <string name="backup_group_aether">Telos Aether Nostr</string>
+    <string name="backup_group_aether">Aether Nostr</string>
     <string name="backup_group_aether_summary">Clés Nostr et configurations des relais</string>
     <string name="keepass_db_password">Mot de passe de la base de données</string>
     <string name="keepass_wrong_password">Mot de passe erroné ou fichier invalide</string>

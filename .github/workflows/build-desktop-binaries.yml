@@ -1,25 +1,9 @@
-# Telos Desktop binaries for GitHub (Linux + Windows first; macOS deferred).
-# Uploads ready-to-run UberJars. Windows also builds a jpackage Exe installer
-# (WiX 3.x) and a portable app-image zip that contains telos-desktop.exe + JRE.
+# Telos Desktop JVM binaries are retired. Telos ships as an Android launcher only.
+# Jobs stay `if: false`. Manual dispatch is kept so the file history remains.
 
-name: Desktop checks and Linux ARM64 artifacts
+name: Desktop checks (retired)
 
 on:
-  push:
-    tags:
-      - 'v*'
-    branches:
-      - main
-    paths:
-      - 'desktop-linux/**'
-      - 'ui-kmp/**'
-      - '.github/workflows/build-desktop-binaries.yml'
-  pull_request:
-    types: [opened, synchronize, reopened, closed]
-    paths:
-      - 'desktop-linux/**'
-      - 'ui-kmp/**'
-      - '.github/workflows/build-desktop-binaries.yml'
   workflow_dispatch:
 
 concurrency:

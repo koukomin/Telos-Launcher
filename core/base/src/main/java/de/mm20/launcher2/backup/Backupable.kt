@@ -23,7 +23,7 @@ enum class BackupGroup(val key: String) {
     VirtualApps("virtual_apps"),
     /** Password manager vault */
     KeePassTL("keepass"),
-    /** Telos Aether Nostr keys and relays */
+    /** Aether Nostr keys and relays */
     Aether("aether"),
     /** Telos Fit health and fitness records */
     Fit("fit");

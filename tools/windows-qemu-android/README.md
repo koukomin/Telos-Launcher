@@ -4,7 +4,7 @@ Headless QEMU + scrcpy for BlissOS x86_64. Encrypted userdata is `images/android
 
 **Full user guide** (Windows, Debian/Ubuntu, Fedora/RHEL, Arch, Gentoo, macOS Apple Silicon): [docs/docs/user-guide/telos/android-vm.md](../../docs/docs/user-guide/telos/android-vm.md).
 
-Not Telos Desktop (`:desktop-linux`). Do not depend `:app:app` on this folder.
+Not the retired Telos Desktop JVM module (`:desktop-linux`). Do not depend `:app:app` on this folder.
 
 ## Hosts
 

@@ -2,9 +2,11 @@
 sidebar_position: 8
 ---
 
-# Telos Desktop (`:desktop-linux`)
+# Telos Desktop (`:desktop-linux`) — retired
 
-`:desktop-linux` is a **standalone Compose for Desktop / JVM** module for **Telos Desktop**. It is registered in `settings.gradle.kts` and is **not** a dependency of `:app:app`. The Android APK does not ship Compose Desktop, cryptsetup helpers, or Linux icon scanners. CI publishes Linux UberJars and Windows UberJar **plus** a WiX/jpackage **setup `.exe`** (and a portable zip with `telos-desktop.exe` + bundled JRE) to GitHub; macOS is deferred until those run cleanly.
+> **Retired.** Telos is the Android launcher. `:desktop-linux` is not included in the Gradle build, and desktop binary CI does not run on push or PR. This page is a historical record of the JVM shell.
+
+`:desktop-linux` was a **standalone Compose for Desktop / JVM** module. It was **not** a dependency of `:app:app`. The Android APK does not ship Compose Desktop, cryptsetup helpers, or Linux icon scanners.
 
 ## Build
 

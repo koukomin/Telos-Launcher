@@ -18,10 +18,10 @@
 
     <string name="settings_keyboard">Bàn phím</string>
     <string name="keepass_title">KeePassTL</string>
-    <string name="aether_title">Telos Aether</string>
+    <string name="aether_title">Aether</string>
     <string name="backup_group_keepass">Kho lưu trữ KeePassTL</string>
     <string name="backup_group_keepass_summary">Mật khẩu và thông tin xác thực đã lưu</string>
-    <string name="backup_group_aether">Telos Aether Nostr</string>
+    <string name="backup_group_aether">Aether Nostr</string>
     <string name="backup_group_aether_summary">Nostr keys and relay configurations</string>
     <string name="keepass_db_password">Mật khẩu cơ sở dữ liệu</string>
     <string name="keepass_wrong_password">Sai mật khẩu hoặc tệp không hợp lệ</string>

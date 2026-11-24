@@ -6,6 +6,8 @@ sidebar_position: 11
 
 **If this session dies, resume here.** Compose remains an xdg-toplevel pinned fullscreen. Native panel/dock use **GtkLayerShell** (`zwlr_layer_shell_v1`) when the host has `gir1.2-gtk-layer-shell`. Without that package, Compose chrome stays visible (W0).
 
+> **Retired** with `:desktop-linux`. Telos is the Android launcher.
+
 P0–P4, Helix H0–H6, Surface S0–S4 stay in tree. Do **not** depend `:app:app` on `:desktop-linux`. Do **not** merge or release unless asked.
 
 ## W0 (in tree)

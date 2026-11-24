@@ -74,10 +74,10 @@
     <string name="voice_voice_recordings">Voice memos</string>
     <string name="settings_keyboard">Клавиатура</string>
     <string name="keepass_title">KeePassTL</string>
-    <string name="aether_title">Telos Aether</string>
+    <string name="aether_title">Aether</string>
     <string name="backup_group_keepass">Хранилище KeePassTL</string>
     <string name="backup_group_keepass_summary">Сохраненные пароли и учетные данные</string>
-    <string name="backup_group_aether">Telos Aether Nostr</string>
+    <string name="backup_group_aether">Aether Nostr</string>
     <string name="backup_group_aether_summary">Ключи Nostr и конфигурации реле</string>
     <string name="keepass_db_password">Пароль базы данных</string>
     <string name="keepass_wrong_password">Неверный пароль или поврежденный файл</string>

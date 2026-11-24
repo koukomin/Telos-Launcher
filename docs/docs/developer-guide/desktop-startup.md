@@ -2,7 +2,9 @@
 sidebar_position: 8
 ---
 
-# Telos Desktop cold-start costs
+# Telos Desktop cold-start costs (retired)
+
+> **Retired** with `:desktop-linux`.
 
 `:desktop-linux` Main / Application startup must stay light. Heavy disk and
 process work is deferred until first use and cached afterward. Features are not

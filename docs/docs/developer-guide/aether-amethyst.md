@@ -1,6 +1,6 @@
 # Embedded Amethyst in Aether
 
-Aether composes the real Amethyst Android client inside the Telos APK. It does
+Aether is a **Telos virtual app** (Nostr). The launcher name is **Telos**. Aether composes the real Amethyst Android client inside the Telos APK. It does
 not install, launch or require an external Amethyst APK. The integration is included
 in version 1.45.71. Earlier published versions contain the local preview.
 

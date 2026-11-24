@@ -74,10 +74,10 @@
     <string name="voice_voice_recordings">Voice memos</string>
     <string name="settings_keyboard">لوحة المفاتيح</string>
     <string name="keepass_title">KeePassTL</string>
-    <string name="aether_title">Telos Aether</string>
+    <string name="aether_title">Aether</string>
     <string name="backup_group_keepass">خزينة KeePassTL</string>
     <string name="backup_group_keepass_summary">كلمات المرور وبيانات الاعتماد المحفوظة</string>
-    <string name="backup_group_aether">Telos Aether Nostr</string>
+    <string name="backup_group_aether">Aether Nostr</string>
     <string name="backup_group_aether_summary">Nostr keys and relay configurations</string>
     <string name="keepass_db_password">كلمة مرور قاعدة البيانات</string>
     <string name="keepass_wrong_password">كلمة المرور غير صحيحة أو الملف غير صالح</string>
