@@ -282,7 +282,6 @@ class OpeningHoursTest {
 
     @Test
     @Ignore("Expected to fail with the current implementation")
-    // TODO: Fix parseOpeningSchedule to pass this test
     fun testEvenOddWeeks() {
         OpeningSchedule.Hours(
             setOf(

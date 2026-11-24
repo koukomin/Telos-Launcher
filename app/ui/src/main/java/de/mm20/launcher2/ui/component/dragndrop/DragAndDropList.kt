@@ -235,7 +235,6 @@ fun LazyDragAndDropRow(
     state: LazyDragAndDropListState,
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(0.dp),
-    //reverseLayout: Boolean = false, //TODO: Fix reverse layout
     horizontalArrangement: Arrangement.Horizontal = Arrangement.Start,
     verticalAlignment: Alignment.Vertical = Alignment.Top,
     flingBehavior: FlingBehavior = ScrollableDefaults.flingBehavior(),
@@ -267,7 +266,6 @@ fun LazyDragAndDropColumn(
     state: LazyDragAndDropListState,
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(0.dp),
-    //reverseLayout: Boolean = false, //TODO: Fix reverse layout
     verticalArrangement: Arrangement.Vertical = Arrangement.Top,
     horizontalAlignment: Alignment.Horizontal = Alignment.Start,
     flingBehavior: FlingBehavior = ScrollableDefaults.flingBehavior(),

@@ -61,7 +61,6 @@ class TelosPocketGuard private constructor(context: Context) : SensorEventListen
                 val inPocket = distance < maxRange && distance < 1.0f
                 if (_isInPocket.value != inPocket) {
                     _isInPocket.value = inPocket
-                    Log.d(TAG, "Pocket state changed: isInPocket=$inPocket")
                 }
             }
             Sensor.TYPE_ACCELEROMETER -> {
@@ -69,7 +68,6 @@ class TelosPocketGuard private constructor(context: Context) : SensorEventListen
                 val faceDown = zAxis < -8.5f // Device screen facing down towards ground
                 if (!_isFaceDown.value && faceDown) {
                     _isFaceDown.value = true
-                    Log.d(TAG, "Device flipped face-down!")
                     onFlipFaceDownAction?.invoke()
                 } else if (!faceDown) {
                     _isFaceDown.value = false

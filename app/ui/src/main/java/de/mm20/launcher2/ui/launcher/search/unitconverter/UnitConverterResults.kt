@@ -219,10 +219,10 @@ fun getDimensionIcon(dimension: Dimension): Int {
         Dimension.Area -> BaseR.drawable.square_foot_24px
         Dimension.Currency -> BaseR.drawable.payments_24px
         Dimension.Data -> BaseR.drawable.hard_disk_24px
-        Dimension.Bitrate -> TODO()
-        Dimension.Pressure -> TODO()
+        Dimension.Bitrate -> BaseR.drawable.speed_24px
+        Dimension.Pressure -> BaseR.drawable.device_thermostat_24px
         Dimension.Energy -> BaseR.drawable.bolt_24px
-        Dimension.Frequency -> TODO()
+        Dimension.Frequency -> BaseR.drawable.bolt_24px
         Dimension.Temperature -> BaseR.drawable.device_thermostat_24px
         Dimension.Time -> BaseR.drawable.schedule_24px
     }

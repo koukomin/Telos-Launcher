@@ -1,11 +1,9 @@
 package de.mm20.launcher2.debug
 
 import android.os.StrictMode
-import android.util.Log
 
 // This class does nothing in release builds
 fun initDebugMode() {
-    Log.d("Telos", "Telos is running in debug mode.")
     StrictMode.setThreadPolicy(
         StrictMode.ThreadPolicy.Builder()
             .detectAll()

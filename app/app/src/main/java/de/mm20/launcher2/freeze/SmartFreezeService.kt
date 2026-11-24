@@ -102,7 +102,6 @@ class SmartFreezeService : Service() {
         // Note: Full notification check requires NotificationListenerService.
         // We use a best-effort approach or assume integration with a companion listener.
         if (hasForegroundOrOngoingNotifications(packageName)) {
-            Log.d("SmartFreeze", "Skipping freeze for $packageName: Has ongoing notifications")
             return false
         }
 
@@ -170,10 +169,8 @@ class SmartFreezeService : Service() {
             (Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED))
 
         if (isShizukuAvailable) {
-            Log.d("SmartFreeze", "Freezing $packageName for user $userId via Shizuku")
             executeShellCommandViaShizuku("cmd package suspend --user $userId $packageName")
         } else {
-            Log.d("SmartFreeze", "Shizuku not available, falling back to root for $packageName user $userId")
             executeShellCommandViaRoot("pm suspend --user $userId $packageName")
         }
     }
@@ -184,10 +181,8 @@ class SmartFreezeService : Service() {
             (Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED))
 
         if (isShizukuAvailable) {
-            Log.d("SmartFreeze", "Unfreezing $packageName for user $userId via Shizuku")
             executeShellCommandViaShizuku("cmd package unsuspend --user $userId $packageName")
         } else {
-            Log.d("SmartFreeze", "Shizuku not available, falling back to root for $packageName user $userId")
             executeShellCommandViaRoot("pm unsuspend --user $userId $packageName")
         }
     }

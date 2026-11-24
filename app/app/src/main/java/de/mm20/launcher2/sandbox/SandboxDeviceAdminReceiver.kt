@@ -11,7 +11,6 @@ class SandboxDeviceAdminReceiver : DeviceAdminReceiver() {
     @Suppress("DEPRECATION")
     override fun onProfileProvisioningComplete(context: Context, intent: Intent) {
         super.onProfileProvisioningComplete(context, intent)
-        Log.d("SandboxDeviceAdmin", "Profile provisioning complete")
         
         val dpm = context.getSystemService(Context.DEVICE_POLICY_SERVICE) as DevicePolicyManager
         val admin = ComponentName(context, SandboxDeviceAdminReceiver::class.java)

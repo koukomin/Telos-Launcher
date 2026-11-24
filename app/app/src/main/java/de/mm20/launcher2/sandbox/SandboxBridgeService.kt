@@ -19,11 +19,6 @@ class SandboxBridgeService : Service() {
 
     private val binder = object : ISandboxBridge.Stub() {
         override fun installApp(pfd: ParcelFileDescriptor, packageName: String) {
-            val callingUid = getCallingUid()
-            // In a real app we'd verify the caller is our own app from another profile.
-            // For now, let's just proceed.
-            Log.d("SandboxBridge", "installApp requested for $packageName by uid $callingUid")
-            
             scope.launch {
                 try {
                     val packageInstaller = packageManager.packageInstaller
@@ -56,7 +51,6 @@ class SandboxBridgeService : Service() {
                     )
                     
                     session.commit(pendingIntent.intentSender)
-                    Log.d("SandboxBridge", "Session committed for $packageName")
                 } catch (e: Exception) {
                     Log.e("SandboxBridge", "Failed to install app $packageName", e)
                 }
@@ -64,7 +58,6 @@ class SandboxBridgeService : Service() {
         }
 
         override fun ping() {
-            Log.d("SandboxBridge", "ping received")
         }
     }
 

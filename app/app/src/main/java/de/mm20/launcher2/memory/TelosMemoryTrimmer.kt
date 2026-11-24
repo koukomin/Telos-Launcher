@@ -61,7 +61,6 @@ class TelosMemoryTrimmer private constructor(
             // Wait 60 seconds before aggressive screen-off purge
             delay(60_000L)
             if (isActive) {
-                Log.d(TAG, "Screen off > 60s: Purging non-essential caches & evicting unpinned icons")
                 purgeNonEssentialCaches(critical = false)
             }
         }
@@ -79,7 +78,6 @@ class TelosMemoryTrimmer private constructor(
                 purgeNonEssentialCaches(critical = true)
             }
             level >= ComponentCallbacks2.TRIM_MEMORY_RUNNING_LOW -> {
-                Log.d(TAG, "onTrimMemory: Moderate trim level ($level) - Trimming icon cache by 50%")
                 purgeNonEssentialCaches(critical = false)
             }
             level == ComponentCallbacks2.TRIM_MEMORY_UI_HIDDEN -> {
