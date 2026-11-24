@@ -245,7 +245,6 @@ fun StoreDashboardScreen(initialLink: String = "", initialQuery: String = "") {
     }) {
         Box(Modifier.fillMaxSize()) {
             Column(Modifier.fillMaxSize()) {
-                // === TELOS_PENDING_REVIEW_START: store_micro_progress ===
                 if (checking || playChecking) {
                     androidx.compose.material3.LinearProgressIndicator(
                         modifier = Modifier.fillMaxWidth().height(2.dp)
@@ -257,7 +256,6 @@ fun StoreDashboardScreen(initialLink: String = "", initialQuery: String = "") {
                         modifier = Modifier.padding(horizontal = 16.dp, vertical = 2.dp)
                     )
                 }
-                // === TELOS_PENDING_REVIEW_END: store_micro_progress ===
                                 val freezeManager: de.mm20.launcher2.freeze.FreezeManager = koinInject()
                 val preferredStorePkg = PlayStoreInventory.getPreferredStorePackage(context)
                 val preferredStoreTitle = PlayStoreInventory.getPreferredStoreTitle(context)

@@ -517,9 +517,7 @@ fun SearchSettingsScreen() {
                         } else {
                             Preference(
                                 title = stringResource(I18nR.string.preference_set_custom_lock),
-                                // === TELOS_PENDING_REVIEW_START: ui_i18n_and_features_batch ===
                                 summary = stringResource(if (customLockHashed != null) I18nR.string.custom_lock_pin_set else I18nR.string.custom_lock_no_pin),
-                                // === TELOS_PENDING_REVIEW_END: ui_i18n_and_features_batch ===
                                 iconPadding = true,
                                 onClick = { showSetPinDialog = true }
                             )

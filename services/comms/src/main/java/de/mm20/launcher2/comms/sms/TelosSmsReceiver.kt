@@ -1,4 +1,3 @@
-// === TELOS_PENDING_REVIEW_START: sms_and_radio_engine ===
 package de.mm20.launcher2.comms.sms
 
 import de.mm20.launcher2.base.containedScope
@@ -56,4 +55,3 @@ class TelosSmsReceiver : BroadcastReceiver(), KoinComponent {
         }
     }
 }
-// === TELOS_PENDING_REVIEW_END: sms_and_radio_engine ===

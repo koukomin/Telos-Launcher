@@ -74,10 +74,10 @@
     <string name="voice_voice_recordings">Voice memos</string>
     <string name="settings_keyboard">Teclado</string>
     <string name="keepass_title">KeePassTL</string>
-    <string name="aether_title">Telos Aether</string>
+    <string name="aether_title">Aether</string>
     <string name="backup_group_keepass">Bóveda KeePassTL</string>
     <string name="backup_group_keepass_summary">Contraseñas y credenciales guardadas</string>
-    <string name="backup_group_aether">Telos Aether Nostr</string>
+    <string name="backup_group_aether">Aether Nostr</string>
     <string name="backup_group_aether_summary">Claves Nostr y configuraciones de retransmisión</string>
     <string name="keepass_db_password">Contraseña de la base de datos</string>
     <string name="keepass_wrong_password">Contraseña incorrecta o archivo no válido</string>
@@ -119,4 +119,22 @@
     <string name="aether_attached_media">Medio adjunto: %1$s</string>
     <string name="aether_dm_unavailable_title">Mensajes directos no disponibles</string>
     <string name="aether_dm_unavailable_summary">Los MD cifrados requieren una sesión Nostr activa. Esta versión mantiene las conversaciones solo en local.</string>
+<string name="fit_sources_tab">Fuentes</string>
+<string name="fit_sources_intro">Fit lee pasos, ritmo cardíaco, sueño, peso, calorías y distancia de Health Connect. Google Fit, Garmin Connect, Samsung Health y Huawei Health sincronizan ahí; ábrelas, activa Health Connect y concede acceso a Fit.</string>
+<string name="fit_source_health_connect">Health Connect</string>
+<string name="fit_source_google_fit">Google Fit / Google Health</string>
+<string name="fit_source_garmin">Garmin Connect</string>
+<string name="fit_source_samsung">Samsung Health</string>
+<string name="fit_source_huawei">Huawei Health</string>
+<string name="fit_source_connect">Conectar</string>
+<string name="fit_source_manage">Gestionar</string>
+<string name="fit_source_open_app">Abrir app</string>
+<string name="fit_source_grant">Conceder acceso a Health Connect</string>
+<string name="fit_source_installed_bridge">Instalada. Activa Health Connect en esta app para que Fit lea sus datos.</string>
+<string name="fit_source_not_installed">No instalada en este dispositivo</string>
+<string name="keyboard_look_category">Apariencia</string>
+<string name="keyboard_accent_title">Color de acento</string>
+<string name="keyboard_scale_title">Tamaño del teclado</string>
+<string name="keyboard_key_height_title">Altura de teclas</string>
+<string name="keyboard_key_font_title">Tamaño del texto</string>
 </resources>

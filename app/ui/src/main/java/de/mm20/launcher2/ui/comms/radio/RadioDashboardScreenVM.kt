@@ -1,4 +1,3 @@
-// === TELOS_PENDING_REVIEW_START: radio_browser_ktor ===
 package de.mm20.launcher2.ui.comms.radio
 import de.mm20.launcher2.i18n.R as I18nR
 
@@ -267,4 +266,3 @@ class RadioDashboardScreenVM : ViewModel(), KoinComponent {
             ?: error("cannot open file")
     }
 }
-// === TELOS_PENDING_REVIEW_END: radio_browser_ktor ===

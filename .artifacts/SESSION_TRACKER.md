@@ -13,3 +13,33 @@ The 1.45.74 runs exposed 11 further Kotlin errors in Media. Corrected resource a
 2026-11-20: PR #132 retry compiled, then hit the stock Pixel Launcher ANR before Aether login. Added a one-time, emulator-only recovery for that exact system dialog.
 
 2026-11-20: PR #132 Aether UI passed all four tests. A parallel APK job still failed to locate KSP 2.3.14. Route the KSP plugin lookup away from Google Maven to its publishing repository.
+2026-11-24: Item #3 code-cleanup — extract Concord ingest/expiry/index from Account.kt into AccountConcordInbox. Account public methods stay one-line delegates. ConcordSessionManager sink uses lazy inbox to avoid init cycle. :amethyst:commons:compileKotlinJvm succeeded.
+2026-11-24: Item #4 code-cleanup — HealthConnectAccess in :core:permissions for Fit SDK/packages/permissions. FitHealthHub delegates. Single FitHealthRationaleActivity system target; Amethyst rationale activity kept exported=false for in-app workouts. Catalog pin androidx-health-connect 1.1.0. FitHealthHubTest passed. ApkInstallActivity now injects AutoFreezeController (installer ctor).
+2026-11-24: Item #5 code-cleanup — retire desktop docs/CI (workflow_dispatch only, jobs if:false). README/setup/AGENTS/modules/notices: Android-only Telos. Virtual app label aether_title/backup_group_aether drop "Telos " prefix (launcher name is Telos; Aether is the Nostr app).
+2026-11-24: Item #6 code-cleanup — git worktree remove --force .claude/worktrees/brave-zhukovsky-2585bc (877M nested clone, dirty GridItem.kt discarded). Add .claude/worktrees/ to .gitignore.
+2026-11-24: Item #7 code-cleanup — strip all TELOS_PENDING_REVIEW_START/END comment markers (118 files, 479 lines). Code unchanged. Docs catalogue no longer mentions the markers.
+2026-11-24: Item #8 code-cleanup — keep KMP AppBottomBar hook. Real UI is AppBottomBarContent; AppPlatform default draws it; AppPlatform.None stays empty; AndroidAppPlatform no longer re-exports a second AppBottomBar. Screens still call platform.AppBottomBar. :amethyst:commonsUI compileAndroidMain and :amethyst:amethyst:compileFdroidDebugKotlin succeeded.
+2026-11-24: Item #9 code-cleanup — merge strings_fit_sources.xml and strings_keyboard_look.xml into strings_telos_extra.xml (905 new keys, 101 files removed, extra created for la/grc). No duplicate keys. :core:i18n:mergeDebugResources succeeded. Translations kept.
+2026-11-24: P2 logs — drop ThemeBundle Log.d("MM20") dump; remove AdbKey privateKey.toString and TLS alias logs; remove AdbClient/AdbPairingClient handshake and packet dumps. Keep pairing Log.e. :libs:shizuku-next and :data:themes compileDebugKotlin succeeded.
+2026-11-24: P2 leftover trio — SearchBenchmark.kt replaces Before/After (compile-once matcher). BinaryClock inactive bits use accent color at 0.45 alpha. DepartureRow uses weight instead of fillMaxWidth(0.66f). :app:ui:compileDefaultDebugKotlin succeeded.
+2026-11-24: P2 FIXMEURL + Fit demo — OsmLocation OSM_FIX_THE_MAP_URL. FitViewModel starts at 0/empty/null; no sample meals/steps/HR/sleep/weight. Dashboard drops fake 54 min / 88% / 70kg target. FitViewModelTest passed.
+2026-11-24: User: synexise. Finish uncommitted P2: fold desktop i18n into strings_desktop.xml (355 keys, all locales); extract StoreInstallSecurity and FreezeNetworkIsolation; drop MM20 debug logs (Debug, Markdown AST dump, ExchangeRateWorker, NotificationService, icon pack installers). AGENTS leftovers already list High splits + out-of-audit items. Gradle wrapper lock denied in this session; i18n key check passed (355 unique, 0 locale mismatches).
+2026-11-24: User: write leftovers to SESSION_TRACKER, remove them from AGENTS.md, give Gemini continuation prompt.
+
+### code-cleanup leftovers (handoff for Gemini / next agent)
+Branch: `code-cleanup`. When you finish an item, delete it from this list in the same change. Do not merge or create a release unless the user asks.
+
+**Medium (next if user says continue without High)**
+- [ ] Split `TelosKeyboardService.kt` (IME + settings + buffer in one service). Preserve behavior. Appearance helpers already exist.
+
+**High (do not start unless asked; preserve behavior; written plan first)**
+- [ ] Split `LauncherScaffold.kt` and `StoreDashboardScreen.kt` only with a written plan.
+- [ ] Split Amethyst `EventCache` / `NoteCompose` / `BaseAccountViewModel` only with a written plan.
+
+**Out of audit (do not merge/release unless the user asks)**
+- [ ] Diagnose failed GitHub Release **v1.45.79** (`build` arm64-v8a / armeabi-v7a).
+- [ ] Dependabot PR **#137** Gradle 9.9.2: keep **9.9.1** while Amethyst fails on 9.9.2.
+- [ ] Dependabot PR **#136** Vue docs.
+- [ ] Failed CodeQL on `main`.
+
+P2 Low/Medium from the audit is done: MM20/ADB logs, SearchBenchmark, BinaryClock, DepartureRow, OSM_FIX_THE_MAP_URL, Fit empty start, FreezeNetworkIsolation, StoreInstallSecurity, desktop include comment, fold `strings_desktop.xml`, TELOS_PENDING_REVIEW markers, nested Claude worktree, AppBottomBar, Fit/keyboard extra catalog, Concord inbox extract, HealthConnectAccess, retire desktop docs/CI. Last commit: `952664ff9` on `code-cleanup`.

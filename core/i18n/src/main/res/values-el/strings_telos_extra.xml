@@ -83,10 +83,10 @@
     <string name="keyboard_settings_category">Ρυθμίσεις πληκτρολογίου</string>
     <string name="keyboard_incognito_title">Λειτουργία Incognito</string>
     <string name="keepass_title">KeePassTL</string>
-    <string name="aether_title">Telos Aether</string>
+    <string name="aether_title">Aether</string>
     <string name="backup_group_keepass">Κωδικοί KeePassTL</string>
     <string name="backup_group_keepass_summary">Αποθηκευμένοι κωδικοί πρόσβασης και λογαριασμοί</string>
-    <string name="backup_group_aether">Telos Aether Nostr</string>
+    <string name="backup_group_aether">Aether Nostr</string>
     <string name="backup_group_aether_summary">Nostr κλειδιά και ρυθμίσεις relays</string>
     <string name="keepass_db_password">Κωδικός πρόσβασης βάσης δεδομένων</string>
     <string name="keepass_wrong_password">Λανθασμένος κωδικός ή μη έγκυρο αρχείο</string>
@@ -128,4 +128,9 @@
     <string name="aether_attached_media">Συνημμένο πολυμέσο: %1$s</string>
     <string name="aether_dm_unavailable_title">Τα άμεσα μηνύματα δεν είναι διαθέσιμα</string>
     <string name="aether_dm_unavailable_summary">Τα κρυπτογραφημένα DM χρειάζονται ζωντανή συνεδρία Nostr. Αυτή η έκδοση κρατά τις συνομιλίες μόνο τοπικά.</string>
+<string name="keyboard_look_category">Εμφάνιση</string>
+<string name="keyboard_accent_title">Χρώμα τονισμού</string>
+<string name="keyboard_scale_title">Μέγεθος πληκτρολογίου</string>
+<string name="keyboard_key_height_title">Ύψος πλήκτρων</string>
+<string name="keyboard_key_font_title">Μέγεθος γραμμάτων</string>
 </resources>

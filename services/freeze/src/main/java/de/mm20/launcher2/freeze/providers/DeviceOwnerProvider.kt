@@ -41,7 +41,6 @@ internal class DeviceOwnerProvider(private val context: Context) : PrivilegedAcc
     // inside the app. Just reports whether it's already held.
     override suspend fun requestPermission(): Boolean = isAvailable()
 
-    // === TELOS_PENDING_REVIEW_START: multi_user_freeze ===
     override suspend fun setPackagesSuspended(
         packageNames: List<String>,
         suspended: Boolean,
@@ -82,7 +81,6 @@ internal class DeviceOwnerProvider(private val context: Context) : PrivilegedAcc
     override suspend fun forceStopPackage(packageName: String, userId: Int): Boolean = false
 
     override suspend fun clearCache(packageName: String, userId: Int): Boolean = false
-    // === TELOS_PENDING_REVIEW_END: multi_user_freeze ===
 
     companion object {
         private const val TAG = "DeviceOwnerProvider"

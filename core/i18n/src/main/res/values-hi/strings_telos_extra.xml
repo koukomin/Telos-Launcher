@@ -74,10 +74,10 @@
     <string name="voice_voice_recordings">Voice memos</string>
     <string name="settings_keyboard">Keyboard</string>
     <string name="keepass_title">KeePassTL</string>
-    <string name="aether_title">Telos Aether</string>
+    <string name="aether_title">Aether</string>
     <string name="backup_group_keepass">KeePassTL Vault</string>
     <string name="backup_group_keepass_summary">Saved passwords and credentials</string>
-    <string name="backup_group_aether">Telos Aether Nostr</string>
+    <string name="backup_group_aether">Aether Nostr</string>
     <string name="backup_group_aether_summary">Nostr keys and relay configurations</string>
     <string name="keyboard_enable_title">Telos Keyboard सक्षम करें</string>
     <string name="keyboard_enable_summary">Android इनपुट सेटिंग में Telos Keyboard चालू करें और इसे अपनी डिफ़ॉल्ट इनपुट विधि चुनें।</string>
@@ -111,4 +111,22 @@
     <string name="keepass_unnamed">बिना नाम</string>
     <string name="keepass_wrong_password">गलत पासवर्ड या अमान्य फ़ाइल</string>
     <string name="keepass_encrypted_val">एन्क्रिप्टेड</string>
+<string name="fit_sources_tab">स्रोत</string>
+<string name="fit_sources_intro">Fit कदम, हृदय गति, नींद, वजन, कैलोरी और दूरी Health Connect से पढ़ता है। Google Fit, Garmin Connect, Samsung Health और Huawei Health वहीं सिंक करते हैं; ऐप खोलें, Health Connect चालू करें, फिर Fit को अनुमति दें।</string>
+<string name="fit_source_health_connect">Health Connect</string>
+<string name="fit_source_google_fit">Google Fit / Google Health</string>
+<string name="fit_source_garmin">Garmin Connect</string>
+<string name="fit_source_samsung">Samsung Health</string>
+<string name="fit_source_huawei">Huawei Health</string>
+<string name="fit_source_connect">कनेक्ट</string>
+<string name="fit_source_manage">प्रबंधित करें</string>
+<string name="fit_source_open_app">ऐप खोलें</string>
+<string name="fit_source_grant">Health Connect पहुँच दें</string>
+<string name="fit_source_installed_bridge">इंस्टॉल है। Fit के डेटा पढ़ने के लिए इस ऐप में Health Connect चालू करें।</string>
+<string name="fit_source_not_installed">इस डिवाइस पर इंस्टॉल नहीं</string>
+<string name="keyboard_look_category">Look</string>
+<string name="keyboard_accent_title">Accent color</string>
+<string name="keyboard_scale_title">Keyboard size</string>
+<string name="keyboard_key_height_title">Key height</string>
+<string name="keyboard_key_font_title">Key text size</string>
 </resources>

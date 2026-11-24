@@ -1,4 +1,3 @@
-// === TELOS_PENDING_REVIEW_START: smart_freeze_service ===
 package de.mm20.launcher2.freeze
 
 import android.app.ActivityManager
@@ -165,7 +164,6 @@ class SmartFreezeService : Service() {
         return false
     }
 
-    // === TELOS_PENDING_REVIEW_START: multi_user_freeze ===
     private suspend fun freezePackage(packageName: String, userId: Int) {
         if (!TelosShellEngine.isValidPackageName(packageName)) return
         val isShizukuAvailable = (Shizuku.pingBinder() && 
@@ -193,7 +191,6 @@ class SmartFreezeService : Service() {
             executeShellCommandViaRoot("pm unsuspend --user $userId $packageName")
         }
     }
-    // === TELOS_PENDING_REVIEW_END: multi_user_freeze ===
 
     private suspend fun executeShellCommandViaShizuku(command: String) {
         val result = TelosShellEngine.execResult(command, timeoutMs = 15_000L)
@@ -226,4 +223,3 @@ class SmartFreezeService : Service() {
         manager.createNotificationChannel(channel)
     }
 }
-// === TELOS_PENDING_REVIEW_END: smart_freeze_service ===

@@ -53,9 +53,7 @@ object DesktopFileLauncher {
             // Integrate KsshaskpassManager env injection
             com.telos.desktop.security.KsshaskpassManager().injectAskPassEnv(pb)
 
-            // === TELOS_PENDING_REVIEW_START: telos_elastic_sharded_pqc_vault ===
             com.telos.desktop.vault.PortableEnvironmentIsolator.inject(pb)
-            // === TELOS_PENDING_REVIEW_END: telos_elastic_sharded_pqc_vault ===
             com.telos.desktop.cursor.CursorThemeApplier.inject(pb)
             if (decision == DesktopNetworkController.LaunchRouteDecision.Vpn) {
                 // Best-effort tag only — do not fake a network namespace.

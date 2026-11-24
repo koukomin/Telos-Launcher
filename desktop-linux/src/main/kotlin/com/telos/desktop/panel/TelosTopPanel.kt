@@ -142,11 +142,9 @@ fun TelosTopPanel(
     ) {
         Row(Modifier.fillMaxWidth().height(barH).padding(horizontal = 8.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceBetween) {
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                // === TELOS_PENDING_REVIEW_START: telos_de_final_polish ===
                 Box(Modifier.clickable { onLauncher() }.padding(4.dp)) {
                     CandyCyberIcon(CandyIcon.TelosLogo, iconDp, contrastTone = iconTone)
                 }
-                // === TELOS_PENDING_REVIEW_END: telos_de_final_polish ===
                 val showWorkspaceTints = WorkspaceTintStrips.shouldShow(
                     settings?.workspaceTints ?: true,
                     settings?.themePanicMute ?: false,
@@ -185,13 +183,11 @@ fun TelosTopPanel(
                     }
                 }
                 Text(wm.windows.find { it.id == wm.focusedId }?.title ?: "Desktop", color = glyph, fontSize = 12.sp)
-                // === TELOS_PENDING_REVIEW_START: telos_launcher_desktop_ui_parity ===
                 TelosVirtualApps.all.filter { it.domain in TelosVirtualApps.pinnedDefaults }.forEach { app ->
                     Box(Modifier.clickable { onOpenTelos(app.windowTitle) }.padding(horizontal = 2.dp)) {
                         CandyCyberIcon(app.icon, iconDp, contrastTone = iconTone)
                     }
                 }
-                // === TELOS_PENDING_REVIEW_END: telos_launcher_desktop_ui_parity ===
             }
             Text(
                 clock.format(DateTimeFormatter.ofPattern("EEE d MMM  HH:mm")),
@@ -298,7 +294,6 @@ fun TelosTopPanel(
                         PanelPopup.Tray -> tray.forEach {
                             Text("${it.name} ${if (it.running) "●" else "○"}", modifier = Modifier.clickable { SystemTrayManager.launch(it) })
                         }
-                        // === TELOS_PENDING_REVIEW_START: telos_desktop_kwin_parity_upgrade ===
                         PanelPopup.Style -> {
                             val s = settings
                             if (s == null) {
@@ -439,7 +434,6 @@ fun TelosTopPanel(
                             }
                         }
                         else -> {}
-                        // === TELOS_PENDING_REVIEW_END: telos_desktop_kwin_parity_upgrade ===
                     }
                 }
             }

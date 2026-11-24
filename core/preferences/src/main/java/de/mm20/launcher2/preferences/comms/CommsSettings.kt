@@ -1,4 +1,3 @@
-// === TELOS_PENDING_REVIEW_START: comms_settings_engine ===
 package de.mm20.launcher2.preferences.comms
 
 import de.mm20.launcher2.preferences.CommsGroup
@@ -774,4 +773,3 @@ class CommsSettings internal constructor(
         dataStore.update { it.copy(comms = group) }
     }
 }
-// === TELOS_PENDING_REVIEW_END: comms_settings_engine ===

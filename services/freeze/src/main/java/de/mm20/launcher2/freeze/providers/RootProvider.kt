@@ -29,7 +29,6 @@ internal class RootProvider : PrivilegedAccessProvider {
 
     override suspend fun requestPermission(): Boolean = isAvailable()
 
-    // === TELOS_PENDING_REVIEW_START: multi_user_freeze ===
     override suspend fun setPackagesSuspended(packageNames: List<String>, suspended: Boolean, userId: Int): Set<String> {
         val action = if (suspended) "suspend" else "unsuspend"
         return packageNames.filterTo(mutableSetOf()) { pkg ->
@@ -63,7 +62,6 @@ internal class RootProvider : PrivilegedAccessProvider {
         // Clearing only cache to avoid data loss
         return runAsRoot("rm -rf /data/user/$userId/$packageName/cache/*")
     }
-    // === TELOS_PENDING_REVIEW_END: multi_user_freeze ===
 
     private suspend fun runAsRoot(command: String, timeoutSeconds: Long? = null): Boolean {
         val timeoutMs = (timeoutSeconds ?: 30L) * 1_000L

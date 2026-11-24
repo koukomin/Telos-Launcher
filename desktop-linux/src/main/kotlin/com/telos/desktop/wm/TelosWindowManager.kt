@@ -9,7 +9,6 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.unit.IntSize
 
-// === TELOS_PENDING_REVIEW_START: telos_window_drag_and_ui_fix ===
 class ManagedWindow(
     val id: Long,
     val title: String,
@@ -49,7 +48,6 @@ class ManagedWindow(
     /** Last Helix [SnapLayout] applied (tracks 2/3–1/3 cycles beyond legacy [SnapZone]). */
     var layoutHint by mutableStateOf<SnapLayout?>(null)
 }
-// === TELOS_PENDING_REVIEW_END: telos_window_drag_and_ui_fix ===
 
 enum class ResizeEdge { None, N, S, E, W, NE, NW, SE, SW }
 
@@ -61,7 +59,6 @@ class TelosWindowManager {
         private set
     var decoration by mutableStateOf(WindowDecorationTheme())
 
-    // === TELOS_PENDING_REVIEW_START: telos_kde_replacement_suite ===
     var workArea by mutableStateOf(WorkArea.of(1920f, 1080f))
     var currentWorkspace by mutableIntStateOf(0)
     val workspaceCount = 4
@@ -77,7 +74,6 @@ class TelosWindowManager {
         if (w.y + 36f > area.maxY) w.y = (area.maxY - 36f).coerceAtLeast(area.minY)
         w.x = w.x.coerceIn(area.minX - w.width + 80f, area.maxX - 80f)
     }
-    // === TELOS_PENDING_REVIEW_END: telos_kde_replacement_suite ===
 
     fun open(title: String, x: Float = 120f, y: Float = 80f, w: Float = 640f, h: Float = 420f): ManagedWindow {
         val existing = windows.find { it.title == title }
@@ -108,7 +104,6 @@ class TelosWindowManager {
 
     fun visibleWindows(): List<ManagedWindow> = windows.filter { it.workspace == currentWorkspace && !it.minimized }
 
-    // === TELOS_PENDING_REVIEW_START: telos_desktop_kwin_parity_upgrade ===
     fun minimize(id: Long) {
         val w = windows.find { it.id == id } ?: return
         w.minimized = true
@@ -166,7 +161,6 @@ class TelosWindowManager {
         w.workspace = index.coerceIn(0, workspaceCount - 1)
         bump(w)
     }
-    // === TELOS_PENDING_REVIEW_END: telos_desktop_kwin_parity_upgrade ===
 
     fun focus(id: Long) {
         val w = windows.find { it.id == id } ?: return
@@ -196,9 +190,7 @@ class TelosWindowManager {
         }
         w.x += delta.x
         w.y += delta.y
-        // === TELOS_PENDING_REVIEW_START: telos_kde_replacement_suite ===
         constrainToWorkArea(w)
-        // === TELOS_PENDING_REVIEW_END: telos_kde_replacement_suite ===
         bump(w)
     }
 
@@ -227,10 +219,8 @@ class TelosWindowManager {
             }
             else -> {}
         }
-        // === TELOS_PENDING_REVIEW_START: telos_kde_replacement_suite ===
         y = y.coerceAtLeast(workArea.minY)
         if (y + height > workArea.maxY) height = (workArea.maxY - y).coerceAtLeast(160f)
-        // === TELOS_PENDING_REVIEW_END: telos_kde_replacement_suite ===
         w.x = x
         w.y = y
         w.width = width
@@ -283,7 +273,6 @@ class TelosWindowManager {
         snapFocused(next)
     }
 
-    // === TELOS_PENDING_REVIEW_START: telos_kde_replacement_suite ===
     private fun applySnap(w: ManagedWindow, zone: SnapZone) {
         val layout = SnapLayoutGeometry.fromLegacyZone(zone) ?: run {
             w.maximized = false
@@ -305,7 +294,6 @@ class TelosWindowManager {
         w.width = rect.width
         w.height = rect.height
     }
-    // === TELOS_PENDING_REVIEW_END: telos_kde_replacement_suite ===
 
     fun toggleShade(id: Long) {
         val w = windows.find { it.id == id } ?: return
@@ -330,12 +318,10 @@ class TelosWindowManager {
         focusedId = visibleWindows().maxByOrNull { it.z }?.id
     }
 
-    // === TELOS_PENDING_REVIEW_START: telos_window_drag_and_ui_fix ===
     private fun bump(w: ManagedWindow) {
         // Snapshot-backed fields already notify Compose; keep hook for focus/z sorts.
         w.z = w.z
     }
-    // === TELOS_PENDING_REVIEW_END: telos_window_drag_and_ui_fix ===
 }
 
 enum class SnapZone { None, Left, Right, Maximize, Restore, TopLeft, TopRight, BottomLeft, BottomRight }

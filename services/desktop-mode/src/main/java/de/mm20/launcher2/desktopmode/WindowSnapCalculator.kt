@@ -1,4 +1,3 @@
-// === TELOS_PENDING_REVIEW_START: desktop_window_snapping ===
 package de.mm20.launcher2.desktopmode
 
 import android.graphics.Rect
@@ -32,4 +31,3 @@ object WindowSnapCalculator {
         }
     }
 }
-// === TELOS_PENDING_REVIEW_END: desktop_window_snapping ===

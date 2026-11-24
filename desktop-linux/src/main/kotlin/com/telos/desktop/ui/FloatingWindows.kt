@@ -40,7 +40,6 @@ import com.telos.desktop.wm.TelosWindowManager
 import com.telos.desktop.wm.WindowButtonStyle
 import kotlin.math.roundToInt
 
-// === TELOS_PENDING_REVIEW_START: telos_window_drag_and_ui_fix ===
 private val lastTitleClickMs = mutableMapOf<Long, Long>()
 
 @Composable
@@ -185,7 +184,6 @@ private fun edgeHandle(
             },
     )
 }
-// === TELOS_PENDING_REVIEW_END: telos_window_drag_and_ui_fix ===
 
 private fun androidx.compose.ui.graphics.drawscope.DrawScope.drawWindowButtons(
     style: WindowButtonStyle,

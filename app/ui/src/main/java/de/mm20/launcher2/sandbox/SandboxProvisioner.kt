@@ -1,4 +1,3 @@
-// === TELOS_PENDING_REVIEW_START: sandbox_provisioning ===
 package de.mm20.launcher2.sandbox
 
 import android.app.Activity
@@ -25,4 +24,3 @@ object SandboxProvisioner {
         }
     }
 }
-// === TELOS_PENDING_REVIEW_END: sandbox_provisioning ===

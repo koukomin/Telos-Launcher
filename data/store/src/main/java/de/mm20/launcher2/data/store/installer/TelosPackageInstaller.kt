@@ -80,32 +80,11 @@ class TelosPackageInstaller(
     }
 
     private suspend fun installApkOnIo(apk: File, packageName: String): InstallResult {
-        StoreTerminalLogs.log("SECURITY", "Scanning APK $packageName...")
-        val securityReport = de.mm20.launcher2.data.store.security.ApkSecurityScanner.scanApk(context, apk)
-        if (securityReport != null) {
-            StoreTerminalLogs.log("SECURITY", "Risk Level: ${securityReport.riskLevel.name}")
-        }
-
-        StoreTerminalLogs.log("SIGNATURE", "Verifying certificate signature match for $packageName...")
-        val signatureMatch = de.mm20.launcher2.data.store.security.ApkSecurityScanner.verifyInstalledSignatureMatch(context, apk)
-        if (!signatureMatch) {
-            StoreTerminalLogs.log("ERROR", "Signature mismatch for $packageName! Install blocked.")
+        StoreInstallSecurity.scanAndLog(context, apk, packageName)
+        if (!StoreInstallSecurity.signatureMatchesInstalled(context, apk, packageName)) {
             return failed(IllegalStateException("APK signature does not match installed application! Update blocked for security."))
         }
-
-        // Automatic Pre-Update Rollback Backup
-        runCatching {
-            val pm = context.packageManager
-            val flags = android.content.pm.PackageManager.MATCH_DISABLED_COMPONENTS or android.content.pm.PackageManager.MATCH_UNINSTALLED_PACKAGES
-            val info = pm.getApplicationInfo(packageName, flags)
-            val installedApk = File(info.sourceDir)
-            if (installedApk.exists()) {
-                val backupDir = File(context.cacheDir, "apk-backups").apply { mkdirs() }
-                val backupFile = File(backupDir, "$packageName-backup.apk")
-                installedApk.copyTo(backupFile, overwrite = true)
-                StoreTerminalLogs.log("BACKUP", "Created pre-update rollback backup for $packageName")
-            }
-        }
+        StoreInstallSecurity.backupInstalledApk(context, packageName)
 
         val archive = context.packageManager.getPackageArchiveInfo(apk.path, 0)
             ?: return failed(IllegalArgumentException("Invalid APK"))

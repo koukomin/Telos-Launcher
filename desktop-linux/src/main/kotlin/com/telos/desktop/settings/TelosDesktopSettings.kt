@@ -37,11 +37,8 @@ class TelosDesktopSettings(private val vaultConfigDir: File) {
     var preferredRefresh: Double? = null
     var preferredScale: Double? = 1.0
     var initializeVaultIfMissing: Boolean = true
-    // === TELOS_PENDING_REVIEW_START: telos_de_final_polish ===
     var startFullscreen: Boolean = false
     var followSystemTheme: Boolean = true
-    // === TELOS_PENDING_REVIEW_END: telos_de_final_polish ===
-    // === TELOS_PENDING_REVIEW_START: telos_desktop_kwin_parity_upgrade ===
     var panelArgb: Long = 0xF2241E36
     var panelAlpha: Float = 0.94f
     var panelBlur: Float = 12f
@@ -52,7 +49,6 @@ class TelosDesktopSettings(private val vaultConfigDir: File) {
     var panelSurfaceMode: String = PanelSurfaceMode.Blurred.propertyValue
     var panelIconDp: Float = 22f
     var panelHeightDp: Float = 36f
-    // === TELOS_PENDING_REVIEW_END: telos_desktop_kwin_parity_upgrade ===
     val outputPrefs = LinkedHashMap<String, String>()
     var idleSeconds: Int = 300
     var secureClipboard: Boolean = true
@@ -206,18 +202,14 @@ class TelosDesktopSettings(private val vaultConfigDir: File) {
         preferredRefresh = p.getProperty("preferredRefresh")?.toDoubleOrNull()
         preferredScale = p.getProperty("preferredScale")?.toDoubleOrNull() ?: 1.0
         initializeVaultIfMissing = p.getProperty("initializeVaultIfMissing", "true").toBoolean()
-        // === TELOS_PENDING_REVIEW_START: telos_de_final_polish ===
         startFullscreen = p.getProperty("startFullscreen", "false").toBoolean()
         followSystemTheme = p.getProperty("followSystemTheme", "true").toBoolean()
-        // === TELOS_PENDING_REVIEW_END: telos_de_final_polish ===
-        // === TELOS_PENDING_REVIEW_START: telos_desktop_kwin_parity_upgrade ===
         panelArgb = p.getProperty("panelArgb")?.toLongOrNull() ?: panelArgb
         panelAlpha = p.getProperty("panelAlpha")?.toFloatOrNull() ?: panelAlpha
         panelBlur = p.getProperty("panelBlur")?.toFloatOrNull() ?: panelBlur
         panelSurfaceMode = PanelSurfaceMode.parse(p).propertyValue
         panelIconDp = p.getProperty("panelIconDp")?.toFloatOrNull() ?: panelIconDp
         panelHeightDp = p.getProperty("panelHeightDp")?.toFloatOrNull() ?: panelHeightDp
-        // === TELOS_PENDING_REVIEW_END: telos_desktop_kwin_parity_upgrade ===
         idleSeconds = p.getProperty("idleSeconds")?.toIntOrNull()?.coerceIn(30, 3600) ?: 300
         secureClipboard = p.getProperty("opsec.secureClipboard", "true").toBoolean()
         clipboardClearSeconds = p.getProperty("opsec.clipboardClearSeconds")?.toIntOrNull()?.coerceIn(0, 600) ?: 45
@@ -296,18 +288,14 @@ class TelosDesktopSettings(private val vaultConfigDir: File) {
         preferredRefresh?.let { p["preferredRefresh"] = it.toString() }
         preferredScale?.let { p["preferredScale"] = it.toString() }
         p["initializeVaultIfMissing"] = initializeVaultIfMissing.toString()
-        // === TELOS_PENDING_REVIEW_START: telos_de_final_polish ===
         p["startFullscreen"] = startFullscreen.toString()
         p["followSystemTheme"] = followSystemTheme.toString()
-        // === TELOS_PENDING_REVIEW_END: telos_de_final_polish ===
-        // === TELOS_PENDING_REVIEW_START: telos_desktop_kwin_parity_upgrade ===
         p["panelArgb"] = panelArgb.toString()
         p["panelAlpha"] = panelAlpha.toString()
         p["panelBlur"] = panelBlur.toString()
         p[PanelSurfaceMode.PREF_KEY] = PanelSurfaceMode.parse(panelSurfaceMode).propertyValue
         p["panelIconDp"] = panelIconDp.toString()
         p["panelHeightDp"] = panelHeightDp.toString()
-        // === TELOS_PENDING_REVIEW_END: telos_desktop_kwin_parity_upgrade ===
         p["idleSeconds"] = idleSeconds.toString()
         p["opsec.secureClipboard"] = secureClipboard.toString()
         p["opsec.clipboardClearSeconds"] = clipboardClearSeconds.toString()

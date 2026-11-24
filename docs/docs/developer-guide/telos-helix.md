@@ -4,7 +4,9 @@ sidebar_position: 10
 
 # Telos Helix (session-crash memory)
 
-**If this session dies, resume here.** Helix is the Plasma-class Linux desktop chrome for `:desktop-linux`. P0–P4 stay in tree. Do **not** depend `:app:app` on `:desktop-linux`. Do **not** merge or release unless the user asks. Auto-approve was given for this work.
+> **Retired** with `:desktop-linux`. Telos is the Android launcher.
+
+**If this session dies, resume here.** Helix was the Plasma-class Linux desktop chrome for `:desktop-linux`. P0–P4 stay in tree. Do **not** depend `:app:app` on `:desktop-linux`. Do **not** merge or release unless the user asks.
 
 ## Goal
 

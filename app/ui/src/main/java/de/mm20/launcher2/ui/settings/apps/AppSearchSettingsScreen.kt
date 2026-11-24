@@ -27,9 +27,7 @@ fun AppSearchSettingsScreen() {
     val showAppDetails by viewModel.showAppDetails.collectAsStateWithLifecycle()
     val showList by viewModel.showList.collectAsStateWithLifecycle()
     val showListIcons by viewModel.showListIcons.collectAsStateWithLifecycle()
-    // === TELOS_PENDING_REVIEW_START: ui_i18n_and_features_batch ===
     val moveFrozenAppsToEnd by viewModel.moveFrozenAppsToEnd.collectAsStateWithLifecycle()
-    // === TELOS_PENDING_REVIEW_END: ui_i18n_and_features_batch ===
 
     val drawerStyle by viewModel.drawerStyle.collectAsStateWithLifecycle()
 
@@ -115,7 +113,6 @@ fun AppSearchSettingsScreen() {
                     )
                 }
                 
-                // === TELOS_PENDING_REVIEW_START: ui_i18n_and_features_batch ===
                 SwitchPreference(
                     title = stringResource(I18nR.string.preference_drawer_frozen_to_end),
                     summary = stringResource(I18nR.string.preference_drawer_frozen_to_end_summary),
@@ -124,7 +121,6 @@ fun AppSearchSettingsScreen() {
                         viewModel.setMoveFrozenAppsToEnd(it)
                     }
                 )
-                // === TELOS_PENDING_REVIEW_END: ui_i18n_and_features_batch ===
             }
         }
     }

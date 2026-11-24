@@ -62,7 +62,7 @@ Popups over glass still use `virtualAppPopup()`.
 
 Formal role names live in `:ui-kmp` (`TelosSurfaceTokens`) and are mirrored on
 Android in `app/ui/.../component/TelosSurfaceTokens.kt` (MaterialTheme accessors).
-`:app:app` must not depend on `:desktop-linux`; both Helix and virtual apps import
+`:app:app` must not depend on the retired `:desktop-linux` module; both Helix and virtual apps import
 `:ui-kmp` (or the Android Material bindings) only.
 
 | Token | Role | Contract |

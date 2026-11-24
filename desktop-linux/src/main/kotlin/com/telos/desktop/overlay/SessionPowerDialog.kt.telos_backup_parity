@@ -25,7 +25,6 @@ object SessionPowerActions {
         SessionPower.open.value = false
     }
 
-    // === TELOS_PENDING_REVIEW_START: telos_elastic_sharded_pqc_vault ===
     fun logout(vault: PhantomVaultEngine, exit: () -> Unit) {
         vault.lock(syncCloud = true)
         exit()
@@ -45,7 +44,6 @@ object SessionPowerActions {
         vault.lock(syncCloud = true)
         Sys.run("systemctl", "poweroff", timeoutSec = 8)
     }
-    // === TELOS_PENDING_REVIEW_END: telos_elastic_sharded_pqc_vault ===
 }
 
 @Composable

@@ -14,10 +14,7 @@ import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchableSerializer
 import de.mm20.launcher2.search.VirtualAppProvider
 import de.mm20.launcher2.icons.LauncherIcon
-import de.mm20.launcher2.icons.StaticLauncherIcon
-import de.mm20.launcher2.icons.StaticIconLayer
-import de.mm20.launcher2.icons.TransparentLayer
-import androidx.core.content.ContextCompat
+import de.mm20.launcher2.search.VirtualAppIcon
 
 internal class VirtualTrashApp(context: Context) : Application {
     override val key: String = "$Domain://trash"
@@ -56,14 +53,8 @@ internal class VirtualTrashApp(context: Context) : Application {
         }
     }
 
-    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? {
-        val res = de.mm20.launcher2.search.TelosAppIcons.forDomain(Domain) ?: de.mm20.launcher2.base.R.drawable.delete_24px
-        val drawable = ContextCompat.getDrawable(context, res) ?: return null
-        return StaticLauncherIcon(
-            foregroundLayer = StaticIconLayer(drawable, 1f),
-            backgroundLayer = TransparentLayer
-        )
-    }
+    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? =
+        VirtualAppIcon.tile(context, Domain, de.mm20.launcher2.base.R.drawable.delete_24px)
 
     override fun getSerializer(): SearchableSerializer = NullSerializer()
 

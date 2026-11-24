@@ -16,9 +16,9 @@
 
     <string name="settings_keyboard">Clavier</string>
     <string name="keepass_title">KeePassTL</string>
-    <string name="aether_title">Telos Aether</string>
+    <string name="aether_title">Aether</string>
     <string name="backup_group_keepass">Coffre-fort KeePassTL</string>
     <string name="backup_group_keepass_summary">Mots de passe et identifiants enregistrés</string>
-    <string name="backup_group_aether">Telos Aether Nostr</string>
+    <string name="backup_group_aether">Aether Nostr</string>
     <string name="backup_group_aether_summary">Clés Nostr et configurations des relais</string>
 </resources>

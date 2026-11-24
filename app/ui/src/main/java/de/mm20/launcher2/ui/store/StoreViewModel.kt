@@ -269,7 +269,6 @@ class StoreViewModel : ViewModel(), KoinComponent {
         if (_checking.value) return
         viewModelScope.launch {
             _checking.value = true
-            // === TELOS_PENDING_REVIEW_START: uninstall_cleanup ===
             try {
                 val items = repository.getAll()
                 val opts = options.items.value
@@ -286,7 +285,6 @@ class StoreViewModel : ViewModel(), KoinComponent {
                     }
                 }
             } catch (_: Exception) {}
-            // === TELOS_PENDING_REVIEW_END: uninstall_cleanup ===
 
             val summary = try {
                 runCatching { updater.checkAll(background = false) }.getOrNull()

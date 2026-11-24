@@ -1,4 +1,3 @@
-// === TELOS_PENDING_REVIEW_START: desktop_wm_klassy_sweet_theming ===
 package de.mm20.launcher2.ui.desktopmode
 
 import androidx.compose.foundation.background
@@ -98,4 +97,3 @@ fun DesktopShell() {
         }
     }
 }
-// === TELOS_PENDING_REVIEW_END: desktop_wm_klassy_sweet_theming ===

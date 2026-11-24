@@ -92,10 +92,8 @@ class VideoWallpaperService : WallpaperService() {
         private var xOffset = 0.5f
         private var cachedColors: WallpaperColors? = null
 
-        // === TELOS_PENDING_REVIEW_START: undead_wallpaper_sync ===
         private val playerMutex = Mutex()
         private var isDoubleTapPaused = false
-        // === TELOS_PENDING_REVIEW_END: undead_wallpaper_sync ===
 
         private val powerSaveReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context, intent: Intent) {
@@ -291,7 +289,6 @@ class VideoWallpaperService : WallpaperService() {
         }
 
         private fun shouldPlay(): Boolean {
-            // === TELOS_PENDING_REVIEW_START: undead_wallpaper_sync ===
             if (isDesktopModeActive) return false
             if (!isSurfaceReady || !isEngineVisible) return false
             if (pauseOnBatterySaver && isPowerSaveActive) return false
@@ -300,7 +297,6 @@ class VideoWallpaperService : WallpaperService() {
                 thermalStatus >= PowerManager.THERMAL_STATUS_SEVERE
             ) return false
             return true
-            // === TELOS_PENDING_REVIEW_END: undead_wallpaper_sync ===
         }
 
         /**

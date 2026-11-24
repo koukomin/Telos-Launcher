@@ -4,7 +4,6 @@ import android.app.Service
 import android.content.Intent
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
-import android.util.Log
 import de.mm20.launcher2.permissions.PermissionsManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -27,7 +26,6 @@ class NotificationService : NotificationListenerService() {
 
     override fun onListenerConnected() {
         super.onListenerConnected()
-        Log.d("MM20", "Notification listener connected")
         permissionsManager.reportNotificationListenerState(true)
         instance = WeakReference(this)
 
@@ -87,7 +85,6 @@ class NotificationService : NotificationListenerService() {
         super.onListenerDisconnected()
         permissionsManager.reportNotificationListenerState(false)
         notificationRepository.setNotifications(emptyList())
-        Log.d("MM20", "Notification listener disconnected")
     }
 
     companion object {

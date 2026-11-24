@@ -287,7 +287,6 @@ fun GridItem(
         val isSuspended by viewModel.isSuspended.collectAsStateWithLifecycle()
 
 
-        // === TELOS_PENDING_REVIEW_START: perf_optimizations ===
         val windowSize = LocalWindowSize.current
         val iconSizeDp = LocalGridSettings.current.iconSize.dp
 
@@ -310,10 +309,8 @@ fun GridItem(
                 return@HandleEnterHomeTransition null
             }
         }
-        // === TELOS_PENDING_REVIEW_END: perf_optimizations ===
 
         val iconShape = LocalIconShape.current
-        // === TELOS_PENDING_REVIEW_START: perf_optimizations ===
         val semanticsModifier = remember(showLabels, item.label) {
             if (showLabels) Modifier else Modifier.semantics {
                 contentDescription = item.label
@@ -341,7 +338,6 @@ fun GridItem(
                 badge = { badge },
                 icon = { icon },
                 frozen = isSuspended && !inDock,
-        // === TELOS_PENDING_REVIEW_END: perf_optimizations ===
             )
         }
         if (showLabels) {

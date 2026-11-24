@@ -17,7 +17,6 @@ internal interface PrivilegedAccessProvider {
     /** Prompts the user if necessary. Suspends until the user responds. Returns the granted state. */
     suspend fun requestPermission(): Boolean
 
-    // === TELOS_PENDING_REVIEW_START: multi_user_freeze ===
     /**
      * Suspends (freezes) or unsuspends (unfreezes) the given packages for the given user.
      * @return the subset of [packageNames] that were actually toggled successfully.
@@ -40,5 +39,4 @@ internal interface PrivilegedAccessProvider {
 
     /** Clears the cache of the given package for the given user. */
     suspend fun clearCache(packageName: String, userId: Int = Process.myUid() / 100000): Boolean
-    // === TELOS_PENDING_REVIEW_END: multi_user_freeze ===
 }

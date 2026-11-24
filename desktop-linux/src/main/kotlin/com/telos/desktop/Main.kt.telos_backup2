@@ -23,9 +23,7 @@ fun main() = application {
     val vault = remember { LuksVaultManager() }
     var unlocked by remember { mutableStateOf(false) }
     val wm = remember { TelosWindowManager() }
-    // === TELOS_PENDING_REVIEW_START: telos_kde_system_monitor ===
     val telemetry = remember { LinuxSystemTelemetryEngine() }
-    // === TELOS_PENDING_REVIEW_END: telos_kde_system_monitor ===
     Window(
         onCloseRequest = {
             vault.lock()
@@ -36,9 +34,7 @@ fun main() = application {
         title = "Telos Desktop",
         state = WindowState(placement = WindowPlacement.Fullscreen),
         onPreviewKeyEvent = { ev ->
-            // === TELOS_PENDING_REVIEW_START: telos_kde_replacement_suite ===
             handleDesktopKeys(ev, wm, telemetry)
-            // === TELOS_PENDING_REVIEW_END: telos_kde_replacement_suite ===
         },
     ) {
         TelosDesktopTheme {

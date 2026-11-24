@@ -69,13 +69,17 @@ import com.vitorpamplona.amethyst.commons.ui.theme.Size27Modifier
 import com.vitorpamplona.amethyst.commons.ui.theme.onSurface65
 import com.vitorpamplona.amethyst.commons.viewmodels.AccountViewModel
 
-/** Content height of the [AppBottomBar] (the 50.dp Column inside [RenderBottomMenu]),
+/** Content height of [AppBottomBarContent] (the 50.dp Column inside [RenderBottomMenu]),
  * exclusive of the system navigation-bar inset. Used by FAB callers that want to
  * reserve the same vertical space when the bar hides itself on in-app pushes. */
 val AppBottomBarHeight = 50.dp
 
+/**
+ * The phone bottom bar UI. Screens call [com.vitorpamplona.amethyst.commons.ui.platform.AppBottomBar],
+ * which the Android [AppPlatform] wires here. Previews using [AppPlatform.None] emit nothing.
+ */
 @Composable
-fun AppBottomBar(
+fun AppBottomBarContent(
     selectedRoute: Route?,
     nav: INav,
     accountViewModel: AccountViewModel,

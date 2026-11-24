@@ -33,9 +33,7 @@ class LuksVaultManager(
 
     @Volatile
     var unlocked: Boolean = false
-        // === TELOS_PENDING_REVIEW_START: telos_elastic_sharded_pqc_vault ===
         internal set
-        // === TELOS_PENDING_REVIEW_END: telos_elastic_sharded_pqc_vault ===
 
     private var shutdownHookRegistered = false
 

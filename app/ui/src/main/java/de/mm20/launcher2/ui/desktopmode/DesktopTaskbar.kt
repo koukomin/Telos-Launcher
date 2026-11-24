@@ -67,15 +67,11 @@ internal fun DesktopTaskbar(
     val appRepository = koinInject<AppRepository>()
     val iconService = koinInject<IconService>()
 
-    // === TELOS_PENDING_REVIEW_START: desktop_window_snapping ===
     val windowManager = koinInject<DesktopWindowManager>()
     val scope = rememberCoroutineScope()
-    // === TELOS_PENDING_REVIEW_END: desktop_window_snapping ===
 
-    // === TELOS_PENDING_REVIEW_START: desktop_taskbar_running_apps ===
     val tasksTracker = remember(context) { DesktopRunningTasksTracker(context) }
     val runningTasks by tasksTracker.runningTasks.collectAsStateWithLifecycle()
-    // === TELOS_PENDING_REVIEW_END: desktop_taskbar_running_apps ===
 
     Row(
         modifier = modifier
@@ -113,12 +109,9 @@ internal fun DesktopTaskbar(
             )
         }
 
-        // === TELOS_PENDING_REVIEW_START: desktop_window_snapping ===
     val windowManager = koinInject<DesktopWindowManager>()
     val scope = rememberCoroutineScope()
-    // === TELOS_PENDING_REVIEW_END: desktop_window_snapping ===
 
-    // === TELOS_PENDING_REVIEW_START: desktop_taskbar_running_apps ===
         LazyRow(
             modifier = Modifier.weight(1f).padding(horizontal = 8.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -136,20 +129,16 @@ internal fun DesktopTaskbar(
                 }
                 val icon by (iconFlow ?: emptyFlow()).collectAsStateWithLifecycle(null)
 
-                // === TELOS_PENDING_REVIEW_START: desktop_window_snapping ===
                 var showTaskMenu by remember { mutableStateOf(false) }
-                // === TELOS_PENDING_REVIEW_END: desktop_window_snapping ===
 
                 Row(
                     modifier = Modifier
                         .height(40.dp)
                         .clip(RoundedCornerShape(8.dp))
-                        // === TELOS_PENDING_REVIEW_START: desktop_window_snapping ===
                         .combinedClickable(
                             onClick = { tasksTracker.bringTaskToFront(task.taskId) },
                             onLongClick = { showTaskMenu = true }
                         )
-                        // === TELOS_PENDING_REVIEW_END: desktop_window_snapping ===
                         .padding(horizontal = 8.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -172,7 +161,6 @@ internal fun DesktopTaskbar(
                             .background(MaterialTheme.colorScheme.primary, CircleShape)
                     )
 
-                    // === TELOS_PENDING_REVIEW_START: desktop_window_snapping ===
                     val taskbarHeightPx = DesktopTaskbarHeight.toPixels().toInt()
                     DropdownMenu(
                         expanded = showTaskMenu,
@@ -222,11 +210,9 @@ internal fun DesktopTaskbar(
                             leadingIcon = { Icon(painterResource(BaseR.drawable.close_24px), null) }
                         )
                     }
-                    // === TELOS_PENDING_REVIEW_END: desktop_window_snapping ===
                 }
             }
         }
-        // === TELOS_PENDING_REVIEW_END: desktop_taskbar_running_apps ===
 
         Row(
             horizontalArrangement = Arrangement.End,

@@ -1,4 +1,3 @@
-// === TELOS_PENDING_REVIEW_START: desktop_wm_klassy_sweet_theming ===
 package de.mm20.launcher2.ui.desktopmode.wm
 
 import androidx.compose.runtime.Composable
@@ -265,4 +264,3 @@ class TelosWindowManager {
         }
     }
 }
-// === TELOS_PENDING_REVIEW_END: desktop_wm_klassy_sweet_theming ===

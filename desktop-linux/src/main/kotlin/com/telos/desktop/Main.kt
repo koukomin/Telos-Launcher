@@ -30,7 +30,6 @@ import com.telos.desktop.wm.TelosWindowManager
 import kotlin.system.exitProcess
 
 fun main(args: Array<String>) {
-    // === TELOS_PENDING_REVIEW_START: telos_labwc_session_p0p1 ===
     if (args.contains("--unlock-only")) {
         com.telos.desktop.session.UnlockCli.run(fromStdin = args.contains("--unlock-stdin"))
         return
@@ -72,26 +71,18 @@ fun main(args: Array<String>) {
             exitProcess(1)
         }
     }
-    // === TELOS_PENDING_REVIEW_END: telos_labwc_session_p0p1 ===
-    // === TELOS_PENDING_REVIEW_START: telos_desktop_kwin_parity_upgrade ===
     System.setProperty("skiko.renderApi", System.getProperty("skiko.renderApi") ?: "OPENGL")
     System.setProperty("skiko.vsync.enabled", "true")
     System.setProperty("skiko.gpu.priority", "auto")
-    // === TELOS_PENDING_REVIEW_END: telos_desktop_kwin_parity_upgrade ===
     application {
-    // === TELOS_PENDING_REVIEW_START: telos_elastic_sharded_pqc_vault ===
     val vault = remember { PhantomVaultEngine().also { PhantomVault.engine = it } }
-    // === TELOS_PENDING_REVIEW_END: telos_elastic_sharded_pqc_vault ===
     var unlocked by remember {
         mutableStateOf(vault.attachMounted() || TelosSessionHome.alreadyUnlocked)
     }
     /** True when this process transitioned from the Quiet Ops pre-boot screen. */
     var playUnlockReveal by remember { mutableStateOf(false) }
     val wm = remember { TelosWindowManager() }
-    // === TELOS_PENDING_REVIEW_START: telos_kde_system_monitor ===
     val telemetry = remember { LinuxSystemTelemetryEngine() }
-    // === TELOS_PENDING_REVIEW_END: telos_kde_system_monitor ===
-    // === TELOS_PENDING_REVIEW_START: telos_de_final_polish ===
     val windowState = rememberWindowState(width = 1440.dp, height = 900.dp, placement = WindowPlacement.Floating)
     val hostTheme = remember { SystemThemeBridge.load() }
     var chromeAccent by remember { mutableStateOf(hostTheme.accent) }

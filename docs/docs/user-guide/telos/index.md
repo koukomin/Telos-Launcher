@@ -6,10 +6,9 @@ set of **built-in apps** that run inside the launcher: a phone app, messages, a 
 gallery, music, video and radio players, an app store and an app freezer.
 
 ::: tip Two parts
-- [**The launcher**](./launcher/) is search, home screen, widgets, icons and themes (inherited from Kvaesitso).
+- [**The launcher**](./launcher/) is **Telos**: search, home screen, widgets, icons and themes (inherited from Kvaesitso). Aether is a built-in Nostr app, not the launcher name.
 - **The Telos apps** are added on top. Each one has its own page below.
-- [**Telos Desktop**](./linux-desktop) is a separate JVM shell (`:desktop-linux`), not in the APK — Linux session + Windows setup `.exe` / portable zip (macOS later).
-- [**TelosAndroidVm**](./android-vm) is a portable BlissOS QEMU + scrcpy guest (Windows / Linux / Apple Silicon), not in the APK.
+- [**TelosAndroidVm**](./android-vm) is a portable BlissOS QEMU + scrcpy guest (Windows / Linux / Apple Silicon), not in the APK. JVM Telos Desktop (`:desktop-linux`) is retired.
 :::
 
 ## ✨ Built-in apps

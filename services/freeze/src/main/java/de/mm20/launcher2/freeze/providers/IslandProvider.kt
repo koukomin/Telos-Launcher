@@ -45,7 +45,6 @@ internal class IslandProvider(private val context: Context) {
         }
     }
 
-    // === TELOS_PENDING_REVIEW_START: multi_user_freeze ===
     fun setPackagesSuspended(packageNames: List<String>, suspended: Boolean, userId: Int = Process.myUid() / 100000): Boolean {
         if (packageNames.isEmpty()) return true
         val intent = buildFreezeIntent(packageNames, suspended) ?: return false
@@ -57,7 +56,6 @@ internal class IslandProvider(private val context: Context) {
             false
         }
     }
-    // === TELOS_PENDING_REVIEW_END: multi_user_freeze ===
 
     /**
      * Posts a notification that freezes [packageNames] via Island when tapped - the only way to

@@ -1,4 +1,3 @@
-// === TELOS_PENDING_REVIEW_START: desktop_grid_and_context_menu ===
 package de.mm20.launcher2.ui.desktopmode
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
@@ -72,7 +71,6 @@ internal fun DesktopWorkspace(
     var showContextMenu by remember { mutableStateOf(false) }
     var contextMenuOffset by remember { mutableStateOf(IntOffset.Zero) }
 
-    // === TELOS_PENDING_REVIEW_START: desktop_context_menu_actions ===
     var showAddShortcutPicker by remember { mutableStateOf(false) }
 
     val wallpaperPicker = rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
@@ -81,7 +79,6 @@ internal fun DesktopWorkspace(
             viewModel.setDesktopWallpaper(uri)
         }
     }
-    // === TELOS_PENDING_REVIEW_END: desktop_context_menu_actions ===
 
     Box(
         modifier = modifier
@@ -205,9 +202,7 @@ internal fun DesktopWorkspace(
                         text = { Text(stringResource(I18nR.string.telos_change_wallpaper)) },
                         onClick = {
                             showContextMenu = false
-                            // === TELOS_PENDING_REVIEW_START: desktop_context_menu_actions ===
                             wallpaperPicker.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
-                            // === TELOS_PENDING_REVIEW_END: desktop_context_menu_actions ===
                         },
                         leadingIcon = { Icon(painterResource(BaseR.drawable.image_search_24px), null) }
                     )
@@ -215,7 +210,6 @@ internal fun DesktopWorkspace(
                         text = { Text(stringResource(I18nR.string.telos_desktop_settings)) },
                         onClick = {
                             showContextMenu = false
-                            // === TELOS_PENDING_REVIEW_START: desktop_context_menu_actions ===
                             val intent = Intent(context, SettingsActivity::class.java).apply {
                                 putExtra("de.mm20.launcher2.settings.ROUTE", "settings/desktopmode")
                             }
@@ -223,7 +217,6 @@ internal fun DesktopWorkspace(
                                 launchDisplayId = context.displayIdCompat()
                             }
                             context.startActivity(intent, options.toBundle())
-                            // === TELOS_PENDING_REVIEW_END: desktop_context_menu_actions ===
                         },
                         leadingIcon = { Icon(painterResource(BaseR.drawable.settings_24px), null) }
                     )
@@ -239,9 +232,7 @@ internal fun DesktopWorkspace(
                         text = { Text(stringResource(I18nR.string.telos_add_shortcut)) },
                         onClick = {
                             showContextMenu = false
-                            // === TELOS_PENDING_REVIEW_START: desktop_context_menu_actions ===
                             showAddShortcutPicker = true
-                            // === TELOS_PENDING_REVIEW_END: desktop_context_menu_actions ===
                         },
                         leadingIcon = { Icon(painterResource(BaseR.drawable.add_24px), null) }
                     )
@@ -250,7 +241,6 @@ internal fun DesktopWorkspace(
         }
     }
 
-    // === TELOS_PENDING_REVIEW_START: desktop_context_menu_actions ===
     if (showAddShortcutPicker) {
         DismissableBottomSheet(
             expanded = true,
@@ -268,7 +258,6 @@ internal fun DesktopWorkspace(
             )
         }
     }
-    // === TELOS_PENDING_REVIEW_END: desktop_context_menu_actions ===
 }
 
 private var freeformLaunchCount = 0
@@ -304,4 +293,3 @@ private fun Context.displayIdCompat(): Int {
         (getSystemService(Context.WINDOW_SERVICE) as? WindowManager)?.defaultDisplay?.displayId ?: 0
     }
 }
-// === TELOS_PENDING_REVIEW_END: desktop_grid_and_context_menu ===

@@ -110,11 +110,9 @@ fun DesktopWorkspace(
     BoxWithConstraints(Modifier.fillMaxSize().background(TelosColors.background)) {
         val wpx = with(density) { maxWidth.toPx() }
         val hpx = with(density) { maxHeight.toPx() }
-        // === TELOS_PENDING_REVIEW_START: telos_kde_replacement_suite ===
         LaunchedEffect(wpx, hpx) {
             wm.setScreen(wpx, hpx, WorkArea.DEFAULT_TOP_BAR_PX, WorkArea.DEFAULT_DOCK_PX, true)
         }
-        // === TELOS_PENDING_REVIEW_END: telos_kde_replacement_suite ===
         Box(
             Modifier
                 .fillMaxSize()
@@ -142,18 +140,14 @@ fun DesktopWorkspace(
             if (showDrawer) {
                 AppDrawer(icons, Modifier.fillMaxSize().padding(top = 36.dp, bottom = 56.dp))
             }
-            // === TELOS_PENDING_REVIEW_START: telos_de_final_polish ===
             if (DesktopChrome.appGridOpen) {
                 PlasmaAppGrid(icons) { DesktopChrome.appGridOpen = false }
             }
-            // === TELOS_PENDING_REVIEW_END: telos_de_final_polish ===
             FloatingWindowLayer(wm) { win ->
                 when (win.title) {
                     "Settings" -> LinuxDesktopSettingsPanel(settings, icons, display) { wm.close(win.id); showSettings = false }
                     "Display" -> LinuxDesktopSettingsPanel(settings, icons, display) { wm.close(win.id); showDisplay = false }
-                    // === TELOS_PENDING_REVIEW_START: telos_kde_system_monitor ===
                     "System Monitor" -> TelosSystemMonitorWindow(telemetry, vault)
-                    // === TELOS_PENDING_REVIEW_END: telos_kde_system_monitor ===
                     else -> Text(win.title, color = TelosColors.onSurface, modifier = Modifier.padding(16.dp))
                 }
             }
@@ -187,7 +181,6 @@ fun DesktopWorkspace(
                     })
                 }
             }
-            // === TELOS_PENDING_REVIEW_START: telos_kde_replacement_suite ===
             TelosTopPanel(
                 wm = wm,
                 engine = telemetry,
@@ -210,7 +203,6 @@ fun DesktopWorkspace(
                     }
                 }
             }
-            // === TELOS_PENDING_REVIEW_END: telos_kde_replacement_suite ===
             toast?.let {
                 Text(it, color = TelosColors.primary, modifier = Modifier.align(Alignment.TopCenter).padding(top = 48.dp))
             }
@@ -238,7 +230,6 @@ private fun keyRefresh(refreshKey: Int, content: @Composable () -> Unit) {
     androidx.compose.runtime.key(refreshKey) { content() }
 }
 
-// === TELOS_PENDING_REVIEW_START: telos_kde_replacement_suite ===
 fun handleDesktopKeys(
     ev: androidx.compose.ui.input.key.KeyEvent,
     wm: TelosWindowManager,
@@ -251,7 +242,6 @@ fun handleDesktopKeys(
     val ctrl = ev.isCtrlPressed
     val shift = ev.isShiftPressed
     val alt = ev.isAltPressed
-    // === TELOS_PENDING_REVIEW_START: telos_de_final_polish ===
     if (key == Key.F11) {
         DesktopChrome.toggleFullscreen()
         return true
@@ -264,7 +254,6 @@ fun handleDesktopKeys(
         DesktopChrome.appGridOpen = false
         return true
     }
-    // === TELOS_PENDING_REVIEW_END: telos_de_final_polish ===
     if (key == Key.PrintScreen) {
         if (shift) TelosCaptureTool.area() else TelosCaptureTool.fullscreen()
         return true
@@ -310,12 +299,9 @@ fun handleDesktopKeys(
         TelosOsd.show("Brightness", (p.screenBrightness - 8) / 100f)
         return true
     }
-    // === TELOS_PENDING_REVIEW_START: telos_elastic_sharded_pqc_vault ===
     if (ctrl && alt && key == Key.L) {
         runCatching { PhantomVault.engine.panicUnmount() }
         return true
     }
-    // === TELOS_PENDING_REVIEW_END: telos_elastic_sharded_pqc_vault ===
     return false
 }
-// === TELOS_PENDING_REVIEW_END: telos_kde_replacement_suite ===

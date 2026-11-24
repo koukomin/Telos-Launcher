@@ -1,4 +1,3 @@
-// === TELOS_PENDING_REVIEW_START: desktop_wm_klassy_sweet_theming ===
 package de.mm20.launcher2.ui.desktopmode.theme
 
 import android.content.Context
@@ -120,4 +119,3 @@ class DesktopThemeRepository(context: Context) {
         }
     }
 }
-// === TELOS_PENDING_REVIEW_END: desktop_wm_klassy_sweet_theming ===

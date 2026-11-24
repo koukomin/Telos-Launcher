@@ -80,9 +80,7 @@ android {
         compose = true
         viewBinding = true
         buildConfig = true
-        // === TELOS_PENDING_REVIEW_START: sandbox_cloning_and_bridge ===
         aidl = true
-        // === TELOS_PENDING_REVIEW_END: sandbox_cloning_and_bridge ===
     }
 
     lint {
@@ -106,7 +104,7 @@ dependencies {
     implementation(libs.androidx.camera.view)
     implementation(libs.androidx.camera.video)
     implementation(libs.androidx.camera.extensions)
-    implementation("androidx.health.connect:connect-client:1.1.0")
+    implementation(libs.androidx.health.connect.client)
 
     implementation(libs.bundles.kotlin)
 
@@ -231,7 +229,6 @@ dependencies {
     implementation(libs.androidx.biometric)
     implementation(project(":core:devicepose"))
 
-    // === TELOS_PENDING_REVIEW_START: radio_mini_player ===
     implementation(libs.androidx.media3.exoplayer)
     implementation(libs.androidx.media3.session)
     implementation(libs.androidx.media3.ui)
@@ -241,7 +238,6 @@ dependencies {
     implementation(libs.androidx.media3.common)
     implementation(libs.androidx.exifinterface)
     implementation(libs.guava.android)
-    // === TELOS_PENDING_REVIEW_END: radio_mini_player ===
 
     androidTestImplementation(libs.androidx.compose.uitestjunit4)
     androidTestImplementation(libs.androidx.junit)

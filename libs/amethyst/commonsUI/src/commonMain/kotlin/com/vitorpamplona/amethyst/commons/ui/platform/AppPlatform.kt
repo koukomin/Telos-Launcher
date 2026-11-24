@@ -36,6 +36,7 @@ import com.vitorpamplona.amethyst.commons.napplet.webxdc.WebxdcApp
 import com.vitorpamplona.amethyst.commons.resources.Res
 import com.vitorpamplona.amethyst.commons.resources.front_page_can_leave
 import com.vitorpamplona.amethyst.commons.service.spellcheck.SpellCheckService
+import com.vitorpamplona.amethyst.commons.ui.navigation.bottombars.AppBottomBarContent
 import com.vitorpamplona.amethyst.commons.ui.navigation.navs.INav
 import com.vitorpamplona.amethyst.commons.ui.payments.PayToAppProbe
 import com.vitorpamplona.amethyst.commons.ui.screen.loggedIn.qrcode.ScanOutcome
@@ -179,13 +180,17 @@ interface AppPlatform {
     @Composable
     fun rememberAppLanguages(): ImmutableMap<String, String> = persistentMapOf()
 
+    /**
+     * Phone bottom navigation. Default draws [AppBottomBarContent]. [None] stays empty so
+     * previews and unwired front ends do not compose the live bar.
+     */
     @Composable
     fun AppBottomBar(
         selectedRoute: Route?,
         nav: INav,
         accountViewModel: AccountViewModel,
         onClick: (Route) -> Unit,
-    ) {}
+    ) = AppBottomBarContent(selectedRoute, nav, accountViewModel, onClick)
 
     @Composable
     fun AroundMeLocationLabel() {}
@@ -396,7 +401,15 @@ interface AppPlatform {
     fun openNestRoom(addressValue: String) {}
 
     /** Draws nothing: previews, and front ends still wiring their pieces. */
-    object None : AppPlatform
+    object None : AppPlatform {
+        @Composable
+        override fun AppBottomBar(
+            selectedRoute: Route?,
+            nav: INav,
+            accountViewModel: AccountViewModel,
+            onClick: (Route) -> Unit,
+        ) {}
+    }
 }
 
 /** The front end's [AppPlatform]. Static: it is set once at the root and never changes. */

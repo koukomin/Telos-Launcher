@@ -1,6 +1,5 @@
 package moe.shizuku.manager.adb
 
-import android.util.Log
 import moe.shizuku.manager.adb.AdbProtocol.ADB_AUTH_RSAPUBLICKEY
 import moe.shizuku.manager.adb.AdbProtocol.ADB_AUTH_SIGNATURE
 import moe.shizuku.manager.adb.AdbProtocol.ADB_AUTH_TOKEN
@@ -14,7 +13,6 @@ import moe.shizuku.manager.adb.AdbProtocol.A_STLS
 import moe.shizuku.manager.adb.AdbProtocol.A_STLS_VERSION
 import moe.shizuku.manager.adb.AdbProtocol.A_VERSION
 import moe.shizuku.manager.adb.AdbProtocol.A_WRTE
-import moe.shizuku.manager.ktx.logd
 import rikka.core.util.BuildUtils
 import java.io.Closeable
 import java.io.DataInputStream
@@ -24,8 +22,6 @@ import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.net.InetSocketAddress
 import javax.net.ssl.SSLSocket
-
-private const val TAG = "AdbClient"
 
 class AdbClient(private val host: String, private val port: Int, private val key: AdbKey) : Closeable {
 
@@ -63,7 +59,6 @@ class AdbClient(private val host: String, private val port: Int, private val key
             val sslContext = key.sslContext
             tlsSocket = sslContext.socketFactory.createSocket(socket, host, port, true) as SSLSocket
             tlsSocket.startHandshake()
-            Log.d(TAG, "Handshake succeeded.")
 
             tlsInputStream = DataInputStream(tlsSocket.inputStream)
             tlsOutputStream = DataOutputStream(tlsSocket.outputStream)
@@ -129,7 +124,6 @@ class AdbClient(private val host: String, private val port: Int, private val key
     private fun write(message: AdbMessage) {
         outputStream.write(message.toByteArray())
         outputStream.flush()
-        Log.d(TAG, "write ${message.toStringShort()}")
     }
 
     private fun read(): AdbMessage {
@@ -152,7 +146,6 @@ class AdbClient(private val host: String, private val port: Int, private val key
         }
         val message = AdbMessage(command, arg0, arg1, dataLength, checksum, magic, data)
         message.validateOrThrow()
-        Log.d(TAG, "read ${message.toStringShort()}")
         return message
     }
 

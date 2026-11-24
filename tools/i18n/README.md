@@ -10,5 +10,7 @@ Every user-visible string of a new or changed feature must be translated into al
 3. `python3 tools/i18n/build.py <code>` checks that the placeholders (%s, %d, %1$s, tags) are unchanged and writes
    `core/i18n/src/main/res/values-<code>/strings_telos_translations.xml`.
 
+Do not add a new `strings_<feature>.xml` per locale. Put English in `values/strings_telos_extra.xml` (or the generated translations catalog) and the same keys in each `values-*/strings_telos_extra.xml` or `strings_telos_translations.xml`.
+
 Run both scripts from the folder that has `missing/` and `done/`. Languages: el, de, es, fr, it, pt, pt-rBR, ru, tr, nl, pl, cs, sk, sl,
 hr, bg, ro, hu, da, sv, fi, et, lv, lt, ga, mt, uk, nb-rNO, zh-rCN, zh-rTW, ja, ko, ar, hi, bn (and the older ones that came with the project).

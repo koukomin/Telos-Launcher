@@ -43,9 +43,7 @@ val dataStoreModule = module {
     single<Downloader> { KtorDownloader(context = androidContext(), httpClient = get()) }
     single<StoreRepository> { StoreRepositoryImpl(context = androidContext()) }
 
-    // === TELOS_PENDING_REVIEW_START: virtual_app_koin_fix ===
     factory<VirtualAppProvider>(org.koin.core.qualifier.named("storeVirtualAppProvider")) { StoreVirtualAppProvider(context = androidContext()) }
-    // === TELOS_PENDING_REVIEW_END: virtual_app_koin_fix ===
     factory<de.mm20.launcher2.search.SearchableDeserializer>(org.koin.core.qualifier.named(VirtualStoreApp.Domain)) {
         de.mm20.launcher2.search.VirtualAppDeserializer(VirtualStoreApp.Domain) { getAll<VirtualAppProvider>() }
     }

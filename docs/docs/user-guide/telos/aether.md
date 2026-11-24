@@ -1,6 +1,6 @@
 # Aether
 
-Aether in Telos 1.45.71 embeds the Amethyst F-Droid Nostr client
+Aether is a built-in Telos app. The launcher name is **Telos**. Aether in Telos 1.45.71 embeds the Amethyst F-Droid Nostr client
 inside Telos. No separate Amethyst application is required. Earlier Telos versions contain
 the preview rather than the embedded client.
 

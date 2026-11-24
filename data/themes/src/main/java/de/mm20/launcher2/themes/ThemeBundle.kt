@@ -1,6 +1,5 @@
 package de.mm20.launcher2.themes
 
-import android.util.Log
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.themes.colors.Color
 import de.mm20.launcher2.themes.colors.ColorScheme
@@ -52,9 +51,7 @@ data class ThemeBundle(
                     return fromLegacyJson(jsonElement)
                 }
 
-                return ThemeJson.decodeFromJsonElement<ThemeBundle>(jsonElement).also {
-                    Log.d("MM20", "$it")
-                }
+                return ThemeJson.decodeFromJsonElement<ThemeBundle>(jsonElement)
 
             } catch (e: SerializationException) {
                 CrashReporter.logException(e)

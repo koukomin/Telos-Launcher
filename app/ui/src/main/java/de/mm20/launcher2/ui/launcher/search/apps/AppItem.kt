@@ -179,9 +179,7 @@ fun AppItem(
                                 .padding(16.dp),
                             badge = { badge },
                             icon = { icon },
-                            // === TELOS_PENDING_REVIEW_START: ui_frozen_apps_style ===
                             frozen = isSuspended,
-                            // === TELOS_PENDING_REVIEW_END: ui_frozen_apps_style ===
                         )
                     }
                     val notifications by viewModel.notifications.collectAsState(emptyList())
@@ -570,7 +568,6 @@ fun AppItem(
                         }
                     }
 
-                    // === TELOS_PENDING_REVIEW_START: smart_freeze_ui_and_actions ===
                     toolbarActions.add(
                         DefaultToolbarAction(
                             label = stringResource(
@@ -582,11 +579,9 @@ fun AppItem(
                             }
                         )
                     )
-                    // === TELOS_PENDING_REVIEW_END: smart_freeze_ui_and_actions ===
 
                     if (advancedFeaturesEnabled) {
                         // (Freeze/Unfreeze is already offered above for every app; not duplicated here.)
-                        // === TELOS_PENDING_REVIEW_START: sandbox_cloning_and_bridge ===
                         val profileManager: ProfileManager = koinInject()
                         val workProfile = profileManager.getProfile(Profile.Type.Work)
                         if (workProfile != null && app.user != workProfile.userHandle) {
@@ -600,7 +595,6 @@ fun AppItem(
                                 )
                             )
                         }
-                        // === TELOS_PENDING_REVIEW_END: sandbox_cloning_and_bridge ===
 
                         toolbarActions.add(
                             DefaultToolbarAction(
@@ -669,9 +663,7 @@ fun AppItem(
                                 .padding(end = 16.dp),
                             badge = { badge },
                             icon = { icon },
-                            // === TELOS_PENDING_REVIEW_START: ui_frozen_apps_style ===
                             frozen = isSuspended,
-                            // === TELOS_PENDING_REVIEW_END: ui_frozen_apps_style ===
                         )
                     }
                     Text(

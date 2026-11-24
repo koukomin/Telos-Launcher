@@ -74,10 +74,10 @@
     <string name="voice_voice_recordings">Voice memos</string>
     <string name="settings_keyboard">键盘</string>
     <string name="keepass_title">KeePassTL</string>
-    <string name="aether_title">Telos Aether</string>
+    <string name="aether_title">Aether</string>
     <string name="backup_group_keepass">KeePassTL 保险库</string>
     <string name="backup_group_keepass_summary">已保存的密码与凭据</string>
-    <string name="backup_group_aether">Telos Aether Nostr</string>
+    <string name="backup_group_aether">Aether Nostr</string>
     <string name="backup_group_aether_summary">Nostr keys and relay configurations</string>
     <string name="keepass_db_password">数据库密码</string>
     <string name="keepass_wrong_password">密码错误或无效文件</string>
@@ -119,4 +119,22 @@
     <string name="aether_attached_media">附加媒体：%1$s</string>
     <string name="aether_dm_unavailable_title">私信不可用</string>
     <string name="aether_dm_unavailable_summary">加密私信需要有效的 Nostr 会话。此版本仅在本地保留对话。</string>
+<string name="fit_sources_tab">来源</string>
+<string name="fit_sources_intro">Fit 从 Health Connect 读取步数、心率、睡眠、体重、卡路里和距离。Google Fit、Garmin Connect、Samsung Health 和 Huawei Health 会同步到那里；打开这些应用，启用 Health Connect，然后授权 Fit。</string>
+<string name="fit_source_health_connect">Health Connect</string>
+<string name="fit_source_google_fit">Google Fit / Google Health</string>
+<string name="fit_source_garmin">Garmin Connect</string>
+<string name="fit_source_samsung">Samsung Health</string>
+<string name="fit_source_huawei">Huawei Health</string>
+<string name="fit_source_connect">连接</string>
+<string name="fit_source_manage">管理</string>
+<string name="fit_source_open_app">打开应用</string>
+<string name="fit_source_grant">授予 Health Connect 访问权限</string>
+<string name="fit_source_installed_bridge">已安装。请在此应用中启用 Health Connect，以便 Fit 读取数据。</string>
+<string name="fit_source_not_installed">未在此设备上安装</string>
+<string name="keyboard_look_category">Look</string>
+<string name="keyboard_accent_title">Accent color</string>
+<string name="keyboard_scale_title">Keyboard size</string>
+<string name="keyboard_key_height_title">Key height</string>
+<string name="keyboard_key_font_title">Key text size</string>
 </resources>

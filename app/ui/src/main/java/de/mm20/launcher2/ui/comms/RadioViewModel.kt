@@ -1,4 +1,3 @@
-// === TELOS_PENDING_REVIEW_START: radio_mini_player ===
 package de.mm20.launcher2.ui.comms
 import de.mm20.launcher2.i18n.R as I18nR
 
@@ -219,7 +218,6 @@ class RadioViewModel : ViewModel(), KoinComponent {
 
     fun cancelSleepTimer() = RadioSleepTimer.cancel()
 
-    // === TELOS_PENDING_REVIEW_START: radio_browser_ktor ===
     fun playStation(station: RadioStation) {
         currentStation = station
         _error.value = null
@@ -271,7 +269,6 @@ class RadioViewModel : ViewModel(), KoinComponent {
             _isLoading.value = false
         }
     }
-    // === TELOS_PENDING_REVIEW_END: radio_browser_ktor ===
 
     override fun onCleared() {
         super.onCleared()
@@ -281,4 +278,3 @@ class RadioViewModel : ViewModel(), KoinComponent {
         if (connecting) controllerFuture?.let { MediaController.releaseFuture(it) }
     }
 }
-// === TELOS_PENDING_REVIEW_END: radio_mini_player ===

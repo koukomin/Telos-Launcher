@@ -4,7 +4,6 @@ import com.telos.desktop.linux.Sys
 import com.telos.desktop.vault.TelosSessionHome
 import java.io.File
 
-// === TELOS_PENDING_REVIEW_START: telos_labwc_session_p0p1 ===
 object Fido2Unlock {
     fun available(): Boolean {
         if (Sys.which("fido2-token") == null || Sys.which("fido2-assert") == null) return false
@@ -30,4 +29,3 @@ object Fido2Unlock {
         return password + ":" + assert.stdout.trim().take(64)
     }
 }
-// === TELOS_PENDING_REVIEW_END: telos_labwc_session_p0p1 ===

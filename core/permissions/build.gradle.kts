@@ -50,4 +50,6 @@ dependencies {
     implementation(project(":core:ktx"))
     implementation(project(":core:base"))
     implementation(project(":core:crashreporter"))
+
+    implementation(libs.androidx.health.connect.client)
 }

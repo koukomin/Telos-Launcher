@@ -7,7 +7,6 @@ import com.telos.desktop.files.ZipArchives
 import com.telos.desktop.linux.Sys
 import java.io.File
 
-// === TELOS_PENDING_REVIEW_START: telos_desktop_kwin_parity_upgrade ===
 enum class TelosOpenTarget { Files, Media, Host }
 
 object TelosFileHandler {
@@ -44,4 +43,3 @@ object TelosFileHandler {
         }
     }
 }
-// === TELOS_PENDING_REVIEW_END: telos_desktop_kwin_parity_upgrade ===

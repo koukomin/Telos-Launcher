@@ -65,7 +65,5 @@ dependencies {
     ksp(libs.androidx.roomcompiler)
     implementation(libs.sqlcipher.android)
 
-    // === TELOS_PENDING_REVIEW_START: radio_browser_ktor ===
     implementation(libs.bundles.ktor)
-    // === TELOS_PENDING_REVIEW_END: radio_browser_ktor ===
 }

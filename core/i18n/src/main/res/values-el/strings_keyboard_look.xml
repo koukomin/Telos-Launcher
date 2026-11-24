@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="keyboard_look_category">Εμφάνιση</string>
-    <string name="keyboard_accent_title">Χρώμα τονισμού</string>
-    <string name="keyboard_scale_title">Μέγεθος πληκτρολογίου</string>
-    <string name="keyboard_key_height_title">Ύψος πλήκτρων</string>
-    <string name="keyboard_key_font_title">Μέγεθος γραμμάτων</string>
-</resources>

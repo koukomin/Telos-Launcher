@@ -52,11 +52,8 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="org.tasks.permission.READ_TASKS" />
 
-    <!-- === TELOS_PENDING_REVIEW_START: desktop_taskbar_running_apps === -->
     <uses-permission android:name="android.permission.REORDER_TASKS" />
-    <!-- === TELOS_PENDING_REVIEW_END: desktop_taskbar_running_apps === -->
 
-    <!-- === TELOS_PENDING_REVIEW_START: smart_freeze_permissions === -->
     <permission-group
         android:name="moe.shizuku.manager.permission-group.API"
         android:label="@string/telos_shizuku_title"
@@ -84,7 +81,6 @@
     <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
-    <!-- === TELOS_PENDING_REVIEW_END: smart_freeze_permissions === -->
 
     <queries>
         <package android:name="moe.shizuku.privileged.api" />
@@ -149,22 +145,17 @@
                 android:resource="@xml/provider_paths" />
         </provider>
 
-        <!-- === TELOS_PENDING_REVIEW_START: smart_freeze_permissions === -->
         <service
             android:name="de.mm20.launcher2.freeze.SmartFreezeService"
             android:exported="false"
             android:foregroundServiceType="specialUse" />
-        <!-- === TELOS_PENDING_REVIEW_END: smart_freeze_permissions === -->
 
 
 
-        <!-- === TELOS_PENDING_REVIEW_START: sandbox_cloning_and_bridge === -->
         <service
             android:name="de.mm20.launcher2.sandbox.SandboxBridgeService"
             android:exported="true"
             android:permission="android.permission.INTERACT_ACROSS_PROFILES" />
-        <!-- === TELOS_PENDING_REVIEW_END: sandbox_cloning_and_bridge === -->
-        <!-- === TELOS_PENDING_REVIEW_START: sandbox_provisioning === -->
         <receiver
             android:name="de.mm20.launcher2.sandbox.SandboxDeviceAdminReceiver"
             android:description="@string/app_name"
@@ -179,7 +170,6 @@
                 <action android:name="android.app.action.PROFILE_PROVISIONING_COMPLETE" />
             </intent-filter>
         </receiver>
-        <!-- === TELOS_PENDING_REVIEW_END: sandbox_provisioning === -->
             <receiver
             android:name="de.mm20.launcher2.PackageReplacedReceiver"
             android:exported="true">
@@ -187,6 +177,18 @@
                 <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
             </intent-filter>
         </receiver>
+
+        <!-- One Health Connect rationale per APK (FitHealthRationaleActivity in :app:ui).
+             Replace Amethyst's duplicate system filters; keep the class for in-app workouts. -->
+        <activity
+            android:name="com.vitorpamplona.amethyst.ui.screen.loggedIn.workouts.health.HealthConnectRationaleActivity"
+            android:exported="false"
+            android:excludeFromRecents="true"
+            android:theme="@style/Theme.Amethyst"
+            tools:node="replace" />
+        <activity-alias
+            android:name="com.vitorpamplona.amethyst.ViewPermissionUsageActivity"
+            tools:node="remove" />
     </application>
 
 </manifest>

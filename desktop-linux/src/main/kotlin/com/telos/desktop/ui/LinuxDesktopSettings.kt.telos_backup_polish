@@ -95,7 +95,6 @@ fun LinuxDesktopSettingsPanel(
         if (filter.showLuksVault) {
             Text("LUKS vault", color = TelosColors.primary, modifier = Modifier.padding(top = 16.dp))
             Text("Configurations are stored only inside ~/.local/share/telos/vault_mnt after unlock.", fontSize = 12.sp)
-            // === TELOS_PENDING_REVIEW_START: telos_elastic_sharded_pqc_vault ===
             Text(com.telos.desktop.vault.HardwareCryptoAccelerator.probe().label, fontSize = 12.sp, color = TelosColors.secondary)
             TextButton(onClick = { runCatching { com.telos.desktop.vault.PhantomVault.engine.expandManual() } }) { Text("Expand vault +128MB") }
             TextButton(onClick = { runCatching { com.telos.desktop.vault.PhantomVault.engine.compact() } }) { Text("Compact vault (fstrim)") }
@@ -104,7 +103,6 @@ fun LinuxDesktopSettingsPanel(
                 com.telos.desktop.vault.PhantomVault.engine.autoGrow = it
                 com.telos.desktop.vault.PhantomVault.engine.expander?.autoGrowEnabled = it
             }
-            // === TELOS_PENDING_REVIEW_END: telos_elastic_sharded_pqc_vault ===
         }
         TextButton(onClick = onClose) { Text("Close") }
     }

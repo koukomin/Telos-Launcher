@@ -35,7 +35,6 @@ class FreezeManager internal constructor(
     private val usageStats: AppUsageStatsProvider,
     private val descriptions: BloatDescriptions,
 ) {
-    // === TELOS_PENDING_REVIEW_START: thor_freezer_features ===
     private val dhizukuProvider = DhizukuProvider(context)
     
     // Critical system packages to protect from freezing
@@ -51,7 +50,6 @@ class FreezeManager internal constructor(
         "io.github.muntashirakon.dhizuku",
         context.packageName
     )
-    // === TELOS_PENDING_REVIEW_END: thor_freezer_features ===
 
     private val operationMutex = Mutex()
     private val companionMutex = Mutex()
@@ -108,10 +106,8 @@ class FreezeManager internal constructor(
             FreezeBackendPreference.ShizukuOnly ->
                 FreezeBackendType.Shizuku.takeIf { shizukuProvider.isAvailable() }
 
-            // === TELOS_PENDING_REVIEW_START: thor_freezer_features ===
             FreezeBackendPreference.DhizukuOnly ->
                 FreezeBackendType.Dhizuku.takeIf { dhizukuProvider.isAvailable() }
-            // === TELOS_PENDING_REVIEW_END: thor_freezer_features ===
 
             FreezeBackendPreference.RootOnly ->
                 FreezeBackendType.Root.takeIf { rootProvider.isAvailable() }
@@ -152,7 +148,6 @@ class FreezeManager internal constructor(
         null -> false
     }
 
-    // === TELOS_PENDING_REVIEW_START: multi_user_freeze ===
     suspend fun freeze(packageName: String, userId: Int = Process.myUid() / 100000): Set<String> {
         if (_activeBackend.value == null) refreshBackendState()
         val result = setSuspended(listOf(packageName), true, userId)
@@ -332,7 +327,6 @@ class FreezeManager internal constructor(
     ): Set<String> {
         if (packageNames.isEmpty()) return emptySet()
 
-        // === TELOS_PENDING_REVIEW_START: thor_freezer_features ===
         // Package names end up in shell commands (root / Shizuku fallbacks), so anything that is not a
         // well-formed package name is dropped here rather than trusted.
         val held = if (respectMaintenance) settings.maintenance.first().values.map { it.packageName }.toSet() else emptySet()
@@ -347,7 +341,6 @@ class FreezeManager internal constructor(
         val approved = if (suspended) settings.systemRiskApproved.first() else emptySet()
         val targetPackages = if (suspended) safePackages.filter { descriptions.allowsFreeze(it, it in approved, userId) } else safePackages
         if (targetPackages.isEmpty()) return emptySet()
-        // === TELOS_PENDING_REVIEW_END: thor_freezer_features ===
 
         val backend = _activeBackend.value
         if (backend == null) {
@@ -478,33 +471,24 @@ class FreezeManager internal constructor(
         }
 
     suspend fun forceStop(packageName: String, userId: Int = Process.myUid() / 100000): Boolean {
-        // === TELOS_PENDING_REVIEW_START: thor_freezer_features ===
         if (PROTECTED_PACKAGES.contains(packageName) || !VALID_PACKAGE_NAME.matches(packageName)) return false
-        // === TELOS_PENDING_REVIEW_END: thor_freezer_features ===
         return when (_activeBackend.value) {
             FreezeBackendType.Shizuku -> shizukuProvider.forceStopPackage(packageName, userId)
-            // === TELOS_PENDING_REVIEW_START: thor_freezer_features ===
             FreezeBackendType.Dhizuku -> dhizukuProvider.forceStopPackage(packageName, userId)
-            // === TELOS_PENDING_REVIEW_END: thor_freezer_features ===
             FreezeBackendType.Root -> rootProvider.forceStopPackage(packageName, userId)
             else -> false
         }
     }
 
     suspend fun clearCache(packageName: String, userId: Int = Process.myUid() / 100000): Boolean {
-        // === TELOS_PENDING_REVIEW_START: thor_freezer_features ===
         if (PROTECTED_PACKAGES.contains(packageName) || !VALID_PACKAGE_NAME.matches(packageName)) return false
-        // === TELOS_PENDING_REVIEW_END: thor_freezer_features ===
         return when (_activeBackend.value) {
             FreezeBackendType.Shizuku -> shizukuProvider.clearCache(packageName, userId)
-            // === TELOS_PENDING_REVIEW_START: thor_freezer_features ===
             FreezeBackendType.Dhizuku -> dhizukuProvider.clearCache(packageName, userId)
-            // === TELOS_PENDING_REVIEW_END: thor_freezer_features ===
             FreezeBackendType.Root -> rootProvider.clearCache(packageName, userId)
             else -> false
         }
     }
-    // === TELOS_PENDING_REVIEW_END: multi_user_freeze ===
 
     /** Live read of the OS-level frozen state (suspended OR disabled). */
     fun isFrozen(packageName: String, userId: Int = Process.myUid() / 100000): Boolean {

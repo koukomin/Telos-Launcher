@@ -1,4 +1,3 @@
-// === TELOS_PENDING_REVIEW_START: sandbox_cloning_and_bridge ===
 package de.mm20.launcher2.sandbox
 
 import android.content.ComponentName
@@ -106,4 +105,3 @@ object AppCloner {
         }
     }
 }
-// === TELOS_PENDING_REVIEW_END: sandbox_cloning_and_bridge ===

@@ -1,7 +1,6 @@
 package de.mm20.launcher2.currencies
 
 import android.content.Context
-import android.util.Log
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import de.mm20.launcher2.crashreporter.CrashReporter
@@ -18,7 +17,6 @@ import javax.xml.parsers.DocumentBuilderFactory
 class ExchangeRateWorker(val context: Context, params: WorkerParameters) :
     CoroutineWorker(context, params) {
     override suspend fun doWork(): Result {
-        Log.d("MM20", "Updating currency exchange rates")
         val httpClient = HttpClient()
         try {
             val response = httpClient.get {

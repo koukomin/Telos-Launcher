@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.graphics.drawable.LayerDrawable
-import android.util.Log
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.database.AppDatabase
 import de.mm20.launcher2.icons.AppIcon
@@ -33,7 +32,6 @@ class GrayscaleMapIconPackInstaller(
                 val resources = context.packageManager.getResourcesForApplication(packageName)
                 val resId = resources.getIdentifier("grayscale_icon_map", "xml", packageName)
                 if (resId == 0) {
-                    Log.d("MM20", "Could not find grayscale_icon_map.xml in $packageName")
                     return@withContext
                 }
                 val parser = resources.getXml(resId)

@@ -376,7 +376,6 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
      * triggers (screen off, idle, battery saver - whichever the user has enabled) keep freezing it
      * going forward instead of this being a one-off action.
      */
-    // === TELOS_PENDING_REVIEW_START: multi_user_freeze ===
     fun freeze() {
         val searchable = searchable.value
         if (searchable is Application) {
@@ -422,9 +421,7 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
         }
     }
 
-    // === TELOS_PENDING_REVIEW_END: multi_user_freeze ===
 
-    // === TELOS_PENDING_REVIEW_START: sandbox_cloning_and_bridge ===
     fun cloneToSandbox(context: Context, workProfileUser: UserHandle) {
         val searchable = searchable.value
         if (searchable is Application) {
@@ -439,7 +436,6 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
         }
     }
 
-    // === TELOS_PENDING_REVIEW_END: sandbox_cloning_and_bridge ===
 
     fun delete(context: Context) {
         val searchable = searchable.value ?: return

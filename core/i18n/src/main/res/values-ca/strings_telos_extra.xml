@@ -18,10 +18,10 @@
 
     <string name="settings_keyboard">Keyboard</string>
     <string name="keepass_title">KeePassTL</string>
-    <string name="aether_title">Telos Aether</string>
+    <string name="aether_title">Aether</string>
     <string name="backup_group_keepass">KeePassTL Vault</string>
     <string name="backup_group_keepass_summary">Saved passwords and credentials</string>
-    <string name="backup_group_aether">Telos Aether Nostr</string>
+    <string name="backup_group_aether">Aether Nostr</string>
     <string name="backup_group_aether_summary">Nostr keys and relay configurations</string>
     <string name="keyboard_enable_title">Activa Telos Keyboard</string>
     <string name="keyboard_enable_summary">Activeu Telos Keyboard a la configuració d’entrada d’Android i trieu-lo com a mètode d’entrada predeterminat.</string>
@@ -55,4 +55,22 @@
     <string name="keepass_unnamed">Sense nom</string>
     <string name="keepass_wrong_password">Contrasenya incorrecta o fitxer no vàlid</string>
     <string name="keepass_encrypted_val">Xifrat</string>
+<string name="fit_sources_tab">Sources</string>
+<string name="fit_sources_intro">Fit reads today\'s steps, heart rate, sleep, weight, calories and distance from Health Connect. Google Fit, Garmin Connect, Samsung Health and Huawei Health sync into Health Connect on the phone; open those apps and enable Health Connect, then grant Fit access here.</string>
+<string name="fit_source_health_connect">Health Connect</string>
+<string name="fit_source_google_fit">Google Fit / Google Health</string>
+<string name="fit_source_garmin">Garmin Connect</string>
+<string name="fit_source_samsung">Samsung Health</string>
+<string name="fit_source_huawei">Huawei Health</string>
+<string name="fit_source_connect">Connect</string>
+<string name="fit_source_manage">Manage</string>
+<string name="fit_source_open_app">Open app</string>
+<string name="fit_source_grant">Grant Health Connect access</string>
+<string name="fit_source_installed_bridge">Installed. Enable Health Connect inside this app so Fit can read its data.</string>
+<string name="fit_source_not_installed">Not installed on this device</string>
+<string name="keyboard_look_category">Look</string>
+<string name="keyboard_accent_title">Accent color</string>
+<string name="keyboard_scale_title">Keyboard size</string>
+<string name="keyboard_key_height_title">Key height</string>
+<string name="keyboard_key_font_title">Key text size</string>
 </resources>

@@ -20,7 +20,6 @@ object PortableEnvironmentIsolator {
     var stateHome: File? = null
 
     fun apply(mount: File, fullSessionHome: Boolean = TelosSessionHome.full) {
-        // === TELOS_PENDING_REVIEW_START: telos_labwc_session_p0p1 ===
         val home = if (fullSessionHome) {
             mount
         } else {
@@ -60,7 +59,6 @@ object PortableEnvironmentIsolator {
         System.setProperty("telos.vault.home", home.absolutePath)
         System.setProperty("java.io.tmpdir", tmp.absolutePath)
         if (fullSessionHome) System.setProperty("telos.session.home", "full")
-        // === TELOS_PENDING_REVIEW_END: telos_labwc_session_p0p1 ===
     }
 
     fun inject(pb: ProcessBuilder) {

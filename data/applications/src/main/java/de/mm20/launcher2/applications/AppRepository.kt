@@ -222,7 +222,6 @@ internal class AppRepositoryImpl(
         }
     }
 
-    // === TELOS_PENDING_REVIEW_START: dual_apps_and_multi_user_fix ===
     private suspend fun getApplications(
         packageName: String?,
         userHandle: UserHandle,
@@ -319,7 +318,6 @@ internal class AppRepositoryImpl(
 
         return apps
     }
-    // === TELOS_PENDING_REVIEW_END: dual_apps_and_multi_user_fix ===
 
 
     private fun getApplication(
@@ -389,9 +387,7 @@ internal class AppRepositoryImpl(
                 val label = appInfo.loadLabel(pm).toString()
                 if (label.isEmpty()) return@mapNotNull null
 
-                // === TELOS_PENDING_REVIEW_START: iconless_apps_iconpack_fix ===
                 val launchClassName = pm.getLaunchIntentForPackage(appInfo.packageName)?.component?.className ?: ""
-                // === TELOS_PENDING_REVIEW_END: iconless_apps_iconpack_fix ===
 
                 LauncherApp(
                     componentName = ComponentName(appInfo.packageName, launchClassName),
@@ -416,15 +412,12 @@ internal class AppRepositoryImpl(
                 val normalizerId = stringNormalizer.id
                 val appResults = mutableListOf<Application>()
                 
-                // === TELOS_PENDING_REVIEW_START: virtual_app_koin_fix ===
                 val virtualApps = virtualAppProviders.flatMap { it.getVirtualApps() }.filter { it.key !in disabled }
-                // === TELOS_PENDING_REVIEW_END: virtual_app_koin_fix ===
 
                 if (query.isEmpty()) {
                     appResults.addAll(apps)
                     appResults.addAll(virtualApps)
                 } else {
-                    // === TELOS_PENDING_REVIEW_START: perf_optimizations ===
                     apps.mapNotNullTo(appResults) { app ->
                         val cachedLabel = app.cachedNormalizerResult
                         val labelStr = if (cachedLabel?.first == normalizerId) {
@@ -450,7 +443,6 @@ internal class AppRepositoryImpl(
                             score = score
                         )
                     }
-                    // === TELOS_PENDING_REVIEW_END: perf_optimizations ===
 
                     val componentName = ComponentName.unflattenFromString(query)
                     getActivityByComponentName(componentName)?.let { appResults.add(it) }

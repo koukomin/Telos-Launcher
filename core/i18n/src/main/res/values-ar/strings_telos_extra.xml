@@ -74,10 +74,10 @@
     <string name="voice_voice_recordings">Voice memos</string>
     <string name="settings_keyboard">لوحة المفاتيح</string>
     <string name="keepass_title">KeePassTL</string>
-    <string name="aether_title">Telos Aether</string>
+    <string name="aether_title">Aether</string>
     <string name="backup_group_keepass">خزينة KeePassTL</string>
     <string name="backup_group_keepass_summary">كلمات المرور وبيانات الاعتماد المحفوظة</string>
-    <string name="backup_group_aether">Telos Aether Nostr</string>
+    <string name="backup_group_aether">Aether Nostr</string>
     <string name="backup_group_aether_summary">Nostr keys and relay configurations</string>
     <string name="keepass_db_password">كلمة مرور قاعدة البيانات</string>
     <string name="keepass_wrong_password">كلمة المرور غير صحيحة أو الملف غير صالح</string>
@@ -119,4 +119,22 @@
     <string name="aether_attached_media">وسائط مرفقة: %1$s</string>
     <string name="aether_dm_unavailable_title">الرسائل المباشرة غير متاحة</string>
     <string name="aether_dm_unavailable_summary">الرسائل المشفرة تحتاج جلسة Nostr نشطة. هذا الإصدار يبقي المحادثات محلية فقط.</string>
+<string name="fit_sources_tab">المصادر</string>
+<string name="fit_sources_intro">يقرأ Fit الخطوات ومعدل القلب والنوم والوزن والسعرات والمسافة من Health Connect. تطبيقات Google Fit وGarmin Connect وSamsung Health وHuawei Health تزامن إلى هناك؛ افتحها وفعّل Health Connect ثم امنح Fit الإذن.</string>
+<string name="fit_source_health_connect">Health Connect</string>
+<string name="fit_source_google_fit">Google Fit / Google Health</string>
+<string name="fit_source_garmin">Garmin Connect</string>
+<string name="fit_source_samsung">Samsung Health</string>
+<string name="fit_source_huawei">Huawei Health</string>
+<string name="fit_source_connect">اتصال</string>
+<string name="fit_source_manage">إدارة</string>
+<string name="fit_source_open_app">فتح التطبيق</string>
+<string name="fit_source_grant">منح وصول Health Connect</string>
+<string name="fit_source_installed_bridge">مثبّت. فعّل Health Connect داخل هذا التطبيق ليقرأ Fit البيانات.</string>
+<string name="fit_source_not_installed">غير مثبّت على هذا الجهاز</string>
+<string name="keyboard_look_category">Look</string>
+<string name="keyboard_accent_title">Accent color</string>
+<string name="keyboard_scale_title">Keyboard size</string>
+<string name="keyboard_key_height_title">Key height</string>
+<string name="keyboard_key_font_title">Key text size</string>
 </resources>

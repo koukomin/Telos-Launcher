@@ -1,4 +1,3 @@
-// === TELOS_PENDING_REVIEW_START: desktop_grid_and_context_menu ===
 package de.mm20.launcher2.ui.desktopmode
 
 import android.net.Uri
@@ -53,4 +52,3 @@ internal class DesktopWorkspaceVM : ViewModel(), KoinComponent {
         favoritesService.unpinItem(app)
     }
 }
-// === TELOS_PENDING_REVIEW_END: desktop_grid_and_context_menu ===

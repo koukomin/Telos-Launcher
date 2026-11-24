@@ -4,7 +4,6 @@ import java.io.File
 import java.nio.file.Path
 import kotlin.io.path.Path
 
-// === TELOS_PENDING_REVIEW_START: telos_labwc_session_p0p1 ===
 object TelosSessionHome {
     val session: Boolean
         get() = System.getenv("TELOS_SESSION") == "1" ||
@@ -28,4 +27,3 @@ object TelosSessionHome {
     val vaultMount: File?
         get() = System.getenv("TELOS_VAULT_MOUNT")?.takeIf { it.isNotBlank() }?.let { File(it) }
 }
-// === TELOS_PENDING_REVIEW_END: telos_labwc_session_p0p1 ===

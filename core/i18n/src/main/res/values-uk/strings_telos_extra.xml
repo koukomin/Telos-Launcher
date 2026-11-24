@@ -74,10 +74,10 @@
     <string name="voice_voice_recordings">Voice memos</string>
     <string name="settings_keyboard">Клавіатура</string>
     <string name="keepass_title">KeePassTL</string>
-    <string name="aether_title">Telos Aether</string>
+    <string name="aether_title">Aether</string>
     <string name="backup_group_keepass">Сховище KeePassTL</string>
     <string name="backup_group_keepass_summary">Збережені паролі та облікові дані</string>
-    <string name="backup_group_aether">Telos Aether Nostr</string>
+    <string name="backup_group_aether">Aether Nostr</string>
     <string name="backup_group_aether_summary">Nostr keys and relay configurations</string>
     <string name="keepass_db_password">Пароль бази даних</string>
     <string name="keepass_wrong_password">Невірний пароль або пошкоджений файл</string>
@@ -119,4 +119,22 @@
     <string name="aether_attached_media">Прикріплене медіа: %1$s</string>
     <string name="aether_dm_unavailable_title">Прямі повідомлення недоступні</string>
     <string name="aether_dm_unavailable_summary">Зашифровані DM потребують активної сесії Nostr. Ця збірка зберігає розмови лише локально.</string>
+<string name="fit_sources_tab">Джерела</string>
+<string name="fit_sources_intro">Fit читає кроки, пульс, сон, вагу, калорії та дистанцію з Health Connect. Google Fit, Garmin Connect, Samsung Health і Huawei Health пишуть туди; відкрийте ці програми, увімкніть Health Connect і дайте Fit доступ.</string>
+<string name="fit_source_health_connect">Health Connect</string>
+<string name="fit_source_google_fit">Google Fit / Google Health</string>
+<string name="fit_source_garmin">Garmin Connect</string>
+<string name="fit_source_samsung">Samsung Health</string>
+<string name="fit_source_huawei">Huawei Health</string>
+<string name="fit_source_connect">Підключити</string>
+<string name="fit_source_manage">Керувати</string>
+<string name="fit_source_open_app">Відкрити програму</string>
+<string name="fit_source_grant">Надати доступ Health Connect</string>
+<string name="fit_source_installed_bridge">Встановлено. Увімкніть Health Connect у цій програмі, щоб Fit читав дані.</string>
+<string name="fit_source_not_installed">Не встановлено на цьому пристрої</string>
+<string name="keyboard_look_category">Look</string>
+<string name="keyboard_accent_title">Accent color</string>
+<string name="keyboard_scale_title">Keyboard size</string>
+<string name="keyboard_key_height_title">Key height</string>
+<string name="keyboard_key_font_title">Key text size</string>
 </resources>

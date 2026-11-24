@@ -72,7 +72,7 @@ internal data class OsmLocation(
         get() = DOMAIN
     override val key: String = "$domain://$id"
     override val fixMeUrl: String
-        get() = FIXMEURL
+        get() = OSM_FIX_THE_MAP_URL
 
     override val userRatingCount: Int? = null
     override val departures: List<Departure>? = null
@@ -88,7 +88,7 @@ internal data class OsmLocation(
     companion object {
 
         internal const val DOMAIN = "osm"
-        internal const val FIXMEURL = "https://www.openstreetmap.org/fixthemap"
+        internal const val OSM_FIX_THE_MAP_URL = "https://www.openstreetmap.org/fixthemap"
 
         internal val addressFormatter =
             OsmAddressFormatter(

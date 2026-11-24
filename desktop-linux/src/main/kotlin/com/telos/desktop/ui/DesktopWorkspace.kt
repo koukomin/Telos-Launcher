@@ -207,7 +207,6 @@ fun DesktopWorkspace(
         }
         val wpx = with(density) { maxWidth.toPx() }
         val hpx = with(density) { maxHeight.toPx() }
-        // === TELOS_PENDING_REVIEW_START: telos_kde_replacement_suite ===
         val form = AdaptiveShell.formFactor(maxWidth, maxHeight)
         val topBarPx = settings.panelHeightDp.coerceIn(32f, 48f)
         LaunchedEffect(wpx, hpx, form, topBarPx) {
@@ -264,7 +263,6 @@ fun DesktopWorkspace(
                 kotlinx.coroutines.delay(400)
             }
         }
-        // === TELOS_PENDING_REVIEW_END: telos_kde_replacement_suite ===
         Box(
             Modifier
                 .fillMaxSize()
@@ -293,20 +291,15 @@ fun DesktopWorkspace(
                 when (win.title) {
                     "Settings" -> LinuxDesktopSettingsPanel(settings, icons, display) { wm.close(win.id); showSettings = false }
                     "Display" -> LinuxDesktopSettingsPanel(settings, icons, display) { wm.close(win.id); showDisplay = false }
-                    // === TELOS_PENDING_REVIEW_START: telos_kde_system_monitor ===
                     "System Monitor" -> TelosSystemMonitorWindow(telemetry, vault)
-                    // === TELOS_PENDING_REVIEW_END: telos_kde_system_monitor ===
-                    // === TELOS_PENDING_REVIEW_START: telos_launcher_desktop_ui_parity ===
                     "Media Player" -> TelosMediaPlayer()
                     "System Optimizer" -> com.telos.desktop.apps.TelosSystemOptimizer(telemetry)
-                    // === TELOS_PENDING_REVIEW_START: telos_window_drag_and_ui_fix ===
                     "Notes" -> com.telos.desktop.apps.TelosNotesApp()
                     "Calendar" -> com.telos.desktop.apps.TelosCalendarApp()
                     "Calculator" -> com.telos.desktop.apps.TelosCalculatorApp()
                     "Clock" -> com.telos.desktop.apps.TelosClockApp()
                     "Network" -> com.telos.desktop.apps.TelosNetworkApp()
                     "Store" -> com.telos.desktop.apps.TelosStoreApp()
-                    // === TELOS_PENDING_REVIEW_END: telos_window_drag_and_ui_fix ===
                     "Files", "Photos", "Downloads", "Trash" -> {
                         val x = remember { XdgUserDirsManager.resolve() }
                         val start = when (win.title) {
@@ -321,7 +314,6 @@ fun DesktopWorkspace(
                             TelosFilesApp(start, showHiddenFiles = settings.showHiddenFiles)
                         }
                     }
-                    // === TELOS_PENDING_REVIEW_END: telos_launcher_desktop_ui_parity ===
                     else -> Text(win.title, color = TelosColors.onSurface, modifier = Modifier.padding(16.dp))
                 }
             }
@@ -362,7 +354,6 @@ fun DesktopWorkspace(
                 }
             }
             }
-            // === TELOS_PENDING_REVIEW_START: telos_kde_replacement_suite ===
             if (!nativeLayer) {
             TelosTopPanel(
                 wm = wm,
@@ -374,7 +365,6 @@ fun DesktopWorkspace(
                 modifier = Modifier.align(Alignment.TopCenter),
             )
             }
-            // === TELOS_PENDING_REVIEW_START: telos_window_drag_and_ui_fix ===
             // Kickoff drops from under the Helix top bar (Yakuake motion); not a fullscreen DE replace.
             val panelH = (settings.panelHeightDp).dp
             AnimatedVisibility(
@@ -436,7 +426,6 @@ fun DesktopWorkspace(
                     },
                 )
             }
-            // === TELOS_PENDING_REVIEW_END: telos_window_drag_and_ui_fix ===
             TelosQuakeTerminal(wm.workArea)
             TelosOsdOverlay()
             Box(Modifier.align(Alignment.TopEnd).padding(top = 40.dp, end = 12.dp).zIndex(203f)) { ClipboardPopup() }
@@ -484,7 +473,6 @@ fun DesktopWorkspace(
                     }
                 }
             }
-            // === TELOS_PENDING_REVIEW_END: telos_kde_replacement_suite ===
             LaunchedEffect(Unit) {
                 com.telos.desktop.session.FreedesktopNotifyBridge.pollLoop()
             }
@@ -519,7 +507,6 @@ private fun keyRefresh(refreshKey: Int, content: @Composable () -> Unit) {
     androidx.compose.runtime.key(refreshKey) { content() }
 }
 
-// === TELOS_PENDING_REVIEW_START: telos_kde_replacement_suite ===
 fun handleDesktopKeys(
     ev: androidx.compose.ui.input.key.KeyEvent,
     wm: TelosWindowManager,
@@ -538,7 +525,6 @@ fun handleDesktopKeys(
         com.telos.desktop.theme.PanicMuteController.toggle(settings, persist = true)
         return true
     }
-    // === TELOS_PENDING_REVIEW_START: telos_de_final_polish ===
     if (key == Key.F11) {
         DesktopChrome.toggleFullscreen()
         return true
@@ -605,7 +591,6 @@ fun handleDesktopKeys(
         wm.focusedId?.let { wm.restore(it) }
         return true
     }
-    // === TELOS_PENDING_REVIEW_END: telos_de_final_polish ===
     if (key == Key.PrintScreen) {
         when {
             ctrl -> TelosCaptureTool.window()
@@ -656,12 +641,10 @@ fun handleDesktopKeys(
         TelosOsd.show("Brightness", (p.screenBrightness - 8) / 100f)
         return true
     }
-    // === TELOS_PENDING_REVIEW_START: telos_elastic_sharded_pqc_vault ===
     if (ctrl && alt && key == Key.L) {
         runCatching { PhantomVault.engine.panicUnmount() }
         return true
     }
-    // === TELOS_PENDING_REVIEW_END: telos_elastic_sharded_pqc_vault ===
     return false
 }
 
@@ -675,4 +658,3 @@ private fun DockItem(label: String, icon: CandyIcon, onClick: () -> Unit) {
         Text(label, color = TelosColors.onSurface, fontSize = 10.sp, maxLines = 1)
     }
 }
-// === TELOS_PENDING_REVIEW_END: telos_kde_replacement_suite ===

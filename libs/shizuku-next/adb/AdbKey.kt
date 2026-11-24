@@ -6,7 +6,6 @@ import android.os.Build
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
 import android.util.Base64
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.core.content.edit
 import moe.shizuku.manager.ShizukuApplication
@@ -37,8 +36,6 @@ import javax.net.ssl.SSLContext
 import javax.net.ssl.SSLEngine
 import javax.net.ssl.X509ExtendedKeyManager
 import javax.net.ssl.X509ExtendedTrustManager
-
-private const val TAG = "AdbKey"
 
 class AdbKey(private val adbKeyStore: AdbKeyStore, name: String) {
 
@@ -96,8 +93,6 @@ class AdbKey(private val adbKeyStore: AdbKeyStore, name: String) {
         ).build(signer)
         this.certificate = CertificateFactory.getInstance("X.509")
                 .generateCertificate(ByteArrayInputStream(x509Certificate.encoded)) as X509Certificate
-
-        Log.d(TAG, privateKey.toString())
     }
 
     val adbPublicKey: ByteArray by unsafeLazy {
@@ -198,7 +193,6 @@ class AdbKey(private val adbKeyStore: AdbKeyStore, name: String) {
             private val alias = "key"
 
             override fun chooseClientAlias(keyTypes: Array<out String>, issuers: Array<out Principal>?, socket: Socket?): String? {
-                Log.d(TAG, "chooseClientAlias: keyType=${keyTypes.contentToString()}, issuers=${issuers?.contentToString()}")
                 for (keyType in keyTypes) {
                     if (keyType == "RSA") return alias
                 }
@@ -206,12 +200,10 @@ class AdbKey(private val adbKeyStore: AdbKeyStore, name: String) {
             }
 
             override fun getCertificateChain(alias: String?): Array<X509Certificate>? {
-                Log.d(TAG, "getCertificateChain: alias=$alias")
                 return if (alias == this.alias) arrayOf(certificate) else null
             }
 
             override fun getPrivateKey(alias: String?): PrivateKey? {
-                Log.d(TAG, "getPrivateKey: alias=$alias")
                 return if (alias == this.alias) privateKey else null
             }
 

@@ -1,5 +1,4 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- === TELOS_PENDING_REVIEW_START: telephony_encryption_suite === -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
     <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
@@ -12,9 +11,7 @@
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.WRITE_CONTACTS" />
-    <!-- === TELOS_PENDING_REVIEW_END: telephony_encryption_suite === -->
 
-    <!-- === TELOS_PENDING_REVIEW_START: sms_and_radio_engine === -->
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.SEND_SMS" />
@@ -31,7 +28,6 @@
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
-    <!-- === TELOS_PENDING_REVIEW_END: sms_and_radio_engine === -->
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
@@ -58,7 +54,6 @@
             android:exported="false"
             android:foregroundServiceType="phoneCall" />
 
-        <!-- === TELOS_PENDING_REVIEW_START: telephony_encryption_suite === -->
         <service
             android:name=".telephony.TelosCallScreeningService"
             android:permission="android.permission.BIND_SCREENING_SERVICE"
@@ -84,9 +79,7 @@
         <receiver
             android:name=".reminder.CallbackReminderReceiver"
             android:exported="false" />
-        <!-- === TELOS_PENDING_REVIEW_END: telephony_encryption_suite === -->
 
-        <!-- === TELOS_PENDING_REVIEW_START: sms_and_radio_engine === -->
         <receiver
             android:name=".sms.TelosSmsReceiver"
             android:permission="android.permission.BROADCAST_SMS"
@@ -191,7 +184,6 @@
             android:name=".radio.RadioRecordingService"
             android:exported="false"
             android:foregroundServiceType="mediaPlayback" />
-        <!-- === TELOS_PENDING_REVIEW_END: sms_and_radio_engine === -->
         <receiver
             android:name=".media.video.PlayerBridgeReceiver"
             android:exported="false" />

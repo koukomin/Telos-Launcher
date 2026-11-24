@@ -24,7 +24,7 @@ Before merging or creating a release:
 ## Gradle & library versioning (Mandatory for all agents)
 
 1. **Prefer the newest stable Gradle and libraries.** Try the current stable Gradle wrapper (Gradle 10 when it is published; until then the newest 9.x) and the newest stable catalog pins in `gradle/libs.versions.toml` (and Amethyst’s catalog when that included build is touched). Prefer `tasks.register<Type>("name")` over `by tasks.registering(...)`.
-2. **Keep the last version that builds if the newest one fails.** If the latest Gradle, AGP, Compose, KSP, or an included-build library (Aether/Amethyst, AppOps, Nextlib) cannot resolve, compile, or pass the existing tests, **do not leave the tree broken**. Revert or pin that one artifact to the last known-good version, write the failure and the pin in `.artifacts/SESSION_TRACKER.md`, and keep using the working pin until a follow-up change lands the upgrade. Do not skip the newest version forever: retry it when the blocker is gone.
+2. **Keep the last version that builds if the newest one fails.** If the latest Gradle, AGP, Compose, KSP, or an included-build library (Amethyst, AppOps, Nextlib) cannot resolve, compile, or pass the existing tests, **do not leave the tree broken**. Revert or pin that one artifact to the last known-good version, write the failure and the pin in `.artifacts/SESSION_TRACKER.md`, and keep using the working pin until a follow-up change lands the upgrade. Do not skip the newest version forever: retry it when the blocker is gone.
 3. **Do not mix an unproven Gradle jump with unrelated feature work.** Composite included builds (`libs/amethyst`) must still resolve (`com.telos.amethyst:amethyst`) after a wrapper bump. If they do not, keep the working wrapper.
 
 ## Project
@@ -33,7 +33,7 @@ Telos — a search-focused, free and open source Android launcher (package `de.m
 
 ## Build & common commands
 
-- Build environment: JDK 21 toolchain (see `gradle/gradle-daemon-jvm.properties`). Gradle version is whatever the wrapper currently ships (see `gradle/wrapper/gradle-wrapper.properties`); prefer the newest stable, keep the last working pin if a bump breaks Aether or the Android build.
+- Build environment: JDK 21 toolchain (see `gradle/gradle-daemon-jvm.properties`). Gradle version is whatever the wrapper currently ships (see `gradle/wrapper/gradle-wrapper.properties`); prefer the newest stable, keep the last working pin if a bump breaks the Amethyst included build or the Android build.
 - Build variants are a combination of a build type (`debug`, `release`, `nightly`) and a product flavor (`default`, `fdroid`), e.g. `assembleDefaultDebug`, `assembleFdroidRelease`.
 - Build a debug APK: `./gradlew assembleDefaultDebug`
 - Install to a connected device/emulator: `./gradlew installDefaultDebug`
@@ -298,7 +298,7 @@ Every AI coding agent (Claude, Codex, Copilot, Cursor, Devin, ChatGPT, Gemini, G
 1. **Search & Navigation (`:services:search`, `:core:base`, `:app:ui`)**:
    - Tiered match ranking (exact > prefix > substring > fuzzy search across apps, files, contacts, calendar, notes, web, actions).
    - 4 Cyber-Tech App Drawer animation styles (Classic Slide, Cyber-Matrix Reveal, Holo-Portal Expansion, Command Deck HUD) with live demo preview.
-   - Desktop Mode & Linux labwc/niri shell integration (`:services:desktop-mode`, `:desktop-linux`).
+   - Android desktop / Dex-style windowing (`:services:desktop-mode`). The JVM `:desktop-linux` module and desktop binary CI are retired.
 
 2. **Phone & Communications (`:services:comms`, `:data:contacts`)**:
    - Telos Phone: Dialer, recents, contacts, dual SIM support, call recording (VOICE_CALL, silence retry, Shizuku/root CAPTURE_AUDIO_OUTPUT), call screening (prefix/regex/outgoing, max priority), SIP.

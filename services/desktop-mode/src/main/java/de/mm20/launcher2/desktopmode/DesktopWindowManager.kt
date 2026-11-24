@@ -1,4 +1,3 @@
-// === TELOS_PENDING_REVIEW_START: desktop_window_snapping ===
 package de.mm20.launcher2.desktopmode
 
 import android.graphics.Rect
@@ -18,4 +17,3 @@ class DesktopWindowManager {
         return TelosShellEngine.execResult(command, timeoutMs = 10_000L).isSuccess
     }
 }
-// === TELOS_PENDING_REVIEW_END: desktop_window_snapping ===

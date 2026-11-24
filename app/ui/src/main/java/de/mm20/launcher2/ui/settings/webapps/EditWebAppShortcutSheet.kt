@@ -85,9 +85,7 @@ fun EditWebAppShortcutSheet(
         onDismissRequest = onDismiss,
     ) {
         var label by rememberSaveable(existing) { mutableStateOf(existing?.label ?: "") }
-        // === TELOS_PENDING_REVIEW_START: ui_i18n_and_features_batch ===
         var url by rememberSaveable(existing) { mutableStateOf(existing?.url ?: "https://") }
-        // === TELOS_PENDING_REVIEW_END: ui_i18n_and_features_batch ===
         var iconUri by rememberSaveable(existing) { mutableStateOf(existing?.iconUri) }
         var faviconUrl by rememberSaveable(existing) { mutableStateOf(existing?.faviconUrl) }
         var rendererPackage by rememberSaveable(existing) { mutableStateOf(existing?.rendererPackage) }
@@ -193,9 +191,7 @@ fun EditWebAppShortcutSheet(
                 // a credential to save on every edit. A URL isn't a credential.
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Uri,
-                    // === TELOS_PENDING_REVIEW_START: ui_i18n_and_features_batch ===
                     capitalization = KeyboardCapitalization.None,
-                    // === TELOS_PENDING_REVIEW_END: ui_i18n_and_features_batch ===
                     autoCorrectEnabled = false,
                 ),
                 trailingIcon = if (findingFavicon) {

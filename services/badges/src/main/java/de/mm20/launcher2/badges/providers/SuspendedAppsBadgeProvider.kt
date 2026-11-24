@@ -1,4 +1,3 @@
-// === TELOS_PENDING_REVIEW_START: ui_frozen_apps_style ===
 package de.mm20.launcher2.badges.providers
 
 import android.content.Context
@@ -57,4 +56,3 @@ class SuspendedAppsBadgeProvider(private val context: Context) : BadgeProvider, 
         }
     }
 }
-// === TELOS_PENDING_REVIEW_END: ui_frozen_apps_style ===
