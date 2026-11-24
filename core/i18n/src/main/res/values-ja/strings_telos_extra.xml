@@ -119,4 +119,22 @@
     <string name="aether_attached_media">添付メディア: %1$s</string>
     <string name="aether_dm_unavailable_title">ダイレクトメッセージは利用できません</string>
     <string name="aether_dm_unavailable_summary">暗号化 DM には有効な Nostr セッションが必要です。このビルドは会話をローカルのみに保ちます。</string>
+<string name="fit_sources_tab">ソース</string>
+<string name="fit_sources_intro">Fit は歩数・心拍・睡眠・体重・カロリー・距離を Health Connect から読みます。Google Fit、Garmin Connect、Samsung Health、Huawei Health はそこに同期します。各アプリで Health Connect をオンにし、Fit に許可してください。</string>
+<string name="fit_source_health_connect">Health Connect</string>
+<string name="fit_source_google_fit">Google Fit / Google Health</string>
+<string name="fit_source_garmin">Garmin Connect</string>
+<string name="fit_source_samsung">Samsung Health</string>
+<string name="fit_source_huawei">Huawei Health</string>
+<string name="fit_source_connect">接続</string>
+<string name="fit_source_manage">管理</string>
+<string name="fit_source_open_app">アプリを開く</string>
+<string name="fit_source_grant">Health Connect へのアクセスを許可</string>
+<string name="fit_source_installed_bridge">インストール済み。Fit がデータを読めるよう、このアプリで Health Connect をオンにしてください。</string>
+<string name="fit_source_not_installed">この端末にはインストールされていません</string>
+<string name="keyboard_look_category">Look</string>
+<string name="keyboard_accent_title">Accent color</string>
+<string name="keyboard_scale_title">Keyboard size</string>
+<string name="keyboard_key_height_title">Key height</string>
+<string name="keyboard_key_font_title">Key text size</string>
 </resources>

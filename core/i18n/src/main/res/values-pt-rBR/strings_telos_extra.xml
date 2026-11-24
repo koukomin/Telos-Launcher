@@ -119,4 +119,22 @@
     <string name="aether_attached_media">Mídia anexada: %1$s</string>
     <string name="aether_dm_unavailable_title">Mensagens diretas indisponíveis</string>
     <string name="aether_dm_unavailable_summary">As MD criptografadas precisam de uma sessão Nostr ativa. Esta versão mantém as conversas apenas no dispositivo.</string>
+<string name="fit_sources_tab">Fontes</string>
+<string name="fit_sources_intro">O Fit lê passos, frequência cardíaca, sono, peso, calorias e distância do Health Connect. Google Fit, Garmin Connect, Samsung Health e Huawei Health sincronizam para lá; abra-os, ative o Health Connect e conceda acesso ao Fit.</string>
+<string name="fit_source_health_connect">Health Connect</string>
+<string name="fit_source_google_fit">Google Fit / Google Health</string>
+<string name="fit_source_garmin">Garmin Connect</string>
+<string name="fit_source_samsung">Samsung Health</string>
+<string name="fit_source_huawei">Huawei Health</string>
+<string name="fit_source_connect">Conectar</string>
+<string name="fit_source_manage">Gerenciar</string>
+<string name="fit_source_open_app">Abrir app</string>
+<string name="fit_source_grant">Conceder acesso ao Health Connect</string>
+<string name="fit_source_installed_bridge">Instalado. Ative o Health Connect neste app para o Fit ler os dados.</string>
+<string name="fit_source_not_installed">Não instalado neste dispositivo</string>
+<string name="keyboard_look_category">Look</string>
+<string name="keyboard_accent_title">Accent color</string>
+<string name="keyboard_scale_title">Keyboard size</string>
+<string name="keyboard_key_height_title">Key height</string>
+<string name="keyboard_key_font_title">Key text size</string>
 </resources>

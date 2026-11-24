@@ -128,4 +128,9 @@
     <string name="aether_attached_media">Συνημμένο πολυμέσο: %1$s</string>
     <string name="aether_dm_unavailable_title">Τα άμεσα μηνύματα δεν είναι διαθέσιμα</string>
     <string name="aether_dm_unavailable_summary">Τα κρυπτογραφημένα DM χρειάζονται ζωντανή συνεδρία Nostr. Αυτή η έκδοση κρατά τις συνομιλίες μόνο τοπικά.</string>
+<string name="keyboard_look_category">Εμφάνιση</string>
+<string name="keyboard_accent_title">Χρώμα τονισμού</string>
+<string name="keyboard_scale_title">Μέγεθος πληκτρολογίου</string>
+<string name="keyboard_key_height_title">Ύψος πλήκτρων</string>
+<string name="keyboard_key_font_title">Μέγεθος γραμμάτων</string>
 </resources>

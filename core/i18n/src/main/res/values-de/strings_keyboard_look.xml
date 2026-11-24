@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="keyboard_look_category">Aussehen</string>
-    <string name="keyboard_accent_title">Akzentfarbe</string>
-    <string name="keyboard_scale_title">Tastaturgröße</string>
-    <string name="keyboard_key_height_title">Tastenhöhe</string>
-    <string name="keyboard_key_font_title">Schriftgröße der Tasten</string>
-</resources>

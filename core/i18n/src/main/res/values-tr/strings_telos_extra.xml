@@ -119,4 +119,22 @@
     <string name="aether_attached_media">Ekli medya: %1$s</string>
     <string name="aether_dm_unavailable_title">Doğrudan mesajlar kullanılamıyor</string>
     <string name="aether_dm_unavailable_summary">Şifreli DM\'ler canlı bir Nostr oturumu ister. Bu sürüm sohbetleri yalnızca yerelde tutar.</string>
+<string name="fit_sources_tab">Kaynaklar</string>
+<string name="fit_sources_intro">Fit; adım, nabız, uyku, kilo, kalori ve mesafeyi Health Connect’ten okur. Google Fit, Garmin Connect, Samsung Health ve Huawei Health oraya yazar; uygulamayı açın, Health Connect’i açın ve Fit’e izin verin.</string>
+<string name="fit_source_health_connect">Health Connect</string>
+<string name="fit_source_google_fit">Google Fit / Google Health</string>
+<string name="fit_source_garmin">Garmin Connect</string>
+<string name="fit_source_samsung">Samsung Health</string>
+<string name="fit_source_huawei">Huawei Health</string>
+<string name="fit_source_connect">Bağlan</string>
+<string name="fit_source_manage">Yönet</string>
+<string name="fit_source_open_app">Uygulamayı aç</string>
+<string name="fit_source_grant">Health Connect erişimi ver</string>
+<string name="fit_source_installed_bridge">Yüklü. Fit’in verileri okuması için bu uygulamada Health Connect’i açın.</string>
+<string name="fit_source_not_installed">Bu cihazda yüklü değil</string>
+<string name="keyboard_look_category">Look</string>
+<string name="keyboard_accent_title">Accent color</string>
+<string name="keyboard_scale_title">Keyboard size</string>
+<string name="keyboard_key_height_title">Key height</string>
+<string name="keyboard_key_font_title">Key text size</string>
 </resources>
