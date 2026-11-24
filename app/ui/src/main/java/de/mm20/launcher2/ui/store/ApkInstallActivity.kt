@@ -45,6 +45,7 @@ import androidx.core.content.FileProvider
 import de.mm20.launcher2.data.store.installer.TelosPackageInstaller
 import de.mm20.launcher2.data.store.security.ApkSecurityReport
 import de.mm20.launcher2.data.store.security.ApkSecurityScanner
+import de.mm20.launcher2.freeze.AutoFreezeController
 import de.mm20.launcher2.freeze.FreezeManager
 import de.mm20.launcher2.store.options.StoreOptions
 import de.mm20.launcher2.ui.base.BaseActivity
@@ -89,6 +90,7 @@ private fun ApkInstallerScreen(
     val context = androidx.compose.ui.platform.LocalContext.current
     val scope = rememberCoroutineScope()
     val freezeManager: FreezeManager = koinInject()
+    val autoFreeze: AutoFreezeController = koinInject()
     val storeOptions: StoreOptions = koinInject()
 
     var tempFile by remember { mutableStateOf<File?>(null) }
@@ -163,7 +165,7 @@ private fun ApkInstallerScreen(
                             scope.launch {
                                 val apk = tempFile
                                 if (apk != null) {
-                                    val installer = TelosPackageInstaller(context, freezeManager, storeOptions)
+                                    val installer = TelosPackageInstaller(context, freezeManager, storeOptions, autoFreeze)
                                     val result = installer.install(apk, report.packageName)
                                     isInstalling = false
                                     if (result is de.mm20.launcher2.store.installer.InstallResult.Success) {

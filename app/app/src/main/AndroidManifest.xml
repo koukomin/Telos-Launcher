@@ -187,6 +187,18 @@
                 <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
             </intent-filter>
         </receiver>
+
+        <!-- One Health Connect rationale per APK (FitHealthRationaleActivity in :app:ui).
+             Replace Amethyst's duplicate system filters; keep the class for in-app workouts. -->
+        <activity
+            android:name="com.vitorpamplona.amethyst.ui.screen.loggedIn.workouts.health.HealthConnectRationaleActivity"
+            android:exported="false"
+            android:excludeFromRecents="true"
+            android:theme="@style/Theme.Amethyst"
+            tools:node="replace" />
+        <activity-alias
+            android:name="com.vitorpamplona.amethyst.ViewPermissionUsageActivity"
+            tools:node="remove" />
     </application>
 
 </manifest>

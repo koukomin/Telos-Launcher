@@ -42,6 +42,9 @@ import com.vitorpamplona.amethyst.ui.theme.AmethystTheme
  * Deliberately its own activity rather than a route inside MainActivity: Health Connect launches it
  * cold, from outside the app, with no account loaded and no guarantee the user is even logged in.
  * It shows static, read-only copy and touches nothing account-scoped.
+ *
+ * In the Telos APK the system intent-filters are stripped so FitHealthRationaleActivity is the
+ * single ACTION_SHOW_PERMISSIONS_RATIONALE target. This class remains for in-app workout details.
  */
 class HealthConnectRationaleActivity : AppCompatActivity() {
     companion object {

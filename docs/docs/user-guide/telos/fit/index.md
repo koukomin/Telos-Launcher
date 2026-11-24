@@ -7,4 +7,4 @@ Fit shows today’s activity. **Sources** is the hub:
 
 Telos does not log into Garmin, Samsung or Huawei cloud accounts. Those apps already push into Health Connect on current Android. Huawei phones without Health Connect stay on local Fit data until HMS Health Kit is added.
 
-Grant Health Connect permissions the first time. Fit does not upload your health data.
+Grant Health Connect permissions the first time. Fit does not upload your health data. The Health Connect privacy/rationale screen for Telos is Fit’s rationale activity (one per APK).

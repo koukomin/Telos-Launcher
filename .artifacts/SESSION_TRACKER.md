@@ -14,3 +14,4 @@ The 1.45.74 runs exposed 11 further Kotlin errors in Media. Corrected resource a
 
 2026-11-20: PR #132 Aether UI passed all four tests. A parallel APK job still failed to locate KSP 2.3.14. Route the KSP plugin lookup away from Google Maven to its publishing repository.
 2026-11-24: Item #3 code-cleanup — extract Concord ingest/expiry/index from Account.kt into AccountConcordInbox. Account public methods stay one-line delegates. ConcordSessionManager sink uses lazy inbox to avoid init cycle. :amethyst:commons:compileKotlinJvm succeeded.
+2026-11-24: Item #4 code-cleanup — HealthConnectAccess in :core:permissions for Fit SDK/packages/permissions. FitHealthHub delegates. Single FitHealthRationaleActivity system target; Amethyst rationale activity kept exported=false for in-app workouts. Catalog pin androidx-health-connect 1.1.0. FitHealthHubTest passed. ApkInstallActivity now injects AutoFreezeController (installer ctor).

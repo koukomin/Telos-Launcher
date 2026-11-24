@@ -41,6 +41,7 @@ androidx-palette = "1.1.0"
 androidx-room = "2.8.5"
 androidx-constraint-layout = "1.1.2"
 androidx-emojipicker = "1.7.0"
+androidx-health-connect = "1.1.0"
 
 accompanist = "0.36.0"
 coil = "2.7.0"
@@ -132,6 +133,7 @@ androidx-navigation3-runtime = { group = "androidx.navigation3", name = "navigat
 androidx-navigation3-ui = { group = "androidx.navigation3", name = "navigation3-ui", version.ref = "androidx-navigation3" }
 
 androidx-activitycompose = { group = "androidx.activity", name = "activity-compose", version.ref = "androidx-activity" }
+androidx-health-connect-client = { group = "androidx.health.connect", name = "connect-client", version.ref = "androidx-health-connect" }
 
 androidx-room = { group = "androidx.room", name = "room-ktx", version.ref = "androidx-room" }
 androidx-roomruntime = { group = "androidx.room", name = "room-runtime", version.ref = "androidx-room" }

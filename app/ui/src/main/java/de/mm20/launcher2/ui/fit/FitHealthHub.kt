@@ -1,10 +1,6 @@
 package de.mm20.launcher2.ui.fit
 
 import android.content.Context
-import android.content.Intent
-
-import androidx.health.connect.client.HealthConnectClient
-import androidx.health.connect.client.permission.HealthPermission
 import androidx.health.connect.client.records.DistanceRecord
 import androidx.health.connect.client.records.ExerciseSessionRecord
 import androidx.health.connect.client.records.HeartRateRecord
@@ -15,6 +11,7 @@ import androidx.health.connect.client.records.WeightRecord
 import androidx.health.connect.client.request.AggregateRequest
 import androidx.health.connect.client.request.ReadRecordsRequest
 import androidx.health.connect.client.time.TimeRangeFilter
+import de.mm20.launcher2.permissions.HealthConnectAccess
 import java.time.Instant
 import java.time.temporal.ChronoUnit
 
@@ -36,56 +33,39 @@ data class FitDaySnapshot(
 
 object FitHealthHub {
     val vendors = listOf(
-        FitVendorApp(FitHealthSourceId.HealthConnect, "com.google.android.apps.healthdata"),
-        FitVendorApp(FitHealthSourceId.GoogleFit, "com.google.android.apps.fitness"),
-        FitVendorApp(FitHealthSourceId.Garmin, "com.garmin.android.apps.connectmobile"),
-        FitVendorApp(FitHealthSourceId.Samsung, "com.sec.android.app.shealth"),
-        FitVendorApp(FitHealthSourceId.Huawei, "com.huawei.health"),
+        FitVendorApp(FitHealthSourceId.HealthConnect, HealthConnectAccess.HEALTH_CONNECT_PACKAGE),
+        FitVendorApp(FitHealthSourceId.GoogleFit, HealthConnectAccess.GOOGLE_FIT_PACKAGE),
+        FitVendorApp(FitHealthSourceId.Garmin, HealthConnectAccess.GARMIN_PACKAGE),
+        FitVendorApp(FitHealthSourceId.Samsung, HealthConnectAccess.SAMSUNG_HEALTH_PACKAGE),
+        FitVendorApp(FitHealthSourceId.Huawei, HealthConnectAccess.HUAWEI_HEALTH_PACKAGE),
     )
 
-    val readPermissions: Set<String> = setOf(
-        HealthPermission.getReadPermission(StepsRecord::class),
-        HealthPermission.getReadPermission(HeartRateRecord::class),
-        HealthPermission.getReadPermission(SleepSessionRecord::class),
-        HealthPermission.getReadPermission(WeightRecord::class),
-        HealthPermission.getReadPermission(TotalCaloriesBurnedRecord::class),
-        HealthPermission.getReadPermission(DistanceRecord::class),
-        HealthPermission.getReadPermission(ExerciseSessionRecord::class),
+    val readPermissions: Set<String> = HealthConnectAccess.readPermissions(
+        StepsRecord::class,
+        HeartRateRecord::class,
+        SleepSessionRecord::class,
+        WeightRecord::class,
+        TotalCaloriesBurnedRecord::class,
+        DistanceRecord::class,
+        ExerciseSessionRecord::class,
     )
 
     fun isInstalled(context: Context, packageName: String): Boolean =
-        runCatching {
-            context.packageManager.getPackageInfo(packageName, 0)
-            true
-        }.getOrDefault(false)
+        HealthConnectAccess.isInstalled(context, packageName)
 
-    fun openApp(context: Context, packageName: String): Boolean {
-        val launch = context.packageManager.getLaunchIntentForPackage(packageName) ?: return false
-        return runCatching {
-            context.startActivity(launch.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
-            true
-        }.getOrDefault(false)
-    }
+    fun openApp(context: Context, packageName: String): Boolean =
+        HealthConnectAccess.openApp(context, packageName)
 
-    fun openHealthConnectSettings(context: Context): Boolean {
-        val intent = Intent(HealthConnectClient.ACTION_HEALTH_CONNECT_SETTINGS)
-            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        return runCatching {
-            context.startActivity(intent)
-            true
-        }.getOrDefault(false)
-    }
+    fun openHealthConnectSettings(context: Context): Boolean =
+        HealthConnectAccess.openHealthConnectSettings(context)
 
-    fun sdkAvailable(context: Context): Boolean =
-        HealthConnectClient.getSdkStatus(context) == HealthConnectClient.SDK_AVAILABLE
+    fun sdkAvailable(context: Context): Boolean = HealthConnectAccess.sdkAvailable(context)
 
-    suspend fun grantedPermissions(context: Context): Set<String> {
-        if (!sdkAvailable(context)) return emptySet()
-        return HealthConnectClient.getOrCreate(context).permissionController.getGrantedPermissions()
-    }
+    suspend fun grantedPermissions(context: Context): Set<String> =
+        HealthConnectAccess.grantedPermissions(context)
 
     suspend fun readToday(context: Context): FitDaySnapshot {
-        val client = HealthConnectClient.getOrCreate(context)
+        val client = HealthConnectAccess.clientOrNull(context) ?: return FitDaySnapshot()
         val start = Instant.now().truncatedTo(ChronoUnit.DAYS)
         val end = Instant.now()
         val range = TimeRangeFilter.between(start, end)

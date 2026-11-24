@@ -112,10 +112,12 @@ class HealthConnectManager(
             )
 
         /** True when a Health Connect provider is installed and up to date on this device. */
-        fun isAvailable(context: Context): Boolean = HealthConnectClient.getSdkStatus(context) == HealthConnectClient.SDK_AVAILABLE
+        fun isAvailable(context: Context): Boolean =
+            HealthConnectClient.getSdkStatus(context) == HealthConnectClient.SDK_AVAILABLE
 
         /** True when the device has no Health Connect provider at all (vs needing an update). */
-        fun needsProviderUpdate(context: Context): Boolean = HealthConnectClient.getSdkStatus(context) == HealthConnectClient.SDK_UNAVAILABLE_PROVIDER_UPDATE_REQUIRED
+        fun needsProviderUpdate(context: Context): Boolean =
+            HealthConnectClient.getSdkStatus(context) == HealthConnectClient.SDK_UNAVAILABLE_PROVIDER_UPDATE_REQUIRED
     }
 
     suspend fun grantedPermissions(): Set<String> = client.permissionController.getGrantedPermissions()
