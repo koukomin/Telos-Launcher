@@ -14,6 +14,7 @@ import de.mm20.launcher2.search.TelosAppKeywords
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchableSerializer
 import de.mm20.launcher2.search.VirtualAppProvider
+import de.mm20.launcher2.search.VirtualAppIcon
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.icons.StaticLauncherIcon
 import de.mm20.launcher2.icons.StaticIconLayer
@@ -66,13 +67,11 @@ internal class VirtualStoreApp(private val context: Context) : Application {
     }
 
     override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): de.mm20.launcher2.icons.LauncherIcon? {
-        // the same icon as the launcher itself
-        val launcher = androidx.core.content.ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.mipmap.ic_launcher) ?: return null
-        val adaptive = launcher as? android.graphics.drawable.AdaptiveIconDrawable
-        val foreground = adaptive?.foreground ?: launcher
-        return StaticLauncherIcon(
-            foregroundLayer = StaticIconLayer(foreground, 1f),
-            backgroundLayer = adaptive?.background?.let { StaticIconLayer(it, 1f) } ?: TransparentLayer,
+        return VirtualAppIcon.tileOnPlate(
+            context,
+            Domain,
+            de.mm20.launcher2.base.R.drawable.ic_app_store_full,
+            0xFF12131C.toInt(),
         )
     }
 
