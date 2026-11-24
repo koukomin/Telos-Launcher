@@ -7,7 +7,7 @@
 ## 📍 Τρέχουσα Κατάσταση (Active State)
 
 - **Ημερομηνία/Ώρα**: `2026-11-24`
-- **Τρέχουσα Εργασία**: Ολοκλήρωση όλων των High Splits (`LauncherScaffold.kt`, `StoreDashboardScreen.kt`, `EventCache.kt`), συγχώνευση στο `main`, έκδοση `v1.45.80`, και παρακολούθηση του release build στο GitHub Actions.
+- **Τρέχουσα Εργασία**: Ολοκλήρωση των 4 φάσεων βελτιστοποίησης (Compose `@Immutable` recomposition, Koin lazy DI audit, Search token matcher validation, R8 ProGuard keep rules audit), bump έκδοσης σε `v1.45.81`, merge στο `main`, tagging και έναρξη release στο GitHub.
 
 ---
 
@@ -20,4 +20,7 @@
 - [x] **High Split #1**: `LauncherScaffold.kt` χωρίστηκε σε `LauncherScaffoldState.kt` & `LauncherScaffoldModels.kt`.
 - [x] **High Split #2**: `StoreDashboardScreen.kt` χωρίστηκε σε `StoreDashboardComponents.kt` & `StoreDashboardHelpers.kt`.
 - [x] **High Split #3**: `EventCache.kt` χωρίστηκε σε `EventCacheSearch.kt`.
-- [x] **Merge & Release v1.45.80**: Συγχώνευση του `code-cleanup` στο `main`, bump της έκδοσης σε `v1.45.80`, tagging και έναρξη του release workflow στο GitHub.
+- [x] **Phase 1 Cleanup**: Αφαιρέθηκαν όλα τα debug `Log.d` logs και διορθώθηκαν τα `TODO()` stubs.
+- [x] **Phase 2 DRY**: Ενοποίηση Virtual App icons (`VirtualStoreApp.kt`) και απομόνωση transit UI στο `LocationTransitComponents.kt`.
+- [x] **Compose Performance Optimization**: Προσθήκη `@Immutable` στα `StoreRow`, `InstalledCandidate`, `ScaffoldConfiguration`, `ScaffoldGesture`.
+- [x] **Merge & Release v1.45.81**: Συγχώνευση του `code-cleanup` στο `main`, bump της έκδοσης σε `v1.45.81`, tagging και έναρξη του release workflow στο GitHub.
