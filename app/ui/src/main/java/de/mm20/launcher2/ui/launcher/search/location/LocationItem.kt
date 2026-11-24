@@ -1212,16 +1212,13 @@ fun DepartureRow(
     val context = LocalContext.current
     val twentyFourHours = LocalTimeFormat.current.isTwentyFourHours(context)
     Row(
-        modifier = modifier,
-        horizontalArrangement = Arrangement.SpaceBetween,
+        modifier = modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Row(
             horizontalArrangement = Arrangement.Start,
             verticalAlignment = Alignment.CenterVertically,
-            // HACK: the extents of this row should be properly calculated.
-            // but how?
-            modifier = Modifier.fillMaxWidth(0.66f)
+            modifier = Modifier.weight(1f),
         ) {
             if (withIcon) {
                 LineIcon(
@@ -1243,6 +1240,7 @@ fun DepartureRow(
                     velocity = 20.dp,
                     fadeLeft = 5.dp,
                     fadeRight = 5.dp,
+                    modifier = Modifier.weight(1f),
                 )
             }
         }

@@ -51,8 +51,7 @@ fun BinaryClock(
         LocalContentColor.current
     }
 
-    // FIXME: Accent color by setting
-    val disabledColor = LocalContentColor.current.copy(alpha = 0.45f)
+    val disabledColor = color.copy(alpha = 0.45f)
 
     if (verticalLayout) {
         Column(
