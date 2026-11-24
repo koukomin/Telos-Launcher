@@ -1,0 +1,1 @@
+Recomposition optimizations with @Immutable models, Store and Scaffold god-file splits, IME controller extraction, and clean release builds.

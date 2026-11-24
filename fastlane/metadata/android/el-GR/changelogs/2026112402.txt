@@ -1,0 +1,1 @@
+Βελτιστοποιήσεις Compose recomposition με @Immutable μοντέλα, διαχωρισμός Store/Scaffold/EventCache, απομόνωση IME controller και καθαρά builds.
