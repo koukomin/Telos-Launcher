@@ -25,28 +25,22 @@ data class LoggedMeal(
 class FitViewModel : ViewModel() {
     val selectedTab = mutableStateOf(FitTab.Dashboard)
 
-    private val _steps = MutableStateFlow(8430)
+    private val _steps = MutableStateFlow(0)
     val steps: StateFlow<Int> = _steps.asStateFlow()
 
-    private val _heartRate = MutableStateFlow(74)
-    val heartRate: StateFlow<Int> = _heartRate.asStateFlow()
+    private val _heartRate = MutableStateFlow<Int?>(null)
+    val heartRate: StateFlow<Int?> = _heartRate.asStateFlow()
 
-    private val _sleepHours = MutableStateFlow(7.75f)
-    val sleepHours: StateFlow<Float> = _sleepHours.asStateFlow()
+    private val _sleepHours = MutableStateFlow<Float?>(null)
+    val sleepHours: StateFlow<Float?> = _sleepHours.asStateFlow()
 
-    private val _waterIntake = MutableStateFlow(2250) // ml
+    private val _waterIntake = MutableStateFlow(0)
     val waterIntake: StateFlow<Int> = _waterIntake.asStateFlow()
 
-    private val _weight = MutableStateFlow(72.4f)
-    val weight: StateFlow<Float> = _weight.asStateFlow()
+    private val _weight = MutableStateFlow<Float?>(null)
+    val weight: StateFlow<Float?> = _weight.asStateFlow()
 
-    private val _loggedMeals = MutableStateFlow<List<LoggedMeal>>(
-        listOf(
-            LoggedMeal("Whey Protein Isolate", 120, 24f, 2f, 1f, "Breakfast"),
-            LoggedMeal("Oats with Almond Milk", 350, 12f, 58f, 6f, "Breakfast"),
-            LoggedMeal("Grilled Chicken Salad", 450, 42f, 15f, 14f, "Lunch")
-        )
-    )
+    private val _loggedMeals = MutableStateFlow<List<LoggedMeal>>(emptyList())
     val loggedMeals: StateFlow<List<LoggedMeal>> = _loggedMeals.asStateFlow()
 
     private val _isHealthConnectAvailable = MutableStateFlow(false)

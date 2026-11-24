@@ -201,7 +201,7 @@ fun FitDashboardScreen() {
                                                 label = "Distance",
                                                 value = distanceKm?.let { "%.1f km".format(it) } ?: "—",
                                             )
-                                            MetricRow(icon = "⏱️", label = "Active Time", value = "54 min")
+                                            MetricRow(icon = "⏱️", label = "Active Time", value = "—")
                                         }
                                     }
                                 }
@@ -223,12 +223,10 @@ fun FitDashboardScreen() {
                                         Text("Heart Rate", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
                                         Spacer(modifier = Modifier.height(8.dp))
                                         Row(verticalAlignment = Alignment.Bottom) {
-                                            Text("$heartRate", fontSize = 28.sp, fontWeight = FontWeight.Bold, color = neonMagenta)
+                                            Text(heartRate?.toString() ?: "—", fontSize = 28.sp, fontWeight = FontWeight.Bold, color = neonMagenta)
                                             Spacer(modifier = Modifier.width(4.dp))
                                             Text("bpm", fontSize = 12.sp, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(bottom = 4.dp))
                                         }
-                                        Spacer(modifier = Modifier.height(4.dp))
-                                        Text("Normal • Just now", fontSize = 10.sp, color = neonGreen)
                                     }
                                 }
 
@@ -241,13 +239,25 @@ fun FitDashboardScreen() {
                                     Column(modifier = Modifier.padding(16.dp)) {
                                         Text("Sleep Score", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
                                         Spacer(modifier = Modifier.height(8.dp))
+                                        val sleep = sleepHours
+                                        val sleepMinutes = sleep?.let { kotlin.math.round(it * 60f).toInt() }
                                         Row(verticalAlignment = Alignment.Bottom) {
-                                            Text("${sleepHours}h", fontSize = 28.sp, fontWeight = FontWeight.Bold, color = neonCyan)
-                                            Spacer(modifier = Modifier.width(4.dp))
-                                            Text("45m", fontSize = 12.sp, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(bottom = 4.dp))
+                                            Text(
+                                                sleepMinutes?.let { "${it / 60}h" } ?: "—",
+                                                fontSize = 28.sp,
+                                                fontWeight = FontWeight.Bold,
+                                                color = neonCyan,
+                                            )
+                                            if (sleepMinutes != null && sleepMinutes % 60 != 0) {
+                                                Spacer(modifier = Modifier.width(4.dp))
+                                                Text(
+                                                    "${sleepMinutes % 60}m",
+                                                    fontSize = 12.sp,
+                                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                                    modifier = Modifier.padding(bottom = 4.dp),
+                                                )
+                                            }
                                         }
-                                        Spacer(modifier = Modifier.height(4.dp))
-                                        Text("Quality: 88% (Good)", fontSize = 10.sp, color = neonCyan)
                                     }
                                 }
                             }
@@ -283,9 +293,12 @@ fun FitDashboardScreen() {
                                     Column(modifier = Modifier.padding(16.dp)) {
                                         Text("Body Weight", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
                                         Spacer(modifier = Modifier.height(8.dp))
-                                        Text("$weight kg", fontSize = 24.sp, fontWeight = FontWeight.Bold, color = neonOrange)
-                                        Spacer(modifier = Modifier.height(4.dp))
-                                        Text("Target: 70.0 kg", fontSize = 10.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                                        Text(
+                                            weight?.let { "$it kg" } ?: "—",
+                                            fontSize = 24.sp,
+                                            fontWeight = FontWeight.Bold,
+                                            color = neonOrange,
+                                        )
                                     }
                                 }
                             }
