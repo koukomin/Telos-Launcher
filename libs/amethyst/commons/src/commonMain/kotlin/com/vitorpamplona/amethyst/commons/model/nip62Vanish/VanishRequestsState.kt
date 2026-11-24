@@ -22,6 +22,7 @@ package com.vitorpamplona.amethyst.commons.model.nip62Vanish
 
 import androidx.compose.runtime.Stable
 import com.vitorpamplona.amethyst.commons.model.cache.LocalCache
+import com.vitorpamplona.amethyst.commons.model.cache.observeNotes
 import com.vitorpamplona.amethyst.commons.relayClient.subscriptions.SubPurpose
 import com.vitorpamplona.amethyst.commons.relayClient.subscriptions.taggedAs
 import com.vitorpamplona.quartz.nip01Core.relay.client.INostrClient

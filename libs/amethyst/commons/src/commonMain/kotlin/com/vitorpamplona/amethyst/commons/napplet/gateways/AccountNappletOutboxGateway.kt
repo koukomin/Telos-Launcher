@@ -21,6 +21,9 @@
 package com.vitorpamplona.amethyst.commons.napplet.gateways
 
 import com.vitorpamplona.amethyst.commons.model.Account
+import com.vitorpamplona.amethyst.commons.model.cache.filter
+import com.vitorpamplona.amethyst.commons.model.cache.observeEvents
+import com.vitorpamplona.amethyst.commons.model.cache.observeNotes
 import com.vitorpamplona.amethyst.commons.napplet.NappletOutboxGateway
 import com.vitorpamplona.amethyst.commons.napplet.OutboxDelivery
 import com.vitorpamplona.amethyst.commons.napplet.OutboxEvent

@@ -699,147 +699,6 @@ open class EventCache :
     // The search entry points of ICacheProvider, so a shared state holder can ask a cache what it
     // holds without naming this module. The policy stays in CacheSearch; these are the door.
 
-    override fun findNotesMatching(
-        filters: List<Filter>,
-        hidden: LiveHiddenUsers,
-    ) = search.findNotesMatching(filters, hidden)
-
-    override fun findNotesStartingWith(
-        text: String,
-        hidden: LiveHiddenUsers,
-    ) = search.findNotesStartingWith(text, hidden)
-
-    override fun findUsersStartingWith(
-        prefix: String,
-        limit: Int,
-    ) = search.findUsersStartingWith(prefix, null, limit)
-
-    override fun findPublicChatChannelsStartingWith(text: String) = search.findPublicChatChannelsStartingWith(text)
-
-    override fun findEphemeralChatChannelsStartingWith(text: String) = search.findEphemeralChatChannelsStartingWith(text)
-
-    override fun findLiveActivityChannelsStartingWith(text: String) = search.findLiveActivityChannelsStartingWith(text)
-
-    fun Filter.match(note: Note): Boolean {
-        val event = note.event
-        return if (event != null) {
-            match(event)
-        } else {
-            false
-        }
-    }
-
-    fun filter(filter: Filter): List<Note> = filter(filter) { true }
-
-    /**
-     * Every note matching [filter]'s NIP-01 fields that also satisfies [predicate].
-     *
-     * [predicate] is where anything the wire type cannot express belongs — a NIP-50 `search` the
-     * matcher does not read, and viewer policy like the mute list, which a relay has no knowledge
-     * of and a `Filter` therefore has no field for. Keeping it a separate parameter is what lets
-     * search reuse this path instead of hand-rolling its own scan.
-     */
-    fun filter(
-        filter: Filter,
-        predicate: (Note) -> Boolean,
-    ): List<Note> {
-        val byKinds = filter.kinds?.filter { it.isAddressable() || it.isReplaceable() }
-
-        val addressableMatches =
-            if (!byKinds.isNullOrEmpty()) {
-                val byAuthors = filter.authors
-                if (!byAuthors.isNullOrEmpty()) {
-                    // optimized
-                    byKinds.flatMap { kind ->
-                        byAuthors.flatMap { pubkey ->
-                            addressables.filter(kind, pubkey) { _, note ->
-                                filter.match(note) && predicate(note)
-                            }
-                        }
-                    }
-                } else {
-                    // optimized
-                    byKinds.flatMap { kind ->
-                        addressables.filter(kind) { _, note ->
-                            filter.match(note) && predicate(note)
-                        }
-                    }
-                }
-            } else {
-                addressables.filter { _, note ->
-                    filter.match(note) && predicate(note)
-                }
-            }
-
-        // Regular events live in [notes], and only they match below. A filter that names no regular
-        // kind (a repository announcement, a list, a profile) can match none of them, so it skips the
-        // walk over every note in memory, which grows with the session: each git card in a feed
-        // opened several such lookups on the main thread as it scrolled into view.
-        val kinds = filter.kinds
-        val noteMatches =
-            if (kinds != null && kinds.none { it.isRegular() }) {
-                emptyList()
-            } else {
-                filterRegularNotes(filter, predicate)
-            }
-
-        // toSet() before sorting: a filter that repeats a kind scans that kind twice, and the
-        // SortedSet this used to return collapsed the repeats. Note declares no equals(), so a
-        // plain Set is the same reference-identity de-duplication that comparator gave.
-        //
-        // The order is the comparator's, newest first, and it is load-bearing: the napplet
-        // gateway answers REQs out of this, and NIP-01 has relays return events newest first.
-        val all = (addressableMatches + noteMatches).toSet().sortedWith(CreatedAtIdHexComparator)
-        val limit = filter.limit ?: return all
-
-        // Sorted first, then cut. Both halves arrive in hash-walk order, so taking before sorting
-        // dropped whichever matches the walk happened to reach last — the newest ones as often as
-        // not — and a query with 200 addressable matches never showed a single regular note.
-        if (all.size <= limit) return all
-        return all.take(limit)
-    }
-
-    private fun filterRegularNotes(
-        filter: Filter,
-        predicate: (Note) -> Boolean,
-    ): List<Note> =
-        notes.filter { _, note ->
-            val event = note.event
-            if (event != null && event.kind.isRegular()) {
-                filter.match(event) && predicate(note)
-            } else {
-                false
-            }
-        }
-
-    fun observeNotes(filter: Filter): Flow<List<Note>> =
-        callbackFlow {
-            val newFilter =
-                NoteListMatchingFilter(filter, this@EventCache::filter) {
-                    trySend(it)
-                }
-
-            startObserving(filter, newFilter, newFilter::start)
-
-            awaitClose {
-                observables.unregister(newFilter)
-            }
-        }.buffer(CoroutineChannel.CONFLATED).flowOn(observerScanContext)
-
-    fun <T : Event> observeEvents(filter: Filter): Flow<List<T>> =
-        callbackFlow {
-            val cachedFilter =
-                EventListMatchingFilter<T>(filter, this@EventCache::filter) {
-                    trySend(it)
-                }
-
-            startObserving(filter, cachedFilter, cachedFilter::start)
-
-            awaitClose {
-                observables.unregister(cachedFilter)
-            }
-        }.buffer(CoroutineChannel.CONFLATED).flowOn(observerScanContext)
-
     /**
      * Where [observeNotes] and [observeEvents] scan the cache for their first list: off the
      * collector's thread, which is the main thread for a composable's `collectAsState`. That scan
@@ -850,7 +709,7 @@ open class EventCache :
     var observerScanContext: CoroutineContext = Dispatchers.Default
 
     /** Registers [observer] and fills it through [start], unregistering it if the scan fails. */
-    private fun startObserving(
+    internal fun startObserving(
         filter: Filter,
         observer: Observable,
         start: (register: () -> Unit) -> Unit,
@@ -862,52 +721,6 @@ open class EventCache :
             throw e
         }
     }
-
-    /**
-     * Emits each new event for which [predicate] returns true, one at a time,
-     * as it is inserted into the cache. Unlike [observeEvents], this does not
-     * accumulate a list — useful for per-event reactive pipelines like
-     * notifications.
-     *
-     * The predicate runs on every insertion, so keep it cheap. Callers with a
-     * Nostr [Filter] can pass `filter::match`; compose additional local checks
-     * (rolling windows, derived fields the Filter grammar can't express) with
-     * `&&`.
-     */
-    fun <T : Event> observeNewEvents(predicate: (Event) -> Boolean): Flow<T> =
-        callbackFlow {
-            val newFilter =
-                NewEventMatchingFilter<T>(predicate) {
-                    trySend(it)
-                }
-
-            // Unindexed: predicate is opaque, the index can't narrow.
-            // Caller is delivered every event and runs the predicate.
-            observables.registerUnindexed(newFilter)
-
-            awaitClose {
-                observables.unregister(newFilter)
-            }
-        }
-
-    fun <T : Event> observeNewEvents(filter: Filter): Flow<T> =
-        callbackFlow {
-            val newFilter =
-                NewEventMatchingFilter<T>(filter::match) {
-                    trySend(it)
-                }
-
-            observables.register(filter, newFilter)
-
-            awaitClose {
-                observables.unregister(newFilter)
-            }
-        }
-
-    @Suppress("UNCHECKED_CAST")
-    fun <T : Event> observeLatestEvent(filter: Filter) = observeEvents<T>(filter).map { it.firstOrNull() }
-
-    fun observeLatestNote(filter: Filter) = observeNotes(filter).map { it.firstOrNull() }
 
     override fun checkGetOrCreateUser(key: String): User? = runCatching { getOrCreateUser(key) }.getOrNull()
 

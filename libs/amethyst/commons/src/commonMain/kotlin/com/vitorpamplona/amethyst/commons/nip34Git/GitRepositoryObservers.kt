@@ -21,6 +21,8 @@
 package com.vitorpamplona.amethyst.commons.nip34Git
 
 import com.vitorpamplona.amethyst.commons.model.cache.EventCache
+import com.vitorpamplona.amethyst.commons.model.cache.filter
+import com.vitorpamplona.amethyst.commons.model.cache.observeEvents
 import com.vitorpamplona.amethyst.commons.relayClient.gitRepo.RepositoryItemEssentialKinds
 import com.vitorpamplona.amethyst.commons.relayClient.gitRepo.RepositoryItemKinds
 import com.vitorpamplona.amethyst.commons.relayClient.gitRepo.repositoryCoordinates
@@ -42,7 +44,7 @@ import kotlinx.coroutines.flow.merge
  * them, so what [com.vitorpamplona.amethyst.commons.nip34Git.authority.GitAuthority] decides about
  * the repository's items can change on each emission.
  */
-fun EventCache.observeGitAnnouncements(identifier: String): Flow<List<GitRepositoryEvent>> = observeEvents(gitAnnouncementsFilter(identifier))
+fun EventCache.observeGitAnnouncements(identifier: String): Flow<List<GitRepositoryEvent>> = observeEvents<GitRepositoryEvent>(gitAnnouncementsFilter(identifier))
 
 /**
  * The announcements published under [identifier] that the cache holds now: the list

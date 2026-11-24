@@ -22,7 +22,7 @@ package com.vitorpamplona.amethyst.commons.nip34Git.ci
 
 import androidx.compose.runtime.Immutable
 import com.vitorpamplona.amethyst.commons.model.cache.LocalCache
-import com.vitorpamplona.amethyst.commons.model.cache.LocalCache.observeEvents
+import com.vitorpamplona.amethyst.commons.model.cache.observeEvents
 import com.vitorpamplona.quartz.nip01Core.core.Event
 import com.vitorpamplona.quartz.nip01Core.core.HexKey
 import com.vitorpamplona.quartz.nip01Core.relay.filters.Filter

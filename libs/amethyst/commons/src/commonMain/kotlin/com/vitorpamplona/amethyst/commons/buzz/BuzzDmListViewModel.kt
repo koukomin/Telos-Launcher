@@ -33,6 +33,7 @@ import com.vitorpamplona.amethyst.commons.model.buzz.membershipNotices
 import com.vitorpamplona.amethyst.commons.model.buzz.reconnectPoolAfterJoin
 import com.vitorpamplona.amethyst.commons.model.cache.LocalCache
 import com.vitorpamplona.amethyst.commons.model.cache.filter
+import com.vitorpamplona.amethyst.commons.model.cache.observeNotes
 import com.vitorpamplona.amethyst.commons.relayClient.channel.relayGroup.RELAY_GROUP_METADATA_KINDS
 import com.vitorpamplona.amethyst.commons.relayClient.subscriptions.SubPurpose
 import com.vitorpamplona.amethyst.commons.relayClient.subscriptions.taggedAs

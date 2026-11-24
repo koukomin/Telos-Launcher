@@ -36,6 +36,7 @@ import com.vitorpamplona.amethyst.commons.chats.rooms.datasource.ChatroomListFil
 import com.vitorpamplona.amethyst.commons.followPacks.feed.datasource.FollowPackFeedFilterAssembler
 import com.vitorpamplona.amethyst.commons.hashtag.datasource.HashtagFilterAssembler
 import com.vitorpamplona.amethyst.commons.model.cache.LocalCache
+import com.vitorpamplona.amethyst.commons.model.cache.observeNotes
 import com.vitorpamplona.amethyst.commons.model.cachedDvmAnnouncements
 import com.vitorpamplona.amethyst.commons.nests.datasource.NestRoomFilterAssembler
 import com.vitorpamplona.amethyst.commons.nests.datasource.NestRoomLivenessAssembler
