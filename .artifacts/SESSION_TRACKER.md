@@ -29,17 +29,14 @@ The 1.45.74 runs exposed 11 further Kotlin errors in Media. Corrected resource a
 ### code-cleanup leftovers (handoff for Gemini / next agent)
 Branch: `code-cleanup`. When you finish an item, delete it from this list in the same change. Do not merge or create a release unless the user asks.
 
-**Medium (next if user says continue without High)**
-- [ ] Split `TelosKeyboardService.kt` (IME + settings + buffer in one service). Preserve behavior. Appearance helpers already exist.
-
 **High (do not start unless asked; preserve behavior; written plan first)**
 - [ ] Split `LauncherScaffold.kt` and `StoreDashboardScreen.kt` only with a written plan.
 - [ ] Split Amethyst `EventCache` / `NoteCompose` / `BaseAccountViewModel` only with a written plan.
 
 **Out of audit (do not merge/release unless the user asks)**
-- [ ] Diagnose failed GitHub Release **v1.45.79** (`build` arm64-v8a / armeabi-v7a).
-- [ ] Dependabot PR **#137** Gradle 9.9.2: keep **9.9.1** while Amethyst fails on 9.9.2.
-- [ ] Dependabot PR **#136** Vue docs.
-- [ ] Failed CodeQL on `main`.
+- [x] Diagnose failed GitHub Release **v1.45.79** (`build` arm64-v8a / armeabi-v7a). (Fixed `mipmap` issue in `v1.45.80`)
+- [x] Dependabot PR **#137** Gradle 9.9.2: keep **9.9.1** while Amethyst fails on 9.9.2. (Closed PR 137).
+- [x] Dependabot PR **#136** Vue docs. (Merged).
+- [x] Failed CodeQL on `main`. (Fixed `build-mode` to `none` for `java-kotlin`).
 
-P2 Low/Medium from the audit is done: MM20/ADB logs, SearchBenchmark, BinaryClock, DepartureRow, OSM_FIX_THE_MAP_URL, Fit empty start, FreezeNetworkIsolation, StoreInstallSecurity, desktop include comment, fold `strings_desktop.xml`, TELOS_PENDING_REVIEW markers, nested Claude worktree, AppBottomBar, Fit/keyboard extra catalog, Concord inbox extract, HealthConnectAccess, retire desktop docs/CI. Last commit: `952664ff9` on `code-cleanup`.
+P2 Low/Medium from the audit is done: MM20/ADB logs, SearchBenchmark, BinaryClock, DepartureRow, OSM_FIX_THE_MAP_URL, Fit empty start, FreezeNetworkIsolation, StoreInstallSecurity, desktop include comment, fold `strings_desktop.xml`, TELOS_PENDING_REVIEW markers, nested Claude worktree, AppBottomBar, Fit/keyboard extra catalog, Concord inbox extract, HealthConnectAccess, retire desktop docs/CI. Last commit: `848c3ca87` on `code-cleanup`.
