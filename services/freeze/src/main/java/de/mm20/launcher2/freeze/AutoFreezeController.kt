@@ -21,7 +21,6 @@ import androidx.core.content.getSystemService
 import de.mm20.launcher2.network.NetState
 import de.mm20.launcher2.network.NetworkEngine
 import de.mm20.launcher2.network.api.AppDirectory
-import de.mm20.launcher2.network.api.AppRule
 import de.mm20.launcher2.network.api.FirewallController
 import de.mm20.launcher2.preferences.freeze.FreezeSettings
 import kotlinx.coroutines.CoroutineScope
@@ -62,6 +61,7 @@ class AutoFreezeController internal constructor(
     private val networkEngine: NetworkEngine,
     private val usageStatsProvider: AppUsageStatsProvider,
 ) {
+    private val networkIsolation = FreezeNetworkIsolation(context, firewall, apps, networkEngine)
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
     private var idleJob: Job? = null
     private val screenCycle = java.util.concurrent.atomic.AtomicLong(0)
@@ -307,7 +307,7 @@ class AutoFreezeController internal constructor(
         val baselines = watch.associateWith { versionCode(it) }
         val until = System.currentTimeMillis() + durationMs
         val netBlocked = if (blockNetwork && networkEngine.state.value is NetState.On && watch.isNotEmpty()) {
-            applyPlayNetworkBlock(watch)
+            networkIsolation.applyPlayNetworkBlock(watch)
         } else emptyMap()
         settings.startPlayUpdatePause(
             packages = watch,
@@ -392,65 +392,22 @@ class AutoFreezeController internal constructor(
         }
     }
 
-    private val storeUpdateNetRestore = java.util.concurrent.ConcurrentHashMap<String, Boolean>()
+    suspend fun isolateNetworkForUpdate(packageName: String) =
+        networkIsolation.isolateNetworkForUpdate(packageName)
 
-    suspend fun isolateNetworkForUpdate(packageName: String) {
-        val saved = blockNetworkForPackages(listOf(packageName))
-        storeUpdateNetRestore.putAll(saved)
-    }
+    suspend fun endNetworkIsolation(packageName: String) =
+        networkIsolation.endNetworkIsolation(packageName)
 
-    suspend fun endNetworkIsolation(packageName: String) {
-        val previous = storeUpdateNetRestore.remove(packageName) ?: return
-        restoreNetworkForPackages(mapOf(packageName to previous))
-    }
+    suspend fun blockNetworkForPackages(packages: Collection<String>): Map<String, Boolean> =
+        networkIsolation.blockNetworkForPackages(packages)
 
-    suspend fun blockNetworkForPackages(packages: Collection<String>): Map<String, Boolean> {
-        if (packages.isEmpty()) return emptyMap()
-        if (networkEngine.state.value !is NetState.On) return emptyMap()
-        return applyPlayNetworkBlock(packages.toSet())
-    }
-
-    suspend fun restoreNetworkForPackages(saved: Map<String, Boolean>) {
-        if (saved.isEmpty()) return
-        for ((pkg, hadBlockAll) in saved) {
-            if (hadBlockAll) continue
-            val appId = apps.byPackage(pkg)?.appId ?: runCatching {
-                context.packageManager.getApplicationInfo(pkg, 0).uid % 100000
-            }.getOrNull() ?: continue
-            val existing = firewall.appRules.value[appId] ?: continue
-            if (existing.blockAll) firewall.setAppRule(existing.copy(blockAll = false))
-        }
-    }
-
-    private suspend fun applyPlayNetworkBlock(packages: Set<String>): Map<String, Boolean> {
-        val result = HashMap<String, Boolean>()
-        for (pkg in packages) {
-            val appId = apps.byPackage(pkg)?.appId ?: runCatching {
-                context.packageManager.getApplicationInfo(pkg, 0).uid % 100000
-            }.getOrNull() ?: continue
-            val existing = firewall.appRules.value[appId] ?: AppRule(appId)
-            result[pkg] = existing.blockAll
-            if (!existing.blockAll) {
-                firewall.setAppRule(existing.copy(blockAll = true))
-            }
-        }
-        return result
-    }
+    suspend fun restoreNetworkForPackages(saved: Map<String, Boolean>) =
+        networkIsolation.restoreNetworkForPackages(saved)
 
     private suspend fun onUserOpenedApp(packageName: String) {
         val blocked = settings.playUpdateNetBlocked.first()
         val hadBlockAll = blocked[packageName] ?: return
-        if (!hadBlockAll) {
-            val appId = apps.byPackage(packageName)?.appId ?: runCatching {
-                context.packageManager.getApplicationInfo(packageName, 0).uid % 100000
-            }.getOrNull()
-            if (appId != null) {
-                val existing = firewall.appRules.value[appId]
-                if (existing != null && existing.blockAll) {
-                    firewall.setAppRule(existing.copy(blockAll = false))
-                }
-            }
-        }
+        networkIsolation.unblockIfWeBlocked(packageName, hadBlockAll)
         settings.clearPlayUpdateNetBlocked(listOf(packageName))
     }
 

@@ -35,8 +35,6 @@ class AppFilterIconPackInstaller(
 
                 parseAppfilterXml(iconPack, dynamicClocks)
                 parseDrawableXml(iconPack, dynamicClocks)
-
-                Log.d("MM20", "Icon pack ${iconPack.packageName} has been installed successfully")
             } catch (e: PackageManager.NameNotFoundException) {
                 Log.e(
                     "MM20",

@@ -66,8 +66,6 @@ class IconPackManager(
                 if (forceReinstall || !installer.isInstalledAndUpToDate(pack)) {
                     installer.install(pack)
                     iconsHaveBeenUpdated = true
-                } else {
-                    Log.d("MM20", "Icon pack ${pack.packageName} is up to date")
                 }
             }
             installedPacks.addAll(iconPacks)

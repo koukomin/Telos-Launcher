@@ -5,7 +5,7 @@ import android.util.Log
 
 // This class does nothing in release builds
 fun initDebugMode() {
-    Log.d("MM20", "MM20Launcher2 is running in debug mode.")
+    Log.d("Telos", "Telos is running in debug mode.")
     StrictMode.setThreadPolicy(
         StrictMode.ThreadPolicy.Builder()
             .detectAll()

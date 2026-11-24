@@ -15,6 +15,20 @@ To ensure seamless crash recovery and zero context loss across IDE restarts or l
 1. **At Session Start**: Every AI agent **MUST** inspect `.artifacts/SESSION_TRACKER.md` to check where previous work left off and read recorded user prompts.
 2. **During Session**: Every AI agent **MUST** log incoming user prompts, key decisions, active tasks, and completed steps into `.artifacts/SESSION_TRACKER.md` before and after major modifications.
 
+## code-cleanup leftovers (handoff)
+
+Branch: `code-cleanup`. When you finish an item, **delete it from this list** in the same change.
+
+**High (do not start unless asked; preserve behavior)**
+- [ ] Split `LauncherScaffold.kt` and `StoreDashboardScreen.kt` only with a written plan.
+- [ ] Split Amethyst `EventCache` / `NoteCompose` / `BaseAccountViewModel` only with a written plan.
+
+**Out of audit (do not merge/release unless the user asks)**
+- [ ] Diagnose failed GitHub Release **v1.45.79** (`build` arm64-v8a / armeabi-v7a).
+- [ ] Dependabot PR **#137** Gradle 9.9.2: keep **9.9.1** while Amethyst fails on 9.9.2.
+- [ ] Dependabot PR **#136** Vue docs.
+- [ ] Failed CodeQL on `main`.
+
 ## Pre-Release Security & Automated Workflow Monitoring (Mandatory for all agents)
 
 Before merging or creating a release:
