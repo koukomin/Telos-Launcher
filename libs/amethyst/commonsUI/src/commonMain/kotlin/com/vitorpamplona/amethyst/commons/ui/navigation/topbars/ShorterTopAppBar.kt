@@ -45,19 +45,23 @@ fun ShorterTopAppBar(
     actions: @Composable RowScope.() -> Unit = {},
     expandedHeight: Dp = TopBarSize,
     windowInsets: WindowInsets = TopAppBarDefaults.windowInsets,
-    colors: TopAppBarColors =
-        TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.surfaceContainer.copy(alpha = 1f),
-            scrolledContainerColor = MaterialTheme.colorScheme.surfaceContainer.copy(alpha = 1f),
-        ),
+    colors: TopAppBarColors? = null,
     scrollBehavior: TopAppBarScrollBehavior? = null,
-) = TopAppBar(
-    { LocalHostChrome.current?.heading?.invoke(title) ?: title() },
-    modifier,
-    navigationIcon,
-    actions,
-    expandedHeight,
-    windowInsets,
-    colors,
-    scrollBehavior,
-)
+) {
+    val barColors =
+        colors
+            ?: TopAppBarDefaults.topAppBarColors(
+                containerColor = MaterialTheme.colorScheme.surfaceContainer.copy(alpha = 1f),
+                scrolledContainerColor = MaterialTheme.colorScheme.surfaceContainer.copy(alpha = 1f),
+            )
+    TopAppBar(
+        { LocalHostChrome.current?.heading?.invoke(title) ?: title() },
+        modifier,
+        navigationIcon,
+        actions,
+        expandedHeight,
+        windowInsets,
+        barColors,
+        scrollBehavior,
+    )
+}

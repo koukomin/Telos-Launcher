@@ -21,7 +21,7 @@ object TelosKeyboardAppearance {
     var keyHeightDp by mutableFloatStateOf(52f)
     var keyFontSp by mutableFloatStateOf(18f)
 
-    val accent: Color get() = Color(accentArgb.toULong().toLong())
+    val accent: Color get() = Color(accentArgb.toULong())
 
     fun scaledKeyHeightDp(): Float = (keyHeightDp * keyboardScale).coerceIn(40f, 80f)
     fun scaledFontSp(): Float = (keyFontSp * keyboardScale).coerceIn(12f, 28f)

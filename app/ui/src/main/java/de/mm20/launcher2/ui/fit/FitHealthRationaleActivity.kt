@@ -19,6 +19,7 @@ class FitHealthRationaleActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            de.mm20.launcher2.ui.theme.LauncherTheme {
             VirtualAppWindow {
                 Column(
                     Modifier.padding(24.dp),
@@ -30,6 +31,7 @@ class FitHealthRationaleActivity : ComponentActivity() {
                         Text(stringResource(I18nR.string.hc_close))
                     }
                 }
+            }
             }
         }
     }

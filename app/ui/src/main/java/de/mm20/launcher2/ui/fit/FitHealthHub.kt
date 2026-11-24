@@ -115,12 +115,15 @@ object FitHealthHub {
                 )
             ).records.maxByOrNull { it.time }?.weight?.inKilograms
         }.getOrNull()
+        val energy = agg?.get(TotalCaloriesBurnedRecord.ENERGY_TOTAL)
+        val distance = agg?.get(DistanceRecord.DISTANCE_TOTAL)
+        val bpm = agg?.get(HeartRateRecord.BPM_AVG)
         return FitDaySnapshot(
             steps = agg?.get(StepsRecord.COUNT_TOTAL),
-            caloriesKcal = agg?.get(TotalCaloriesBurnedRecord.ENERGY_TOTAL)?.inKilocalories?.toLong(),
-            distanceMeters = agg?.get(DistanceRecord.DISTANCE_TOTAL)?.inMeters,
-            heartRateBpm = agg?.get(HeartRateRecord.BPM_AVG),
-            sleepHours = sleep?.let { it / 60f },
+            caloriesKcal = energy?.inKilocalories?.toLong(),
+            distanceMeters = distance?.inMeters,
+            heartRateBpm = bpm,
+            sleepHours = sleep?.div(60.0)?.toFloat(),
             weightKg = weight,
         )
     }

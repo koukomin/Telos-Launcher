@@ -152,7 +152,7 @@ fun TelosKeyboardSettingsScreen() {
                             modifier = Modifier
                                 .size(36.dp)
                                 .clip(RoundedCornerShape(18.dp))
-                                .background(androidx.compose.ui.graphics.Color(argb.toULong().toLong()))
+                                .background(androidx.compose.ui.graphics.Color(argb.toULong()))
                                 .clickable {
                                     TelosKeyboardAppearance.accentArgb = argb
                                     TelosKeyboardAppearance.save(context)
