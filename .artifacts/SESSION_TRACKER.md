@@ -24,3 +24,22 @@ The 1.45.74 runs exposed 11 further Kotlin errors in Media. Corrected resource a
 2026-11-24: P2 leftover trio — SearchBenchmark.kt replaces Before/After (compile-once matcher). BinaryClock inactive bits use accent color at 0.45 alpha. DepartureRow uses weight instead of fillMaxWidth(0.66f). :app:ui:compileDefaultDebugKotlin succeeded.
 2026-11-24: P2 FIXMEURL + Fit demo — OsmLocation OSM_FIX_THE_MAP_URL. FitViewModel starts at 0/empty/null; no sample meals/steps/HR/sleep/weight. Dashboard drops fake 54 min / 88% / 70kg target. FitViewModelTest passed.
 2026-11-24: User: synexise. Finish uncommitted P2: fold desktop i18n into strings_desktop.xml (355 keys, all locales); extract StoreInstallSecurity and FreezeNetworkIsolation; drop MM20 debug logs (Debug, Markdown AST dump, ExchangeRateWorker, NotificationService, icon pack installers). AGENTS leftovers already list High splits + out-of-audit items. Gradle wrapper lock denied in this session; i18n key check passed (355 unique, 0 locale mismatches).
+2026-11-24: User: write leftovers to SESSION_TRACKER, remove them from AGENTS.md, give Gemini continuation prompt.
+
+### code-cleanup leftovers (handoff for Gemini / next agent)
+Branch: `code-cleanup`. When you finish an item, delete it from this list in the same change. Do not merge or create a release unless the user asks.
+
+**Medium (next if user says continue without High)**
+- [ ] Split `TelosKeyboardService.kt` (IME + settings + buffer in one service). Preserve behavior. Appearance helpers already exist.
+
+**High (do not start unless asked; preserve behavior; written plan first)**
+- [ ] Split `LauncherScaffold.kt` and `StoreDashboardScreen.kt` only with a written plan.
+- [ ] Split Amethyst `EventCache` / `NoteCompose` / `BaseAccountViewModel` only with a written plan.
+
+**Out of audit (do not merge/release unless the user asks)**
+- [ ] Diagnose failed GitHub Release **v1.45.79** (`build` arm64-v8a / armeabi-v7a).
+- [ ] Dependabot PR **#137** Gradle 9.9.2: keep **9.9.1** while Amethyst fails on 9.9.2.
+- [ ] Dependabot PR **#136** Vue docs.
+- [ ] Failed CodeQL on `main`.
+
+P2 Low/Medium from the audit is done: MM20/ADB logs, SearchBenchmark, BinaryClock, DepartureRow, OSM_FIX_THE_MAP_URL, Fit empty start, FreezeNetworkIsolation, StoreInstallSecurity, desktop include comment, fold `strings_desktop.xml`, TELOS_PENDING_REVIEW markers, nested Claude worktree, AppBottomBar, Fit/keyboard extra catalog, Concord inbox extract, HealthConnectAccess, retire desktop docs/CI. Last commit: `952664ff9` on `code-cleanup`.
