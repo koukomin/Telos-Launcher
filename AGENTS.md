@@ -21,6 +21,24 @@ Before merging or creating a release:
 1. **Pre-Release Security Audit**: All AI agents **MUST** inspect GitHub for security & secrets issues (Dependabot alerts, CodeQL scans, secret scanning) and automatically remediate any vulnerabilities or exposed secrets before releasing.
 2. **Real-time Workflow & PR Monitoring**: During merge/release operations, AI agents **MUST** actively monitor GitHub Actions workflows and PR builds in real-time. If any action or PR fails or hangs, the agent **MUST** automatically diagnose and fix the issue, re-triggering or pushing fixes until the entire build & release process is 100% completed.
 
+
+## AI-Driven Development & Optimization Guidelines (Mandatory)
+
+Because AI agents drive the development of Telos Launcher, the codebase must be optimized not just for runtime performance, but for **AI readability and context window efficiency**.
+
+1. **Context Window Management**: 
+   - No "God Files". If a file grows beyond ~500 lines or takes on multiple responsibilities (e.g. State, UI, Data parsing), it MUST be split into domains (e.g., `*Screen.kt`, `*State.kt`, `*Models.kt`).
+   - Keep Koin definitions, models, and domain extensions strictly separated.
+2. **Zero-Allocation & Performance Rules**: 
+   - Avoid creating new `String` or temporary objects in tight loops (e.g., Search indexers, `GreekFold`). Use `StringBuilder` and primitive Char operations.
+   - Use `@Immutable` or `@Stable` on all Jetpack Compose data models (`data class`) to guarantee Recomposition Skipping on unchanged items.
+3. **Lazy Initialization (Koin DI)**:
+   - Do NOT use `createEagerInstances = true` for heavy or non-critical modules. Defer initialization to `Dispatchers.Default` background scopes or lazy getters to maintain a Cold Start under 200ms.
+4. **DRY (Don't Repeat Yourself)**:
+   - If an agent spots duplicate boilerplate (e.g., Virtual Apps, Location Items), it MUST extract a generic base class or interface with default implementations before proceeding.
+5. **No Broken Windows**:
+   - Do not leave `TODO()` or `FIXME` stubs in production paths that could throw `NotImplementedError` or crash the app. Implement safe fallbacks or empty implementations.
+
 ## Gradle & library versioning (Mandatory for all agents)
 
 1. **Prefer the newest stable Gradle and libraries.** Try the current stable Gradle wrapper (Gradle 10 when it is published; until then the newest 9.x) and the newest stable catalog pins in `gradle/libs.versions.toml` (and Amethyst’s catalog when that included build is touched). Prefer `tasks.register<Type>("name")` over `by tasks.registering(...)`.
