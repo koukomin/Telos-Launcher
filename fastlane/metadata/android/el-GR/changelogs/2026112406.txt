@@ -1,0 +1,1 @@
+Υλοποίηση PreferenceBinding delegates, CompactPreferences DSL και αυτοματοποιημένου ελεγκτή μεγέθους κώδικα.

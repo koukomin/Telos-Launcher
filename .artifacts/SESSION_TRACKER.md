@@ -7,7 +7,7 @@
 ## 📍 Τρέχουσα Κατάσταση (Active State)
 
 - **Ημερομηνία/Ώρα**: `2026-11-24`
-- **Τρέχουσα Εργασία**: [Phase 3] Πλήρης ολοκλήρωση Αρχιτεκτονικής Ενοποίησης (Architectural Unification) και βελτιστοποιήσεων. Bump έκδοσης σε `v1.45.84`, merge στο `main`, tagging και έναρξη release στο GitHub.
+- **Τρέχουσα Εργασία**: [Phase 4] Υλοποίηση 4 προτάσεων Token Optimization (PreferenceBinding delegates, CompactPreferences DSL, Automated token-budget validator), bump έκδοσης σε `v1.45.85`, merge στο `main`, tagging και έναρξη release στο GitHub.
 
 ---
 
@@ -29,4 +29,8 @@
   - `TypographySettingsScreen.kt` (1.326 ➡️ 755 γραμμές, + `TypographyComponents.kt`).
   - `EditSearchActionSheet.kt` (1.434 ➡️ 290 γραμμές, + `EditSearchActionPages.kt`).
   - `FilesScreen.kt` (1.282 ➡️ 953 γραμμές, + `FilesDialogsComponents.kt`).
-- [x] **Merge & Releases**: Δημοσιεύτηκαν επιτυχώς οι εκδόσεις `v1.45.80`, `v1.45.81`, `v1.45.82`, `v1.45.83`, `v1.45.84`.
+- [x] **Token Budget Optimization (Phase 4)**:
+  - Υλοποίηση `PreferenceBinding.kt` (`asPreferenceState` extension).
+  - Υλοποίηση `CompactPreferences.kt` (`SwitchPref`, `ListPref` DSL helpers).
+  - Δημιουργία `tools/validation/check-file-sizes.py` (Αυτοματοποιημένος ελεγκτής ορίου 500 γραμμών).
+- [x] **Merge & Releases**: Δημοσιεύτηκαν επιτυχώς οι εκδόσεις `v1.45.80`, `v1.45.81`, `v1.45.82`, `v1.45.83`, `v1.45.84`, `v1.45.85`.

@@ -1,0 +1,1 @@
+Implemented PreferenceBinding delegates, CompactPreferences DSL, and automated token-budget validator for AI agent efficiency.
