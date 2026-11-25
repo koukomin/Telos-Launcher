@@ -12,7 +12,6 @@ import subprocess
 from pathlib import Path
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
-REGISTRY_FILE = ROOT_DIR / ".artifacts" / "COMPONENT_REGISTRY.md"
 CONTEXT_MAP_FILE = ROOT_DIR / ".artifacts" / "CONTEXT_MAP.json"
 VERSION_FILE = ROOT_DIR / "version.properties"
 

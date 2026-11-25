@@ -16,7 +16,8 @@ object TelosTokenScanner {
 
         for (i in 0 until len) {
             val c = query[i]
-            if (c.isWhitespace()) {
+            // Match the ASCII separators previously handled by Regex("\\s+").
+            if (c == ' ' || c in '\t'..'\r') {
                 if (inWord) {
                     tokenAction(start, i)
                     inWord = false

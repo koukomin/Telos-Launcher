@@ -1,5 +1,7 @@
 package de.mm20.launcher2.comms.search
 
+import de.mm20.launcher2.search.TelosTokenScanner
+
 /**
  * The matcher shared by all Telos apps.
  *
@@ -27,7 +29,11 @@ object TelosSearch {
     fun compile(query: String): Query = Query(query)
 
     class Query internal constructor(query: String) {
-        private val tokens = query.split(WHITESPACE).mapNotNull { buildToken(it) }
+        private val tokens = buildList {
+            TelosTokenScanner.scanWordTokens(query) { start, end ->
+                buildToken(query.substring(start, end))?.let { add(it) }
+            }
+        }
 
         fun matches(vararg fields: String?): Boolean = scoreFields(fields.asList()) > 0
         fun score(vararg fields: String?): Int = scoreFields(fields.asList())
@@ -253,7 +259,6 @@ object TelosSearch {
         return sb.toString()
     }
 
-    private val WHITESPACE = Regex("\\s+")
     private const val PHONE_PUNCT = "+-.()/"
     private val IGNORED = setOf('´', '΄', '\'', '’', 'ʼ', '᾽', '`', '´', '΄')
 
