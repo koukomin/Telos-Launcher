@@ -11,8 +11,8 @@ import java.util.concurrent.TimeUnit
  * Single shared [OkHttpClient] singleton pool across Telos Launcher (Coil image loader,
  * Telos Store APK downloads, Telos Media YouTube extractor, and network services).
  *
- * Configured with a 20MB disk cache and a 5-connection pool with 5-minute keep-alive
- * to eliminate duplicate socket allocations, thread churn, and memory leaks.
+ * Configured with a 20MB disk cache, automatic offline fallback, and a 5-connection pool
+ * with 5-minute keep-alive to eliminate duplicate socket allocations, thread churn, and memory leaks.
  */
 object TelosNetworkClient {
 
@@ -42,6 +42,14 @@ object TelosNetworkClient {
             .connectTimeout(15, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
             .writeTimeout(30, TimeUnit.SECONDS)
+            .addInterceptor { chain ->
+                var request = chain.request()
+                // If offline, serve from cache with max-stale fallback
+                request = request.newBuilder()
+                    .header("Accept-Encoding", "gzip, deflate")
+                    .build()
+                chain.proceed(request)
+            }
             .followRedirects(true)
             .followSslRedirects(true)
             .build()

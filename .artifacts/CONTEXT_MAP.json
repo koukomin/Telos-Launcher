@@ -13,7 +13,14 @@
     "registry": "app/ui/src/main/java/de/mm20/launcher2/ui/theme/TelosThemeRegistry.kt"
   },
   "ktx": {
-    "context": "core/ktx/src/main/java/de/mm20/launcher2/ktx/Context.kt"
+    "context": "core/ktx/src/main/java/de/mm20/launcher2/ktx/Context.kt",
+    "network_client": "core/ktx/src/main/java/de/mm20/launcher2/ktx/TelosNetworkClient.kt"
+  },
+  "sensors": {
+    "gate": "core/devicepose/src/main/java/de/mm20/launcher2/devicepose/TelosSensorGate.kt"
+  },
+  "security": {
+    "secret_string": "core/base/src/main/java/de/mm20/launcher2/security/SecretString.kt"
   },
   "store": {
     "dashboard_screen": "app/ui/src/main/java/de/mm20/launcher2/ui/store/StoreDashboardScreen.kt",

@@ -1,0 +1,1 @@
+Προσθήκη TelosNetworkClient HTTP caching, TelosSensorGate για εξοικονόμηση μπαταρίας και SecretString για ασφάλεια μνήμης.

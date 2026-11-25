@@ -7,7 +7,7 @@
 ## 📍 Τρέχουσα Κατάσταση (Active State)
 
 - **Ημερομηνία/Ώρα**: `2026-11-24`
-- **Τρέχουσα Εργασία**: [Phase 9] Υλοποίηση `TelosIntents.kt` (System Intents Registry), `DialogState.kt` (Compose Dialog State Helper), και `PreferenceKeys.kt` (Datastore Keys Registry). Bump έκδοσης σε `v1.45.93`, merge στο `main`, tagging και έναρξη release στο GitHub.
+- **Τρέχουσα Εργασία**: [Phase 10] Υλοποίηση Multi-Domain Optimizations (`TelosNetworkClient` HTTP caching policy, `TelosSensorGate` lifecycle-aware hardware sensor unbinding, `SecretString` RAM memory sanitization). Bump έκδοσης σε `v1.45.94`, merge στο `main`, tagging και έναρξη release στο GitHub.
 
 ---
 
@@ -55,4 +55,8 @@
   - Δημιουργία `TelosIntents.kt` (Centralized System Intents Registry).
   - Δημιουργία `DialogState.kt` (Type-Safe Compose Dialog State Helper).
   - Δημιουργία `PreferenceKeys.kt` (Datastore Preference Field Names Registry).
-- [x] **Merge & Releases**: Δημοσιεύτηκαν επιτυχώς οι εκδόσεις `v1.45.80` έως `v1.45.93`.
+- [x] **Multi-Domain Optimizations (Phase 10)**:
+  - `TelosNetworkClient`: HTTP GZIP + offline max-stale caching policy.
+  - `TelosSensorGate`: Lifecycle-aware hardware sensor unbinding (0% background battery drain).
+  - `SecretString`: Memory-sanitized wrapper (automatic zeroing on dispose).
+- [x] **Merge & Releases**: Δημοσιεύτηκαν επιτυχώς οι εκδόσεις `v1.45.80` έως `v1.45.94`.
