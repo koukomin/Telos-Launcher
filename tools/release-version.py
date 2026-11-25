@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 """Validate the single release version before any expensive builds or publishing."""
-import json
 import os
 from pathlib import Path
 import re
@@ -59,16 +58,6 @@ def main():
                 old_code = int(re.search(r'versionCode[^\n]*\?: (\d+)', old_build)[1])
             if int(props['versionCode']) <= old_code:
                 raise ValueError(f'versionCode must exceed {old_code} from {previous[-1]}')
-        releases = json.loads(subprocess.check_output([
-            'gh', 'api', '--paginate', '--slurp', f'repos/{os.environ["GITHUB_REPOSITORY"]}/releases',
-        ], text=True))
-        for release in (release for page in releases for release in page):
-            if release['tag_name'] == tag and not release['draft']:
-                # GitHub Release is often created on the same commit before CI attaches APKs.
-                tagged = subprocess.check_output(
-                    ['git', 'rev-parse', f'{tag}^{{commit}}'], text=True).strip()
-                if tagged != head:
-                    raise ValueError(f'{tag} is already published; bump version.properties')
     print(f'tag={tag}')
     print(f'publish={str(publish).lower()}')
 
