@@ -6,8 +6,8 @@
 
 ## 📍 Τρέχουσα Κατάσταση (Active State)
 
-- **Ημερομηνία/Ώρα**: `2026-11-24`
-- **Τρέχουσα Εργασία**: Ολοκλήρωση των 4 φάσεων βελτιστοποίησης (Compose `@Immutable` recomposition, Koin lazy DI audit, Search token matcher validation, R8 ProGuard keep rules audit), bump έκδοσης σε `v1.45.81`, merge στο `main`, tagging και έναρξη release στο GitHub.
+- **Ημερομηνία/Ώρα**: `2026-11-25`
+- **Τρέχουσα Εργασία**: Ανάλυση ανοιχτού PR #138 (Dependabot Gradle 9.9.2 + Material3) και failed GitHub Actions. Δεν υπάρχουν queued/in_progress runs. `gh` token 401.
 
 ---
 
