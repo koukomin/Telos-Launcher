@@ -32,3 +32,14 @@ DO NOT write raw UI layouts, repeated search logic, or raw shell commands if a c
 | **Installed Apps** | `AppRepository` | `org.koin.core.component.inject` |
 | **Package Freezing** | `FreezeManager` | `org.koin.core.component.inject` |
 | **App Store Updates** | `StoreUpdateScheduler` | `org.koin.core.component.inject` |
+| **App/Package Search** | `SavableSearchableRepository` | `org.koin.core.component.inject` |
+| **Contacts** | `ContactRepository` | `org.koin.core.component.inject` |
+| **Files & Storage** | `FilesRepository` | `org.koin.core.component.inject` |
+| **Calendar Events** | `CalendarRepository` | `org.koin.core.component.inject` |
+| **Weather Data** | `WeatherRepository` | `org.koin.core.component.inject` |
+| **Websites & History** | `WebsiteRepository` | `org.koin.core.component.inject` |
+| **Call Logs** | `CallLogRepository` | `org.koin.core.component.inject` |
+| **SMS/MMS Messages** | `MessageRepository` | `org.koin.core.component.inject` |
+| **Radio Stations** | `RadioRepository` | `org.koin.core.component.inject` |
+| **Desktop Window Mgmt**| `DesktopWindowManager` | `org.koin.core.component.inject` |
+| **App Lock & Security**| `AppLockManager` | `org.koin.core.component.inject` |
