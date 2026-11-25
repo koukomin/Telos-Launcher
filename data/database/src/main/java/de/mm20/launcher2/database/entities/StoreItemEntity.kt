@@ -1,6 +1,5 @@
-package de.mm20.launcher2.database.entities
-
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 
 /**
@@ -9,7 +8,12 @@ import androidx.room.PrimaryKey
  * depending on `:services:store` for the type itself - `:data:database` is a low-level module
  * shared by nearly everything, and `AppSource` is encoded/decoded by `:data:store` instead.
  */
-@Entity(tableName = "StoreItem")
+@Entity(
+    tableName = "StoreItem",
+    indices = [
+        Index(value = ["packageName"])
+    ]
+)
 data class StoreItemEntity(
     @PrimaryKey val id: String,
     val packageName: String,

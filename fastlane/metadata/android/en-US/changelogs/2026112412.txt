@@ -1,0 +1,1 @@
+Added Room multi-column composite indices for faster SQLite search queries.
