@@ -92,8 +92,8 @@
     "repository": "services/store/src/main/java/de/mm20/launcher2/store/repository/StoreRepository.kt"
   },
   "comms": {
-    "phone_dialer": "app/ui/src/main/java/de/mm20/launcher2/ui/comms/TelosPhone.kt",
-    "messages": "app/ui/src/main/java/de/mm20/launcher2/ui/comms/TelosMessages.kt",
+    "phone_dialer": "app/ui/src/main/java/de/mm20/launcher2/ui/comms/DialpadScreen.kt",
+    "messages": "app/ui/src/main/java/de/mm20/launcher2/ui/comms/MessagesScreen.kt",
     "settings_screen": "app/ui/src/main/java/de/mm20/launcher2/ui/settings/comms/CommsSettingsScreen.kt",
     "settings_categories": "app/ui/src/main/java/de/mm20/launcher2/ui/settings/comms/CommsSettingsCategories.kt",
     "settings_vm": "app/ui/src/main/java/de/mm20/launcher2/ui/settings/comms/CommsSettingsScreenVM.kt"
@@ -106,7 +106,7 @@
     "repository": "data/files/src/main/java/de/mm20/launcher2/files/FilesRepository.kt"
   },
   "freeze": {
-    "screen": "app/ui/src/main/java/de/mm20/launcher2/ui/settings/freeze/SmartFreezeSettingsScreen.kt",
+    "screen": "app/ui/src/main/java/de/mm20/launcher2/ui/settings/freeze/FreezeSettingsScreen.kt",
     "dialog": "app/ui/src/main/java/de/mm20/launcher2/ui/settings/freeze/FreezeAppPolicyDialog.kt",
     "manager": "services/freeze/src/main/java/de/mm20/launcher2/freeze/FreezeManager.kt"
   },
