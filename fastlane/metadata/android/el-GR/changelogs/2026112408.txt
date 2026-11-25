@@ -1,0 +1,1 @@
+Εγκατάσταση συστήματος Telos Upstream Sentinel με αυτόματο εντοπισμό έργων, ημερήσιους ελέγχους GitHub Actions και πρωτόκολλο AI agent.

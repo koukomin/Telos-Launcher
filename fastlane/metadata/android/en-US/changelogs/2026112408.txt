@@ -1,0 +1,1 @@
+Established Telos Upstream Sentinel system with auto-discovery, daily GitHub Actions checks, and mandatory Step 0 AI agent sync protocol.
