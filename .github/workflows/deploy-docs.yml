@@ -73,7 +73,6 @@ jobs:
         uses: actions/upload-pages-artifact@v5
         with:
           path: 'docs/.vitepress/dist'
-          name: github-pages-${{ github.run_id }}-${{ github.run_attempt }}
       # The previous release left this Pages deployment active after its workflow timed out.
       # Cancel only that known abandoned deployment; never touch the live site's successful build.
       - name: Recover abandoned Pages deployment
@@ -90,5 +89,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
-        with:
-          artifact_name: github-pages-${{ github.run_id }}-${{ github.run_attempt }}
