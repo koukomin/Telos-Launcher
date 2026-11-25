@@ -209,7 +209,9 @@ jobs:
           done
           # Tags must still point at the commit whose binaries were built.
           REMOTE_COMMIT=$(git ls-remote origin "refs/tags/$TAG" "refs/tags/$TAG^{}" | tail -n 1 | cut -f1)
-          test "$REMOTE_COMMIT" = "$GITHUB_SHA"
+          if [ -n "$REMOTE_COMMIT" ] || [ "$GITHUB_REF" != refs/heads/main ]; then
+            test "$REMOTE_COMMIT" = "$GITHUB_SHA"
+          fi
           git fetch origin refs/heads/main
           git merge-base --is-ancestor "$GITHUB_SHA" FETCH_HEAD
           bash tools/release-notes.sh "$TAG" "$RUNNER_TEMP/notes.md"
@@ -217,6 +219,8 @@ jobs:
             gh release create "$TAG" --draft --target "$GITHUB_SHA" \
               --title "Telos $TAG" --notes-file "$RUNNER_TEMP/notes.md"
           fi
+          REMOTE_COMMIT=$(git ls-remote origin "refs/tags/$TAG" "refs/tags/$TAG^{}" | tail -n 1 | cut -f1)
+          test "$REMOTE_COMMIT" = "$GITHUB_SHA"
           gh release upload "$TAG" release-assets/* --clobber
           gh release edit "$TAG" --draft=false --latest \
             --title "Telos $TAG" --notes-file "$RUNNER_TEMP/notes.md"
