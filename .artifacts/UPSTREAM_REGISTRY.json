@@ -1,0 +1,488 @@
+{
+  "shizuku-next": {
+    "repo": "rushiranpise/Shizuku-Next",
+    "path": "libs/shizuku-next",
+    "current_version": "v13.5.4",
+    "type": "vendored_module"
+  },
+  "appops-next": {
+    "repo": "1zumiii/AppOpsNext",
+    "path": "libs/appops-next",
+    "current_version": "v1.2.0",
+    "type": "vendored_module"
+  },
+  "amethyst": {
+    "repo": "vitorpamplona/amethyst",
+    "path": "libs/amethyst",
+    "current_version": "v0.92.5",
+    "type": "included_build"
+  },
+  "uad-ng": {
+    "repo": "Universal-Debloater-Alliance/universal-android-debloater-next-generation",
+    "path": "services/freeze/src/main/assets/uad_lists.json.gz",
+    "current_commit": "e0af3336d8f71fcb2b65ad4949051cf25c654f61",
+    "type": "asset_data"
+  },
+  "flow-tube": {
+    "repo": "Flow-Tube/Flow",
+    "path": "services/comms/src/main/java/de/mm20/launcher2/comms/youtube/flow",
+    "current_commit": "4c93b64790c3d89eed57ba96abc997bb955c05f2",
+    "type": "adapted_source"
+  },
+  "newpipe-extractor": {
+    "repo": "TeamNewPipe/NewPipeExtractor",
+    "path": "services/comms",
+    "current_version": "v0.26.5",
+    "type": "maven_dependency"
+  },
+  "kvaesitso": {
+    "repo": "MM2-0/Kvaesitso",
+    "path": "app/ui",
+    "current_version": "v1.36.0",
+    "type": "architecture_reference"
+  },
+  "obtainium": {
+    "repo": "ImranR98/Obtainium",
+    "path": "services/store",
+    "current_version": "v1.1.20",
+    "type": "feature_reference"
+  },
+  "rethinkdns": {
+    "repo": "celzero/rethink-app",
+    "path": "services/network",
+    "current_version": "v0.5.5",
+    "type": "adapted_engine"
+  },
+  "intertune": {
+    "repo": "ItzSkyeYT/InterTune",
+    "path": "services/comms/src/main/java/de/mm20/launcher2/comms/akou/fingerprint",
+    "current_commit": "a99111df5205de3c2af49d158958c8cf82543ac2",
+    "type": "adapted_source"
+  },
+  "guava": {
+    "repo": "google/guava",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "jsoup": {
+    "repo": "jhy/jsoup",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "shizuku-nex": {
+    "repo": "rushiranpise/Shizuku-Nex",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "shizuku": {
+    "repo": "RikkaApps/Shizuku",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "compose-multiplatform": {
+    "repo": "JetBrains/compose-multiplatform",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "scrcpy": {
+    "repo": "Genymobile/scrcpy",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "labwc": {
+    "repo": "labwc/labwc",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "dialer": {
+    "repo": "Goodwy/Dialer",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "simple-dialer": {
+    "repo": "SimpleMobileTools/Simple-Dialer",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "phone": {
+    "repo": "FossifyOrg/Phone",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "secure-dialer": {
+    "repo": "Secure-Phone-apps/Secure-Dialer",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "ever-dialer": {
+    "repo": "hari161008/Ever-Dialer",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "thor": {
+    "repo": "trinadhthatakula/Thor",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "undeadwallpaper": {
+    "repo": "maocide/UndeadWallpaper",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "stremio-addon-sdk": {
+    "repo": "Stremio/stremio-addon-sdk",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "stremio-core": {
+    "repo": "Stremio/stremio-core",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "stremio-watched-bitfield": {
+    "repo": "Stremio/stremio-watched-bitfield",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "ap": {
+    "repo": "iptv-org/ap",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "iptv": {
+    "repo": "Free-TV/IPTV",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "greektvm3u": {
+    "repo": "filipposfilippides/greektvm3u",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "gopeed": {
+    "repo": "GopeedLab/gopeed",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "ketch": {
+    "repo": "linroid/Ketch",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "libretorren": {
+    "repo": "proninyaroslav/libretorren",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "kite": {
+    "repo": "zenzer0s/kite",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "aio-video-downloader": {
+    "repo": "shibaFoss/AIO-Video-Downloader",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "yt-dlp": {
+    "repo": "yt-dlp/yt-dlp",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "youtubedl-android": {
+    "repo": "JunkFood02/youtubedl-android",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "netguard": {
+    "repo": "M66B/NetGuard",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "adns": {
+    "repo": "eyalm2000/adns",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "fairemail": {
+    "repo": "M66B/FairEmail",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "sdmaid-se": {
+    "repo": "d4rken-org/sdmaid-se",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "gama": {
+    "repo": "palincat/gama",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "firestack": {
+    "repo": "celzero/firestack",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "taglib": {
+    "repo": "Kyant0/taglib",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "sqlcipher": {
+    "repo": "sqlcipher/sqlcipher",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "sqlcipher-android": {
+    "repo": "sqlcipher/sqlcipher-android",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "dhizuku-ap": {
+    "repo": "iamr0s/Dhizuku-API",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "wifi-password-manager": {
+    "repo": "Khh-vu/wifi-password-manager",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "paperknifeplus": {
+    "repo": "potatameister/PaperKnifePlus",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "librecuts": {
+    "repo": "tharunbirla/LibreCuts",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "librecamera": {
+    "repo": "iakdis/librecamera",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "camx": {
+    "repo": "uncannyRishabh/camx",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "photoncamera": {
+    "repo": "bjzhou/PhotonCamera",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "opencamera-om": {
+    "repo": "ysdede/opencamera-om",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "spy-camera-os": {
+    "repo": "wolkenschieber/spy-camera-os",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "pdfbox-android": {
+    "repo": "TomRoush/PdfBox-Android",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "baresip": {
+    "repo": "baresip/baresip",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "baresip-studio": {
+    "repo": "juha-h/baresip-studio",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "papirus-icon-theme": {
+    "repo": "PapirusDevelopmentTeam/papirus-icon-theme",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "tela-icon-theme": {
+    "repo": "vinceliuice/Tela-icon-theme",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "candy-icons": {
+    "repo": "EliverLara/candy-icons",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "libtorrent4j": {
+    "repo": "aldenml/libtorrent4j",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "nextlib": {
+    "repo": "anilbeesetti/nextlib",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "nextplayer": {
+    "repo": "anilbeesetti/nextplayer",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "aos-avp": {
+    "repo": "nova-video-player/aos-AVP",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "libarchive-android": {
+    "repo": "zhanghai/libarchive-android",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "tor-android": {
+    "repo": "guardianproject/tor-android",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "mail": {
+    "repo": "eclipse-ee4j/mail",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "jaf": {
+    "repo": "eclipse-ee4j/jaf",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "songrec": {
+    "repo": "marin-m/SongRec",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "audile": {
+    "repo": "AudileTeam/Audile",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "anyasc": {
+    "repo": "anyascii/anyasc",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "appopsnex": {
+    "repo": "1zumiii/AppOpsNex",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "breezex_cursor": {
+    "repo": "ful1e5/BreezeX_Cursor",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "bibata_cursor": {
+    "repo": "ful1e5/Bibata_Cursor",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "tesseract4android": {
+    "repo": "adaptech-cz/Tesseract4Android",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "tessdata_fas": {
+    "repo": "tesseract-ocr/tessdata_fas",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "tessconfigs": {
+    "repo": "tesseract-ocr/tessconfigs",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "zxin": {
+    "repo": "zxing/zxin",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "boringssl_android": {
+    "repo": "vvb2060/BoringSSL_Android",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  },
+  "amethys": {
+    "repo": "vitorpamplona/amethys",
+    "path": "auto_discovered",
+    "current_version": "unknown",
+    "type": "third_party_notice"
+  }
+}

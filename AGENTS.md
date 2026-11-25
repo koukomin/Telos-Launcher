@@ -26,6 +26,9 @@ Before merging or creating a release:
 
 Because AI agents drive the development of Telos Launcher, the codebase must be optimized not just for runtime performance, but for **AI readability and context window efficiency**.
 
+0. **Mandatory Upstream Sync Check (Step 0)**:
+   - Before starting ANY new feature, refactoring, or editing task in a session, every AI agent MUST execute `python3 tools/upstream/check-upstreams.py`. If new upstream releases or bugfixes are detected, the agent MUST review and integrate them into Telos before proceeding with other work.
+
 1. **Context Window Management**: 
    - No "God Files". If a file grows beyond ~500 lines or takes on multiple responsibilities (e.g. State, UI, Data parsing), it MUST be split into domains (e.g., `*Screen.kt`, `*State.kt`, `*Models.kt`).
    - Keep Koin definitions, models, and domain extensions strictly separated.
