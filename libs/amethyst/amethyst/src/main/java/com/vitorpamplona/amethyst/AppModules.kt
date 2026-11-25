@@ -51,6 +51,7 @@ import com.vitorpamplona.amethyst.commons.model.Account
 import com.vitorpamplona.amethyst.commons.model.NoteState
 import com.vitorpamplona.amethyst.commons.model.UiSettings
 import com.vitorpamplona.amethyst.commons.model.cache.LocalCache
+import com.vitorpamplona.amethyst.commons.model.cache.observeNewEvents
 import com.vitorpamplona.amethyst.commons.model.cache.MemoryTrimmingService
 import com.vitorpamplona.amethyst.commons.model.nip03Timestamp.BitcoinExplorerEndpoint
 import com.vitorpamplona.amethyst.commons.model.nip03Timestamp.IncomingOtsEventVerifier
