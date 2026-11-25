@@ -76,6 +76,11 @@ subprojects {
         isPreserveFileTimestamps = false
         isReproducibleFileOrder = true
     }
+    tasks.withType<KotlinCompile>().configureEach {
+        compilerOptions {
+            freeCompilerArgs.addAll("-Xbackend-threads=8")
+        }
+    }
 }
 
 dependencies {
