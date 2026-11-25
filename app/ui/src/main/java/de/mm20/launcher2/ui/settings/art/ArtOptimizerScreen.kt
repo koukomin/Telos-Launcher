@@ -140,9 +140,7 @@ fun ArtOptimizerScreen() {
                 ArtAppFilter.DEGRADED -> entry.bucket == OptimizationBucket.DEGRADED
                 ArtAppFilter.FROZEN -> entry.isFrozen
             }
-            val matchesQuery = q.isEmpty() ||
-                entry.label.lowercase().contains(q) ||
-                entry.packageName.lowercase().contains(q)
+            val matchesQuery = de.mm20.launcher2.comms.search.TelosSearch.matches(q, entry.label, entry.packageName)
             matchesFilter && matchesQuery
         }
     }

@@ -809,7 +809,7 @@ private fun InstalledAppsTab(
     val visibleApps = remember(installedApps, query, frozenOnly, refreshTrigger) {
         installedApps.filter { app ->
             val label = context.packageManager.getApplicationLabel(app).toString()
-            val matchesQuery = query.isBlank() || label.contains(query.trim(), ignoreCase = true) || app.packageName.contains(query.trim(), ignoreCase = true)
+            val matchesQuery = de.mm20.launcher2.comms.search.TelosSearch.matches(query, label, app.packageName)
             val isFrozen = freezeManager.isFrozen(app.packageName)
             val matchesFrozen = !frozenOnly || isFrozen
             matchesQuery && matchesFrozen
