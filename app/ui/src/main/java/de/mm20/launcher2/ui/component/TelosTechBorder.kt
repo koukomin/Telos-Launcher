@@ -48,7 +48,8 @@ fun TelosTechPill(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     icon: Painter? = null,
-    accentColor: Color = Color(0xFF00E676)
+    accentColor: Color = Color(0xFF00E676),
+    compact: Boolean = false,
 ) {
     val container = TelosSurfaceTokens.techPill()
     val bg = if (isSelected) accentColor.copy(alpha = 0.16f).compositeOver(container) else container
@@ -64,7 +65,7 @@ fun TelosTechPill(
         color = bg
     ) {
         Row(
-            modifier = Modifier.padding(horizontal = 14.dp, vertical = 7.dp),
+            modifier = Modifier.padding(horizontal = if (compact) 4.dp else 14.dp, vertical = 7.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(6.dp)
         ) {
@@ -78,6 +79,8 @@ fun TelosTechPill(
             }
             Text(
                 text = text,
+                modifier = if (compact) Modifier.weight(1f) else Modifier,
+                textAlign = if (compact) androidx.compose.ui.text.style.TextAlign.Center else null,
                 fontSize = 13.sp,
                 fontWeight = FontWeight.SemiBold,
                 color = textCol

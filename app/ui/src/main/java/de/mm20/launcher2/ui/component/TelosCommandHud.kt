@@ -10,6 +10,7 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -60,6 +61,7 @@ fun TelosCommandHud(
     onSearchQueryChange: ((String) -> Unit)? = null,
     searchPlaceholder: String = "",
     status: String? = null,
+    fitWidth: Boolean = false,
 ) {
     var searchOpen by rememberSaveable { mutableStateOf(!searchQuery.isNullOrBlank()) }
     val searching = searchOpen || !searchQuery.isNullOrBlank()
@@ -77,12 +79,13 @@ fun TelosCommandHud(
             Modifier
                 .fillMaxWidth()
                 .telosTechCard(borderColor = TelosCyber.NeonCyan, shape = RoundedCornerShape(18.dp), alpha = 0.7f)
-                .horizontalScroll(rememberScrollState())
+                .then(if (fitWidth) Modifier else Modifier.horizontalScroll(rememberScrollState()))
                 .padding(horizontal = 4.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(2.dp),
         ) {
             if (onSearchQueryChange != null) {
+                Box(if (fitWidth) Modifier.weight(1f) else Modifier, contentAlignment = Alignment.Center) {
                 TelosHudIcon(
                     selected = searching,
                     onClick = {
@@ -93,6 +96,7 @@ fun TelosCommandHud(
                     label = searchPlaceholder,
                     accent = TelosCyber.NeonCyan,
                 )
+                }
             }
             actions.forEach { action ->
                 val button = @Composable {
@@ -104,6 +108,7 @@ fun TelosCommandHud(
                         accent = action.accent,
                     )
                 }
+                Box(if (fitWidth) Modifier.weight(1f) else Modifier, contentAlignment = Alignment.Center) {
                 val badge = action.badge
                 if (badge.isNullOrBlank()) button()
                 else BadgedBox(
@@ -112,8 +117,9 @@ fun TelosCommandHud(
                             Text(badge, style = MaterialTheme.typography.labelSmall)
                         }
                     },
-                    modifier = Modifier.padding(end = 8.dp),
+                    modifier = if (fitWidth) Modifier else Modifier.padding(end = 8.dp),
                 ) { button() }
+                }
             }
         }
         if (!status.isNullOrBlank()) {

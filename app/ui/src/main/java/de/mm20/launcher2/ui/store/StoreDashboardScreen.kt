@@ -18,7 +18,6 @@ import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -265,13 +264,12 @@ fun StoreDashboardScreen(initialLink: String = "", initialQuery: String = "") {
                 Row(
                     Modifier
                         .fillMaxWidth()
-                        .horizontalScroll(rememberScrollState())
                         .padding(horizontal = 12.dp, vertical = 4.dp),
                     horizontalArrangement = Arrangement.spacedBy(6.dp),
                 ) {
-                    TelosTechPill(stringResource(I18nR.string.hc_apps), tab == 0, { tab = 0 }, accentColor = TelosCyber.NeonCyan)
-                    TelosTechPill(stringResource(I18nR.string.hc_telos_apps), tab == 1, { tab = 1 }, accentColor = TelosCyber.NeonGreen)
-                    TelosTechPill(stringResource(I18nR.string.recommendation_tab_label), tab == 2, { tab = 2 }, accentColor = TelosCyber.NeonOrange)
+                    TelosTechPill(stringResource(I18nR.string.hc_apps), tab == 0, { tab = 0 }, modifier = Modifier.weight(1f), accentColor = TelosCyber.NeonCyan, compact = true)
+                    TelosTechPill(stringResource(I18nR.string.hc_telos_apps), tab == 1, { tab = 1 }, modifier = Modifier.weight(1f), accentColor = TelosCyber.NeonGreen, compact = true)
+                    TelosTechPill(stringResource(I18nR.string.recommendation_tab_label), tab == 2, { tab = 2 }, modifier = Modifier.weight(1f), accentColor = TelosCyber.NeonOrange, compact = true)
                     if (showStoreTab) {
                         TelosTechPill(
                             preferredStoreTitle,
@@ -281,7 +279,9 @@ fun StoreDashboardScreen(initialLink: String = "", initialQuery: String = "") {
                                     PlayStoreInventory.openPreferredStoreUpdates(context, freezeManager)
                                 }
                             },
+                            modifier = Modifier.weight(1f),
                             accentColor = TelosCyber.NeonMagenta,
+                            compact = true,
                         )
                     }
                 }
@@ -626,6 +626,7 @@ private fun StoreCommandHud(
         onSearchQueryChange = onQuery,
         searchPlaceholder = stringResource(I18nR.string.hf_store_search),
         status = status,
+        fitWidth = true,
     )
 }
 
