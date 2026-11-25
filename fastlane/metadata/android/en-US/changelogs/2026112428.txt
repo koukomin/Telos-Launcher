@@ -1,0 +1,1 @@
+Restored EventCache extension imports, updated upstream sentinel, and unified release validation.

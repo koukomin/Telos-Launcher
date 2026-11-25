@@ -7,7 +7,7 @@
 ## 📍 Τρέχουσα Κατάσταση (Active State)
 
 - **Ημερομηνία/Ώρα**: `2026-11-24`
-- **Τρέχουσα Εργασία**: [Phase 22] Υλοποίηση Git OS Pre-Push Hook & Self-Healing Diagnostics (`.git/hooks/pre-push` OS level push blocker, `check-github-health.py` Failure Diagnostic Cards via log triage, Dependabot CVE vulnerability auditor). Bump έκδοσης σε `v1.46.06`, merge στο `main`, tagging και έναρξη release στο GitHub.
+- **Τρέχουσα Εργασία**: [Phase 23] Συγχώνευση PR #139 (EventCache imports & Upstream Sentinel alignment), bump έκδοσης σε `v1.46.07`, tagging και έναρξη release στο GitHub.
 
 ---
 
@@ -106,4 +106,7 @@
 - [x] **Git OS Pre-Push Hook & Log Diagnostics (Phase 22)**:
   - `.git/hooks/pre-push` & `tools/git/setup-hooks.py`: Native OS-level Git hook blocking unsafe pushes.
   - `check-github-health.py`: Failure Diagnostic Cards extracting exact log lines via `gh run view --log-failed`.
-- [x] **Merge & Releases**: Δημοσιεύτηκαν επιτυχώς οι εκδόσεις `v1.45.80` έως `v1.46.06`.
+- [x] **Merge PR #139 & Release v1.46.07 (Phase 23)**:
+  - Squashed and merged PR #139 (`codex/cleanup-followup`).
+  - Restored EventCache extension imports and aligned upstream sentinel.
+- [x] **Merge & Releases**: Δημοσιεύτηκαν επιτυχώς οι εκδόσεις `v1.45.80` έως `v1.46.07`.
