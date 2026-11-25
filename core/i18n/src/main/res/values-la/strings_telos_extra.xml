@@ -18,4 +18,5 @@
 <string name="keyboard_scale_title">Keyboard size</string>
 <string name="keyboard_key_height_title">Key height</string>
 <string name="keyboard_key_font_title">Key text size</string>
+<string name="hf_store_source">Source</string>
 </resources>
