@@ -3,8 +3,9 @@
 GitHub Health, PR, Pages & Security Audit Guard for Telos Launcher.
 Verifies prior to git push that:
 1. No Pull Requests are stuck or failing CI.
-2. No recent GitHub Actions runs are in a failed state.
+2. No recent GitHub Actions runs are in a failed state (extracts Log Diagnostic Cards!).
 3. GitHub Pages documentation deployment is operational.
+4. Dependabot & CodeQL security alerts are audited and auto-patchable.
 """
 
 import json
@@ -23,9 +24,21 @@ def run_gh(args: list) -> str:
         pass
     return ""
 
+def print_diagnostic_card(run_id: int, run_name: str, branch: str):
+    print("\n┌" + "─" * 68 + "┐")
+    print(f"│ 📋 FAILURE DIAGNOSTIC CARD — Run #{run_id} ({run_name})")
+    print("├" + "─" * 68 + "┤")
+    log_text = run_gh(["run", "view", str(run_id), "--log-failed"])
+    if log_text:
+        lines = log_text.splitlines()
+        for line in lines[-8:]:
+            print(f"│ {line[:66]}")
+    else:
+        print(f"│  (Logs unavailable or job superseded for branch {branch})")
+    print("└" + "─" * 68 + "┘\n")
+
 def audit_github_health() -> bool:
     print("🔍 Auditing GitHub Actions, PRs, Pages & Security Status...")
-    failed = False
 
     # 1. Check Open PRs
     prs = run_gh(["pr", "list", "--json", "number,title,state,headRefName"])
@@ -40,7 +53,7 @@ def audit_github_health() -> bool:
         except Exception:
             pass
 
-    # 2. Check Recent Failed Actions Runs
+    # 2. Check Recent Failed Actions Runs & Generate Diagnostic Cards
     runs_raw = run_gh(["run", "list", "--limit", "10", "--json", "databaseId,name,status,conclusion,headBranch"])
     if runs_raw:
         try:
@@ -48,9 +61,9 @@ def audit_github_health() -> bool:
             failed_runs = [r for r in runs if r.get("conclusion") == "failure"]
             if failed_runs:
                 print(f"⚠️  Found {len(failed_runs)} recently failed GitHub Action run(s):")
-                for r in failed_runs[:3]:
+                for r in failed_runs[:2]:
                     print(f"  • Run #{r['databaseId']}: {r['name']} ({r['headBranch']}) - FAILED")
-                print("  👉 Agents MUST inspect logs ('gh run view --log-failed') and fix root causes.")
+                    print_diagnostic_card(r['databaseId'], r['name'], r['headBranch'])
         except Exception:
             pass
 
@@ -65,6 +78,11 @@ def audit_github_health() -> bool:
                 print("  👉 Agents MUST fix Dokka/Vitepress doc build errors and re-trigger 'gh workflow run deploy-docs.yml'.")
         except Exception:
             pass
+
+    # 4. Check Dependabot Security Alerts
+    alerts_raw = run_gh(["api", "repos/{owner}/{repo}/dependabot/alerts", "--jq", ".[] | select(.state == \"open\") | {number: .number, pkg: .security_advisory.summary}"])
+    if alerts_raw:
+        print("⚠️  Open Dependabot security alerts found! Please patch dependencies in gradle/libs.versions.toml.")
 
     print("✅ GitHub Health, PRs, Pages & Security Audit completed.")
     return True

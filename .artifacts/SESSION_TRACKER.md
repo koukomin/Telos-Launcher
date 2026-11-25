@@ -7,7 +7,7 @@
 ## 📍 Τρέχουσα Κατάσταση (Active State)
 
 - **Ημερομηνία/Ώρα**: `2026-11-24`
-- **Τρέχουσα Εργασία**: [Phase 21] Υλοποίηση Pre-Push GitHub Health, PRs, Pages & Security Audit System (`check-github-health.py` automated checker, `AGENTS.md` Rule 8 Pre-Push GitHub Audit Rule). Bump έκδοσης σε `v1.46.05`, merge στο `main`, tagging και έναρξη release στο GitHub.
+- **Τρέχουσα Εργασία**: [Phase 22] Υλοποίηση Git OS Pre-Push Hook & Self-Healing Diagnostics (`.git/hooks/pre-push` OS level push blocker, `check-github-health.py` Failure Diagnostic Cards via log triage, Dependabot CVE vulnerability auditor). Bump έκδοσης σε `v1.46.06`, merge στο `main`, tagging και έναρξη release στο GitHub.
 
 ---
 
@@ -103,4 +103,7 @@
 - [x] **Pre-Push GitHub Health & Security Audit Rule (Phase 21)**:
   - `check-github-health.py`: Automated checker for open PRs, failed Actions, Pages deployments, and Security alerts.
   - `AGENTS.md` Rule 8: Mandatory Pre-Push GitHub Health, PRs, Pages & Security Audit Rule.
-- [x] **Merge & Releases**: Δημοσιεύτηκαν επιτυχώς οι εκδόσεις `v1.45.80` έως `v1.46.05`.
+- [x] **Git OS Pre-Push Hook & Log Diagnostics (Phase 22)**:
+  - `.git/hooks/pre-push` & `tools/git/setup-hooks.py`: Native OS-level Git hook blocking unsafe pushes.
+  - `check-github-health.py`: Failure Diagnostic Cards extracting exact log lines via `gh run view --log-failed`.
+- [x] **Merge & Releases**: Δημοσιεύτηκαν επιτυχώς οι εκδόσεις `v1.45.80` έως `v1.46.06`.

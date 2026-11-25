@@ -1,0 +1,1 @@
+Εγκατάσταση Git OS Pre-Push Hook, Failure Diagnostic Cards και αυτόματου ελέγχου Dependabot CVEs.
