@@ -14,6 +14,15 @@
     "glass_blur": "app/ui/src/main/java/de/mm20/launcher2/ui/theme/TelosGlassBlur.kt",
     "frame_rate": "app/ui/src/main/java/de/mm20/launcher2/ui/theme/TelosFrameRate.kt"
   },
+  "app_management": {
+    "stale_apk_cleaner": "services/app-management/src/main/java/de/mm20/launcher2/appmanagement/StaleApkCleaner.kt"
+  },
+  "battery_health": {
+    "guard": "core/devicepose/src/main/java/de/mm20/launcher2/devicepose/TelosBatteryHealthGuard.kt"
+  },
+  "search_aliases": {
+    "engine": "services/comms/src/main/java/de/mm20/launcher2/comms/search/TelosSearchAliasEngine.kt"
+  },
   "database": {
     "maintenance": "data/database/src/main/java/de/mm20/launcher2/database/TelosDatabaseMaintenance.kt"
   },

@@ -7,7 +7,7 @@
 ## 📍 Τρέχουσα Κατάσταση (Active State)
 
 - **Ημερομηνία/Ώρα**: `2026-11-24`
-- **Τρέχουσα Εργασία**: [Phase 12] Υλοποίηση SQLite Maintenance & Internationalization (`TelosDatabaseMaintenance` auto-VACUUM, `TelosFormatter` locale-aware formatters, `TelosFrameRate` LTPO adaptive Hz hint). Bump έκδοσης σε `v1.45.96`, merge στο `main`, tagging και έναρξη release στο GitHub.
+- **Τρέχουσα Εργασία**: [Phase 13] Υλοποίηση Storage Clean, Battery Guard & Search Alias Engine (`StaleApkCleaner` auto-purge, `TelosBatteryHealthGuard` battery temperature guard, `TelosSearchAliasEngine` acronym & multilingual search aliases). Bump έκδοσης σε `v1.45.97`, merge στο `main`, tagging και έναρξη release στο GitHub.
 
 ---
 
@@ -68,4 +68,8 @@
   - `TelosDatabaseMaintenance`: SQLite PRAGMA optimize + WAL checkpointing helper.
   - `TelosFormatter`: Unified locale-aware number and file size formatting across 35 languages.
   - `TelosFrameRate`: LTPO adaptive Hz hint modifier.
-- [x] **Merge & Releases**: Δημοσιεύτηκαν επιτυχώς οι εκδόσεις `v1.45.80` έως `v1.45.96`.
+- [x] **Storage, Battery & Search Alias Engine (Phase 13)**:
+  - `StaleApkCleaner`: Auto-purge temporary `.apk` installer files from cache.
+  - `TelosBatteryHealthGuard`: Hardware battery temperature & charging health status guard.
+  - `TelosSearchAliasEngine`: Multilingual search acronym & shortcut alias engine (`wifi`, `bt`, `cam`, `calc`, `sec`, `dial`).
+- [x] **Merge & Releases**: Δημοσιεύτηκαν επιτυχώς οι εκδόσεις `v1.45.80` έως `v1.45.97`.
