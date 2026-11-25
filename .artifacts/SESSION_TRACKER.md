@@ -7,7 +7,7 @@
 ## 📍 Τρέχουσα Κατάσταση (Active State)
 
 - **Ημερομηνία/Ώρα**: `2026-11-24`
-- **Τρέχουσα Εργασία**: [Phase 19] Υλοποίηση Badge Batching, Short-Circuit Search & Shape Path Caching (`TelosBadgeBatcher` 50ms batching for unread counts, `TelosStringDistance` short-circuit prefix matching for 1-2 char search queries, `TelosShapePathCache` pre-computed Compose Path cache). Bump έκδοσης σε `v1.46.03`, merge στο `main`, tagging και έναρξη release στο GitHub.
+- **Τρέχουσα Εργασία**: [Phase 20] Υλοποίηση Display Cutouts, Token Scanner & DataStore File Integrity (`TelosCutoutPadding` dynamic notch & punch-hole inset modifier, `TelosTokenScanner` zero-allocation multi-word query token scanner, `TelosDataStoreGuard` atomic `.tmp` datastore file guard). Bump έκδοσης σε `v1.46.04`, merge στο `main`, tagging και έναρξη release στο GitHub.
 
 ---
 
@@ -96,4 +96,8 @@
   - `TelosBadgeBatcher`: 50ms batching for unread counts & notification badges to eliminate recomposition thrashing.
   - `TelosStringDistance`: Short-circuit prefix matching for 1-2 char search queries (40% faster matching).
   - `TelosShapePathCache`: Pre-computed Compose Path cache for custom icon shapes (Hexagon, Pentagon, Squircle, Teardrop).
-- [x] **Merge & Releases**: Δημοσιεύτηκαν επιτυχώς οι εκδόσεις `v1.45.80` έως `v1.46.03`.
+- [x] **Display Cutouts, Token Scanner & DataStore File Integrity (Phase 20)**:
+  - `TelosCutoutPadding`: Dynamic display cutout & notch inset modifier for punch-hole cameras, notches & foldables.
+  - `TelosTokenScanner`: Zero-allocation multi-word query token scanner for search matching.
+  - `TelosDataStoreGuard`: Atomic `.tmp` file guard protecting DataStore settings against power loss / force-kill.
+- [x] **Merge & Releases**: Δημοσιεύτηκαν επιτυχώς οι εκδόσεις `v1.45.80` έως `v1.46.04`.
