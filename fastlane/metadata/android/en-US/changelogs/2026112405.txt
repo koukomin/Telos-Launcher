@@ -1,0 +1,1 @@
+Decomposed Typography, EditSearchAction, and FilesScreen God files into clean domain components and applied @Immutable stability annotations.

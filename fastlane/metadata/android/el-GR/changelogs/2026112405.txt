@@ -1,0 +1,1 @@
+Αρχιτεκτονικός διαχωρισμός των οθονών Typography, EditSearchAction και FilesScreen και προσθήκη @Immutable annotations.
