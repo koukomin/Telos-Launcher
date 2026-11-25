@@ -1,0 +1,1 @@
+Added TelosIdGenerator, TelosAudioFocusManager, and Bitmap.ensureSoftwareCopy guard.

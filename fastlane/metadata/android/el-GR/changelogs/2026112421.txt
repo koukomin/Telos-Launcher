@@ -1,0 +1,1 @@
+Προσθήκη TelosIdGenerator, TelosAudioFocusManager και προστασίας Bitmap hardware rendering.

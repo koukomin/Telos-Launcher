@@ -18,6 +18,9 @@
   "notifications": {
     "channels": "core/ktx/src/main/java/de/mm20/launcher2/ktx/TelosNotificationChannels.kt"
   },
+  "audio": {
+    "focus_manager": "core/ktx/src/main/java/de/mm20/launcher2/ktx/TelosAudioFocusManager.kt"
+  },
   "app_management": {
     "stale_apk_cleaner": "services/app-management/src/main/java/de/mm20/launcher2/appmanagement/StaleApkCleaner.kt",
     "url_sanitizer": "services/app-management/src/main/java/de/mm20/launcher2/appmanagement/TelosUrlSanitizer.kt",
@@ -49,7 +52,11 @@
   },
   "ktx": {
     "context": "core/ktx/src/main/java/de/mm20/launcher2/ktx/Context.kt",
-    "network_client": "core/ktx/src/main/java/de/mm20/launcher2/ktx/TelosNetworkClient.kt"
+    "network_client": "core/ktx/src/main/java/de/mm20/launcher2/ktx/TelosNetworkClient.kt",
+    "bitmap": "core/ktx/src/main/java/de/mm20/launcher2/ktx/BitmapKtx.kt"
+  },
+  "id_generator": {
+    "compact_id": "core/base/src/main/java/de/mm20/launcher2/base/TelosIdGenerator.kt"
   },
   "sensors": {
     "gate": "core/devicepose/src/main/java/de/mm20/launcher2/devicepose/TelosSensorGate.kt"

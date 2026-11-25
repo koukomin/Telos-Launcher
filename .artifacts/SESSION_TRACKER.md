@@ -7,7 +7,7 @@
 ## 📍 Τρέχουσα Κατάσταση (Active State)
 
 - **Ημερομηνία/Ώρα**: `2026-11-24`
-- **Τρέχουσα Εργασία**: [Phase 15] Υλοποίηση Notification Channels, Clipboard Guard & Color Extractor (`TelosNotificationChannels` system channels registry, `TelosClipboardGuard` auto-clear for sensitive text, `TelosColorExtractor` 0ms 16x16 downsampled dominant color extractor). Bump έκδοσης σε `v1.45.99`, merge στο `main`, tagging και έναρξη release στο GitHub.
+- **Τρέχουσα Εργασία**: [Phase 16] Υλοποίηση ID Generation, Audio Focus & Bitmap Hardware Guard (`TelosIdGenerator` compact Base62 IDs, `TelosAudioFocusManager` unified audio focus & ducking manager, `Bitmap.ensureSoftwareCopy` hardware bitmap crash guard). Bump έκδοσης σε `v1.46.00`, merge στο `main`, tagging και έναρξη release στο GitHub.
 
 ---
 
@@ -80,4 +80,8 @@
   - `TelosNotificationChannels`: Centralized single source of truth for Android system notification channels.
   - `TelosClipboardGuard`: Clipboard privacy guard with `EXTRA_IS_SENSITIVE` and 60s auto-clear.
   - `TelosColorExtractor`: 16x16 downsampled dominant color extractor for zero-lag glass UI.
-- [x] **Merge & Releases**: Δημοσιεύτηκαν επιτυχώς οι εκδόσεις `v1.45.80` έως `v1.45.99`.
+- [x] **ID Generation, Audio Focus & Bitmap Guard (Phase 16 Milestone)**:
+  - `TelosIdGenerator`: Fast 64-bit compact base62 unique ID generation.
+  - `TelosAudioFocusManager`: Centralized single source of truth for audio focus, ducking, and auto-resume.
+  - `Bitmap.ensureSoftwareCopy`: Hardware bitmap software conversion guard for safe Canvas/PDF rendering.
+- [x] **Merge & Releases**: Δημοσιεύτηκαν επιτυχώς οι εκδόσεις `v1.45.80` έως `v1.46.00`.
