@@ -7,7 +7,7 @@
 ## 📍 Τρέχουσα Κατάσταση (Active State)
 
 - **Ημερομηνία/Ώρα**: `2026-11-24`
-- **Τρέχουσα Εργασία**: [Phase 16] Υλοποίηση ID Generation, Audio Focus & Bitmap Hardware Guard (`TelosIdGenerator` compact Base62 IDs, `TelosAudioFocusManager` unified audio focus & ducking manager, `Bitmap.ensureSoftwareCopy` hardware bitmap crash guard). Bump έκδοσης σε `v1.46.00`, merge στο `main`, tagging και έναρξη release στο GitHub.
+- **Τρέχουσα Εργασία**: [Phase 17] Υλοποίηση Haptics, Web Privacy & Fast Letter Indexing (`TelosHaptics` tactile haptic feedback engine, `TelosWebContainer` third-party cookie & DOM isolation container, `TelosLetterIndex` 0ms binary search app drawer index engine). Bump έκδοσης σε `v1.46.01`, merge στο `main`, tagging και έναρξη release στο GitHub.
 
 ---
 
@@ -80,8 +80,12 @@
   - `TelosNotificationChannels`: Centralized single source of truth for Android system notification channels.
   - `TelosClipboardGuard`: Clipboard privacy guard with `EXTRA_IS_SENSITIVE` and 60s auto-clear.
   - `TelosColorExtractor`: 16x16 downsampled dominant color extractor for zero-lag glass UI.
-- [x] **ID Generation, Audio Focus & Bitmap Guard (Phase 16 Milestone)**:
+- [x] **ID Generation, Audio Focus & Bitmap Guard (Phase 16)**:
   - `TelosIdGenerator`: Fast 64-bit compact base62 unique ID generation.
   - `TelosAudioFocusManager`: Centralized single source of truth for audio focus, ducking, and auto-resume.
   - `Bitmap.ensureSoftwareCopy`: Hardware bitmap software conversion guard for safe Canvas/PDF rendering.
-- [x] **Merge & Releases**: Δημοσιεύτηκαν επιτυχώς οι εκδόσεις `v1.45.80` έως `v1.46.00`.
+- [x] **Haptics, Web Privacy & Fast Letter Indexing (Phase 17)**:
+  - `TelosHaptics`: Modern haptic feedback engine with predefined `VibrationEffect` APIs (clicks, ticks, confirmations).
+  - `TelosWebContainer`: Third-party cookie & DOM storage isolation privacy container for web apps.
+  - `TelosLetterIndex`: 0ms binary search app drawer letter index engine.
+- [x] **Merge & Releases**: Δημοσιεύτηκαν επιτυχώς οι εκδόσεις `v1.45.80` έως `v1.46.01`.

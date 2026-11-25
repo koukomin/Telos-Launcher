@@ -1,0 +1,1 @@
+Added TelosHaptics engine, TelosWebContainer privacy, and TelosLetterIndex binary search.

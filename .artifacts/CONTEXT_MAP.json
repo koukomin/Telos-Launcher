@@ -3,7 +3,8 @@
     "scaffold": "app/ui/src/main/java/de/mm20/launcher2/ui/launcher/scaffold/LauncherScaffold.kt",
     "state": "app/ui/src/main/java/de/mm20/launcher2/ui/launcher/scaffold/LauncherScaffoldState.kt",
     "models": "app/ui/src/main/java/de/mm20/launcher2/ui/launcher/scaffold/LauncherScaffoldModels.kt",
-    "search_vm": "app/ui/src/main/java/de/mm20/launcher2/ui/launcher/search/SearchVM.kt"
+    "search_vm": "app/ui/src/main/java/de/mm20/launcher2/ui/launcher/search/SearchVM.kt",
+    "letter_index": "app/ui/src/main/java/de/mm20/launcher2/ui/launcher/search/TelosLetterIndex.kt"
   },
   "navigation": {
     "settings_routes": "app/ui/src/main/java/de/mm20/launcher2/ui/navigation/SettingsRoutes.kt",
@@ -15,16 +16,20 @@
     "frame_rate": "app/ui/src/main/java/de/mm20/launcher2/ui/theme/TelosFrameRate.kt",
     "color_extractor": "app/ui/src/main/java/de/mm20/launcher2/ui/theme/TelosColorExtractor.kt"
   },
+  "haptics": {
+    "engine": "core/ktx/src/main/java/de/mm20/launcher2/ktx/TelosHaptics.kt"
+  },
+  "app_management": {
+    "stale_apk_cleaner": "services/app-management/src/main/java/de/mm20/launcher2/appmanagement/StaleApkCleaner.kt",
+    "url_sanitizer": "services/app-management/src/main/java/de/mm20/launcher2/appmanagement/TelosUrlSanitizer.kt",
+    "clipboard_guard": "services/app-management/src/main/java/de/mm20/launcher2/appmanagement/TelosClipboardGuard.kt",
+    "web_container": "services/app-management/src/main/java/de/mm20/launcher2/appmanagement/TelosWebContainer.kt"
+  },
   "notifications": {
     "channels": "core/ktx/src/main/java/de/mm20/launcher2/ktx/TelosNotificationChannels.kt"
   },
   "audio": {
     "focus_manager": "core/ktx/src/main/java/de/mm20/launcher2/ktx/TelosAudioFocusManager.kt"
-  },
-  "app_management": {
-    "stale_apk_cleaner": "services/app-management/src/main/java/de/mm20/launcher2/appmanagement/StaleApkCleaner.kt",
-    "url_sanitizer": "services/app-management/src/main/java/de/mm20/launcher2/appmanagement/TelosUrlSanitizer.kt",
-    "clipboard_guard": "services/app-management/src/main/java/de/mm20/launcher2/appmanagement/TelosClipboardGuard.kt"
   },
   "backup": {
     "verifier": "services/backup/src/main/java/de/mm20/launcher2/backup/TelosBackupVerifier.kt"
