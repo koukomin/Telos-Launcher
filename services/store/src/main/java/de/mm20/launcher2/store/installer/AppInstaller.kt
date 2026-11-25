@@ -6,7 +6,7 @@ sealed interface InstallResult {
     data object Success : InstallResult
     /** The install was handed off to the system installer UI; the outcome isn't known yet. */
     data object Pending : InstallResult
-    data class Failed(val reason: String, val cause: Throwable? = null) : InstallResult
+    data class Failed(val reason: String, val cause: Throwable? = null, val signatureMismatch: Boolean = false) : InstallResult
 }
 
 /** An explicitly selectable installation path. External handlers always require user interaction. */

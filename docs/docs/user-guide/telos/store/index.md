@@ -271,3 +271,10 @@ System package details read TAKE_AUDIO_FOCUS and PLAY_AUDIO through an available
 System → Apps and each package page now offer AppOpsNext (Android 15+). The button opens the complete external AppOpsNext application; if it is not installed, it opens its official GitHub project in Telos Store for installation. Choose the target app in AppOpsNext. Its own Shizuku authorization is separate from Telos. The complete upstream suite includes package/UID modes, permission browsing, templates and batch changes, new-install rules, history/archive, experimental monitoring and watcher diagnostics. Native backend support follows upstream’s device/ABI limits (tested ARM64); Telos does not claim that suite is embedded or that every OEM supports every operation. System audio focus/playback controls remain built into Telos and now select a usable privileged command channel independently of the freeze backend. Binder/permission changes and returning to the screen refresh availability.
 
 Root component editing also checks actual Root authorization independently of the freezing provider; it still requires explicit confirmation and retains protected-package checks.
+
+
+### Installation source and signing
+
+App details show the installer reported by Android when that information is available. If an individual update comes with a different signing certificate, Telos blocks that APK and opens the recorded store. Telos uses its normal thaw mechanism when that store is frozen. If the store does not support opening the product page, Telos opens its main screen.
+
+When **Shizuku** is selected as the installation method, start the Shizuku service and grant Telos permission. If the privileged install fails, Store shows that error so you can see which operation failed.

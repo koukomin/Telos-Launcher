@@ -75,7 +75,7 @@ class FreezeManager internal constructor(
     suspend fun hasPendingFrozenUpdate(packageName: String) = settings.maintenance.first().values.any {
         it.packageName == packageName && it.userId == Process.myUid() / 100000 && it.operationId.isNotEmpty()
     }
-    suspend fun launchThawed(packageName: String, user: UserHandle, preferred: ComponentName,
+    suspend fun launchThawed(packageName: String, user: UserHandle, preferred: ComponentName?,
         launch: (ComponentName) -> Boolean): Boolean {
         val wasFrozen = user == Process.myUserHandle() && withContext(kotlinx.coroutines.Dispatchers.IO) { isFrozen(packageName) }
         val started = maintenance.launchThawed(packageName, user, preferred, launch)

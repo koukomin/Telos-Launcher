@@ -38,7 +38,12 @@ internal class ShizukuInstallBackend(private val context: android.content.Contex
         if (!isAvailable()) return false
         if (Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED) return true
 
-        return suspendCancellableCoroutine { cont ->
+        return kotlinx.coroutines.withTimeoutOrNull(60_000) {
+            withContext(Dispatchers.Main.immediate) { awaitPermission() }
+        } ?: false
+    }
+
+    private suspend fun awaitPermission(): Boolean = suspendCancellableCoroutine { cont ->
             val listener = object : Shizuku.OnRequestPermissionResultListener {
                 override fun onRequestPermissionResult(requestCode: Int, grantResult: Int) {
                     if (requestCode != REQUEST_CODE) return
@@ -52,9 +57,14 @@ internal class ShizukuInstallBackend(private val context: android.content.Contex
             cont.invokeOnCancellation {
                 Shizuku.removeRequestPermissionResultListener(listener)
             }
-            Shizuku.requestPermission(REQUEST_CODE)
+            try {
+                Shizuku.requestPermission(REQUEST_CODE)
+            } catch (e: RuntimeException) {
+                Shizuku.removeRequestPermissionResultListener(listener)
+                Log.w(TAG, "Could not request Shizuku permission", e)
+                if (cont.isActive) cont.resume(false)
+            }
         }
-    }
 
     override suspend fun install(apk: File, packageName: String, allowDowngrade: Boolean): BackendInstallResult =
         withContext(Dispatchers.IO) {

@@ -365,17 +365,17 @@ class StoreViewModel : ViewModel(), KoinComponent {
                 .sortedWith(storeBulkUpdateOrder(context.packageName))
                 .partition { it.isTelosLauncher(context.packageName) }
             coroutineScope {
-                otherApps.forEach { item -> launch { installForBatch(item) } }
+                otherApps.forEach { item -> launch { installForBatch(item, targets.size == 1) } }
             }
-            launcher.forEach { installForBatch(it) }
+            launcher.forEach { installForBatch(it, targets.size == 1) }
         }
     }
 
-    private suspend fun installForBatch(item: StoreItem) = coroutineScope {
+    private suspend fun installForBatch(item: StoreItem, openSourceOnMismatch: Boolean) = coroutineScope {
         val completion = async(start = CoroutineStart.UNDISPATCHED) {
             de.mm20.launcher2.store.installer.InstallEvents.events.first { it.packageName == item.packageName }
         }
-        installNow(item)
+        installNow(item, openSourceOnMismatch)
         if (_installStates.value[item.id] == StoreInstallUiState.Installing) {
             completion.await()
         } else {
@@ -410,7 +410,7 @@ class StoreViewModel : ViewModel(), KoinComponent {
         else viewModelScope.launch { installNow(item) }
     }
 
-    private suspend fun installNow(item: StoreItem) {
+    private suspend fun installNow(item: StoreItem, openSourceOnMismatch: Boolean = true) {
         if (!activeInstalls.add(item.id)) return
         try {
         setState(item.id, StoreInstallUiState.Downloading)
@@ -427,11 +427,31 @@ class StoreViewModel : ViewModel(), KoinComponent {
             is StoreAction.Installing -> setState(item.id, StoreInstallUiState.Installing)
             is StoreAction.LaunchedPlayStore -> setState(item.id, StoreInstallUiState.Idle)
             is StoreAction.Failed -> {
+                if (action.signatureMismatch && openSourceOnMismatch && openInstallingStore(item.packageName)) {
+                    setState(item.id, StoreInstallUiState.Idle)
+                    return
+                }
                 setState(item.id, StoreInstallUiState.Failed)
                 _installationError.value = "${item.displayName}: ${action.reason}"
             }
         }
         } finally { activeInstalls.remove(item.id) }
+    }
+
+    private suspend fun openInstallingStore(packageName: String): Boolean {
+        val installer = installedBy(context, packageName) ?: return false
+        if (installer == context.packageName || installer == packageName) return false
+        val preferred = context.packageManager.getLaunchIntentForPackage(installer)?.component
+        return freezeManager.launchThawed(installer, android.os.Process.myUserHandle(), preferred) { component ->
+            val details = android.content.Intent(android.content.Intent.ACTION_VIEW,
+                android.net.Uri.parse("market://details").buildUpon().appendQueryParameter("id", packageName).build())
+                .setPackage(installer).addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK)
+            runCatching { context.startActivity(details) }.isSuccess ||
+                runCatching {
+                    context.startActivity(android.content.Intent.makeMainActivity(component)
+                        .addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK))
+                }.isSuccess
+        }
     }
 
     fun uninstall(item: StoreItem) = actionHandler.uninstall(item.packageName)
