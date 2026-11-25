@@ -1,0 +1,1 @@
+Zero-allocation GreekFold text matching optimization for ultra-fast search indexing and lower RAM usage.
