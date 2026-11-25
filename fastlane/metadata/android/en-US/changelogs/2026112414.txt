@@ -1,0 +1,1 @@
+Established TelosIntents, DialogState, and PreferenceKeys for structural organization.

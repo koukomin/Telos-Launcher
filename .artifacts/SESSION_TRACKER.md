@@ -7,7 +7,7 @@
 ## 📍 Τρέχουσα Κατάσταση (Active State)
 
 - **Ημερομηνία/Ώρα**: `2026-11-24`
-- **Τρέχουσα Εργασία**: [Phase 8] Υλοποίηση Next-Level Navigation Registry (`SettingsRoutes.kt`, `LauncherRoutes.kt`), `Context.startActivitySafe` KTX extension, και `TelosThemeRegistry.kt`. Bump έκδοσης σε `v1.45.92`, merge στο `main`, tagging και έναρξη release στο GitHub.
+- **Τρέχουσα Εργασία**: [Phase 9] Υλοποίηση `TelosIntents.kt` (System Intents Registry), `DialogState.kt` (Compose Dialog State Helper), και `PreferenceKeys.kt` (Datastore Keys Registry). Bump έκδοσης σε `v1.45.93`, merge στο `main`, tagging και έναρξη release στο GitHub.
 
 ---
 
@@ -51,4 +51,8 @@
   - Δημιουργία `SettingsRoutes.kt` & `LauncherRoutes.kt` (Type-Safe Navigation3 registry).
   - Προσθήκη `Context.startActivitySafe` στο `:core:ktx`.
   - Δημιουργία `TelosThemeRegistry.kt` (Cyber-Tech color palette registry).
-- [x] **Merge & Releases**: Δημοσιεύτηκαν επιτυχώς οι εκδόσεις `v1.45.80` έως `v1.45.92`.
+- [x] **Structural Organization (Phase 9)**:
+  - Δημιουργία `TelosIntents.kt` (Centralized System Intents Registry).
+  - Δημιουργία `DialogState.kt` (Type-Safe Compose Dialog State Helper).
+  - Δημιουργία `PreferenceKeys.kt` (Datastore Preference Field Names Registry).
+- [x] **Merge & Releases**: Δημοσιεύτηκαν επιτυχώς οι εκδόσεις `v1.45.80` έως `v1.45.93`.
