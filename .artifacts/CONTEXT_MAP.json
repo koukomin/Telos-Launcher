@@ -5,6 +5,16 @@
     "models": "app/ui/src/main/java/de/mm20/launcher2/ui/launcher/scaffold/LauncherScaffoldModels.kt",
     "search_vm": "app/ui/src/main/java/de/mm20/launcher2/ui/launcher/search/SearchVM.kt"
   },
+  "navigation": {
+    "settings_routes": "app/ui/src/main/java/de/mm20/launcher2/ui/navigation/SettingsRoutes.kt",
+    "launcher_routes": "app/ui/src/main/java/de/mm20/launcher2/ui/navigation/LauncherRoutes.kt"
+  },
+  "theme": {
+    "registry": "app/ui/src/main/java/de/mm20/launcher2/ui/theme/TelosThemeRegistry.kt"
+  },
+  "ktx": {
+    "context": "core/ktx/src/main/java/de/mm20/launcher2/ktx/Context.kt"
+  },
   "store": {
     "dashboard_screen": "app/ui/src/main/java/de/mm20/launcher2/ui/store/StoreDashboardScreen.kt",
     "dashboard_components": "app/ui/src/main/java/de/mm20/launcher2/ui/store/StoreDashboardComponents.kt",

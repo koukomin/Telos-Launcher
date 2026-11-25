@@ -1,0 +1,1 @@
+Established type-safe Navigation Registry, centralized Core KTX helpers, and TelosThemeRegistry.

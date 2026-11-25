@@ -30,3 +30,16 @@ fun Context.tryStartActivity(intent: Intent, bundle: Bundle? = null): Boolean {
         false
     }
 }
+
+inline fun Context.startActivitySafe(intentBuilder: Intent.() -> Unit): Boolean {
+    return try {
+        val intent = Intent().apply(intentBuilder)
+        if (this !is android.app.Activity) {
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
+        startActivity(intent)
+        true
+    } catch (e: Exception) {
+        false
+    }
+}

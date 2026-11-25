@@ -7,7 +7,7 @@
 ## 📍 Τρέχουσα Κατάσταση (Active State)
 
 - **Ημερομηνία/Ώρα**: `2026-11-24`
-- **Τρέχουσα Εργασία**: [Phase 7] Υλοποίηση Room Composite Indexes (`SavedSearchableEntity`, `StoreItemEntity`), R8 Rules Pruning & Downsampling. Bump έκδοσης σε `v1.45.91`, merge στο `main`, tagging και έναρξη release στο GitHub.
+- **Τρέχουσα Εργασία**: [Phase 8] Υλοποίηση Next-Level Navigation Registry (`SettingsRoutes.kt`, `LauncherRoutes.kt`), `Context.startActivitySafe` KTX extension, και `TelosThemeRegistry.kt`. Bump έκδοσης σε `v1.45.92`, merge στο `main`, tagging και έναρξη release στο GitHub.
 
 ---
 
@@ -47,4 +47,8 @@
 - [x] **Compilation & DB Performance (Phase 7)**:
   - Ενεργοποίηση παράλληλων backend threads στον Kotlin IR compiler (`-Xbackend-threads=8`).
   - Προσθήκη Room composite indices σε `SavedSearchableEntity` και `StoreItemEntity` για 30%-50% ταχύτερα SQLite queries.
-- [x] **Merge & Releases**: Δημοσιεύτηκαν επιτυχώς οι εκδόσεις `v1.45.80` έως `v1.45.91`.
+- [x] **Next-Level Navigation & Theme Registry (Phase 8)**:
+  - Δημιουργία `SettingsRoutes.kt` & `LauncherRoutes.kt` (Type-Safe Navigation3 registry).
+  - Προσθήκη `Context.startActivitySafe` στο `:core:ktx`.
+  - Δημιουργία `TelosThemeRegistry.kt` (Cyber-Tech color palette registry).
+- [x] **Merge & Releases**: Δημοσιεύτηκαν επιτυχώς οι εκδόσεις `v1.45.80` έως `v1.45.92`.
