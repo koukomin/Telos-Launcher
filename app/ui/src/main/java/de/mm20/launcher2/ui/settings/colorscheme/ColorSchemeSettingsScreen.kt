@@ -143,16 +143,132 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
             if (previewDarkTheme) theme!!.darkColorScheme else theme!!.lightColorScheme
         val selectedDefaultScheme =
             if (previewDarkTheme) DefaultDarkColorScheme else DefaultLightColorScheme
-                CorePaletteCategory(
-            theme = theme!!,
-            previewColorScheme = previewColorScheme,
-            selectedColorScheme = selectedColorScheme,
-            selectedDefaultScheme = selectedDefaultScheme,
-            mergedCorePalette = mergedCorePalette,
-            previewDarkTheme = previewDarkTheme,
-            onDarkModeChanged = { previewDarkTheme = it },
-            updateTheme = viewModel::updateTheme
-        )
+        item {
+
+            PreferenceCategory(
+                title = stringResource(I18nR.string.preference_custom_colors_corepalette),
+            ) {
+                CorePaletteColorPreference(
+                    title = stringResource(I18nR.string.au3_appearance_cs_primary),
+                    value = theme?.corePalette?.primary,
+                    onValueChange = {
+                        viewModel.updateTheme(
+                            theme!!.copy(
+                                corePalette = theme!!.corePalette.copy(
+                                    primary = it
+                                )
+                            )
+                        )
+                    },
+                    defaultValue = systemPalette.primary,
+                )
+                CorePaletteColorPreference(
+                    title = stringResource(I18nR.string.au3_appearance_cs_secondary),
+                    value = theme?.corePalette?.secondary,
+                    onValueChange = {
+                        viewModel.updateTheme(
+                            theme!!.copy(
+                                corePalette = theme!!.corePalette.copy(
+                                    secondary = it
+                                )
+                            )
+                        )
+                    },
+                    defaultValue = systemPalette.secondary,
+                    autoGenerate = {
+                        theme!!.corePalette.primary?.let {
+                            SchemeExpressive(
+                                Hct.fromInt(it), false, 0.0,
+                            ).secondaryPaletteKeyColor
+                        }
+                    },
+                )
+                CorePaletteColorPreference(
+                    title = stringResource(I18nR.string.au3_appearance_cs_tertiary),
+                    value = theme?.corePalette?.tertiary,
+                    onValueChange = {
+                        viewModel.updateTheme(
+                            theme!!.copy(
+                                corePalette = theme!!.corePalette.copy(
+                                    tertiary = it
+                                )
+                            )
+                        )
+                    },
+                    defaultValue = systemPalette.tertiary,
+                    autoGenerate = {
+                        theme!!.corePalette.primary?.let {
+                            SchemeExpressive(
+                                Hct.fromInt(it), false, 0.0,
+                            ).tertiaryPaletteKeyColor
+                        }
+                    },
+                )
+                CorePaletteColorPreference(
+                    title = stringResource(I18nR.string.au3_appearance_cs_neutral),
+                    value = theme?.corePalette?.neutral,
+                    onValueChange = {
+                        viewModel.updateTheme(
+                            theme!!.copy(
+                                corePalette = theme!!.corePalette.copy(
+                                    neutral = it
+                                )
+                            )
+                        )
+                    },
+                    defaultValue = systemPalette.neutral,
+                    autoGenerate = {
+                        theme!!.corePalette.primary?.let {
+                            SchemeExpressive(
+                                Hct.fromInt(it), false, 0.0,
+                            ).neutralPaletteKeyColor
+                        }
+                    },
+                )
+                CorePaletteColorPreference(
+                    title = stringResource(I18nR.string.au3_appearance_cs_neutral_variant),
+                    value = theme?.corePalette?.neutralVariant,
+                    onValueChange = {
+                        viewModel.updateTheme(
+                            theme!!.copy(
+                                corePalette = theme!!.corePalette.copy(
+                                    neutralVariant = it
+                                )
+                            )
+                        )
+                    },
+                    defaultValue = systemPalette.neutralVariant,
+                    autoGenerate = {
+                        theme!!.corePalette.primary?.let {
+                            SchemeExpressive(
+                                Hct.fromInt(it), false, 0.0,
+                            ).neutralVariantPaletteKeyColor
+                        }
+                    },
+                )
+                CorePaletteColorPreference(
+                    title = stringResource(I18nR.string.au3_appearance_cs_error),
+                    value = theme?.corePalette?.error,
+                    onValueChange = {
+                        viewModel.updateTheme(
+                            theme!!.copy(
+                                corePalette = theme!!.corePalette.copy(
+                                    error = it
+                                )
+                            )
+                        )
+                    },
+                    defaultValue = systemPalette.error,
+                    autoGenerate = {
+                        theme!!.corePalette.primary?.let {
+                            SchemeExpressive(
+                                Hct.fromInt(it), false, 0.0,
+                            ).errorPalette.keyColor.toInt()
+                        }
+                    },
+                )
+            }
+        }
         item {
             ColorSchemePreferenceCategory(
                 title = stringResource(I18nR.string.au3_appearance_cs_primary_colors),

@@ -288,6 +288,23 @@ fun EditSearchActionSheet(
         }
     }
 }
+
+@Composable
+private fun SelectTypePage(viewModel: EditSearchActionSheetVM) {
+    Column(
+        modifier = Modifier
+            .verticalScroll(rememberScrollState())
+            .fillMaxWidth()
+            .padding(16.dp)
+            .navigationBarsPadding()
+    ) {
+        Text(
+            text = stringResource(I18nR.string.create_search_action_type),
+            style = MaterialTheme.typography.labelMedium,
+            color = MaterialTheme.colorScheme.secondary
+        )
+        OutlinedCard(
+            onClick = { viewModel.initWebSearch() },
             modifier = Modifier
                 .padding(top = 12.dp)
                 .fillMaxWidth()

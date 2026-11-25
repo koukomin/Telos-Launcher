@@ -95,7 +95,6 @@
     "phone_dialer": "app/ui/src/main/java/de/mm20/launcher2/ui/comms/DialpadScreen.kt",
     "messages": "app/ui/src/main/java/de/mm20/launcher2/ui/comms/MessagesScreen.kt",
     "settings_screen": "app/ui/src/main/java/de/mm20/launcher2/ui/settings/comms/CommsSettingsScreen.kt",
-    "settings_categories": "app/ui/src/main/java/de/mm20/launcher2/ui/settings/comms/CommsSettingsCategories.kt",
     "settings_vm": "app/ui/src/main/java/de/mm20/launcher2/ui/settings/comms/CommsSettingsScreenVM.kt"
   },
   "files": {
@@ -113,13 +112,12 @@
   "search_engine": {
     "matcher": "services/comms/src/main/java/de/mm20/launcher2/comms/search/TelosSearch.kt",
     "greek_fold": "core/base/src/main/java/de/mm20/launcher2/search/GreekFold.kt",
-    "actions": "app/ui/src/main/java/de/mm20/launcher2/ui/settings/searchactions/EditSearchActionPages.kt",
+    "actions": "app/ui/src/main/java/de/mm20/launcher2/ui/settings/searchactions/EditSearchActionSheet.kt",
     "short_circuit_distance": "core/base/src/main/java/de/mm20/launcher2/search/TelosStringDistance.kt",
     "token_scanner": "core/base/src/main/java/de/mm20/launcher2/search/TelosTokenScanner.kt"
   },
   "appearance_settings": {
     "colorscheme_screen": "app/ui/src/main/java/de/mm20/launcher2/ui/settings/colorscheme/ColorSchemeSettingsScreen.kt",
-    "colorscheme_categories": "app/ui/src/main/java/de/mm20/launcher2/ui/settings/colorscheme/ColorSchemeCategories.kt",
     "typography_screen": "app/ui/src/main/java/de/mm20/launcher2/ui/settings/typography/TypographySettingsScreen.kt",
     "typography_components": "app/ui/src/main/java/de/mm20/launcher2/ui/settings/typography/TypographyComponents.kt"
   }
