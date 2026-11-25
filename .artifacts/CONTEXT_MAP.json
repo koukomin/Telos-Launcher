@@ -1,0 +1,45 @@
+{
+  "launcher": {
+    "scaffold": "app/ui/src/main/java/de/mm20/launcher2/ui/launcher/scaffold/LauncherScaffold.kt",
+    "state": "app/ui/src/main/java/de/mm20/launcher2/ui/launcher/scaffold/LauncherScaffoldState.kt",
+    "models": "app/ui/src/main/java/de/mm20/launcher2/ui/launcher/scaffold/LauncherScaffoldModels.kt",
+    "search_vm": "app/ui/src/main/java/de/mm20/launcher2/ui/launcher/search/SearchVM.kt"
+  },
+  "store": {
+    "dashboard_screen": "app/ui/src/main/java/de/mm20/launcher2/ui/store/StoreDashboardScreen.kt",
+    "dashboard_components": "app/ui/src/main/java/de/mm20/launcher2/ui/store/StoreDashboardComponents.kt",
+    "dashboard_helpers": "app/ui/src/main/java/de/mm20/launcher2/ui/store/StoreDashboardHelpers.kt",
+    "view_model": "app/ui/src/main/java/de/mm20/launcher2/ui/store/StoreViewModel.kt",
+    "repository": "services/store/src/main/java/de/mm20/launcher2/store/repository/StoreRepository.kt"
+  },
+  "comms": {
+    "phone_dialer": "app/ui/src/main/java/de/mm20/launcher2/ui/comms/TelosPhone.kt",
+    "messages": "app/ui/src/main/java/de/mm20/launcher2/ui/comms/TelosMessages.kt",
+    "settings_screen": "app/ui/src/main/java/de/mm20/launcher2/ui/settings/comms/CommsSettingsScreen.kt",
+    "settings_categories": "app/ui/src/main/java/de/mm20/launcher2/ui/settings/comms/CommsSettingsCategories.kt",
+    "settings_vm": "app/ui/src/main/java/de/mm20/launcher2/ui/settings/comms/CommsSettingsScreenVM.kt"
+  },
+  "files": {
+    "screen": "app/ui/src/main/java/de/mm20/launcher2/ui/files/FilesScreen.kt",
+    "dialogs": "app/ui/src/main/java/de/mm20/launcher2/ui/files/FilesDialogsComponents.kt",
+    "view_model": "app/ui/src/main/java/de/mm20/launcher2/ui/files/FilesViewModel.kt",
+    "model": "app/ui/src/main/java/de/mm20/launcher2/ui/files/FsModel.kt",
+    "repository": "data/files/src/main/java/de/mm20/launcher2/files/FilesRepository.kt"
+  },
+  "freeze": {
+    "screen": "app/ui/src/main/java/de/mm20/launcher2/ui/settings/freeze/SmartFreezeSettingsScreen.kt",
+    "dialog": "app/ui/src/main/java/de/mm20/launcher2/ui/settings/freeze/FreezeAppPolicyDialog.kt",
+    "manager": "services/freeze/src/main/java/de/mm20/launcher2/freeze/FreezeManager.kt"
+  },
+  "search_engine": {
+    "matcher": "services/comms/src/main/java/de/mm20/launcher2/comms/search/TelosSearch.kt",
+    "greek_fold": "core/base/src/main/java/de/mm20/launcher2/search/GreekFold.kt",
+    "actions": "app/ui/src/main/java/de/mm20/launcher2/ui/settings/searchactions/EditSearchActionPages.kt"
+  },
+  "appearance_settings": {
+    "colorscheme_screen": "app/ui/src/main/java/de/mm20/launcher2/ui/settings/colorscheme/ColorSchemeSettingsScreen.kt",
+    "colorscheme_categories": "app/ui/src/main/java/de/mm20/launcher2/ui/settings/colorscheme/ColorSchemeCategories.kt",
+    "typography_screen": "app/ui/src/main/java/de/mm20/launcher2/ui/settings/typography/TypographySettingsScreen.kt",
+    "typography_components": "app/ui/src/main/java/de/mm20/launcher2/ui/settings/typography/TypographyComponents.kt"
+  }
+}
