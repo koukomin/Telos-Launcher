@@ -7,7 +7,7 @@
 ## 📍 Τρέχουσα Κατάσταση (Active State)
 
 - **Ημερομηνία/Ώρα**: `2026-11-24`
-- **Τρέχουσα Εργασία**: [Phase 20] Υλοποίηση Display Cutouts, Token Scanner & DataStore File Integrity (`TelosCutoutPadding` dynamic notch & punch-hole inset modifier, `TelosTokenScanner` zero-allocation multi-word query token scanner, `TelosDataStoreGuard` atomic `.tmp` datastore file guard). Bump έκδοσης σε `v1.46.04`, merge στο `main`, tagging και έναρξη release στο GitHub.
+- **Τρέχουσα Εργασία**: [Phase 21] Υλοποίηση Pre-Push GitHub Health, PRs, Pages & Security Audit System (`check-github-health.py` automated checker, `AGENTS.md` Rule 8 Pre-Push GitHub Audit Rule). Bump έκδοσης σε `v1.46.05`, merge στο `main`, tagging και έναρξη release στο GitHub.
 
 ---
 
@@ -100,4 +100,7 @@
   - `TelosCutoutPadding`: Dynamic display cutout & notch inset modifier for punch-hole cameras, notches & foldables.
   - `TelosTokenScanner`: Zero-allocation multi-word query token scanner for search matching.
   - `TelosDataStoreGuard`: Atomic `.tmp` file guard protecting DataStore settings against power loss / force-kill.
-- [x] **Merge & Releases**: Δημοσιεύτηκαν επιτυχώς οι εκδόσεις `v1.45.80` έως `v1.46.04`.
+- [x] **Pre-Push GitHub Health & Security Audit Rule (Phase 21)**:
+  - `check-github-health.py`: Automated checker for open PRs, failed Actions, Pages deployments, and Security alerts.
+  - `AGENTS.md` Rule 8: Mandatory Pre-Push GitHub Health, PRs, Pages & Security Audit Rule.
+- [x] **Merge & Releases**: Δημοσιεύτηκαν επιτυχώς οι εκδόσεις `v1.45.80` έως `v1.46.05`.

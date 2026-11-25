@@ -1,0 +1,1 @@
+Προσθήκη ελέγχου υγείας GitHub Actions/PRs/Pages και Κανόνα 8 στο AGENTS.md.

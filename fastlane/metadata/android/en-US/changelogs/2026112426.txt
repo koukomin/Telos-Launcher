@@ -1,0 +1,1 @@
+Added GitHub Health & Security audit check and AGENTS.md Rule 8.
