@@ -46,14 +46,33 @@ object GreekFold {
                 else -> null
             }
             if (pair != null) { out.append(pair); i += 2; continue }
-            out.append(
-                when (c) {
-                    'α' -> "a"; 'β' -> "v"; 'γ' -> "g"; 'δ' -> "d"; 'ε' -> "e"; 'ζ' -> "z"; 'η' -> "i"; 'θ' -> "t"
-                    'ι' -> "i"; 'κ' -> "k"; 'λ' -> "l"; 'μ' -> "m"; 'ν' -> "n"; 'ξ' -> "x"; 'ο' -> "o"; 'π' -> "p"
-                    'ρ' -> "r"; 'σ' -> "s"; 'τ' -> "t"; 'υ' -> "i"; 'φ' -> "v"; 'χ' -> "x"; 'ψ' -> "ps"; 'ω' -> "o"
-                    else -> c.toString()
-                }
-            )
+            when (c) {
+                'α' -> out.append('a')
+                'β' -> out.append('v')
+                'γ' -> out.append('g')
+                'δ' -> out.append('d')
+                'ε' -> out.append('e')
+                'ζ' -> out.append('z')
+                'η' -> out.append('i')
+                'θ' -> out.append('t')
+                'ι' -> out.append('i')
+                'κ' -> out.append('k')
+                'λ' -> out.append('l')
+                'μ' -> out.append('m')
+                'ν' -> out.append('n')
+                'ξ' -> out.append('x')
+                'ο' -> out.append('o')
+                'π' -> out.append('p')
+                'ρ' -> out.append('r')
+                'σ' -> out.append('s')
+                'τ' -> out.append('t')
+                'υ' -> out.append('i')
+                'φ' -> out.append('v')
+                'χ' -> out.append('x')
+                'ψ' -> out.append("ps")
+                'ω' -> out.append('o')
+                else -> out.append(c)
+            }
             i++
         }
         return out.toString()
