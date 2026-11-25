@@ -101,7 +101,7 @@ internal fun FreezePackagePolicyDialog(pkg: String, label: String, user: android
 private fun CompanionPicker(choices: List<Pair<String, String>>, initial: Set<String>, save: (Set<String>) -> Unit, close: () -> Unit) {
     var query by rememberSaveable { mutableStateOf("") }
     var chosen by rememberSaveable { mutableStateOf(initial.toList()) }
-    val shown = remember(choices, query) { choices.filter { it.first.contains(query, true) || it.second.contains(query, true) } }
+    val shown = remember(choices, query) { choices.filter { de.mm20.launcher2.comms.search.TelosSearch.matches(query, it.first, it.second) } }
     AlertDialog(onDismissRequest = close, title = { TelosCyberHeading {  Text(stringResource(I18nR.string.freeze_hub_companions))  } },
         confirmButton = { TextButton(onClick = { save(chosen.toSet()) }) { Text(stringResource(I18nR.string.hc_apply)) } },
         dismissButton = { TextButton(onClick = close) { Text(stringResource(android.R.string.cancel)) } },
