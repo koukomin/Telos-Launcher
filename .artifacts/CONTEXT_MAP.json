@@ -10,7 +10,14 @@
     "launcher_routes": "app/ui/src/main/java/de/mm20/launcher2/ui/navigation/LauncherRoutes.kt"
   },
   "theme": {
-    "registry": "app/ui/src/main/java/de/mm20/launcher2/ui/theme/TelosThemeRegistry.kt"
+    "registry": "app/ui/src/main/java/de/mm20/launcher2/ui/theme/TelosThemeRegistry.kt",
+    "glass_blur": "app/ui/src/main/java/de/mm20/launcher2/ui/theme/TelosGlassBlur.kt"
+  },
+  "coroutines": {
+    "safe_launch": "core/base/src/main/java/de/mm20/launcher2/coroutines/SafeCoroutines.kt"
+  },
+  "accessibility": {
+    "semantics": "app/ui/src/main/java/de/mm20/launcher2/ui/component/TelosSemantics.kt"
   },
   "ktx": {
     "context": "core/ktx/src/main/java/de/mm20/launcher2/ktx/Context.kt",

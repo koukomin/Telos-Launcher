@@ -1,0 +1,1 @@
+Προσθήκη TelosGlassBlur hardware GPU blur, SafeCoroutines crash guard, TelosSemantics και AGENTS.md Κανόνα 7.

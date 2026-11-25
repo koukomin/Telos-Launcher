@@ -7,7 +7,7 @@
 ## 📍 Τρέχουσα Κατάσταση (Active State)
 
 - **Ημερομηνία/Ώρα**: `2026-11-24`
-- **Τρέχουσα Εργασία**: [Phase 10] Υλοποίηση Multi-Domain Optimizations (`TelosNetworkClient` HTTP caching policy, `TelosSensorGate` lifecycle-aware hardware sensor unbinding, `SecretString` RAM memory sanitization). Bump έκδοσης σε `v1.45.94`, merge στο `main`, tagging και έναρξη release στο GitHub.
+- **Τρέχουσα Εργασία**: [Phase 11] Υλοποίηση Rendering, Accessibility & Safety Guard (`TelosGlassBlur` GPU acceleration, `SafeCoroutines` non-fatal crash guard, `TelosSemantics` TalkBack tree merging, `AGENTS.md` Rule 7 Non-Regression Rule). Bump έκδοσης σε `v1.45.95`, merge στο `main`, tagging και έναρξη release στο GitHub.
 
 ---
 
@@ -59,4 +59,9 @@
   - `TelosNetworkClient`: HTTP GZIP + offline max-stale caching policy.
   - `TelosSensorGate`: Lifecycle-aware hardware sensor unbinding (0% background battery drain).
   - `SecretString`: Memory-sanitized wrapper (automatic zeroing on dispose).
-- [x] **Merge & Releases**: Δημοσιεύτηκαν επιτυχώς οι εκδόσεις `v1.45.80` έως `v1.45.94`.
+- [x] **Rendering, Accessibility & Non-Regression Rule (Phase 11)**:
+  - `AGENTS.md` Rule 7: Mandatory Universal Functional Integrity & Zero Regression Rule.
+  - `TelosGlassBlur`: Hardware-accelerated GPU blur modifier (`RenderEffect.createBlurEffect`).
+  - `SafeCoroutines`: Non-fatal background coroutine exception containment guard (`launchSafe`).
+  - `TelosSemantics`: TalkBack accessibility screen reader tree merging.
+- [x] **Merge & Releases**: Δημοσιεύτηκαν επιτυχώς οι εκδόσεις `v1.45.80` έως `v1.45.95`.

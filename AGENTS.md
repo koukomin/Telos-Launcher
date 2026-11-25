@@ -45,6 +45,10 @@ Because AI agents drive the development of Telos Launcher, the codebase must be 
 6. **Component Registry (MANDATORY READ)**:
    - Before writing ANY new UI layout, search logic, or system integration, you MUST consult `.artifacts/COMPONENT_REGISTRY.md`. It acts as the single source of truth for all reusable components and logic in the project. If a component exists there, YOU MUST USE IT.
 
+7. **Universal Functional Integrity & Zero Regression Rule (CRITICAL MANDATORY)**:
+   - All AI agents MUST guarantee that any code addition, optimization, refactoring, or bugfix NEVER breaks or regresses existing functionality anywhere in Telos.
+   - This applies universally across all surfaces: the main launcher scaffold, home screen, dock, widgets, search engine, all 22+ virtual apps (Phone, Messages, Files, Store, Media, Notes, Calendar, Viewer, etc.), background services (AppLock, Network, Freeze, Shizuku, Crash Guard), and hidden system/KMP background integrations. Every edit MUST preserve 100% backward compatibility and existing feature behavior.
+
 ## Gradle & library versioning (Mandatory for all agents)
 
 1. **Prefer the newest stable Gradle and libraries.** Try the current stable Gradle wrapper (Gradle 10 when it is published; until then the newest 9.x) and the newest stable catalog pins in `gradle/libs.versions.toml` (and Amethyst’s catalog when that included build is touched). Prefer `tasks.register<Type>("name")` over `by tasks.registering(...)`.
