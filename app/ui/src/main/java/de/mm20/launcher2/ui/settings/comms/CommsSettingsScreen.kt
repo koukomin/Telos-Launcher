@@ -215,18 +215,7 @@ fun CommsSettingsScreen() {
 
     PreferenceScreen(title = { Text(stringResource(I18nR.string.hc_settings)) }) {
         item {
-            PreferenceCategory(title = stringResource(I18nR.string.hc_t9_search_settings)) {
-                ListPreference(
-                    title = stringResource(I18nR.string.hc_t9_language_alphabet),
-                    items = listOf(
-                        stringResource(I18nR.string.au3_commsfreeze_t9_latin) to "latin",
-                        stringResource(I18nR.string.au3_commsfreeze_t9_greek) to "greek",
-                        stringResource(I18nR.string.au3_commsfreeze_t9_cyrillic) to "cyrillic"
-                    ),
-                    value = t9Alphabet,
-                    onValueChanged = { viewModel.setT9Alphabet(it) }
-                )
-            }
+            T9AlphabetSettings(t9Alphabet, viewModel::setT9Alphabet)
         }
 
         item {
