@@ -15,7 +15,14 @@
     "frame_rate": "app/ui/src/main/java/de/mm20/launcher2/ui/theme/TelosFrameRate.kt"
   },
   "app_management": {
-    "stale_apk_cleaner": "services/app-management/src/main/java/de/mm20/launcher2/appmanagement/StaleApkCleaner.kt"
+    "stale_apk_cleaner": "services/app-management/src/main/java/de/mm20/launcher2/appmanagement/StaleApkCleaner.kt",
+    "url_sanitizer": "services/app-management/src/main/java/de/mm20/launcher2/appmanagement/TelosUrlSanitizer.kt"
+  },
+  "backup": {
+    "verifier": "services/backup/src/main/java/de/mm20/launcher2/backup/TelosBackupVerifier.kt"
+  },
+  "memory": {
+    "trimmer": "core/base/src/main/java/de/mm20/launcher2/base/TelosMemoryTrimmer.kt"
   },
   "battery_health": {
     "guard": "core/devicepose/src/main/java/de/mm20/launcher2/devicepose/TelosBatteryHealthGuard.kt"

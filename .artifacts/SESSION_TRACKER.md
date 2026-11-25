@@ -7,7 +7,7 @@
 ## 📍 Τρέχουσα Κατάσταση (Active State)
 
 - **Ημερομηνία/Ώρα**: `2026-11-24`
-- **Τρέχουσα Εργασία**: [Phase 13] Υλοποίηση Storage Clean, Battery Guard & Search Alias Engine (`StaleApkCleaner` auto-purge, `TelosBatteryHealthGuard` battery temperature guard, `TelosSearchAliasEngine` acronym & multilingual search aliases). Bump έκδοσης σε `v1.45.97`, merge στο `main`, tagging και έναρξη release στο GitHub.
+- **Τρέχουσα Εργασία**: [Phase 14] Υλοποίηση Privacy, Backup & Memory Trimming (`TelosUrlSanitizer` tracking parameter stripper, `TelosBackupVerifier` ZIP integrity validator, `TelosMemoryTrimmer` emergency cache release). Bump έκδοσης σε `v1.45.98`, merge στο `main`, tagging και έναρξη release στο GitHub.
 
 ---
 
@@ -72,4 +72,8 @@
   - `StaleApkCleaner`: Auto-purge temporary `.apk` installer files from cache.
   - `TelosBatteryHealthGuard`: Hardware battery temperature & charging health status guard.
   - `TelosSearchAliasEngine`: Multilingual search acronym & shortcut alias engine (`wifi`, `bt`, `cam`, `calc`, `sec`, `dial`).
-- [x] **Merge & Releases**: Δημοσιεύτηκαν επιτυχώς οι εκδόσεις `v1.45.80` έως `v1.45.97`.
+- [x] **Privacy, Backup & Memory Trimming (Phase 14)**:
+  - `TelosUrlSanitizer`: Strips tracking query parameters (`utm_*`, `fbclid`, `gclid`, `si`, `igshid`) when sharing links.
+  - `TelosBackupVerifier`: Validates ZIP archive headers & checksums before unpacking backups.
+  - `TelosMemoryTrimmer`: Listens to `onTrimMemory` to release bitmap caches under memory pressure.
+- [x] **Merge & Releases**: Δημοσιεύτηκαν επιτυχώς οι εκδόσεις `v1.45.80` έως `v1.45.98`.
