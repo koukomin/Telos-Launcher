@@ -1,0 +1,1 @@
+Added TelosEntropyWarmup, DateIntervalFormatter, and TelosLuminanceDetector.

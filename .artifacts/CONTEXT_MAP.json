@@ -14,7 +14,8 @@
     "registry": "app/ui/src/main/java/de/mm20/launcher2/ui/theme/TelosThemeRegistry.kt",
     "glass_blur": "app/ui/src/main/java/de/mm20/launcher2/ui/theme/TelosGlassBlur.kt",
     "frame_rate": "app/ui/src/main/java/de/mm20/launcher2/ui/theme/TelosFrameRate.kt",
-    "color_extractor": "app/ui/src/main/java/de/mm20/launcher2/ui/theme/TelosColorExtractor.kt"
+    "color_extractor": "app/ui/src/main/java/de/mm20/launcher2/ui/theme/TelosColorExtractor.kt",
+    "luminance_detector": "app/ui/src/main/java/de/mm20/launcher2/ui/theme/TelosLuminanceDetector.kt"
   },
   "haptics": {
     "engine": "core/ktx/src/main/java/de/mm20/launcher2/ktx/TelosHaptics.kt"
@@ -47,7 +48,8 @@
     "maintenance": "data/database/src/main/java/de/mm20/launcher2/database/TelosDatabaseMaintenance.kt"
   },
   "i18n": {
-    "formatter": "core/i18n/src/main/java/de/mm20/launcher2/i18n/TelosFormatter.kt"
+    "formatter": "core/i18n/src/main/java/de/mm20/launcher2/i18n/TelosFormatter.kt",
+    "date_interval": "core/i18n/src/main/java/de/mm20/launcher2/i18n/DateIntervalFormatter.kt"
   },
   "coroutines": {
     "safe_launch": "core/base/src/main/java/de/mm20/launcher2/coroutines/SafeCoroutines.kt"
@@ -67,7 +69,8 @@
     "gate": "core/devicepose/src/main/java/de/mm20/launcher2/devicepose/TelosSensorGate.kt"
   },
   "security": {
-    "secret_string": "core/base/src/main/java/de/mm20/launcher2/security/SecretString.kt"
+    "secret_string": "core/base/src/main/java/de/mm20/launcher2/security/SecretString.kt",
+    "entropy_warmup": "core/base/src/main/java/de/mm20/launcher2/security/TelosEntropyWarmup.kt"
   },
   "store": {
     "dashboard_screen": "app/ui/src/main/java/de/mm20/launcher2/ui/store/StoreDashboardScreen.kt",

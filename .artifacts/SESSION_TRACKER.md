@@ -7,7 +7,7 @@
 ## 📍 Τρέχουσα Κατάσταση (Active State)
 
 - **Ημερομηνία/Ώρα**: `2026-11-24`
-- **Τρέχουσα Εργασία**: [Phase 17] Υλοποίηση Haptics, Web Privacy & Fast Letter Indexing (`TelosHaptics` tactile haptic feedback engine, `TelosWebContainer` third-party cookie & DOM isolation container, `TelosLetterIndex` 0ms binary search app drawer index engine). Bump έκδοσης σε `v1.46.01`, merge στο `main`, tagging και έναρξη release στο GitHub.
+- **Τρέχουσα Εργασία**: [Phase 18] Υλοποίηση Security Warmup, Date Range Formatting & Fast Luminance Sensing (`TelosEntropyWarmup` async entropy seeding for AppLock, `DateIntervalFormatter` locale-aware date/time span formatter, `TelosLuminanceDetector` 0ms 5-point luminance contrast detector). Bump έκδοσης σε `v1.46.02`, merge στο `main`, tagging και έναρξη release στο GitHub.
 
 ---
 
@@ -88,4 +88,8 @@
   - `TelosHaptics`: Modern haptic feedback engine with predefined `VibrationEffect` APIs (clicks, ticks, confirmations).
   - `TelosWebContainer`: Third-party cookie & DOM storage isolation privacy container for web apps.
   - `TelosLetterIndex`: 0ms binary search app drawer letter index engine.
-- [x] **Merge & Releases**: Δημοσιεύτηκαν επιτυχώς οι εκδόσεις `v1.45.80` έως `v1.46.01`.
+- [x] **Security Warmup, Date Range Formatting & Fast Luminance Sensing (Phase 18)**:
+  - `TelosEntropyWarmup`: Async entropy seeding for AppLock & encryption tasks to eliminate 100ms cold-start jitter.
+  - `DateIntervalFormatter`: Native locale-aware date/time range formatter for LTR & RTL scripts (Arabic/Hebrew).
+  - `TelosLuminanceDetector`: Fast 0ms 5-point luminance contrast detector for adaptive text colors on wallpapers.
+- [x] **Merge & Releases**: Δημοσιεύτηκαν επιτυχώς οι εκδόσεις `v1.45.80` έως `v1.46.02`.
