@@ -20,6 +20,7 @@
  */
 package com.vitorpamplona.amethyst.commons.ui.note.types
 
+import com.vitorpamplona.amethyst.commons.model.cache.observeLatestEvent
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row

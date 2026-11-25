@@ -20,6 +20,7 @@
  */
 package com.vitorpamplona.amethyst.commons.ui.screen.loggedIn.profile.header
 
+import com.vitorpamplona.amethyst.commons.model.cache.observeLatestEvent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Row

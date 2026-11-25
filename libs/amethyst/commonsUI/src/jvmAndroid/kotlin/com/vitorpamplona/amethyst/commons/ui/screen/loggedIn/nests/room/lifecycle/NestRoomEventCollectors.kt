@@ -20,6 +20,9 @@
  */
 package com.vitorpamplona.amethyst.commons.ui.screen.loggedIn.nests.room.lifecycle
 
+import com.vitorpamplona.amethyst.commons.model.cache.observeEvents
+import com.vitorpamplona.amethyst.commons.model.cache.observeNotes
+import com.vitorpamplona.amethyst.commons.model.cache.observeNewEvents
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState

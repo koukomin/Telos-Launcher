@@ -20,6 +20,7 @@
  */
 package com.vitorpamplona.amethyst.commons.ui.note.nip22Comments
 
+import com.vitorpamplona.amethyst.commons.model.cache.observeEvents
 import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.foundation.text.input.clearText
 import androidx.compose.foundation.text.input.setTextAndPlaceCursorAtEnd
