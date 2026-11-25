@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
 Pre-Push AI Audit Script for Telos Launcher.
-Executes token budget check, release notes validation, and core unit tests
-in a single command before git push operations.
+Executes token budget check, git diff safety, Koin DI audit, release notes validation,
+and core unit tests in a single command before git push operations.
 """
 
 import subprocess
@@ -44,7 +44,19 @@ def main():
         if not run_command("Checking File Sizes & Token Budget", [sys.executable, str(file_size_script)]):
             success = False
 
-    # 2. Fastlane release notes check
+    # 2. Git Diff Safety Check
+    diff_safety_script = ROOT_DIR / "tools" / "validation" / "check-diff-safety.py"
+    if diff_safety_script.exists():
+        if not run_command("Checking Git Diff Safety & Anti-Patterns", [sys.executable, str(diff_safety_script)]):
+            success = False
+
+    # 3. Koin DI Graph Audit
+    koin_script = ROOT_DIR / "tools" / "validation" / "check-koin-graph.py"
+    if koin_script.exists():
+        if not run_command("Auditing Koin Dependency Injection Graph", [sys.executable, str(koin_script)]):
+            success = False
+
+    # 4. Fastlane release notes check
     validator_code = """
 import os, sys
 from pathlib import Path
@@ -61,7 +73,7 @@ for locale in ['en-US', 'el-GR']:
     if not run_command("Validating Release Metadata", [sys.executable, "-c", validator_code]):
         success = False
 
-    # 3. Core Unit Tests
+    # 5. Core Unit Tests
     gradlew = ROOT_DIR / "gradlew"
     if gradlew.exists():
         if not run_command("Running Core Unit Tests", [str(gradlew), ":core:base:test", "--no-daemon", "--no-configuration-cache"]):

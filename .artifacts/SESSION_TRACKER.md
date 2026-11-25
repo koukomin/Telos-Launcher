@@ -7,7 +7,7 @@
 ## 📍 Τρέχουσα Κατάσταση (Active State)
 
 - **Ημερομηνία/Ώρα**: `2026-11-24`
-- **Τρέχουσα Εργασία**: [Phase 5] Υλοποίηση AI Agent Enablement (tools/ai-cli.py, TROUBLESHOOTING.md, Compose Templates, readme/docs updates), bump έκδοσης σε `v1.45.88`, merge στο `main`, tagging και έναρξη release στο GitHub.
+- **Τρέχουσα Εργασία**: [Phase 6] Υλοποίηση AI Safety Guards & Command Blueprints (`check-diff-safety.py`, `check-koin-graph.py`, `AI_PROMPTS.md`), bump έκδοσης σε `v1.45.89`, merge στο `main`, tagging και έναρξη release στο GitHub.
 
 ---
 
@@ -40,5 +40,9 @@
   - Δημιουργία `tools/ai-cli.py` (Unified CLI Assistant).
   - Δημιουργία `.artifacts/TROUBLESHOOTING.md` (AI Memory Bank & Gotchas).
   - Δημιουργία `tools/templates/TemplateScreen.kt` & `TemplateDialog.kt`.
+- [x] **AI Safety Guards & Blueprints (Phase 6)**:
+  - Δημιουργία `tools/validation/check-diff-safety.py` (AI Diff Anti-Pattern Guard).
+  - Δημιουργία `tools/validation/check-koin-graph.py` (Koin DI Graph Auditor).
+  - Δημιουργία `.artifacts/AI_PROMPTS.md` (AI Command Blueprints).
   - Ενημέρωση `readme.md` & `docs/docs/developer-guide/index.md`.
-- [x] **Merge & Releases**: Δημοσιεύτηκαν επιτυχώς οι εκδόσεις `v1.45.80` έως `v1.45.88`.
+- [x] **Merge & Releases**: Δημοσιεύτηκαν επιτυχώς οι εκδόσεις `v1.45.80` έως `v1.45.89`.
