@@ -8,6 +8,8 @@ import java.text.DateFormat
 import java.util.Date
 import java.util.Locale
 
+import androidx.compose.runtime.Immutable
+
 /** What kind of file something is, decides its icon, its colour and what happens when it is opened. */
 enum class FileKind(val labelRes: Int, val color: Color, val icon: Int) {
     Folder(I18nR.string.au_files_kind_folder, Color(0xFFF4B400), de.mm20.launcher2.base.R.drawable.folder_24px),
@@ -49,6 +51,7 @@ enum class FileKind(val labelRes: Int, val color: Color, val icon: Int) {
 }
 
 /** One file or folder in a listing. */
+@Immutable
 data class FsEntry(
     val path: String,
     val name: String,
@@ -70,6 +73,7 @@ enum class SortKey(val labelRes: Int) {
     Name(I18nR.string.au_files_sort_name), Modified(I18nR.string.au_files_sort_date), Size(I18nR.string.au_files_sort_size), Type(I18nR.string.au_files_sort_type)
 }
 
+@Immutable
 data class SortSpec(val key: SortKey = SortKey.Name, val ascending: Boolean = true, val foldersFirst: Boolean = true)
 
 fun List<FsEntry>.sorted(spec: SortSpec): List<FsEntry> {
