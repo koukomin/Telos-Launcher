@@ -7,7 +7,7 @@
 ## 📍 Τρέχουσα Κατάσταση (Active State)
 
 - **Ημερομηνία/Ώρα**: `2026-11-24`
-- **Τρέχουσα Εργασία**: [Phase 14] Υλοποίηση Privacy, Backup & Memory Trimming (`TelosUrlSanitizer` tracking parameter stripper, `TelosBackupVerifier` ZIP integrity validator, `TelosMemoryTrimmer` emergency cache release). Bump έκδοσης σε `v1.45.98`, merge στο `main`, tagging και έναρξη release στο GitHub.
+- **Τρέχουσα Εργασία**: [Phase 15] Υλοποίηση Notification Channels, Clipboard Guard & Color Extractor (`TelosNotificationChannels` system channels registry, `TelosClipboardGuard` auto-clear for sensitive text, `TelosColorExtractor` 0ms 16x16 downsampled dominant color extractor). Bump έκδοσης σε `v1.45.99`, merge στο `main`, tagging και έναρξη release στο GitHub.
 
 ---
 
@@ -76,4 +76,8 @@
   - `TelosUrlSanitizer`: Strips tracking query parameters (`utm_*`, `fbclid`, `gclid`, `si`, `igshid`) when sharing links.
   - `TelosBackupVerifier`: Validates ZIP archive headers & checksums before unpacking backups.
   - `TelosMemoryTrimmer`: Listens to `onTrimMemory` to release bitmap caches under memory pressure.
-- [x] **Merge & Releases**: Δημοσιεύτηκαν επιτυχώς οι εκδόσεις `v1.45.80` έως `v1.45.98`.
+- [x] **Notification Channels, Clipboard Guard & Color Extractor (Phase 15)**:
+  - `TelosNotificationChannels`: Centralized single source of truth for Android system notification channels.
+  - `TelosClipboardGuard`: Clipboard privacy guard with `EXTRA_IS_SENSITIVE` and 60s auto-clear.
+  - `TelosColorExtractor`: 16x16 downsampled dominant color extractor for zero-lag glass UI.
+- [x] **Merge & Releases**: Δημοσιεύτηκαν επιτυχώς οι εκδόσεις `v1.45.80` έως `v1.45.99`.

@@ -1,0 +1,1 @@
+Added TelosNotificationChannels, TelosClipboardGuard, and TelosColorExtractor.
