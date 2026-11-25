@@ -1,122 +1,85 @@
 #!/usr/bin/env python3
-"""
-Telos Upstream Sentinel — Intelligent Upstream Project Checker.
-Automatically monitors incorporated third-party projects for new releases, bugfixes, and features.
-Auto-discovers new upstream projects mentioned in THIRD_PARTY_NOTICES.md!
-"""
+"""Report upstream candidates for Telos without modifying the checkout."""
 
 import json
+import os
 import re
-import urllib.request
-import urllib.error
 import sys
 from pathlib import Path
+from urllib.error import HTTPError, URLError
+from urllib.request import Request, urlopen
 
-ROOT_DIR = Path(__file__).resolve().parents[2]
-REGISTRY_PATH = ROOT_DIR / ".artifacts" / "UPSTREAM_REGISTRY.json"
-NOTICES_PATH = ROOT_DIR / "THIRD_PARTY_NOTICES.md"
+ROOT = Path(__file__).resolve().parents[2]
+REGISTRY = ROOT / ".artifacts" / "UPSTREAM_REGISTRY.json"
+REPO = re.compile(r"[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+")
 
-def fetch_github_api(endpoint: str) -> dict:
-    url = f"https://api.github.com/repos/{endpoint}"
-    req = urllib.request.Request(url, headers={"User-Agent": "Telos-Upstream-Sentinel/1.0"})
+
+def fetch(repo, route, *, optional=False):
+    headers = {"Accept": "application/vnd.github+json", "User-Agent": "Telos-Upstream-Sentinel"}
+    if token := os.environ.get("GH_TOKEN"):
+        headers["Authorization"] = f"Bearer {token}"
+    request = Request(f"https://api.github.com/repos/{repo}/{route}", headers=headers)
     try:
-        with urllib.request.urlopen(req, timeout=10) as resp:
-            if resp.status == 200:
-                return json.loads(resp.read().decode("utf-8"))
-    except Exception as e:
-        pass
-    return {}
+        with urlopen(request, timeout=15) as response:
+            return json.load(response)
+    except HTTPError as error:
+        if optional and error.code == 404:
+            return None
+        raise
 
-def auto_discover_notices(registry: dict) -> bool:
-    """Scans THIRD_PARTY_NOTICES.md to auto-register newly added upstream projects."""
-    if not NOTICES_PATH.exists():
-        return False
 
-    content = NOTICES_PATH.read_text(encoding="utf-8", errors="ignore")
-    # Match https://github.com/owner/repo
-    matches = re.findall(r"https://github\.com/([A-Za-z0-9_.-]+)/([A-Za-z0-9_.-]+)", content)
+def candidate(repo, project):
+    if pinned := project.get("current_commit"):
+        if not re.fullmatch(r"[0-9a-f]{7,40}", pinned):
+            raise ValueError("Invalid pinned commit")
+        upstream = fetch(repo, "")
+        comparison = fetch(repo, f"compare/{pinned}...{upstream['default_branch']}")
+        if comparison["status"] == "diverged":
+            return f"{pinned[:12]} diverges from the upstream default branch. Review the pinned base."
+        if comparison["ahead_by"]:
+            return f"{comparison['ahead_by']} newer commits: {comparison['html_url']}"
+        return None
 
-    existing_repos = {v.get("repo", "").lower() for v in registry.values()}
-    added_any = False
+    version = project.get("current_version")
+    if not version or version == "unknown":
+        return "No pinned baseline. Add one to compare releases."
+    release = fetch(repo, "releases/latest", optional=True)
+    if release is None:
+        return "No published stable release. Consider tracking a reviewed commit."
+    if release["tag_name"] != version:
+        return f"{version} -> {release['tag_name']}: {release['html_url']}"
+    return None
 
-    for owner, repo in matches:
-        repo_slug = f"{owner}/{repo}".rstrip(".git")
-        slug_key = repo.lower().rstrip(".git")
 
-        # Skip generic tools or GitHub actions
-        if "actions/" in repo_slug.lower() or "checkout" in slug_key or "setup-" in slug_key:
+def main():
+    projects = json.loads(REGISTRY.read_text(encoding="utf-8"))
+    checked = set()
+    report = ["## Telos upstream changes", ""]
+    failures = 0
+    for project in projects.values():
+        repo = project["repo"].removesuffix(".git")
+        if repo.lower() in checked:
             continue
+        checked.add(repo.lower())
+        try:
+            if not REPO.fullmatch(repo):
+                raise ValueError("Invalid repository name")
+            if change := candidate(repo, project):
+                report.append(f"- {repo} [{project['type']}, {project['path']}]: {change}")
+        except (URLError, TimeoutError, ValueError, KeyError) as error:
+            report.append(f"- {repo}: check failed ({error})")
+            failures += 1
 
-        if repo_slug.lower() not in existing_repos:
-            print(f"✨ Auto-discovered new upstream project in THIRD_PARTY_NOTICES.md: {repo_slug}")
-            registry[slug_key] = {
-                "repo": repo_slug,
-                "path": "auto_discovered",
-                "current_version": "unknown",
-                "type": "third_party_notice"
-            }
-            existing_repos.add(repo_slug.lower())
-            added_any = True
+    if len(report) == 2:
+        report.append("No changes found for tracked baselines.")
+    report.extend(["", "For an integration PR, record the upstream revision, license, Telos changes and validation."])
+    result = "\n".join(report)
+    print(result)
+    if summary := os.environ.get("GITHUB_STEP_SUMMARY"):
+        with Path(summary).open("a", encoding="utf-8") as output:
+            print(result, file=output)
+    return int(failures > 0)
 
-    return added_any
-
-def check_upstreams() -> bool:
-    print("=" * 60)
-    print("🛰️  Telos Upstream Sentinel — Checking Incorporated Projects")
-    print("=" * 60)
-
-    if not REGISTRY_PATH.exists():
-        print(f"❌ Registry file not found at {REGISTRY_PATH}")
-        return False
-
-    with open(REGISTRY_PATH, "r", encoding="utf-8") as f:
-        registry = json.load(f)
-
-    # Auto-discover new projects added to THIRD_PARTY_NOTICES.md
-    if auto_discover_notices(registry):
-        # Save updated registry
-        with open(REGISTRY_PATH, "w", encoding="utf-8") as f:
-            json.dump(registry, f, indent=2, ensure_ascii=False)
-
-    updates_found = []
-
-    for name, info in registry.items():
-        repo = info.get("repo")
-        if not repo:
-            continue
-
-        curr_ver = info.get("current_version")
-        curr_commit = info.get("current_commit")
-
-        # Query latest release
-        latest_rel = fetch_github_api(f"{repo}/releases/latest")
-        latest_ver = latest_rel.get("tag_name")
-        rel_name = latest_rel.get("name") or latest_ver
-
-        if latest_ver and curr_ver and latest_ver != curr_ver and curr_ver != "unknown":
-            updates_found.append({
-                "name": name,
-                "repo": repo,
-                "type": "New Release",
-                "current": curr_ver,
-                "latest": latest_ver,
-                "url": latest_rel.get("html_url", f"https://github.com/{repo}")
-            })
-            print(f"🔔 [{name}] New Release Available! {curr_ver} ➔ {latest_ver} ({repo})")
-        else:
-            print(f"✓ [{name}] Up to date: {curr_ver or curr_commit or 'tracked'} ({repo})")
-
-    print("\n" + "=" * 60)
-    if updates_found:
-        print(f"⚠️  Found {len(updates_found)} upstream project updates!")
-        for u in updates_found:
-            print(f"  • {u['name']} ({u['repo']}): {u['current']} ➔ {u['latest']} ({u['url']})")
-        print("\nEnsure upstream fixes/updates are integrated into Telos before proceeding with feature development.")
-    else:
-        print("🎉 All incorporated upstream projects are fully up to date!")
-    print("=" * 60)
-
-    return True
 
 if __name__ == "__main__":
-    check_upstreams()
+    sys.exit(main())
