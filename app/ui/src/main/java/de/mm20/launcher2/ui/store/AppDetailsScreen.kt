@@ -67,6 +67,14 @@ import java.util.Date
 import kotlin.math.ln
 import kotlin.math.pow
 
+internal suspend fun installedBy(context: android.content.Context, packageName: String): String? =
+    kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+        runCatching {
+            de.mm20.launcher2.compat.PackageManagerCompat
+                .getInstallSource(context.packageManager, packageName).installingPackageName
+        }.getOrNull()
+    }
+
 @Serializable
 data class AppDetailsRoute(val itemId: String) : NavKey
 
@@ -85,6 +93,16 @@ fun AppDetailsScreen(itemId: String) {
     MediaFrame(row?.item?.displayName ?: "") {
         if (row == null) return@MediaFrame
         val item = row.item
+        val installerLabel by produceState<String?>(null, item.packageName, item.installedVersionCode) {
+            value = if (item.installedVersionCode == null) null else installedBy(context, item.packageName)?.let { installer ->
+                kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+                    runCatching {
+                        val pm = context.packageManager
+                        pm.getApplicationLabel(pm.getApplicationInfo(installer, 0)).toString()
+                    }.getOrDefault(installer)
+                }
+            }
+        }
         val o = row.options
         var confirmRemove by remember { mutableStateOf(false) }
         var renaming by remember { mutableStateOf(false) }
@@ -113,6 +131,9 @@ fun AppDetailsScreen(itemId: String) {
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
+                        installerLabel?.let {
+                            Text(stringResource(I18nR.string.hf_store_source) + ": " + it, style = MaterialTheme.typography.bodySmall)
+                        }
                         Text(item.source.summary(), style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.primary)
                     }
                 }

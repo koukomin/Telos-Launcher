@@ -20,6 +20,8 @@
  */
 package com.vitorpamplona.amethyst.commons.ui.screen.loggedIn.nests.room.lobby
 
+import com.vitorpamplona.amethyst.commons.model.cache.observeEvents
+import com.vitorpamplona.amethyst.commons.model.cache.observeNotes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column

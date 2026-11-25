@@ -20,6 +20,7 @@
  */
 package com.vitorpamplona.amethyst.commons.ui.screen.loggedIn.nsites
 
+import com.vitorpamplona.amethyst.commons.model.cache.observeNotes
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth

@@ -9,8 +9,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
-  pull-requests: write
+  contents: read
 
 jobs:
   upgrade-dependencies:
@@ -29,27 +28,14 @@ jobs:
         with:
           cache-provider: basic
 
-      - name: Audit & Log Dependency Upgrade Suggestions
+      - name: Check for stable dependency updates
         run: |
-          echo "Auditing dependencies in gradle/libs.versions.toml..."
-          ./gradlew dependencyUpdates -Drevision=release || echo "Dependency update check complete"
-          
-          DATE=$(date -u +"%Y-%m-%d")
-          mkdir -p .github/dependencies
-          cat <<EOF > .github/dependencies/upgrade-audit-${DATE}.json
-          {
-            "audit_date": "$DATE",
-            "timestamp": $(date +%s),
-            "kotlin_version": "2.4.21",
-            "agp_version": "9.5.0",
-            "status": "UP_TO_DATE"
-          }
-          EOF
+          set -o pipefail
+          bash gradlew dependencyUpdates -Drevision=release --console=plain | tee dependency-updates.txt
 
-      - name: Commit Dependency Audit Report
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add .github/dependencies/
-          git commit -m "chore(deps): Weekly automated library upgrade audit - $(date -u +'%Y-%m-%d')" || echo "No changes"
-          git push origin main || echo "No push"
+      - name: Upload dependency report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dependency-updates
+          path: dependency-updates.txt

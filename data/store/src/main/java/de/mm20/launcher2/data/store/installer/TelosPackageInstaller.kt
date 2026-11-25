@@ -82,7 +82,7 @@ class TelosPackageInstaller(
     private suspend fun installApkOnIo(apk: File, packageName: String): InstallResult {
         StoreInstallSecurity.scanAndLog(context, apk, packageName)
         if (!StoreInstallSecurity.signatureMatchesInstalled(context, apk, packageName)) {
-            return failed(IllegalStateException("APK signature does not match installed application! Update blocked for security."))
+            return InstallResult.Failed("APK signature does not match the installed app.", signatureMismatch = true)
         }
         StoreInstallSecurity.backupInstalledApk(context, packageName)
 
@@ -101,7 +101,10 @@ class TelosPackageInstaller(
             }
         }.ifEmpty { listOfNotNull(selectedBackend) }
         for (backend in privileged) {
-            if (!backend.isAvailable() || !backend.requestPermission()) continue
+            if (!backend.isAvailable() || !backend.requestPermission()) {
+                if (selected == "shizuku") return failed(details = "Shizuku service is unavailable or permission was denied.")
+                continue
+            }
             var result: BackendInstallResult = BackendInstallResult.Failed("Install did not start")
             var restored = true
             var lease: String? = null
@@ -131,6 +134,7 @@ class TelosPackageInstaller(
                 }
                 is BackendInstallResult.Failed -> {
                     CrashReporter.logException(Exception("${backend::class.simpleName}: ${installed.reason}", installed.cause))
+                    if (selected == "shizuku") return failed(installed.cause, installed.reason)
                     // Fall back to the default package installer prompt if privileged install fails
                     android.util.Log.w("TelosPackageInstaller", "Privileged install failed, falling back to session installer")
                     break // breaks the 'for (backend in ...)' loop to fall through to sessionApi

@@ -258,7 +258,7 @@ internal class FreezeMaintenance(
         }
     }
     /** Survives removal of the old app row after enablement; waits for an actual launcher activity. */
-    suspend fun launchThawed(packageName: String, user: android.os.UserHandle, preferred: ComponentName,
+    suspend fun launchThawed(packageName: String, user: android.os.UserHandle, preferred: ComponentName?,
         launch: (ComponentName) -> Boolean): Boolean = withContext(NonCancellable) {
         mutex.withLock {
             val apps = requireNotNull(context.getSystemService(android.content.pm.LauncherApps::class.java))

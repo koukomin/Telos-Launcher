@@ -20,6 +20,7 @@
  */
 package com.vitorpamplona.amethyst.commons.ui.screen.loggedIn.buzz
 
+import com.vitorpamplona.amethyst.commons.model.cache.observeNotes
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import com.vitorpamplona.amethyst.commons.model.Account

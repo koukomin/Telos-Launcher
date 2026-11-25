@@ -1,1 +1,1 @@
-{"reason":"Verify ART profile parser fix with signed ARM64 and ARM32 release builds","pr":70}
+{"reason":"Validate Store installer handoff and the Amethyst compile fix on both signed Android ABIs","pr":139}

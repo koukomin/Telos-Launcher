@@ -20,6 +20,7 @@
  */
 package com.vitorpamplona.amethyst.commons.ui.screen.loggedIn.dvms
 
+import com.vitorpamplona.amethyst.commons.model.cache.observeLatestEvent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column

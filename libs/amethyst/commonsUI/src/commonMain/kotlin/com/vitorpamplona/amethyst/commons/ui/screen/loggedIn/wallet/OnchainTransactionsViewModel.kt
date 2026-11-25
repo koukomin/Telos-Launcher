@@ -20,6 +20,7 @@
  */
 package com.vitorpamplona.amethyst.commons.ui.screen.loggedIn.wallet
 
+import com.vitorpamplona.amethyst.commons.model.cache.observeEvents
 import androidx.compose.runtime.Immutable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

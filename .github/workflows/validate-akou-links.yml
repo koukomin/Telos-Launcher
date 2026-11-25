@@ -40,8 +40,9 @@ jobs:
       - name: Compile Akou and YouTube handlers and run communication tests
         run: |
           BUILD_STATUS=0
-          bash ./gradlew :services:comms:testDebugUnitTest :app:ui:assembleDefaultDebugAndroidTest --no-daemon --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process -Dorg.gradle.jvmargs=-Xmx3072m --stacktrace > "$RUNNER_TEMP/system-compile.log" 2>&1 || BUILD_STATUS=$?
+          bash ./gradlew :services:comms:testDebugUnitTest :app:ui:assembleDefaultDebugAndroidTest --build-cache --daemon --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process '-Dorg.gradle.jvmargs=-Xmx5g -Dfile.encoding=UTF-8' --stacktrace > "$RUNNER_TEMP/system-compile.log" 2>&1 || BUILD_STATUS=$?
           cat "$RUNNER_TEMP/system-compile.log"
+          grep -E 'FROM-CACHE|UP-TO-DATE' "$RUNNER_TEMP/system-compile.log" | wc -l | xargs printf 'Gradle tasks reused: %s\n'
           if [ "$BUILD_STATUS" -ne 0 ]; then
             python3 - <<'PY'
           from pathlib import Path
@@ -67,7 +68,7 @@ jobs:
           profile: pixel_7
           disable-animations: true
           emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim
-          script: bash ./gradlew :app:ui:connectedDefaultDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=de.mm20.launcher2.ui.media.akou.AkouAutoListenTest,de.mm20.launcher2.ui.media.youtube.YouTubeLinkHandlerTest --no-daemon --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process -Dorg.gradle.jvmargs=-Xmx2048m
+          script: bash ./gradlew :app:ui:connectedDefaultDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=de.mm20.launcher2.ui.media.akou.AkouAutoListenTest,de.mm20.launcher2.ui.media.youtube.YouTubeLinkHandlerTest --build-cache --daemon --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process '-Dorg.gradle.jvmargs=-Xmx5g -Dfile.encoding=UTF-8'
       - name: Verify all listening and link regressions ran
         if: always()
         run: |

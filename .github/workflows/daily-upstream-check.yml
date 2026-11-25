@@ -5,7 +5,20 @@ on:
     - cron: "0 5 * * *" # Daily at 05:00 UTC
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
+  code-scanning:
+    permissions:
+      contents: read
+      actions: read
+      security-events: write
+    uses: ./.github/workflows/codeql-security-scan.yml
+
+  dependency-security:
+    uses: ./.github/workflows/dependency-graph.yml
+
   check-upstreams:
     runs-on: ubuntu-latest
     steps:
@@ -18,4 +31,6 @@ jobs:
           python-version: "3.x"
 
       - name: Run Upstream Sentinel Check
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: python3 tools/upstream/check-upstreams.py

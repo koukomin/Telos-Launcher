@@ -21,6 +21,7 @@ on:
       - 'tools/validation/security-dependencies.init.gradle'
       - '.github/workflows/dependency-graph.yml'
   workflow_dispatch:
+  workflow_call:
 
 concurrency:
   group: dependency-security-${{ github.event.pull_request.number || github.ref }}

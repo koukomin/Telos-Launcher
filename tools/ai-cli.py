@@ -12,7 +12,6 @@ import subprocess
 from pathlib import Path
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
-REGISTRY_FILE = ROOT_DIR / ".artifacts" / "COMPONENT_REGISTRY.md"
 CONTEXT_MAP_FILE = ROOT_DIR / ".artifacts" / "CONTEXT_MAP.json"
 VERSION_FILE = ROOT_DIR / "version.properties"
 
@@ -46,6 +45,11 @@ def cmd_locate(args):
     matches = {k: v for k, v in data.items() if query in k.lower()}
 
     if matches:
+        for domain, files in matches.items():
+            for role, path in files.items():
+                if not (ROOT_DIR / path).is_file():
+                    print(f"Invalid context map path: {domain}.{role}: {path}", file=sys.stderr)
+                    sys.exit(1)
         print(f"🔍 Located feature domain(s) matching '{query}':\n")
         print(json.dumps(matches, indent=2, ensure_ascii=False))
     else:

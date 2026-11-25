@@ -20,7 +20,7 @@ sealed interface StoreAction {
     data object LaunchedPlayStore : StoreAction
     data object Installing : StoreAction
     data object Installed : StoreAction
-    data class Failed(val reason: String, val cause: Throwable? = null) : StoreAction
+    data class Failed(val reason: String, val cause: Throwable? = null, val signatureMismatch: Boolean = false) : StoreAction
 }
 
 /**
@@ -75,7 +75,7 @@ class StoreActionHandler(
             is InstallResult.Pending -> StoreAction.Installing
             is InstallResult.Failed -> {
                 result.cause?.let { CrashReporter.logException(Exception(result.reason, it)) }
-                StoreAction.Failed(result.reason, result.cause)
+                StoreAction.Failed(result.reason, result.cause, result.signatureMismatch)
             }
         }
     }

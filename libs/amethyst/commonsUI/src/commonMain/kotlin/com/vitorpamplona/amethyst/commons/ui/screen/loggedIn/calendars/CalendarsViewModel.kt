@@ -20,6 +20,8 @@
  */
 package com.vitorpamplona.amethyst.commons.ui.screen.loggedIn.calendars
 
+import com.vitorpamplona.amethyst.commons.model.cache.observeEvents
+import com.vitorpamplona.amethyst.commons.model.cache.observeNewEvents
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue

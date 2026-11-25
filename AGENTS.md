@@ -9,50 +9,13 @@ Read this file only. Do not create or keep parallel instruction files
 `.cursor/rules/`, `CODEX.md`, `.windsurfrules`, Aider rule files, or extra
 `*-instructions.md`). Put every shared rule here so all agents stay in sync.
 
-## Session Prompt & Progress Tracker (Mandatory for all agents)
+## Working in this repository
 
-To ensure seamless crash recovery and zero context loss across IDE restarts or login session resets:
-1. **At Session Start**: Every AI agent **MUST** inspect `.artifacts/SESSION_TRACKER.md` to check where previous work left off and read recorded user prompts.
-2. **During Session**: Every AI agent **MUST** log incoming user prompts, key decisions, active tasks, and completed steps into `.artifacts/SESSION_TRACKER.md` before and after major modifications.
-
-## Pre-Release Security & Automated Workflow Monitoring (Mandatory for all agents)
-
-Before merging or creating a release:
-1. **Pre-Release Security Audit**: All AI agents **MUST** inspect GitHub for security & secrets issues (Dependabot alerts, CodeQL scans, secret scanning) and automatically remediate any vulnerabilities or exposed secrets before releasing.
-2. **Real-time Workflow & PR Monitoring**: During merge/release operations, AI agents **MUST** actively monitor GitHub Actions workflows and PR builds in real-time. If any action or PR fails or hangs, the agent **MUST** automatically diagnose and fix the issue, re-triggering or pushing fixes until the entire build & release process is 100% completed.
-
-
-## AI-Driven Development & Optimization Guidelines (Mandatory)
-
-Because AI agents drive the development of Telos Launcher, the codebase must be optimized not just for runtime performance, but for **AI readability and context window efficiency**.
-
-0. **Mandatory Upstream Sync Check (Step 0)**:
-   - Before starting ANY new feature, refactoring, or editing task in a session, every AI agent MUST execute `python3 tools/upstream/check-upstreams.py`. If new upstream releases or bugfixes are detected, the agent MUST review and integrate them into Telos before proceeding with other work.
-
-1. **Context Window Management**: 
-   - No "God Files". If a file grows beyond ~500 lines or takes on multiple responsibilities (e.g. State, UI, Data parsing), it MUST be split into domains (e.g., `*Screen.kt`, `*State.kt`, `*Models.kt`).
-   - Keep Koin definitions, models, and domain extensions strictly separated.
-2. **Zero-Allocation & Performance Rules**: 
-   - Avoid creating new `String` or temporary objects in tight loops (e.g., Search indexers, `GreekFold`). Use `StringBuilder` and primitive Char operations.
-   - Use `@Immutable` or `@Stable` on all Jetpack Compose data models (`data class`) to guarantee Recomposition Skipping on unchanged items.
-3. **Lazy Initialization (Koin DI)**:
-   - Do NOT use `createEagerInstances = true` for heavy or non-critical modules. Defer initialization to `Dispatchers.Default` background scopes or lazy getters to maintain a Cold Start under 200ms.
-4. **DRY (Don't Repeat Yourself)**:
-   - If an agent spots duplicate boilerplate (e.g., Virtual Apps, Location Items), it MUST extract a generic base class or interface with default implementations before proceeding.
-5. **No Broken Windows**:
-   - Do not leave `TODO()` or `FIXME` stubs in production paths that could throw `NotImplementedError` or crash the app. Implement safe fallbacks or empty implementations.
-
-6. **Component Registry (MANDATORY READ)**:
-   - Before writing ANY new UI layout, search logic, or system integration, you MUST consult `.artifacts/COMPONENT_REGISTRY.md`. It acts as the single source of truth for all reusable components and logic in the project. If a component exists there, YOU MUST USE IT.
-
-7. **Universal Functional Integrity & Zero Regression Rule (CRITICAL MANDATORY)**:
-   - All AI agents MUST guarantee that any code addition, optimization, refactoring, or bugfix NEVER breaks or regresses existing functionality anywhere in Telos.
-   - This applies universally across all surfaces: the main launcher scaffold, home screen, dock, widgets, search engine, all 22+ virtual apps (Phone, Messages, Files, Store, Media, Notes, Calendar, Viewer, etc.), background services (AppLock, Network, Freeze, Shizuku, Crash Guard), and hidden system/KMP background integrations. Every edit MUST preserve 100% backward compatibility and existing feature behavior.
-
-8. **Pre-Push GitHub Health, PRs, Pages & Security Audit Rule (MANDATORY)**:
-   - Before executing ANY `git push` or release operation, every AI agent MUST run `python3 tools/ai-cli.py audit`.
-   - The audit automatically inspects open PRs (`gh pr list`), background workflow runs (`gh run list`), GitHub Pages deployments (`deploy-docs.yml`), and security/dependabot alerts.
-   - If ANY background workflow failed, PR is stuck, or Pages build is broken, the AI agent MUST inspect the logs (`gh run view --log-failed`), diagnose the issue, and fix the root cause BEFORE pushing. Pushing while leaving failing workflows, stuck PRs, or broken docs is STRICTLY PROHIBITED.
+- Use `.artifacts/CONTEXT_MAP.json` to locate the feature and its entry points. Read the relevant section of `.artifacts/COMPONENT_REGISTRY.md` when looking for existing reusable behavior.
+- Keep each change scoped to the affected flow. Record durable decisions or known blockers in the session tracker when they matter to the next contributor.
+- Extract shared behavior when there are concrete callers with matching semantics. Migrate the callers and remove the replaced implementation in the same change. Split files along responsibilities.
+- Validate affected modules and existing entry points. For persisted data, check compatibility with existing values and schemas. During release, monitor the affected GitHub workflows and confirm signed artifacts.
+- Use scheduled upstream and dependency checks to identify maintenance work. Review upgrades separately unless the task depends on them.
 
 ## Gradle & library versioning (Mandatory for all agents)
 
