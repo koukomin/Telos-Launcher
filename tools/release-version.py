@@ -21,7 +21,7 @@ def validate(properties, event, ref, tags):
         raise ValueError('versionCode must be a positive Android version code')
     tag = f'v{name}'
     publish = event in ('push', 'workflow_dispatch')
-    if event == 'push' and ref != f'refs/tags/{tag}':
+    if event == 'push' and ref not in (f'refs/tags/{tag}', 'refs/heads/main'):
         raise ValueError(f'Tag must match version.properties: {tag}')
     if event == 'workflow_dispatch' and ref != 'refs/heads/main':
         raise ValueError('Release dispatch is allowed only from main')

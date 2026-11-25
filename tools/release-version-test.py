@@ -17,6 +17,11 @@ class ReleaseVersionTest(unittest.TestCase):
             with self.assertRaises(ValueError):
                 module.validate(self.props, 'push', ref, tags)
 
+    def test_main_version_push_publishes(self):
+        self.assertEqual(module.validate(self.props, 'push', 'refs/heads/main', ['v1.43.81']), ('v1.43.82', True))
+        with self.assertRaises(ValueError):
+            module.validate(self.props, 'push', 'refs/heads/topic', [])
+
     def test_dispatch_requires_main(self):
         with self.assertRaises(ValueError):
             module.validate(self.props, 'workflow_dispatch', 'refs/heads/topic', [])

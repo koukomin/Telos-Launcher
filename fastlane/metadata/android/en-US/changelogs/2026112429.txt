@@ -1,0 +1,1 @@
+Restore Android and Amethyst release compilation. Improve Store update handling and keep its main actions visible on narrow screens.

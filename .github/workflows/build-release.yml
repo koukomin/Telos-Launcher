@@ -12,6 +12,8 @@ on:
       - 'app/app/build.gradle.kts'
       - 'ui-kmp/**'
   push:
+    branches: [main]
+    paths: ['version.properties']
     tags: ['v*']
   workflow_dispatch:
 
