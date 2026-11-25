@@ -1,0 +1,1 @@
+Added TelosBadgeBatcher, TelosStringDistance short-circuit fuzzy engine, and TelosShapePathCache.

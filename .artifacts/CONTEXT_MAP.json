@@ -17,6 +17,12 @@
     "color_extractor": "app/ui/src/main/java/de/mm20/launcher2/ui/theme/TelosColorExtractor.kt",
     "luminance_detector": "app/ui/src/main/java/de/mm20/launcher2/ui/theme/TelosLuminanceDetector.kt"
   },
+  "badges": {
+    "batcher": "services/badges/src/main/java/de/mm20/launcher2/badges/TelosBadgeBatcher.kt"
+  },
+  "shapes": {
+    "path_cache": "app/ui/src/main/java/de/mm20/launcher2/ui/component/TelosShapePathCache.kt"
+  },
   "haptics": {
     "engine": "core/ktx/src/main/java/de/mm20/launcher2/ktx/TelosHaptics.kt"
   },
@@ -101,7 +107,8 @@
   "search_engine": {
     "matcher": "services/comms/src/main/java/de/mm20/launcher2/comms/search/TelosSearch.kt",
     "greek_fold": "core/base/src/main/java/de/mm20/launcher2/search/GreekFold.kt",
-    "actions": "app/ui/src/main/java/de/mm20/launcher2/ui/settings/searchactions/EditSearchActionPages.kt"
+    "actions": "app/ui/src/main/java/de/mm20/launcher2/ui/settings/searchactions/EditSearchActionPages.kt",
+    "short_circuit_distance": "core/base/src/main/java/de/mm20/launcher2/search/TelosStringDistance.kt"
   },
   "appearance_settings": {
     "colorscheme_screen": "app/ui/src/main/java/de/mm20/launcher2/ui/settings/colorscheme/ColorSchemeSettingsScreen.kt",
