@@ -1,0 +1,1 @@
+Ενεργοποίηση παράλληλων backend threads στον Kotlin IR compiler (-Xbackend-threads=8) για ταχύτερη μεταγλώττιση.
