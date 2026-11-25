@@ -1,0 +1,1 @@
+Added TelosDatabaseMaintenance, TelosFormatter, and TelosFrameRate LTPO refresh rate hint.

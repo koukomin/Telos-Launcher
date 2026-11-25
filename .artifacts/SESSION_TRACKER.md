@@ -7,7 +7,7 @@
 ## 📍 Τρέχουσα Κατάσταση (Active State)
 
 - **Ημερομηνία/Ώρα**: `2026-11-24`
-- **Τρέχουσα Εργασία**: [Phase 11] Υλοποίηση Rendering, Accessibility & Safety Guard (`TelosGlassBlur` GPU acceleration, `SafeCoroutines` non-fatal crash guard, `TelosSemantics` TalkBack tree merging, `AGENTS.md` Rule 7 Non-Regression Rule). Bump έκδοσης σε `v1.45.95`, merge στο `main`, tagging και έναρξη release στο GitHub.
+- **Τρέχουσα Εργασία**: [Phase 12] Υλοποίηση SQLite Maintenance & Internationalization (`TelosDatabaseMaintenance` auto-VACUUM, `TelosFormatter` locale-aware formatters, `TelosFrameRate` LTPO adaptive Hz hint). Bump έκδοσης σε `v1.45.96`, merge στο `main`, tagging και έναρξη release στο GitHub.
 
 ---
 
@@ -64,4 +64,8 @@
   - `TelosGlassBlur`: Hardware-accelerated GPU blur modifier (`RenderEffect.createBlurEffect`).
   - `SafeCoroutines`: Non-fatal background coroutine exception containment guard (`launchSafe`).
   - `TelosSemantics`: TalkBack accessibility screen reader tree merging.
-- [x] **Merge & Releases**: Δημοσιεύτηκαν επιτυχώς οι εκδόσεις `v1.45.80` έως `v1.45.95`.
+- [x] **Database Maintenance & Internationalization (Phase 12)**:
+  - `TelosDatabaseMaintenance`: SQLite PRAGMA optimize + WAL checkpointing helper.
+  - `TelosFormatter`: Unified locale-aware number and file size formatting across 35 languages.
+  - `TelosFrameRate`: LTPO adaptive Hz hint modifier.
+- [x] **Merge & Releases**: Δημοσιεύτηκαν επιτυχώς οι εκδόσεις `v1.45.80` έως `v1.45.96`.
