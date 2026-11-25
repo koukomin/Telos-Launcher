@@ -132,7 +132,7 @@ fun AppDetailsScreen(itemId: String) {
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                         installerLabel?.let {
-                            Text(stringResource(I18nR.string.telos_store_installed_by, it), style = MaterialTheme.typography.bodySmall)
+                            Text(stringResource(I18nR.string.hf_store_source) + ": " + it, style = MaterialTheme.typography.bodySmall)
                         }
                         Text(item.source.summary(), style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.primary)
                     }
