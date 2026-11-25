@@ -1,0 +1,1 @@
+Modularized ColorScheme and Comms settings screens for Component Registry compliance and AI-friendly maintenance.
