@@ -66,3 +66,16 @@ data class StoreLink(
     val label: String,
     val url: String
 )
+
+interface VirtualApplication : Application {
+    override val labelOverride: String? get() = null
+    override val isSuspended: Boolean get() = false
+    override val user: UserHandle get() = android.os.Process.myUserHandle()
+    override val versionName: String? get() = null
+    override val canUninstall: Boolean get() = false
+    override fun uninstall(context: Context) {}
+    override fun openAppDetails(context: Context) {}
+    override val canShareApk: Boolean get() = false
+    override fun overrideLabel(label: String): SavableSearchable = this
+    override fun getSerializer(): SearchableSerializer = VirtualAppSerializer()
+}

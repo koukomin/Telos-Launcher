@@ -8,17 +8,12 @@ import android.os.Process
 import android.os.UserHandle
 import de.mm20.launcher2.applock.SettingsDeepLinkContract
 import de.mm20.launcher2.search.Application
-import de.mm20.launcher2.search.VirtualAppSerializer
+import de.mm20.launcher2.search.VirtualApplication
 import de.mm20.launcher2.search.ResultScore
 import de.mm20.launcher2.search.TelosAppKeywords
-import de.mm20.launcher2.search.SavableSearchable
-import de.mm20.launcher2.search.SearchableSerializer
 import de.mm20.launcher2.search.VirtualAppProvider
 import de.mm20.launcher2.search.VirtualAppIcon
 import de.mm20.launcher2.icons.LauncherIcon
-import de.mm20.launcher2.icons.StaticLauncherIcon
-import de.mm20.launcher2.icons.StaticIconLayer
-import de.mm20.launcher2.icons.TransparentLayer
 
 /**
  * A synthetic "app" entry for the Store, so it shows up in the app drawer/app list like any
@@ -27,11 +22,10 @@ import de.mm20.launcher2.icons.TransparentLayer
  * [SettingsDeepLinkContract], since `:data:store` can't depend on `:app:ui`) pointed straight at
  * the Store dashboard, rather than resolving a real [componentName] through the package manager.
  */
-internal class VirtualStoreApp(private val context: Context) : Application {
+internal class VirtualStoreApp(private val context: Context) : VirtualApplication {
 
     override val key: String = "$Domain://store"
     override val label: String get() = de.mm20.launcher2.search.TelosAppLabels.forDomain(context, Domain)
-    override val labelOverride: String? = null
     override val keywords: List<String> = TelosAppKeywords.forDomain(Domain)
     override val domain: String = Domain
     override val score: ResultScore = ResultScore.Unspecified
@@ -40,17 +34,6 @@ internal class VirtualStoreApp(private val context: Context) : Application {
         context.packageName,
         "de.mm20.launcher2.store.VirtualStoreApp",
     )
-    override val isSuspended: Boolean = false
-    override val user: UserHandle = Process.myUserHandle()
-    override val versionName: String? = null
-
-    override val canUninstall: Boolean = false
-    override fun uninstall(context: Context) { /* Not a real package - nothing to uninstall. */ }
-    override fun openAppDetails(context: Context) { /* No system app-info page for this entry. */ }
-
-    override val canShareApk: Boolean = false
-
-    override fun overrideLabel(label: String): SavableSearchable = this
 
     override fun launch(context: Context, options: Bundle?): Boolean {
         return try {
@@ -66,7 +49,7 @@ internal class VirtualStoreApp(private val context: Context) : Application {
         }
     }
 
-    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): de.mm20.launcher2.icons.LauncherIcon? {
+    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? {
         return VirtualAppIcon.tileOnPlate(
             context,
             Domain,
@@ -74,8 +57,6 @@ internal class VirtualStoreApp(private val context: Context) : Application {
             0xFF12131C.toInt(),
         )
     }
-
-    override fun getSerializer(): SearchableSerializer = VirtualAppSerializer()
 
     companion object {
         const val Domain = "telos_store_app"
