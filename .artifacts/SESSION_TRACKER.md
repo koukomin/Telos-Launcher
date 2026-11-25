@@ -7,7 +7,7 @@
 ## 📍 Τρέχουσα Κατάσταση (Active State)
 
 - **Ημερομηνία/Ώρα**: `2026-11-24`
-- **Τρέχουσα Εργασία**: [Phase 4] Υλοποίηση 4 προτάσεων Token Optimization (PreferenceBinding delegates, CompactPreferences DSL, Automated token-budget validator), bump έκδοσης σε `v1.45.85`, merge στο `main`, tagging και έναρξη release στο GitHub.
+- **Τρέχουσα Εργασία**: [Phase 5] Υλοποίηση AI Agent Enablement (tools/ai-cli.py, TROUBLESHOOTING.md, Compose Templates, readme/docs updates), bump έκδοσης σε `v1.45.88`, merge στο `main`, tagging και έναρξη release στο GitHub.
 
 ---
 
@@ -33,4 +33,12 @@
   - Υλοποίηση `PreferenceBinding.kt` (`asPreferenceState` extension).
   - Υλοποίηση `CompactPreferences.kt` (`SwitchPref`, `ListPref` DSL helpers).
   - Δημιουργία `tools/validation/check-file-sizes.py` (Αυτοματοποιημένος ελεγκτής ορίου 500 γραμμών).
-- [x] **Merge & Releases**: Δημοσιεύτηκαν επιτυχώς οι εκδόσεις `v1.45.80`, `v1.45.81`, `v1.45.82`, `v1.45.83`, `v1.45.84`, `v1.45.85`.
+- [x] **Upstream Sentinel (Phase 5.1)**:
+  - Δημιουργία `.artifacts/UPSTREAM_REGISTRY.json` & `tools/upstream/check-upstreams.py`.
+  - Δημιουργία `.github/workflows/daily-upstream-check.yml`.
+- [x] **AI Agent Tools & Memory Bank (Phase 5.2)**:
+  - Δημιουργία `tools/ai-cli.py` (Unified CLI Assistant).
+  - Δημιουργία `.artifacts/TROUBLESHOOTING.md` (AI Memory Bank & Gotchas).
+  - Δημιουργία `tools/templates/TemplateScreen.kt` & `TemplateDialog.kt`.
+  - Ενημέρωση `readme.md` & `docs/docs/developer-guide/index.md`.
+- [x] **Merge & Releases**: Δημοσιεύτηκαν επιτυχώς οι εκδόσεις `v1.45.80` έως `v1.45.88`.

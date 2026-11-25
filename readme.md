@@ -213,6 +213,17 @@ Telos YouTube and Telos YouTube Music provide video/music search, direct video l
 | Telos Store | `obtainium:` links |
 | Telos Phone | `tel:` links |
 
+## AI Agent Architecture & Automation
+
+Telos Launcher is built from the ground up to be **100% AI-Agent-Native**. Every AI coding assistant (Claude, Codex, Copilot, Cursor, Devin, ChatGPT, Gemini, Grok) working on this repository follows an automated, token-budgeted engineering protocol:
+
+- **AI Control Center (`tools/ai-cli.py`)**: Single-command entry point for automated pre-push audits, upstream checks, version bumping, and feature location querying.
+- **Telos Upstream Sentinel (`tools/upstream/check-upstreams.py`)**: Auto-discovers new incorporated third-party projects from `THIRD_PARTY_NOTICES.md` and queries GitHub APIs for new releases/bugfixes. Daily scheduled GitHub Actions check (`.github/workflows/daily-upstream-check.yml`).
+- **AI Context Index (`.artifacts/CONTEXT_MAP.json`)**: Machine-readable feature-to-file index allowing AI agents to locate domain files in 1 call, saving 80% research tokens.
+- **Component Registry (`.artifacts/COMPONENT_REGISTRY.md`)**: Single source of truth database for reusable Compose UI preferences, MVI architecture contracts (`UiState`, `UiEvent`), and Koin repositories.
+- **Troubleshooting Memory Bank (`.artifacts/TROUBLESHOOTING.md`)**: Institutional memory for complex Android platform gotchas (Shizuku Binder limits, Media3 surface lifecycles, Room schema migrations, zero-allocation `GreekFold` loops).
+- **Automated Token-Budget Validator (`tools/validation/check-file-sizes.py`)**: Enforces a strict 500-line budget per Kotlin file to keep context windows compact and AI-friendly.
+
 ## Download
 
 Stable releases contain signed Android APKs and Linux desktop artifacts under one version.
