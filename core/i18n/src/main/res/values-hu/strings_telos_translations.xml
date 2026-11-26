@@ -1272,4 +1272,16 @@
     <string name="fit_steps">Daily Steps</string>
     <string name="fit_water">Water Intake</string>
     <string name="fit_weight">Body Weight</string>
+    <string name="telos_headset_playback_title">Fülhallgató lejátszás</string>
+    <string name="telos_headset_playback_summary">A legutóbbi engedélyezett Telos munkamenet folytatása, amikor az Android fülhallgató lejátszási parancsot küld.</string>
+    <string name="telos_headset_playback_enable">Fülhallgató lejátszás irányítása a Telos Media felé</string>
+    <string name="telos_headset_playback_save_failed">A fülhallgató beállításait nem sikerült menteni.</string>
+    <string name="backup_group_apps">Alkalmazások (APK és Splits)</string>
+    <string name="backup_group_apps_summary">Telepíthető csomagok a kiválasztott alkalmazásokhoz</string>
+    <string name="backup_group_app_data">Alkalmazásadatok (Root/Shizuku)</string>
+    <string name="backup_group_app_data_summary">Alkalmazásadatok és beállítások</string>
+    <string name="backup_group_system_data">Rendszeradatok</string>
+    <string name="backup_group_system_data_summary">SMS, hívásnaplók, Wi-Fi hálózatok</string>
+    <string name="backup_group_virtual_apps">Telos virtuális alkalmazások</string>
+    <string name="backup_group_virtual_apps_summary">Konfigurációk a Telos Sync, Viewer, Számológép stb. számára.</string>
 </resources>

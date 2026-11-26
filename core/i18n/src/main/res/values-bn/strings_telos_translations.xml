@@ -2251,4 +2251,16 @@
     <string name="fit_steps">Daily Steps</string>
     <string name="fit_water">Water Intake</string>
     <string name="fit_weight">Body Weight</string>
+    <string name="telos_headset_playback_title">হেডসেট প্লেব্যাক</string>
+    <string name="telos_headset_playback_summary">অ্যান্ড্রয়েড হেডসেট প্লেব্যাক কমান্ড পাঠালে সর্বশেষ অনুমোদিত Telos সেশনটি পুনরুদ্ধার করুন।</string>
+    <string name="telos_headset_playback_enable">হেডসেট প্লেব্যাক Telos Media তে রুট করুন</string>
+    <string name="telos_headset_playback_save_failed">হেডসেট সেটিংস সংরক্ষণ করা যায়নি।</string>
+    <string name="backup_group_apps">অ্যাপস (APK এবং স্প্লিটস)</string>
+    <string name="backup_group_apps_summary">নির্বাচিত অ্যাপ্লিকেশনগুলির জন্য ইনস্টলযোগ্য প্যাকেজ</string>
+    <string name="backup_group_app_data">অ্যাপ ডেটা (Root/Shizuku)</string>
+    <string name="backup_group_app_data_summary">অ্যাপ্লিকেশন ডেটা এবং পছন্দসমূহ</string>
+    <string name="backup_group_system_data">সিস্টেম ডেটা</string>
+    <string name="backup_group_system_data_summary">এসএমএস, কল লগ, ওয়াই-ফাই নেটওয়ার্ক</string>
+    <string name="backup_group_virtual_apps">Telos ভার্চুয়াল অ্যাপস</string>
+    <string name="backup_group_virtual_apps_summary">Telos Sync, Viewer, ক্যালকুলেটর ইত্যাদির জন্য কনফিগারেশন।</string>
 </resources>

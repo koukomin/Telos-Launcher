@@ -1675,4 +1675,8 @@
     <string name="fit_steps">Daily Steps</string>
     <string name="fit_water">Water Intake</string>
     <string name="fit_weight">Body Weight</string>
+    <string name="telos_headset_playback_title">헤드셋 재생</string>
+    <string name="telos_headset_playback_summary">Android에서 헤드셋 재생 명령을 보낼 때 마지막으로 허용된 Telos 세션을 재개합니다.</string>
+    <string name="telos_headset_playback_enable">헤드셋 재생을 Telos Media로 라우팅</string>
+    <string name="telos_headset_playback_save_failed">헤드셋 설정을 저장할 수 없습니다.</string>
 </resources>

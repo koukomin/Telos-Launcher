@@ -1971,4 +1971,8 @@
     <string name="fit_steps">Daily Steps</string>
     <string name="fit_water">Water Intake</string>
     <string name="fit_weight">Body Weight</string>
+    <string name="telos_headset_playback_title">ヘッドセット再生</string>
+    <string name="telos_headset_playback_summary">Androidがヘッドセット再生コマンドを送信したときに、許可された最新のTelosセッションを再開します。</string>
+    <string name="telos_headset_playback_enable">ヘッドセット再生をTelos Mediaにルーティング</string>
+    <string name="telos_headset_playback_save_failed">ヘッドセットの設定を保存できませんでした。</string>
 </resources>

@@ -2000,4 +2000,16 @@
     <string name="fit_steps">Daily Steps</string>
     <string name="fit_water">Water Intake</string>
     <string name="fit_weight">Body Weight</string>
+    <string name="telos_headset_playback_title">Headset-uppspelning</string>
+    <string name="telos_headset_playback_summary">Återuppta den senast tillåtna Telos-sessionen när Android skickar ett headset-uppspelningskommando.</string>
+    <string name="telos_headset_playback_enable">Omdirigera headset-uppspelning till Telos Media</string>
+    <string name="telos_headset_playback_save_failed">Det gick inte att spara headset-inställningarna.</string>
+    <string name="backup_group_apps">Appar (APK och Splits)</string>
+    <string name="backup_group_apps_summary">Installerbara paket för valda applikationer</string>
+    <string name="backup_group_app_data">Appdata (Root/Shizuku)</string>
+    <string name="backup_group_app_data_summary">Applikationsdata och inställningar</string>
+    <string name="backup_group_system_data">Systemdata</string>
+    <string name="backup_group_system_data_summary">SMS, samtalshistorik, Wi-Fi-nätverk</string>
+    <string name="backup_group_virtual_apps">Telos virtuella appar</string>
+    <string name="backup_group_virtual_apps_summary">Konfigurationer för Telos Sync, Viewer, Miniräknare osv.</string>
 </resources>

@@ -2079,4 +2079,8 @@
     <string name="fit_steps">Daily Steps</string>
     <string name="fit_water">Water Intake</string>
     <string name="fit_weight">Body Weight</string>
+    <string name="telos_headset_playback_title">Відтворення з гарнітури</string>
+    <string name="telos_headset_playback_summary">Відновлювати останній дозволений сеанс Telos, коли Android надсилає команду відтворення з гарнітури.</string>
+    <string name="telos_headset_playback_enable">Спрямовувати відтворення з гарнітури в Telos Media</string>
+    <string name="telos_headset_playback_save_failed">Не вдалося зберегти налаштування гарнітури.</string>
 </resources>

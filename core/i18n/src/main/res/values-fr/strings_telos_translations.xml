@@ -1183,4 +1183,8 @@
     <string name="fit_steps">Daily Steps</string>
     <string name="fit_water">Water Intake</string>
     <string name="fit_weight">Body Weight</string>
+    <string name="telos_headset_playback_title">Lecture par casque</string>
+    <string name="telos_headset_playback_summary">Reprendre la dernière session Telos autorisée quand Android envoie une commande de lecture casque.</string>
+    <string name="telos_headset_playback_enable">Routage de la lecture casque vers Telos Media</string>
+    <string name="telos_headset_playback_save_failed">Impossible d\'enregistrer les paramètres du casque.</string>
 </resources>

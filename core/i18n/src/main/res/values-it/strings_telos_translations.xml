@@ -1159,4 +1159,8 @@
     <string name="fit_steps">Daily Steps</string>
     <string name="fit_water">Water Intake</string>
     <string name="fit_weight">Body Weight</string>
+    <string name="telos_headset_playback_title">Riproduzione da auricolari</string>
+    <string name="telos_headset_playback_summary">Riprendi l\'ultima sessione Telos consentita quando Android invia un comando di riproduzione da auricolari.</string>
+    <string name="telos_headset_playback_enable">Inoltra riproduzione auricolari a Telos Media</string>
+    <string name="telos_headset_playback_save_failed">Impossibile salvare le impostazioni degli auricolari.</string>
 </resources>

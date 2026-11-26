@@ -1282,4 +1282,8 @@
     <string name="fit_steps">Daily Steps</string>
     <string name="fit_water">Water Intake</string>
     <string name="fit_weight">Body Weight</string>
+    <string name="telos_headset_playback_title">Přehrávání ze sluchátek</string>
+    <string name="telos_headset_playback_summary">Obnovit последní povolenou relaci Telos, když Android odešle příkaz k přehrávání ze sluchátek.</string>
+    <string name="telos_headset_playback_enable">Směrovat přehrávání ze sluchátek do Telos Media</string>
+    <string name="telos_headset_playback_save_failed">Nastavení sluchátek nelze uložit.</string>
 </resources>

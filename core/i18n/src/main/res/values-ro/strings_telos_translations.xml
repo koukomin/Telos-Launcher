@@ -1799,4 +1799,16 @@
     <string name="fit_steps">Daily Steps</string>
     <string name="fit_water">Water Intake</string>
     <string name="fit_weight">Body Weight</string>
+    <string name="telos_headset_playback_title">Redare din căști</string>
+    <string name="telos_headset_playback_summary">Reluați ultima sesiune Telos permisă când Android trimite o comandă de redare din căști.</string>
+    <string name="telos_headset_playback_enable">Redirijați redarea din căști către Telos Media</string>
+    <string name="telos_headset_playback_save_failed">Nu s-au putut salva setările pentru căști.</string>
+    <string name="backup_group_apps">Aplicații (APK &amp; Splits)</string>
+    <string name="backup_group_apps_summary">Pachete instalabile pentru aplicațiile selectate</string>
+    <string name="backup_group_app_data">Date aplicații (Root/Shizuku)</string>
+    <string name="backup_group_app_data_summary">Datele aplicației și preferințele</string>
+    <string name="backup_group_system_data">Date de sistem</string>
+    <string name="backup_group_system_data_summary">SMS, istoricul apelurilor, rețele Wi-Fi</string>
+    <string name="backup_group_virtual_apps">Aplicații virtuale Telos</string>
+    <string name="backup_group_virtual_apps_summary">Configurații pentru Telos Sync, Viewer, Calculator etc.</string>
 </resources>

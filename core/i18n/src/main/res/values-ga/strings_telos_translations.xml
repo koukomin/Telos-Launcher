@@ -3068,4 +3068,16 @@
     <string name="fit_steps">Daily Steps</string>
     <string name="fit_water">Water Intake</string>
     <string name="fit_weight">Body Weight</string>
+    <string name="telos_headset_playback_title">Athsheinm chluasáin</string>
+    <string name="telos_headset_playback_summary">Atosaigh an seisiún Telos is déanaí atá ceadaithe nuair a sheolann Android ordú athsheinm chluasáin.</string>
+    <string name="telos_headset_playback_enable">RRoute athsheinm chluasáin chuig Telos Media</string>
+    <string name="telos_headset_playback_save_failed">Níor sikeríodh socruithe chluasáin a shábháil.</string>
+    <string name="backup_group_apps">Feidhmchláir (APK &amp; Splits)</string>
+    <string name="backup_group_apps_summary">Pacáistí in-installáilte do fheidhmchláir roghnaithe</string>
+    <string name="backup_group_app_data">Data Feidhmchláir (Root/Shizuku)</string>
+    <string name="backup_group_app_data_summary">Data agus roghanna feidhmchláir</string>
+    <string name="backup_group_system_data">Data Córais</string>
+    <string name="backup_group_system_data_summary">SMS, Logaí Glaonna, Líonraí Wi-Fi</string>
+    <string name="backup_group_virtual_apps">Feidhmchláir Fhíorúla Telos</string>
+    <string name="backup_group_virtual_apps_summary">Socruithe do Telos Sync, Viewer, Áireamhán, srl.</string>
 </resources>

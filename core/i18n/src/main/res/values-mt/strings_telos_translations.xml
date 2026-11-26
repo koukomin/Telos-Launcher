@@ -3068,4 +3068,16 @@
     <string name="fit_steps">Daily Steps</string>
     <string name="fit_water">Water Intake</string>
     <string name="fit_weight">Body Weight</string>
+    <string name="telos_headset_playback_title">Daq mill-headset</string>
+    <string name="telos_headset_playback_summary">Kompli l-aħħar sessjoni permessa ta\' Telos meta Android jibgħat kmand ta\' daq mill-headset.</string>
+    <string name="telos_headset_playback_enable">Drobna d-daq mill-headset lejn Telos Media</string>
+    <string name="telos_headset_playback_save_failed">Mhux possibbli li tippreserva l-settjar tal-headset.</string>
+    <string name="backup_group_apps">Applikazzjonijiet (APK &amp; Splits)</string>
+    <string name="backup_group_apps_summary">Pakketti installabbli għall-applikazzjonijiet magħżula</string>
+    <string name="backup_group_app_data">Data tal-Applikazzjoni (Root/Shizuku)</string>
+    <string name="backup_group_app_data_summary">Data u preferenzi tal-applikazzjoni</string>
+    <string name="backup_group_system_data">Data tas-Sistema</string>
+    <string name="backup_group_system_data_summary">SMS, Loggs tas-Seħħ, Netwerks Wi-Fi</string>
+    <string name="backup_group_virtual_apps">Applikazzjonijiet Virtwali ta\' Telos</string>
+    <string name="backup_group_virtual_apps_summary">Konfigurazzjonijiet għal Telos Sync, Viewer, Kalkulatur, eċċ.</string>
 </resources>

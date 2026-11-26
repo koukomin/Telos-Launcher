@@ -1293,4 +1293,8 @@
     <string name="fit_steps">Daily Steps</string>
     <string name="fit_water">Water Intake</string>
     <string name="fit_weight">Body Weight</string>
+    <string name="telos_headset_playback_title">Kulaklık oynatma</string>
+    <string name="telos_headset_playback_summary">Android bir kulaklık oynatma komutu gönderdiğinde son izin verilen Telos oturumunu sürdürün.</string>
+    <string name="telos_headset_playback_enable">Kulaklık oynatmasını Telos Media\'ya yönlendir</string>
+    <string name="telos_headset_playback_save_failed">Kulaklık ayarları kaydedilemedi.</string>
 </resources>

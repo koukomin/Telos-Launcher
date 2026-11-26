@@ -2792,4 +2792,16 @@
     <string name="fit_steps">Daily Steps</string>
     <string name="fit_water">Water Intake</string>
     <string name="fit_weight">Body Weight</string>
+    <string name="telos_headset_playback_title">Predvajanje preko slušalk</string>
+    <string name="telos_headset_playback_summary">Nadaljujte z zadnjo dovoljeno sejo Telos, ko Android pošlje ukaz za predvajanje preko slušalk.</string>
+    <string name="telos_headset_playback_enable">Preusmeri predvajanje slušalk na Telos Media</string>
+    <string name="telos_headset_playback_save_failed">Nastavitev slušalk ni bilo mogoče shraniti.</string>
+    <string name="backup_group_apps">Aplikacije (APK in Splits)</string>
+    <string name="backup_group_apps_summary">Namestitveni paketi za izbrane aplikacije</string>
+    <string name="backup_group_app_data">Podatki aplikacije (Root/Shizuku)</string>
+    <string name="backup_group_app_data_summary">Podatki aplikacije in nastavitve</string>
+    <string name="backup_group_system_data">Sistemski podatki</string>
+    <string name="backup_group_system_data_summary">SMS, dnevniki klicev, omrežja Wi-Fi</string>
+    <string name="backup_group_virtual_apps">Virtualne aplikacije Telos</string>
+    <string name="backup_group_virtual_apps_summary">Konfiguracije za Telos Sync, Viewer, Računalo itd.</string>
 </resources>

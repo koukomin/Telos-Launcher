@@ -1273,4 +1273,8 @@
     <string name="fit_steps">Daily Steps</string>
     <string name="fit_water">Water Intake</string>
     <string name="fit_weight">Body Weight</string>
+    <string name="telos_headset_playback_title">耳机播放</string>
+    <string name="telos_headset_playback_summary">当 Android 发送耳机播放指令时恢复上次允许的 Telos 会话。</string>
+    <string name="telos_headset_playback_enable">将耳机播放路由至 Telos Media</string>
+    <string name="telos_headset_playback_save_failed">无法保存耳机设置。</string>
 </resources>

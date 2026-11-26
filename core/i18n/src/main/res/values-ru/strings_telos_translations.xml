@@ -1366,4 +1366,8 @@
     <string name="fit_steps">Daily Steps</string>
     <string name="fit_water">Water Intake</string>
     <string name="fit_weight">Body Weight</string>
+    <string name="telos_headset_playback_title">Воспроизведение с гарнитуры</string>
+    <string name="telos_headset_playback_summary">Возобновлять последнюю разрешённую сессию Telos при получении команды воспроизведения с гарнитуры.</string>
+    <string name="telos_headset_playback_enable">Направлять воспроизведение с гарнитуры в Telos Media</string>
+    <string name="telos_headset_playback_save_failed">Не удалось сохранить настройки гарнитуры.</string>
 </resources>

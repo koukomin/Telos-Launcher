@@ -1797,4 +1797,16 @@
     <string name="fit_steps">Daily Steps</string>
     <string name="fit_water">Water Intake</string>
     <string name="fit_weight">Body Weight</string>
+    <string name="telos_headset_playback_title">Kuuloketoisto</string>
+    <string name="telos_headset_playback_summary">Jatka viimeisintä sallittua Telos-istuntoa, kun Android lähettää kuulokkeiden toistokomennon.</string>
+    <string name="telos_headset_playback_enable">Ohjaa kuuloketoisto Telos Mediaan</string>
+    <string name="telos_headset_playback_save_failed">Kuulokeasetuksia ei voitu tallentaa.</string>
+    <string name="backup_group_apps">Sovellukset (APK &amp; Splits)</string>
+    <string name="backup_group_apps_summary">Asennettavat paketit valituille sovelluksille</string>
+    <string name="backup_group_app_data">Sovellusdata (Root/Shizuku)</string>
+    <string name="backup_group_app_data_summary">Sovelluksen tiedot ja asetukset</string>
+    <string name="backup_group_system_data">Järjestelmädata</string>
+    <string name="backup_group_system_data_summary">SMS, puhelulokit, Wi-Fi-verkot</string>
+    <string name="backup_group_virtual_apps">Telos-virtuaalisovellukset</string>
+    <string name="backup_group_virtual_apps_summary">Asetukset Telos Sync-, Viewer-, Laskin- jne. sovelluksille.</string>
 </resources>

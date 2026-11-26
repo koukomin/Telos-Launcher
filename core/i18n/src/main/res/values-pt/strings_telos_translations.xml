@@ -1226,4 +1226,8 @@
     <string name="fit_steps">Daily Steps</string>
     <string name="fit_water">Water Intake</string>
     <string name="fit_weight">Body Weight</string>
+    <string name="telos_headset_playback_title">Reprodução por fone de ouvido</string>
+    <string name="telos_headset_playback_summary">Retomar a última sessão do Telos permitida quando o Android enviar um comando de reprodução por fone.</string>
+    <string name="telos_headset_playback_enable">Encaminhar reprodução de fone para Telos Media</string>
+    <string name="telos_headset_playback_save_failed">Não foi possível salvar as configurações do fone.</string>
 </resources>

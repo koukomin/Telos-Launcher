@@ -2705,4 +2705,16 @@
     <string name="fit_steps">Daily Steps</string>
     <string name="fit_water">Water Intake</string>
     <string name="fit_weight">Body Weight</string>
+    <string name="telos_headset_playback_title">Austiņu atskaņošana</string>
+    <string name="telos_headset_playback_summary">Atsākt pēdējo atļauto Telos sesiju, kad Android nosūta austiņu atskaņošanas komandu.</string>
+    <string name="telos_headset_playback_enable">Novirzīt austiņu atskaņošanu uz Telos Media</string>
+    <string name="telos_headset_playback_save_failed">Neizdevās saglabāt austiņu iestatījumus.</string>
+    <string name="backup_group_apps">Lietotnes (APK un Splits)</string>
+    <string name="backup_group_apps_summary">Instalējamas pakotnes atlasītajām lietotnēm</string>
+    <string name="backup_group_app_data">Lietotnes dati (Root/Shizuku)</string>
+    <string name="backup_group_app_data_summary">Lietotnes dati un iestatījumi</string>
+    <string name="backup_group_system_data">Sistēmas dati</string>
+    <string name="backup_group_system_data_summary">SMS, zvanu žurnāli, Wi-Fi tīkli</string>
+    <string name="backup_group_virtual_apps">Telos virtuālās lietotnes</string>
+    <string name="backup_group_virtual_apps_summary">Konfigurācijas priekš Telos Sync, Viewer, Kalkulatora u.c.</string>
 </resources>

@@ -2062,4 +2062,16 @@
     <string name="fit_steps">Daily Steps</string>
     <string name="fit_water">Water Intake</string>
     <string name="fit_weight">Body Weight</string>
+    <string name="telos_headset_playback_title">Peakomplekti taasesitus</string>
+    <string name="telos_headset_playback_summary">Jätka viimast lubatud Telos-seanssi, kui Android saadab peakomplekti taasesituse käsu.</string>
+    <string name="telos_headset_playback_enable">Suuna peakomplekti taasesitus rakendusse Telos Media</string>
+    <string name="telos_headset_playback_save_failed">Peakomplekti seadeid ei saanud salvestada.</string>
+    <string name="backup_group_apps">Rakendused (APK ja Splits)</string>
+    <string name="backup_group_apps_summary">Installitavad paketid valitud rakendustele</string>
+    <string name="backup_group_app_data">Rakenduse andmed (Root/Shizuku)</string>
+    <string name="backup_group_app_data_summary">Rakenduse andmed ja eelistused</string>
+    <string name="backup_group_system_data">Süsteemi andmed</string>
+    <string name="backup_group_system_data_summary">SMS, kõnelogid, Wi-Fi võrgud</string>
+    <string name="backup_group_virtual_apps">Telose virtuaalsed rakendused</string>
+    <string name="backup_group_virtual_apps_summary">Seadistused Telos Sync, Viewer, Kalkulaatori jne jaoks.</string>
 </resources>

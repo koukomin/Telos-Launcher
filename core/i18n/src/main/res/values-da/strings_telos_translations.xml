@@ -1534,4 +1534,16 @@
     <string name="fit_steps">Daily Steps</string>
     <string name="fit_water">Water Intake</string>
     <string name="fit_weight">Body Weight</string>
+    <string name="telos_headset_playback_title">Headset-afspilning</string>
+    <string name="telos_headset_playback_summary">Genoptag den senest tilladte Telos-session, når Android sender en headset-afspilningskommando.</string>
+    <string name="telos_headset_playback_enable">Diriger headset-afspilning til Telos Media</string>
+    <string name="telos_headset_playback_save_failed">Kunne ikke gemme headset-indstillinger.</string>
+    <string name="backup_group_apps">Apps (APK &amp; Splits)</string>
+    <string name="backup_group_apps_summary">Installerbare pakker til valgte applikationer</string>
+    <string name="backup_group_app_data">Appdata (Root/Shizuku)</string>
+    <string name="backup_group_app_data_summary">Applikationsdata og præferencer</string>
+    <string name="backup_group_system_data">Systemdata</string>
+    <string name="backup_group_system_data_summary">SMS, opkaldslister, Wi-Fi-netværk</string>
+    <string name="backup_group_virtual_apps">Telos virtuelle apps</string>
+    <string name="backup_group_virtual_apps_summary">Konfigurationer til Telos Sync, Viewer, Lommeregner osv.</string>
 </resources>

@@ -1813,4 +1813,16 @@
     <string name="fit_steps">Daily Steps</string>
     <string name="fit_water">Water Intake</string>
     <string name="fit_weight">Body Weight</string>
+    <string name="telos_headset_playback_title">Laisvų rankų įrangos grojimas</string>
+    <string name="telos_headset_playback_summary">Tęsti paskutinę leidžiamą „Telos“ sesiją, kai „Android“ siunčia laisvų rankų įrangos grojimo komandą.</string>
+    <string name="telos_headset_playback_enable">Nukreipti laisvų rankų įrangos grojimą į „Telos Media“</string>
+    <string name="telos_headset_playback_save_failed">Nepatvirtinti laisvų rankų įrangos nustatymai.</string>
+    <string name="backup_group_apps">Programos (APK ir „Splits“)</string>
+    <string name="backup_group_apps_summary">Diegiami paketai pasirinktoms programoms</string>
+    <string name="backup_group_app_data">Programų duomenys (Root/Shizuku)</string>
+    <string name="backup_group_app_data_summary">Programos duomenys ir nustatymai</string>
+    <string name="backup_group_system_data">Sistemos duomenys</string>
+    <string name="backup_group_system_data_summary">SMS, skambučių žurnalai, „Wi-Fi“ tinklai</string>
+    <string name="backup_group_virtual_apps">„Telos“ virtualios programos</string>
+    <string name="backup_group_virtual_apps_summary">Nustatymai „Telos Sync“, „Viewer“, Skaičiuotuvui ir kt.</string>
 </resources>

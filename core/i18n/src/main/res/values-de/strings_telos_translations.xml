@@ -1311,4 +1311,8 @@
     <string name="fit_steps">Daily Steps</string>
     <string name="fit_water">Water Intake</string>
     <string name="fit_weight">Body Weight</string>
+    <string name="telos_headset_playback_title">Headset-Wiedergabe</string>
+    <string name="telos_headset_playback_summary">Letzte erlaubte Telos-Sitzung fortsetzen, wenn Android ein Headset-Wiedergabesignal sendet.</string>
+    <string name="telos_headset_playback_enable">Headset-Wiedergabe zu Telos Media leiten</string>
+    <string name="telos_headset_playback_save_failed">Headset-Einstellungen konnten nicht gespeichert werden.</string>
 </resources>

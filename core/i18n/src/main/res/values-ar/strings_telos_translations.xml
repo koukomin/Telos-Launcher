@@ -1344,4 +1344,8 @@
     <string name="fit_steps">Daily Steps</string>
     <string name="fit_water">Water Intake</string>
     <string name="fit_weight">Body Weight</string>
+    <string name="telos_headset_playback_title">تشغيل عبر السماعة</string>
+    <string name="telos_headset_playback_summary">استئناف أحدث جلسة Telos مسموح بها عندما يرسل Android أمر تشغيل السماعة.</string>
+    <string name="telos_headset_playback_enable">توجيه تشغيل السماعة إلى Telos Media</string>
+    <string name="telos_headset_playback_save_failed">تعذر حفظ إعدادات السماعة.</string>
 </resources>
