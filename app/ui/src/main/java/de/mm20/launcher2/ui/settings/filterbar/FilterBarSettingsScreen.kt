@@ -94,7 +94,7 @@ fun FilterBarSettingsScreen() {
                             stringResource(id = I18nR.string.preference_customize_filter_bar),
                             overflow = TextOverflow.Ellipsis,
                             modifier = Modifier.padding(horizontal = 16.dp),
-                            maxLines = 1
+                            maxLines = 2
                         )
                     }
                 },
@@ -142,7 +142,7 @@ fun FilterBarSettingsScreen() {
                         tint = MaterialTheme.colorScheme.secondary
                     )
                     Text(
-                        modifier = Modifier,
+                        modifier = Modifier.weight(1f),
                         text = stringResource(I18nR.string.hint_drag_and_drop_reorder),
                         style = MaterialTheme.typography.titleSmall,
                         color = MaterialTheme.colorScheme.secondary

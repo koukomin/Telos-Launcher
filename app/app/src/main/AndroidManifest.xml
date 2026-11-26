@@ -54,20 +54,7 @@
 
     <uses-permission android:name="android.permission.REORDER_TASKS" />
 
-    <permission-group
-        android:name="moe.shizuku.manager.permission-group.API"
-        android:label="@string/telos_shizuku_title"
-        android:description="@string/telos_shizuku_autostart_summary" />
-    <permission
-        android:name="moe.shizuku.manager.permission.MANAGER"
-        android:protectionLevel="signature" />
     <uses-permission android:name="moe.shizuku.manager.permission.MANAGER" />
-    <permission
-        android:name="moe.shizuku.manager.permission.API_V23"
-        android:label="@string/telos_shizuku_title"
-        android:description="@string/telos_shizuku_autostart_summary"
-        android:permissionGroup="moe.shizuku.manager.permission-group.API"
-        android:protectionLevel="dangerous" />
     <uses-permission android:name="moe.shizuku.manager.permission.API_V23" />
     <uses-permission android:name="dev.rikka.shizuku.permission.API_V23" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />

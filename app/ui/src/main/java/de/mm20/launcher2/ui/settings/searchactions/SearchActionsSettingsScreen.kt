@@ -107,7 +107,7 @@ fun SearchActionsSettingsScreen() {
                             stringResource(id = I18nR.string.preference_screen_search_actions),
                             overflow = TextOverflow.Ellipsis,
                             modifier = Modifier.padding(horizontal = 16.dp),
-                            maxLines = 1
+                            maxLines = 2
                         )
                     }
                 },

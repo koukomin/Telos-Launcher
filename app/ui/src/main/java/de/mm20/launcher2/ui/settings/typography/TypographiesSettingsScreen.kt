@@ -27,6 +27,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -82,7 +83,7 @@ fun TypographiesSettingsScreen() {
                         title = {
                             Text(
                                 text = theme.name,
-                                maxLines = 1,
+                                maxLines = 1, overflow = TextOverflow.Ellipsis,
                                 style = typo.titleMedium
                             )
                         },
@@ -147,7 +148,7 @@ fun TypographiesSettingsScreen() {
                             title = {
                                 Text(
                                     text = theme.name,
-                                    maxLines = 1,
+                                    maxLines = 1, overflow = TextOverflow.Ellipsis,
                                     style = typo.titleMedium
                                 )
                             },

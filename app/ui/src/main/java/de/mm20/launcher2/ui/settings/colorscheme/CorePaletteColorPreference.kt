@@ -76,7 +76,7 @@ fun CorePaletteColorPreference(
             style = MaterialTheme.typography.titleMedium,
             textAlign = TextAlign.Center,
             overflow = TextOverflow.Ellipsis,
-            maxLines = 1,
+            maxLines = 1, overflow = TextOverflow.Ellipsis,
         )
     }
 
