@@ -22,7 +22,7 @@ jobs:
       generate: ${{ steps.activation.outputs.generate }}
       partitions: ${{ steps.partitions.outputs.value }}
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           ref: ${{ github.event.pull_request.head.sha || inputs.source_ref }}
           fetch-depth: 0
@@ -54,7 +54,7 @@ jobs:
       matrix:
         partition: ${{ fromJSON(needs.request.outputs.partitions) }}
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           ref: ${{ github.event.pull_request.head.sha || inputs.source_ref }}
           fetch-depth: 0
@@ -79,7 +79,7 @@ jobs:
           TRANSLATION_PARTITION: ${{ matrix.partition }}
           TRANSLATION_PARTITIONS: '16'
         run: python tools/translations/generate.py
-      - uses: actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b # v4
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         if: always()
         with:
           name: telos-translations-${{ github.run_id }}-${{ matrix.partition }}
