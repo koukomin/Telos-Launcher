@@ -68,7 +68,7 @@ fun TypographiesSettingsScreen() {
         item {
             PreferenceCategory {
                 for (theme in builtin) {
-                    var showMenu by remember { mutableStateOf(false) }
+                    var showMenu by remember(theme.id) { mutableStateOf(false) }
                     val typo = typographyOf(theme)
                     Preference(
                         icon = {
@@ -133,7 +133,7 @@ fun TypographiesSettingsScreen() {
             item {
                 PreferenceCategory {
                     for (theme in user) {
-                        var showMenu by remember { mutableStateOf(false) }
+                        var showMenu by remember(theme.id) { mutableStateOf(false) }
                         val typo = typographyOf(theme)
                         Preference(
                             icon = {

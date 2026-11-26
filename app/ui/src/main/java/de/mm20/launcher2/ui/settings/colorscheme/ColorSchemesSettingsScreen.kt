@@ -72,7 +72,7 @@ fun ColorSchemesSettingsScreen() {
         item {
             PreferenceCategory {
                 for (theme in builtin) {
-                    var showMenu by remember { mutableStateOf(false) }
+                    var showMenu by remember(theme.id) { mutableStateOf(false) }
                     Preference(
                         icon = if (theme.id == selectedTheme) BaseR.drawable.radio_button_checked_24px else BaseR.drawable.radio_button_unchecked_24px,
                         title = theme.name,
@@ -123,7 +123,7 @@ fun ColorSchemesSettingsScreen() {
             item {
                 PreferenceCategory {
                     for (theme in user) {
-                        var showMenu by remember { mutableStateOf(false) }
+                        var showMenu by remember(theme.id) { mutableStateOf(false) }
                         Preference(
                             icon = if (theme.id == selectedTheme) BaseR.drawable.radio_button_checked_24px else BaseR.drawable.radio_button_unchecked_24px,
                             title = theme.name,
