@@ -17,6 +17,9 @@ concurrency:
   group: codeql-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
   analyze:
     if: github.event_name != 'pull_request' || github.event.action != 'closed'
