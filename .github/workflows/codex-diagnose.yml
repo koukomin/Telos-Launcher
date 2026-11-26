@@ -1,0 +1,25 @@
+name: Diagnose failed workflows
+on:
+  push:
+    branches: [codex/actions-diagnostic]
+permissions:
+  actions: read
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python3 - <<'PY'
+          import json, os, subprocess
+          base='repos/'+os.environ['GITHUB_REPOSITORY']+'/actions/jobs/'
+          for job in ['139937144002','139937143864','139936239505']:
+              p=subprocess.run(['gh','api','--allow-escape-sequences',base+job+'/logs'],capture_output=True,text=True)
+              lines=p.stdout.splitlines()
+              indices=[i for i,l in enumerate(lines) if 'What went wrong:' in l or 'FAILURE: Build failed' in l or ' e: file:' in l]
+              selected=[]
+              for i in indices[:8]:selected.extend(lines[i:i+12])
+              print('::notice title=Failed job '+job+'::'+json.dumps(selected).replace('%','%25')[:30000])
+          PY
