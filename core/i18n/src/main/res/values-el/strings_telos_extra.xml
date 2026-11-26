@@ -48,6 +48,8 @@
     <string name="trash_hero_ready">Έτοιμα για μεταφορά</string>
     <string name="trash_hero_stored">%1$d αποθηκευμένα στοιχεία</string>
     <string name="trash_in_bin">Στον κάδο</string>
+    <string name="telos_youtube_handler_label">YouTube</string>
+    <string name="telos_youtube_music_handler_label">YouTube Music</string>
     <string name="trash_kind_apk">Παλιά αρχεία εγκατάστασης</string>
     <string name="trash_kind_cache">Προσωρινά αρχεία εφαρμογών</string>
     <string name="trash_kind_corpse">Υπόλοιπα απεγκατεστημένων εφαρμογών</string>
