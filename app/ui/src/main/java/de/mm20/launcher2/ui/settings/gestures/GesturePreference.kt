@@ -464,7 +464,6 @@ private fun GestureItem(
                     text = summary,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     style = MaterialTheme.typography.bodyMedium,
-                    maxLines = 1, overflow = TextOverflow.Ellipsis,
                     overflow = TextOverflow.Ellipsis
                 )
             }

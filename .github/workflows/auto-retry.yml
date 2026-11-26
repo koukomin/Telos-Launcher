@@ -2,7 +2,7 @@ name: Auto-Retry Failed Workflows
 
 on:
   workflow_run:
-    workflows: ["*"]
+    workflows: ["Release Telos Android", "Deploy Telos Documentation", "CodeQL Security Scan"]
     types:
       - completed
 
@@ -19,7 +19,5 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RUN_ID: ${{ github.event.workflow_run.id }}
         run: |
-          
-
-          echo "Workflow Run ID $RUN_ID failed. Automatically retrying failed jobs..."
+          echo "Workflow Run ID $RUN_ID failed due to timeout. Automatically retrying failed jobs..."
           gh run rerun "$RUN_ID" --failed --repo "$GITHUB_REPOSITORY"

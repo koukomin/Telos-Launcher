@@ -267,7 +267,6 @@ private fun TransparencyPreference(
                 title,
                 style = MaterialTheme.typography.bodyMedium.copy(fontFamily = FontFamily.Monospace),
                 textAlign = TextAlign.Center,
-                overflow = TextOverflow.Ellipsis,
                 maxLines = 1, overflow = TextOverflow.Ellipsis,
             )
             Row(

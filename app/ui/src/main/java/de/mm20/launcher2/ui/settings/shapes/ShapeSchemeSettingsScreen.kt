@@ -461,7 +461,6 @@ fun ShapePreference(
             title,
             style = titleTextStyle,
             textAlign = TextAlign.Center,
-            overflow = TextOverflow.Ellipsis,
             maxLines = 1, overflow = TextOverflow.Ellipsis,
         )
     }
