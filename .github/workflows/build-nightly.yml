@@ -52,10 +52,12 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b # v4
         with:
+        with:  retention-days: 7
           name: de.mm20.launcher2.nightly.apk
           path: app/app/build/outputs/apk/default/nightly/app-default-nightly.apk
       - name: Upload R8 mapping
         uses: actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b # v4
         with:
+        with:  retention-days: 7
           name: mapping-nightly
           path: app/app/build/outputs/mapping/defaultNightly/mapping.txt

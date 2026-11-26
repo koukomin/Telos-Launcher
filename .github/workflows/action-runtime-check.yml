@@ -54,6 +54,7 @@ jobs:
           printf 'Node 24 action runtime smoke test\n' > runtime-fixture/result.txt
       - uses: actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b # v4
         with:
+        with:  retention-days: 7
           name: runtime-roundtrip
           path: runtime-fixture/result.txt
           if-no-files-found: error
