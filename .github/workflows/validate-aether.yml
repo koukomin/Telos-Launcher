@@ -23,14 +23,14 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 60
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       - name: Reject stale Tor native binaries or build inputs
         run: python3 tools/validation/aether-native-check.py
-      - uses: actions/setup-java@3a4f6e1af504cf6a31855fa899c6aa5355ba6f12 # v4.2.2
+      - uses: actions/setup-java@d1374f8ac74474200d16ef8ecee22c7ae7a51880 # v6
         with:
           distribution: temurin
           java-version: '21'
-      - uses: gradle/actions/setup-gradle@94baf225fe0a508e581a564467443d0e2379123b # v4
+      - uses: gradle/actions/setup-gradle@8da46b539cd8fe6ab27ca75128919a18d757604c # v6
         with:
           cache-provider: basic
           cache-read-only: false
@@ -83,7 +83,7 @@ jobs:
               raise SystemExit('No Aether host tests executed')
           print('::notice title=Aether host test totals::' + ', '.join(f'{key}={value}' for key, value in totals.items()))
           PYCODE
-      - uses: actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b # v4
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         if: always()
         with:
           name: aether-library-validation
@@ -99,8 +99,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 90
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
-      - uses: actions/setup-java@3a4f6e1af504cf6a31855fa899c6aa5355ba6f12 # v4.2.2
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: actions/setup-java@d1374f8ac74474200d16ef8ecee22c7ae7a51880 # v6
         with:
           distribution: temurin
           java-version: '21'
@@ -108,7 +108,7 @@ jobs:
         with:
           go-version-file: libs/appops-next/daemon/go.mod
           cache: false
-      - uses: gradle/actions/setup-gradle@94baf225fe0a508e581a564467443d0e2379123b # v4
+      - uses: gradle/actions/setup-gradle@8da46b539cd8fe6ab27ca75128919a18d757604c # v6
         with:
           cache-provider: basic
           cache-read-only: false
@@ -164,7 +164,7 @@ jobs:
           for line in (selected[-30:] or lines[-30:]):
               print('::error title=Telos Aether compile::' + line.replace('%', '%25').replace('\r', '%0D').replace('\n', '%0A'))
           PYCODE
-      - uses: actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b # v4
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         if: always()
         with:
           name: telos-aether-build-validation
@@ -176,12 +176,12 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 90
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
-      - uses: actions/setup-java@3a4f6e1af504cf6a31855fa899c6aa5355ba6f12 # v4.2.2
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: actions/setup-java@d1374f8ac74474200d16ef8ecee22c7ae7a51880 # v6
         with:
           distribution: temurin
           java-version: '21'
-      - uses: gradle/actions/setup-gradle@94baf225fe0a508e581a564467443d0e2379123b # v4
+      - uses: gradle/actions/setup-gradle@8da46b539cd8fe6ab27ca75128919a18d757604c # v6
         with:
           cache-provider: basic
           cache-read-only: false
@@ -251,7 +251,7 @@ jobs:
               print(f'::{level} title=Aether security boundary test::{classname}: executed={len(tests)}, expected=1, all_passed={passed}')
               if not passed: raise SystemExit(f'{classname} must execute successfully without skips')
           PYCODE
-      - uses: actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b # v4
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         if: always()
         with:
           name: aether-storage-device-results
@@ -269,8 +269,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 90
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
-      - uses: actions/setup-java@3a4f6e1af504cf6a31855fa899c6aa5355ba6f12 # v4.2.2
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: actions/setup-java@d1374f8ac74474200d16ef8ecee22c7ae7a51880 # v6
         with:
           distribution: temurin
           java-version: '21'
@@ -278,7 +278,7 @@ jobs:
         with:
           go-version-file: libs/appops-next/daemon/go.mod
           cache: false
-      - uses: gradle/actions/setup-gradle@94baf225fe0a508e581a564467443d0e2379123b # v4
+      - uses: gradle/actions/setup-gradle@8da46b539cd8fe6ab27ca75128919a18d757604c # v6
         with:
           cache-provider: basic
           cache-read-only: false
@@ -372,7 +372,7 @@ jobs:
                   text = '\n'.join(errors[-80:])[-18000:]
                   print('::error title=Aether runtime details::' + text.replace('%', '%25').replace('\r', '%0D').replace('\n', '%0A'))
           PYCODE
-      - uses: actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b # v4
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         if: always()
         with:
           name: aether-client-device-results
