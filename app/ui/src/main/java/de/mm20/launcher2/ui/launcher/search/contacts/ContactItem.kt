@@ -414,13 +414,13 @@ fun ContactItem(
                             ),
                             text = contact.labelOverride ?: contact.label,
                             style = MaterialTheme.typography.titleSmall,
-                            maxLines = 1, overflow = TextOverflow.Ellipsis,
+                            maxLines = 1,
                             overflow = TextOverflow.Ellipsis
                         )
                         Text(
                             contact.summary,
                             style = MaterialTheme.typography.bodySmall,
-                            maxLines = 1, overflow = TextOverflow.Ellipsis,
+                            maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
                             modifier = Modifier.padding(top = 2.dp)
                         )

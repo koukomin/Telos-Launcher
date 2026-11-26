@@ -374,7 +374,7 @@ internal fun TextStylePreference(
                 text = stringResource(I18nR.string.typo_preview_extra_short),
                 style = textStyle,
                 color = MaterialTheme.colorScheme.primary,
-                maxLines = 1, overflow = TextOverflow.Ellipsis,
+                maxLines = 1,
                 overflow = TextOverflow.Clip,
                 textAlign = TextAlign.Center,
             )
@@ -502,7 +502,7 @@ internal fun TextStylePreference(
                             style = MaterialTheme.typography.bodySmall,
                             textAlign = TextAlign.Center,
                             modifier = Modifier.width(56.dp),
-                            maxLines = 1, overflow = TextOverflow.Ellipsis,
+                            maxLines = 1,
                             overflow = TextOverflow.MiddleEllipsis,
                         )
                     }

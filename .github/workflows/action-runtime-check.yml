@@ -27,7 +27,7 @@ jobs:
           node-version: 'lts/*'
           check-latest: true
           package-manager-cache: false
-      - uses: actions/setup-python@4066144eb887f0b5d033866503c5825aeb3f2fa1 # v5.3.0
+      - uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b # v5.3.0
         with:
           python-version: '3.11'
       - uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff # v5

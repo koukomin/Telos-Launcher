@@ -161,7 +161,7 @@ fun StealthCloakScreen() {
                     Text(
                         row.label,
                         style = MaterialTheme.typography.bodyLarge,
-                        maxLines = 1, overflow = TextOverflow.Ellipsis,
+                        maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                     )
                     Text(
