@@ -1,11 +1,23 @@
 package de.mm20.launcher2.ui.settings.main
+
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
 
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.navigation3.runtime.NavKey
-import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
@@ -27,110 +39,68 @@ import kotlinx.serialization.Serializable
 @Serializable
 data object MainRoute: NavKey
 
+private data class SettingItem(
+    val icon: Int,
+    val titleRes: Int,
+    val summaryRes: Int,
+    val route: NavKey
+)
+
 @Composable
 fun MainSettingsScreen() {
     val backStack = LocalBackStack.current
+    var query by rememberSaveable { mutableStateOf("") }
+
+    val items = listOf(
+        SettingItem(BaseR.drawable.palette_24px, I18nR.string.preference_screen_appearance, I18nR.string.preference_screen_appearance_summary, AppearanceSettingsRoute),
+        SettingItem(BaseR.drawable.home_24px, I18nR.string.preference_screen_homescreen, I18nR.string.preference_screen_homescreen_summary, HomescreenSettingsRoute),
+        SettingItem(BaseR.drawable.apps_24px, I18nR.string.preference_screen_icons, I18nR.string.preference_screen_icons_summary, IconsSettingsRoute),
+        SettingItem(BaseR.drawable.language_24px, I18nR.string.preference_screen_web_app_shortcuts, I18nR.string.preference_screen_web_app_shortcuts_summary, WebAppsSettingsRoute),
+        SettingItem(BaseR.drawable.search_24px, I18nR.string.preference_screen_search, I18nR.string.preference_screen_search_summary, SearchSettingsRoute),
+        SettingItem(BaseR.drawable.gesture_24px, I18nR.string.preference_screen_gestures, I18nR.string.preference_screen_gestures_summary, GesturesSettingsRoute),
+        SettingItem(BaseR.drawable.timer_24px, I18nR.string.preference_screen_dynamic_island, I18nR.string.preference_screen_dynamic_island_summary, DynamicIslandSettingsRoute),
+        SettingItem(BaseR.drawable.power_24px, I18nR.string.preference_screen_integrations, I18nR.string.preference_screen_integrations_summary, IntegrationsSettingsRoute),
+        SettingItem(BaseR.drawable.translate_24px, I18nR.string.preference_screen_locale, I18nR.string.preference_screen_locale_summary, LocaleSettingsRoute),
+        SettingItem(BaseR.drawable.settings_24px, I18nR.string.telos_system_label, I18nR.string.preference_screen_advanced_summary, SystemDashboardRoute()),
+        SettingItem(BaseR.drawable.widgets_24px, I18nR.string.preference_screen_floating_launcher, I18nR.string.preference_screen_floating_launcher_summary, FloatingLauncherSettingsRoute),
+        SettingItem(BaseR.drawable.info_24px, I18nR.string.preference_screen_about, I18nR.string.preference_screen_about_summary, AboutSettingsRoute)
+    )
+
     PreferenceScreen(
         title = stringResource(I18nR.string.settings),
     ) {
         item {
+            OutlinedTextField(
+                value = query,
+                onValueChange = { query = it },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 4.dp, vertical = 4.dp),
+                placeholder = { Text(stringResource(I18nR.string.search_bar_placeholder)) },
+                leadingIcon = { Icon(painterResource(BaseR.drawable.search_24px), contentDescription = null) },
+                singleLine = true
+            )
+        }
+        item {
             PreferenceCategory {
-                Preference(
-                    icon = BaseR.drawable.palette_24px,
-                    title = stringResource(id = I18nR.string.preference_screen_appearance),
-                    summary = stringResource(id = I18nR.string.preference_screen_appearance_summary),
-                    onClick = {
-                        backStack.add(AppearanceSettingsRoute)
+                val filtered = items.filter { item ->
+                    if (query.isBlank()) true
+                    else {
+                        val title = stringResource(item.titleRes)
+                        val summary = stringResource(item.summaryRes)
+                        title.contains(query, ignoreCase = true) || summary.contains(query, ignoreCase = true)
                     }
-                )
-                Preference(
-                    icon = BaseR.drawable.home_24px,
-                    title = stringResource(id = I18nR.string.preference_screen_homescreen),
-                    summary = stringResource(id = I18nR.string.preference_screen_homescreen_summary),
-                    onClick = {
-                        backStack.add(HomescreenSettingsRoute)
-                    }
-                )
-                Preference(
-                    icon = BaseR.drawable.apps_24px,
-                    title = stringResource(id = I18nR.string.preference_screen_icons),
-                    summary = stringResource(id = I18nR.string.preference_screen_icons_summary),
-                    onClick = {
-                        backStack.add(IconsSettingsRoute)
-                    }
-                )
-                Preference(
-                    icon = BaseR.drawable.language_24px,
-                    title = stringResource(id = I18nR.string.preference_screen_web_app_shortcuts),
-                    summary = stringResource(id = I18nR.string.preference_screen_web_app_shortcuts_summary),
-                    onClick = {
-                        backStack.add(WebAppsSettingsRoute)
-                    }
-                )
-                Preference(
-                    icon = BaseR.drawable.search_24px,
-                    title = stringResource(id = I18nR.string.preference_screen_search),
-                    summary = stringResource(id = I18nR.string.preference_screen_search_summary),
-                    onClick = {
-                        backStack.add(SearchSettingsRoute)
-                    }
-                )
-                Preference(
-                    icon = BaseR.drawable.gesture_24px,
-                    title = stringResource(id = I18nR.string.preference_screen_gestures),
-                    summary = stringResource(id = I18nR.string.preference_screen_gestures_summary),
-                    onClick = {
-                        backStack.add(GesturesSettingsRoute)
-                    }
-                )
-                Preference(
-                    icon = BaseR.drawable.timer_24px,
-                    title = stringResource(id = I18nR.string.preference_screen_dynamic_island),
-                    summary = stringResource(id = I18nR.string.preference_screen_dynamic_island_summary),
-                    onClick = {
-                        backStack.add(DynamicIslandSettingsRoute)
-                    }
-                )
-                Preference(
-                    icon = BaseR.drawable.power_24px,
-                    title = stringResource(id = I18nR.string.preference_screen_integrations),
-                    summary = stringResource(id = I18nR.string.preference_screen_integrations_summary),
-                    onClick = {
-                        backStack.add(IntegrationsSettingsRoute)
-                    }
-                )
-                Preference(
-                    icon = BaseR.drawable.translate_24px,
-                    title = stringResource(id = I18nR.string.preference_screen_locale),
-                    summary = stringResource(id = I18nR.string.preference_screen_locale_summary),
-                    onClick = {
-                        backStack.add(LocaleSettingsRoute)
-                    }
-                )
-                Preference(
-                    icon = BaseR.drawable.settings_24px,
-                    title = stringResource(id = I18nR.string.telos_system_label),
-                    summary = stringResource(id = I18nR.string.preference_screen_advanced_summary),
-                    onClick = {
-                        backStack.add(SystemDashboardRoute())
-                    }
-                )
-                Preference(
-                    icon = BaseR.drawable.widgets_24px,
-                    title = stringResource(I18nR.string.preference_screen_floating_launcher),
-                    summary = stringResource(I18nR.string.preference_screen_floating_launcher_summary),
-                    onClick = {
-                        backStack.add(FloatingLauncherSettingsRoute)
-                    }
-                )
-                Preference(
-                    icon = BaseR.drawable.info_24px,
-                    title = stringResource(id = I18nR.string.preference_screen_about),
-                    summary = stringResource(id = I18nR.string.preference_screen_about_summary),
-                    onClick = {
-                        backStack.add(AboutSettingsRoute)
-                    }
-                )
+                }
+                for (item in filtered) {
+                    Preference(
+                        icon = item.icon,
+                        title = stringResource(id = item.titleRes),
+                        summary = stringResource(id = item.summaryRes),
+                        onClick = {
+                            backStack.add(item.route)
+                        }
+                    )
+                }
             }
         }
     }

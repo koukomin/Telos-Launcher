@@ -440,6 +440,7 @@ private fun DialpadKey(
     val digitSp = (26f / fontScale.coerceAtLeast(1f)).coerceAtLeast(18f).sp
     val sublabelSp = (11f / fontScale.coerceAtLeast(1f)).coerceAtLeast(8f).sp
 
+    val haptics = androidx.compose.ui.platform.LocalHapticFeedback.current
     Box(
         modifier = Modifier
             .width(size)
@@ -447,7 +448,10 @@ private fun DialpadKey(
             .clip(CircleShape)
             .combinedClickable(
                 role = androidx.compose.ui.semantics.Role.Button,
-                onClick = onClick,
+                onClick = {
+                    haptics.performHapticFeedback(androidx.compose.ui.hapticfeedback.HapticFeedbackType.TextHandleMove)
+                    onClick()
+                },
                 onLongClick = onLongClick,
             )
             .padding(vertical = 2.dp),

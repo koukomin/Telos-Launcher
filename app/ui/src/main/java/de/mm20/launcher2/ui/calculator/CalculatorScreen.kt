@@ -16,6 +16,8 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.width
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalHapticFeedback
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -210,6 +212,7 @@ private fun RoundKey(
         KeyKind.Function -> scheme.surfaceContainer to (if (selected) scheme.primary else scheme.onSurfaceVariant)
         KeyKind.Equals -> scheme.primary to scheme.onPrimary
     }
+    val haptics = LocalHapticFeedback.current
     Box(
         modifier
             .padding(3.dp)
@@ -217,7 +220,10 @@ private fun RoundKey(
             .heightIn(min = de.mm20.launcher2.ui.layout.UiSpacing.TouchTarget)
             .clip(MaterialTheme.shapes.large)
             .background(bg)
-            .clickable(onClick = onClick)
+            .clickable(onClick = {
+                haptics.performHapticFeedback(HapticFeedbackType.TextHandleMove)
+                onClick()
+            })
             .padding(horizontal = 2.dp, vertical = 2.dp),
         contentAlignment = Alignment.Center,
     ) {
