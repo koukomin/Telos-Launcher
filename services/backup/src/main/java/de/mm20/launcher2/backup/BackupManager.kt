@@ -164,8 +164,9 @@ class BackupManager(
 
     suspend fun readBackupMeta(uri: Uri, password: String? = null): BackupMetadata? {
         return withContext(Dispatchers.IO) {
-            var inputStream = context.contentResolver.openInputStream(uri) ?: return@withContext null
+            var rawStream = context.contentResolver.openInputStream(uri) ?: return@withContext null
             try {
+                var inputStream: java.io.InputStream = rawStream
                 val magic = ByteArray(4)
                 inputStream.read(magic)
                 if (magic.toString(Charsets.UTF_8) == "TLBQ") {
@@ -178,15 +179,16 @@ class BackupManager(
                     cipher.init(Cipher.DECRYPT_MODE, key, GCMParameterSpec(128, iv))
                     inputStream = CipherInputStream(inputStream, cipher)
                 } else {
-                    inputStream.close()
-                    inputStream = context.contentResolver.openInputStream(uri) ?: return@withContext null
+                    rawStream.close()
+                    rawStream = context.contentResolver.openInputStream(uri) ?: return@withContext null
+                    inputStream = rawStream
                 }
                 
                 ZipInputStream(inputStream).use { zipStream ->
                     var entry = zipStream.nextEntry
                     while (entry != null) {
                         if (entry.name == "meta") {
-                            return@withContext BackupMetadata.fromInputStream(zipStream)
+                            return@use BackupMetadata.fromInputStream(zipStream)
                         }
                         zipStream.closeEntry()
                         entry = zipStream.nextEntry
@@ -196,6 +198,8 @@ class BackupManager(
             } catch (e: Exception) {
                 // not a zip file at all, or truncated, or wrong password
                 null
+            } finally {
+                kotlin.runCatching { rawStream.close() }
             }
         }
     }
