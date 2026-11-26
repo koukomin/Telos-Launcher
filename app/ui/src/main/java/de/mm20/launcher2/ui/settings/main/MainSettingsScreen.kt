@@ -46,24 +46,49 @@ private data class SettingItem(
     val route: NavKey
 )
 
+private data class SettingGroup(
+    val titleRes: Int,
+    val items: List<SettingItem>
+)
+
 @Composable
 fun MainSettingsScreen() {
     val backStack = LocalBackStack.current
     var query by rememberSaveable { mutableStateOf("") }
 
-    val items = listOf(
-        SettingItem(BaseR.drawable.palette_24px, I18nR.string.preference_screen_appearance, I18nR.string.preference_screen_appearance_summary, AppearanceSettingsRoute),
-        SettingItem(BaseR.drawable.home_24px, I18nR.string.preference_screen_homescreen, I18nR.string.preference_screen_homescreen_summary, HomescreenSettingsRoute),
-        SettingItem(BaseR.drawable.apps_24px, I18nR.string.preference_screen_icons, I18nR.string.preference_screen_icons_summary, IconsSettingsRoute),
-        SettingItem(BaseR.drawable.language_24px, I18nR.string.preference_screen_web_app_shortcuts, I18nR.string.preference_screen_web_app_shortcuts_summary, WebAppsSettingsRoute),
-        SettingItem(BaseR.drawable.search_24px, I18nR.string.preference_screen_search, I18nR.string.preference_screen_search_summary, SearchSettingsRoute),
-        SettingItem(BaseR.drawable.gesture_24px, I18nR.string.preference_screen_gestures, I18nR.string.preference_screen_gestures_summary, GesturesSettingsRoute),
-        SettingItem(BaseR.drawable.timer_24px, I18nR.string.preference_screen_dynamic_island, I18nR.string.preference_screen_dynamic_island_summary, DynamicIslandSettingsRoute),
-        SettingItem(BaseR.drawable.power_24px, I18nR.string.preference_screen_integrations, I18nR.string.preference_screen_integrations_summary, IntegrationsSettingsRoute),
-        SettingItem(BaseR.drawable.translate_24px, I18nR.string.preference_screen_locale, I18nR.string.preference_screen_locale_summary, LocaleSettingsRoute),
-        SettingItem(BaseR.drawable.settings_24px, I18nR.string.telos_system_label, I18nR.string.preference_screen_advanced_summary, SystemDashboardRoute()),
-        SettingItem(BaseR.drawable.widgets_24px, I18nR.string.preference_screen_floating_launcher, I18nR.string.preference_screen_floating_launcher_summary, FloatingLauncherSettingsRoute),
-        SettingItem(BaseR.drawable.info_24px, I18nR.string.preference_screen_about, I18nR.string.preference_screen_about_summary, AboutSettingsRoute)
+    val groups = listOf(
+        SettingGroup(
+            titleRes = I18nR.string.preference_screen_appearance,
+            items = listOf(
+                SettingItem(BaseR.drawable.palette_24px, I18nR.string.preference_screen_appearance, I18nR.string.preference_screen_appearance_summary, AppearanceSettingsRoute),
+                SettingItem(BaseR.drawable.home_24px, I18nR.string.preference_screen_homescreen, I18nR.string.preference_screen_homescreen_summary, HomescreenSettingsRoute),
+                SettingItem(BaseR.drawable.apps_24px, I18nR.string.preference_screen_icons, I18nR.string.preference_screen_icons_summary, IconsSettingsRoute),
+                SettingItem(BaseR.drawable.timer_24px, I18nR.string.preference_screen_dynamic_island, I18nR.string.preference_screen_dynamic_island_summary, DynamicIslandSettingsRoute),
+            )
+        ),
+        SettingGroup(
+            titleRes = I18nR.string.preference_screen_search,
+            items = listOf(
+                SettingItem(BaseR.drawable.search_24px, I18nR.string.preference_screen_search, I18nR.string.preference_screen_search_summary, SearchSettingsRoute),
+                SettingItem(BaseR.drawable.gesture_24px, I18nR.string.preference_screen_gestures, I18nR.string.preference_screen_gestures_summary, GesturesSettingsRoute),
+                SettingItem(BaseR.drawable.widgets_24px, I18nR.string.preference_screen_floating_launcher, I18nR.string.preference_screen_floating_launcher_summary, FloatingLauncherSettingsRoute),
+                SettingItem(BaseR.drawable.language_24px, I18nR.string.preference_screen_web_app_shortcuts, I18nR.string.preference_screen_web_app_shortcuts_summary, WebAppsSettingsRoute),
+            )
+        ),
+        SettingGroup(
+            titleRes = I18nR.string.telos_system_label,
+            items = listOf(
+                SettingItem(BaseR.drawable.settings_24px, I18nR.string.telos_system_label, I18nR.string.preference_screen_advanced_summary, SystemDashboardRoute()),
+                SettingItem(BaseR.drawable.power_24px, I18nR.string.preference_screen_integrations, I18nR.string.preference_screen_integrations_summary, IntegrationsSettingsRoute),
+                SettingItem(BaseR.drawable.translate_24px, I18nR.string.preference_screen_locale, I18nR.string.preference_screen_locale_summary, LocaleSettingsRoute),
+            )
+        ),
+        SettingGroup(
+            titleRes = I18nR.string.preference_screen_about,
+            items = listOf(
+                SettingItem(BaseR.drawable.info_24px, I18nR.string.preference_screen_about, I18nR.string.preference_screen_about_summary, AboutSettingsRoute)
+            )
+        )
     )
 
     PreferenceScreen(
@@ -81,25 +106,31 @@ fun MainSettingsScreen() {
                 singleLine = true
             )
         }
-        item {
-            PreferenceCategory {
-                val filtered = items.filter { item ->
-                    if (query.isBlank()) true
-                    else {
-                        val title = stringResource(item.titleRes)
-                        val summary = stringResource(item.summaryRes)
-                        title.contains(query, ignoreCase = true) || summary.contains(query, ignoreCase = true)
-                    }
+        for (group in groups) {
+            val matchingItems = group.items.filter { item ->
+                if (query.isBlank()) true
+                else {
+                    val title = stringResource(item.titleRes)
+                    val summary = stringResource(item.summaryRes)
+                    title.contains(query, ignoreCase = true) || summary.contains(query, ignoreCase = true)
                 }
-                for (item in filtered) {
-                    Preference(
-                        icon = item.icon,
-                        title = stringResource(id = item.titleRes),
-                        summary = stringResource(id = item.summaryRes),
-                        onClick = {
-                            backStack.add(item.route)
+            }
+            if (matchingItems.isNotEmpty()) {
+                item {
+                    PreferenceCategory(
+                        title = stringResource(group.titleRes)
+                    ) {
+                        for (item in matchingItems) {
+                            Preference(
+                                icon = item.icon,
+                                title = stringResource(id = item.titleRes),
+                                summary = stringResource(id = item.summaryRes),
+                                onClick = {
+                                    backStack.add(item.route)
+                                }
+                            )
                         }
-                    )
+                    }
                 }
             }
         }

@@ -21,9 +21,9 @@ internal object SavedWifiParser {
     private val legacySsid = Regex("(?m)^\\s*ssid=\"([^\"]+)\"")
     private val legacyKey = Regex("(?m)^\\s*(?:psk|password)=\"([^\"]+)\"")
 
-    // Dumpsys wifi / CLI output parser
-    private val dumpsysSsid = Regex("(?i)(?:SSID|Ssid):\\s*\"?([^\"\r\n]+)\"?")
-    private val dumpsysKey = Regex("(?i)(?:PreSharedKey|Psk|Password):\\s*\"?([^\"\r\n]+)\"?")
+    // Dumpsys wifi / CLI output parser (enhanced for ColorOS / OxygenOS / OneUI / MIUI / Android 15+)
+    private val dumpsysSsid = Regex("(?i)(?:SSID|Ssid|ssid):\\s*\"?([^\"\r\n]+)\"?")
+    private val dumpsysKey = Regex("(?i)(?:PreSharedKey|Psk|KeyPsk|PSK|Password|Key|PreSharedKeyString|wep_key0):\\s*\"?([^\"\r\n]+)\"?")
 
     private fun decode(value: String): String = value.replace("&quot;", "\"").replace("&apos;", "'")
         .replace("&lt;", "<").replace("&gt;", ">").replace("&amp;", "&").trim('"')

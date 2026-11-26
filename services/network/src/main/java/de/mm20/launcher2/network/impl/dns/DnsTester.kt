@@ -40,6 +40,9 @@ internal object DnsTester {
             }
         }
 
+    fun isFastOrHealthy(latencyMs: Long, thresholdMs: Long = 250L): Boolean =
+        latencyMs in 1L..thresholdMs
+
     /** A minimal A query. */
     private fun query(domain: String): ByteArray {
         val out = ByteArrayOutputStream()

@@ -350,17 +350,21 @@ internal object PrivilegedWifiStore {
         val wm = wifiManager() ?: return emptyList()
         val extras = extrasBundle()
         val slice = runCatching {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                hiddenInvoke(wm.javaClass, wm, "getPrivilegedConfiguredNetworks", privilegedUser(), callingPackage(), extras)
-            } else {
-                runCatching {
-                    hiddenInvoke(wm.javaClass, wm, "getPrivilegedConfiguredNetworks", privilegedUser(), callingPackage())
-                }.getOrElse {
-                    hiddenInvoke(wm.javaClass, wm, "getPrivilegedConfiguredNetworks", privilegedUser(), callingPackage(), extras)
-                }
-            }
+            // Attempt 1: Standard Android 13-17 method with privileged user + calling package + attribution extras
+            var res = hiddenInvoke(wm.javaClass, wm, "getPrivilegedConfiguredNetworks", privilegedUser(), callingPackage(), extras)
+            // Attempt 2: Fallback without privileged user string (ColorOS / OxygenOS / OneUI 6+)
+            if (res == null) res = hiddenInvoke(wm.javaClass, wm, "getPrivilegedConfiguredNetworks", callingPackage(), extras)
+            // Attempt 3: Fallback without extras bundle
+            if (res == null) res = hiddenInvoke(wm.javaClass, wm, "getPrivilegedConfiguredNetworks", privilegedUser(), callingPackage())
+            // Attempt 4: Fallback zero-arg getPrivilegedConfiguredNetworks
+            if (res == null) res = hiddenInvoke(wm.javaClass, wm, "getPrivilegedConfiguredNetworks")
+            // Attempt 5: Fallback getConfiguredNetworks with extras (ColorOS 14/15)
+            if (res == null) res = hiddenInvoke(wm.javaClass, wm, "getConfiguredNetworks", callingPackage(), extras)
+            res
         }.onFailure { Log.w(TAG, "getPrivilegedConfiguredNetworks failed", it) }.getOrNull() ?: return emptyList()
-        val list = runCatching { hiddenInvoke(slice.javaClass, slice, "getList") as? List<WifiConfiguration> }.getOrNull()
+
+        val list = (runCatching { hiddenInvoke(slice.javaClass, slice, "getList") as? List<WifiConfiguration> }.getOrNull())
+            ?: (slice as? List<WifiConfiguration>)
         return list.orEmpty()
     }
 
@@ -394,10 +398,19 @@ internal object PrivilegedWifiStore {
             "/data/misc/apexdata/com.android.wifi/WifiConfigStore.xml",
             "/data/misc/wifi/WifiConfigStore.xml",
             "/data/misc/wifi/wpa_supplicant.conf",
+            "/data/vendor/wifi/wpa_supplicant.conf",
+            "/data/misc/wifi/p2p_supplicant.conf",
         )
         val fileOutputs = files.mapNotNull { PrivilegedShell.run("cat $it 2>/dev/null")?.output?.takeIf { out -> out.isNotBlank() } } +
-            listOfNotNull(PrivilegedShell.run("cat /data/misc_ce/*/wifi/WifiConfigStore.xml /data/misc_ce/*/apexdata/com.android.wifi/WifiConfigStore.xml 2>/dev/null")?.output?.takeIf { it.isNotBlank() })
-        val dumpsysOutput = listOfNotNull(PrivilegedShell.run("dumpsys wifi 2>/dev/null")?.output?.takeIf { it.isNotBlank() })
+            listOfNotNull(PrivilegedShell.run("cat /data/misc_ce/*/wifi/WifiConfigStore.xml /data/misc_ce/*/apexdata/com.android.wifi/WifiConfigStore.xml /data/misc_de/*/apexdata/com.android.wifi/WifiConfigStore.xml 2>/dev/null")?.output?.takeIf { it.isNotBlank() })
+        val dumpsysOutput = listOfNotNull(
+            PrivilegedShell.run("dumpsys wifi 2>/dev/null")?.output?.takeIf { it.isNotBlank() },
+            PrivilegedShell.run("dumpsys wifi_config 2>/dev/null")?.output?.takeIf { it.isNotBlank() },
+            PrivilegedShell.run("dumpsys wificond 2>/dev/null")?.output?.takeIf { it.isNotBlank() },
+        )
+        val raw = fileOutputs + dumpsysOutput
+        return raw.flatMap(SavedWifiParser::parse).distinctBy { it.ssid }
+    }
         val raw = fileOutputs + dumpsysOutput
         return raw.flatMap(SavedWifiParser::parse).distinctBy { it.ssid }
     }
