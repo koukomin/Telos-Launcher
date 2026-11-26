@@ -11,7 +11,7 @@ targetSdk = "36"
 
 pluginSdk = "2.3.0"
 
-android-gradle-plugin = "9.5.2"
+android-gradle-plugin = "9.5.3"
 ksp-gradle-plugin = "2.3.14"
 
 kotlin = "2.4.21"
@@ -22,7 +22,7 @@ kotlinx-serialization = "1.13.0"
 jetbrains-markdown = "0.7.18"
 
 androidx-compose = "1.12.1"
-androidx-compose-material3 = "1.5.0-rc01"
+androidx-compose-material3 = "1.6.0-alpha01"
 androidx-compose-material3adaptive = "1.3.0"
 androidx-lifecycle = "2.11.0"
 androidx-core = "1.19.1"
