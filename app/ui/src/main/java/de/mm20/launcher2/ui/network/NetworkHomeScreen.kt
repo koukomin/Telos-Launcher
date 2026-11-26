@@ -219,12 +219,8 @@ fun NetworkHomeScreen() {
                             val ul = (stats.dnsBlocked + stats.connectionsBlocked).coerceAtLeast(0L)
                             waveHistory = (waveHistory.drop(1) + (dl to ul))
                         }
-                        de.mm20.launcher2.ui.component.CyberWaveformChart(
-                            downloadKb = stats.dnsAllowed + stats.connectionsAllowed,
-                            uploadKb = stats.dnsBlocked + stats.connectionsBlocked,
-                            history = waveHistory,
-                            modifier = Modifier.padding(top = 12.dp)
-                        )
+                        
+                        LiveTrafficGraph(modifier = Modifier.padding(top = 12.dp))
 
                         FlowRow(
                             modifier = Modifier.padding(top = 16.dp),

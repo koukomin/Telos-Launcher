@@ -10,6 +10,8 @@ import kotlinx.coroutines.flow.map
 data class NetworkSettingsValues(
     /** Tor mode changes interface routing; edit only while the VPN is stopped. */
     val torEnabled: Boolean = false,
+    val torBridgesEnabled: Boolean = false,
+    val torBridgesConfig: String = "",
     /** Route every captured app through Tor, failing closed until ready. */
     val torSystemDefault: Boolean = false,
     val torAutoStart: Boolean = false,

@@ -123,13 +123,23 @@ class TorController internal constructor(private val context: Context, private v
             settings.flush()
             dnsPort = freePort()
             val socks = freePort()
+            val bridgeExtra = if (settings.current.torBridgesEnabled) {
+                val custom = settings.current.torBridgesConfig.trim()
+                if (custom.isNotBlank()) {
+                    "UseBridges 1\n$custom\n"
+                } else {
+                    "UseBridges 1\nClientTransportPlugin snowflake exec obfs4proxy\nBridge snowflake 192.0.2.3:1 2B280B23E1107BB62AB65691D116D2A7228B35F9 url=https://snowflake-broker.torproject.net/ front=cdn.sstatic.net ice=stun:stun.l.google.com:19302,stun:stun.voiparound.com:3478\n"
+                }
+            } else ""
+
             // TorService supplies its private control socket and cookie authentication separately.
             TorService.getTorrc(context).writeText(
                 "SocksPort 127.0.0.1:$socks IsolateDestAddr\nDNSPort 127.0.0.1:$dnsPort\nHTTPTunnelPort 0\n" +
                     "AutomapHostsOnResolve 1\nAutomapHostsSuffixes .onion\n" +
                     "VirtualAddrNetworkIPv4 ${TorPolicy.VIRTUAL_V4}\nVirtualAddrNetworkIPv6 ${TorPolicy.VIRTUAL_V6}\n" +
                     "ClientOnly 1\nAvoidDiskWrites 1\nUseEntryGuards 1\nNumEntryGuards 2\n" +
-                    "CircuitBuildTimeout 10\nLearnCircuitBuildTimeout 1\nDormantCanceledByStartup 1\n"
+                    "CircuitBuildTimeout 10\nLearnCircuitBuildTimeout 1\nDormantCanceledByStartup 1\n" +
+                    bridgeExtra
             )
             bound = context.bindService(Intent(context, TorService::class.java), connection, Context.BIND_AUTO_CREATE)
             if (!bound) unavailable()
