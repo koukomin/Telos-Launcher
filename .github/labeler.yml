@@ -1,0 +1,14 @@
+UI:
+  - 'app/ui/**/*'
+Core:
+  - 'core/**/*'
+Services:
+  - 'services/**/*'
+Data:
+  - 'data/**/*'
+CI:
+  - '.github/**/*'
+  - 'tools/**/*'
+Dependencies:
+  - 'gradle/libs.versions.toml'
+  - '**/*.gradle.kts'

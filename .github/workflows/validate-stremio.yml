@@ -105,7 +105,7 @@ jobs:
         run: ./gradlew :app:app:assembleDefaultDebug --stacktrace --no-daemon --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process '-Dorg.gradle.jvmargs=-Xmx7g -Dfile.encoding=UTF-8' --no-configuration-cache
       - uses: actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b # v4
         with:
-        with:  retention-days: 7
+          retention-days: 7
           name: telos-stremio-debug
           path: app/app/build/outputs/apk/default/debug/*.apk
       - name: Focused UI lint (API, descriptions and RTL)
@@ -114,7 +114,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b # v4
         with:
-        with:  retention-days: 7
+          retention-days: 7
           name: adaptive-ui-check-reports
           path: |
             app/ui/build/reports/tests/

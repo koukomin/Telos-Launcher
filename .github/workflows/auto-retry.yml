@@ -21,4 +21,4 @@ jobs:
           RUN_ID=${{ github.event.workflow_run.id }}
           ATTEMPT=${{ github.event.workflow_run.run_attempt }}
           echo "Workflow Run ID $RUN_ID failed on attempt $ATTEMPT. Automatically retrying failed jobs..."
-          gh run rerun $RUN_ID --failed
+          gh run rerun $RUN_ID --failed --repo ${{ github.repository }}
