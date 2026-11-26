@@ -22,11 +22,11 @@ jobs:
       generate: ${{ steps.activation.outputs.generate }}
       partitions: ${{ steps.partitions.outputs.value }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
           ref: ${{ github.event.pull_request.head.sha || inputs.source_ref }}
           fetch-depth: 0
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@4066144eb887f0b5d033866503c5825aeb3f2fa1 # v5.3.0
         with:
           python-version: '3.11'
       - name: Gate explicit final-translation activation
@@ -54,11 +54,11 @@ jobs:
       matrix:
         partition: ${{ fromJSON(needs.request.outputs.partitions) }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
           ref: ${{ github.event.pull_request.head.sha || inputs.source_ref }}
           fetch-depth: 0
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@4066144eb887f0b5d033866503c5825aeb3f2fa1 # v5.3.0
         with:
           python-version: '3.11'
       - name: Inventory all supported base locales
@@ -79,7 +79,7 @@ jobs:
           TRANSLATION_PARTITION: ${{ matrix.partition }}
           TRANSLATION_PARTITIONS: '16'
         run: python tools/translations/generate.py
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b # v4
         if: always()
         with:
           name: telos-translations-${{ github.run_id }}-${{ matrix.partition }}

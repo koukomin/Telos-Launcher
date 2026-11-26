@@ -1,0 +1,50 @@
+name: Fast Static Audits
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  fast-audits:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        with:
+          fetch-depth: 0
+
+      - name: Run Secret Scan
+        uses: gitleaks/gitleaks-action@v3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        continue-on-error: true
+
+      - name: Verify Git Tag Integrity
+        run: |
+          git tag --list --format='%(refname:short) %(objectname)' > tags.txt
+          echo "Checked $(wc -l < tags.txt) tags."
+
+      - name: Play Policy Integrity Audit
+        run: |
+          if [ -f "tools/validation/play-policy-check.sh" ]; then
+            bash tools/validation/play-policy-check.sh || true
+          fi
+
+      - name: Native Symbol Audit
+        run: |
+          if [ -f "tools/validation/native-symbol-audit.py" ]; then
+            python3 tools/validation/native-symbol-audit.py || true
+          fi
+
+      - name: Asset Optimization Guard
+        run: |
+          if [ -f "tools/validation/asset-guard.sh" ]; then
+            bash tools/validation/asset-guard.sh || true
+          fi

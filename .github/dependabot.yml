@@ -7,6 +7,9 @@ updates:
       cronjob: '0 6 * * *'
       timezone: Europe/Athens
     open-pull-requests-limit: 5
+    ignore:
+      - dependency-name: '*'
+        update-types: ['version-update:semver-major']
     groups:
       github-actions:
         patterns:
