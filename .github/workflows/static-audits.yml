@@ -51,3 +51,12 @@ jobs:
           if [ -f "tools/validation/asset-guard.sh" ]; then
             bash tools/validation/asset-guard.sh || true
           fi
+
+      - name: Kotlin Code Smells (Detekt)
+        uses: reviewdog/action-detekt@1ed16a13d7890632b732fb1cc63e52703a116b9b # v1.23.0
+        if: github.event_name == 'pull_request'
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          reporter: github-pr-review
+          filter_mode: added
+          fail_on_error: false

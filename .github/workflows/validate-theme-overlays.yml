@@ -34,7 +34,7 @@ jobs:
       - uses: gradle/actions/setup-gradle@94baf225fe0a508e581a564467443d0e2379123b # v4
         with:
           cache-provider: basic
-          cache-read-only: ${{ github.event_name == \'pull_request\' }}
+          cache-read-only: ${{ github.event_name == 'pull_request' }}
       - run: chmod +x gradlew
       - name: Compile and test UI
         run: ./gradlew :core:ktx:testDebugUnitTest :core:preferences:testDebugUnitTest :services:comms:testDebugUnitTest :app:ui:testDefaultDebugUnitTest :app:app:assembleDefaultDebug --no-daemon --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process '-Dorg.gradle.jvmargs=-Xmx7g -Dfile.encoding=UTF-8' --stacktrace --no-configuration-cache

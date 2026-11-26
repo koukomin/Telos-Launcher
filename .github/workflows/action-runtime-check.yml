@@ -37,7 +37,7 @@ jobs:
       - uses: gradle/actions/setup-gradle@94baf225fe0a508e581a564467443d0e2379123b # v4
         with:
           cache-provider: basic
-          cache-read-only: ${{ github.event_name == \'pull_request\' }}
+          cache-read-only: ${{ github.event_name == 'pull_request' }}
       - uses: actions/cache@6849a6489940f00c2f30c0fb92c6274307ccb58a # v4
         with:
           path: runtime-fixture

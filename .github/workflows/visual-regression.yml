@@ -1,0 +1,35 @@
+name: Visual Regression (Roborazzi)
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'app/ui/src/main/**/*.kt'
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  visual-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-java@3a4f6e1af504cf6a31855fa899c6aa5355ba6f12 # v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@94baf225fe0a508e581a564467443d0e2379123b # v4
+        with:
+          cache-read-only: ${{ github.event_name == 'pull_request' }}
+
+      - name: Verify Roborazzi Visual Tests
+        run: |
+          echo "Placeholder: Add ./gradlew verifyRoborazziDebug once visual tests are written."
+          echo "Check out https://github.com/takahirom/roborazzi for setup instructions."
+        continue-on-error: true
