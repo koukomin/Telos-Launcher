@@ -86,6 +86,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavKey
@@ -257,7 +258,7 @@ private fun CalculatorPage(vm: CalculatorViewModel, onUnits: () -> Unit, onVat: 
                         Text(
                             text = if (scientific) "+ −\n× =" else "√ π\ne =",
                             fontSize = 13.sp,
-                            lineHeight = 14.sp,
+                            lineHeight = 1.1.em,
                             fontWeight = FontWeight.Medium,
                             textAlign = TextAlign.Center,
                             modifier = Modifier.padding(2.dp),

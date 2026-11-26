@@ -78,7 +78,7 @@ fun TelosCyberAppBarTitle(
             Text(
                 title,
                 fontWeight = FontWeight.SemiBold,
-                maxLines = 1,
+                maxLines = 1, overflow = TextOverflow.Ellipsis,
                 overflow = TextOverflow.Ellipsis,
             )
             if (!status.isNullOrBlank()) {

@@ -86,6 +86,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.base.BaseActivity
@@ -977,7 +978,7 @@ private fun TextView(text: String) {
     SelectionContainer {
         LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(12.dp)) {
             items(lines.size) { i ->
-                Text(lines[i].ifEmpty { " " }, fontFamily = FontFamily.Monospace, fontSize = 13.sp, lineHeight = 18.sp)
+                Text(lines[i].ifEmpty { " " }, fontFamily = FontFamily.Monospace, fontSize = 13.sp, lineHeight = 1.4.em)
             }
         }
     }
@@ -991,7 +992,7 @@ private fun BigTextView(big: BigTextFile) {
             Text(stringResource(I18nR.string.od_text_too_big), Modifier.padding(bottom = 12.dp), color = MaterialTheme.colorScheme.onSurfaceVariant, style = MaterialTheme.typography.bodySmall)
         }
         items(big.lines) { i ->
-            Text(big.line(i).ifEmpty { " " }, fontFamily = FontFamily.Monospace, fontSize = 13.sp, lineHeight = 18.sp, maxLines = 6)
+            Text(big.line(i).ifEmpty { " " }, fontFamily = FontFamily.Monospace, fontSize = 13.sp, lineHeight = 1.4.em, maxLines = 6)
         }
     }
 }

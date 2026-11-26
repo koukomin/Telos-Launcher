@@ -59,6 +59,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.em
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.comms.intent.MessengerIntentUtils
@@ -470,7 +471,7 @@ private fun DialpadKey(
             Text(
                 text = sublabel.ifEmpty { " " },
                 fontSize = 12.sp,
-                lineHeight = 16.sp,
+                lineHeight = 1.33.em,
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f),
                 textAlign = TextAlign.Center,
             )

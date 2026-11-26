@@ -91,8 +91,8 @@ class TelosPackageInstaller(
         if (archive?.packageName != packageName) return failed(IllegalArgumentException("APK package does not match the selected app"))
         val selected = options.global.value.installer
         val selectedBackend = when (selected) { "shizuku" -> shizuku; "root" -> root; else -> null }
-        val shizukuReady = shizuku.isAvailable() && shizuku.hasPermission()
-        val rootReady = root.isAvailable() && root.hasPermission()
+        val shizukuReady = shizuku.isAvailable()
+        val rootReady = root.isAvailable()
         val privileged = StoreInstallPolicy.backends(selected, shizukuReady, rootReady).mapNotNull { id ->
             when (id) {
                 "shizuku" -> shizuku

@@ -194,7 +194,7 @@ private fun SearchPill(
                         placeholder,
                         style = MaterialTheme.typography.bodyLarge,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        maxLines = 1,
+                        maxLines = 1, overflow = TextOverflow.Ellipsis,
                         overflow = TextOverflow.Ellipsis,
                     )
                 }

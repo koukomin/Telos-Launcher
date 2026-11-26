@@ -222,7 +222,7 @@ internal fun VideoHome(
                         }
                     }
                     if (movies.isEmpty() && series.isEmpty() && recent.isEmpty()) {
-                        item { VideoEmptyState(BaseR.drawable.movie_24px, stringResource(I18nR.string.au14_videoui_empty_title), empty, Modifier.height(320.dp)) }
+                        item { VideoEmptyState(BaseR.drawable.movie_24px, stringResource(I18nR.string.au14_videoui_empty_title), empty, Modifier.heightIn(min = 320.dp)) }
                     }
                 }
             }

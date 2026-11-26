@@ -87,7 +87,6 @@ import de.mm20.launcher2.webapp.WebAppLaunchContract
 import de.mm20.launcher2.webappshortcuts.WebAppShortcutRepository
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import org.json.JSONObject
 import org.koin.core.component.get
 import org.koin.compose.koinInject
@@ -169,9 +168,9 @@ class WebAppActivity : BaseActivity() {
             
             val browsingSettings: WebAppBrowsingSettings = org.koin.java.KoinJavaComponent.getKoin().get()
 
-            val isGroupEnabled = runBlocking { browsingSettings.groupsEnabled.first() }
+            val isGroupEnabled = kotlinx.coroutines.runBlocking { browsingSettings.groupsEnabled.first() }
             if (isGroupEnabled && shortcutKey != null) {
-                val groups = runBlocking { browsingSettings.groups.first() }
+                val groups = kotlinx.coroutines.runBlocking { browsingSettings.groups.first() }
                 val group = groups.find { it.appKeys.contains(shortcutKey) }
                 if (group != null && !group.notificationsEnabled) {
                     return

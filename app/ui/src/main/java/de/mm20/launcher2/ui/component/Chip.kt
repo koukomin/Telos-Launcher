@@ -73,7 +73,7 @@ fun Chip(
                 start = if (icon == null) 12.dp else 4.dp,
                 end = if (rightIcon == null) 12.dp else 4.dp,
             ),
-            maxLines = 1,
+            maxLines = 1, overflow = TextOverflow.Ellipsis,
             overflow = TextOverflow.Ellipsis,
             text = text)
         if (rightIcon != null) {

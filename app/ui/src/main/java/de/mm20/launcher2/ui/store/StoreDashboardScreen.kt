@@ -29,6 +29,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -1143,7 +1144,7 @@ private fun InstalledAppsDialog(viewModel: StoreViewModel, onDismiss: () -> Unit
                 } else {
                     if (list.isEmpty() && iq.isNotBlank()) de.mm20.launcher2.ui.component.SearchEmptyState(iq.trim())
                     else if (list.isEmpty()) Text(stringResource(I18nR.string.au_store_no_installed_candidates), style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(16.dp))
-                    else LazyColumn(Modifier.height(320.dp)) {
+                    else LazyColumn(Modifier.heightIn(max = 320.dp)) {
                         items(list, key = { it.packageName }) { app ->
                             Row(
                                 Modifier.fillMaxWidth().clickable { if (app.packageName in selected) selected.remove(app.packageName) else selected.add(app.packageName) },
