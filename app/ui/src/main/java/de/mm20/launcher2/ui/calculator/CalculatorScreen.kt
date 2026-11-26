@@ -230,6 +230,8 @@ private fun RoundKey(
                 fontSize = fontSize.sp,
                 fontWeight = if (kind == KeyKind.Clear || selected) FontWeight.SemiBold else FontWeight.Normal,
                 maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                softWrap = false,
             )
         }
     }

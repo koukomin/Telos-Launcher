@@ -464,14 +464,7 @@ private fun DialpadKey(
             Text(
                 text = sublabel.ifEmpty { " " },
                 fontSize = sublabelSp,
-                lineHeight = sublabelSp * 1.15f,
-                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f),
-                textAlign = TextAlign.Center,
-            )
-            Text(
-                text = sublabel.ifEmpty { " " },
-                fontSize = 12.sp,
-                lineHeight = 1.33.em,
+                lineHeight = 1.2.em,
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f),
                 textAlign = TextAlign.Center,
             )
