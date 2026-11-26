@@ -75,6 +75,7 @@ jobs:
       - uses: gradle/actions/setup-gradle@94baf225fe0a508e581a564467443d0e2379123b # v4
         with:
           cache-provider: basic
+          cache-read-only: ${{ github.event_name == \'pull_request\' }}
       - run: chmod +x gradlew
       - name: Test Stremio protocol and watched state
         run: ./gradlew :services:comms:testDebugUnitTest --stacktrace --no-daemon --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process -Dorg.gradle.jvmargs=-Xmx3072m
@@ -133,6 +134,7 @@ jobs:
       - uses: gradle/actions/setup-gradle@94baf225fe0a508e581a564467443d0e2379123b # v4
         with:
           cache-provider: basic
+          cache-read-only: ${{ github.event_name == \'pull_request\' }}
       - run: chmod +x gradlew
       - name: Build wallpaper surface instrumentation
         run: ./gradlew :services:wallpapers:assembleDebugAndroidTest --stacktrace

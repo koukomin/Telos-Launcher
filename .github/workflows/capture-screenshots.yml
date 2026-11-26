@@ -21,6 +21,7 @@ jobs:
       - uses: gradle/actions/setup-gradle@94baf225fe0a508e581a564467443d0e2379123b # v4
         with:
           cache-provider: basic
+          cache-read-only: ${{ github.event_name == \'pull_request\' }}
       - name: Prepare clean English dark-wallpaper screenshot build
         run: python3 docs/scripts/prepare_development_screenshots.py
       - name: Build emulator APK

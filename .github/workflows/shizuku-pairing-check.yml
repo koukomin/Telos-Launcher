@@ -23,6 +23,7 @@ jobs:
       - uses: gradle/actions/setup-gradle@94baf225fe0a508e581a564467443d0e2379123b # v4
         with:
           cache-provider: basic
+          cache-read-only: ${{ github.event_name == \'pull_request\' }}
       - name: Compile UI, run unit regressions, build physical-device harness
         run: ./gradlew :services:app-management:testDebugUnitTest :services:app-management:assembleDebugAndroidTest :app:ui:compileDefaultDebugKotlin --console=plain --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process '-Dorg.gradle.jvmargs=-Xmx7g -Dfile.encoding=UTF-8' --no-configuration-cache
       - name: Verify ARM payloads and ARM64 16 KB ELF alignment

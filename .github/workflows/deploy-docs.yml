@@ -57,6 +57,7 @@ jobs:
         uses: gradle/actions/setup-gradle@94baf225fe0a508e581a564467443d0e2379123b # v4
         with:
           cache-provider: basic
+          cache-read-only: ${{ github.event_name == \'pull_request\' }}
       - run: chmod +x gradlew && ./gradlew dokkaGenerateHtml --no-configuration-cache --stacktrace
         working-directory: .
       - run: mv build/dokka/html docs/public/reference
