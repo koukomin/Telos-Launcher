@@ -43,16 +43,19 @@ val DefaultChannels =
         ChannelTag("42224859763652914db53052103f0b744df79dfc4efef7e950fc0802fc3df3c5", Constants.nos),
     )
 
-val DefaultNIP65RelaySet = setOf(Constants.mom, Constants.nos, Constants.bitcoiner)
+val DefaultNIP65RelaySet = setOf(Constants.mom, Constants.nos, Constants.bitcoiner, Constants.primal, Constants.coracle, Constants.oxchat)
 
 val DefaultNIP65List =
     listOf(
         AdvertisedRelayInfo(Constants.mom, AdvertisedRelayType.BOTH),
         AdvertisedRelayInfo(Constants.nos, AdvertisedRelayType.BOTH),
         AdvertisedRelayInfo(Constants.bitcoiner, AdvertisedRelayType.BOTH),
+        AdvertisedRelayInfo(Constants.primal, AdvertisedRelayType.BOTH),
+        AdvertisedRelayInfo(Constants.coracle, AdvertisedRelayType.BOTH),
+        AdvertisedRelayInfo(Constants.oxchat, AdvertisedRelayType.BOTH),
     )
 
-val DefaultGlobalRelays = listOf(Constants.wine, Constants.news)
+val DefaultGlobalRelays = listOf(Constants.wine, Constants.news, Constants.primal, Constants.coracle, Constants.oxchat)
 
 val DefaultDMRelayList = listOf(Constants.auth, Constants.oxchat, Constants.nos)
 
