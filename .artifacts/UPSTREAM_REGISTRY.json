@@ -14,8 +14,8 @@
   "amethyst": {
     "repo": "vitorpamplona/amethyst",
     "path": "libs/amethyst",
-    "current_version": "v0.92.5",
-    "type": "included_build"
+    "type": "included_build",
+    "current_commit": "75bb07fa3adf4ef5d590bb5379d87f01c139a430"
   },
   "uad-ng": {
     "repo": "Universal-Debloater-Alliance/universal-android-debloater-next-generation",

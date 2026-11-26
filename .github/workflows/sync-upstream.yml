@@ -1,0 +1,51 @@
+name: Sync Amethyst Upstream
+
+on:
+  schedule:
+    - cron: '0 5 * * 0' # Every Sunday at 05:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync-amethyst:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+
+      - name: Setup Python
+        uses: actions/setup-python@4066144eb887f0b5d033866503c5825aeb3f2fa1 # v5
+
+      - name: Check for new Amethyst commits
+        run: |
+          UPSTREAM_REPO="https://github.com/vitorpamplona/amethyst.git"
+          CURRENT_REV=$(cat libs/amethyst/UPSTREAM_REVISION)
+          LATEST_REV=$(git ls-remote $UPSTREAM_REPO HEAD | awk '{ print $1 }')
+          
+          if [ "$CURRENT_REV" == "$LATEST_REV" ]; then
+            echo "Amethyst is up to date."
+            echo "SYNC_NEEDED=false" >> $GITHUB_ENV
+          else
+            echo "New version available: $LATEST_REV"
+            echo "SYNC_NEEDED=true" >> $GITHUB_ENV
+            echo "LATEST_REV=$LATEST_REV" >> $GITHUB_ENV
+          fi
+
+      - name: Create Sync Pull Request
+        if: env.SYNC_NEEDED == 'true'
+        uses: peter-evans/create-pull-request@c5a7806660adbe173f04e3e038b0ccdcd758773c # v6
+        with:
+          commit-message: "chore(deps): sync amethyst upstream to ${{ env.LATEST_REV }}"
+          title: "chore(deps): sync amethyst upstream"
+          body: |
+            A new commit is available in the upstream Amethyst repository.
+            
+            * **Current Revision:** `cat libs/amethyst/UPSTREAM_REVISION`
+            * **Latest Revision:** `${{ env.LATEST_REV }}`
+            
+            Due to the complex nature of the hard-fork (and Telos-specific UI patches), this PR acts as a **notification**. 
+            A maintainer needs to manually pull the changes, apply our patches, and update `UPSTREAM_REVISION`.
+          branch: "ci/sync-amethyst"
+          labels: "dependencies, upstream-sync"
