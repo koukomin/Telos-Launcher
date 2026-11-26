@@ -27,7 +27,10 @@ import kotlin.coroutines.resume
  * entry (declared in this module's manifest). Hidden-API reflection goes through
  * [HiddenApiBypass] because these framework methods are on the greylist since API 28.
  */
-internal class ShizukuProvider(private val ownPackage: String) : PrivilegedAccessProvider {
+internal class ShizukuProvider(
+    private val context: android.content.Context,
+    private val ownPackage: String = context.packageName
+) : PrivilegedAccessProvider {
 
     companion object {
         private const val REQUEST_CODE = 9316
@@ -138,6 +141,7 @@ internal class ShizukuProvider(private val ownPackage: String) : PrivilegedAcces
         withContext(Dispatchers.IO) { runPackageCommand(if (hidden) "hide" else "unhide", packageName, userId) }
 
     private suspend fun runPackageCommand(action: String, packageName: String, userId: Int): Boolean {
+        de.mm20.launcher2.ktx.ShizukuProcesses.init(context.applicationContext)
         return de.mm20.launcher2.ktx.TelosShellEngine.execArgsResult(
             args = arrayOf("pm", action, "--user", userId.toString(), packageName),
             timeoutMs = 10_000L,

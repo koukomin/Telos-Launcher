@@ -59,8 +59,8 @@ internal class RootProvider : PrivilegedAccessProvider {
 
     override suspend fun clearCache(packageName: String, userId: Int): Boolean {
         if (!TelosShellEngine.isValidPackageName(packageName)) return false
-        // Clearing only cache to avoid data loss
-        return runAsRoot("rm -rf /data/user/$userId/$packageName/cache/*")
+        // Clearing cache directory safely
+        return runAsRoot("rm -rf /data/user/$userId/$packageName/cache")
     }
 
     private suspend fun runAsRoot(command: String, timeoutSeconds: Long? = null): Boolean {

@@ -54,7 +54,7 @@ class FreezeManager internal constructor(
     private val operationMutex = Mutex()
     private val companionMutex = Mutex()
 
-    private val shizukuProvider = ShizukuProvider(context.packageName)
+    private val shizukuProvider = ShizukuProvider(context, context.packageName)
     private val rootProvider = RootProvider()
     private val islandProvider = IslandProvider(context)
     private val deviceOwnerProvider = DeviceOwnerProvider(context)
