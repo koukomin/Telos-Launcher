@@ -1,0 +1,2 @@
+• Fixed Shizuku auto-prompt and permission group conflict.
+• Fixed Large Font Scale text clipping and Dialpad UI.
