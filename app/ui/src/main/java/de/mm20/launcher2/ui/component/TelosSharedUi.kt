@@ -153,7 +153,7 @@ fun TelosAppListRow(
                     text = label,
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.Medium,
-                    maxLines = 1, overflow = TextOverflow.Ellipsis,
+                    maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )
 
@@ -164,7 +164,7 @@ fun TelosAppListRow(
                     text = subtitle,
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    maxLines = 1, overflow = TextOverflow.Ellipsis,
+                    maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )
 

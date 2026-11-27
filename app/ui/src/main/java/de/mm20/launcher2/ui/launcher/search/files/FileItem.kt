@@ -94,7 +94,7 @@ fun FileItem(
                                 ),
                                 text = file.labelOverride ?: file.label,
                                 style = MaterialTheme.typography.titleMedium,
-                                maxLines = 1, overflow = TextOverflow.Ellipsis,
+                                maxLines = 1,
                                 overflow = TextOverflow.Ellipsis
                             )
                             val tags by viewModel.tags.collectAsState(emptyList())
@@ -277,13 +277,13 @@ fun FileItem(
                             ),
                             text = file.labelOverride ?: file.label,
                             style = MaterialTheme.typography.titleSmall,
-                            maxLines = 1, overflow = TextOverflow.Ellipsis,
+                            maxLines = 1,
                             overflow = TextOverflow.Ellipsis
                         )
                         Text(
                             file.getFileType(context),
                             style = MaterialTheme.typography.bodySmall,
-                            maxLines = 1, overflow = TextOverflow.Ellipsis,
+                            maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
                             modifier = Modifier.padding(top = 2.dp)
                         )

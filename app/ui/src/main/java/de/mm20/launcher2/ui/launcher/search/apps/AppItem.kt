@@ -151,7 +151,7 @@ fun AppItem(
                                             text = stringResource(I18nR.string.app_info_version, it),
                                             style = MaterialTheme.typography.bodySmall,
                                             modifier = Modifier.padding(top = 4.dp),
-                                            maxLines = 1, overflow = TextOverflow.Ellipsis,
+                                            maxLines = 1,
                                             overflow = TextOverflow.Ellipsis
                                         )
                                     }
@@ -159,7 +159,7 @@ fun AppItem(
                                         text = app.componentName.packageName,
                                         style = MaterialTheme.typography.bodySmall,
                                         modifier = Modifier.padding(top = 1.dp),
-                                        maxLines = 1, overflow = TextOverflow.Ellipsis,
+                                        maxLines = 1,
                                         overflow = TextOverflow.Ellipsis,
                                     )
                                 }
@@ -252,7 +252,7 @@ fun AppItem(
                                                     Text(
                                                         not.title!!,
                                                         style = MaterialTheme.typography.titleSmall,
-                                                        maxLines = 1, overflow = TextOverflow.Ellipsis,
+                                                        maxLines = 1,
                                                         overflow = TextOverflow.Ellipsis
                                                     )
                                                 }
@@ -262,7 +262,7 @@ fun AppItem(
                                                         not.text!!,
                                                         modifier = Modifier.padding(top = 2.dp),
                                                         style = MaterialTheme.typography.bodySmall,
-                                                        maxLines = 1, overflow = TextOverflow.Ellipsis,
+                                                        maxLines = 1,
                                                         overflow = TextOverflow.Ellipsis
                                                     )
                                                 }
@@ -368,7 +368,7 @@ fun AppItem(
                                         shortcut.labelOverride ?: shortcut.label,
                                         modifier = Modifier.weight(1f),
                                         style = MaterialTheme.typography.titleSmall,
-                                        maxLines = 1, overflow = TextOverflow.Ellipsis,
+                                        maxLines = 1,
                                         overflow = TextOverflow.Ellipsis
                                     )
                                     IconButton(
@@ -667,7 +667,7 @@ fun AppItem(
                         )
                     }
                     Text(
-                        maxLines = 1, overflow = TextOverflow.Ellipsis,
+                        maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                         text = app.labelOverride ?: app.label,
                         style = MaterialTheme.typography.titleMedium,
