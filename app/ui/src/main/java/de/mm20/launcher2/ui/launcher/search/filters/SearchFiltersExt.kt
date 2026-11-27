@@ -17,7 +17,8 @@ fun SearchFilters.withAllCategories(): SearchFilters {
         documents = true,
         images = true,
         video = true,
-        music = true
+        music = true,
+        settings = true,
     )
 }
 
@@ -35,7 +36,8 @@ fun SearchFilters.withOnlyCategory(
     documents: Boolean = false,
     images: Boolean = false,
     video: Boolean = false,
-    music: Boolean = false
+    music: Boolean = false,
+    settings: Boolean = false,
 ): SearchFilters {
     return copy(
         apps = apps,
@@ -51,7 +53,8 @@ fun SearchFilters.withOnlyCategory(
         documents = documents,
         images = images,
         video = video,
-        music = music
+        music = music,
+        settings = settings,
     )
 }
 
@@ -213,4 +216,10 @@ fun SearchFilters.toggleMusic(): SearchFilters {
     }
 
     return copy(music = !music)
+}
+
+fun SearchFilters.toggleSettings(): SearchFilters {
+    if (allCategoriesEnabled) return withOnlyCategory(settings = true)
+    if (settings && enabledCategories == 1) return withAllCategories()
+    return copy(settings = !settings)
 }

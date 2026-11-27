@@ -1,6 +1,5 @@
 package de.mm20.launcher2.search
 
-import de.mm20.launcher2.ktx.toInt
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -21,6 +20,7 @@ data class SearchFilters(
     val images: Boolean = true,
     val video: Boolean = true,
     val music: Boolean = true,
+    val settings: Boolean = true,
 ) {
     private val categories = listOf(
         apps,
@@ -36,7 +36,8 @@ data class SearchFilters(
         documents,
         images,
         video,
-        music
+        music,
+        settings,
     )
 
     val allCategoriesEnabled
