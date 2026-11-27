@@ -1303,7 +1303,7 @@ See [dependency security checks](docs/docs/developer-guide/dependabot.md) and
 ./gradlew :core:base:test           # run the tests of a single module
 ```
 
-Telos is an Android launcher. The JVM `:desktop-linux` module and desktop binary CI are retired (`include` commented in `settings.gradle.kts`; `.github/workflows/build-desktop-binaries.yml` does not run on push or PR). Historical notes remain under [Telos Desktop](docs/docs/developer-guide/desktop-linux.md).
+Telos ships as an Android launcher. Standalone Telos Desktop development is paused. Its source remains in `desktop-linux/`, outside the active Gradle build, and its workflow is archived outside GitHub Actions' workflow directory. [Desktop development notes](docs/docs/developer-guide/telos-wayland-shell.md).
 
 Developer documentation (module structure, plugin contracts) lives in `docs/docs/developer-guide/`.
 

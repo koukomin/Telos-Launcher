@@ -1,4 +1,11 @@
 ---
+
+Standalone Telos Desktop development is paused. Gradle does not include
+`:desktop-linux`, and its workflow is archived under
+`.github/retired-workflows/`. The desktop source and session assets are retained
+for future work. The archived Linux launcher and Windows shell installer
+require `TELOS_DESKTOP_DEV=1`; Windows `-Revert` remains available.
+Android's external-display mode continues to ship with the launcher.
 sidebar_position: 11
 ---
 
