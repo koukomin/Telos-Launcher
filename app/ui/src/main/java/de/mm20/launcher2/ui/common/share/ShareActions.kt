@@ -97,6 +97,12 @@ object ShareActions {
             ).build()
         }
         val uri = uris.singleOrNull()
+        if (uri?.scheme == "content" && isTelosCarrierShare(context, uri)) {
+            action(
+                I18nR.string.telos_files_share_extract,
+                Intent(context, ExtractSharedFileActivity::class.java).setData(uri),
+            )
+        }
         if (uri?.scheme == "content" && uri.authority == "${context.packageName}.fileprovider") {
             action(
                 de.mm20.launcher2.i18n.R.string.files_cloud_upload,
@@ -119,6 +125,10 @@ object ShareActions {
         }
         if (actions.isNotEmpty()) chooser.putExtra(Intent.EXTRA_CHOOSER_CUSTOM_ACTIONS, actions.toTypedArray())
     }
+
+    internal fun isTelosCarrierShare(context: Context, uri: Uri): Boolean =
+        uri.scheme == "content" && (uri.authority == "${context.packageName}.fileprovider" ||
+            uri.authority == "${context.packageName}.provider")
 
     private val nextShareActionId = java.util.concurrent.atomic.AtomicInteger()
     private val saveArchivePackages = listOf(

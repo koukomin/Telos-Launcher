@@ -29,4 +29,5 @@
     <string name="telos_files_carrier_png">Χρήση pixel PNG</string>
     <string name="telos_files_carrier_png_info">Διάλεξε PNG έως 8 megapixel. Η χωρητικότητα εξαρτάται από τα αδιαφανή pixel. Χρησιμοποίησε κατάληξη .png και στείλε το ως αρχείο. Η αλλαγή μεγέθους ή η επανακωδικοποίηση μπορεί να καταστρέψει τα δεδομένα.</string>
     <string name="share_archive_with_save">Αρχειοθέτηση με το Save</string>
+    <string name="telos_files_share_extract">Αποκρυπτογράφηση με το Telos</string>
 </resources>

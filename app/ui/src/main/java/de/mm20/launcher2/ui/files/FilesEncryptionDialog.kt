@@ -30,7 +30,7 @@ import java.util.UUID
 
 /** Single local file only. Remote, archive and vault entries are deliberately not accepted. */
 @Composable
-fun FilesEncryptionDialog(source: File, decrypt: Boolean, onDismiss: () -> Unit, onComplete: () -> Unit, carrierMode: Boolean = false) {
+fun FilesEncryptionDialog(source: File, decrypt: Boolean, onDismiss: () -> Unit, onComplete: () -> Unit, carrierMode: Boolean = false, onExport: ((File) -> Unit)? = null) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     val action = when {
@@ -138,7 +138,12 @@ fun FilesEncryptionDialog(source: File, decrypt: Boolean, onDismiss: () -> Unit,
                                 else PasswordFileEncryption.encrypt(source, output, secret, staging, checkpoint, update)
                             } finally { staging.deleteRecursively() }
                         }
-                        onComplete(); onDismiss()
+                        if (onExport != null) {
+                            onExport(output)
+                        } else {
+                            onComplete()
+                            onDismiss()
+                        }
                     } catch (_: CancellationException) { /* Helper cleans up owned work; original stays. */ }
                     catch (_: Exception) { failure = true }
                     finally { secret.fill('\u0000'); job = null }

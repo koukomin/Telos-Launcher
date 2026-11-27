@@ -984,7 +984,10 @@ private suspend fun shareImageFile(
                 addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             }
 
-        context.startActivity(Intent.createChooser(shareIntent, null))
+        context.startActivity(
+                    com.vitorpamplona.amethyst.ui.AetherHostBridge.createFileChooser
+                        ?.invoke(context, uri, determinedMimeType) ?: Intent.createChooser(shareIntent, null),
+                )
     } catch (e: Exception) {
         if (e is CancellationException) throw e
         Log.w("ZoomableContentView", "Failed to share image: $videoUri", e)
@@ -1042,7 +1045,10 @@ private suspend fun shareVideoFile(
                 }
 
             withContext(Dispatchers.Main) {
-                context.startActivity(Intent.createChooser(shareIntent, null))
+                context.startActivity(
+                    com.vitorpamplona.amethyst.ui.AetherHostBridge.createFileChooser
+                        ?.invoke(context, uri, determinedMimeType) ?: Intent.createChooser(shareIntent, null),
+                )
             }
         }
 
@@ -1108,7 +1114,10 @@ private suspend fun shareLocalVideoFile(
                 }
 
             withContext(Dispatchers.Main) {
-                context.startActivity(Intent.createChooser(shareIntent, null))
+                context.startActivity(
+                    com.vitorpamplona.amethyst.ui.AetherHostBridge.createFileChooser
+                        ?.invoke(context, uri, determinedMimeType) ?: Intent.createChooser(shareIntent, null),
+                )
             }
         }
     } catch (e: Exception) {

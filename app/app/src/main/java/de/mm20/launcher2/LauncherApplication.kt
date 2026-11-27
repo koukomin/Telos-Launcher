@@ -110,6 +110,10 @@ class LauncherApplication : Amethyst(), CoroutineScope, ImageLoaderFactory {
         // The video player's own process needs none of the launcher
         if (ProcessInfo.init(this)) return
 
+        AetherHostBridge.createFileChooser = { context, uri, mime ->
+            de.mm20.launcher2.ui.common.share.ShareActions.createChooserIntent(listOf(uri), mime, context = context)
+        }
+
         AetherHostBridge.createHostIntent = { context ->
             Intent().setClassName(context, SettingsDeepLinkContract.ACTIVITY_CLASS_NAME)
                 .putExtra(SettingsDeepLinkContract.EXTRA_ROUTE, SettingsDeepLinkContract.ROUTE_AETHER)

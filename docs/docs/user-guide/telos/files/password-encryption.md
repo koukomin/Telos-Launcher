@@ -32,3 +32,7 @@ The carrier and payload may be different file types. Telos keeps the originals a
 
 
 For PNG carriers, select **Use PNG pixels** when embedding or extracting. Telos stores the encrypted payload in the least significant blue bit of each fully opaque pixel. It supports images up to eight megapixels. Capacity is roughly one byte per eight opaque pixels, minus encryption and format overhead. Send the PNG as a file, since resizing or re-encoding can destroy the payload. This method is detectable through image analysis and uses a Telos-specific format.
+
+## Decrypt a shared file
+
+In Viewer or Aether's photo and video viewer, open **Share** and choose **Decrypt with Telos** on Android 14 or newer. Ermis offers the same action next to an attachment in an open message. Enter the shared secret, select **Use PNG pixels** if that was how the payload was embedded, then choose where to save the recovered file. Standalone `.telos-aes` files use the standard decrypt dialog.

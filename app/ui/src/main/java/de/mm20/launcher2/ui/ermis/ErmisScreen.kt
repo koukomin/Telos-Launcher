@@ -309,7 +309,25 @@ private fun ErmisMailbox() {
         onMove = { target -> moveTarget = message to target },
         onMoveAny = { moving = message; task { repository.loadFolders(message.accountId) } },
         onSaveNote = { task { repository.saveNote(message.accountId, message.uid, it, message.folder); selected = selected?.copy(note = it) } },
-        onDownload = { attachment, uri -> task { repository.downloadAttachment(message.accountId, message.uid, attachment.index, uri, message.folder) } }) }
+        onDownload = { attachment, uri -> task { repository.downloadAttachment(message.accountId, message.uid, attachment.index, uri, message.folder) } },
+        onDecrypt = { attachment -> task {
+            val extract = de.mm20.launcher2.ui.common.share.ExtractSharedFileActivity::class.java
+            val staging = java.io.File(context.cacheDir, "ermis-carrier/${java.util.UUID.randomUUID()}")
+            check(staging.mkdirs())
+            try {
+                val safeName = de.mm20.launcher2.ui.common.share.ShareActions.safeName(attachment.name)
+                val file = java.io.File(staging, safeName)
+                val uri = androidx.core.content.FileProvider.getUriForFile(context, "${context.packageName}.fileprovider", file)
+                repository.downloadAttachment(message.accountId, message.uid, attachment.index, uri, message.folder)
+                check(file.isFile)
+                context.startActivity(android.content.Intent(context, extract)
+                    .setData(uri)
+                    .putExtra("ermis_staging", staging.name))
+            } catch (error: Exception) {
+                staging.deleteRecursively()
+                throw error
+            }
+        } }) }
     if (foldersOpen) AlertDialog(onDismissRequest = { foldersOpen = false }, title = { TelosCyberHeading {  Text(stringResource(I18nR.string.ermis_folders))  } }, text = {
         LazyColumn(Modifier.heightIn(max = 480.dp)) {
             if (accountId == null) {
@@ -505,7 +523,7 @@ private fun ComposeDialog(accounts: List<ErmisAccount>, initialAccount: String?,
 }
 
 @Composable
-private fun MessageDialog(message: ErmisMessage, conversation: List<ErmisMessage>, folders: List<ErmisFolder>, onSelect: (ErmisMessage) -> Unit, onDismiss: () -> Unit, onReply: () -> Unit, onReplyAll: () -> Unit, onForward: () -> Unit, onMarkUnread: () -> Unit, onMove: (ErmisFolder) -> Unit, onMoveAny: () -> Unit, onSaveNote: (String) -> Unit, onDownload: (ErmisAttachment, Uri) -> Unit) {
+private fun MessageDialog(message: ErmisMessage, conversation: List<ErmisMessage>, folders: List<ErmisFolder>, onSelect: (ErmisMessage) -> Unit, onDismiss: () -> Unit, onReply: () -> Unit, onReplyAll: () -> Unit, onForward: () -> Unit, onMarkUnread: () -> Unit, onMove: (ErmisFolder) -> Unit, onMoveAny: () -> Unit, onSaveNote: (String) -> Unit, onDownload: (ErmisAttachment, Uri) -> Unit, onDecrypt: (ErmisAttachment) -> Unit) {
     val scope = rememberCoroutineScope()
     var conversationOpen by remember { mutableStateOf(false) }
     var showHtml by remember(message.accountId, message.folder, message.uid, message.html) { mutableStateOf(message.html.isNotBlank()) }
@@ -580,7 +598,14 @@ private fun MessageDialog(message: ErmisMessage, conversation: List<ErmisMessage
             }
             if (showHtml && message.html.isNotBlank()) ErmisHtmlBody(message.html, message.body.ifBlank { message.preview }, Modifier.fillMaxWidth().height(htmlHeight))
             else SelectionContainer { Text(message.body.ifBlank { message.preview }) }
-            message.attachments.forEach { item -> OutlinedButton(onClick = { attachment = item; download.launch(item.name) }) { Text(item.name) } }
+            message.attachments.forEach { item ->
+                FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    OutlinedButton(onClick = { attachment = item; download.launch(item.name) }) { Text(item.name) }
+                    TextButton(onClick = { onDecrypt(item) }) {
+                        Text(stringResource(I18nR.string.telos_files_share_extract))
+                    }
+                }
+            }
             OutlinedTextField(note, { note = it }, label = { Text(stringResource(I18nR.string.ermis_note)) }, modifier = Modifier.fillMaxWidth(), minLines = 2)
             TextButton(onClick = { onSaveNote(note) }) { Text(stringResource(I18nR.string.ermis_note_save)) }
         }

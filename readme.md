@@ -1583,3 +1583,5 @@ The cloud upload and copy-link dialog is also available in Sync, Downloads and t
 Telos Files can embed a password-protected payload in a copy of a carrier file and recover it with the same secret. The [carrier guide](docs/docs/user-guide/telos/files/password-encryption.md#embed-an-encrypted-file-in-a-carrier) covers format limits and how to share the copy.
 
 The Security Hub also accepts an opt-in Ripple signal to lock private access. On Android 14+, the file share sheet can hand supported files to Save by OpenArchive for archiving.
+
+**Decrypt with Telos** opens supported encrypted attachments directly from Ermis and from the Android 14+ file share sheet in Viewer and Aether's media viewer. Recovered files are exported through the Android save dialog.

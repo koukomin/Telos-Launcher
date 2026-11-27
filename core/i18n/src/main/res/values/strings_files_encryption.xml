@@ -16,4 +16,5 @@
     <string name="telos_files_carrier_png">Use PNG pixels</string>
     <string name="telos_files_carrier_png_info">Choose a PNG of up to 8 megapixels. Capacity depends on opaque pixels. Use a .png output name and send it as a file. Resizing or re-encoding can destroy the payload.</string>
     <string name="share_archive_with_save">Archive with Save</string>
+    <string name="telos_files_share_extract">Decrypt with Telos</string>
 </resources>

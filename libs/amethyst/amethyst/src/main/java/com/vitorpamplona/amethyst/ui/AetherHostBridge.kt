@@ -16,6 +16,8 @@ object AetherHostBridge {
 
     var notificationSmallIcon: Int? = null
 
+    var createFileChooser: ((Context, Uri, String) -> Intent)? = null
+
     var createHostIntent: ((Context) -> Intent)? = null
 
     fun redirect(context: Context, incoming: Intent): Intent? {
