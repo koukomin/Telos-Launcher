@@ -39,4 +39,10 @@
     <string name="security_hub_cloak_off">Stealth cloak</string>
     <string name="security_hub_clip_on">Clipboard blocked</string>
     <string name="security_hub_clip_off">Block clipboard access</string>
+    <string name="security_hub_emergency_lock">Lock private access now</string>
+    <string name="security_hub_emergency_locked">Vault sessions closed. App Lock will ask for authentication on the next protected app visit.</string>
+    <string name="security_hub_ripple_connect">Connect Ripple</string>
+    <string name="security_hub_ripple_connect_info">Allow Ripple to lock vault sessions and expire App Lock access when you activate its panic button?</string>
+    <string name="security_hub_ripple_disconnect">Disconnect Ripple</string>
+    <string name="security_hub_ripple_disconnected">Ripple access removed</string>
 </resources>

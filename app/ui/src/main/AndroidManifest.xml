@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <queries>
+        <package android:name="net.opendasharchive.openarchive.release" />
+        <package android:name="net.opendasharchive.openarchive" />
         <package android:name="com.termux" />
         <package android:name="com.google.android.apps.youtube.music" />
         <package android:name="ai.x.grok" />
@@ -57,6 +59,18 @@
                 android:name="android.view.im"
                 android:resource="@xml/method" />
         </service>
+
+        <activity
+            android:name=".settings.security.PanicResponderActivity"
+            android:exported="true"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
+            <intent-filter>
+                <action android:name="info.guardianproject.panic.action.CONNECT" />
+                <action android:name="info.guardianproject.panic.action.DISCONNECT" />
+                <action android:name="info.guardianproject.panic.action.TRIGGER" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
 
         <activity
             android:name=".common.share.CloudUploadActivity"

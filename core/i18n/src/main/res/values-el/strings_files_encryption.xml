@@ -26,4 +26,7 @@
     <string name="telos_files_carrier_pick">Επιλογή αρχείου-φορέα</string>
     <string name="telos_files_carrier_change">Αλλαγή αρχείου-φορέα</string>
     <string name="telos_files_carrier_info">Το Telos προσθέτει ανιχνεύσιμα κρυπτογραφημένα δεδομένα σε αντίγραφο του αρχείου-φορέα. Ορισμένες μορφές μπορεί να μην ανοίγουν πλέον. Η επεξεργασία ή η επανασυμπίεση μπορεί να αφαιρέσει τα δεδομένα. Χρησιμοποίησε ισχυρό συνθηματικό ή τυχαίο κοινό μυστικό. Για ενσωμάτωση, δώσε στο νέο αρχείο την επέκταση του αρχείου-φορέα.</string>
+    <string name="telos_files_carrier_png">Χρήση pixel PNG</string>
+    <string name="telos_files_carrier_png_info">Διάλεξε PNG έως 8 megapixel. Η χωρητικότητα εξαρτάται από τα αδιαφανή pixel. Χρησιμοποίησε κατάληξη .png και στείλε το ως αρχείο. Η αλλαγή μεγέθους ή η επανακωδικοποίηση μπορεί να καταστρέψει τα δεδομένα.</string>
+    <string name="share_archive_with_save">Αρχειοθέτηση με το Save</string>
 </resources>

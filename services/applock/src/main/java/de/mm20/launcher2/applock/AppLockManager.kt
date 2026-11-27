@@ -62,8 +62,7 @@ class AppLockManager(
         val receiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context, intent: Intent) {
                 if (intent.action == Intent.ACTION_SCREEN_OFF) {
-                    unlockedPackages.clear()
-                    lastLeftAt.clear()
+                    relockAll()
                     _pendingLock.value = null
                 }
             }
@@ -120,6 +119,12 @@ class AppLockManager(
     private suspend fun gateIfLocked(packageName: String) {
         val locked = settings.lockedPackages.first().contains(packageName)
         _pendingLock.value = if (locked) packageName else null
+    }
+
+    /** Expires the grace period for every authenticated app. */
+    fun relockAll() {
+        unlockedPackages.clear()
+        lastLeftAt.clear()
     }
 
     /** Called by the gate after a successful authentication for [packageName]. */

@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import androidx.compose.ui.window.SecureFlagPolicy
 import de.mm20.launcher2.helper.EncryptedFileCarrier
+import de.mm20.launcher2.helper.EncryptedPngCarrier
 import de.mm20.launcher2.helper.PasswordFileEncryption
 import de.mm20.launcher2.ui.R
 import kotlinx.coroutines.*
@@ -38,6 +39,7 @@ fun FilesEncryptionDialog(source: File, decrypt: Boolean, onDismiss: () -> Unit,
         decrypt -> I18nR.string.telos_files_decrypt
         else -> I18nR.string.telos_files_encrypt
     }
+    var usePixels by remember(source, carrierMode) { mutableStateOf(false) }
     var carrier by remember { mutableStateOf<Uri?>(null) }
     val carrierPicker = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri ->
         if (uri != null) carrier = uri
@@ -55,7 +57,7 @@ fun FilesEncryptionDialog(source: File, decrypt: Boolean, onDismiss: () -> Unit,
     var job by remember { mutableStateOf<Job?>(null) }
     var failure by remember { mutableStateOf(false) }
     var progress by remember { mutableStateOf(0f) }
-    val valid = (!carrierMode || decrypt || carrier != null) && password.length in (if (decrypt) 1 else 8)..1024 && (decrypt || confirmation == password) &&
+    val valid = (!usePixels || decrypt || filename.endsWith(".png", true)) && (!carrierMode || decrypt || carrier != null) && password.length in (if (decrypt) 1 else 8)..1024 && (decrypt || confirmation == password) &&
         filename.isNotBlank() && filename !in setOf(".", "..") && filename.none { it == '/' || it == '\\' || it == '\u0000' } && filename != source.name
     fun dismiss() {
         if (job?.isActive == true) job?.cancel() else { password = ""; confirmation = ""; onDismiss() }
@@ -67,8 +69,22 @@ fun FilesEncryptionDialog(source: File, decrypt: Boolean, onDismiss: () -> Unit,
             Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(10.dp)) {
                 Text(source.name, style = MaterialTheme.typography.titleSmall)
                 if (carrierMode) {
-                    Text(stringResource(I18nR.string.telos_files_carrier_info))
-                    if (!decrypt) TextButton(enabled = job?.isActive != true, onClick = { carrierPicker.launch("*/*") }) {
+                    Row {
+                        Checkbox(
+                            checked = usePixels,
+                            enabled = job?.isActive != true,
+                            onCheckedChange = {
+                                usePixels = it
+                                carrier = null
+                            },
+                        )
+                        Text(
+                            text = stringResource(I18nR.string.telos_files_carrier_png),
+                            modifier = Modifier.padding(top = 12.dp),
+                        )
+                    }
+                    Text(stringResource(if (usePixels) I18nR.string.telos_files_carrier_png_info else I18nR.string.telos_files_carrier_info))
+                    if (!decrypt) TextButton(enabled = job?.isActive != true, onClick = { carrierPicker.launch(if (usePixels) "image/png" else "*/*") }) {
                         Text(stringResource(if (carrier == null) I18nR.string.telos_files_carrier_pick else I18nR.string.telos_files_carrier_change))
                     }
                 } else {
@@ -94,6 +110,7 @@ fun FilesEncryptionDialog(source: File, decrypt: Boolean, onDismiss: () -> Unit,
             TextButton(enabled = valid && job?.isActive != true, onClick = {
                 val secret = password.toCharArray(); password = ""; confirmation = ""; failure = false; progress = 0f
                 val carrierUri = carrier
+                val pixelMode = usePixels
                 val output = File(source.parentFile, filename)
                 job = scope.launch {
                     try {
@@ -104,7 +121,14 @@ fun FilesEncryptionDialog(source: File, decrypt: Boolean, onDismiss: () -> Unit,
                             try {
                                 val checkpoint = { execution.ensureActive() }
                                 val update: (Long, Long) -> Unit = { done, total -> progress = if (total > 0) (done.toDouble() / total).toFloat() else 1f }
-                                if (carrierMode && decrypt) {
+                                if (pixelMode && decrypt) {
+                                    EncryptedPngCarrier.extract(source, output, secret, staging, checkpoint)
+                                } else if (pixelMode) {
+                                    EncryptedPngCarrier.embed(
+                                        { checkNotNull(context.contentResolver.openInputStream(checkNotNull(carrierUri))) },
+                                        source, output, secret, staging, checkpoint,
+                                    )
+                                } else if (carrierMode && decrypt) {
                                     EncryptedFileCarrier.extract(source, output, secret, staging, checkpoint)
                                 } else if (carrierMode) {
                                     checkNotNull(context.contentResolver.openInputStream(checkNotNull(carrierUri))).use {

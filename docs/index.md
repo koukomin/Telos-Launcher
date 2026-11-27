@@ -3,8 +3,8 @@ layout: home
 
 hero:
   name: "Telos Launcher"
-  text: "Built-in apps, privacy and search"
-  tagline: Search-focused launcher with built-in phone, messages, files, media, store and freezer
+  text: "One launcher for more of your phone"
+  tagline: Search, communicate, manage files, play media and control your apps from a single Android launcher.
   actions:
     - theme: brand
       text: Get Started
@@ -18,7 +18,7 @@ hero:
 
 features:
   - icon: 🔍
-    title: Search-focused
+    title: Start with search
     text: Find apps, contacts, files, calendar events, calculations, unit conversions and web results from one place.
 
   - icon: 📞
@@ -26,8 +26,8 @@ features:
     text: Built-in phone with dialer, call recording, screening and SIP; built-in SMS and MMS messenger.
 
   - icon: 📁
-    title: Files & Media
-    text: Built-in file manager, photo viewer, music, video and radio players, document viewer and PDF tools.
+    title: Files & Documents
+    text: Move between local, USB and network storage. Browse archives, open PDFs and protect files with a password.
 
   - icon: ❄️
     title: Smart Freeze

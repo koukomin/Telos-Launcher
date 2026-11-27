@@ -10,9 +10,11 @@
 
 # Telos Launcher
 
-**A search-focused, free and open source Android launcher with a set of built-in apps.**
+**An Android launcher built to be the place you actually work from.**
 
-Telos is a personal fork of [Kvaesitso](https://github.com/MM2-0/Kvaesitso). It keeps everything the original launcher does and adds a phone app, messages, a file manager, a gallery, music, video and radio players, an app store and an app freezer.
+Search from one bar, make a call, open your files, pick up where you left off in your media or check a Nostr feed. Telos brings those tools together with Cybertech styling, app freezing, network controls and a home screen you can make your own.
+
+Built on [Kvaesitso](https://github.com/MM2-0/Kvaesitso), Telos runs on Android and uses its permission model. It brings many of the tools you'd expect from a complete phone environment into one open-source launcher.
 
 [![License: GPL-3.0](https://img.shields.io/badge/license-GPL--3.0-blue.svg)](LICENSE.txt)
 [![Platform: Android](https://img.shields.io/badge/platform-Android-3DDC84.svg)](https://github.com/koukomin/Telos-Launcher/releases)
@@ -1579,3 +1581,5 @@ Telos Files can upload a selected local file to a public host and copy the resul
 The cloud upload and copy-link dialog is also available in Sync, Downloads and the Android 14+ Telos file share sheet. Installed OnionShare Android builds can receive selected files from the same sheet.
 
 Telos Files can embed a password-protected payload in a copy of a carrier file and recover it with the same secret. The [carrier guide](docs/docs/user-guide/telos/files/password-encryption.md#embed-an-encrypted-file-in-a-carrier) covers format limits and how to share the copy.
+
+The Security Hub also accepts an opt-in Ripple signal to lock private access. On Android 14+, the file share sheet can hand supported files to Save by OpenArchive for archiving.

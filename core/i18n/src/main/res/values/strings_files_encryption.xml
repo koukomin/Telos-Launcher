@@ -13,4 +13,7 @@
     <string name="telos_files_carrier_pick">Choose carrier file</string>
     <string name="telos_files_carrier_change">Change carrier file</string>
     <string name="telos_files_carrier_info">Telos appends detectable encrypted data to a copy of the carrier. Some formats may stop opening, and editing or recompressing the copy may remove the data. Use a strong password or a random shared secret. For embedding, give the output the carrier’s extension.</string>
+    <string name="telos_files_carrier_png">Use PNG pixels</string>
+    <string name="telos_files_carrier_png_info">Choose a PNG of up to 8 megapixels. Capacity depends on opaque pixels. Use a .png output name and send it as a file. Resizing or re-encoding can destroy the payload.</string>
+    <string name="share_archive_with_save">Archive with Save</string>
 </resources>

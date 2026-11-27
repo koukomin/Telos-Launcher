@@ -15,7 +15,7 @@
     <string name="telos_help_chapter_settings">Settings worth changing</string>
     <string name="telos_help_chapter_settings_sum">Theme, search, gestures and widgets — with a link to the screen.</string>
     <string name="telos_help_intro_title">Want a one-minute tour?</string>
-    <string name="telos_help_intro_body">Help shows how search, the home screen and Telos apps work. You can open it later from the Help app.</string>
+    <string name="telos_help_intro_body">Start with search and make the home screen yours. Help shows you how to use the built-in apps for calls, files and media, and where to find the controls for privacy and your apps.</string>
     <string name="telos_help_intro_yes">Show Help</string>
     <string name="telos_help_intro_no">Not now</string>
     <string name="preference_reset_help_tutorial">Show Help intro again</string>

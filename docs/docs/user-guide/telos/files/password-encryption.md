@@ -29,3 +29,6 @@ Final output is created exclusively (`CREATE_NEW`) and streamed from the verifie
 3. To recover the payload, select the carrier copy and choose **Extract encrypted file**. Enter the same secret and give the recovered file its original name and extension.
 
 The carrier and payload may be different file types. Telos keeps the originals and uses authenticated AES-256-GCM for the payload. The original carrier bytes are copied verbatim and the encrypted data is appended using Telos's format. That data is detectable and incompatible with PixelKnot. Some formats reject trailing data, and editing, re-encoding or forwarding through a media compressor may strip it. Send the resulting copy as a file to preserve its bytes. Share the secret through a separate channel.
+
+
+For PNG carriers, select **Use PNG pixels** when embedding or extracting. Telos stores the encrypted payload in the least significant blue bit of each fully opaque pixel. It supports images up to eight megapixels. Capacity is roughly one byte per eight opaque pixels, minus encryption and format overhead. Send the PNG as a file, since resizing or re-encoding can destroy the payload. This method is detectable through image analysis and uses a Telos-specific format.

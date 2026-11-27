@@ -24,16 +24,28 @@ object VaultPath {
 /** The keys of the vaults that are unlocked right now. They live in memory only and are gone when the process ends. */
 object VaultSessions {
     private val open = ConcurrentHashMap<String, VaultCrypto>()
+    private val sessionLock = Any()
+    private var generation = 0L
     fun isUnlocked(vault: String) = open.containsKey(vault)
     fun lock(vault: String) { open.remove(vault) }
-    fun lockAll() = open.clear()
+    fun lockAll() {
+        synchronized(sessionLock) {
+            generation++
+            open.clear()
+        }
+    }
 
     /** Throws [WrongPasswordException] when the password is wrong */
     fun unlock(vault: String, password: String) {
+        val started = synchronized(sessionLock) { generation }
         val dir = File(vault)
         val key = File(dir, "masterkey.cryptomator").readText()
         val config = File(dir, "vault.cryptomator").takeIf { it.isFile }?.readText()
-        open[vault] = VaultCrypto.unlock(key, config, password)
+        val crypto = VaultCrypto.unlock(key, config, password)
+        synchronized(sessionLock) {
+            if (started != generation) throw IOException("Vault locked during authentication")
+            open[vault] = crypto
+        }
     }
 
     fun crypto(vault: String): VaultCrypto = open[vault] ?: throw IOException("The vault is locked")

@@ -233,3 +233,12 @@ Privileged `pm` / `cmd appops` calls need a live Shizuku or root session.
 - Locks are not a security boundary against someone who controls the device.
 - Backups are not encrypted and do not carry cloud logins.
 - The video process split is experimental, and SIP does not have one yet.
+
+
+## Lock private access now
+
+Open the **Security Hub** and tap **Lock private access now**. Telos closes its in-memory Secret Vault and Cryptomator sessions and ends the App Lock grace period. The next visit to an app protected by App Lock asks you to authenticate. Files already opened in a viewer or copied outside a vault remain accessible in those copies.
+
+### Connect Ripple
+
+In Ripple, open the Telos entry and confirm the connection in Telos. Enable Telos in Ripple's responder list. A panic signal delivered by the connected Ripple app runs the same local lock action as the Security Hub button. Use **Disconnect Ripple** in the Security Hub to revoke access.

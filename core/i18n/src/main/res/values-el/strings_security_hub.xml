@@ -39,4 +39,10 @@
     <string name="security_hub_cloak_off">Πέπλο stealth</string>
     <string name="security_hub_clip_on">Πρόχειρο αποκλεισμένο</string>
     <string name="security_hub_clip_off">Αποκλεισμός πρόσβασης προχείρου</string>
+    <string name="security_hub_emergency_lock">Κλείδωμα ιδιωτικής πρόσβασης τώρα</string>
+    <string name="security_hub_emergency_locked">Οι συνεδρίες θυρίδων έκλεισαν. Το App Lock θα ζητήσει ταυτοποίηση στο επόμενο άνοιγμα προστατευμένης εφαρμογής.</string>
+    <string name="security_hub_ripple_connect">Σύνδεση Ripple</string>
+    <string name="security_hub_ripple_connect_info">Να επιτρέπεται στο Ripple να κλειδώνει τις θυρίδες και να τερματίζει την προσωρινή πρόσβαση του App Lock όταν πατάς το κουμπί πανικού;</string>
+    <string name="security_hub_ripple_disconnect">Αποσύνδεση Ripple</string>
+    <string name="security_hub_ripple_disconnected">Η πρόσβαση του Ripple αφαιρέθηκε</string>
 </resources>

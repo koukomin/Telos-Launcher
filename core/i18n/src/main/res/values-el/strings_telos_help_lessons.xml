@@ -10,7 +10,7 @@
     <string name="telos_help_chapter_settings">Ρυθμίσεις που αξίζει να πειράξεις</string>
     <string name="telos_help_chapter_settings_sum">Θέμα, αναζήτηση, χειρονομίες και γραφικά στοιχεία — με σύνδεσμο στην οθόνη.</string>
     <string name="telos_help_intro_title">Θέλεις ξενάγηση ενός λεπτού;</string>
-    <string name="telos_help_intro_body">Η Βοήθεια δείχνει πώς δουλεύουν η αναζήτηση, η αρχική και οι εφαρμογές Telos. Μπορείς να την ανοίξεις αργότερα από την εφαρμογή Βοήθεια.</string>
+    <string name="telos_help_intro_body">Ξεκίνα από την αναζήτηση και φτιάξε τη δική σου αρχική οθόνη. Η Βοήθεια σου δείχνει πώς να χρησιμοποιείς τις ενσωματωμένες εφαρμογές για κλήσεις, αρχεία και πολυμέσα και πού θα βρεις τις ρυθμίσεις απορρήτου.</string>
     <string name="telos_help_intro_yes">Δείξε τη Βοήθεια</string>
     <string name="telos_help_intro_no">Όχι τώρα</string>
     <string name="preference_reset_help_tutorial">Ξαναδείξε την εισαγωγή της Βοήθειας</string>

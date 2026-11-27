@@ -281,3 +281,7 @@ For a Tor share, install OnionShare for Android. Select **Share with OnionShare*
 in the Android 14+ Telos file share sheet, or choose the installed app as a
 regular share target. OnionShare receives only the selected files and manages
 the onion service and the link.
+
+### Archive with Save by OpenArchive
+
+On Android 14 and later, sharing a supported file from Telos can show **Archive with Save** when Save by OpenArchive is installed. Save handles metadata, licensing, verification and the archive destination in its own app. Available file types follow the installed Save build.

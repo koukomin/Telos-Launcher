@@ -49,7 +49,9 @@ import de.mm20.launcher2.appmanagement.hardware.TelosContextHardwareEngine
 import de.mm20.launcher2.appmanagement.shizuku.TelosShizukuManager
 import de.mm20.launcher2.appmanagement.stealth.TelosDevOptsCloak
 import de.mm20.launcher2.appmanagement.stealth.TelosStealthBlacklist
+import de.mm20.launcher2.applock.AppLockManager
 import de.mm20.launcher2.packages.TelosIconCache
+import org.koin.compose.koinInject
 import de.mm20.launcher2.ui.component.preferences.ListPreference
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
@@ -76,6 +78,8 @@ fun androidx.compose.foundation.lazy.LazyListScope.TelosSecurityHubItems() {
 fun TelosSecurityHubBody() {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
+    val appLock: AppLockManager = koinInject()
+    var emergencyLocked by remember { mutableStateOf(false) }
     val engine by TelosShizukuManager.status.collectAsStateWithLifecycle()
     val cloak by TelosDevOptsCloak.status.collectAsStateWithLifecycle()
     val vault by TelosClipboardShield.vaultEntry.collectAsStateWithLifecycle()
@@ -125,6 +129,24 @@ fun TelosSecurityHubBody() {
                                 else TelosShizukuManager.setExternalShizukuEnabled(context, true)
                             }
                         },
+                    )
+                }
+                FilledTonalButton(onClick = {
+                    lockPrivateAccess(appLock)
+                    emergencyLocked = true
+                }) {
+                    Text(stringResource(I18nR.string.security_hub_emergency_lock))
+                }
+                TextButton(onClick = {
+                    panicPreferences(context).edit().remove(PANIC_CONNECTED).apply()
+                    android.widget.Toast.makeText(context, I18nR.string.security_hub_ripple_disconnected, android.widget.Toast.LENGTH_SHORT).show()
+                }) {
+                    Text(stringResource(I18nR.string.security_hub_ripple_disconnect))
+                }
+                if (emergencyLocked) {
+                    Text(
+                        stringResource(I18nR.string.security_hub_emergency_locked),
+                        style = MaterialTheme.typography.bodySmall,
                     )
                 }
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {

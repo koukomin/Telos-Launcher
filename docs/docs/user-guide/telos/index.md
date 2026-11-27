@@ -1,9 +1,9 @@
 # Telos at a glance
 
-Telos is a search-focused, free and open source launcher for Android. It is a fork of
-[Kvaesitso](https://github.com/MM2-0/Kvaesitso) and keeps everything the original launcher does, then adds a
-set of **built-in apps** that run inside the launcher: a phone app, messages, a file manager, a
-gallery, music, video and radio players, an app store and an app freezer.
+Telos starts with the home screen and search from [Kvaesitso](https://github.com/MM2-0/Kvaesitso).
+Its built-in apps take you from a search result to a call, a document, a playlist or a system setting.
+Use the guide below to set up the parts you want, from everyday messaging and media to app freezing,
+network controls and password-protected files.
 
 ::: tip Two parts
 - [**The launcher**](./launcher/) is **Telos**: search, home screen, widgets, icons and themes (inherited from Kvaesitso). Aether is a built-in Nostr app, not the launcher name.

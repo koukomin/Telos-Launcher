@@ -110,10 +110,21 @@ object ShareActions {
                 break
             }
         }
+        for (packageName in saveArchivePackages) {
+            val target = Intent(send).setPackage(packageName)
+            if (target.resolveActivity(context.packageManager) != null) {
+                action(de.mm20.launcher2.i18n.R.string.share_archive_with_save, target)
+                break
+            }
+        }
         if (actions.isNotEmpty()) chooser.putExtra(Intent.EXTRA_CHOOSER_CUSTOM_ACTIONS, actions.toTypedArray())
     }
 
     private val nextShareActionId = java.util.concurrent.atomic.AtomicInteger()
+    private val saveArchivePackages = listOf(
+        "net.opendasharchive.openarchive.release",
+        "net.opendasharchive.openarchive",
+    )
     private val onionSharePackages = listOf("org.onionshare.android", "org.onionshare.android.fdroid")
 
     private fun createFileSendIntent(uris: List<Uri>, mime: String, subject: String?, text: String?): Intent {
