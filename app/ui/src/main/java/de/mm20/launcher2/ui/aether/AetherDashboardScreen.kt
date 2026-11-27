@@ -4,9 +4,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.ui.res.painterResource
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.rememberCoroutineScope
-import de.mm20.launcher2.network.tor.TorController
 import de.mm20.launcher2.ui.component.VirtualAppWindow
 import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.ui.component.TelosDotMatrixText
@@ -15,7 +12,6 @@ import androidx.navigation3.runtime.NavKey
 import com.vitorpamplona.amethyst.ui.EmbeddedAether
 import kotlinx.serialization.Serializable
 
-import org.koin.compose.koinInject
 
 @Serializable
 data class AetherDashboardRoute(
@@ -25,11 +21,6 @@ data class AetherDashboardRoute(
 
 @Composable
 fun AetherDashboardScreen() {
-    val torController: TorController = koinInject()
-    val scope = rememberCoroutineScope()
-    LaunchedEffect(Unit) {
-        TelosTorBackend.registerBridge(torController, scope)
-    }
     VirtualAppWindow {
         EmbeddedAether(
             card = { modifier, shape, container -> modifier.telosTechCard(shape = shape, backgroundColor = container) },

@@ -70,6 +70,7 @@ android {
         // Extract .so files so the Shizuku starter can be exec'd from nativeLibraryDir
         // (libshizuku.so) and so youtubedl-android can run Python/FFmpeg from disk.
         jniLibs.useLegacyPackaging = true
+        jniLibs.excludes.add("**/libarti_android.so")
         
         // Keep the selected ABI's native libraries; size filtering must not empty a 32-bit APK.
         listOf("arm64-v8a", "armeabi-v7a", "x86", "x86_64")

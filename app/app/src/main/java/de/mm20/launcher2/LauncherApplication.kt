@@ -110,6 +110,12 @@ class LauncherApplication : Amethyst(), CoroutineScope, ImageLoaderFactory {
         // The video player's own process needs none of the launcher
         if (ProcessInfo.init(this)) return
 
+        com.vitorpamplona.amethyst.ui.tor.TorBackendBridge.provider = { scope ->
+            de.mm20.launcher2.ui.aether.TelosTorBackend(
+                org.koin.core.context.GlobalContext.get().get(),
+                scope,
+            )
+        }
         AetherHostBridge.createHostIntent = { context ->
             Intent().setClassName(context, SettingsDeepLinkContract.ACTIVITY_CLASS_NAME)
                 .putExtra(SettingsDeepLinkContract.EXTRA_ROUTE, SettingsDeepLinkContract.ROUTE_AETHER)

@@ -1,7 +1,6 @@
 package de.mm20.launcher2.ui.aether
 
 import com.vitorpamplona.amethyst.ui.tor.TorBackend
-import com.vitorpamplona.amethyst.ui.tor.TorBackendBridge
 import com.vitorpamplona.amethyst.ui.tor.TorServiceStatus
 import de.mm20.launcher2.network.tor.TorController
 import de.mm20.launcher2.network.tor.TorStatus
@@ -41,8 +40,7 @@ class TelosTorBackend(
                 TorStatus.Ready -> {
                     _bootstrapInFlight.value = false
                     _bootstrapProgress.value = 100
-                    val port = torController.progress.value
-                    _status.value = TorServiceStatus.Active(if (port > 0) port else 9050)
+                    _status.value = TorServiceStatus.Active(torController.socksPort)
                 }
                 TorStatus.Starting, TorStatus.Waiting -> {
                     _bootstrapInFlight.value = true
@@ -79,11 +77,5 @@ class TelosTorBackend(
 
     override suspend fun hasBootstrappedBefore(): Boolean {
         return torController.ready
-    }
-
-    companion object {
-        fun registerBridge(torController: TorController, scope: CoroutineScope) {
-            TorBackendBridge.provider = { TelosTorBackend(torController, scope) }
-        }
     }
 }

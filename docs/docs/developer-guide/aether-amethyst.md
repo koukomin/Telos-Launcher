@@ -4,6 +4,8 @@ Aether is a **Telos virtual app** (Nostr). The launcher name is **Telos**. Aethe
 not install, launch or require an external Amethyst APK. The integration is included
 in version 1.45.71. Earlier published versions contain the local preview.
 
+Embedded Aether uses the Telos Network Tor controller and its active SOCKS port. The Telos APK excludes Amethyst’s standalone Arti library.
+
 ## Source and distribution
 
 `libs/amethyst` preserves the MIT-licensed Android client and its `commons`,

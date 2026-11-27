@@ -6,5 +6,5 @@ package com.vitorpamplona.amethyst.ui.tor
  */
 object TorBackendBridge {
     @Volatile
-    var provider: (() -> TorBackend)? = null
+    var provider: ((kotlinx.coroutines.CoroutineScope) -> TorBackend)? = null
 }
