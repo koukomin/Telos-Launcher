@@ -3,6 +3,7 @@ set -euo pipefail
 
 lint=${TELOS_ACTIONLINT:-actionlint}
 version=$("$lint" -version)
+version=${version#v}
 if [[ ${version%%$'\n'*} != 1.7.12 ]]; then
     echo 'Workflow validation requires actionlint 1.7.12.' >&2
     exit 1
