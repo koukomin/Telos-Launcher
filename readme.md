@@ -221,14 +221,14 @@ Telos Launcher is built from the ground up to be **100% AI-Agent-Native**. Every
 
 - **AI Control Center (`tools/ai-cli.py`)**: Single-command entry point for automated pre-push audits, upstream checks, version bumping, and feature location querying.
 - **Telos Upstream Sentinel (`tools/upstream/check-upstreams.py`)**: Auto-discovers new incorporated third-party projects from `THIRD_PARTY_NOTICES.md` and queries GitHub APIs for new releases/bugfixes. Daily scheduled GitHub Actions check (`.github/workflows/daily-upstream-check.yml`).
-- **AI Context Index (`.artifacts/CONTEXT_MAP.json`)**: Machine-readable feature-to-file index allowing AI agents to locate domain files in 1 call, saving 80% research tokens.
+- **AI Context Index (`.artifacts/CONTEXT_MAP.json`)**: Machine-readable feature index with entry points and targeted verification commands.
 - **Component Registry (`.artifacts/COMPONENT_REGISTRY.md`)**: Single source of truth database for reusable Compose UI preferences, MVI architecture contracts (`UiState`, `UiEvent`), and Koin repositories.
 - **Troubleshooting Memory Bank (`.artifacts/TROUBLESHOOTING.md`)**: Institutional memory for complex Android platform gotchas (Shizuku Binder limits, Media3 surface lifecycles, Room schema migrations, zero-allocation `GreekFold` loops).
-- **Automated Token-Budget Validator (`tools/validation/check-file-sizes.py`)**: Enforces a strict 500-line budget per Kotlin file to keep context windows compact and AI-friendly.
+- **Automated Token-Budget Validator (`tools/validation/check-file-sizes.py`)**: Reports changed Kotlin files over 500 lines and shows up to three examples.
 
 ## Download
 
-Stable releases contain signed Android APKs and Linux desktop artifacts under one version.
+Stable releases contain signed Android APKs.
 Both Android ABIs are checked for the presence of their own native libraries before publication.
 Development builds upload debug-signed APKs to Actions artifacts for testing.
 Linux release validation includes archive round trips, split volumes and rejection of absolute/traversal entry paths.
