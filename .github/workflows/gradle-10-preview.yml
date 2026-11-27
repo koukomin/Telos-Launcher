@@ -31,11 +31,11 @@ jobs:
         timeout-minutes: 15
         run: |
           for attempt in 1 2; do
-            if timeout 6m sdkmanager --install 'platforms;android-37' 'ndk;27.0.12077973' </dev/null; then
+            if timeout 6m sdkmanager --install 'platforms;android-37.0' 'platforms;android-37.2' 'ndk;27.0.12077973' </dev/null; then
               exit 0
             fi
           done
-          echo '::error::Could not install Android 37 and NDK 27 for Gradle 10'
+          echo '::error::Could not install Android 37.0, 37.2, and NDK 27 for Gradle 10'
           exit 1
       - name: Verify and compile the selected build
         env:
