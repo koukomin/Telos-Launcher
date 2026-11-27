@@ -21,7 +21,17 @@ val quartzJitpack =
 
 allprojects {
     group = "com.telos.amethyst"
-    version = appVersion
+    version = providers.gradleProperty("telosAmethystVersion").getOrElse(appVersion)
+    plugins.withId("maven-publish") {
+        providers.gradleProperty("telosAmethystRepository").orNull?.let { repository ->
+            extensions.configure<PublishingExtension> {
+                repositories.maven {
+                    name = "TelosAmethyst"
+                    url = uri(repository)
+                }
+            }
+        }
+    }
 
     configurations.configureEach {
         resolutionStrategy.cacheChangingModulesFor(0, "seconds")

@@ -7,6 +7,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 // live in `:commonsUI`, which sits on top of this module. Only the Compose
 // *runtime* (@Stable/@Immutable + snapshot state) is allowed here.
 plugins {
+    `maven-publish`
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidKotlinMultiplatformLibrary)
     // Kept on purpose even though no @Composable lives here anymore: the

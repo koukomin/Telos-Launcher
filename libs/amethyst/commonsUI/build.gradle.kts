@@ -11,6 +11,7 @@ import org.jetbrains.kotlin.gradle.plugin.KotlinPlatformType
 // have to change a single import when the split happened.
 
 plugins {
+    `maven-publish`
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidKotlinMultiplatformLibrary)
     alias(libs.plugins.jetbrainsComposeCompiler)

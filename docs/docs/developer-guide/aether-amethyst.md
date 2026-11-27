@@ -15,6 +15,36 @@ library selected through a composite build. Telos selects the F-Droid distributi
 Google Play-specific Firebase, Cast and Google AI extensions are not included.
 The Play source set is retained for source provenance, with no Firebase key shipped.
 
+## Local Maven publication
+
+An explicit local Maven repository lets the launcher consume prebuilt Aether
+libraries while the default checkout continues to use the composite build.
+Choose a new publication version whenever the embedded source changes.
+Set `JAVA_HOME` to JDK 21 before running the standalone publication build.
+
+```sh
+./gradlew -p libs/amethyst \
+  :amethyst:publishEmbeddedAndroidPublicationToTelosAmethystRepository \
+  :nappletHost:publishEmbeddedAndroidPublicationToTelosAmethystRepository \
+  :commons:publishAndroidPublicationToTelosAmethystRepository \
+  :commons:publishKotlinMultiplatformPublicationToTelosAmethystRepository \
+  :commonsUI:publishAndroidPublicationToTelosAmethystRepository \
+  :commonsUI:publishKotlinMultiplatformPublicationToTelosAmethystRepository \
+  :nestsClient:publishAndroidPublicationToTelosAmethystRepository \
+  :nestsClient:publishKotlinMultiplatformPublicationToTelosAmethystRepository \
+  -PtelosAmethystRepository=/tmp/telos-amethyst-maven \
+  -PtelosAmethystVersion=1.21.0-telos-local \
+  --no-configuration-cache
+./gradlew :app:app:assembleDefaultDebug \
+  -PtelosAmethystRepository=/tmp/telos-amethyst-maven \
+  -PtelosAmethystVersion=1.21.0-telos-local \
+  --no-configuration-cache
+```
+
+The repository is exclusive to the `com.telos.amethyst` group. It contains the
+F-Droid release library, the napplet host release library and the
+multiplatform modules with their Gradle variant metadata.
+
 ## Launcher cold-start regression
 
 Real-APK instrumentation found that asynchronous Koin module registration raced

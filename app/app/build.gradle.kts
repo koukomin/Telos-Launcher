@@ -182,7 +182,7 @@ android {
 
 
 dependencies {
-    implementation("com.telos.amethyst:amethyst:1.21.0")
+    implementation("com.telos.amethyst:amethyst:" + providers.gradleProperty("telosAmethystVersion").getOrElse("1.21.0"))
     implementation(libs.bundles.kotlin)
 
     // Android Jetpack & Optimization

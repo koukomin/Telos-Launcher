@@ -10,8 +10,16 @@ pluginManagement {
     }
 }
 
+val telosAmethystRepository = providers.gradleProperty("telosAmethystRepository").orNull
+
 dependencyResolutionManagement {
     repositories {
+        telosAmethystRepository?.let { repository ->
+            exclusiveContent {
+                forRepository { maven(repository) }
+                filter { includeGroup("com.telos.amethyst") }
+            }
+        }
         maven("https://raw.githubusercontent.com/guardianproject/gpmaven/master") {
             content { includeGroup("info.guardianproject") }
         }
@@ -171,7 +179,7 @@ include(":ui-kmp")
 include(":services:keepasstl")
 
 // The full Aether client is compiled from source into the Telos APK.
-includeBuild("libs/amethyst") {
+if (telosAmethystRepository == null) includeBuild("libs/amethyst") {
     name = "amethyst"
     dependencySubstitution {
         substitute(module("com.telos.amethyst:amethyst")).using(project(":amethyst"))

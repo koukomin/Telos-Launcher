@@ -94,7 +94,7 @@ android {
 
 
 dependencies {
-    implementation("com.telos.amethyst:amethyst:1.21.0")
+    implementation("com.telos.amethyst:amethyst:" + providers.gradleProperty("telosAmethystVersion").getOrElse("1.21.0"))
     implementation(project(":libs:appops-next"))
     implementation("cz.adaptech.tesseract4android:tesseract4android:4.9.0")
     // CameraX

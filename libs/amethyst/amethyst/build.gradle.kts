@@ -2,6 +2,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import java.util.Properties
 
 plugins {
+    `maven-publish`
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsComposeCompiler)
     alias(libs.plugins.serialization)
@@ -18,6 +19,7 @@ val hostVersion = Properties().apply {
 }
 
 android {
+    publishing { singleVariant("fdroidRelease") }
     namespace = "com.vitorpamplona.amethyst"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
     defaultConfig {
@@ -315,4 +317,11 @@ dependencies {
     implementation(libs.androidx.camera.lifecycle)
     implementation(libs.androidx.camera.view)
     implementation(libs.androidx.camera.extensions)
+}
+
+
+afterEvaluate {
+    publishing.publications.register<MavenPublication>("embeddedAndroid") {
+        from(components["fdroidRelease"])
+    }
 }
