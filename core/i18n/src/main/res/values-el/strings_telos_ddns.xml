@@ -17,4 +17,8 @@
     <string name="ddns_rejected">Ο πάροχος απέρριψε την ενημέρωση. Έλεγξε την εγγραφή και τα διαπιστευτήρια.</string>
     <string name="ddns_unreachable">Αποτυχία σύνδεσης με τον πάροχο.</string>
     <string name="ddns_invalid">Έλεγξε το όνομα host, τη διεύθυνση IP και τα διαπιστευτήρια.</string>
+    <string name="ddns_free_setup">Δημιουργία δωρεάν ονόματος DuckDNS</string>
+    <string name="ddns_detect_ipv4">Εντοπισμός δημόσιας IPv4 μέσω ipify</string>
+    <string name="ddns_detect_ipv6">Εντοπισμός δημόσιας IPv6 μέσω ipify</string>
+    <string name="files_send_localsend">Αποστολή με LocalSend</string>
 </resources>

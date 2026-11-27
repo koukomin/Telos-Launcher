@@ -79,3 +79,9 @@ provider. Repeat the update if your IP address changes.
 For Cloudflare, use IPv4 with an A record and IPv6 with an AAAA record. DDNS
 updates the address associated with a hostname. Direct file downloads from a
 device need a separate HTTPS listener and a reachable network path.
+
+If you need a free hostname, **Set up a free DuckDNS hostname** opens DuckDNS
+in your browser. Sign in with one of the identities it supports, create the
+subdomain there, and enter the hostname and token in Telos. **Detect public
+IPv4/IPv6 with ipify** fills the IP field on request. ipify sees the connection
+address, which may be a VPN exit address if the request uses a VPN.

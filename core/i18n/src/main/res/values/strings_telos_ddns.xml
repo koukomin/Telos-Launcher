@@ -17,4 +17,8 @@
     <string name="ddns_rejected">The provider rejected the update. Check the record and credentials.</string>
     <string name="ddns_unreachable">Could not reach the provider.</string>
     <string name="ddns_invalid">Check the hostname, IP address and credentials.</string>
+    <string name="ddns_free_setup">Set up a free DuckDNS hostname</string>
+    <string name="ddns_detect_ipv4">Detect public IPv4 with ipify</string>
+    <string name="ddns_detect_ipv6">Detect public IPv6 with ipify</string>
+    <string name="files_send_localsend">Send with LocalSend</string>
 </resources>

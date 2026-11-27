@@ -309,6 +309,11 @@ internal fun PropertiesDialog(vm: FilesViewModel, entry: FsEntry, onDismiss: () 
             if (!entry.isDir) Row {
                 TextButton(onClick = { scope.launch { FileActions.openWith(context, entry, vm.rootMode, vm.shizukuMode) } }) { Text(stringResource(I18nR.string.hc_open_with_2)) }
                 TextButton(onClick = { vm.shareEntries(listOf(entry)) }) { Text(stringResource(I18nR.string.hc_share)) }
+                if (de.mm20.launcher2.ui.common.share.ShareActions.hasLocalSend(context)) {
+                    TextButton(onClick = { vm.shareEntries(listOf(entry), localSend = true) }) {
+                        Text(stringResource(I18nR.string.files_send_localsend))
+                    }
+                }
             }
         },
     )

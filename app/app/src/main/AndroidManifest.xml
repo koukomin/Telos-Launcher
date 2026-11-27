@@ -80,6 +80,7 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
 
     <queries>
+        <package android:name="org.localsend.localsend_app" />
         <package android:name="moe.shizuku.privileged.api" />
         <package android:name="com.google.android.apps.healthdata" />
         <package android:name="com.google.android.apps.fitness" />

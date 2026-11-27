@@ -121,7 +121,7 @@ internal object FileActions {
         runCatching { context.startActivity(Intent.createChooser(view, entry.name).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)) }
     }
 
-    suspend fun share(context: Context, entries: List<FsEntry>, rootMode: Boolean, shizukuMode: Boolean = false) {
+    suspend fun share(context: Context, entries: List<FsEntry>, rootMode: Boolean, shizukuMode: Boolean = false, localSend: Boolean = false) {
         val files = entries.filter { !it.isDir }
         val uris = files.mapNotNull { uriFor(context, it.path, rootMode, shizukuMode) }
         if (uris.isEmpty()) {
@@ -129,7 +129,7 @@ internal object FileActions {
             return
         }
         val shared = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
-            de.mm20.launcher2.ui.common.share.ShareActions.shareUris(context, uris)
+            de.mm20.launcher2.ui.common.share.ShareActions.shareUris(context, uris, localSend = localSend)
         }
         if (!shared) {
             Toast.makeText(context, I18nR.string.au20_viewer_share_failed, Toast.LENGTH_SHORT).show()

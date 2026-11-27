@@ -74,6 +74,11 @@ object ShareActions {
         subject: String? = null,
         text: String? = null,
     ): Intent {
+        return Intent.createChooser(createFileSendIntent(uris, mime, subject, text), chooserTitle)
+            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+    }
+
+    private fun createFileSendIntent(uris: List<Uri>, mime: String, subject: String?, text: String?): Intent {
         require(uris.isNotEmpty()) { "At least one URI is required" }
         val intent = if (uris.size == 1) {
             Intent(Intent.ACTION_SEND).putExtra(Intent.EXTRA_STREAM, uris[0])
@@ -87,9 +92,24 @@ object ShareActions {
         for (i in 1 until uris.size) clip.addItem(ClipData.Item(uris[i]))
         intent.clipData = clip
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-        return Intent.createChooser(intent, chooserTitle)
-            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        return intent
     }
+
+    private const val LOCAL_SEND_PACKAGE = "org.localsend.localsend_app"
+
+    fun hasLocalSend(context: Context): Boolean = try {
+        context.packageManager.getPackageInfo(LOCAL_SEND_PACKAGE, 0)
+        true
+    } catch (_: android.content.pm.PackageManager.NameNotFoundException) {
+        false
+    }
+
+    private fun sendToLocalSend(context: Context, uris: List<Uri>, mime: String): Boolean = runCatching {
+        context.startActivity(
+            createFileSendIntent(uris, mime, null, null).setPackage(LOCAL_SEND_PACKAGE)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        )
+    }.isSuccess
 
     /** Starts the system share sheet for [uris], read permission is granted through the ClipData */
     private fun send(
@@ -150,6 +170,7 @@ object ShareActions {
         uris: List<Uri>,
         mimeType: String? = null,
         chooserTitle: CharSequence? = null,
+        localSend: Boolean = false,
     ): Boolean = runCatching {
         if (uris.isEmpty()) return@runCatching false
         cleanup(context)
@@ -188,7 +209,11 @@ object ShareActions {
             }
             val sharedUris = copied.map { it.first }
             val mimeTypes = copied.map { it.second }.distinct()
-            send(context, sharedUris, mimeType ?: mimeTypes.singleOrNull() ?: "*/*", null, chooserTitle = chooserTitle)
+            val mime = mimeType ?: mimeTypes.singleOrNull() ?: "*/*"
+            val sent = if (localSend) sendToLocalSend(context, sharedUris, mime)
+                else send(context, sharedUris, mime, null, chooserTitle = chooserTitle)
+            if (!sent) folder.deleteRecursively()
+            sent
         } catch (e: Exception) {
             folder.deleteRecursively()
             throw e

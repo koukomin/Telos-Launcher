@@ -776,7 +776,7 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
      * Shares [entries]: local files straight away, files on network/cloud storages (and in archives) are
      * downloaded into the cache first (with the progress bar), then handed out through the FileProvider.
      */
-    fun shareEntries(entries: List<FsEntry>) {
+    fun shareEntries(entries: List<FsEntry>, localSend: Boolean = false) {
         val files = shareable(entries)
         if (files.isEmpty()) {
             message = s(I18nR.string.au9_share_nothing)
@@ -786,14 +786,14 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
         val remote = files.filter { RemotePath.isRemote(it.path) || ArchivePath.isArchive(it.path) }
         if (remote.isEmpty()) {
             val root = rootMode; val adb = shizukuMode
-            viewModelScope.launch { FileActions.share(context, local, root, adb) }
+            viewModelScope.launch { FileActions.share(context, local, root, adb, localSend) }
             return
         }
         val folder = File(File(context.cacheDir, "share_dl"), System.nanoTime().toString())
         fun step(i: Int, done: List<FsEntry>) {
             if (i >= remote.size) {
                 val root = rootMode; val adb = shizukuMode
-                viewModelScope.launch { FileActions.share(context, local + done, root, adb) }
+                viewModelScope.launch { FileActions.share(context, local + done, root, adb, localSend) }
                 return
             }
             download(remote[i]) { f ->

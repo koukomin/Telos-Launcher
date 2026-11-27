@@ -36,6 +36,21 @@ object DynamicDnsClient {
     private val cloudId = Regex("[a-fA-F0-9]{32}")
     private val freeDnsKey = Regex("[a-zA-Z0-9_+/=-]{1,256}")
 
+    /** Explicit, credential-free lookup of the WAN address seen by the HTTPS endpoint. */
+    suspend fun detectAddress(ipv6: Boolean): String? = withContext(Dispatchers.IO) {
+        val endpoint = if (ipv6) "https://api6.ipify.org/" else "https://api.ipify.org/"
+        try {
+            http.newCall(Request.Builder().url(endpoint).build()).execute().use { response ->
+                if (!response.isSuccessful) return@withContext null
+                val source = response.body.source()
+                if (source.request(65)) return@withContext null
+                source.readUtf8().trim().takeIf { validAddress(it) && (':' in it) == ipv6 }
+            }
+        } catch (_: java.io.IOException) {
+            null
+        }
+    }
+
     suspend fun update(
         provider: DynamicDnsProvider,
         host: String,

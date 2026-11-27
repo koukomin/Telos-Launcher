@@ -1571,3 +1571,5 @@ On ColorOS-family devices, Telos leaves launcher scheduling and process importan
 Telos Media offers headset play routing with individual source choices. Local Video and Stremio are excluded by default, and YouTube stays enabled. See the [headset playback guide](docs/docs/user-guide/telos/media/index.md#headset-playback).
 
 Telos Network can update existing Dynamic DNS records at DuckDNS, No-IP, Dyn, Dynu, FreeDNS and Cloudflare. See the [provider setup guide](docs/docs/user-guide/telos/network/dns.md#dynamic-dns).
+
+Telos Files can hand a file to the installed Android LocalSend app from its properties dialog. All Telos apps that use the Android share sheet can also choose LocalSend there. LocalSend handles device discovery, consent and transfer after the handoff. The Dynamic DNS dialog links to free DuckDNS setup and can fill in the WAN address on request.

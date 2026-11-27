@@ -1,5 +1,7 @@
 package de.mm20.launcher2.ui.network
 
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.rememberScrollState
@@ -17,6 +19,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import de.mm20.launcher2.i18n.R
@@ -37,6 +40,20 @@ internal fun DynamicDnsDialog(onDismiss: () -> Unit) {
     var busy by remember { mutableStateOf(false) }
     var result by remember { mutableStateOf<DynamicDnsClient.Result?>(null) }
     val scope = rememberCoroutineScope()
+    val context = LocalContext.current
+    fun detect(ipv6: Boolean) {
+        busy = true
+        result = null
+        scope.launch {
+            try {
+                val detected = DynamicDnsClient.detectAddress(ipv6)
+                if (detected != null) address = detected
+                else result = DynamicDnsClient.Result.Unreachable
+            } finally {
+                busy = false
+            }
+        }
+    }
     AlertDialog(
         onDismissRequest = { if (!busy) onDismiss() },
         containerColor = virtualAppPopup(),
@@ -60,8 +77,23 @@ internal fun DynamicDnsDialog(onDismiss: () -> Unit) {
                         })
                     }
                 }
+                TextButton(enabled = !busy, onClick = {
+                    try {
+                        context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://www.duckdns.org/")))
+                    } catch (_: android.content.ActivityNotFoundException) {
+                        result = DynamicDnsClient.Result.Unreachable
+                    }
+                }) { Text(stringResource(R.string.ddns_free_setup)) }
                 DdnsField(host, { host = it }, R.string.ddns_host, !busy)
                 DdnsField(address, { address = it }, R.string.ddns_address, !busy)
+                TextButton(enabled = !busy, onClick = { detect(false) }) {
+                    Text(stringResource(R.string.ddns_detect_ipv4))
+                }
+                if (provider != DynamicDnsProvider.FreeDns) {
+                    TextButton(enabled = !busy, onClick = { detect(true) }) {
+                        Text(stringResource(R.string.ddns_detect_ipv6))
+                    }
+                }
                 when (provider) {
                     DynamicDnsProvider.Cloudflare -> {
                         DdnsField(account, { account = it }, R.string.ddns_zone, !busy)
