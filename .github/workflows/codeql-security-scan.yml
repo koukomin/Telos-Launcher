@@ -22,7 +22,7 @@ permissions:
 
 jobs:
   analyze:
-    if: github.event_name != 'pull_request' || github.event.action != 'closed'
+    if: github.actor != 'dependabot[bot]' && (github.event_name != 'pull_request' || github.event.action != 'closed')
     runs-on: ubuntu-latest
     timeout-minutes: 120
     permissions:
@@ -68,15 +68,12 @@ jobs:
 
       - name: Build Debug Sources
         if: matrix.build-mode == 'manual'
-        # CodeQL must observe compilation, not restore compiled output from Gradle caches.
-        # Actions language uses build-mode none (overlay PRs). Manual is only for Java/Kotlin.
-        # https://docs.github.com/en/code-security/reference/code-scanning/troubleshoot-analysis-errors/no-source-code-seen-during-build
         env:
-          GRADLE_OPTS: "-Dorg.gradle.jvmargs=-Xmx6g -XX:+UseG1GC"
+          GRADLE_OPTS: "-Dorg.gradle.jvmargs=-Xmx4g -XX:+UseG1GC"
         run: |
           bash gradlew :app:app:compileDefaultDebugSources --no-daemon --no-build-cache --no-configuration-cache \
             --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process \
-            '-Dorg.gradle.jvmargs=-Xmx7g -Dfile.encoding=UTF-8' \
+            '-Dorg.gradle.jvmargs=-Xmx4g -Dfile.encoding=UTF-8' \
             --rerun-tasks -Pkotlin.incremental=false
 
       - name: Perform CodeQL Analysis
