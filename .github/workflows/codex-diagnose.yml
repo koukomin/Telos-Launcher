@@ -15,7 +15,7 @@ jobs:
           python3 - <<'PY'
           import json, os, subprocess
           base='repos/'+os.environ['GITHUB_REPOSITORY']+'/actions/jobs/'
-          for job in ['139937144002','139937143864','139936239505']:
+          for job in ['140397945267','140397945554','140367377926']:
               p=subprocess.run(['gh','api','--allow-escape-sequences',base+job+'/logs'],capture_output=True,text=True)
               lines=p.stdout.splitlines()
               indices=[i for i,l in enumerate(lines) if 'What went wrong:' in l or 'FAILURE: Build failed' in l or ' e: file:' in l]
