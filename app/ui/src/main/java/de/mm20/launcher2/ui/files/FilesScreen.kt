@@ -181,6 +181,11 @@ internal fun FilesBrowser(vm: FilesViewModel, handlesBack: Boolean = true) {
     var showApps by remember { mutableStateOf(false) }
     if (showApps) FilesAppManagerDialog { showApps = false }
     var showTransfers by remember { mutableStateOf(false) }
+    var carrierEntry by remember { mutableStateOf<Pair<FsEntry, Boolean>?>(null) }
+    carrierEntry?.let { (entry, extract) ->
+        FilesEncryptionDialog(java.io.File(entry.path), extract, { carrierEntry = null },
+            { vm.clearSelection(); vm.reload(); vm.onFilesChanged() }, carrierMode = true)
+    }
     var encryptionEntry by remember { mutableStateOf<Pair<FsEntry, Boolean>?>(null) }
     encryptionEntry?.let { (entry, decrypt) -> FilesEncryptionDialog(java.io.File(entry.path), decrypt,
         { encryptionEntry = null }, { encryptionEntry = null; vm.clearSelection(); vm.reload(); vm.onFilesChanged() }) }
@@ -310,6 +315,9 @@ internal fun FilesBrowser(vm: FilesViewModel, handlesBack: Boolean = true) {
                             onCompress = { dialog = FilesDialog.Compress(vm.selectedEntries()) },
                             onProperties = { vm.selectedEntries().singleOrNull()?.let { dialog = FilesDialog.Properties(it) } },
                             onBookmark = { vm.selectedEntries().singleOrNull()?.let { vm.toggleBookmark(it.path); vm.clearSelection() } },
+                            onCarrier = vm.selectedEntries().singleOrNull()
+                                ?.takeIf { !vm.rootMode && !it.isDir && !it.isLink && !RemotePath.isRemote(it.path) && !ArchivePath.isArchive(it.path) && !de.mm20.launcher2.ui.files.vault.VaultPath.isVault(it.path) }
+                                ?.let { entry -> { extract: Boolean -> carrierEntry = entry to extract } },
                             onEncrypt = vm.selectedEntries().singleOrNull()?.takeIf { !vm.rootMode && !it.isDir && !it.isLink && !RemotePath.isRemote(it.path) && !ArchivePath.isArchive(it.path) && !de.mm20.launcher2.ui.files.vault.VaultPath.isVault(it.path) }?.let { entry -> { encryptionEntry = entry to false } },
                             onDecrypt = vm.selectedEntries().singleOrNull()?.takeIf { !vm.rootMode && !it.isDir && !it.isLink && it.name.endsWith(".telos-aes", true) && !RemotePath.isRemote(it.path) && !ArchivePath.isArchive(it.path) && !de.mm20.launcher2.ui.files.vault.VaultPath.isVault(it.path) }?.let { entry -> { encryptionEntry = entry to true } },
                             onOpenAsArchive = vm.selectedEntries().singleOrNull()
@@ -540,6 +548,7 @@ private fun SelectionBar(
     count: Int, single: FsEntry?, onClose: () -> Unit, onSelectAll: () -> Unit, onCopy: () -> Unit, onCut: () -> Unit,
     onDelete: () -> Unit, onShare: () -> Unit, onRename: () -> Unit, onCompress: () -> Unit, onProperties: () -> Unit, onBookmark: () -> Unit,
     onOpenAsArchive: (() -> Unit)? = null,
+    onCarrier: ((Boolean) -> Unit)? = null,
     onEncrypt: (() -> Unit)? = null, onDecrypt: (() -> Unit)? = null,
 ) {
     var more by remember { mutableStateOf(false) }
@@ -557,6 +566,10 @@ private fun SelectionBar(
                     DropdownMenuItem(text = { Text(stringResource(I18nR.string.hc_select_all)) }, onClick = { more = false; onSelectAll() })
                     DropdownMenuItem(text = { Text(stringResource(I18nR.string.hc_share)) }, onClick = { more = false; onShare() })
                     DropdownMenuItem(text = { Text(stringResource(I18nR.string.au21_arch_compress)) }, onClick = { more = false; onCompress() })
+                    if (onCarrier != null) {
+                        DropdownMenuItem(text = { Text(stringResource(I18nR.string.telos_files_carrier_embed)) }, onClick = { more = false; onCarrier(false) })
+                        DropdownMenuItem(text = { Text(stringResource(I18nR.string.telos_files_carrier_extract)) }, onClick = { more = false; onCarrier(true) })
+                    }
                     if (onEncrypt != null) DropdownMenuItem(text = { Text(stringResource(I18nR.string.telos_files_encrypt)) }, onClick = { more = false; onEncrypt() })
                     if (onDecrypt != null) DropdownMenuItem(text = { Text(stringResource(I18nR.string.telos_files_decrypt)) }, onClick = { more = false; onDecrypt() })
                     if (onOpenAsArchive != null) DropdownMenuItem(text = { Text(stringResource(I18nR.string.au22_files_open_as_archive)) }, onClick = { more = false; onOpenAsArchive() })

@@ -21,3 +21,11 @@ Final output is created exclusively (`CREATE_NEW`) and streamed from the verifie
 Η **Κρυπτογράφηση αρχείου** δημιουργεί ξεχωριστό αρχείο `.telos-aes` με κωδικό και έλεγχο αυθεντικότητας AES-256-GCM. Η **Αποκρυπτογράφηση αρχείου** δημιουργεί ξεχωριστό αρχείο στην αρχική μορφή. Το αρχικό διατηρείται και δεν αντικαθίστανται υπάρχοντα αρχεία.
 
 Ο κωδικός δεν αποθηκεύεται και δεν υπάρχει ανάκτηση αν χαθεί. Η μορφή είναι ειδική για το Telos, όχι ZIP AES ή κρυπτογραφημένος φάκελος άλλης εφαρμογής. Η αποκρυπτογράφηση ελέγχεται πλήρως σε ιδιωτικό προσωρινό χώρο πριν δημιουργηθεί το δημόσιο αποτέλεσμα. Αν διακοπεί το ρεύμα κατά την τελική αποθήκευση, το αποτέλεσμα μπορεί να είναι ελλιπές· κράτησε το αρχικό μέχρι να το ελέγξεις.
+
+## Embed an encrypted file in a carrier
+
+1. Select the local file you want to protect, open the selection menu and choose **Embed encrypted file**.
+2. Choose a carrier using Android's file picker. Give the new file a name with the carrier's extension and enter a strong password or randomly generated shared secret.
+3. To recover the payload, select the carrier copy and choose **Extract encrypted file**. Enter the same secret and give the recovered file its original name and extension.
+
+The carrier and payload may be different file types. Telos keeps the originals and uses authenticated AES-256-GCM for the payload. The original carrier bytes are copied verbatim and the encrypted data is appended using Telos's format. That data is detectable and incompatible with PixelKnot. Some formats reject trailing data, and editing, re-encoding or forwarding through a media compressor may strip it. Send the resulting copy as a file to preserve its bytes. Share the secret through a separate channel.

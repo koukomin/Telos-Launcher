@@ -66,3 +66,7 @@ For user-facing behavior see [Telos Files](../../user-guide/telos/files/).
 `FilesWorkspaceViewModel` owns one ViewModelStore/browser per tab, a shared clipboard and the active left/right panels. Closing a tab clears its store and cancels its active task. Closing the workspace clears decrypted/downloaded temporary data and archive sessions. Folder presentation options are stored under SHA-256 path keys. `BatchNames` in core/base plans rename tokens; the browser checks target conflicts and performs two-phase renames with best-effort rollback.
 
 The [feature comparison](../../user-guide/telos/files/feature-comparison) records remaining gaps against the published MiXplorer/Solid lists.
+
+### Encrypted file carriers
+
+`EncryptedFileCarrier` in `:core:base` appends a `PasswordFileEncryption` payload and a 16-byte footer with the payload length and format marker. The footer is validated before reading the payload. The existing AES-GCM format authenticates the embedded payload before publishing it. The carrier prefix is outside that authentication boundary. Files stages intermediate data in the app-private no-backup directory and publishes to a new path without overwriting existing files.

@@ -1577,3 +1577,5 @@ Telos Files can hand a file to the installed Android LocalSend app from its prop
 Telos Files can upload a selected local file to a public host and copy the resulting HTTPS link. The uploader is shared with Ermis and Downloads. See the [cloud sharing guide](docs/docs/user-guide/telos/files/network-cloud.md#upload-and-copy-a-public-link).
 
 The cloud upload and copy-link dialog is also available in Sync, Downloads and the Android 14+ Telos file share sheet. Installed OnionShare Android builds can receive selected files from the same sheet.
+
+Telos Files can embed a password-protected payload in a copy of a carrier file and recover it with the same secret. The [carrier guide](docs/docs/user-guide/telos/files/password-encryption.md#embed-an-encrypted-file-in-a-carrier) covers format limits and how to share the copy.

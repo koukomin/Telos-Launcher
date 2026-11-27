@@ -8,4 +8,9 @@
     <string name="telos_files_encryption_password">Password</string>
     <string name="telos_files_encryption_confirm">Confirm password</string>
     <string name="telos_files_encryption_failed">Could not complete the operation. Check the password, file integrity, available storage and write permission. The original has been kept.</string>
+    <string name="telos_files_carrier_embed">Embed encrypted file</string>
+    <string name="telos_files_carrier_extract">Extract encrypted file</string>
+    <string name="telos_files_carrier_pick">Choose carrier file</string>
+    <string name="telos_files_carrier_change">Change carrier file</string>
+    <string name="telos_files_carrier_info">Telos appends detectable encrypted data to a copy of the carrier. Some formats may stop opening, and editing or recompressing the copy may remove the data. Use a strong password or a random shared secret. For embedding, give the output the carrier’s extension.</string>
 </resources>

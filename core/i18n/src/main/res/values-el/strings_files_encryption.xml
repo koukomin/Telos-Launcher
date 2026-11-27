@@ -21,4 +21,9 @@
     
     
 
+    <string name="telos_files_carrier_embed">Ενσωμάτωση κρυπτογραφημένου αρχείου</string>
+    <string name="telos_files_carrier_extract">Εξαγωγή κρυπτογραφημένου αρχείου</string>
+    <string name="telos_files_carrier_pick">Επιλογή αρχείου-φορέα</string>
+    <string name="telos_files_carrier_change">Αλλαγή αρχείου-φορέα</string>
+    <string name="telos_files_carrier_info">Το Telos προσθέτει ανιχνεύσιμα κρυπτογραφημένα δεδομένα σε αντίγραφο του αρχείου-φορέα. Ορισμένες μορφές μπορεί να μην ανοίγουν πλέον. Η επεξεργασία ή η επανασυμπίεση μπορεί να αφαιρέσει τα δεδομένα. Χρησιμοποίησε ισχυρό συνθηματικό ή τυχαίο κοινό μυστικό. Για ενσωμάτωση, δώσε στο νέο αρχείο την επέκταση του αρχείου-φορέα.</string>
 </resources>

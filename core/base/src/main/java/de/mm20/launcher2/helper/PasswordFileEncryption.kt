@@ -140,7 +140,7 @@ object PasswordFileEncryption {
         }
     }
 
-    private fun publish(temporary: File, destination: File, checkpoint: () -> Unit) {
+    internal fun publish(temporary: File, destination: File, checkpoint: () -> Unit) {
         // CREATE_NEW is exclusive even on shared storage. Publish starts only after the complete
         // encrypted input has authenticated. Power loss during this final copy can leave a partial
         // destination; this intentionally does not claim atomic rename on emulated/FAT storage.
