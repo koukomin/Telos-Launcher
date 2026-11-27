@@ -1,0 +1,7 @@
+<resources>
+    <string name="files_cloud_upload">Μεταφόρτωση και αντιγραφή συνδέσμου</string>
+    <string name="files_cloud_warning">Το αρχείο αποστέλλεται στον επιλεγμένο δημόσιο πάροχο. Όποιος έχει τον σύνδεσμο ενδέχεται να μπορεί να το κατεβάσει. Η διατήρηση και η πρόσβαση εξαρτώνται από τον πάροχο.</string>
+    <string name="files_cloud_uploading">Μεταφόρτωση…</string>
+    <string name="files_cloud_failed">Η μεταφόρτωση απέτυχε. Έλεγξε τη σύνδεση και τα όρια του παρόχου.</string>
+    <string name="files_cloud_copied">Ο σύνδεσμος λήψης αντιγράφηκε.</string>
+</resources>

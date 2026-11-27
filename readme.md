@@ -1573,3 +1573,5 @@ Telos Media offers headset play routing with individual source choices. Local Vi
 Telos Network can update existing Dynamic DNS records at DuckDNS, No-IP, Dyn, Dynu, FreeDNS and Cloudflare. See the [provider setup guide](docs/docs/user-guide/telos/network/dns.md#dynamic-dns).
 
 Telos Files can hand a file to the installed Android LocalSend app from its properties dialog. All Telos apps that use the Android share sheet can also choose LocalSend there. LocalSend handles device discovery, consent and transfer after the handoff. The Dynamic DNS dialog links to free DuckDNS setup and can fill in the WAN address on request.
+
+Telos Files can upload a selected local file to a public host and copy the resulting HTTPS link. The uploader is shared with Ermis and Downloads. See the [cloud sharing guide](docs/docs/user-guide/telos/files/network-cloud.md#upload-and-copy-a-public-link).

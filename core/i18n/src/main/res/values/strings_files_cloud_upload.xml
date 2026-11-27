@@ -1,0 +1,7 @@
+<resources>
+    <string name="files_cloud_upload">Upload and copy link</string>
+    <string name="files_cloud_warning">This sends the file to the selected public host. Anyone with the link may be able to download it. Retention and access rules depend on the provider.</string>
+    <string name="files_cloud_uploading">Uploading…</string>
+    <string name="files_cloud_failed">Upload failed. Check your connection and the provider limits.</string>
+    <string name="files_cloud_copied">Download link copied.</string>
+</resources>

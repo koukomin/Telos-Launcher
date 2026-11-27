@@ -263,6 +263,8 @@ internal fun PropertiesDialog(vm: FilesViewModel, entry: FsEntry, onDismiss: () 
     var hashes by remember { mutableStateOf<Map<String, String>>(emptyMap()) }
     var mode by remember { mutableStateOf("") }
     val unavailableLabel = stringResource(I18nR.string.au_files_unavailable)
+    var showCloudUpload by remember(entry.path) { mutableStateOf(false) }
+    if (showCloudUpload) CloudUploadDialog(entry) { showCloudUpload = false }
     val scope = rememberCoroutineScope()
     LaunchedEffect(entry.path) {
         size = vm.sizeOf(entry)
@@ -281,6 +283,13 @@ internal fun PropertiesDialog(vm: FilesViewModel, entry: FsEntry, onDismiss: () 
                 if (entry.permissions.isNotEmpty()) Detail(stringResource(I18nR.string.hf_files_prop_permissions), entry.permissions)
                 if (entry.owner.isNotEmpty()) Detail(stringResource(I18nR.string.hf_files_prop_owner), entry.owner)
                 entry.linkTarget?.takeIf { it.isNotEmpty() }?.let { Detail(stringResource(I18nR.string.hf_files_prop_link_to), it) }
+                if (!entry.isDir && !vm.rootMode && entry.path.startsWith("/") &&
+                    !FileActions.isSystemPath(entry.path, true)
+                ) {
+                    TextButton(onClick = { showCloudUpload = true }) {
+                        Text(stringResource(I18nR.string.files_cloud_upload))
+                    }
+                }
                 if (!entry.isDir) {
                     HorizontalDivider()
                     Text(stringResource(I18nR.string.hc_checksums), style = MaterialTheme.typography.labelLarge)

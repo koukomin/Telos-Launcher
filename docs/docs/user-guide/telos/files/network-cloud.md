@@ -258,3 +258,15 @@ In the picture view (grid), tiles of cloud and network storages show the coloure
 | "Sign-in failed" or "Signing in took too long" | Redirect address mismatch, or you took more than three minutes |
 | "The service did not give a refresh token" | Remove the app's earlier grant in the provider's account settings and sign in again |
 | Cloud upload fails for a big file | Free space in the cache is too small, or the network dropped |
+
+## Upload and copy a public link
+
+Open the properties of a local file in Telos Files, then choose **Upload and
+copy link**. Select file.io, Catbox or Gofile and confirm. Telos sends the
+selected file to that provider and copies its HTTPS download link after a
+successful upload. Retention, access rules and file size limits depend on the
+provider. Compress a folder into an archive first if you want to share it as
+one file.
+
+Ermis uses the same uploader to attach a link to an email. Telos Downloads
+can also upload a selected file and copy its link.

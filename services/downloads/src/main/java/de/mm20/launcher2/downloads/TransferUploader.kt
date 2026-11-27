@@ -7,10 +7,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.RequestBody.Companion.toRequestBody
+import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
+import okio.BufferedSink
+import okio.source
 import org.json.JSONObject
-import java.io.File
-import java.io.InputStream
+import java.io.IOException
+import kotlinx.coroutines.CancellationException
 import java.util.concurrent.TimeUnit
 
 enum class UploadService(val displayName: String, val host: String) {
@@ -29,6 +31,10 @@ data class UploadResult(
 object TransferUploader {
 
     private val httpClient = OkHttpClient.Builder()
+        .followRedirects(false)
+        .followSslRedirects(false)
+        .retryOnConnectionFailure(false)
+        .callTimeout(10, TimeUnit.MINUTES)
         .connectTimeout(30, TimeUnit.SECONDS)
         .readTimeout(120, TimeUnit.SECONDS)
         .writeTimeout(120, TimeUnit.SECONDS)
@@ -49,25 +55,43 @@ object TransferUploader {
                 }
             }
 
-            val bytes = contentResolver.openInputStream(uri)?.use { it.readBytes() }
-                ?: throw IllegalArgumentException("Could not read file data")
+            var uploadedSize = 0L
+            val data = object : RequestBody() {
+                override fun contentType() = "application/octet-stream".toMediaTypeOrNull()
+                override fun contentLength() = if (fileSize > 0) fileSize else -1L
+                override fun isOneShot() = true
 
-            if (fileSize <= 0) fileSize = bytes.size.toLong()
-
-            val link = when (service) {
-                UploadService.FileIo -> uploadToFileIo(fileName, bytes)
-                UploadService.Catbox -> uploadToCatbox(fileName, bytes)
-                UploadService.Gofile -> uploadToGofile(fileName, bytes)
+                override fun writeTo(sink: BufferedSink) {
+                    val input = contentResolver.openInputStream(uri) ?: throw IOException("Could not open file")
+                    uploadedSize = input.source().use { sink.writeAll(it) }
+                }
             }
+            val rawLink = when (service) {
+                UploadService.FileIo -> uploadToFileIo(fileName, data)
+                UploadService.Catbox -> uploadToCatbox(fileName, data)
+                UploadService.Gofile -> uploadToGofile(fileName, data)
+            }
+            val link = rawLink.toHttpUrlOrNull()?.takeIf {
+                it.isHttps && it.port == 443 && it.username.isEmpty() && it.password.isEmpty() &&
+                    (it.host == service.host || it.host.endsWith(".${service.host}"))
+            }?.toString() ?: throw IOException("Invalid download link from provider")
+            fileSize = uploadedSize
 
             UploadResult(service, fileName, link, fileSize)
-        }
+        }.onFailure { if (it is CancellationException) throw it }
     }
 
-    private fun uploadToFileIo(fileName: String, bytes: ByteArray): String {
+    private fun responseText(response: Response): String {
+        if (!response.isSuccessful) throw IOException("Upload provider returned HTTP ${response.code}")
+        val source = response.body.source()
+        if (source.request(65_537)) throw IOException("Upload provider response too large")
+        return source.readUtf8()
+    }
+
+    private fun uploadToFileIo(fileName: String, data: RequestBody): String {
         val requestBody = MultipartBody.Builder()
             .setType(MultipartBody.FORM)
-            .addFormDataPart("file", fileName, bytes.toRequestBody("application/octet-stream".toMediaTypeOrNull()))
+            .addFormDataPart("file", fileName, data)
             .build()
 
         val request = Request.Builder()
@@ -76,21 +100,21 @@ object TransferUploader {
             .build()
 
         httpClient.newCall(request).execute().use { response ->
-            val jsonStr = response.body?.string() ?: throw IllegalStateException("Empty response from file.io")
+            val jsonStr = responseText(response)
             val json = JSONObject(jsonStr)
             if (json.optBoolean("success")) {
                 return json.getString("link")
             } else {
-                throw IllegalStateException(json.optString("message", "Upload to file.io failed"))
+                throw IOException("file.io refused the upload")
             }
         }
     }
 
-    private fun uploadToCatbox(fileName: String, bytes: ByteArray): String {
+    private fun uploadToCatbox(fileName: String, data: RequestBody): String {
         val requestBody = MultipartBody.Builder()
             .setType(MultipartBody.FORM)
             .addFormDataPart("reqtype", "fileupload")
-            .addFormDataPart("fileToUpload", fileName, bytes.toRequestBody("application/octet-stream".toMediaTypeOrNull()))
+            .addFormDataPart("fileToUpload", fileName, data)
             .build()
 
         val request = Request.Builder()
@@ -99,24 +123,26 @@ object TransferUploader {
             .build()
 
         httpClient.newCall(request).execute().use { response ->
-            val link = response.body?.string()?.trim() ?: throw IllegalStateException("Empty response from catbox.moe")
+            val link = responseText(response).trim()
             if (link.startsWith("http")) return link
-            else throw IllegalStateException("Catbox upload failed: $link")
+            else throw IOException("Catbox refused the upload")
         }
     }
 
-    private fun uploadToGofile(fileName: String, bytes: ByteArray): String {
+    private fun uploadToGofile(fileName: String, data: RequestBody): String {
         // Step 1: Get best server
         val serverReq = Request.Builder().url("https://api.gofile.io/servers").build()
         val serverName = httpClient.newCall(serverReq).execute().use { res ->
-            val json = JSONObject(res.body?.string() ?: "{}")
+            val json = JSONObject(responseText(res))
             json.getJSONObject("data").getJSONArray("servers").getJSONObject(0).getString("name")
         }
+
+        if (!Regex("[a-zA-Z0-9-]{1,63}").matches(serverName)) throw IOException("Invalid upload server")
 
         // Step 2: Upload
         val requestBody = MultipartBody.Builder()
             .setType(MultipartBody.FORM)
-            .addFormDataPart("file", fileName, bytes.toRequestBody("application/octet-stream".toMediaTypeOrNull()))
+            .addFormDataPart("file", fileName, data)
             .build()
 
         val uploadReq = Request.Builder()
@@ -125,7 +151,7 @@ object TransferUploader {
             .build()
 
         httpClient.newCall(uploadReq).execute().use { res ->
-            val json = JSONObject(res.body?.string() ?: "{}")
+            val json = JSONObject(responseText(res))
             if (json.optString("status") == "ok") {
                 return json.getJSONObject("data").getString("downloadPage")
             } else {
