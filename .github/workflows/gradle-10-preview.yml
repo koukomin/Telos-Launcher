@@ -29,9 +29,8 @@ jobs:
           BUILD: ${{ matrix.build }}
         run: |
           if [[ "$BUILD" == "Amethyst" ]]; then
-            cd libs/amethyst
             bash gradlew --version
-            bash gradlew :amethyst:assembleFdroidDebug --warning-mode all \
+            bash gradlew -p libs/amethyst :amethyst:assembleFdroidDebug --warning-mode all \
               --no-configuration-cache --no-daemon --max-workers=1 -Dorg.gradle.parallel=false \
               -Pkotlin.compiler.execution.strategy=in-process '-Dorg.gradle.jvmargs=-Xmx7g -Dfile.encoding=UTF-8'
           else
