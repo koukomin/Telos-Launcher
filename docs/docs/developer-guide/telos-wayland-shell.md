@@ -1,15 +1,15 @@
 ---
-
-Standalone Telos Desktop development is paused. Gradle does not include
-`:desktop-linux`, and its workflow is archived under
-`.github/retired-workflows/`. The desktop source and session assets are retained
-for future work. The archived Linux launcher and Windows shell installer
-require `TELOS_DESKTOP_DEV=1`; Windows `-Revert` remains available.
-Android's external-display mode continues to ship with the launcher.
 sidebar_position: 11
 ---
 
 # Telos Wayland Shell (session-crash memory)
+
+> Standalone Telos Desktop development is paused. Gradle does not include
+> `:desktop-linux`, and its workflow is archived under
+> `.github/retired-workflows/`. The desktop source and session assets are retained
+> for future work. The archived Linux launcher and Windows shell installer
+> require `TELOS_DESKTOP_DEV=1`; Windows `-Revert` remains available.
+> Android's external-display mode continues to ship with the launcher.
 
 **If this session dies, resume here.** Compose remains an xdg-toplevel pinned fullscreen. Native panel/dock use **GtkLayerShell** (`zwlr_layer_shell_v1`) when the host has `gir1.2-gtk-layer-shell`. Without that package, Compose chrome stays visible (W0).
 
