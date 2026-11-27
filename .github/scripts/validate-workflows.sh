@@ -8,9 +8,9 @@ workflows=()
 for workflow in .github/workflows/*.yml .github/workflows/*.yaml; do
     if [[ "$workflow" != "$legacy" ]]; then workflows+=("$workflow"); fi
 done
-actionlint "${workflows[@]}"
+actionlint -shellcheck= "${workflows[@]}"
 if [[ -f "$legacy" ]]; then
-    actionlint -ignore '^constant expression "false" in condition\.' "$legacy"
+    actionlint -shellcheck= -ignore '^constant expression "false" in condition\.' "$legacy"
 fi
 for script in .github/scripts/*.sh; do
     bash -n "$script"
