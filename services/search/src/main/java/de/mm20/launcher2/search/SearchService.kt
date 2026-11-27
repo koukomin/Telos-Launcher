@@ -82,7 +82,7 @@ internal class SearchServiceImpl(
                         wikipedia = if (filters.articles) it.wikipedia else null,
                         locations = if (filters.places) it.locations else null,
                         webAppShortcuts = if (filters.apps) it.webAppShortcuts else null,
-                        settings = it.settings,
+                        settings = if (filters.settings) it.settings else null,
                     )
                 }
                     ?: SearchResults())
@@ -330,18 +330,20 @@ internal class SearchServiceImpl(
                         }
                 }
             }
-            launch {
-                kotlinx.coroutines.flow.combine(
-                    searchUiSettings.searchAndroidSettings,
-                    searchUiSettings.searchTelosSettings,
-                    searchUiSettings.searchTelosAppSettings,
-                ) { android, telos, apps -> Triple(android, telos, apps) }
-                    .flatMapLatest { (android, telos, apps) ->
-                        settingsSearchRepository.search(query, android, telos, apps)
-                    }
-                    .collectLatest { r ->
-                        results.update { it.copy(settings = r) }
-                    }
+            if (filters.settings) {
+                launch {
+                    kotlinx.coroutines.flow.combine(
+                        searchUiSettings.searchAndroidSettings,
+                        searchUiSettings.searchTelosSettings,
+                        searchUiSettings.searchTelosAppSettings,
+                    ) { android, telos, apps -> Triple(android, telos, apps) }
+                        .flatMapLatest { (android, telos, apps) ->
+                            settingsSearchRepository.search(query, android, telos, apps)
+                        }
+                        .collectLatest { r ->
+                            results.update { it.copy(settings = r) }
+                        }
+                }
             }
             emitAll(results)
         }
