@@ -163,7 +163,7 @@ object ScreenshotController {
         )
         val share = PendingIntent.getActivity(
             context, id + 100000,
-            ShareActions.createChooserIntent(listOf(shareableUri(context, uri)), "image/*"),
+            ShareActions.createChooserIntent(listOf(shareableUri(context, uri)), "image/*", context = context),
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
         )
         val delete = PendingIntent.getActivity(

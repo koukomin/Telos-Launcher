@@ -4,4 +4,5 @@
     <string name="files_cloud_uploading">Uploading…</string>
     <string name="files_cloud_failed">Upload failed. Check your connection and the provider limits.</string>
     <string name="files_cloud_copied">Download link copied.</string>
+    <string name="share_with_onionshare">Share with OnionShare</string>
 </resources>

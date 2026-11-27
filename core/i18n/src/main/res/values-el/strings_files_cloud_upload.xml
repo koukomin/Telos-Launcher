@@ -4,4 +4,5 @@
     <string name="files_cloud_uploading">Μεταφόρτωση…</string>
     <string name="files_cloud_failed">Η μεταφόρτωση απέτυχε. Έλεγξε τη σύνδεση και τα όρια του παρόχου.</string>
     <string name="files_cloud_copied">Ο σύνδεσμος λήψης αντιγράφηκε.</string>
+    <string name="share_with_onionshare">Κοινή χρήση με OnionShare</string>
 </resources>

@@ -58,6 +58,11 @@
                 android:resource="@xml/method" />
         </service>
 
+        <activity
+            android:name=".common.share.CloudUploadActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+
         <activity android:name="de.mm20.launcher2.ui.system.AppOpsActivity" android:exported="false" />
         <activity android:name=".trash.FileDeleteActivity" android:exported="false" android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
 

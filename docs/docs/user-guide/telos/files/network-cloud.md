@@ -270,3 +270,14 @@ one file.
 
 Ermis uses the same uploader to attach a link to an email. Telos Downloads
 can also upload a selected file and copy its link.
+
+In **Telos Sync** and **Telos Downloads**, open **Upload and copy link** and
+select an individual file through Android's file picker. On Android 14 and
+newer, the share sheet also offers the upload action when an app such as
+Viewer, Photos, Video or Voice Recorder is sharing a single file through the
+Telos file provider. Confirm the provider before sending the file.
+
+For a Tor share, install OnionShare for Android. Select **Share with OnionShare**
+in the Android 14+ Telos file share sheet, or choose the installed app as a
+regular share target. OnionShare receives only the selected files and manages
+the onion service and the link.

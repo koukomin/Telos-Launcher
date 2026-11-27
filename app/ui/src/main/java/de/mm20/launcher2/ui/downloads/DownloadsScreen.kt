@@ -237,7 +237,7 @@ fun DownloadsScreen(initialUrls: List<String> = emptyList()) {
                 Icon(painterResource(BaseR.drawable.more_vert_24px), stringResource(I18nR.string.action_more_actions))
             }
             DropdownMenu(expanded = menu, onDismissRequest = { menu = false }) {
-                DropdownMenuItem(text = { Text("Upload File to Cloud") }, onClick = { menu = false; showUploadSheet = true })
+                DropdownMenuItem(text = { Text(stringResource(I18nR.string.files_cloud_upload)) }, onClick = { menu = false; showUploadSheet = true })
                 DropdownMenuItem(text = { Text("Create Torrent / Magnet") }, onClick = { menu = false; showTorrentCreatorSheet = true })
                 DropdownMenuItem(text = { Text(stringResource(I18nR.string.dl_pause_all)) }, onClick = { menu = false; manager.pauseAll() })
                 DropdownMenuItem(text = { Text(stringResource(I18nR.string.dl_resume_all)) }, onClick = { menu = false; manager.resumeAll() })
@@ -636,109 +636,7 @@ private fun DeleteDialog(task: DownloadTask, onDismiss: () -> Unit, onConfirm: (
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TransferUploadSheet(onDismiss: () -> Unit) {
-    val context = LocalContext.current
-    val scope = rememberCoroutineScope()
-    var selectedUri by remember { mutableStateOf<android.net.Uri?>(null) }
-    var selectedService by remember { mutableStateOf(de.mm20.launcher2.downloads.UploadService.FileIo) }
-    var busy by remember { mutableStateOf(false) }
-    var uploadResult by remember { mutableStateOf<de.mm20.launcher2.downloads.UploadResult?>(null) }
-    var error by remember { mutableStateOf<String?>(null) }
-
-    val picker = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri ->
-        if (uri != null) selectedUri = uri
-    }
-
-    ModalBottomSheet(onDismissRequest = onDismiss) {
-        Column(
-            Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 20.dp, vertical = 12.dp),
-            verticalArrangement = Arrangement.spacedBy(14.dp)
-        ) {
-            Text("Upload File to Cloud", style = MaterialTheme.typography.titleLarge, fontWeight = androidx.compose.ui.text.font.FontWeight.Bold)
-
-            Text("Select a file from your device and upload to anonymous cloud file hosting.", style = MaterialTheme.typography.bodyMedium)
-
-            Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
-                Button(onClick = { picker.launch("*/*") }, enabled = !busy) {
-                    Text(if (selectedUri != null) "Change File" else "Choose File")
-                }
-                selectedUri?.let { uri ->
-                    Text(uri.lastPathSegment ?: "File selected", style = MaterialTheme.typography.bodySmall, maxLines = 1, overflow = TextOverflow.Ellipsis)
-                }
-            }
-
-            Text("Target Hosting Service:", style = MaterialTheme.typography.titleSmall)
-
-            Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                de.mm20.launcher2.downloads.UploadService.entries.forEach { service ->
-                    FilterChip(
-                        selected = selectedService == service,
-                        onClick = { selectedService = service },
-                        label = { Text(service.displayName) }
-                    )
-                }
-            }
-
-            if (busy) {
-                LinearProgressIndicator(Modifier.fillMaxWidth())
-            }
-
-            error?.let { err ->
-                Text(err, color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall)
-            }
-
-            uploadResult?.let { result ->
-                Card(colors = androidx.compose.material3.CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh)) {
-                    Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                        Text("Upload Complete!", fontWeight = androidx.compose.ui.text.font.FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
-                        Text("File: ${result.fileName} (${Formatting.size(result.sizeBytes)})", style = MaterialTheme.typography.bodySmall)
-                        androidx.compose.material3.OutlinedTextField(
-                            value = result.downloadUrl,
-                            onValueChange = {},
-                            readOnly = true,
-                            label = { Text("Share Link") },
-                            modifier = Modifier.fillMaxWidth()
-                        )
-                        Button(
-                            onClick = {
-                                val clipboard = context.getSystemService(android.content.Context.CLIPBOARD_SERVICE) as android.content.ClipboardManager
-                                clipboard.setPrimaryClip(android.content.ClipData.newPlainText("Upload Link", result.downloadUrl))
-                                Toast.makeText(context, "Link copied to clipboard!", Toast.LENGTH_SHORT).show()
-                            },
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            Text("Copy Link")
-                        }
-                    }
-                }
-            }
-
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End, verticalAlignment = Alignment.CenterVertically) {
-                TextButton(onClick = onDismiss) { Text(stringResource(I18nR.string.dl_cancel)) }
-                Spacer(Modifier.width(8.dp))
-                Button(
-                    onClick = {
-                        val uri = selectedUri ?: return@Button
-                        busy = true
-                        error = null
-                        scope.launch {
-                            val res = de.mm20.launcher2.downloads.TransferUploader.upload(context, uri, selectedService)
-                            busy = false
-                            res.onSuccess {
-                                uploadResult = it
-                            }.onFailure {
-                                error = it.message ?: "Upload failed"
-                            }
-                        }
-                    },
-                    enabled = selectedUri != null && !busy
-                ) {
-                    Text("Start Upload")
-                }
-            }
-        }
-    }
+    de.mm20.launcher2.ui.files.CloudUploadPicker(open = true, onDismiss = onDismiss)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

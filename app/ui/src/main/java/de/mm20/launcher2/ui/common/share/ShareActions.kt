@@ -73,10 +73,48 @@ object ShareActions {
         chooserTitle: CharSequence? = null,
         subject: String? = null,
         text: String? = null,
+        context: Context? = null,
     ): Intent {
-        return Intent.createChooser(createFileSendIntent(uris, mime, subject, text), chooserTitle)
-            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        val send = createFileSendIntent(uris, mime, subject, text)
+        val chooser = Intent.createChooser(send, chooserTitle).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        if (context != null && android.os.Build.VERSION.SDK_INT >= 34) {
+            addTelosFileActions(context, chooser, send, uris)
+        }
+        return chooser
     }
+
+    @androidx.annotation.RequiresApi(34)
+    private fun addTelosFileActions(context: Context, chooser: Intent, send: Intent, uris: List<Uri>) {
+        val actions = mutableListOf<android.service.chooser.ChooserAction>()
+        fun action(label: Int, intent: Intent) {
+            val pending = android.app.PendingIntent.getActivity(
+                context, nextShareActionId.incrementAndGet(), intent,
+                android.app.PendingIntent.FLAG_IMMUTABLE or android.app.PendingIntent.FLAG_ONE_SHOT,
+            )
+            actions += android.service.chooser.ChooserAction.Builder(
+                android.graphics.drawable.Icon.createWithResource(context, android.R.drawable.ic_menu_share),
+                context.getString(label), pending,
+            ).build()
+        }
+        val uri = uris.singleOrNull()
+        if (uri?.scheme == "content" && uri.authority == "${context.packageName}.fileprovider") {
+            action(
+                de.mm20.launcher2.i18n.R.string.files_cloud_upload,
+                Intent(context, CloudUploadActivity::class.java).setData(uri),
+            )
+        }
+        for (packageName in onionSharePackages) {
+            val target = Intent(send).setPackage(packageName)
+            if (target.resolveActivity(context.packageManager) != null) {
+                action(de.mm20.launcher2.i18n.R.string.share_with_onionshare, target)
+                break
+            }
+        }
+        if (actions.isNotEmpty()) chooser.putExtra(Intent.EXTRA_CHOOSER_CUSTOM_ACTIONS, actions.toTypedArray())
+    }
+
+    private val nextShareActionId = java.util.concurrent.atomic.AtomicInteger()
+    private val onionSharePackages = listOf("org.onionshare.android", "org.onionshare.android.fdroid")
 
     private fun createFileSendIntent(uris: List<Uri>, mime: String, subject: String?, text: String?): Intent {
         require(uris.isNotEmpty()) { "At least one URI is required" }
@@ -123,7 +161,7 @@ object ShareActions {
         if (uris.isEmpty()) return false
         return runCatching {
             context.startActivity(
-                createChooserIntent(uris, mime, chooserTitle, subject, text)
+                createChooserIntent(uris, mime, chooserTitle, subject, text, context)
             )
         }.isSuccess
     }

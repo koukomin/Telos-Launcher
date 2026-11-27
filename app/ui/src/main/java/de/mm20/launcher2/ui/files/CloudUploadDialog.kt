@@ -3,6 +3,11 @@ package de.mm20.launcher2.ui.files
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.net.Uri
+import android.provider.OpenableColumns
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.runtime.produceState
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -23,9 +28,17 @@ import de.mm20.launcher2.downloads.UploadService
 import de.mm20.launcher2.i18n.R
 import de.mm20.launcher2.ui.component.virtualAppPopup
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 @Composable
 internal fun CloudUploadDialog(entry: FsEntry, onDismiss: () -> Unit) {
+    val context = LocalContext.current
+    CloudUploadDialog(entry.name, onDismiss) { FileActions.uriFor(context, entry.path, rootMode = false) }
+}
+
+@Composable
+internal fun CloudUploadDialog(fileName: String, onDismiss: () -> Unit, openUri: suspend () -> Uri?) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     var provider by remember { mutableStateOf<UploadService?>(null) }
@@ -39,7 +52,7 @@ internal fun CloudUploadDialog(entry: FsEntry, onDismiss: () -> Unit) {
         title = { Text(stringResource(R.string.files_cloud_upload)) },
         text = {
             Column(Modifier.verticalScroll(rememberScrollState())) {
-                Text(entry.name)
+                Text(fileName)
                 Text(stringResource(R.string.files_cloud_warning))
                 if (link == null) {
                     UploadService.entries.forEach { candidate ->
@@ -63,7 +76,7 @@ internal fun CloudUploadDialog(entry: FsEntry, onDismiss: () -> Unit) {
                     failed = false
                     scope.launch {
                         try {
-                            val uri = FileActions.uriFor(context, entry.path, rootMode = false)
+                            val uri = openUri()
                             val url = uri?.let { TransferUploader.upload(context, it, selected).getOrNull()?.downloadUrl }
                             if (url == null) {
                                 failed = true
@@ -83,4 +96,36 @@ internal fun CloudUploadDialog(entry: FsEntry, onDismiss: () -> Unit) {
             TextButton(enabled = !busy, onClick = onDismiss) { Text(stringResource(if (link == null) android.R.string.cancel else R.string.hc_close)) }
         },
     )
+}
+
+@Composable
+internal fun CloudUploadUriDialog(uri: Uri, onDismiss: () -> Unit) {
+    val context = LocalContext.current
+    val name by produceState<String?>(null, uri) {
+        value = withContext(Dispatchers.IO) {
+            runCatching {
+                context.contentResolver.query(uri, arrayOf(OpenableColumns.DISPLAY_NAME), null, null, null)
+                    ?.use { if (it.moveToFirst()) it.getString(0) else null }
+            }.getOrNull() ?: uri.lastPathSegment?.substringAfterLast('/').orEmpty()
+        }
+    }
+    name?.let { CloudUploadDialog(it, onDismiss) { uri } }
+}
+
+/** Use Android's picker so Telos receives access to exactly the chosen file. */
+@Composable
+internal fun CloudUploadPicker(open: Boolean, onDismiss: () -> Unit) {
+    var selected by remember { mutableStateOf<Uri?>(null) }
+    val picker = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+        if (uri == null) onDismiss() else selected = uri
+    }
+    androidx.compose.runtime.LaunchedEffect(open) {
+        if (open) picker.launch("*/*")
+    }
+    selected?.let { uri ->
+        CloudUploadUriDialog(uri) {
+            selected = null
+            onDismiss()
+        }
+    }
 }

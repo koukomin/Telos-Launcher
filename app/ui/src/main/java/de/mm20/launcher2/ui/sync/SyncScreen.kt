@@ -61,6 +61,8 @@ fun SyncScreen() {
     var showAddFolderDialog by remember { mutableStateOf(false) }
     var showAddDeviceDialog by remember { mutableStateOf(false) }
     var showFontDialog by remember { mutableStateOf(false) }
+    var showCloudPicker by remember { mutableStateOf(false) }
+    de.mm20.launcher2.ui.files.CloudUploadPicker(showCloudPicker) { showCloudPicker = false }
 
     VirtualAppWindow {
         Scaffold(
@@ -76,6 +78,9 @@ fun SyncScreen() {
                         )
                     },
                     actions = {
+                        IconButton(onClick = { showCloudPicker = true }) {
+                            Icon(painterResource(BaseR.drawable.share_24px), stringResource(I18nR.string.files_cloud_upload))
+                        }
                         IconButton(onClick = { showFontDialog = true }) {
                             Icon(painterResource(BaseR.drawable.text_fields_24px), contentDescription = stringResource(I18nR.string.per_app_font_size))
                         }
