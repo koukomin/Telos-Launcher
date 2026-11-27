@@ -34,30 +34,6 @@ export const DeveloperGuideSidebar: DefaultTheme.SidebarItem[] = [
     link: '/docs/developer-guide/setup',
   },
   {
-    text: 'Telos Desktop module',
-    link: '/docs/developer-guide/desktop-linux',
-  },
-  {
-    text: 'TelosAndroidVm (QEMU + scrcpy)',
-    link: '/docs/developer-guide/windows-qemu-scrcpy',
-  },
-  {
-    text: 'Telos Desktop cold start',
-    link: '/docs/developer-guide/desktop-startup',
-  },
-  {
-    text: 'Telos Desktop roadmap',
-    link: '/docs/developer-guide/desktop-roadmap',
-  },
-  {
-    text: 'Telos Helix chrome',
-    link: '/docs/developer-guide/telos-helix',
-  },
-  {
-    text: 'Telos Wayland Shell',
-    link: '/docs/developer-guide/telos-wayland-shell',
-  },
-  {
     text: 'External APIs',
     link: '/docs/developer-guide/external-apis/',
     items: [
@@ -176,7 +152,6 @@ export const DeveloperGuideSidebar: DefaultTheme.SidebarItem[] = [
             text: 'v2.0.0',
             link: '/docs/developer-guide/plugins/changelogs/v2.0.0',
           },
-
         ],
       },
       {

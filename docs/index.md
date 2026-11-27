@@ -2,251 +2,77 @@
 layout: home
 
 hero:
-  name: 'Telos'
-  text: 'Search first. Own your phone.'
-  tagline: A free and open source Android launcher built around fast search, with a family of privacy-minded Telos apps.
-  image:
-    src: /icon.png
-    alt: Telos
+  name: "Telos Launcher"
+  text: "Built-in apps, privacy and search"
+  tagline: Search-focused launcher with built-in phone, messages, files, media, store and freezer
   actions:
     - theme: brand
-      text: Telos apps overview
-      link: /docs/user-guide/telos/
-    - theme: alt
-      text: Launcher features
-      link: /docs/user-guide/telos/launcher/
-    - theme: alt
-      text: User guide
+      text: Get Started
       link: /docs/user-guide/
+    - theme: alt
+      text: GitHub Releases
+      link: https://github.com/koukomin/Telos-Launcher/releases
+    - theme: alt
+      text: Add to Obtainium
+      link: https://obtainium.imranr.dev/add?url=https://github.com/koukomin/Telos-Launcher
 
 features:
-  - icon: 🔎
-    title: Search-first launcher
-    details: Apps, contacts, files, calendar, calculator, unit converter, web and more in one fast, customizable search.
-    link: /docs/user-guide/telos/launcher/
+  - icon: 🔍
+    title: Search-focused
+    text: Find apps, contacts, files, calendar events, calculations, unit conversions and web results from one place.
+
   - icon: 📞
-    title: Telos Phone
-    details: Contacts, calls and an encrypted block list, with recoverable contact-detail loading.
-    link: /docs/user-guide/telos/phone/
-  - icon: 💬
-    title: Messages
-    details: Read and send messages from a simple, focused app.
-    link: /docs/user-guide/telos/messages/
+    title: Phone & Messages
+    text: Built-in phone with dialer, call recording, screening and SIP; built-in SMS and MMS messenger.
+
   - icon: 📁
-    title: Files
-    details: Local, USB and remote space, ISO and zip folders, RAW/HEIC previews, SMB by name or IP.
-    link: /docs/user-guide/telos/files/
-  - icon: 📸
-    title: Screenshot
-    details: Full, partial and scrolling screenshots, with crop, pixelate, blur and drawing.
-    link: /docs/user-guide/telos/screenshot/
-  - icon: 🎥
-    title: Screen Recorder
-    details: Record the screen to a video with the microphone, pause and a countdown.
-    link: /docs/user-guide/telos/screen-recorder/
-  - icon: 🎙️
-    title: Voice Recorder
-    details: Voice recordings with a list, search, pause and the call recordings of Telos Phone.
-    link: /docs/user-guide/telos/voice-recorder/
-  - icon: 📷
-    title: Camera
-    details: Telos camera, RAW, discreet capture and an IP webcam for OBS.
-    link: /docs/user-guide/telos/camera/
-  - icon: 📝
-    title: Notes
-    details: Notes with labels, sync with a Markdown folder or Nextcloud, import from Google Keep and Evernote.
-    link: /docs/user-guide/telos/notes/
-  - icon: 📅
-    title: Calendar
-    details: Month and agenda on your calendars, a local calendar and Google or CalDAV through the system.
-    link: /docs/user-guide/telos/calendar/
-  - icon: ⬇️
-    title: Downloads
-    details: Download manager with several connections per file, resume, a queue and the folder of your choice.
-    link: /docs/user-guide/telos/downloads/
-  - icon: 🧮
-    title: Calculator
-    details: Standard and scientific calculator with VAT, unit and currency conversion and a history.
-    link: /docs/user-guide/telos/calculator/
-  - icon: 🖼️
-    title: Viewer
-    details: Photos, PDF highlight, comics, SVG/PSD/AI/CDR previews, Office documents.
-    link: /docs/user-guide/telos/photos/
-  - icon: 🎵
-    title: Music
-    details: Local music with one mini player, lyrics and home-screen playback controls.
-    link: /docs/user-guide/telos/music/
-  - icon: 🎬
-    title: Video
-    details: Local and remote video with brightness, volume and stop-and-back controls.
-    link: /docs/user-guide/telos/video/
-  - icon: 📻
-    title: Radio
-    details: Internet radio with one now-playing bar and home-screen station/track controls.
-    link: /docs/user-guide/telos/radio/
-  - icon: 🛍️
-    title: Store
-    details: Discover and update apps, including opt-in frozen-app updates through authorized backends.
-    link: /docs/user-guide/telos/store/
-  - icon: ⚙️
-    title: System
-    details: Device stats, saved Wi-Fi, AppOps, and a built-in Shizuku server with wireless pairing or a one-line adb command.
-    link: /docs/user-guide/telos/system/
+    title: Files & Media
+    text: Built-in file manager, photo viewer, music, video and radio players, document viewer and PDF tools.
+
   - icon: ❄️
     title: Smart Freeze
-    details: Freeze apps, launch them on demand, and temporarily unfreeze/restore saved groups for updates.
-    link: /docs/user-guide/telos/freeze/
+    text: Freeze apps through Shizuku, root or Island, and launch them instantly when you need them.
+
+  - icon: 🛍️
+    title: Store & System
+    text: App installer and updater (GitHub, F-Droid), CPU/RAM telemetry, built-in Shizuku server and AppOps.
+
+  - icon: 🎨
+    title: Customizable
+    text: Presets, themes, custom icon packs, fonts, shapes, widgets and a flexible home screen grid.
+
   - icon: 🎬
     title: Media
-    details: Listen, Watch and Live in one app — local files, YouTube, TV, Stremio Fork (deep links, calendar, continue watching), NextLib decoders.
-    link: /docs/user-guide/telos/media/
+    text: Listen, Watch and Live in one app — local files, YouTube, TV, Stremio Fork (deep links, calendar, continue watching), NextLib decoders.
   - icon: ✉️
     title: Ermis
-    details: IMAP/SMTP mail with TLS, conversations, drafts and optional Google/microG consent.
+    text: IMAP/SMTP mail with TLS, conversations, drafts and optional Google/microG consent.
     link: /docs/user-guide/telos/ermis/
-  - icon: 📦
-    title: TelosAndroidVm
-    details: BlissOS in headless QEMU + scrcpy on Windows, Linux (KVM) and Apple Silicon. Encrypted guest disk survives opt-in ISO updates.
-    link: /docs/user-guide/telos/android-vm
   - icon: 🛡️
     title: Privacy and crash guard
-    details: No tracking by default, and a crash guard that keeps the launcher usable if something goes wrong.
+    text: No tracking by default, and a crash guard that keeps the launcher usable if something goes wrong.
     link: /docs/user-guide/
+
 ---
 
 <script setup>
   import { withBase } from 'vitepress'
   import Footer from '.vitepress/theme/Footer.vue'
   const shots = [
-  {
-    "src": "/img/telos-development-01-launcher.webp",
-    "caption": "Launcher — home clock and search"
-  },
-  {
-    "src": "/img/telos-development-02-media-listen.webp",
-    "caption": "Media — local music"
-  },
-  {
-    "src": "/img/telos-development-03-youtube-music.webp",
-    "caption": "YouTube Music"
-  },
-  {
-    "src": "/img/telos-development-04-youtube-video.webp",
-    "caption": "YouTube video"
-  },
-  {
-    "src": "/img/telos-development-05-stremio-fork.webp",
-    "caption": "Stremio Fork — account sign-in"
-  },
-  {
-    "src": "/img/telos-development-06-files.webp",
-    "caption": "Files"
-  },
-  {
-    "src": "/img/telos-development-07-store.webp",
-    "caption": "Store"
-  },
-  {
-    "src": "/img/telos-development-08-viewer.webp",
-    "caption": "Viewer"
-  },
-  {
-    "src": "/img/telos-development-09-notes.webp",
-    "caption": "Notes"
-  },
-  {
-    "src": "/img/telos-development-10-calendar.webp",
-    "caption": "Calendar"
-  },
-  {
-    "src": "/img/telos-development-11-calculator.webp",
-    "caption": "Calculator"
-  },
-  {
-    "src": "/img/telos-development-12-downloads.webp",
-    "caption": "Downloads"
-  },
-  {
-    "src": "/img/telos-development-13-phone.webp",
-    "caption": "Phone"
-  },
-  {
-    "src": "/img/telos-development-14-messages.webp",
-    "caption": "Messages"
-  },
-  {
-    "src": "/img/telos-development-15-radio.webp",
-    "caption": "Radio"
-  },
-  {
-    "src": "/img/telos-development-16-tv.webp",
-    "caption": "TV"
-  },
-  {
-    "src": "/img/telos-development-17-video.webp",
-    "caption": "Local video"
-  },
-  {
-    "src": "/img/telos-development-18-clock.webp",
-    "caption": "Clock"
-  },
-  {
-    "src": "/img/telos-development-19-ermis.webp",
-    "caption": "Ermis — mail account setup"
-  },
-  {
-    "src": "/img/telos-development-20-akou.webp",
-    "caption": "Akou — music recognition"
-  },
-  {
-    "src": "/img/telos-development-21-network.webp",
-    "caption": "Network"
-  },
-  {
-    "src": "/img/telos-development-22-system.webp",
-    "caption": "System"
-  },
-  {
-    "src": "/img/telos-development-23-trash.webp",
-    "caption": "Trash"
-  },
-  {
-    "src": "/img/telos-development-24-camera.webp",
-    "caption": "Camera"
-  },
-  {
-    "src": "/img/telos-development-25-magnifier.webp",
-    "caption": "Magnifier"
-  },
-  {
-    "src": "/img/telos-development-26-flashlight.webp",
-    "caption": "Flashlight"
-  },
-  {
-    "src": "/img/telos-development-27-voice-recorder.webp",
-    "caption": "Voice recorder"
-  },
-  {
-    "src": "/img/telos-development-28-screen-recorder.webp",
-    "caption": "Screen recorder"
-  },
-  {
-    "src": "/img/telos-development-29-screenshot.webp",
-    "caption": "Screenshot"
-  },
-  {
-    "src": "/img/telos-development-30-settings.webp",
-    "caption": "Settings"
-  }
-]
+    { src: '/images/telos-shots/01-home-widgets.png', caption: 'Home screen & widgets' },
+    { src: '/images/telos-shots/02-search-omnibar.png', caption: 'Search & quick actions' },
+    { src: '/images/telos-shots/03-phone-app.png', caption: 'Built-in Phone' },
+    { src: '/images/telos-shots/04-messages-app.png', caption: 'Built-in Messages' },
+    { src: '/images/telos-shots/05-files-cloud.png', caption: 'Telos Files' },
+    { src: '/images/telos-shots/06-network-hub.png', caption: 'Telos Network' },
+    { src: '/images/telos-shots/07-store-installer.png', caption: 'Telos Store' },
+    { src: '/images/telos-shots/08-freeze-manager.png', caption: 'Smart Freeze' },
+    { src: '/images/telos-shots/09-system-appops.png', caption: 'Telos System' },
+    { src: '/images/telos-shots/10-cyberpunk-preset.png', caption: 'Cyberpunk preset' },
+  ]
 </script>
-<div class="telos-note">
-  <strong>Development preview · Pixel 7 emulator · Android API 35</strong><br />
-  30 captures · English UI · dark wallpaper and shared blur · clean debug build, without personal accounts.
-  Πραγματικές λήψεις από καθαρό development build σε emulator, χωρίς προσωπικούς λογαριασμούς.
-  <a :href="withBase('/docs/user-guide/telos/screenshots')">All screenshots / Όλα τα screenshots</a>
-</div>
-<div class="home-screenshots">
+
+<div class="telos-shot-grid">
   <figure v-for="shot in shots" :key="shot.src">
     <a :href="withBase(shot.src)"><img :src="withBase(shot.src)" :alt="shot.caption" loading="lazy" width="1080" height="2400" /></a>
     <figcaption>{{ shot.caption }}</figcaption>
@@ -264,7 +90,6 @@ features:
   stop-and-back button. TV keeps a separate minimize action.
 - **Freeze Manager:** consistent snowflake/grayscale and icon packs, verified Disable/Suspend
   transitions, and actual-state scans with Unfreeze all / Freeze again for saved user/system groups.
-- **TelosAndroidVm:** portable BlissOS guest (QEMU + scrcpy) on Windows, Linux KVM, and Apple Silicon, with opt-in ISO updates that keep the encrypted data disk. [Guide](/docs/user-guide/telos/android-vm).
 - **Store:** opt-in frozen-app updates with durable restoration and streaming Shizuku/root installs.
   Published source artwork is shown for uninstalled apps, and full installer failures are readable.
   Plain Device Admin is insufficient; Device Owner supports only states it can restore.
@@ -278,36 +103,57 @@ Telos started as a personal project, and I want to be upfront about how it was m
 
 It all comes down to one missing feature. I was already a happy user of [Kvaesitso](https://github.com/MM2-0/Kvaesitso), which I think is an excellent launcher. But a few things I really wanted weren't there — above all **freezing apps and launching frozen apps straight from the launcher.** For me that is the single most important feature, for two reasons:
 
-- **Battery.** A frozen app can't wake up, run in the background, sync or drain power. Freeze the apps you only open once in a while and the battery lasts noticeably longer.
-- **Privacy.** A frozen app can't phone home, track you, or quietly listen in the background. (You know the feeling — you talk about something near your phone and suddenly see an ad for it? A frozen app simply isn't running. *Are you listening, Facebook?*) Being able to freeze an app and still open it on demand, right from the home screen, gives you the convenience without leaving it running all day.
+1. **Battery life and RAM.** Apps that run in the background — social media, shopping, games — eat up battery and memory even when you're not using them. Freezing them stops them completely until you need them.
+2. **App overload.** Having dozens of icons on your home screen or in your app drawer makes your phone feel cluttered. When apps are frozen, they're out of the way until you search for them.
 
-Once that worked, I kept going. I started adding the things I use every day — a dialer, messaging, a file manager, a gallery, music, video, radio, downloads, a firewall and more — not as separate apps you install, but as **virtual apps built into the launcher itself.** Little by little the project grew, and at some point it stopped feeling like "a launcher with a few extras" and started feeling like something closer to a small **operating system on top of Android**: one place that does most of what I need a phone to do, built around my own priorities of speed, battery and privacy.
+When I searched for a solution, I found a few third-party freezer tools, but none of them integrated nicely with a launcher. You'd have to open the freezer app, unfreeze, launch, and then remember to freeze again later. I wanted something seamless: search for an app, tap it, it unfreezes and opens; when you're done, it freezes itself back.
 
-Telos is still a personal fork and a work in progress, shaped by what one person actually wanted from their phone. If any of that resonates with you, you're welcome to use it.
+So I decided to try building it myself — or rather, with AI. I took Kvaesitso's source code as a base, and step by step, prompt by prompt, added the freeze integration. Once that worked, I kept going: I added a built-in file manager, media players, a phone app, messages, an app store, a PDF tools suite, a network manager, and more. What started as "Kvaesitso with a freezer" grew into Telos: a complete, self-contained launcher environment.
 
+Everything is open source under the GPLv3 license. If you're curious, the source code is on [GitHub](https://github.com/koukomin/Telos-Launcher).
 
 </div>
 
-<p class="telos-note">Telos is a fork of <a href="https://github.com/MM2-0/Kvaesitso">Kvaesitso</a> by MM2-0 and its contributors, released under the GPL-3.0.</p>
-<Footer></Footer>
+<Footer />
 
-
-### Launcher appearance and installation controls
-
-Store offers a selectable Android-session, Shizuku, root or installed external APK installer.
-The dock keeps frozen apps' normal icons. Drawer opacity and blur are adjustable with a soft-glass
-preset for fresh installs and full-width tablet layout. Wallpaper settings also accept animated
-GIFs through the live-wallpaper preview, subject to the documented size limits.
-
-Built-in apps use localized names without a Telos prefix, while `telos` and English/Greek feature
-names remain search aliases. Their own artwork is retained in the launcher, Store and Recents.
-
-The tablet drawer offers a full-width switch in Settings → Icons → App drawer; columns adapt to available width unless overridden.
-
-Frozen application targets assigned to icon shutters and folder children use the same app-lock and verified thaw-before-launch path as drawer and dock icons. An authorized freeze backend is required to thaw an app.
-
-Store cards wrap full app names and separate actions from the title for large system fonts. Tabs scroll horizontally instead of squeezing labels. Tap a tracked or recommended card to visit the project or app listing (not the release); Details retains per-app management. Direct APK sources without a known project resolve to the hosting site's home page. This uses source addresses only, without AI or generated descriptions. Shizuku does not bypass Android update-signature validation.
-
-Dock and shutter app pickers show applications only and start a fresh search on every opening. App picker names wrap at large font sizes, overflow action menus scroll, and Telos Media reserves the navigation-bar inset even when no mini player is visible. Other general item pickers retain their supported item types.
-
-Transfer network rules independently block Wi-Fi, mobile data, roaming and metered connections. Downloader has its own profile; torrents, Video and Stremio share a profile because the torrent session is shared. Downloader queues pause and resume as connectivity changes, torrent sessions pause on disallowed networks, and online video data sources check the policy before opening and reading. The player also stops loading on a blocked connection and prepares again when permitted. Existing Downloader Wi-Fi-only preferences and the mirrored Video Wi-Fi-only preference provide initial defaults. VPNs without an identifiable underlying transport are blocked when transport restrictions are active.
+<style>
+.telos-shot-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 16px;
+  margin: 32px 0;
+}
+.telos-shot-grid figure {
+  margin: 0;
+  text-align: center;
+}
+.telos-shot-grid img {
+  border-radius: 12px;
+  border: 1px solid var(--vp-c-divider);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  transition: transform .2s, box-shadow .2s;
+}
+.telos-shot-grid img:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+}
+.telos-shot-grid figcaption {
+  margin-top: 8px;
+  font-size: 0.85em;
+  color: var(--vp-c-text-2);
+}
+.telos-story {
+  margin: 40px 0;
+  line-height: 1.7;
+}
+.telos-story h2 {
+  border-top: 1px solid var(--vp-c-divider);
+  padding-top: 24px;
+}
+.telos-story ol {
+  padding-left: 20px;
+}
+.telos-story li {
+  margin-bottom: 8px;
+}
+</style>

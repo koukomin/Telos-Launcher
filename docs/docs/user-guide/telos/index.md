@@ -8,7 +8,6 @@ gallery, music, video and radio players, an app store and an app freezer.
 ::: tip Two parts
 - [**The launcher**](./launcher/) is **Telos**: search, home screen, widgets, icons and themes (inherited from Kvaesitso). Aether is a built-in Nostr app, not the launcher name.
 - **The Telos apps** are added on top. Each one has its own page below.
-- [**TelosAndroidVm**](./android-vm) is a portable BlissOS QEMU + scrcpy guest (Windows / Linux / Apple Silicon), not in the APK. JVM Telos Desktop (`:desktop-linux`) is retired.
 :::
 
 ## ✨ Built-in apps
@@ -37,8 +36,6 @@ gallery, music, video and radio players, an app store and an app freezer.
 <a href="./system/"><b>⚙️ System</b><span>CPU, RAM, Wi-Fi, AppOps, built-in Shizuku server, pairing, ADB</span></a>
 <a href="./freeze/"><b>❄️ Smart Freeze</b><span>Freeze or hide apps through Shizuku, Dhizuku, root, Island or device owner</span></a>
 <a href="./media/"><b>🎬 Media</b><span>Listen / Watch / Live: music, radio, YouTube, TV, Stremio Fork (deep links, calendar)</span></a>
-<a href="./linux-desktop"><b>🖥️ Telos Desktop</b><span>Linux session + Windows jar; vault as \$HOME on Linux</span></a>
-<a href="./android-vm"><b>📦 TelosAndroidVm</b><span>BlissOS in QEMU + scrcpy on Windows, Linux, and Apple Silicon</span></a>
 
 </div>
 
