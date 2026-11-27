@@ -55,7 +55,7 @@ fun TagsSettingsScreen() {
         item {
             PreferenceCategory {
                 for (tag in tags) {
-                    var showMenu by remember(tag.id) { mutableStateOf(false) }
+                    var showMenu by remember(tag) { mutableStateOf(false) }
 
                     val icon by remember(tag) { viewModel.getIcon(tag) }.collectAsState(null)
 
