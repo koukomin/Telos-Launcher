@@ -5,7 +5,6 @@ import de.mm20.launcher2.base.R as BaseR
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.content.res.Resources
 import android.net.Uri
 import android.text.format.DateUtils
 import androidx.appcompat.app.AppCompatActivity
@@ -85,7 +84,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.preferences.MeasurementSystem
 import de.mm20.launcher2.preferences.TimeFormat
-import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.common.WeatherLocationSearchDialog
 import de.mm20.launcher2.ui.component.Banner
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
@@ -798,29 +796,6 @@ private fun formatTime(context: Context, timestamp: Long, timeFormat: TimeFormat
         context,
         timestamp,
         DateUtils.FORMAT_SHOW_TIME or timeFormatFlag
-    )
-}
-
-private fun windDirectionAsWord(resources: Resources, direction: Double): String {
-    return resources.getString(
-        when (direction) {
-            in 11.25..33.75 -> I18nR.string.wind_north_north_east
-            in 33.75..56.25 -> I18nR.string.wind_north_east
-            in 56.25..78.75 -> I18nR.string.wind_east_north_east
-            in 78.75..101.25 -> I18nR.string.wind_east
-            in 101.25..123.75 -> I18nR.string.wind_east_south_east
-            in 123.75..146.25 -> I18nR.string.wind_south_east
-            in 146.25..168.75 -> I18nR.string.wind_south_south_east
-            in 168.75..191.25 -> I18nR.string.wind_south
-            in 191.25..213.75 -> I18nR.string.wind_south_south_west
-            in 213.75..236.25 -> I18nR.string.wind_south_west
-            in 236.25..258.75 -> I18nR.string.wind_west_south_west
-            in 258.75..281.25 -> I18nR.string.wind_west
-            in 281.25..303.75 -> I18nR.string.wind_west_north_west
-            in 303.75..326.25 -> I18nR.string.wind_north_west
-            in 326.25..348.75 -> I18nR.string.wind_north_north_west
-            else -> I18nR.string.wind_north
-        }
     )
 }
 

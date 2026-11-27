@@ -6,21 +6,12 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.WindowManager
 import de.mm20.launcher2.applock.SettingsDeepLinkContract
-import androidx.activity.SystemBarStyle
 import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.scaleIn
-import androidx.compose.animation.scaleOut
-import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideOutHorizontally
-import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -28,16 +19,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
-import androidx.core.app.GrammaticalInflectionManagerCompat
 import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
@@ -56,9 +43,7 @@ import de.mm20.launcher2.ui.overlays.OverlayHost
 import de.mm20.launcher2.ui.settings.about.AboutSettingsRoute
 import de.mm20.launcher2.ui.settings.about.AboutSettingsScreen
 import de.mm20.launcher2.ui.settings.advanced.AdvancedSettingsRoute
-import de.mm20.launcher2.ui.settings.advanced.AdvancedSettingsScreen
 import de.mm20.launcher2.ui.settings.freeze.SmartFreezeDashboardRoute
-import de.mm20.launcher2.ui.settings.freeze.SmartFreezeDashboardScreen
 import de.mm20.launcher2.ui.settings.appearance.AppearanceSettingsRoute
 import de.mm20.launcher2.ui.settings.appearance.AppearanceSettingsScreen
 import de.mm20.launcher2.ui.settings.appearance.ExportThemeSettingsRoute
@@ -225,7 +210,6 @@ import de.mm20.launcher2.ui.settings.weather.WeatherIntegrationSettingsScreen
 import de.mm20.launcher2.ui.settings.wikipedia.WikipediaSettingsRoute
 import de.mm20.launcher2.ui.settings.wikipedia.WikipediaSettingsScreen
 import de.mm20.launcher2.ui.theme.LauncherTheme
-import de.mm20.launcher2.ui.theme.transparency.transparency
 import de.mm20.launcher2.ui.theme.wallpaperColorsAsState
 
 open class SettingsActivity : BaseActivity() {
@@ -257,7 +241,7 @@ open class SettingsActivity : BaseActivity() {
             intent.getStringExtra(SettingsDeepLinkContract.EXTRA_COMMS_TAB),
             allowDialerLandscape = false,
         )
-        val newRoute = getStartRoute(intent)
+        val newRoute = resolveSettingsStartRoute(intent)
         // Only apply the deep link on a fresh start; after rotation the restored back stack must be kept.
         initialRoute = if (savedInstanceState == null) newRoute else null
 
@@ -881,7 +865,7 @@ open class SettingsActivity : BaseActivity() {
             intent.getStringExtra(SettingsDeepLinkContract.EXTRA_COMMS_TAB),
             allowDialerLandscape = false,
         )
-        val newRoute = getStartRoute(intent)
+        val newRoute = resolveSettingsStartRoute(intent)
         initialRoute = newRoute
     }
 
@@ -912,106 +896,6 @@ open class SettingsActivity : BaseActivity() {
                 Intent.FLAG_ACTIVITY_NEW_DOCUMENT
         })
         return true
-    }
-
-    private fun getStartRoute(intent: Intent): NavKey? {
-        val routeName = if (intent.data?.host == "kvaesitso.mm20.de") {
-            intent.data?.getQueryParameter("route") ?: return null
-        } else {
-            intent.getStringExtra(EXTRA_ROUTE) ?: return null
-        }
-        return when(routeName) {
-            ROUTE_WEATHER_INTEGRATION -> WeatherIntegrationSettingsRoute
-            ROUTE_DESKTOP_MODE -> DesktopModeSettingsRoute
-            ROUTE_MEDIA_INTEGRATION -> MediaIntegrationSettingsRoute
-            ROUTE_SEARCH_ACTIONS -> SearchActionsSettingsRoute
-            ROUTE_HIDDEN_ITEMS -> HiddenItemsSettingsRoute
-            ROUTE_FLOATING_LAUNCHER -> FloatingLauncherSettingsRoute
-            ROUTE_SECURITY_HUB -> de.mm20.launcher2.ui.system.SystemDashboardRoute("shield")
-            ROUTE_WALLPAPER -> WallpaperSettingsRoute
-            ROUTE_WEB_APPS -> WebAppsSettingsRoute
-            ROUTE_INTRUDER_PHOTOS -> IntruderPhotosRoute
-            ROUTE_STORE -> StoreDashboardRoute(addUrl = intent.getStringExtra(SettingsDeepLinkContract.EXTRA_STORE_URL).orEmpty())
-            ROUTE_COMMS -> {
-                val tab = intent.getStringExtra(SettingsDeepLinkContract.EXTRA_COMMS_TAB) ?: "recents"
-                val number = intent.getStringExtra(SettingsDeepLinkContract.EXTRA_DIAL_NUMBER).orEmpty()
-                CommsDashboardRoute(
-                    initialTab = tab,
-                    initialNumber = number,
-                    initialBody = intent.getStringExtra(SettingsDeepLinkContract.EXTRA_SMS_BODY).orEmpty(),
-                    initialAttachments = intent.getStringArrayListExtra(SettingsDeepLinkContract.EXTRA_SMS_ATTACHMENTS).orEmpty(),
-                )
-            }
-            ROUTE_RADIO -> de.mm20.launcher2.ui.media.hub.MediaHubRoute("radio")
-            ROUTE_MUSIC -> de.mm20.launcher2.ui.media.hub.MediaHubRoute("music")
-            SettingsDeepLinkContract.ROUTE_YOUTUBE -> de.mm20.launcher2.ui.media.hub.MediaHubRoute(
-                "youtube", intent.getStringExtra(SettingsDeepLinkContract.EXTRA_YOUTUBE_LINK)?.takeIf {
-                    de.mm20.launcher2.comms.youtube.YouTubeWebLinks.musicTarget(it) != null
-                }, intent.getLongExtra(SettingsDeepLinkContract.EXTRA_YOUTUBE_LINK_REQUEST, 0L),
-            )
-            SettingsDeepLinkContract.ROUTE_YOUTUBE_MUSIC -> de.mm20.launcher2.ui.media.hub.MediaHubRoute(
-                "youtube_music", intent.getStringExtra(SettingsDeepLinkContract.EXTRA_YOUTUBE_LINK)?.takeIf {
-                    de.mm20.launcher2.comms.youtube.YouTubeWebLinks.musicTarget(it) != null
-                }, intent.getLongExtra(SettingsDeepLinkContract.EXTRA_YOUTUBE_LINK_REQUEST, 0L),
-            )
-            ROUTE_VIDEO -> de.mm20.launcher2.ui.media.hub.MediaHubRoute("video")
-            SettingsDeepLinkContract.ROUTE_TV -> de.mm20.launcher2.ui.media.hub.MediaHubRoute("tv")
-            SettingsDeepLinkContract.ROUTE_STREMIO -> de.mm20.launcher2.ui.media.hub.MediaHubRoute(
-                "stremio",
-                intent.getStringExtra(SettingsDeepLinkContract.EXTRA_STREMIO_ADDON),
-                intent.getLongExtra(SettingsDeepLinkContract.EXTRA_YOUTUBE_LINK_REQUEST, 0L),
-                intent.getStringExtra(SettingsDeepLinkContract.EXTRA_STREMIO_DETAIL_TYPE),
-                intent.getStringExtra(SettingsDeepLinkContract.EXTRA_STREMIO_DETAIL_ID),
-            )
-            ROUTE_MEDIA -> de.mm20.launcher2.ui.media.hub.MediaHubRoute(
-                intent.getStringExtra(SettingsDeepLinkContract.EXTRA_MEDIA_SPACE).orEmpty()
-            )
-            ROUTE_PHOTOS -> de.mm20.launcher2.ui.media.docs.ViewerRoute
-            SettingsDeepLinkContract.ROUTE_VIEWER -> de.mm20.launcher2.ui.media.docs.ViewerRoute
-            ROUTE_FILES -> de.mm20.launcher2.ui.files.FilesRoute
-            "settings/akou" -> de.mm20.launcher2.ui.media.akou.AkouRoute
-            "settings/clock" -> de.mm20.launcher2.ui.clock.ClockRoute
-            SettingsDeepLinkContract.ROUTE_CAMERA -> de.mm20.launcher2.ui.camera.CameraRoute
-            SettingsDeepLinkContract.ROUTE_ERMIS -> de.mm20.launcher2.ui.ermis.ErmisRoute
-            "settings/magnifier" -> de.mm20.launcher2.ui.tools.MagnifierRoute
-            "settings/flashlight" -> de.mm20.launcher2.ui.tools.FlashlightRoute
-            ROUTE_NETWORK -> de.mm20.launcher2.ui.network.NetworkRoute
-            SettingsDeepLinkContract.ROUTE_NETWORK_SPEED_TEST -> de.mm20.launcher2.ui.network.NetworkSpeedTestRoute
-            SettingsDeepLinkContract.ROUTE_NETWORK_PRIVATE_DNS -> de.mm20.launcher2.ui.network.PrivateDnsRoute
-            SettingsDeepLinkContract.ROUTE_SYSTEM -> de.mm20.launcher2.ui.system.SystemDashboardRoute(
-                intent.getStringExtra(SettingsDeepLinkContract.EXTRA_SYSTEM_TAB).orEmpty(),
-            )
-            SettingsDeepLinkContract.ROUTE_WEATHER -> de.mm20.launcher2.ui.weather.WeatherRoute
-            SettingsDeepLinkContract.ROUTE_TRASH -> de.mm20.launcher2.ui.trash.TrashUnlockRoute
-            ROUTE_CALCULATOR -> de.mm20.launcher2.ui.calculator.CalculatorRoute
-            ROUTE_VOICE_RECORDER -> de.mm20.launcher2.ui.voice.VoiceRecorderRoute
-            SettingsDeepLinkContract.ROUTE_KEYBOARD -> de.mm20.launcher2.ui.keyboard.TelosKeyboardRoute
-            SettingsDeepLinkContract.ROUTE_KEEPASS -> de.mm20.launcher2.ui.keepass.KeePassDashboardRoute
-            SettingsDeepLinkContract.ROUTE_AETHER -> de.mm20.launcher2.ui.aether.AetherDashboardRoute()
-            SettingsDeepLinkContract.ROUTE_BACKUP -> de.mm20.launcher2.ui.backup.BackupRoute
-            SettingsDeepLinkContract.ROUTE_SYNC -> de.mm20.launcher2.ui.sync.SyncRoute
-            SettingsDeepLinkContract.ROUTE_FIT -> de.mm20.launcher2.ui.fit.FitDashboardRoute
-            ROUTE_SCREEN_RECORDER -> de.mm20.launcher2.ui.screenrec.ScreenRecorderRoute
-            ROUTE_SCREENSHOT -> de.mm20.launcher2.ui.screenshot.ScreenshotRoute
-            ROUTE_NOTES -> de.mm20.launcher2.ui.notes.NotesRoute
-            ROUTE_CALENDAR -> de.mm20.launcher2.ui.calendar.CalendarRoute
-            ROUTE_DOWNLOADS -> de.mm20.launcher2.ui.downloads.DownloadsRoute(
-                initialUrls = intent.getStringArrayListExtra(SettingsDeepLinkContract.EXTRA_DOWNLOAD_URLS).orEmpty(),
-            )
-            SettingsDeepLinkContract.ROUTE_TELOS_PAGE -> {
-                val topic = intent.getStringExtra(SettingsDeepLinkContract.EXTRA_HELP_TOPIC)
-                if (topic.isNullOrEmpty()) de.mm20.launcher2.ui.help.HelpDashboardRoute
-                else de.mm20.launcher2.ui.help.HelpLessonRoute(topic)
-            }
-            "settings/appearance" -> AppearanceSettingsRoute
-            "settings/search" -> SearchSettingsRoute
-            "settings/gestures" -> GesturesSettingsRoute
-            "settings/homescreen" -> HomescreenSettingsRoute
-            ROUTE_CRASH_REPORT if (intent.hasExtra(EXTRA_CRASH_REPORT_PATH)) -> {
-                CrashReportRoute(intent.getStringExtra(EXTRA_CRASH_REPORT_PATH)!!)
-            }
-            else -> null
-        }
     }
 
     companion object {

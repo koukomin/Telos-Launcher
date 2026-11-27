@@ -396,7 +396,13 @@ class AppModules(
         UiSettingsState(uiPrefs.value, connManager.isMobileOrFalse, applicationIOScope)
     }
 
-    private val torService: TorBackend = com.vitorpamplona.amethyst.ui.tor.TorBackendBridge.provider?.invoke() ?: TorService(appContext, applicationIOScope)
+    private val torService: TorBackend = com.vitorpamplona.amethyst.ui.tor.TorBackendBridge.provider?.invoke(applicationIOScope)
+        ?: run {
+            check(com.vitorpamplona.amethyst.ui.AetherHostBridge.createHostIntent == null) {
+                "Embedded Aether requires a host Tor backend"
+            }
+            TorService(appContext, applicationIOScope)
+        }
     val torManager = TorManager(torPrefs, torService, applicationIOScope)
 
     // Opt-in Tor startup-progress notification (TorSettings.progressNotification). Watches the

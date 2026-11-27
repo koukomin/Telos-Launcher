@@ -189,7 +189,7 @@ fun CurrencySettingsScreen() {
                                 iconPadding = true,
                                 enabled = true,
                                 controls = {
-                                    var showMenu by remember(currency.code) { mutableStateOf(false) }
+                                    var showMenu by remember(currency) { mutableStateOf(false) }
                                     IconButton(
                                         onClick = { showMenu = true }
                                     ) {

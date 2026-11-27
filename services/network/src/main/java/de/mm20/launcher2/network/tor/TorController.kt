@@ -39,7 +39,8 @@ class TorController internal constructor(private val context: Context, private v
     private var bound = false
     private var monitor: Job? = null
     private var dnsPort = 0
-    private var registeredPort = 0
+    @Volatile private var registeredPort = 0
+    val socksPort: Int get() = registeredPort
     private var observingErrors = false
     private val errorReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {

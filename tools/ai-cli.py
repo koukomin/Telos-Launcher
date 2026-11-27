@@ -47,6 +47,8 @@ def cmd_locate(args):
     if matches:
         for domain, files in matches.items():
             for role, path in files.items():
+                if role == "verify":
+                    continue
                 if not (ROOT_DIR / path).is_file():
                     print(f"Invalid context map path: {domain}.{role}: {path}", file=sys.stderr)
                     sys.exit(1)

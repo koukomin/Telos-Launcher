@@ -1,50 +1,36 @@
 #!/usr/bin/env python3
-"""
-Token Budget & File Size Validator for Telos Launcher.
-Enforces that no Kotlin file exceeds the 500-line budget to keep files AI-friendly.
-"""
+"""Report oversized Kotlin files in the current change."""
 
+import subprocess
 import sys
 from pathlib import Path
 
+ROOT_DIR = Path(__file__).resolve().parents[2]
 MAX_LINES = 500
 
-# Excluded directories or generated files
-EXCLUDED_PATHS = [
-    "build/",
-    "AmethystAppFunctions.kt", # Vendor library bridge
-    "Account.kt",             # Nostr protocol model
-]
 
-def check_file_sizes(root_dir: Path) -> bool:
-    failed = False
-    kt_files = list(root_dir.glob("**/*.kt"))
-
-    over_budget = []
-
-    for path in kt_files:
-        path_str = str(path)
-        if any(ex in path_str for ex in EXCLUDED_PATHS):
+def main(paths: list[str]) -> None:
+    if not paths:
+        result = subprocess.run(
+            ["git", "diff", "--name-only", "-z", "HEAD", "--", "*.kt"],
+            cwd=ROOT_DIR, check=True, capture_output=True, text=True,
+        )
+        paths = result.stdout.rstrip("\0").split("\0") if result.stdout else []
+    oversized = []
+    for name in sorted(set(paths)):
+        path = ROOT_DIR / name
+        if path.suffix != ".kt" or not path.is_file():
             continue
+        with path.open(encoding="utf-8") as source:
+            line_count = sum(1 for _ in source)
+        if line_count > MAX_LINES:
+            oversized.append((line_count, name))
 
-        try:
-            lines = len(path.read_text(encoding="utf-8", errors="ignore").splitlines())
-            if lines > MAX_LINES:
-                over_budget.append((lines, path.relative_to(root_dir)))
-        except Exception:
-            pass
+    if oversized:
+        print(f"{len(oversized)} changed Kotlin files exceed {MAX_LINES} lines.")
+        for line_count, name in sorted(oversized, reverse=True)[:3]:
+            print(f"  {name}: {line_count} lines")
 
-    if over_budget:
-        print(f"⚠️  Found {len(over_budget)} files exceeding the {MAX_LINES}-line AI token budget:\n")
-        over_budget.sort(key=lambda x: x[0], reverse=True)
-        for lines, rel_path in over_budget[:15]:
-            print(f"  - {rel_path}: {lines} lines")
-        print("\nConsider splitting these files into domain components to keep them AI-friendly.")
-    else:
-        print(f"✅ All checked Kotlin files are within the {MAX_LINES}-line AI token budget!")
-
-    return True
 
 if __name__ == "__main__":
-    root = Path(__file__).resolve().parents[2]
-    check_file_sizes(root)
+    main(sys.argv[1:])

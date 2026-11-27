@@ -17,6 +17,10 @@ if ($Revert) {
     exit 0
 }
 
+if ($env:TELOS_DESKTOP_DEV -ne "1") {
+    throw "Telos Desktop development is paused. Set TELOS_DESKTOP_DEV=1 to install an archived build."
+}
+
 $here = Split-Path -Parent $MyInvocation.MyCommand.Path
 $searchRoots = @($here, (Join-Path $here ".."), (Get-Location).Path)
 

@@ -9,7 +9,7 @@ Python that ships with the repo lives **here**, not in the repository root.
 | `tools/validation/` | Manifest and route checks, security Gradle init scripts |
 | `tools/performance/` | APK size helpers |
 | `tools/release-*.py` | Version / APK / Shizuku release gates |
-| `tools/windows/` | Optional HKCU Telos Desktop shell (`install-telos-shell.ps1`) |
+| `tools/windows/` | Paused HKCU Telos Desktop shell installer. Development requires `TELOS_DESKTOP_DEV=1`; `-Revert` remains available. |
 | `tools/windows-qemu-android/` | TelosAndroidVm: Windows `.exe`, Linux KVM / macOS ARM Python runner, BlissOS opt-in ISO update |
 | `docs/scripts/` | Docs screenshot prep (VitePress site only) |
 | `.github/scripts/` | CI screenshot capture |

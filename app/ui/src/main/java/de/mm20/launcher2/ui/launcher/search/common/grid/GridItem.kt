@@ -8,8 +8,6 @@ import android.view.View
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.MutableTransitionState
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.spring
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
@@ -23,7 +21,6 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
@@ -106,8 +103,6 @@ import de.mm20.launcher2.ui.locals.LocalWindowSize
 import de.mm20.launcher2.ui.overlays.Overlay
 import de.mm20.launcher2.ui.theme.transparency.transparency
 import de.mm20.launcher2.preferences.ui.ShutterSettings
-import de.mm20.launcher2.preferences.ui.UiSettings
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import org.koin.compose.koinInject
 import kotlin.math.pow
@@ -154,8 +149,6 @@ fun GridItem(
     }
 
     val context = LocalContext.current
-    val uiSettings: UiSettings = koinInject()
-    val desktopLocked by uiSettings.desktopLocked.collectAsStateWithLifecycle(false)
 
     var showPopup by remember(item.key) { mutableStateOf(false) }
     var bounds by remember { mutableStateOf(IntRect.Zero) }

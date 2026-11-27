@@ -1,12 +1,14 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
+    `maven-publish`
     alias(libs.plugins.androidLibrary)
     // The full-screen browser / napplet windows draw the shared Compose browser chrome (commonsUI).
     alias(libs.plugins.jetbrainsComposeCompiler)
 }
 
 android {
+    publishing { singleVariant("release") }
     namespace = "com.vitorpamplona.amethyst.napplethost"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
@@ -60,4 +62,11 @@ dependencies {
     // `:napplet` process and ships its rendered surface to the main app via SurfaceControlViewHost.
     implementation(libs.androidx.privacysandbox.ui.core)
     implementation(libs.androidx.privacysandbox.ui.provider)
+}
+
+
+afterEvaluate {
+    publishing.publications.register<MavenPublication>("embeddedAndroid") {
+        from(components["release"])
+    }
 }

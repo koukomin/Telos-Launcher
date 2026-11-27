@@ -7,8 +7,11 @@ from zipfile import ZipFile
 
 def verify(path, expected):
     with ZipFile(path) as apk:
-        abis = {name.split('/')[1] for name in apk.namelist()
-                if name.startswith('lib/') and name.endswith('.so')}
+        native_libraries = [name for name in apk.namelist()
+                            if name.startswith('lib/') and name.endswith('.so')]
+    if any(name.rsplit('/', 1)[-1] == 'libarti_android.so' for name in native_libraries):
+        raise ValueError(f'{path}: standalone Amethyst Arti library must not ship in Telos')
+    abis = {name.split('/')[1] for name in native_libraries}
     if abis != {expected}:
         raise ValueError(f'{path}: expected native libraries for {expected}, found {sorted(abis)}')
 

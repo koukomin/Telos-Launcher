@@ -6,24 +6,16 @@ import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.ui.res.stringResource
 import android.content.Intent
-import android.graphics.drawable.Drawable
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.expandVertically
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -37,20 +29,14 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.border
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.FilledTonalButton
-import androidx.compose.material3.Badge
-import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -60,18 +46,12 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
-import androidx.compose.material3.Tab
-import androidx.compose.material3.PrimaryScrollableTabRow
 import androidx.compose.material3.Text
-import androidx.compose.material3.SwipeToDismissBox
-import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
-import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.mutableStateOf
@@ -83,9 +63,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.selected
-import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -93,7 +70,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.core.graphics.drawable.toBitmap
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavKey
@@ -104,20 +80,12 @@ import de.mm20.launcher2.store.catalog.RecommendedCategory
 import de.mm20.launcher2.store.catalog.TelosApp
 import de.mm20.launcher2.store.catalog.TelosApps
 import de.mm20.launcher2.store.model.projectPageUrl
-import de.mm20.launcher2.store.model.AppSource
-import de.mm20.launcher2.store.model.StoreItem
 import de.mm20.launcher2.store.parser.StoreUrlParser
 import de.mm20.launcher2.ui.component.TelosCyber
 import de.mm20.launcher2.ui.component.TelosTechPill
-import de.mm20.launcher2.ui.component.telosTechCard
-import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.locals.LocalBackStack
 import de.mm20.launcher2.ui.media.MediaFrame
-import de.mm20.launcher2.ui.media.MediaSearchBar
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
 
 /** [addUrl] is an address or obtainium:// link to add right away (from a link that opened the Store). */
@@ -387,76 +355,6 @@ fun StoreDashboardScreen(initialLink: String = "", initialQuery: String = "") {
 // ---------------------------------------------------------------------------------------------
 
 @Composable
-private fun PlayStoreTab(
-    apps: List<PlayStoreApp>,
-    totalCount: Int,
-    updateCount: Int,
-    frozenCount: Int,
-    query: String,
-    filterUpdates: Boolean,
-    checking: Boolean,
-    onQuery: (String) -> Unit,
-    onFilterUpdates: (Boolean) -> Unit,
-    onCheck: () -> Unit,
-    onUpdate: (PlayStoreApp) -> Unit,
-    onUpdateAll: () -> Unit,
-    onOpen: (PlayStoreApp) -> Unit,
-) {
-    Column(Modifier.fillMaxSize()) {
-        StoreCommandHud(
-            query = query,
-            onQuery = onQuery,
-            filter = if (filterUpdates) StoreFilter.Updates else StoreFilter.All,
-            updateCount = updateCount,
-            onFilter = { onFilterUpdates(it == StoreFilter.Updates) },
-            onUpdateAll = onUpdateAll,
-            filters = listOf(StoreFilter.All, StoreFilter.Updates),
-        )
-        Text(
-            stringResource(I18nR.string.store_play_hint),
-            style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
-        )
-        PullToRefreshBox(isRefreshing = checking, onRefresh = onCheck, modifier = Modifier.weight(1f)) {
-            if (apps.isEmpty() && query.isNotBlank()) {
-                de.mm20.launcher2.ui.component.SearchEmptyState(query.trim())
-            } else if (apps.isEmpty()) {
-                EmptyMessage(
-                    stringResource(I18nR.string.store_play_empty),
-                    stringResource(I18nR.string.store_play_empty_hint),
-                )
-            } else {
-                val updates = apps.filter { it.updateAvailable == true }
-                val frozen = apps.filter { it.frozen && it.updateAvailable != true }
-                val rest = apps.filter { !it.frozen && it.updateAvailable != true }
-                LazyColumn(contentPadding = PaddingValues(bottom = 96.dp), modifier = Modifier.fillMaxSize()) {
-                    if (updates.isNotEmpty()) {
-                        item { StoreSectionHeader(stringResource(I18nR.string.store_section_updates, updates.size)) }
-                        items(updates, key = { "u-${it.packageName}" }) { app ->
-                            SwipePlayRow(app, onOpen, onUpdate)
-                        }
-                    }
-                    if (frozen.isNotEmpty()) {
-                        item { StoreSectionHeader(stringResource(I18nR.string.store_section_frozen, frozen.size)) }
-                        items(frozen, key = { "f-${it.packageName}" }) { app ->
-                            SwipePlayRow(app, onOpen, onUpdate)
-                        }
-                    }
-                    if (rest.isNotEmpty()) {
-                        item { StoreSectionHeader(stringResource(I18nR.string.store_section_uptodate, rest.size)) }
-                        items(rest, key = { "r-${it.packageName}" }) { app ->
-                            SwipePlayRow(app, onOpen, onUpdate)
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-
-
-@Composable
 private fun StoreSectionHeader(title: String) {
     Text(
         title,
@@ -465,106 +363,6 @@ private fun StoreSectionHeader(title: String) {
         modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
     )
 }
-
-@Composable
-private fun SwipePlayRow(app: PlayStoreApp, onOpen: (PlayStoreApp) -> Unit, onUpdate: (PlayStoreApp) -> Unit) {
-    val current by androidx.compose.runtime.rememberUpdatedState(app)
-    val state = rememberSwipeToDismissBoxState(
-        confirmValueChange = { value ->
-            when (value) {
-                SwipeToDismissBoxValue.StartToEnd -> onUpdate(current)
-                SwipeToDismissBoxValue.EndToStart -> onOpen(current)
-                else -> {}
-            }
-            false
-        },
-    )
-    SwipeToDismissBox(
-        state = state,
-        backgroundContent = {
-            val toEnd = state.dismissDirection == SwipeToDismissBoxValue.StartToEnd
-            Box(
-                Modifier.fillMaxSize().padding(horizontal = 12.dp, vertical = 4.dp)
-                    .clip(RoundedCornerShape(16.dp))
-                    .then(
-                        Modifier.padding(horizontal = 20.dp)
-                    ),
-                contentAlignment = if (toEnd) Alignment.CenterStart else Alignment.CenterEnd,
-            ) {
-                Text(
-                    if (toEnd) stringResource(I18nR.string.store_play_update) else stringResource(I18nR.string.store_play_open_my_apps),
-                    color = MaterialTheme.colorScheme.primary,
-                    style = MaterialTheme.typography.labelLarge,
-                )
-            }
-        },
-    ) {
-        PlayStoreAppRow(app = app, onOpen = { onOpen(app) }, onUpdate = { onUpdate(app) })
-    }
-}
-
-
-@Composable
-private fun PlayStoreAppRow(app: PlayStoreApp, onOpen: () -> Unit, onUpdate: () -> Unit) {
-    Surface(
-        modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 4.dp).clickable(onClick = onOpen),
-        shape = RoundedCornerShape(16.dp),
-        tonalElevation = 1.dp,
-    ) {
-        Row(
-            Modifier.fillMaxWidth().padding(12.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            val bmp = remember(app.packageName, app.icon) {
-                app.icon?.toBitmap(96, 96)?.asImageBitmap()
-            }
-            if (bmp != null) {
-                Image(bmp, contentDescription = null, modifier = Modifier.size(48.dp).clip(RoundedCornerShape(12.dp)))
-            } else {
-                Box(Modifier.size(48.dp).clip(RoundedCornerShape(12.dp)))
-            }
-            Spacer(Modifier.width(12.dp))
-            Column(Modifier.weight(1f)) {
-                Text(app.label, style = MaterialTheme.typography.titleMedium, maxLines = 1, overflow = TextOverflow.Ellipsis)
-                Text(
-                    app.packageName,
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                )
-                val versionLine = buildString {
-                    app.versionName?.let { append(it) }
-                    if (app.frozen) {
-                        if (isNotEmpty()) append(" · ")
-                        append("❄")
-                    }
-                    app.playVersion?.let {
-                        if (isNotEmpty()) append(" · ")
-                        append(it)
-                    }
-                }
-                if (versionLine.isNotBlank()) {
-                    Text(versionLine, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                }
-                val status = when (app.updateAvailable) {
-                    true -> stringResource(I18nR.string.store_play_update_available)
-                    false -> stringResource(I18nR.string.store_play_up_to_date)
-                    null -> stringResource(I18nR.string.store_play_update_unknown)
-                }
-                Text(
-                    status,
-                    style = MaterialTheme.typography.labelMedium,
-                    color = if (app.updateAvailable == true) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            }
-            OutlinedButton(onClick = onUpdate) {
-                Text(stringResource(I18nR.string.store_play_update))
-            }
-        }
-    }
-}
-
 
 @Composable
 private fun StoreCommandHud(
@@ -776,133 +574,6 @@ private fun RecommendedTab(tracked: Set<String>, onAdd: (RecommendedApp, () -> U
         }
     }
 }
-
-@Composable
-private fun InstalledAppsTab(
-    onOpenDetails: (String) -> Unit,
-) {
-    val context = LocalContext.current
-    val scope = androidx.compose.runtime.rememberCoroutineScope()
-    val freezeManager: de.mm20.launcher2.freeze.FreezeManager = org.koin.compose.koinInject()
-
-    var query by rememberSaveable { mutableStateOf("") }
-    var showSystem by rememberSaveable { mutableStateOf(false) }
-    var showVirtual by rememberSaveable { mutableStateOf(false) }
-    var frozenOnly by rememberSaveable { mutableStateOf(false) }
-
-    var installedApps by remember { mutableStateOf<List<android.content.pm.ApplicationInfo>>(emptyList()) }
-    var refreshTrigger by remember { mutableIntStateOf(0) }
-
-    LaunchedEffect(showSystem, showVirtual, refreshTrigger) {
-        withContext(kotlinx.coroutines.Dispatchers.IO) {
-            val pm = context.packageManager
-            val flags = android.content.pm.PackageManager.MATCH_DISABLED_COMPONENTS or android.content.pm.PackageManager.MATCH_UNINSTALLED_PACKAGES
-            val apps = pm.getInstalledApplications(flags)
-            val filtered = apps.filter { app ->
-                val isSystem = (app.flags and android.content.pm.ApplicationInfo.FLAG_SYSTEM) != 0
-                val isVirtual = app.packageName.startsWith(context.packageName)
-                (showSystem || !isSystem) && (showVirtual || !isVirtual)
-            }.sortedBy { pm.getApplicationLabel(it).toString().lowercase() }
-
-            installedApps = filtered
-        }
-    }
-
-    val visibleApps = remember(installedApps, query, frozenOnly, refreshTrigger) {
-        installedApps.filter { app ->
-            val label = context.packageManager.getApplicationLabel(app).toString()
-            val matchesQuery = de.mm20.launcher2.comms.search.TelosSearch.matches(query, label, app.packageName)
-            val isFrozen = freezeManager.isFrozen(app.packageName)
-            val matchesFrozen = !frozenOnly || isFrozen
-            matchesQuery && matchesFrozen
-        }
-    }
-
-    Column(Modifier.fillMaxSize()) {
-        de.mm20.launcher2.ui.component.TelosSearchBar(query, { query = it }, stringResource(I18nR.string.hf_store_search))
-
-        Row(
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 4.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            FilterChip(
-                selected = frozenOnly,
-                onClick = { frozenOnly = !frozenOnly },
-                label = { Text("Frozen Only (❄)") },
-            )
-            FilterChip(
-                selected = showSystem,
-                onClick = { showSystem = !showSystem },
-                label = { Text(stringResource(I18nR.string.store_show_system_apps)) },
-            )
-            FilterChip(
-                selected = showVirtual,
-                onClick = { showVirtual = !showVirtual },
-                label = { Text(stringResource(I18nR.string.store_show_virtual_apps)) },
-            )
-        }
-
-        if (visibleApps.isEmpty()) {
-            EmptyMessage(
-                stringResource(I18nR.string.hf_store_no_apps_match),
-                stringResource(I18nR.string.hf_store_change_filter),
-            )
-        } else {
-            LazyColumn(contentPadding = PaddingValues(bottom = 96.dp), modifier = Modifier.fillMaxSize()) {
-                items(visibleApps, key = { it.packageName }) { app ->
-                    val isFrozen = freezeManager.isFrozen(app.packageName)
-                    val pm = context.packageManager
-                    val label = pm.getApplicationLabel(app).toString()
-
-                    Surface(
-                        shape = RoundedCornerShape(20.dp),
-                        color = MaterialTheme.colorScheme.surfaceContainerLow,
-                        modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 4.dp).clickable {
-                            onOpenDetails(app.packageName)
-                        },
-                    ) {
-                        Row(
-                            Modifier.fillMaxWidth().padding(16.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                        ) {
-                            AppIcon(app.packageName, label, 48, source = null)
-                            Spacer(Modifier.width(12.dp))
-                            Column(Modifier.weight(1f)) {
-                                Text(label, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold)
-                                val sizeBytes = runCatching { java.io.File(app.sourceDir).length() }.getOrDefault(0L)
-                                val sizeText = if (sizeBytes > 0) android.text.format.Formatter.formatFileSize(context, sizeBytes) else null
-                                val subtitle = listOfNotNull(app.packageName, sizeText).joinToString(" · ")
-                                Text(subtitle, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                                Row(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalAlignment = Alignment.CenterVertically) {
-                                    if (isFrozen) {
-                                        Text("❄ Frozen", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold)
-                                    } else {
-                                        Text("Active", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.secondary)
-                                    }
-                                }
-                            }
-                            OutlinedButton(
-                                onClick = {
-                                    scope.launch {
-                                        withContext(kotlinx.coroutines.Dispatchers.IO) {
-                                            if (isFrozen) freezeManager.unfreeze(app.packageName)
-                                            else freezeManager.freeze(app.packageName)
-                                            refreshTrigger++
-                                        }
-                                    }
-                                },
-                            ) {
-                                Text(if (isFrozen) "Thaw" else "Freeze")
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-
 
 // ---------------------------------------------------------------------------------------------
 

@@ -17,7 +17,8 @@ fun SearchFilters.withAllCategories(): SearchFilters {
         documents = true,
         images = true,
         video = true,
-        music = true
+        music = true,
+        settings = true,
     )
 }
 
@@ -35,7 +36,8 @@ fun SearchFilters.withOnlyCategory(
     documents: Boolean = false,
     images: Boolean = false,
     video: Boolean = false,
-    music: Boolean = false
+    music: Boolean = false,
+    settings: Boolean = false,
 ): SearchFilters {
     return copy(
         apps = apps,
@@ -51,166 +53,46 @@ fun SearchFilters.withOnlyCategory(
         documents = documents,
         images = images,
         video = video,
-        music = music
+        music = music,
+        settings = settings,
     )
 }
 
-/**
- * Create a new [SearchFilters] object with the [apps] property update, according to the following rules:
- *  - If all categories are enabled, disable all categories except for apps.
- *  - If apps is the only enabled category, enable all categories.
- *  - Otherwise, toggle the apps category.
- */
-fun SearchFilters.toggleApps(): SearchFilters {
-    if (allCategoriesEnabled) {
-        return withOnlyCategory(apps = true)
-    }
-    if (apps && enabledCategories == 1) {
-        return withAllCategories()
-    }
-
-    return copy(apps = !apps)
+private inline fun SearchFilters.toggleCategory(
+    enabled: Boolean,
+    update: SearchFilters.(Boolean) -> SearchFilters,
+): SearchFilters = when {
+    allCategoriesEnabled -> withOnlyCategory().update(true)
+    enabled && enabledCategories == 1 -> withAllCategories()
+    else -> update(!enabled)
 }
 
-fun SearchFilters.toggleWebsites(): SearchFilters {
-    if (allCategoriesEnabled) {
-        return withOnlyCategory(websites = true)
-    }
-    if (websites && enabledCategories == 1) {
-        return withAllCategories()
-    }
+fun SearchFilters.toggleApps(): SearchFilters = toggleCategory(apps) { copy(apps = it) }
 
-    return copy(websites = !websites)
-}
+fun SearchFilters.toggleWebsites(): SearchFilters = toggleCategory(websites) { copy(websites = it) }
 
-fun SearchFilters.toggleArticles(): SearchFilters {
-    if (allCategoriesEnabled) {
-        return withOnlyCategory(articles = true)
-    }
-    if (articles && enabledCategories == 1) {
-        return withAllCategories()
-    }
+fun SearchFilters.toggleArticles(): SearchFilters = toggleCategory(articles) { copy(articles = it) }
 
-    return copy(articles = !articles)
-}
+fun SearchFilters.togglePlaces(): SearchFilters = toggleCategory(places) { copy(places = it) }
 
-fun SearchFilters.togglePlaces(): SearchFilters {
-    if (allCategoriesEnabled) {
-        return withOnlyCategory(places = true)
-    }
-    if (places && enabledCategories == 1) {
-        return withAllCategories()
-    }
+fun SearchFilters.toggleFiles(): SearchFilters = toggleCategory(files) { copy(files = it) }
 
-    return copy(places = !places)
-}
+fun SearchFilters.toggleShortcuts(): SearchFilters = toggleCategory(shortcuts) { copy(shortcuts = it) }
 
-fun SearchFilters.toggleFiles(): SearchFilters {
-    if (allCategoriesEnabled) {
-        return withOnlyCategory(files = true)
-    }
-    if (files && enabledCategories == 1) {
-        return withAllCategories()
-    }
+fun SearchFilters.toggleContacts(): SearchFilters = toggleCategory(contacts) { copy(contacts = it) }
 
-    return copy(files = !files)
-}
+fun SearchFilters.toggleEvents(): SearchFilters = toggleCategory(events) { copy(events = it) }
 
-fun SearchFilters.toggleShortcuts(): SearchFilters {
-    if (allCategoriesEnabled) {
-        return withOnlyCategory(shortcuts = true)
-    }
-    if (shortcuts && enabledCategories == 1) {
-        return withAllCategories()
-    }
+fun SearchFilters.toggleTools(): SearchFilters = toggleCategory(tools) { copy(tools = it) }
 
-    return copy(shortcuts = !shortcuts)
-}
+fun SearchFilters.toggleReminders(): SearchFilters = toggleCategory(reminders) { copy(reminders = it) }
 
-fun SearchFilters.toggleContacts(): SearchFilters {
-    if (allCategoriesEnabled) {
-        return withOnlyCategory(contacts = true)
-    }
-    if (contacts && enabledCategories == 1) {
-        return withAllCategories()
-    }
+fun SearchFilters.toggleDocuments(): SearchFilters = toggleCategory(documents) { copy(documents = it) }
 
-    return copy(contacts = !contacts)
-}
+fun SearchFilters.toggleImages(): SearchFilters = toggleCategory(images) { copy(images = it) }
 
-fun SearchFilters.toggleEvents(): SearchFilters {
-    if (allCategoriesEnabled) {
-        return withOnlyCategory(events = true)
-    }
-    if (events && enabledCategories == 1) {
-        return withAllCategories()
-    }
+fun SearchFilters.toggleVideo(): SearchFilters = toggleCategory(video) { copy(video = it) }
 
-    return copy(events = !events)
-}
+fun SearchFilters.toggleMusic(): SearchFilters = toggleCategory(music) { copy(music = it) }
 
-fun SearchFilters.toggleTools(): SearchFilters {
-    if (allCategoriesEnabled) {
-        return withOnlyCategory(utilities = true)
-    }
-    if (tools && enabledCategories == 1) {
-        return withAllCategories()
-    }
-
-    return copy(tools = !tools)
-}
-
-fun SearchFilters.toggleReminders(): SearchFilters {
-    if (allCategoriesEnabled) {
-        return withOnlyCategory(reminders = true)
-    }
-    if (reminders && enabledCategories == 1) {
-        return withAllCategories()
-    }
-
-    return copy(reminders = !reminders)
-}
-
-fun SearchFilters.toggleDocuments(): SearchFilters {
-    if (allCategoriesEnabled) {
-        return withOnlyCategory(documents = true)
-    }
-    if (documents && enabledCategories == 1) {
-        return withAllCategories()
-    }
-
-    return copy(documents = !documents)
-}
-
-fun SearchFilters.toggleImages(): SearchFilters {
-    if (allCategoriesEnabled) {
-        return withOnlyCategory(images = true)
-    }
-    if (images && enabledCategories == 1) {
-        return withAllCategories()
-    }
-
-    return copy(images = !images)
-}
-
-fun SearchFilters.toggleVideo(): SearchFilters {
-    if (allCategoriesEnabled) {
-        return withOnlyCategory(video = true)
-    }
-    if (video && enabledCategories == 1) {
-        return withAllCategories()
-    }
-
-    return copy(video = !video)
-}
-
-fun SearchFilters.toggleMusic(): SearchFilters {
-    if (allCategoriesEnabled) {
-        return withOnlyCategory(music = true)
-    }
-    if (music && enabledCategories == 1) {
-        return withAllCategories()
-    }
-
-    return copy(music = !music)
-}
+fun SearchFilters.toggleSettings(): SearchFilters = toggleCategory(settings) { copy(settings = it) }

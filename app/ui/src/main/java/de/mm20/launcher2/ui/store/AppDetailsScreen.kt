@@ -3,8 +3,6 @@ package de.mm20.launcher2.ui.store
 import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 
-import de.mm20.launcher2.ui.system.UadRepository
-import de.mm20.launcher2.ui.R
 import androidx.compose.ui.res.stringResource
 import android.content.Intent
 import androidx.compose.foundation.clickable
@@ -36,7 +34,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -57,15 +54,12 @@ import androidx.navigation3.runtime.NavKey
 import coil.compose.AsyncImage
 import de.mm20.launcher2.ui.media.photos.PhotoViewerActivity
 import de.mm20.launcher2.store.model.AppSource
-import de.mm20.launcher2.store.options.ItemOptions
 import de.mm20.launcher2.store.parser.StoreUrlParser
 import de.mm20.launcher2.ui.locals.LocalBackStack
 import de.mm20.launcher2.ui.media.MediaFrame
 import kotlinx.serialization.Serializable
 import java.text.DateFormat
 import java.util.Date
-import kotlin.math.ln
-import kotlin.math.pow
 
 internal suspend fun installedBy(context: android.content.Context, packageName: String): String? =
     kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
@@ -407,20 +401,5 @@ private fun SwitchLine(label: String, description: String?, value: Boolean, enab
             description?.let { Text(it, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant) }
         }
         Switch(checked = value, onCheckedChange = onChange, enabled = enabled)
-    }
-}
-
-@Composable
-private fun DetailsActionButton(row: StoreRow, state: StoreInstallUiState, onClick: () -> Unit) {
-    when (state) {
-        StoreInstallUiState.Downloading, StoreInstallUiState.Installing -> {
-            Button(onClick = {}, enabled = false) {
-                CircularProgressIndicator(Modifier.size(18.dp), strokeWidth = 2.dp)
-                Spacer(Modifier.width(8.dp))
-                Text(if (state == StoreInstallUiState.Downloading) stringResource(I18nR.string.hf_store_downloading_dots) else stringResource(I18nR.string.hf_store_installing_dots))
-            }
-        }
-        StoreInstallUiState.Failed -> OutlinedButton(onClick = onClick) { Text(stringResource(I18nR.string.hc_failed_try_again)) }
-        StoreInstallUiState.Idle, StoreInstallUiState.Installed -> Button(onClick = onClick) { Text(row.actionLabel()) }
     }
 }

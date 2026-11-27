@@ -91,6 +91,14 @@ fun MainSettingsScreen() {
         )
     )
 
+    val matchingGroups = groups.map { group ->
+        group to group.items.filter { item ->
+            query.isBlank() ||
+                stringResource(item.titleRes).contains(query, ignoreCase = true) ||
+                stringResource(item.summaryRes).contains(query, ignoreCase = true)
+        }
+    }
+
     PreferenceScreen(
         title = stringResource(I18nR.string.settings),
     ) {
@@ -106,15 +114,7 @@ fun MainSettingsScreen() {
                 singleLine = true
             )
         }
-        for (group in groups) {
-            val matchingItems = group.items.filter { item ->
-                if (query.isBlank()) true
-                else {
-                    val title = stringResource(item.titleRes)
-                    val summary = stringResource(item.summaryRes)
-                    title.contains(query, ignoreCase = true) || summary.contains(query, ignoreCase = true)
-                }
-            }
+        for ((group, matchingItems) in matchingGroups) {
             if (matchingItems.isNotEmpty()) {
                 item {
                     PreferenceCategory(

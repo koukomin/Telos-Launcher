@@ -133,6 +133,8 @@ Phone settings expose Android’s caller-identification/blocking role on support
 
 Telos Keyboard setup offers both Android input settings and the input-method chooser. The IME installs Compose owners on its window, recreates input views safely, routes taps directly to its keys, uses numeric layouts for numeric editors and honors Search/Done/Send actions. Password/PIN and no-learning editors keep their privacy requirement independently of the manual incognito switch and clear transient word/clipboard state when editors change.
 
+Embedded Aether uses the Telos Network Tor controller and its active SOCKS port. The Telos APK excludes Amethyst’s standalone Arti library.
+
 Version 1.45.71 embeds the Amethyst F-Droid client in Aether inside the Telos APK, including multiple accounts, settings, feeds, relays, messaging and media. No external Amethyst APK is required. This version also fixes a cold-start crash affecting direct Telos app entry. The client inherits Telos fonts and Cybertech settings chrome; encrypted account data is isolated from launcher preferences and Android backup. See the [integration and validation record](docs/docs/developer-guide/aether-amethyst.md) for test scope and distribution differences.
 
 
@@ -219,14 +221,14 @@ Telos Launcher is built from the ground up to be **100% AI-Agent-Native**. Every
 
 - **AI Control Center (`tools/ai-cli.py`)**: Single-command entry point for automated pre-push audits, upstream checks, version bumping, and feature location querying.
 - **Telos Upstream Sentinel (`tools/upstream/check-upstreams.py`)**: Auto-discovers new incorporated third-party projects from `THIRD_PARTY_NOTICES.md` and queries GitHub APIs for new releases/bugfixes. Daily scheduled GitHub Actions check (`.github/workflows/daily-upstream-check.yml`).
-- **AI Context Index (`.artifacts/CONTEXT_MAP.json`)**: Machine-readable feature-to-file index allowing AI agents to locate domain files in 1 call, saving 80% research tokens.
+- **AI Context Index (`.artifacts/CONTEXT_MAP.json`)**: Machine-readable feature index with entry points and targeted verification commands.
 - **Component Registry (`.artifacts/COMPONENT_REGISTRY.md`)**: Single source of truth database for reusable Compose UI preferences, MVI architecture contracts (`UiState`, `UiEvent`), and Koin repositories.
 - **Troubleshooting Memory Bank (`.artifacts/TROUBLESHOOTING.md`)**: Institutional memory for complex Android platform gotchas (Shizuku Binder limits, Media3 surface lifecycles, Room schema migrations, zero-allocation `GreekFold` loops).
-- **Automated Token-Budget Validator (`tools/validation/check-file-sizes.py`)**: Enforces a strict 500-line budget per Kotlin file to keep context windows compact and AI-friendly.
+- **Automated Token-Budget Validator (`tools/validation/check-file-sizes.py`)**: Reports changed Kotlin files over 500 lines and shows up to three examples.
 
 ## Download
 
-Stable releases contain signed Android APKs and Linux desktop artifacts under one version.
+Stable releases contain signed Android APKs.
 Both Android ABIs are checked for the presence of their own native libraries before publication.
 Development builds upload debug-signed APKs to Actions artifacts for testing.
 Linux release validation includes archive round trips, split volumes and rejection of absolute/traversal entry paths.
@@ -1301,7 +1303,7 @@ See [dependency security checks](docs/docs/developer-guide/dependabot.md) and
 ./gradlew :core:base:test           # run the tests of a single module
 ```
 
-Telos is an Android launcher. The JVM `:desktop-linux` module and desktop binary CI are retired (`include` commented in `settings.gradle.kts`; `.github/workflows/build-desktop-binaries.yml` does not run on push or PR). Historical notes remain under [Telos Desktop](docs/docs/developer-guide/desktop-linux.md).
+Telos ships as an Android launcher. Standalone Telos Desktop development is paused. Its source remains in `desktop-linux/`, outside the active Gradle build, and its workflow is archived outside GitHub Actions' workflow directory. [Desktop development notes](docs/docs/developer-guide/telos-wayland-shell.md).
 
 Developer documentation (module structure, plugin contracts) lives in `docs/docs/developer-guide/`.
 

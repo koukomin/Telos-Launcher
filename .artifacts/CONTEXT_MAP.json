@@ -1,5 +1,6 @@
 {
   "launcher": {
+    "verify": "./gradlew :app:ui:compileDefaultDebugKotlin",
     "scaffold": "app/ui/src/main/java/de/mm20/launcher2/ui/launcher/scaffold/LauncherScaffold.kt",
     "state": "app/ui/src/main/java/de/mm20/launcher2/ui/launcher/scaffold/LauncherScaffoldState.kt",
     "models": "app/ui/src/main/java/de/mm20/launcher2/ui/launcher/scaffold/LauncherScaffoldModels.kt",
@@ -7,10 +8,13 @@
     "letter_index": "app/ui/src/main/java/de/mm20/launcher2/ui/launcher/search/TelosLetterIndex.kt"
   },
   "navigation": {
+    "verify": "./gradlew :app:ui:compileDefaultDebugKotlin",
+    "intent_routes": "app/ui/src/main/java/de/mm20/launcher2/ui/settings/SettingsStartRoute.kt",
     "settings_routes": "app/ui/src/main/java/de/mm20/launcher2/ui/navigation/SettingsRoutes.kt",
     "launcher_routes": "app/ui/src/main/java/de/mm20/launcher2/ui/navigation/LauncherRoutes.kt"
   },
   "theme": {
+    "verify": "./gradlew :app:ui:compileDefaultDebugKotlin",
     "registry": "app/ui/src/main/java/de/mm20/launcher2/ui/theme/TelosThemeRegistry.kt",
     "glass_blur": "app/ui/src/main/java/de/mm20/launcher2/ui/theme/TelosGlassBlur.kt",
     "frame_rate": "app/ui/src/main/java/de/mm20/launcher2/ui/theme/TelosFrameRate.kt",
@@ -85,6 +89,7 @@
     "entropy_warmup": "core/base/src/main/java/de/mm20/launcher2/security/TelosEntropyWarmup.kt"
   },
   "store": {
+    "verify": "./gradlew :services:store:test",
     "dashboard_screen": "app/ui/src/main/java/de/mm20/launcher2/ui/store/StoreDashboardScreen.kt",
     "dashboard_components": "app/ui/src/main/java/de/mm20/launcher2/ui/store/StoreDashboardComponents.kt",
     "dashboard_helpers": "app/ui/src/main/java/de/mm20/launcher2/ui/store/StoreDashboardHelpers.kt",
@@ -92,6 +97,7 @@
     "repository": "services/store/src/main/java/de/mm20/launcher2/store/repository/StoreRepository.kt"
   },
   "comms": {
+    "verify": "./gradlew :services:comms:test",
     "phone_dialer": "app/ui/src/main/java/de/mm20/launcher2/ui/comms/DialpadScreen.kt",
     "messages": "app/ui/src/main/java/de/mm20/launcher2/ui/comms/MessagesScreen.kt",
     "settings_screen": "app/ui/src/main/java/de/mm20/launcher2/ui/settings/comms/CommsSettingsScreen.kt",
@@ -105,11 +111,13 @@
     "repository": "data/files/src/main/java/de/mm20/launcher2/files/FilesRepository.kt"
   },
   "freeze": {
+    "verify": "./gradlew :services:freeze:testDebugUnitTest",
     "screen": "app/ui/src/main/java/de/mm20/launcher2/ui/settings/freeze/FreezeSettingsScreen.kt",
     "dialog": "app/ui/src/main/java/de/mm20/launcher2/ui/settings/freeze/FreezeAppPolicyDialog.kt",
     "manager": "services/freeze/src/main/java/de/mm20/launcher2/freeze/FreezeManager.kt"
   },
   "search_engine": {
+    "verify": "./gradlew :services:search:compileDebugKotlin",
     "matcher": "services/comms/src/main/java/de/mm20/launcher2/comms/search/TelosSearch.kt",
     "greek_fold": "core/base/src/main/java/de/mm20/launcher2/search/GreekFold.kt",
     "actions": "app/ui/src/main/java/de/mm20/launcher2/ui/settings/searchactions/EditSearchActionSheet.kt",

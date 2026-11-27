@@ -30,8 +30,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -53,10 +51,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.FilledTonalButton
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
@@ -67,7 +63,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
@@ -90,19 +85,15 @@ import androidx.compose.ui.graphics.StrokeJoin
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
-import de.mm20.launcher2.ui.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -172,8 +163,8 @@ internal fun ColumnScope.WatermarkBody(vm: PdfToolsViewModel, src: PdfSource) {
 
     val mark by produceState<Bitmap?>(null, useImage, text, imageUri, color, opacity) {
         value = withContext(Dispatchers.IO) {
-            if (useImage) imageUri?.let { PdfEngine.imageMark(context, it, opacity) }
-            else if (text.isNotBlank()) PdfEngine.textBitmap(text.trim(), color, (opacity * 255).roundToInt(), 3f)
+            if (useImage) imageUri?.let { PdfBitmaps.imageMark(context, it, opacity) }
+            else if (text.isNotBlank()) PdfBitmaps.textBitmap(text.trim(), color, (opacity * 255).roundToInt(), 3f)
             else null
         }
     }
@@ -319,7 +310,7 @@ internal fun ColumnScope.SignBody(vm: PdfToolsViewModel, src: PdfSource) {
     val density = LocalDensity.current
     val pickImage = rememberSingleImagePicker { uri ->
         scope.launch {
-            rawImage = withContext(Dispatchers.IO) { PdfEngine.decodeImage(context, uri, 1200, keepAlpha = true) }
+            rawImage = withContext(Dispatchers.IO) { PdfBitmaps.decodeImage(context, uri, 1200, keepAlpha = true) }
         }
     }
     val placement = remember { PlaceState() }
@@ -621,7 +612,7 @@ internal fun ImagesToPdfScreen(vm: PdfToolsViewModel, snackbar: SnackbarHostStat
                 LazyColumn(Modifier.weight(1f), contentPadding = PaddingValues(12.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     itemsIndexed(images.toList(), key = { _, img -> img.id }) { index, item ->
                         val thumb by produceState<Bitmap?>(null, item.id) {
-                            value = withContext(Dispatchers.IO) { PdfEngine.decodeImage(context, item.uri, 160) }
+                            value = withContext(Dispatchers.IO) { PdfBitmaps.decodeImage(context, item.uri, 160) }
                         }
                         Surface(shape = MaterialTheme.shapes.medium, color = MaterialTheme.colorScheme.surfaceContainerHigh) {
                             Row(Modifier.padding(8.dp), verticalAlignment = Alignment.CenterVertically) {

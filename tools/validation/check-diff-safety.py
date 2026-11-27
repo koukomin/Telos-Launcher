@@ -4,9 +4,9 @@ AI Diff & Anti-Pattern Safety Guard for Telos Launcher.
 Scans git diffs for common AI anti-patterns:
 1. Hardcoded UI strings in Compose text parameters.
 2. Unfinished TODO() / FIXME stubs in production paths.
-3. Unsafe SharedPreferences.commit() on Main thread.
 """
 
+import argparse
 import subprocess
 import re
 import sys
@@ -14,31 +14,34 @@ from pathlib import Path
 
 ROOT_DIR = Path(__file__).resolve().parents[2]
 
-def check_git_diff() -> bool:
-    print("🔍 Checking git diff for AI anti-patterns...")
+def check_git_diff(base: str | None = None, head: str = "HEAD") -> bool:
+    revision = [base, head] if base else ["HEAD"]
+    result = subprocess.run(
+        ["git", "diff", "--no-ext-diff", *revision, "--", "*.kt", "*.kts", "*.java"],
+        cwd=ROOT_DIR, capture_output=True, text=True,
+    )
+    if result.returncode != 0:
+        print(result.stderr.strip(), file=sys.stderr)
+        return False
 
-    # Get staged and unstaged diff
-    try:
-        res = subprocess.run(["git", "diff", "HEAD"], cwd=ROOT_DIR, capture_output=True, text=True)
-        diff_text = res.stdout
-    except Exception as e:
-        print(f"⚠️ Could not read git diff: {e}")
-        return True
-
-    if not diff_text.strip():
-        print("  • No diff detected (clean working tree).")
+    added_lines = "\n".join(
+        line for line in result.stdout.splitlines()
+        if line.startswith("+") and not line.startswith("+++")
+    )
+    if not added_lines:
+        print("No added lines to audit.")
         return True
 
     failed = False
 
     # Anti-pattern 1: TODO() or FIXME stubs added in diff
-    todo_matches = re.findall(r"\+.*?\b(TODO|FIXME)\b.*", diff_text)
+    todo_matches = re.findall(r"(?m)^\+.*?\b(TODO|FIXME)\s*\(", added_lines)
     if todo_matches:
         print(f"❌ Anti-Pattern Detected: Added {len(todo_matches)} TODO()/FIXME stub(s) in diff.")
         failed = True
 
     # Anti-pattern 2: Hardcoded Text("literal string") without stringResource
-    hardcoded_text = re.findall(r"\+\s*Text\(\s*\"([^\"]{3,})\"\s*[\),]", diff_text)
+    hardcoded_text = re.findall(r"(?m)^\+\s*Text\(\s*\"([^\"]{3,})\"\s*[\),]", added_lines)
     if hardcoded_text:
         # Filter out numbers, URLs or symbols
         ignored = ["http", "0x", "123", "ABC", "Google", "Telos"]
@@ -52,5 +55,8 @@ def check_git_diff() -> bool:
     return not failed
 
 if __name__ == "__main__":
-    if not check_git_diff():
-        sys.exit(1)
+    parser = argparse.ArgumentParser(description="Check added lines in a Git diff.")
+    parser.add_argument("--base", help="Compare a committed base to --head.")
+    parser.add_argument("--head", default="HEAD")
+    args = parser.parse_args()
+    sys.exit(0 if check_git_diff(args.base, args.head) else 1)

@@ -23,6 +23,15 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Check committed pull request changes
+        if: github.event_name == 'pull_request'
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          BASE=$(git merge-base "$BASE_SHA" "$HEAD_SHA")
+          python3 tools/validation/check-diff-safety.py --base "$BASE" --head "$HEAD_SHA"
+
       - name: Run Secret Scan
         uses: gitleaks/gitleaks-action@v3
         env:

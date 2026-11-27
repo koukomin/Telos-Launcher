@@ -411,9 +411,6 @@ internal object PrivilegedWifiStore {
         val raw = fileOutputs + dumpsysOutput
         return raw.flatMap(SavedWifiParser::parse).distinctBy { it.ssid }
     }
-        val raw = fileOutputs + dumpsysOutput
-        return raw.flatMap(SavedWifiParser::parse).distinctBy { it.ssid }
-    }
 
     private fun WifiConfiguration.toWifiEntry(): WifiEntry? {
         val ssid = (SSID ?: "").trim().removeSurrounding("\"").ifBlank { return null }

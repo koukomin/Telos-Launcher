@@ -1,0 +1,64 @@
+name: Validate Amethyst binary integration
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/validate-amethyst-publication.yml'
+      - 'libs/amethyst/**'
+      - 'app/app/build.gradle.kts'
+      - 'app/ui/build.gradle.kts'
+      - 'settings.gradle.kts'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: amethyst-binary-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      AMETHYST_VERSION: 1.21.0-telos-validation
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - uses: actions/setup-java@d1374f8ac74474200d16ef8ecee22c7ae7a51880 # v6
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+      - uses: gradle/actions/setup-gradle@8da46b539cd8fe6ab27ca75128919a18d757604c # v6
+        with:
+          cache-provider: basic
+          cache-read-only: ${{ github.event_name == 'pull_request' }}
+      - name: Publish Android libraries and Gradle metadata
+        run: |
+          ./gradlew -p libs/amethyst \
+            :amethyst:publishEmbeddedAndroidPublicationToTelosAmethystRepository \
+            :nappletHost:publishEmbeddedAndroidPublicationToTelosAmethystRepository \
+            :commons:publishAndroidPublicationToTelosAmethystRepository \
+            :commons:publishKotlinMultiplatformPublicationToTelosAmethystRepository \
+            :commonsUI:publishAndroidPublicationToTelosAmethystRepository \
+            :commonsUI:publishKotlinMultiplatformPublicationToTelosAmethystRepository \
+            :nestsClient:publishAndroidPublicationToTelosAmethystRepository \
+            :nestsClient:publishKotlinMultiplatformPublicationToTelosAmethystRepository \
+            "-PtelosAmethystRepository=$RUNNER_TEMP/amethyst-maven" \
+            "-PtelosAmethystVersion=$AMETHYST_VERSION" \
+            --build-cache --no-configuration-cache --max-workers=1 \
+            -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process \
+            '-Dorg.gradle.jvmargs=-Xmx7g -Dfile.encoding=UTF-8'
+      - name: Build Telos with Maven artifacts
+        run: |
+          ./gradlew :app:app:assembleDefaultDebug \
+            "-PtelosAmethystRepository=$RUNNER_TEMP/amethyst-maven" \
+            "-PtelosAmethystVersion=$AMETHYST_VERSION" \
+            --build-cache --no-configuration-cache --max-workers=1 \
+            -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process \
+            '-Dorg.gradle.jvmargs=-Xmx7g -Dfile.encoding=UTF-8'
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: telos-amethyst-binary-debug
+          path: app/app/build/outputs/apk/default/debug/*.apk
+          if-no-files-found: error

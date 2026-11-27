@@ -13,6 +13,7 @@ spec.loader.exec_module(module)
 class ApkCheckTest(unittest.TestCase):
     def test_selected_native_abi_required(self):
         for entries, valid in [(['lib/armeabi-v7a/engine.so'], True),
+                               (['lib/armeabi-v7a/engine.so', 'lib/armeabi-v7a/libarti_android.so'], False),
                                ([], False),
                                (['lib/arm64-v8a/engine.so'], False),
                                (['lib/armeabi-v7a/engine.so', 'lib/x86/engine.so'], False)]:
