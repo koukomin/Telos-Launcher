@@ -285,3 +285,9 @@ the onion service and the link.
 ### Archive with Save by OpenArchive
 
 On Android 14 and later, sharing a supported file from Telos can show **Archive with Save** when Save by OpenArchive is installed. Save handles metadata, licensing, verification and the archive destination in its own app. Available file types follow the installed Save build.
+
+### Create an archive bundle in Telos
+
+Select one local file in Telos Files and choose **Create archive bundle**. Add a title, notes and an optional Creative Commons license. Telos saves a ZIP beside the original with the original file and a `metadata.json` containing the metadata and a SHA-256 checksum. You can copy the ZIP to a configured WebDAV connection or share it as a file.
+
+The checksum can detect a change in the archived bytes when compared with a trusted checksum. It does not attest to who captured the file or when. The bundle stores the metadata and file in plain text. For encryption, use the password encryption action on the resulting ZIP.

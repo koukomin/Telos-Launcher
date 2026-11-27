@@ -30,4 +30,9 @@
     <string name="telos_files_carrier_png_info">Διάλεξε PNG έως 8 megapixel. Η χωρητικότητα εξαρτάται από τα αδιαφανή pixel. Χρησιμοποίησε κατάληξη .png και στείλε το ως αρχείο. Η αλλαγή μεγέθους ή η επανακωδικοποίηση μπορεί να καταστρέψει τα δεδομένα.</string>
     <string name="share_archive_with_save">Αρχειοθέτηση με το Save</string>
     <string name="telos_files_share_extract">Αποκρυπτογράφηση με το Telos</string>
+    <string name="telos_archive_bundle">Δημιουργία πακέτου αρχειοθέτησης</string>
+    <string name="telos_archive_bundle_info">Αποθήκευσε δίπλα στο πρωτότυπο ένα ZIP με το αρχείο, σημειώσεις, προαιρετική άδεια Creative Commons και άθροισμα ελέγχου SHA-256. Τα μεταδεδομένα αποθηκεύονται σε απλό κείμενο.</string>
+    <string name="telos_archive_title">Τίτλος</string>
+    <string name="telos_archive_notes">Σημειώσεις</string>
+    <string name="telos_archive_bundle_failed">Αδυναμία αποθήκευσης του πακέτου. Έλεγξε τον χώρο, τα δικαιώματα και αν υπάρχει ήδη το αρχείο εξόδου.</string>
 </resources>

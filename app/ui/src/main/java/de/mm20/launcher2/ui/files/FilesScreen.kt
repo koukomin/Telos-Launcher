@@ -181,6 +181,15 @@ internal fun FilesBrowser(vm: FilesViewModel, handlesBack: Boolean = true) {
     var showApps by remember { mutableStateOf(false) }
     if (showApps) FilesAppManagerDialog { showApps = false }
     var showTransfers by remember { mutableStateOf(false) }
+    var archiveBundleEntry by remember { mutableStateOf<FsEntry?>(null) }
+    archiveBundleEntry?.let { entry ->
+        ArchiveBundleDialog(java.io.File(entry.path), { archiveBundleEntry = null }) {
+            archiveBundleEntry = null
+            vm.clearSelection()
+            vm.reload()
+            vm.onFilesChanged()
+        }
+    }
     var carrierEntry by remember { mutableStateOf<Pair<FsEntry, Boolean>?>(null) }
     carrierEntry?.let { (entry, extract) ->
         FilesEncryptionDialog(java.io.File(entry.path), extract, { carrierEntry = null },
@@ -315,6 +324,9 @@ internal fun FilesBrowser(vm: FilesViewModel, handlesBack: Boolean = true) {
                             onCompress = { dialog = FilesDialog.Compress(vm.selectedEntries()) },
                             onProperties = { vm.selectedEntries().singleOrNull()?.let { dialog = FilesDialog.Properties(it) } },
                             onBookmark = { vm.selectedEntries().singleOrNull()?.let { vm.toggleBookmark(it.path); vm.clearSelection() } },
+                            onArchiveBundle = vm.selectedEntries().singleOrNull()
+                                ?.takeIf { !vm.rootMode && !it.isDir && !it.isLink && !RemotePath.isRemote(it.path) && !ArchivePath.isArchive(it.path) && !de.mm20.launcher2.ui.files.vault.VaultPath.isVault(it.path) }
+                                ?.let { entry -> { archiveBundleEntry = entry } },
                             onCarrier = vm.selectedEntries().singleOrNull()
                                 ?.takeIf { !vm.rootMode && !it.isDir && !it.isLink && !RemotePath.isRemote(it.path) && !ArchivePath.isArchive(it.path) && !de.mm20.launcher2.ui.files.vault.VaultPath.isVault(it.path) }
                                 ?.let { entry -> { extract: Boolean -> carrierEntry = entry to extract } },
@@ -548,6 +560,7 @@ private fun SelectionBar(
     count: Int, single: FsEntry?, onClose: () -> Unit, onSelectAll: () -> Unit, onCopy: () -> Unit, onCut: () -> Unit,
     onDelete: () -> Unit, onShare: () -> Unit, onRename: () -> Unit, onCompress: () -> Unit, onProperties: () -> Unit, onBookmark: () -> Unit,
     onOpenAsArchive: (() -> Unit)? = null,
+    onArchiveBundle: (() -> Unit)? = null,
     onCarrier: ((Boolean) -> Unit)? = null,
     onEncrypt: (() -> Unit)? = null, onDecrypt: (() -> Unit)? = null,
 ) {
@@ -566,6 +579,10 @@ private fun SelectionBar(
                     DropdownMenuItem(text = { Text(stringResource(I18nR.string.hc_select_all)) }, onClick = { more = false; onSelectAll() })
                     DropdownMenuItem(text = { Text(stringResource(I18nR.string.hc_share)) }, onClick = { more = false; onShare() })
                     DropdownMenuItem(text = { Text(stringResource(I18nR.string.au21_arch_compress)) }, onClick = { more = false; onCompress() })
+                    if (onArchiveBundle != null) DropdownMenuItem(
+                        text = { Text(stringResource(I18nR.string.telos_archive_bundle)) },
+                        onClick = { more = false; onArchiveBundle() },
+                    )
                     if (onCarrier != null) {
                         DropdownMenuItem(text = { Text(stringResource(I18nR.string.telos_files_carrier_embed)) }, onClick = { more = false; onCarrier(false) })
                         DropdownMenuItem(text = { Text(stringResource(I18nR.string.telos_files_carrier_extract)) }, onClick = { more = false; onCarrier(true) })

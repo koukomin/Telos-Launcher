@@ -1585,3 +1585,5 @@ Telos Files can embed a password-protected payload in a copy of a carrier file a
 The Security Hub also accepts an opt-in Ripple signal to lock private access. On Android 14+, the file share sheet can hand supported files to Save by OpenArchive for archiving.
 
 **Decrypt with Telos** opens supported encrypted attachments directly from Ermis and from the Android 14+ file share sheet in Viewer and Aether's media viewer. Recovered files are exported through the Android save dialog.
+
+Telos Files can create an archive ZIP with original bytes, notes, optional Creative Commons licensing and a SHA-256 checksum. The bundle can be copied to a configured WebDAV connection.
