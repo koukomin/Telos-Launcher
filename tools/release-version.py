@@ -49,50 +49,68 @@ def auto_bump_version(props):
     props['versionName'] = new_name
     props['versionCode'] = str(new_code)
 
-    Path('version.properties').write_text(
-        f"versionName={new_name}\nversionCode={new_code}\n# Auto-bumped by release-version.py\n"
-    )
-
-    for lang in ['en-US', 'el-GR']:
-        cl_dir = Path(f'fastlane/metadata/android/{lang}/changelogs')
-        cl_dir.mkdir(parents=True, exist_ok=True)
-        cl_file = cl_dir / f"{new_code}.txt"
-        if not cl_file.exists():
-            content = "• Performance optimizations and bug fixes.\n" if lang == 'en-US' else "• Βελτιώσεις επιδόσεων και διορθώσεις σφαλμάτων.\n"
-            cl_file.write_text(content)
-
     return f"v{new_name}"
+
+
+def tag_code(tag):
+    """Read the packaged version code, including tags whose source pin was older."""
+    annotation = subprocess.check_output(
+        ['git', 'for-each-ref', '--format=%(contents:subject)', f'refs/tags/{tag}'], text=True,
+    ).strip()
+    match = re.fullmatch(r'Telos versionCode=(\d+)', annotation)
+    if match:
+        return int(match[1])
+    old = subprocess.run(['git', 'show', f'{tag}:version.properties'], capture_output=True, text=True)
+    if old.returncode == 0:
+        return int(dict(line.split('=', 1) for line in old.stdout.splitlines()
+                        if line and not line.startswith('#'))['versionCode'])
+    build = subprocess.check_output(['git', 'show', f'{tag}:app/app/build.gradle.kts'], text=True)
+    return int(re.search(r'versionCode[^\n]*\?: (\d+)', build)[1])
+
+
+def select_main_version(props, latest, head, read_code, read_commit):
+    if latest is None:
+        return
+    name = latest[1:]
+    latest_code = read_code(latest)
+    if read_commit(latest) == head and version_tuple(props['versionName']) <= version_tuple(name):
+        props.update(versionName=name, versionCode=str(latest_code))
+        return
+    props['versionCode'] = str(max(int(props['versionCode']), latest_code + 1))
+    if version_tuple(props['versionName']) <= version_tuple(name):
+        props.update(versionName=name, versionCode=str(latest_code))
+        auto_bump_version(props)
 
 
 def main():
     props = dict(line.split('=', 1) for line in Path('version.properties').read_text().splitlines()
                  if line and not line.startswith('#'))
     tags = subprocess.check_output(['git', 'tag', '-l', 'v*'], text=True).splitlines()
-    tag, publish = validate(props, os.environ.get('GITHUB_EVENT_NAME', 'pull_request'),
-                            os.environ.get('GITHUB_REF', ''), tags)
-    if publish:
+    versions = sorted((t for t in tags if re.fullmatch(r'v[0-9]+\.[0-9]+\.[0-9]+', t)),
+                      key=lambda t: version_tuple(t[1:]))
+    event = os.environ.get('GITHUB_EVENT_NAME', 'pull_request')
+    ref = os.environ.get('GITHUB_REF', '')
+    if event in ('push', 'workflow_dispatch'):
         head = subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip()
         subprocess.run(['git', 'merge-base', '--is-ancestor', head, 'origin/main'], check=True)
-        if tag in tags:
-            tagged = subprocess.check_output(['git', 'rev-parse', f'{tag}^{{commit}}'], text=True).strip()
-            if tagged != head:
-                tag = auto_bump_version(props)
-        previous = sorted((t for t in tags if re.fullmatch(r'v[0-9]+\.[0-9]+\.[0-9]+', t)
-                           and version_tuple(t[1:]) < version_tuple(props['versionName'])),
-                          key=lambda t: version_tuple(t[1:]))
-        if previous:
-            old = subprocess.run(['git', 'show', f'{previous[-1]}:version.properties'],
-                                 capture_output=True, text=True)
-            if old.returncode == 0:
-                old_code = int(dict(line.split('=', 1) for line in old.stdout.splitlines()
-                                    if line and not line.startswith('#'))['versionCode'])
-            else:
-                old_build = subprocess.check_output([
-                    'git', 'show', f'{previous[-1]}:app/app/build.gradle.kts'], text=True)
-                old_code = int(re.search(r'versionCode[^\n]*\?: (\d+)', old_build)[1])
-            if int(props['versionCode']) <= old_code:
-                raise ValueError(f'versionCode must exceed {old_code} from {previous[-1]}')
+        if ref == 'refs/heads/main':
+            select_main_version(props, versions[-1] if versions else None, head, tag_code,
+                                lambda t: subprocess.check_output(
+                                    ['git', 'rev-parse', f'{t}^{{commit}}'], text=True).strip())
+        elif ref.startswith('refs/tags/') and ref.removeprefix('refs/tags/') in versions:
+            tagged = ref.removeprefix('refs/tags/')
+            marker = subprocess.check_output(
+                ['git', 'for-each-ref', '--format=%(contents:subject)', ref], text=True,
+            ).strip()
+            if re.fullmatch(r'Telos versionCode=\d+', marker):
+                props.update(versionName=tagged[1:], versionCode=str(tag_code(tagged)))
+    tag, publish = validate(props, event, ref, tags)
+    if publish:
+        previous = [t for t in versions if version_tuple(t[1:]) < version_tuple(props['versionName'])]
+        if previous and int(props['versionCode']) <= tag_code(previous[-1]):
+            raise ValueError(f"versionCode must exceed the code of {previous[-1]}")
     print(f'tag={tag}')
+    print(f"version_code={props['versionCode']}")
     print(f'publish={str(publish).lower()}')
 
 

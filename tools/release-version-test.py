@@ -36,6 +36,17 @@ class ReleaseVersionTest(unittest.TestCase):
             ('v1.43.82', True),
         )
 
+    def test_main_bumps_past_latest_tag_even_if_source_pin_is_stale(self):
+        props = dict(self.props)
+        module.select_main_version(props, 'v1.43.90', 'new', lambda _: 2026112801, lambda _: 'old')
+        self.assertEqual(props['versionName'], '1.43.91')
+        self.assertGreater(int(props['versionCode']), 2026112801)
+
+    def test_rerun_reuses_version_for_same_commit(self):
+        props = dict(self.props)
+        module.select_main_version(props, 'v1.43.90', 'same', lambda _: 2026112801, lambda _: 'same')
+        self.assertEqual(props, {'versionName': '1.43.90', 'versionCode': '2026112801'})
+
     def test_bad_version_or_code_fails(self):
         for props in [dict(self.props, versionName='1.2'), dict(self.props, versionCode='0')]:
             with self.assertRaises(ValueError):

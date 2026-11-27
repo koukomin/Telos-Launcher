@@ -1,25 +1,12 @@
-# Android and Desktop releases
+# Android releases
 
-`version.properties` is the single source for Android versionName/versionCode,
-Linux package version and JAR Implementation-Version, and the GitHub release tag.
-Release version codes are committed positive integers and must increase with each
-release; they are not generated from a workflow counter or date. The initial
-unified release retains a code above the previously committed 2026110505.
-Current published line is **v1.45.79** (`versionCode` 2026112303).
+Review and merge the Android changes into `main`. The release workflow starts automatically for Android source, build or release-tool changes. It uses `version.properties` as the version floor and allocates a higher version name and Android code when a previous release has already used that pin. Both ABI jobs receive the same version. The annotated tag records the packaged version code at the source commit.
 
-1. Increase both values in `version.properties` and merge the reviewed PR into main.
-2. Push the matching tag (`v<versionName>`) at that main commit, or dispatch
-   **Release Android and Linux** on main. Do not run both for the same version.
-3. `build-release.yml` validates the version, builds the ARM64, ARMv7 and x86_64 VM Android release APKs
-   using the repository signing key, tests/builds Linux with JDK 21, and collects
-   all artifacts before creating a draft. It publishes and marks Latest only
-   after every required asset uploads successfully.
+The workflow builds and signs ARM64 and ARMv7 APKs. It checks the version, native ABIs, ZIP alignment and signatures, then publishes the verified APKs, signature sidecars and SHA-256 manifest together. The run summary links the published release. Documentation changes merge into `main` and trigger GitHub Pages separately.
 
-The workflow rejects mismatched/older tags, dispatches from other branches,
-and already-published versions. A failed upload leaves a draft for a retry.
-Missing signing secrets fail the job instead of generating a new signing key.
-PR validation builds the three Android ABIs without repository secrets and tests/builds
-Linux; it cannot publish. The Android profile uses class patterns and explicit
+For a failed run, open the first failing step and record its commit, job and error. The shared Android toolchain installs the SDK versions declared by Telos and Amethyst with bounded retries for transient downloads. Automatic reruns are limited to one confirmed runner startup failure on current `main`. Build and CodeQL failures require a fix to their underlying cause. The Gradle 10 preview has its own workflow.
+
+PR validation builds both Android ABIs without repository signing secrets and cannot publish. The Android profile uses class patterns and explicit
 method descriptors, avoiding the invalid trailing return-type wildcard that
 crashed profgen in previous release builds. Device startup performance is not
 certified by this build check.

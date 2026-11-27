@@ -1,0 +1,21 @@
+name: Telos Android toolchain
+description: Install the JDK and SDK packages used by the Telos and Amethyst builds
+inputs:
+  cache-read-only:
+    description: Prevent the Gradle action from writing cache entries
+    default: 'true'
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-java@d1374f8ac74474200d16ef8ecee22c7ae7a51880 # v6
+      with:
+        java-version: '21'
+        distribution: temurin
+    - uses: gradle/actions/setup-gradle@8da46b539cd8fe6ab27ca75128919a18d757604c # v6
+      with:
+        cache-provider: basic
+        cache-read-only: ${{ inputs.cache-read-only }}
+    - uses: android-actions/setup-android@v4
+    - name: Install Android platforms and NDK
+      shell: bash
+      run: bash .github/scripts/install-android-toolchain.sh

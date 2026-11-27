@@ -4,9 +4,9 @@ name: CodeQL Security Scan
 
 on:
   push:
-    branches: [main]
+    branches: [main, codex/telos-dynamic-dns]
   pull_request:
-    types: [opened, synchronize, reopened, closed]
+    types: [opened, synchronize, reopened]
     branches: [main]
   schedule:
     - cron: '0 1 * * 0' # Weekly on Sunday at 01:00 UTC
@@ -22,7 +22,7 @@ permissions:
 
 jobs:
   analyze:
-    if: github.actor != 'dependabot[bot]' && (github.event_name != 'pull_request' || github.event.action != 'closed')
+    if: github.actor != 'dependabot[bot]'
     runs-on: ubuntu-latest
     timeout-minutes: 120
     permissions:
@@ -49,27 +49,17 @@ jobs:
           languages: ${{ matrix.language }}
           build-mode: ${{ matrix.build-mode }}
 
-      - name: Set up JDK 21
+      - name: Set up Android toolchain
+        uses: ./.github/actions/android-toolchain
         if: matrix.build-mode == 'manual'
-        uses: actions/setup-java@d1374f8ac74474200d16ef8ecee22c7ae7a51880 # v6
         with:
-          java-version: '21'
-          distribution: 'temurin'
-
-      - name: Setup Gradle
-        if: matrix.build-mode == 'manual'
-        uses: gradle/actions/setup-gradle@8da46b539cd8fe6ab27ca75128919a18d757604c # v6
-        with:
-          cache-provider: basic
           cache-read-only: ${{ github.event_name == 'pull_request' }}
-
-      - uses: android-actions/setup-android@v4
-        if: matrix.build-mode == 'manual'
 
       - name: Build Debug Sources
         if: matrix.build-mode == 'manual'
+        timeout-minutes: 85
         run: |
-          bash gradlew :app:app:compileDefaultDebugSources --no-daemon --no-build-cache --no-configuration-cache \
+          bash .github/scripts/build-with-summary.sh :app:app:compileDefaultDebugSources --no-daemon --no-build-cache --no-configuration-cache \
             --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process \
             '-Dorg.gradle.jvmargs=-Xmx7g -Dfile.encoding=UTF-8' \
             --rerun-tasks -Pkotlin.incremental=false

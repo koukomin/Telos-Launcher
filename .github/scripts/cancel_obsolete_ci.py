@@ -18,7 +18,8 @@ def cancellation_reason(run, default_branch, latest_sha, pulls, is_ancestor):
                           (p.get("head", {}).get("sha"), p.get("merge_commit_sha"))]
         if candidates and all(p["state"] == "closed" for p in candidates):
             return "pull request is already closed or merged"
-    elif (run.get("head_branch") == default_branch
+    elif (run.get("name") in {"Build Debug APK", "CodeQL Security Scan", "Automatic Dependency Submission (Gradle)"}
+          and run.get("head_branch") == default_branch
           and (run.get("event") == "push" or run.get("path", "").startswith("dynamic/dependency-graph/"))
           and run.get("head_sha") and run["head_sha"] != latest_sha
           and is_ancestor(run["head_sha"], latest_sha)):
