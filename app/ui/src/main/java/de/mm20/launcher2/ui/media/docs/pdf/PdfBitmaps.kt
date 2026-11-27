@@ -58,7 +58,7 @@ internal object PdfBitmaps {
         return dst
     }
 
-    private fun flattenOnWhite(src: Bitmap): Bitmap {
+    internal fun flattenOnWhite(src: Bitmap): Bitmap {
         if (!src.hasAlpha()) return src
         val dst = Bitmap.createBitmap(src.width, src.height, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(dst)
