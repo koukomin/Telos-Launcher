@@ -31,7 +31,11 @@ permissions:
   contents: read
 
 jobs:
+  preflight:
+    uses: ./.github/workflows/validate-workflows.yml
+
   version:
+    needs: preflight
     if: github.actor != 'dependabot[bot]' || github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     outputs:

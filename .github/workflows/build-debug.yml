@@ -20,7 +20,11 @@ permissions:
   contents: read
 
 jobs:
+  preflight:
+    uses: ./.github/workflows/validate-workflows.yml
+
   build:
+    needs: preflight
     runs-on: ubuntu-latest
     timeout-minutes: 120
     steps:

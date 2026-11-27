@@ -17,6 +17,15 @@ Read this file only. Do not create or keep parallel instruction files
 - Validate affected modules and existing entry points. For persisted data, check compatibility with existing values and schemas. During release, monitor the affected GitHub workflows and confirm signed artifacts.
 - Use scheduled upstream and dependency checks to identify maintenance work. Review upgrades separately unless the task depends on them.
 
+## Code and CI handoff
+
+- Start from the current target branch and check the working tree before editing. Read the affected entry point, its callers and existing validation. Preserve error handling, cancellation, permissions and stored formats unless the task explicitly changes them.
+- Use the stable wrapper to compile the affected Android module and run relevant existing tests. For UI changes, verify the normal app entry point on a device or emulator when available. If the environment blocks a check, record the exact command and failure and use CI on the same commit.
+- Reuse the shared Android toolchain and build-summary scripts in new Android workflows. Set explicit job time limits and bound network operations. Retry only transient, idempotent operations. Keep Gradle previews independent of release.
+- For changes to workflows or release tooling, run `bash .github/scripts/validate-workflows.sh` with actionlint 1.7.12 on PATH. Debug APK, CodeQL and release run this preflight before Android work.
+- Diagnose failures from the first substantive error in the failed job. Record the commit, run, job and step before changing dependencies, time limits or memory. Check the same commit after a fix. A completed workflow with failed or skipped required jobs does not count as a passing build.
+- Before a requested release, sync with `main` and check the exact candidate commit. Verify published APKs and the matching tag and checksums before reporting a release as available.
+
 ## Gradle & library versioning (Mandatory for all agents)
 
 1. **Prefer the newest stable Gradle and libraries.** Try the current stable Gradle wrapper (Gradle 10 when it is published; until then the newest 9.x) and the newest stable catalog pins in `gradle/libs.versions.toml` (and Amethyst’s catalog when that included build is touched). Prefer `tasks.register<Type>("name")` over `by tasks.registering(...)`.

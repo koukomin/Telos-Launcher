@@ -1,0 +1,33 @@
+name: Workflow preflight
+
+on:
+  pull_request:
+    paths:
+      - '.github/**'
+      - 'tools/release-*'
+      - 'AGENTS.md'
+  workflow_dispatch:
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
+      - uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff # v5
+        with:
+          go-version: '1.26.1'
+          cache: false
+      - name: Lint workflows and verify release helpers
+        env:
+          GOBIN: ${{ runner.temp }}/telos-ci-tools
+        run: |
+          export PATH="$GOBIN:$PATH"
+          timeout 3m go install github.com/rhysd/actionlint/cmd/actionlint@v1.7.12
+          bash .github/scripts/validate-workflows.sh
