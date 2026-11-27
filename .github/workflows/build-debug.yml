@@ -4,12 +4,12 @@ on:
   push:
     branches:
       - 'claude/**'
+      - 'codex/telos-dynamic-dns'
     paths-ignore:
       - '**.md'
       - 'docs/**'
       - 'sip-native/**'
       - '.github/workflows/build-sip-libs.yml'
-      - '.github/workflows/build-debug.yml'
   workflow_dispatch:
 
 concurrency:
