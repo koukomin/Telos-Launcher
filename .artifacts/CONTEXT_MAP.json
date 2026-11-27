@@ -7,6 +7,7 @@
     "letter_index": "app/ui/src/main/java/de/mm20/launcher2/ui/launcher/search/TelosLetterIndex.kt"
   },
   "navigation": {
+    "intent_routes": "app/ui/src/main/java/de/mm20/launcher2/ui/settings/SettingsStartRoute.kt",
     "settings_routes": "app/ui/src/main/java/de/mm20/launcher2/ui/navigation/SettingsRoutes.kt",
     "launcher_routes": "app/ui/src/main/java/de/mm20/launcher2/ui/navigation/LauncherRoutes.kt"
   },

@@ -19,7 +19,6 @@ import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.*
 import de.mm20.launcher2.ui.component.virtualAppPopup
@@ -35,25 +34,17 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavKey
-import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.SearchEmptyState
 import de.mm20.launcher2.ui.component.TelosCyber
 import de.mm20.launcher2.ui.component.TelosCyberAppBarTitle
 import de.mm20.launcher2.ui.component.TelosTechPill
-import de.mm20.launcher2.ui.component.telosTechSurface
 import de.mm20.launcher2.ui.component.TelosSearchTopBar
-import de.mm20.launcher2.ui.theme.transparency.transparency
 import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
 import java.text.DateFormat
@@ -242,25 +233,6 @@ fun NotesScreen() {
 }
 
 
-private val mdBold = Regex("""\*\*(.*?)\*\*""")
-private val mdItalic = Regex("""\*(.*?)\*""")
-private val mdStrike = Regex("~~(.*?)~~")
-
-@Composable
-private fun renderMarkdown(text: String): androidx.compose.ui.text.AnnotatedString {
-    return buildAnnotatedString {
-        append(text)
-        mdBold.findAll(text).forEach { match ->
-            addStyle(SpanStyle(fontWeight = FontWeight.Bold), match.range.first, match.range.last + 1)
-        }
-        mdItalic.findAll(text).forEach { match ->
-            addStyle(SpanStyle(fontStyle = FontStyle.Italic), match.range.first, match.range.last + 1)
-        }
-        mdStrike.findAll(text).forEach { match ->
-            addStyle(SpanStyle(textDecoration = TextDecoration.LineThrough), match.range.first, match.range.last + 1)
-        }
-    }
-}
 
 @Composable
 private fun NoteCard(n: Note, onClick: () -> Unit, onLong: () -> Unit, trash: Boolean) {

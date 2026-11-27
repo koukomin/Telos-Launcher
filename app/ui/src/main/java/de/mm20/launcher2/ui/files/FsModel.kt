@@ -88,15 +88,8 @@ fun List<FsEntry>.sorted(spec: SortSpec): List<FsEntry> {
     return sortedWith(comparator)
 }
 
-fun formatSize(bytes: Long): String {
-    if (bytes < 0) return ""
-    if (bytes < 1024) return "$bytes B"
-    val units = arrayOf("KB", "MB", "GB", "TB")
-    var value = bytes / 1024.0
-    var unit = 0
-    while (value >= 1024 && unit < units.lastIndex) { value /= 1024; unit++ }
-    return String.format(Locale.getDefault(), if (value >= 100) "%.0f %s" else "%.1f %s", value, units[unit])
-}
+fun formatSize(bytes: Long): String =
+    if (bytes < 0) "" else de.mm20.launcher2.downloads.logic.Formatting.size(bytes)
 
 fun formatDate(ms: Long): String =
     if (ms <= 0) "" else DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT).format(Date(ms))

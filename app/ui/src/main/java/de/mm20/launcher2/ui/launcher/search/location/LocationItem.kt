@@ -2,7 +2,6 @@ package de.mm20.launcher2.ui.launcher.search.location
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
 
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.animation.AnimatedContent
@@ -18,7 +17,6 @@ import androidx.compose.animation.shrinkOut
 import androidx.compose.animation.slideIn
 import androidx.compose.animation.slideOut
 import androidx.compose.animation.togetherWith
-import androidx.compose.foundation.MarqueeSpacing
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -30,29 +28,19 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeight
-import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.widthIn
-import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.AssistChipDefaults
-import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.InputChip
-import androidx.compose.material3.InputChipDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
@@ -68,42 +56,31 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntRect
 import androidx.compose.ui.unit.IntSize
-import androidx.compose.ui.unit.TextUnit
-import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.max
 import androidx.compose.ui.unit.times
 import androidx.compose.ui.util.fastFilterNotNull
 import androidx.core.net.toUri
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import blend.Blend.harmonize
 import coil.compose.AsyncImage
 import de.mm20.launcher2.ktx.tryStartActivity
-import de.mm20.launcher2.preferences.MeasurementSystem
 import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.isOpen
 import de.mm20.launcher2.search.location.Attribution
 import de.mm20.launcher2.search.location.Departure
 import de.mm20.launcher2.search.location.LineNameComparator
-import de.mm20.launcher2.search.location.LineType
 import de.mm20.launcher2.search.location.OpeningHours
 import de.mm20.launcher2.search.location.OpeningSchedule
 import de.mm20.launcher2.search.location.PaymentMethod
 import de.mm20.launcher2.search.location.isNotEmpty
-import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.base.LocalTime
 import de.mm20.launcher2.ui.component.DefaultToolbarAction
 import de.mm20.launcher2.ui.component.MarqueeText
@@ -111,15 +88,11 @@ import de.mm20.launcher2.ui.component.RatingBar
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.component.Toolbar
 import de.mm20.launcher2.ui.component.ToolbarAction
-import de.mm20.launcher2.ui.ktx.atTone
 import de.mm20.launcher2.ui.ktx.blendIntoViewScale
 import de.mm20.launcher2.ui.ktx.toComposeColor
 import de.mm20.launcher2.ui.launcher.search.common.SearchableItemVM
 import de.mm20.launcher2.ui.launcher.search.listItemViewModel
 import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
-import de.mm20.launcher2.ui.locals.LocalDarkTheme
-import de.mm20.launcher2.ui.locals.LocalTimeFormat
-import de.mm20.launcher2.ui.utils.isTwentyFourHours
 import de.mm20.launcher2.ui.locals.LocalFavoritesEnabled
 import de.mm20.launcher2.ui.locals.LocalGridSettings
 import de.mm20.launcher2.ui.modifier.scale
@@ -1014,20 +987,6 @@ fun LocationItemGridPopup(
             onBack = onDismiss,
         )
     }
-}
-
-private fun buildAddress(
-    street: String?,
-    houseNumber: String?,
-): String? {
-    val summary = StringBuilder()
-    if (street != null) {
-        summary.append(street, ' ')
-        if (houseNumber != null) {
-            summary.append(houseNumber, ' ')
-        }
-    }
-    return if (summary.isEmpty()) null else summary.toString()
 }
 
 private fun OpeningSchedule.Hours.getCurrentOpeningHours(): OpeningHours? {
