@@ -51,7 +51,7 @@ def apply_sha_pinning():
 apply_sha_pinning()
 
 # 3. Add concurrency to heavy workflows
-HEAVY_WORKFLOWS = ["build-debug.yml", "build-aab.yml", "build-nightly.yml", "build-desktop-binaries.yml"]
+HEAVY_WORKFLOWS = ["build-debug.yml", "build-aab.yml", "build-nightly.yml"]
 
 for hw in HEAVY_WORKFLOWS:
     path = os.path.join(WORKFLOWS_DIR, hw)

@@ -427,9 +427,7 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
         if (searchable is Application) {
             viewModelScope.launch {
                 val success = AppCloner.cloneAppToWorkProfile(context, searchable, workProfileUser)
-                if (success) {
-                    Log.d("SmartFreeze", "Cloned successfully")
-                } else {
+                if (!success) {
                     Log.e("SmartFreeze", "Cloning failed")
                 }
             }
@@ -488,7 +486,6 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
                                     Toast.LENGTH_LONG,
                                 )
                                 .show()
-                            Log.d("requestUpdatedSearchable", "PermanentlyUnavailable", this.cause)
                         }
                     }
                 }

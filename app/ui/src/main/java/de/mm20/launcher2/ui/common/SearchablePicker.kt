@@ -4,21 +4,17 @@ import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.animation.animateColor
 import androidx.compose.animation.core.updateTransition
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.asPaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.DockedSearchBar
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -34,12 +30,10 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.search.SavableSearchable
-import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.ktx.animateShapeAsState
 import de.mm20.launcher2.ui.ktx.toPixels
@@ -67,61 +61,13 @@ fun SearchablePicker(
         viewModel.startSession(applicationsOnly)
     }
 
-    val colorSurface = MaterialTheme.colorScheme.surfaceContainerLow
-
     LazyColumn(
         modifier = modifier,
         contentPadding = contentPadding,
         verticalArrangement = Arrangement.spacedBy(1.dp)
     ) {
         stickyHeader {
-            DockedSearchBar(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .drawBehind {
-                        drawRect(
-                            brush = Brush.verticalGradient(
-                                0.5f to colorSurface,
-                                0.5f to colorSurface.copy(alpha = 0f),
-                            )
-                        )
-                    }
-                    .padding(bottom = 16.dp),
-                expanded = false,
-                onExpandedChange = {},
-                inputField = {
-                    SearchBarDefaults.InputField(
-                        leadingIcon = {
-                            Icon(
-                                painterResource(BaseR.drawable.search_24px),
-                                contentDescription = null
-                            )
-                        },
-                        trailingIcon = {
-                            if (viewModel.searchQuery.isNotEmpty()) {
-                                IconButton(
-                                    modifier = Modifier.offset(16.dp),
-                                    onClick = {
-                                        viewModel.onSearchQueryChanged("")
-                                    }) {
-                                    Icon(painterResource(BaseR.drawable.close_24px), stringResource(I18nR.string.action_clear))
-                                }
-                            }
-                        },
-                        onSearch = {},
-                        expanded = false,
-                        onExpandedChange = {},
-                        query = viewModel.searchQuery,
-                        onQueryChange = {
-                            viewModel.onSearchQueryChanged(it)
-                        },
-                        placeholder = {
-                            Text(stringResource(I18nR.string.search_bar_placeholder))
-                        },
-                    )
-                }
-            ) {
-            }
+            PickerSearchHeader(viewModel.searchQuery) { viewModel.onSearchQueryChanged(it) }
         }
         if (viewModel.items.isEmpty() && viewModel.searchQuery.isNotBlank()) {
             item {
@@ -206,5 +152,55 @@ fun SearchablePicker(
                 }
             }
         }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+internal fun PickerSearchHeader(query: String, onQueryChange: (String) -> Unit) {
+    val colorSurface = MaterialTheme.colorScheme.surfaceContainerLow
+    DockedSearchBar(
+        modifier = Modifier
+            .fillMaxWidth()
+            .drawBehind {
+                drawRect(
+                    brush = Brush.verticalGradient(
+                        0.5f to colorSurface,
+                        0.5f to colorSurface.copy(alpha = 0f),
+                    )
+                )
+            }
+            .padding(bottom = 16.dp),
+        expanded = false,
+        onExpandedChange = {},
+        inputField = {
+            SearchBarDefaults.InputField(
+                leadingIcon = {
+                    Icon(
+                        painterResource(BaseR.drawable.search_24px),
+                        contentDescription = null
+                    )
+                },
+                trailingIcon = {
+                    if (query.isNotEmpty()) {
+                        IconButton(
+                            modifier = Modifier.offset(16.dp),
+                            onClick = { onQueryChange("") },
+                        ) {
+                            Icon(painterResource(BaseR.drawable.close_24px), stringResource(I18nR.string.action_clear))
+                        }
+                    }
+                },
+                onSearch = {},
+                expanded = false,
+                onExpandedChange = {},
+                query = query,
+                onQueryChange = onQueryChange,
+                placeholder = {
+                    Text(stringResource(I18nR.string.search_bar_placeholder))
+                },
+            )
+        }
+    ) {
     }
 }

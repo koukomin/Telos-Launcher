@@ -2,50 +2,22 @@ package de.mm20.launcher2.ui.settings.gestures
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
 
-import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.LocalContentColor
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.FeatureFlags
-import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.preferences.GestureAction
-import de.mm20.launcher2.preferences.WidgetScreenTarget
-import de.mm20.launcher2.search.SavableSearchable
-import de.mm20.launcher2.ui.R
-import de.mm20.launcher2.ui.common.SearchablePicker
-import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.component.preferences.GuardedPreference
-import de.mm20.launcher2.ui.component.preferences.ListPreference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
-import de.mm20.launcher2.ui.ktx.toPixels
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -345,89 +317,3 @@ fun requiresAccessibilityService(action: GestureAction?): Boolean {
         else -> false
     }
 }
-
-//@Composable
-//fun GesturePreference(
-//    title: String,
-//    @DrawableRes icon: Int,
-//    value: GestureAction?,
-//    onValueChanged: (GestureAction) -> Unit,
-//    options: List<Pair<String, GestureAction>>,
-//    app: SavableSearchable?,
-//    appIcon: LauncherIcon?,
-//    onAppChanged: (SavableSearchable?) -> Unit,
-//) {
-//    var showAppPicker by remember { mutableStateOf(false) }
-//    Row(
-//        verticalAlignment = (Alignment.CenterVertically),
-//    ) {
-//        Box(
-//            modifier = Modifier.weight(1f),
-//        ) {
-//            ListPreference(
-//                title = title,
-//                icon = icon,
-//                items = options,
-//                value = value,
-//                summary = options.find { option ->
-//                    when {
-//                        value is GestureAction.Widgets && option.second is GestureAction.Widgets -> {
-//                            val valueTarget = value.target
-//                            val optionTarget = (option.second as GestureAction.Widgets).target
-//                            valueTarget == optionTarget
-//                        }
-//
-//                        else -> value?.javaClass == option.second.javaClass
-//                    }
-//                }?.first ?: stringResource(I18nR.string.gesture_action_none),
-//                onValueChanged = { if (it != null) onValueChanged(it) },
-//            )
-//        }
-//
-//        if (value is GestureAction.Launch) {
-//            Box(
-//                modifier = Modifier
-//                    .height(36.dp)
-//                    .width(1.dp)
-//                    .background(MaterialTheme.colorScheme.outlineVariant),
-//            )
-//            Box(
-//                modifier = Modifier
-//                    .clickable { showAppPicker = true }
-//                    .padding(12.dp),
-//            ) {
-//                ShapedLauncherIcon(size = 32.dp, icon = { appIcon })
-//            }
-//        }
-//        if (value is GestureAction.Widgets) {
-//            Box(
-//                modifier = Modifier
-//                    .height(36.dp)
-//                    .width(1.dp)
-//                    .background(MaterialTheme.colorScheme.outlineVariant),
-//            )
-//            IconButton(
-//                modifier = Modifier.padding(4.dp),
-//                onClick = {}
-//            ) {
-//                Icon(painterResource(BaseR.drawable.tune_24px), "")
-//            }
-//        }
-//    }
-//
-//    if (value is GestureAction.Launch) {
-//        SearchablePicker(
-//            expanded = (showAppPicker || app == null),
-//            onDismissRequest = {
-//                showAppPicker = false
-//                if (app == null) onValueChanged(GestureAction.NoAction)
-//            },
-//            value = app,
-//            onValueChanged = {
-//                showAppPicker = false
-//                onAppChanged(it)
-//            },
-//        )
-//    }
-//
-//}

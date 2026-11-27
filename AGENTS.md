@@ -9,6 +9,16 @@ Read this file only. Do not create or keep parallel instruction files
 `.cursor/rules/`, `CODEX.md`, `.windsurfrules`, Aider rule files, or extra
 `*-instructions.md`). Put every shared rule here so all agents stay in sync.
 
+## Find the instructions for your change
+
+Start with the feature entry point and verification command from
+`python3 tools/ai-cli.py locate <feature>`. Specialist rules stay in this file.
+
+- Build or dependency changes: [Gradle and libraries](#gradle--library-versioning-mandatory-for-all-agents) and [Dependabot alerts](#dependabot-alerts-mandatory-high-priority).
+- UI or launcher changes: [UI design](#ui-design-rules-for-every-agent), [performance](#performance-memory-and-apk-size-rules) and [translations](#translations).
+- Navigation or persistence: [restart and update continuity](#restart-and-update-continuity).
+- User-facing changes: [documentation](#documentation) and [README and Pages](#keeping-readme-docs-and-pages-up-to-date).
+
 ## Working in this repository
 
 - Use `.artifacts/CONTEXT_MAP.json` to locate the feature and its entry points. Read the relevant section of `.artifacts/COMPONENT_REGISTRY.md` when looking for existing reusable behavior.

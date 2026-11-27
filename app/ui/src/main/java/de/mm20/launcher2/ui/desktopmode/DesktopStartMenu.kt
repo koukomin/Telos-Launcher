@@ -50,18 +50,15 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.desktopmode.DesktopModeManager
-import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.preferences.ui.DesktopModeSettings
 import de.mm20.launcher2.search.Application
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.ktx.toPixels
-import kotlinx.coroutines.flow.Flow
 import org.koin.compose.koinInject
 
 @Composable
@@ -238,33 +235,6 @@ internal fun DesktopStartMenu(onDismiss: () -> Unit) {
                 }
             }
         }
-    }
-}
-
-@Composable
-private fun StartMenuAppRow(
-    app: Application,
-    iconSize: Dp,
-    getIcon: (Int) -> Flow<LauncherIcon?>,
-    onClick: () -> Unit,
-) {
-    val iconSizePx = iconSize.toPixels().toInt()
-    val icon by remember(app.key, iconSizePx) { getIcon(iconSizePx) }.collectAsStateWithLifecycle(null)
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable(onClick = onClick)
-            .padding(horizontal = 16.dp, vertical = 10.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(16.dp),
-    ) {
-        ShapedLauncherIcon(size = iconSize, icon = { icon })
-        Text(
-            text = app.labelOverride ?: app.label,
-            style = MaterialTheme.typography.bodyMedium,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-        )
     }
 }
 

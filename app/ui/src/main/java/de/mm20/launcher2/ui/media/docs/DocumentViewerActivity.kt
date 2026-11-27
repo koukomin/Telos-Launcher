@@ -34,7 +34,6 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
@@ -118,7 +117,6 @@ import de.mm20.launcher2.ui.component.virtualAppElevated
 import de.mm20.launcher2.ui.component.virtualAppGlass
 import de.mm20.launcher2.ui.component.virtualAppSurface
 import de.mm20.launcher2.ui.media.photos.ViewerLibrary
-import de.mm20.launcher2.ui.theme.transparency.transparency
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.ColorMatrix
 import androidx.compose.material3.TopAppBarDefaults
@@ -210,10 +208,6 @@ private class PdfDoc(val file: File) {
     // waits for a page that is being drawn: closing the renderer under it crashes
     @Synchronized
     fun close() { runCatching { renderer.close() }; runCatching { fd.close() } }
-}
-
-private fun convertedName(name: String): String = name.substringBeforeLast('.') + "." + when (name.substringAfterLast('.', "").lowercase()) {
-    "xls" -> "xlsx"; "ppt" -> "pptx"; else -> "docx"
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
