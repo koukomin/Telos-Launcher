@@ -59,3 +59,23 @@ The **Network settings** tab exposes the profile's Security, Privacy, Family and
 **Use this profile for DNS** explicitly adds/reuses its `https://dns.nextdns.io/<profile>` server and selects it in Telos Network. It does not start the VPN or change Android Private DNS. Connecting the editor alone does not select a resolver. **Remove saved key** clears the encrypted credential and its dedicated encryption key; it does not remove server-side rules or change the currently selected DNS server. This action also permits recovery from an invalid local credential vault.
 
 This completes the Copilot editor idea inside the existing Network service and Compose navigation. The incomplete standalone `app:network` module is superseded; it is not packaged alongside a second Network provider. The API contract follows [official NextDNS documentation](https://nextdns.github.io/api/). Contract tests use fixtures and fake transports; a live user API key was not available for end-to-end verification.
+
+## Dynamic DNS
+
+In **Telos Network → Settings → Dynamic DNS**, select the provider, enter an
+existing hostname and your public WAN IP address, then tap **Update DNS**.
+Credentials stay in the open dialog and are sent over HTTPS to the selected
+provider. Repeat the update if your IP address changes.
+
+| Provider | Setup |
+| --- | --- |
+| DuckDNS | Create a subdomain in DuckDNS, then enter its full hostname and the dashboard token. |
+| No-IP | Create a hostname and a DDNS Key for it. Use the generated key username and password. |
+| Dyn | Create the hostname in Dyn and use its update username and password or updater client key. |
+| Dynu | Add the hostname and use the account username and IP update password. |
+| FreeDNS | Create a subdomain, open the Dynamic DNS page, and copy the token after the question mark in its Direct URL. Enter an IPv4 address. |
+| Cloudflare | Create an A or AAAA record. Use the zone ID, the existing DNS record ID, and an API token with **Zone → DNS → Edit** scoped to that zone. The DNS Records API list can find the record ID by hostname. |
+
+For Cloudflare, use IPv4 with an A record and IPv6 with an AAAA record. DDNS
+updates the address associated with a hostname. Direct file downloads from a
+device need a separate HTTPS listener and a reachable network path.

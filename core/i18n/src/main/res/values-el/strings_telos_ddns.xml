@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ddns_title">Dynamic DNS</string>
+    <string name="ddns_summary">Ενημέρωσε μια υπάρχουσα εγγραφή DNS με τη δημόσια IP σου. Τα διαπιστευτήρια διαγράφονται όταν κλείσεις το παράθυρο.</string>
+    <string name="ddns_host">Πλήρες όνομα host</string>
+    <string name="ddns_address">Δημόσια διεύθυνση IPv4 ή IPv6</string>
+    <string name="ddns_zone">Αναγνωριστικό ζώνης</string>
+    <string name="ddns_record">Αναγνωριστικό εγγραφής DNS</string>
+    <string name="ddns_account">Όνομα χρήστη ή λογαριασμός ενημέρωσης</string>
+    <string name="ddns_secret">Token ενημέρωσης ή κωδικός</string>
+    <string name="ddns_cloudflare_help">Χρησιμοποίησε token με δικαίωμα DNS Edit μόνο για αυτή τη ζώνη. Επίλεξε υπάρχουσα εγγραφή A ή AAAA.</string>
+    <string name="ddns_duck_help">Βάλε το πλήρες όνομα DuckDNS και το token από τον πίνακα ελέγχου.</string>
+    <string name="ddns_free_help">Χρησιμοποίησε το token από το FreeDNS Direct URL και διεύθυνση IPv4.</string>
+    <string name="ddns_update">Ενημέρωση DNS</string>
+    <string name="ddns_updated">Ο πάροχος δέχτηκε την ενημέρωση.</string>
+    <string name="ddns_unchanged">Η εγγραφή έχει ήδη αυτή τη διεύθυνση.</string>
+    <string name="ddns_rejected">Ο πάροχος απέρριψε την ενημέρωση. Έλεγξε την εγγραφή και τα διαπιστευτήρια.</string>
+    <string name="ddns_unreachable">Αποτυχία σύνδεσης με τον πάροχο.</string>
+    <string name="ddns_invalid">Έλεγξε το όνομα host, τη διεύθυνση IP και τα διαπιστευτήρια.</string>
+</resources>

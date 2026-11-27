@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ddns_title">Dynamic DNS</string>
+    <string name="ddns_summary">Update an existing DNS record with your public IP address. Credentials are cleared when you close this window.</string>
+    <string name="ddns_host">Full hostname</string>
+    <string name="ddns_address">Public IPv4 or IPv6 address</string>
+    <string name="ddns_zone">Zone ID</string>
+    <string name="ddns_record">DNS record ID</string>
+    <string name="ddns_account">Username or update account</string>
+    <string name="ddns_secret">Update token or password</string>
+    <string name="ddns_cloudflare_help">Use a token with DNS Edit permission limited to this zone. Choose an existing A or AAAA record.</string>
+    <string name="ddns_duck_help">Enter the full DuckDNS hostname and the token shown in your dashboard.</string>
+    <string name="ddns_free_help">Use the token from the FreeDNS Direct URL and enter an IPv4 address.</string>
+    <string name="ddns_update">Update DNS</string>
+    <string name="ddns_updated">The provider accepted the update.</string>
+    <string name="ddns_unchanged">The record already has this address.</string>
+    <string name="ddns_rejected">The provider rejected the update. Check the record and credentials.</string>
+    <string name="ddns_unreachable">Could not reach the provider.</string>
+    <string name="ddns_invalid">Check the hostname, IP address and credentials.</string>
+</resources>

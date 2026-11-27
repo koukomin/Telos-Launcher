@@ -110,3 +110,5 @@
   - Squashed and merged PR #139 (`codex/cleanup-followup`).
   - Restored EventCache extension imports and aligned upstream sentinel.
 - [x] **Merge & Releases**: Δημοσιεύτηκαν επιτυχώς οι εκδόσεις `v1.45.80` έως `v1.46.07`.
+
+2026-11-27: Reviewed release and CodeQL job logs. Removed duplicate Compose text arguments, restored the verified setup-python pin, and increased the CodeQL Gradle heap after the resource generation OOM. Added manual Dynamic DNS updates in Network settings. Direct file hosting and share link lifecycle still need implementation.

@@ -59,9 +59,12 @@ fun NetworkSettingsScreen() {
     val mtuLabelAuto = stringResource(I18nR.string.net_settings_mtu_auto)
 
     var showFontDialog by remember { mutableStateOf(false) }
+    var showDdns by remember { mutableStateOf(false) }
+    if (showDdns) DynamicDnsDialog { showDdns = false }
 
     val networkBackStack = de.mm20.launcher2.ui.locals.LocalBackStack.current
     PreferenceScreen(title = { Text(stringResource(I18nR.string.net_settings_title), modifier = Modifier.padding(horizontal = 16.dp)) }, bottomBar = { NetworkNavigationBar(NetworkSection.Settings) }) {
+        item { Preference(title = stringResource(I18nR.string.ddns_title), onClick = { showDdns = true }) }
         item { de.mm20.launcher2.ui.component.preferences.Preference(title = stringResource(I18nR.string.netproxy_title), onClick = { networkBackStack.add(NetworkProxiesRoute) }) }
         item {
             PreferenceCategory(title = stringResource(I18nR.string.per_app_font_size)) {
