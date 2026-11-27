@@ -14,4 +14,15 @@ if [[ $status != 0 && -n ${GITHUB_STEP_SUMMARY:-} ]]; then
             sed 's/^/    /' || true
     } >> "$GITHUB_STEP_SUMMARY"
 fi
+if [[ $status != 0 ]]; then
+    diagnostic=$(grep -m 1 -E '^(e: |Execution failed for task|Could not resolve|> Task .* FAILED)' "$log" || true)
+    if [[ -z "$diagnostic" ]]; then
+        diagnostic=$(awk '/^\* What went wrong:$/ { if (getline) print; exit }' "$log")
+    fi
+    if [[ -n "$diagnostic" ]]; then
+        diagnostic=${diagnostic//%/%25}
+        diagnostic=${diagnostic//$'\r'/%0D}
+        printf '::error title=Android build failure::%s\n' "$diagnostic"
+    fi
+fi
 exit "$status"
