@@ -14,7 +14,11 @@ data class SyncthingFolder(
     val status: String = "Up to date",
     val sizeFormatted: String = "1.2 GB",
     val fileCount: Int = 342,
-    val isPaused: Boolean = false
+    val isPaused: Boolean = false,
+    val isEncrypted: Boolean = false,
+    val versioningPolicy: String = "Staggered",
+    val filePullOrder: String = "Newest First",
+    val watcherEnabled: Boolean = true
 )
 
 data class SyncthingDevice(
@@ -24,7 +28,8 @@ data class SyncthingDevice(
     val isConnected: Boolean = true,
     val downloadSpeed: String = "0 B/s",
     val uploadSpeed: String = "0 B/s",
-    val isPaused: Boolean = false
+    val isPaused: Boolean = false,
+    val isUntrustedEncrypted: Boolean = false
 )
 
 class SyncViewModel(application: Application) : AndroidViewModel(application) {
@@ -40,7 +45,8 @@ class SyncViewModel(application: Application) : AndroidViewModel(application) {
 
     private val _folders = MutableStateFlow(
         listOf(
-            SyncthingFolder("default", "Default Folder", "/storage/emulated/0/Sync", "Send & Receive", "Up to date", "450 MB", 128),
+            SyncthingFolder("full-sdcard", "Full Internal Storage (SD Card)", "/storage/emulated/0", "Send & Receive", "Up to date", "18.4 GB", 4120),
+            SyncthingFolder("default", "Default Sync Folder", "/storage/emulated/0/Sync", "Send & Receive", "Up to date", "450 MB", 128),
             SyncthingFolder("camera-photos", "Camera Photos", "/storage/emulated/0/DCIM/Camera", "Send Only", "Up to date", "3.4 GB", 890),
             SyncthingFolder("documents", "Telos Documents", "/storage/emulated/0/Documents", "Send & Receive", "Up to date", "120 MB", 45)
         )
@@ -50,7 +56,8 @@ class SyncViewModel(application: Application) : AndroidViewModel(application) {
     private val _devices = MutableStateFlow(
         listOf(
             SyncthingDevice("ABC1234-DEF5678-GHI9012", "Desktop Workstation", "192.168.1.10:22000", true, "1.2 MB/s", "45 KB/s"),
-            SyncthingDevice("JKL3456-MNO7890-PQR1234", "Telos Laptop", "192.168.1.15:22000", true, "0 B/s", "0 B/s")
+            SyncthingDevice("JKL3456-MNO7890-PQR1234", "Telos Laptop", "192.168.1.15:22000", true, "0 B/s", "0 B/s"),
+            SyncthingDevice("ENC9999-ZERO-KNOWLEDGE", "Untrusted Encrypted Backup Node", "quic://backup.node:22000", true, "320 KB/s", "12 KB/s", isUntrustedEncrypted = true)
         )
     )
     val devices: StateFlow<List<SyncthingDevice>> = _devices.asStateFlow()
@@ -67,6 +74,13 @@ class SyncViewModel(application: Application) : AndroidViewModel(application) {
         _chargingOnly.value = enabled
     }
 
+    fun addFullSdCardFolder() {
+        val fullSd = SyncthingFolder("full-sdcard", "Full Internal Storage (SD Card)", "/storage/emulated/0", "Send & Receive")
+        if (_folders.value.none { it.path == "/storage/emulated/0" }) {
+            _folders.value = listOf(fullSd) + _folders.value
+        }
+    }
+
     fun addFolder(label: String, path: String, type: String) {
         if (label.isBlank() || path.isBlank()) return
         val id = label.lowercase().replace(Regex("[^a-z0-9]"), "-")
@@ -74,9 +88,9 @@ class SyncViewModel(application: Application) : AndroidViewModel(application) {
         _folders.value = _folders.value + newFolder
     }
 
-    fun addDevice(id: String, name: String) {
+    fun addDevice(id: String, name: String, isEncrypted: Boolean = false) {
         if (id.isBlank() || name.isBlank()) return
-        val newDevice = SyncthingDevice(id = id, name = name, isConnected = false)
+        val newDevice = SyncthingDevice(id = id, name = name, isConnected = false, isUntrustedEncrypted = isEncrypted)
         _devices.value = _devices.value + newDevice
     }
 
