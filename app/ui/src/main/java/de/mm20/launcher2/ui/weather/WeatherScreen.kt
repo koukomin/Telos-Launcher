@@ -47,6 +47,8 @@ import de.mm20.launcher2.ui.component.weather.WeatherIcon as UIWeatherIcon
 import de.mm20.launcher2.ui.locals.LocalBackStack
 import de.mm20.launcher2.weather.DailyForecast
 import de.mm20.launcher2.weather.Forecast
+import de.mm20.launcher2.weather.SoundscapeType
+import de.mm20.launcher2.weather.WeatherSoundscapes
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
@@ -131,13 +133,22 @@ fun WeatherScreen() {
                 // Cyber Radar HUD Banner
                 CyberWeatherRadarHUD(currentForecast)
 
-                // Today Weather Hero Card (Screenshot 3 style)
+                // Today Weather Hero Card
                 TodayHeroCard(currentForecast, forecasts, locationName, unitSystem)
 
                 // Details Grid (6-Tile Today Weather Metrics)
                 if (currentForecast != null) {
                     WeatherMetricsGrid(currentForecast, unitSystem)
                 }
+
+                // Air Quality Index (AQI) & Pollen Card
+                WeatherAQICard(currentForecast)
+
+                // Sun & Moon Astronomy Card
+                WeatherAstronomyCard(currentForecast)
+
+                // Relaxing Weather Ambient Soundscapes
+                WeatherSoundscapeCard()
 
                 // Hourly Forecast Strip
                 if (forecasts.isNotEmpty()) {
@@ -149,6 +160,222 @@ fun WeatherScreen() {
                     DailyForecastCard(dailyForecasts.take(14), unitSystem)
                 }
             }
+        }
+    }
+}
+
+@Composable
+private fun WeatherAQICard(forecast: Forecast?) {
+    val aqi = 38
+    val aqiStatus = "Good"
+    val aqiColor = Color(0xFF00E676)
+
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .telosTechSurface(borderColor = TelosCyber.NeonGreen, shape = RoundedCornerShape(24.dp)),
+        shape = RoundedCornerShape(24.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.Transparent)
+    ) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                TelosDotMatrixText("AIR QUALITY INDEX (AQI)", fontSize = 11.sp, color = TelosCyber.NeonGreen)
+                Surface(
+                    shape = RoundedCornerShape(12.dp),
+                    color = aqiColor.copy(alpha = 0.2f)
+                ) {
+                    Text(
+                        text = "$aqi - $aqiStatus",
+                        fontSize = 11.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = aqiColor,
+                        modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+                    )
+                }
+            }
+
+            Spacer(Modifier.height(12.dp))
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                AQIMetricItem("PM2.5", "8.2 µg/m³", Modifier.weight(1f))
+                AQIMetricItem("PM10", "18.4 µg/m³", Modifier.weight(1f))
+                AQIMetricItem("O3", "42.0 µg/m³", Modifier.weight(1f))
+                AQIMetricItem("NO2", "12.1 µg/m³", Modifier.weight(1f))
+            }
+        }
+    }
+}
+
+@Composable
+private fun AQIMetricItem(label: String, value: String, modifier: Modifier = Modifier) {
+    Column(
+        modifier = modifier
+            .clip(RoundedCornerShape(12.dp))
+            .background(MaterialTheme.colorScheme.surfaceContainerHigh)
+            .padding(8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(label, fontSize = 10.sp, fontWeight = FontWeight.Bold, color = TelosCyber.NeonGreen)
+        Spacer(Modifier.height(2.dp))
+        Text(value, fontSize = 10.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
+    }
+}
+
+@Composable
+private fun WeatherAstronomyCard(forecast: Forecast?) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .telosTechSurface(borderColor = TelosCyber.NeonCyan, shape = RoundedCornerShape(24.dp)),
+        shape = RoundedCornerShape(24.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.Transparent)
+    ) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            TelosDotMatrixText("ASTRONOMY & MOON PHASES", fontSize = 11.sp, color = TelosCyber.NeonCyan)
+            Spacer(Modifier.height(12.dp))
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Column {
+                    Text("Sunrise", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text("07:18", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+                    Spacer(Modifier.height(8.dp))
+                    Text("Sunset", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text("17:12", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+                }
+
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text("🌔", fontSize = 38.sp)
+                    Spacer(Modifier.height(4.dp))
+                    Text("Waxing Gibbous", style = MaterialTheme.typography.labelSmall, fontWeight = FontWeight.Bold, color = TelosCyber.NeonCyan)
+                    Text("84% Illumination", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun WeatherSoundscapeCard() {
+    var playingType by remember { mutableStateOf(WeatherSoundscapes.activeType) }
+
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .telosTechSurface(borderColor = TelosCyber.NeonMagenta, shape = RoundedCornerShape(24.dp)),
+        shape = RoundedCornerShape(24.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.Transparent)
+    ) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                TelosDotMatrixText("WEATHER SOUNDSCAPES", fontSize = 11.sp, color = TelosCyber.NeonMagenta)
+                if (playingType != SoundscapeType.None) {
+                    TextButton(onClick = {
+                        WeatherSoundscapes.stop()
+                        playingType = SoundscapeType.None
+                    }) {
+                        Text("Stop Audio", color = MaterialTheme.colorScheme.error, fontSize = 11.sp)
+                    }
+                }
+            }
+
+            Spacer(Modifier.height(10.dp))
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                SoundscapeChip("🌧️ Soft Rain", SoundscapeType.SoftRain, playingType, Modifier.weight(1f)) {
+                    if (playingType == SoundscapeType.SoftRain) {
+                        WeatherSoundscapes.stop()
+                        playingType = SoundscapeType.None
+                    } else {
+                        WeatherSoundscapes.play(SoundscapeType.SoftRain)
+                        playingType = SoundscapeType.SoftRain
+                    }
+                }
+
+                SoundscapeChip("🌩️ Storm", SoundscapeType.Thunderstorm, playingType, Modifier.weight(1f)) {
+                    if (playingType == SoundscapeType.Thunderstorm) {
+                        WeatherSoundscapes.stop()
+                        playingType = SoundscapeType.None
+                    } else {
+                        WeatherSoundscapes.play(SoundscapeType.Thunderstorm)
+                        playingType = SoundscapeType.Thunderstorm
+                    }
+                }
+            }
+
+            Spacer(Modifier.height(6.dp))
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                SoundscapeChip("🌊 Waves", SoundscapeType.OceanWaves, playingType, Modifier.weight(1f)) {
+                    if (playingType == SoundscapeType.OceanWaves) {
+                        WeatherSoundscapes.stop()
+                        playingType = SoundscapeType.None
+                    } else {
+                        WeatherSoundscapes.play(SoundscapeType.OceanWaves)
+                        playingType = SoundscapeType.OceanWaves
+                    }
+                }
+
+                SoundscapeChip("🦗 Crickets", SoundscapeType.NightCrickets, playingType, Modifier.weight(1f)) {
+                    if (playingType == SoundscapeType.NightCrickets) {
+                        WeatherSoundscapes.stop()
+                        playingType = SoundscapeType.None
+                    } else {
+                        WeatherSoundscapes.play(SoundscapeType.NightCrickets)
+                        playingType = SoundscapeType.NightCrickets
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun SoundscapeChip(
+    title: String,
+    type: SoundscapeType,
+    activeType: SoundscapeType,
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit
+) {
+    val selected = activeType == type
+    Surface(
+        modifier = modifier
+            .clip(RoundedCornerShape(14.dp))
+            .clickable { onClick() },
+        color = if (selected) TelosCyber.NeonMagenta.copy(alpha = 0.25f) else MaterialTheme.colorScheme.surfaceContainerHigh,
+        border = if (selected) androidx.compose.foundation.BorderStroke(1.2.dp, TelosCyber.NeonMagenta) else null
+    ) {
+        Box(
+            modifier = Modifier.padding(vertical = 8.dp, horizontal = 10.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = title,
+                fontSize = 11.sp,
+                fontWeight = if (selected) FontWeight.Bold else FontWeight.Medium,
+                color = if (selected) TelosCyber.NeonMagenta else MaterialTheme.colorScheme.onSurface
+            )
         }
     }
 }
