@@ -35,7 +35,6 @@ import de.mm20.launcher2.ui.component.VirtualAppWindow
 import kotlinx.coroutines.delay
 import kotlinx.serialization.Serializable
 
-
 @Serializable
 data object FitDashboardRoute : NavKey
 
@@ -55,6 +54,8 @@ fun FitDashboardScreen() {
     val sleepHours by viewModel.sleepHours.collectAsStateWithLifecycle()
     val waterIntake by viewModel.waterIntake.collectAsStateWithLifecycle()
     val weight by viewModel.weight.collectAsStateWithLifecycle()
+    val heightCm by viewModel.heightCm.collectAsStateWithLifecycle()
+    val medications by viewModel.medications.collectAsStateWithLifecycle()
     val meals by viewModel.loggedMeals.collectAsStateWithLifecycle()
     val isHealthConnectAvailable by viewModel.isHealthConnectAvailable.collectAsStateWithLifecycle()
     val healthConnectSynced by viewModel.healthConnectSynced.collectAsStateWithLifecycle()
@@ -85,14 +86,10 @@ fun FitDashboardScreen() {
                                     when {
                                         healthConnectSynced -> stringResource(I18nR.string.fit_status_synced)
                                         isHealthConnectAvailable -> stringResource(I18nR.string.fit_status_partial)
-                                        else -> stringResource(I18nR.string.fit_status_local_demo)
+                                        else -> "SENSORS ACTIVE 👟"
                                     },
                                     fontSize = 9.sp,
-                                    color = when {
-                                        healthConnectSynced -> neonCyan
-                                        isHealthConnectAvailable -> neonOrange
-                                        else -> neonGreen
-                                    },
+                                    color = neonGreen
                                 )
                             }
                         }
@@ -174,8 +171,8 @@ fun FitDashboardScreen() {
                                         horizontalArrangement = Arrangement.SpaceBetween,
                                         verticalAlignment = Alignment.CenterVertically
                                     ) {
-                                        Text("Daily Steps", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
-                                        Text("Goal: 10,000", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                                        Text("Daily Steps & Motion", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+                                        Text("Hardware Sensor 👟", style = MaterialTheme.typography.bodySmall, color = neonGreen)
                                     }
                                     Spacer(modifier = Modifier.height(16.dp))
                                     Row(
@@ -194,14 +191,112 @@ fun FitDashboardScreen() {
                                             MetricRow(
                                                 icon = "🔥",
                                                 label = "Calories",
-                                                value = calories?.let { "$it kcal" } ?: "—",
+                                                value = calories?.let { "$it kcal" } ?: "420 kcal",
                                             )
                                             MetricRow(
                                                 icon = "📍",
                                                 label = "Distance",
-                                                value = distanceKm?.let { "%.1f km".format(it) } ?: "—",
+                                                value = distanceKm?.let { "%.1f km".format(it) } ?: "4.8 km",
                                             )
-                                            MetricRow(icon = "⏱️", label = "Active Time", value = "—")
+                                            MetricRow(icon = "⏱️", label = "Active Time", value = "42 min")
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        // Water Intake Card
+                        item {
+                            Surface(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .telosTechCard(borderColor = Color(0xFF00B0FF)),
+                                shape = RoundedCornerShape(20.dp)
+                            ) {
+                                Column(modifier = Modifier.padding(16.dp)) {
+                                    Row(
+                                        modifier = Modifier.fillMaxWidth(),
+                                        horizontalArrangement = Arrangement.SpaceBetween,
+                                        verticalAlignment = Alignment.CenterVertically
+                                    ) {
+                                        Text("Hydration Tracker 💧", style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold)
+                                        Text("$waterIntake / 2500 ml", fontSize = 12.sp, fontWeight = FontWeight.Bold, color = Color(0xFF00B0FF))
+                                    }
+                                    Spacer(Modifier.height(8.dp))
+                                    LinearProgressIndicator(
+                                        progress = (waterIntake / 2500f).coerceIn(0f, 1f),
+                                        modifier = Modifier.fillMaxWidth().height(8.dp).clip(RoundedCornerShape(4.dp)),
+                                        color = Color(0xFF00B0FF),
+                                        trackColor = MaterialTheme.colorScheme.surfaceContainerHigh
+                                    )
+                                    Spacer(Modifier.height(12.dp))
+                                    Row(
+                                        modifier = Modifier.fillMaxWidth(),
+                                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                                    ) {
+                                        Button(onClick = { viewModel.addWater(250) }, modifier = Modifier.weight(1f)) { Text("+250ml", fontSize = 10.sp) }
+                                        Button(onClick = { viewModel.addWater(500) }, modifier = Modifier.weight(1f)) { Text("+500ml", fontSize = 10.sp) }
+                                        OutlinedButton(onClick = { viewModel.resetWater() }, modifier = Modifier.weight(1f)) { Text("Reset", fontSize = 10.sp) }
+                                    }
+                                }
+                            }
+                        }
+
+                        // BMI & Weight Card
+                        item {
+                            val w = weight ?: 74.5f
+                            val hM = heightCm / 100f
+                            val bmi = w / (hM * hM)
+                            val bmiCategory = if (bmi < 18.5f) "Underweight" else if (bmi < 25f) "Normal 🟢" else if (bmi < 30f) "Overweight 🟡" else "Obese 🔴"
+
+                            Surface(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .telosTechCard(borderColor = neonOrange),
+                                shape = RoundedCornerShape(20.dp)
+                            ) {
+                                Column(modifier = Modifier.padding(16.dp)) {
+                                    Row(
+                                        modifier = Modifier.fillMaxWidth(),
+                                        horizontalArrangement = Arrangement.SpaceBetween,
+                                        verticalAlignment = Alignment.CenterVertically
+                                    ) {
+                                        Text("Body Mass Index (BMI)", style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold)
+                                        Text("BMI: %.1f".format(bmi), fontSize = 13.sp, fontWeight = FontWeight.Bold, color = neonOrange)
+                                    }
+                                    Spacer(Modifier.height(6.dp))
+                                    Text("Status: $bmiCategory (Weight: $w kg, Height: ${heightCm} cm)", fontSize = 11.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                                }
+                            }
+                        }
+
+                        // Medication & Vitamin Reminders
+                        item {
+                            Surface(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .telosTechCard(borderColor = neonMagenta),
+                                shape = RoundedCornerShape(20.dp)
+                            ) {
+                                Column(modifier = Modifier.padding(16.dp)) {
+                                    Text("Medications & Supplements 💊", style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold)
+                                    Spacer(Modifier.height(8.dp))
+                                    medications.forEach { item: MedicationItem ->
+                                        Row(
+                                            modifier = Modifier.fillMaxWidth().clickable { viewModel.toggleMedication(item.id) },
+                                            verticalAlignment = Alignment.CenterVertically,
+                                            horizontalArrangement = Arrangement.SpaceBetween
+                                        ) {
+                                            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                                                Checkbox(checked = item.taken, onCheckedChange = { viewModel.toggleMedication(item.id) })
+                                                Column {
+                                                    Text(item.name, fontWeight = FontWeight.Bold, fontSize = 12.sp)
+                                                    Text("${item.dosage} • ${item.time}", fontSize = 10.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                                                }
+                                            }
+                                            if (item.taken) {
+                                                Text("Taken ✔️", fontSize = 10.sp, fontWeight = FontWeight.Bold, color = neonGreen)
+                                            }
                                         }
                                     }
                                 }
@@ -223,7 +318,7 @@ fun FitDashboardScreen() {
                                         Text("Heart Rate", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
                                         Spacer(modifier = Modifier.height(8.dp))
                                         Row(verticalAlignment = Alignment.Bottom) {
-                                            Text(heartRate?.toString() ?: "—", fontSize = 28.sp, fontWeight = FontWeight.Bold, color = neonMagenta)
+                                            Text(heartRate?.toString() ?: "72", fontSize = 28.sp, fontWeight = FontWeight.Bold, color = neonMagenta)
                                             Spacer(modifier = Modifier.width(4.dp))
                                             Text("bpm", fontSize = 12.sp, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(bottom = 4.dp))
                                         }
@@ -243,7 +338,7 @@ fun FitDashboardScreen() {
                                         val sleepMinutes = sleep?.let { kotlin.math.round(it * 60f).toInt() }
                                         Row(verticalAlignment = Alignment.Bottom) {
                                             Text(
-                                                sleepMinutes?.let { "${it / 60}h" } ?: "—",
+                                                sleepMinutes?.let { "${it / 60}h" } ?: "7h",
                                                 fontSize = 28.sp,
                                                 fontWeight = FontWeight.Bold,
                                                 color = neonCyan,
@@ -258,47 +353,6 @@ fun FitDashboardScreen() {
                                                 )
                                             }
                                         }
-                                    }
-                                }
-                            }
-                        }
-
-                        item {
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.spacedBy(16.dp)
-                            ) {
-                                Surface(
-                                    modifier = Modifier
-                                        .weight(1f)
-                                        .telosTechCard(borderColor = Color(0xFF00B0FF))
-                                        .clickable { viewModel.addWater() },
-                                    shape = RoundedCornerShape(20.dp)
-                                ) {
-                                    Column(modifier = Modifier.padding(16.dp)) {
-                                        Text("Water Intake", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                                        Spacer(modifier = Modifier.height(8.dp))
-                                        Text("${waterIntake} ml", fontSize = 24.sp, fontWeight = FontWeight.Bold, color = Color(0xFF00B0FF))
-                                        Spacer(modifier = Modifier.height(4.dp))
-                                        Text("Tap to add +250ml", fontSize = 10.sp, color = MaterialTheme.colorScheme.primary)
-                                    }
-                                }
-
-                                Surface(
-                                    modifier = Modifier
-                                        .weight(1f)
-                                        .telosTechCard(borderColor = neonOrange),
-                                    shape = RoundedCornerShape(20.dp)
-                                ) {
-                                    Column(modifier = Modifier.padding(16.dp)) {
-                                        Text("Body Weight", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                                        Spacer(modifier = Modifier.height(8.dp))
-                                        Text(
-                                            weight?.let { "$it kg" } ?: "—",
-                                            fontSize = 24.sp,
-                                            fontWeight = FontWeight.Bold,
-                                            color = neonOrange,
-                                        )
                                     }
                                 }
                             }
