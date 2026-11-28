@@ -124,6 +124,10 @@ Keep Python under `tools/` (and `docs/scripts/` / `.github/scripts/` for docs/CI
 6. **Home Screen Clock Weather Default:**
    - Keep `clockWidgetWeatherPart = true` enabled by default in `LauncherSettingsData.kt` so weather appears on the home screen clock widget out of the box.
 
+7. **Mandatory Rule Update on Bug Fixes & Corrections:**
+   - Whenever an agent or developer fixes a bug, CI workflow failure, or code mistake, the agent MUST immediately update `AGENTS.md` with the new rule, root cause, and required fix.
+   - This ensures that all future AI agents and contributors are automatically notified and will never repeat the same mistake.
+
 ## Documentation
 
 Docs live in `docs/` (a VitePress site, published as GitHub Pages at https://koukomin.github.io/Telos-Launcher/ and historically at https://telos.mm20.de). Every user-visible or architectural change must update, **in the same change**:
