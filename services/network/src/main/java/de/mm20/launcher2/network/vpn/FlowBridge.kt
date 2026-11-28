@@ -98,7 +98,7 @@ internal class FlowBridge(
 
     // --- connections ---
 
-    override fun preflow(protocol: Int, uid: Int, connectionId: String?, src: String?, dst: String?): PreMark {
+    override fun preflow(protocol: Int, uid: Int, src: String?, dst: String?): PreMark {
         val mark = PreMark()
         try {
             val owner = resolveUid(protocol, uid, src, dst)
@@ -115,7 +115,6 @@ internal class FlowBridge(
     override fun flow(
         protocol: Int,
         uid: Int,
-        connectionId: String?,
         src: String?,
         dst: String?,
         realIps: String?,
@@ -124,7 +123,7 @@ internal class FlowBridge(
         blocklists: String?,
         isAlg: Boolean,
     ): Mark {
-        val cid = connectionId?.takeIf { it.isNotBlank() } ?: newConnectionId()
+        val cid = newConnectionId()
         try {
             val (srcIp, srcPort) = IpUtil.splitHostPort(src)
             val (dstIp, dstPort) = IpUtil.splitHostPort(dst)
@@ -208,8 +207,8 @@ internal class FlowBridge(
         }
     }
 
-    override fun inflow(protocol: Int, recvdUid: Int, connectionId: String?, src: String?, dst: String?): Mark {
-        val cid = connectionId?.takeIf { it.isNotBlank() } ?: newConnectionId()
+    override fun inflow(protocol: Int, recvdUid: Int, src: String?, dst: String?): Mark {
+        val cid = newConnectionId()
         try {
             val (srcIp, srcPort) = IpUtil.splitHostPort(src)
             val (dstIp, dstPort) = IpUtil.splitHostPort(dst)
@@ -320,7 +319,7 @@ internal class FlowBridge(
 
     // --- DNS ---
 
-    override fun onQuery(origin: String?, flowId: String?, uid: String?, fqdn: String?, qtype: Long): DNSOpts {
+    override fun onQuery(origin: String?, uid: String?, fqdn: String?, qtype: Long): DNSOpts {
         val opts = DNSOpts()
         val owner = uid?.toIntOrNull() ?: FlowInfo.UNKNOWN_UID
         val domain = fqdn.orEmpty().trimEnd('.')
@@ -360,14 +359,14 @@ internal class FlowBridge(
         return opts
     }
 
-    override fun onUpstreamAnswer(id: String?, flowId: String?, smm: DNSSummary?, rcvdDnsOpts: DNSOpts?, ipcsv: String?): DNSOpts {
+    override fun onUpstreamAnswer(id: String?, smm: DNSSummary?, rcvdDnsOpts: DNSOpts?, ipcsv: String?): DNSOpts {
         // An empty DNSOpts means "no change": the options of the question (transport, and NOBLOCK for
         // trusted/bypassed domains) stay in force. Returning the received options instead would make
         // the engine start the resolve again (see Rethink's TunDnsManager.onUpstreamAnswer).
         return DNSOpts()
     }
 
-    override fun onPrequery(origin: String?, flowId: String?, uid: String?, fqdn: String?, qtype: Long): DomainOpts? = null
+    override fun onPrequery(a: String?, b: String?, c: String?, d: Long): DomainOpts? = null
 
     override fun onResponse(summary: DNSSummary?) {
         try {

@@ -254,7 +254,7 @@ fun LetterKeyboardGrid(
         if (state.currentLanguage == KeyboardLanguage.Greek) {
             listOf(
                 listOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "0"),
-                listOf("ς", "ε", "ρ", "τ", "υ", "θ", "ι", "ο", "π"),
+                listOf(";", "ς", "ε", "ρ", "τ", "υ", "θ", "ι", "ο", "π"),
                 listOf("α", "σ", "δ", "φ", "γ", "η", "ξ", "κ", "λ"),
                 listOf("ζ", "χ", "ψ", "ω", "β", "ν", "μ"),
             )

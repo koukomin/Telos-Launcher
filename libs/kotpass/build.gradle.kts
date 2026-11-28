@@ -10,7 +10,7 @@ java {
 dependencies {
     implementation(libs.kotpass) { isTransitive = false }
     shadow(libs.kotlin.stdlib)
-    shadow(libs.okio.jvm)
+    shadow(libs.okio)
 }
 
 tasks.shadowJar {

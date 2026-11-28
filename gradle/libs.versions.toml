@@ -87,7 +87,7 @@ robolectric = "4.18.1"
 androidx-camera = "1.7.0"
 
 # Go network engine of Rethink DNS (MPL-2.0), pinned like Rethink pins it (firestackCommit)
-firestack = "525c343dde"
+firestack = "c4a33649be"
 annotation = "1.11.0"
 
 [libraries]
@@ -232,7 +232,7 @@ shizuku-aidl = { group = "dev.rikka.shizuku", name = "aidl", version.ref = "shiz
 dhizuku-api = { group = "io.github.iamr0s", name = "Dhizuku-API", version.ref = "dhizuku" }
 hiddenapibypass = { group = "org.lsposed.hiddenapibypass", name = "hiddenapibypass", version = "6.2" }
 androidx-annotation = { group = "androidx.annotation", name = "annotation", version.ref = "annotation" }
-okio-jvm = { module = "com.squareup.okio:okio-jvm", version.ref = "okio" }
+okio = { module = "com.squareup.okio:okio-jvm", version.ref = "okio" }
 kotpass = { group = "app.keemobile", name = "kotpass", version.ref = "kotpass" }
 robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "robolectric" }
 
