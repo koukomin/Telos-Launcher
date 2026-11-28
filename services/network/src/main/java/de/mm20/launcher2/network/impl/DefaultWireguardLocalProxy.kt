@@ -110,7 +110,7 @@ internal class DefaultWireguardLocalProxy(
         val services = t.services
         // AddServer reports "no proxy named svchttp" although the server was stored: ignore that, check below
         try {
-            services.addServer(Backend.SVCHTTP, "http://$HOST:$port")
+            services.addServer(Backend.SVCHTTP, Backend.SVCHTTP, "http://$HOST:$port")
         } catch (_: Exception) {
             // Verify the stored server below.
         }

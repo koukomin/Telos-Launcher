@@ -248,3 +248,11 @@ have no patched versions. The selected feature graph and inherited source-level 
   boundary, not a patched SQLite claim.
 
 No Cargo advisory or private Dependabot alert is dismissed by this review.
+
+### Firestack
+
+Telos tracks the Firestack revision pinned by upstream Rethink. Revision
+`525c343dde` preserves the DNS measurement API. Its VPN callbacks include an
+engine connection ID, DoH bootstrap IPs use `addDoHTransport2`, and custom
+servers take a type and a separate identifier. The Maven POM advertises a JAR
+so the dependency selects the published Android artifact with `@aar`.

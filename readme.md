@@ -1371,7 +1371,7 @@ adapted, the original license is respected.
 | [Jakarta Mail / Activation for Android](https://github.com/eclipse-ee4j/mail) | EPL-2.0 / secondary GPL-2.0 with Classpath Exception | Native Ermis IMAP, SMTP and MIME transports |
 | [Termux](https://github.com/termux/termux-app) | GPL-3.0-only (upstream app) | External Store recommendation and optional external-app launch; no upstream app source or runtime bundled |
 | [Tor Android](https://github.com/guardianproject/tor-android) / [Tor](https://www.torproject.org/) | BSD-3-Clause | Embedded Tor client, used unchanged as `info.guardianproject:tor-android:0.4.9.14`; notices bundled in the license screen |
-| [firestack](https://github.com/celzero/firestack) | MPL-2.0 | The Go network engine behind Telos Network, used unchanged as a Maven dependency (`com.celzero:firestack`) |
+| [firestack 525c343dde](https://github.com/celzero/firestack/tree/525c343dde) | MPL-2.0 | The Go network engine behind Telos Network, used unchanged as a Maven dependency (`com.celzero:firestack`) |
 | [WireGuard](https://www.wireguard.com) | MIT / GPL-2.0 (see project) | The tunnel protocol of Telos Network, implemented inside firestack (WireGuard is a registered trademark of Jason A. Donenfeld; Telos is not affiliated) |
 | [Transistor](https://codeberg.org/y20k/transistor) | MIT | Radio player behaviour |
 | [Radio-Browser](https://www.radio-browser.info/) | public API | Radio station directory |

@@ -39,7 +39,7 @@ based on" table in `readme.md`.
 | [FairEmail](https://github.com/M66B/FairEmail) | GPL-3.0 | Copyright © 2018–2026 Marcel Bokhorst. Feature ideas only for Ermis; no FairEmail source was copied |
 | [SD Maid SE](https://github.com/d4rken-org/sdmaid-se) | GPL-3.0 | Copyright the SD Maid SE authors (d4rken). Feature ideas for Fill the bin (caches, leftovers, scheduler); no SD Maid source was copied |
 | [GAMA](https://github.com/palincat/gama) | see project | Copyright the GAMA authors (palincat). Feature idea for the Vulkan/OpenGL HWUI switch; no GAMA source was copied |
-| [firestack](https://github.com/celzero/firestack) | MPL-2.0 | Copyright (c) Celzero / The Rethink DNS Open Source Project; used unchanged as a Maven dependency |
+| [firestack 525c343dde](https://github.com/celzero/firestack/tree/525c343dde) | MPL-2.0 | Copyright (c) Celzero / The Rethink DNS Open Source Project; used unchanged as a Maven dependency |
 | [WireGuard](https://www.wireguard.com) | see project | Implemented inside firestack; WireGuard is a registered trademark of Jason A. Donenfeld |
 | [Transistor](https://codeberg.org/y20k/transistor) | MIT | Copyright (c) 2015-22 - Y20K.org (full notice below) |
 | [TagLib](https://github.com/taglib/taglib) | LGPL-2.1 / MPL-1.1 | Audio tag library bundled by the Kyant0 wrapper below |
