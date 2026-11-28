@@ -248,3 +248,10 @@ have no patched versions. The selected feature graph and inherited source-level 
   boundary, not a patched SQLite claim.
 
 No Cargo advisory or private Dependabot alert is dismissed by this review.
+
+### Kotpass
+
+The `:libs:kotpass` build relocates the Commons Lang classes bundled by Kotpass
+0.13.0. Android modules use the relocated JAR. Check
+`:app:app:checkDefaultDebugDuplicateClasses` and the KeePass unit tests when
+upgrading Kotpass.

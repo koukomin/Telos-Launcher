@@ -115,8 +115,9 @@
 
 Kotpass 0.13.0 embeds classes under `org.apache.commons.lang3`, including
 `ArrayUtils`, `ClassUtils`, `ObjectUtils` and `StringEscapeUtils` also present
-in Telos's commons-lang3 dependency. Keep Kotpass 0.10.0 and retry the upgrade
-when upstream relocates the bundled classes or publishes an unbundled artifact.
+in Telos's commons-lang3 dependency. The Android consumers now use a separate
+Kotpass JAR that relocates the bundled Commons Lang classes and their bytecode
+references while preserving the original Kotpass API.
 
 ### Firestack 8134609734 compatibility
 

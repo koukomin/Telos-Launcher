@@ -39,7 +39,7 @@ dependencies {
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.material3)
     implementation(libs.koin.android)
-    implementation(libs.kotpass)
+    implementation(project(path = ":libs:kotpass", configuration = "shadow"))
     implementation(project(":core:base"))
     implementation(project(":core:ktx"))
     implementation(project(":core:preferences"))

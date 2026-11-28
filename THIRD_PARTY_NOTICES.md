@@ -7,6 +7,9 @@ based on" table in `readme.md`.
 
 | Project | License | Copyright notice found in the project |
 | --- | --- | --- |
+| [Kotpass 0.13.0](https://github.com/keemobile/kotpass) | MIT | KeeMobile contributors. Telos relocates the Apache Commons Lang classes bundled by Kotpass to a private package. |
+| [Apache Commons Lang](https://commons.apache.org/proper/commons-lang/) | Apache-2.0 | The Apache Software Foundation. Kotpass bundles a subset, which Telos relocates at build time. |
+| [Shadow 9.6.1](https://github.com/GradleUp/shadow) | Apache-2.0 | GradleUp contributors. Build-time Gradle plugin for the Kotpass relocation. |
 | [Guava 33.8.0](https://github.com/google/guava) | Apache-2.0 | Copyright The Guava Authors. Used as unmodified Maven artifacts: `-android` in application dependencies and `-jre` in build-tool dependencies. The full upstream license is retained in `app/app/src/main/assets/licenses/guava-33.8.0-LICENSE.txt`. |
 | [jsoup 1.24.1](https://github.com/jhy/jsoup) | MIT | Copyright (c) 2009–2026 Jonathan Hedley. Used as an unmodified Maven dependency. The full upstream copyright and license are retained in `app/app/src/main/assets/licenses/jsoup-1.24.1-LICENSE.txt`. |
 | [Shizuku-Next](https://github.com/rushiranpise/Shizuku-Next) (server, starter, JNI; based on [RikkaApps/Shizuku](https://github.com/RikkaApps/Shizuku) and thedjchi's fork) | Apache-2.0 | Copyright of RikkaW / RikkaApps, thedjchi, rushiranpise and Shizuku-Next contributors. Vendored under `libs/shizuku-next`. |
