@@ -18,6 +18,15 @@ enum class KeyboardMode {
     Symbols,
     Emojis,
     Clipboard,
+    TextEditing,
+    Numpad,
+    Translate,
+}
+
+enum class OneHandedSide {
+    Off,
+    Left,
+    Right,
 }
 
 data class ClipboardItem(
@@ -45,4 +54,10 @@ object TelosKeyboardState {
 
     var imeAction by mutableIntStateOf(EditorInfo.IME_ACTION_UNSPECIFIED)
     var activeKeyPreview by mutableStateOf<String?>(null)
+
+    var oneHandedSide by mutableStateOf(OneHandedSide.Off)
+    var emojiSearchQuery by mutableStateOf("")
+    var translateSourceText by mutableStateOf("")
+    var translateTargetText by mutableStateOf("")
+    var isListeningVoice by mutableStateOf(false)
 }

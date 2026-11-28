@@ -4,18 +4,19 @@ package de.mm20.launcher2.ui.keyboard
 
 import android.view.inputmethod.EditorInfo
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.drag
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -49,91 +50,125 @@ fun TelosKeyboardView(
     onSwitchLanguage: () -> Unit,
     onPasteText: (String) -> Unit,
     onPasteClipboardItem: (ClipboardItem) -> Unit,
+    onStartVoiceTyping: () -> Unit,
+    onTextEditingAction: (String) -> Unit,
     onVibrate: () -> Unit,
 ) {
     val state = TelosKeyboardState
     val surfaceColor = MaterialTheme.colorScheme.surfaceContainerLow
 
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(surfaceColor)
-            .navigationBarsPadding()
-            .padding(start = 3.dp, end = 3.dp, top = 4.dp, bottom = 4.dp)
-    ) {
-        // Gboard Style Toolbar Row
-        GboardToolbar(
-            onVibrate = onVibrate,
-            onToggleIncognito = onToggleIncognito,
-            onSwitchLanguage = onSwitchLanguage,
-            onPasteClipboardItem = onPasteClipboardItem
-        )
-
-        // Gboard Style Candidate Strip (Word Suggestions)
-        if (TelosKeyboardBuffer.activeSuggestions.isNotEmpty()) {
-            GboardCandidateStrip(
-                suggestions = TelosKeyboardBuffer.activeSuggestions.toList(),
-                onSelectWord = { sugWord ->
-                    onVibrate()
-                    onPasteText("$sugWord ")
-                    TelosKeyboardDictionary.learnWord(sugWord, state.privateMode)
-                    TelosKeyboardBuffer.clear()
-                }
-            )
+    OneHandedContainer(
+        oneHandedSide = state.oneHandedSide,
+        onExpand = { state.oneHandedSide = OneHandedSide.Off },
+        onSwitchSide = {
+            state.oneHandedSide = if (state.oneHandedSide == OneHandedSide.Left) OneHandedSide.Right else OneHandedSide.Left
         }
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(surfaceColor)
+                .navigationBarsPadding()
+                .padding(start = 3.dp, end = 3.dp, top = 4.dp, bottom = 4.dp)
+        ) {
+            // Gboard Style Toolbar Row
+            GboardToolbar(
+                onVibrate = onVibrate,
+                onToggleIncognito = onToggleIncognito,
+                onSwitchLanguage = onSwitchLanguage,
+                onPasteClipboardItem = onPasteClipboardItem,
+                onStartVoiceTyping = onStartVoiceTyping
+            )
 
-        Box(modifier = Modifier.fillMaxWidth()) {
-            // Main Keyboard Area
-            when (state.keyboardMode) {
-                KeyboardMode.Letters ->
-                    LetterKeyboardGrid(
-                        onKeyTap = onKeyTap,
-                        onBackspace = onBackspace,
-                        onEnter = onEnter,
-                        onSpace = onSpace,
-                        onVibrate = onVibrate,
-                        onSwitchLanguage = onSwitchLanguage,
-                    )
-                KeyboardMode.Numbers ->
-                    SymbolKeyboardGrid(
-                        isSymbols = false,
-                        onKeyTap = onKeyTap,
-                        onBackspace = onBackspace,
-                        onEnter = onEnter,
-                        onSpace = onSpace,
-                        onVibrate = onVibrate,
-                    )
-                KeyboardMode.Symbols ->
-                    SymbolKeyboardGrid(
-                        isSymbols = true,
-                        onKeyTap = onKeyTap,
-                        onBackspace = onBackspace,
-                        onEnter = onEnter,
-                        onSpace = onSpace,
-                        onVibrate = onVibrate,
-                    )
-                KeyboardMode.Emojis ->
-                    EmojiKeyboardGrid { emoji ->
+            // Gboard Style Candidate Strip (Word Suggestions)
+            if (TelosKeyboardBuffer.activeSuggestions.isNotEmpty()) {
+                GboardCandidateStrip(
+                    suggestions = TelosKeyboardBuffer.activeSuggestions.toList(),
+                    onSelectWord = { sugWord ->
                         onVibrate()
-                        onKeyTap(emoji)
+                        onPasteText("$sugWord ")
+                        TelosKeyboardDictionary.learnWord(sugWord, state.privateMode)
+                        TelosKeyboardBuffer.clear()
                     }
-                KeyboardMode.Clipboard ->
-                    ClipboardPanel(
-                        items = state.clipboardItems,
-                        onPasteItem = { item ->
-                            onVibrate()
-                            onPasteClipboardItem(item)
-                        }
-                    )
+                )
             }
 
-            // Visual Swipe Trail Overlay
-            GlideTypingTrailOverlay()
+            Box(modifier = Modifier.fillMaxWidth()) {
+                // Main Keyboard Area
+                when (state.keyboardMode) {
+                    KeyboardMode.Letters ->
+                        LetterKeyboardGrid(
+                            onKeyTap = onKeyTap,
+                            onBackspace = onBackspace,
+                            onEnter = onEnter,
+                            onSpace = onSpace,
+                            onVibrate = onVibrate,
+                            onSwitchLanguage = onSwitchLanguage,
+                        )
+                    KeyboardMode.Numbers ->
+                        SymbolKeyboardGrid(
+                            isSymbols = false,
+                            onKeyTap = onKeyTap,
+                            onBackspace = onBackspace,
+                            onEnter = onEnter,
+                            onSpace = onSpace,
+                            onVibrate = onVibrate,
+                        )
+                    KeyboardMode.Symbols ->
+                        SymbolKeyboardGrid(
+                            isSymbols = true,
+                            onKeyTap = onKeyTap,
+                            onBackspace = onBackspace,
+                            onEnter = onEnter,
+                            onSpace = onSpace,
+                            onVibrate = onVibrate,
+                        )
+                    KeyboardMode.Emojis ->
+                        EmojiKeyboardGrid { emoji ->
+                            onVibrate()
+                            onKeyTap(emoji)
+                        }
+                    KeyboardMode.Clipboard ->
+                        ClipboardPanel(
+                            items = state.clipboardItems,
+                            onPasteItem = { item ->
+                                onVibrate()
+                                onPasteClipboardItem(item)
+                            }
+                        )
+                    KeyboardMode.TextEditing ->
+                        TextEditingPanel(
+                            onAction = { action ->
+                                onVibrate()
+                                onTextEditingAction(action)
+                            }
+                        )
+                    KeyboardMode.Numpad ->
+                        NumpadGrid(
+                            onKeyTap = onKeyTap,
+                            onBackspace = onBackspace,
+                            onEnter = onEnter,
+                            onVibrate = onVibrate
+                        )
+                    KeyboardMode.Translate ->
+                        SymbolKeyboardGrid(
+                            isSymbols = false,
+                            onKeyTap = onKeyTap,
+                            onBackspace = onBackspace,
+                            onEnter = onEnter,
+                            onSpace = onSpace,
+                            onVibrate = onVibrate
+                        )
+                }
 
-            // Floating Key Preview Bubble (Magnifier)
-            val previewText = state.activeKeyPreview
-            if (previewText != null) {
-                KeyPreviewBubble(text = previewText)
+                // Visual Swipe Trail Overlay
+                GlideTypingTrailOverlay()
+
+                // Floating Key Preview Bubble (Magnifier)
+                val previewText = state.activeKeyPreview
+                if (previewText != null) {
+                    KeyPreviewBubble(text = previewText)
+                }
             }
         }
     }
@@ -142,19 +177,20 @@ fun TelosKeyboardView(
 @Composable
 private fun GlideTypingTrailOverlay() {
     val pathColor = TelosKeyboardAppearance.accent
-    val points = TelosGlideTyping.currentPathPoints.toList()
-    if (points.size >= 2) {
+    val pts = TelosGlideTyping.currentPathPoints.toList()
+    if (pts.size > 1) {
         Canvas(modifier = Modifier.fillMaxSize()) {
-            val path = Path().apply {
-                moveTo(points[0].x, points[0].y)
-                var idx = 1
-                while (idx < points.size) {
-                    lineTo(points[idx].x, points[idx].y)
-                    idx++
-                }
+            val p = Path()
+            val start = pts[0]
+            p.moveTo(start.x, start.y)
+            var i = 1
+            while (i < pts.size) {
+                val pt = pts[i]
+                p.lineTo(pt.x, pt.y)
+                i++
             }
             drawPath(
-                path = path,
+                path = p,
                 color = pathColor,
                 style = Stroke(
                     width = 7.dp.toPx(),
@@ -167,11 +203,58 @@ private fun GlideTypingTrailOverlay() {
 }
 
 @Composable
+private fun OneHandedContainer(
+    oneHandedSide: OneHandedSide,
+    onExpand: () -> Unit,
+    onSwitchSide: () -> Unit,
+    content: @Composable () -> Unit
+) {
+    if (oneHandedSide == OneHandedSide.Off) {
+        content()
+    } else {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.Bottom,
+            horizontalArrangement = if (oneHandedSide == OneHandedSide.Left) Arrangement.Start else Arrangement.End
+        ) {
+            if (oneHandedSide == OneHandedSide.Right) {
+                OneHandedControls(onExpand = onExpand, onSwitchSide = onSwitchSide)
+            }
+
+            Box(modifier = Modifier.fillMaxWidth(0.85f)) {
+                content()
+            }
+
+            if (oneHandedSide == OneHandedSide.Left) {
+                OneHandedControls(onExpand = onExpand, onSwitchSide = onSwitchSide)
+            }
+        }
+    }
+}
+
+@Composable
+private fun OneHandedControls(onExpand: () -> Unit, onSwitchSide: () -> Unit) {
+    Column(
+        modifier = Modifier.padding(horizontal = 4.dp, vertical = 8.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        IconButton(onClick = onExpand) {
+            Icon(painterResource(BaseR.drawable.arrow_forward_24px), contentDescription = "Expand")
+        }
+        IconButton(onClick = onSwitchSide) {
+            Icon(painterResource(BaseR.drawable.arrow_back_24px), contentDescription = "Switch Side")
+        }
+    }
+}
+
+@Composable
 private fun GboardToolbar(
     onVibrate: () -> Unit,
     onToggleIncognito: () -> Unit,
     onSwitchLanguage: () -> Unit,
     onPasteClipboardItem: (ClipboardItem) -> Unit,
+    onStartVoiceTyping: () -> Unit,
 ) {
     val state = TelosKeyboardState
     val primaryColor = TelosKeyboardAppearance.accent
@@ -180,26 +263,39 @@ private fun GboardToolbar(
         modifier = Modifier
             .fillMaxWidth()
             .height(44.dp)
-            .padding(horizontal = 8.dp),
+            .padding(horizontal = 4.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween,
     ) {
         Row(
-            horizontalArrangement = Arrangement.spacedBy(4.dp),
+            horizontalArrangement = Arrangement.spacedBy(2.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
+            // Voice Typing Microphone Button
+            IconButton(
+                onClick = {
+                    onVibrate()
+                    onStartVoiceTyping()
+                }
+            ) {
+                Icon(
+                    painterResource(BaseR.drawable.mic_24px),
+                    contentDescription = "Voice Typing",
+                    tint = if (state.isListeningVoice) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.size(20.dp)
+                )
+            }
+
             // Emoji Mode Button
             IconButton(
                 onClick = {
                     onVibrate()
-                    state.keyboardMode =
-                        if (state.keyboardMode == KeyboardMode.Emojis) KeyboardMode.Letters
-                        else KeyboardMode.Emojis
+                    state.keyboardMode = if (state.keyboardMode == KeyboardMode.Emojis) KeyboardMode.Letters else KeyboardMode.Emojis
                 }
             ) {
                 Text(
                     if (state.keyboardMode == KeyboardMode.Emojis) "ABC" else "😊",
-                    fontSize = 18.sp,
+                    fontSize = 17.sp,
                 )
             }
 
@@ -207,16 +303,48 @@ private fun GboardToolbar(
             IconButton(
                 onClick = {
                     onVibrate()
-                    state.keyboardMode =
-                        if (state.keyboardMode == KeyboardMode.Clipboard) KeyboardMode.Letters
-                        else KeyboardMode.Clipboard
+                    state.keyboardMode = if (state.keyboardMode == KeyboardMode.Clipboard) KeyboardMode.Letters else KeyboardMode.Clipboard
                 }
             ) {
                 Icon(
                     painterResource(BaseR.drawable.content_copy_24px),
                     contentDescription = "Clipboard",
                     modifier = Modifier.size(20.dp),
-                    tint = MaterialTheme.colorScheme.onSurfaceVariant
+                    tint = if (state.keyboardMode == KeyboardMode.Clipboard) primaryColor else MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+
+            // D-Pad Text Editing Panel Button
+            IconButton(
+                onClick = {
+                    onVibrate()
+                    state.keyboardMode = if (state.keyboardMode == KeyboardMode.TextEditing) KeyboardMode.Letters else KeyboardMode.TextEditing
+                }
+            ) {
+                Icon(
+                    painterResource(BaseR.drawable.edit_24px),
+                    contentDescription = "Text Editing",
+                    modifier = Modifier.size(20.dp),
+                    tint = if (state.keyboardMode == KeyboardMode.TextEditing) primaryColor else MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+
+            // One-Handed Mode Toggle Button
+            IconButton(
+                onClick = {
+                    onVibrate()
+                    state.oneHandedSide = when (state.oneHandedSide) {
+                        OneHandedSide.Off -> OneHandedSide.Right
+                        OneHandedSide.Right -> OneHandedSide.Left
+                        OneHandedSide.Left -> OneHandedSide.Off
+                    }
+                }
+            ) {
+                Icon(
+                    painterResource(BaseR.drawable.settings_24px),
+                    contentDescription = "One-Handed Mode",
+                    modifier = Modifier.size(20.dp),
+                    tint = if (state.oneHandedSide != OneHandedSide.Off) primaryColor else MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
 
@@ -242,7 +370,7 @@ private fun GboardToolbar(
             Surface(
                 modifier = Modifier
                     .weight(1f)
-                    .padding(horizontal = 8.dp)
+                    .padding(horizontal = 4.dp)
                     .clip(RoundedCornerShape(16.dp))
                     .clickable {
                         onVibrate()
@@ -251,7 +379,7 @@ private fun GboardToolbar(
                 color = MaterialTheme.colorScheme.primaryContainer,
             ) {
                 Row(
-                    modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp),
+                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 6.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(6.dp)
                 ) {
@@ -868,8 +996,137 @@ fun SymbolKeyboardGrid(
 }
 
 @Composable
+fun TextEditingPanel(onAction: (String) -> Unit) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(12.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            "✂️ Text Editing / Cursor D-Pad",
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colorScheme.primary,
+        )
+
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Button(onClick = { onAction("select_all") }, modifier = Modifier.weight(1f)) { Text("Select All", fontSize = 11.sp) }
+            Button(onClick = { onAction("copy") }, modifier = Modifier.weight(1f)) { Text("Copy", fontSize = 11.sp) }
+            Button(onClick = { onAction("cut") }, modifier = Modifier.weight(1f)) { Text("Cut", fontSize = 11.sp) }
+            Button(onClick = { onAction("paste") }, modifier = Modifier.weight(1f)) { Text("Paste", fontSize = 11.sp) }
+        }
+
+        // 4-Way D-Pad
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(6.dp)
+        ) {
+            IconButton(onClick = { onAction("up") }) {
+                Icon(painterResource(BaseR.drawable.keyboard_arrow_up_24px), contentDescription = "Up")
+            }
+            Row(horizontalArrangement = Arrangement.spacedBy(20.dp), verticalAlignment = Alignment.CenterVertically) {
+                IconButton(onClick = { onAction("left") }) {
+                    Icon(painterResource(BaseR.drawable.arrow_back_24px), contentDescription = "Left")
+                }
+                IconButton(onClick = { onAction("right") }) {
+                    Icon(painterResource(BaseR.drawable.arrow_forward_24px), contentDescription = "Right")
+                }
+            }
+            IconButton(onClick = { onAction("down") }) {
+                Icon(painterResource(BaseR.drawable.keyboard_arrow_down_24px), contentDescription = "Down")
+            }
+        }
+    }
+}
+
+@Composable
+fun NumpadGrid(
+    onKeyTap: (String) -> Unit,
+    onBackspace: () -> Unit,
+    onEnter: () -> Unit,
+    onVibrate: () -> Unit
+) {
+    val look = TelosKeyboardAppearance
+    val numpadRows = listOf(
+        listOf("1", "2", "3"),
+        listOf("4", "5", "6"),
+        listOf("7", "8", "9"),
+        listOf("-", "0", ".")
+    )
+
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 24.dp, vertical = 8.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        numpadRows.forEach { row ->
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                row.forEach { digit: String ->
+                    Surface(
+                        modifier = Modifier
+                            .weight(1f)
+                            .height(look.scaledKeyHeightDp().dp)
+                            .clip(RoundedCornerShape(14.dp))
+                            .clickable {
+                                onVibrate()
+                                onKeyTap(digit)
+                            },
+                        color = MaterialTheme.colorScheme.surfaceContainerHighest,
+                    ) {
+                        Box(contentAlignment = Alignment.Center) {
+                            Text(digit, fontSize = 22.sp, fontWeight = FontWeight.Bold)
+                        }
+                    }
+                }
+            }
+        }
+
+        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            Surface(
+                modifier = Modifier
+                    .weight(1f)
+                    .height(look.scaledKeyHeightDp().dp)
+                    .clip(RoundedCornerShape(14.dp))
+                    .clickable {
+                        onVibrate()
+                        onBackspace()
+                    },
+                color = MaterialTheme.colorScheme.surfaceContainer,
+            ) {
+                Box(contentAlignment = Alignment.Center) {
+                    Text("⌫", fontSize = 22.sp, fontWeight = FontWeight.Bold)
+                }
+            }
+
+            Surface(
+                modifier = Modifier
+                    .weight(2f)
+                    .height(look.scaledKeyHeightDp().dp)
+                    .clip(RoundedCornerShape(14.dp))
+                    .clickable {
+                        onVibrate()
+                        onEnter()
+                    },
+                color = MaterialTheme.colorScheme.primary,
+            ) {
+                Box(contentAlignment = Alignment.Center) {
+                    Text("↵", fontSize = 22.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onPrimary)
+                }
+            }
+        }
+    }
+}
+
+@Composable
 fun EmojiKeyboardGrid(onSelectEmoji: (String) -> Unit) {
-    val emojis = listOf(
+    var searchQuery by remember { mutableStateOf("") }
+    val allEmojis = listOf(
         "😀", "😃", "😄", "😁", "😆", "😅", "😂", "🤣", "🥲", "🥹", "☺️", "😊",
         "😇", "🙂", "🙃", "😉", "😌", "😍", "🥰", "😘", "😗", "😙", "😚", "😋",
         "😛", "😝", "😜", "🤪", "🤨", "🧐", "🤓", "😎", "🥸", "🤩", "🥳", "😏",
@@ -880,24 +1137,31 @@ fun EmojiKeyboardGrid(onSelectEmoji: (String) -> Unit) {
         "🫶", "❤️", "🔥", "✨", "💯", "🎉", "🚀", "💡", "⚽", "🇬🇷", "🇬🇷", "🇬🇷"
     )
 
-    LazyVerticalGrid(
-        columns = GridCells.Fixed(8),
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(220.dp)
-            .padding(8.dp),
-        horizontalArrangement = Arrangement.spacedBy(4.dp),
-        verticalArrangement = Arrangement.spacedBy(4.dp),
-    ) {
-        items(emojis) { emoji ->
-            Box(
-                modifier = Modifier
-                    .size(40.dp)
-                    .clip(RoundedCornerShape(8.dp))
-                    .clickable { onSelectEmoji(emoji) },
-                contentAlignment = Alignment.Center,
-            ) {
-                Text(emoji, fontSize = 22.sp)
+    Column(modifier = Modifier.fillMaxWidth().padding(8.dp)) {
+        OutlinedTextField(
+            value = searchQuery,
+            onValueChange = { searchQuery = it },
+            placeholder = { Text("Search Emojis...") },
+            modifier = Modifier.fillMaxWidth().padding(bottom = 6.dp),
+            singleLine = true
+        )
+
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(8),
+            modifier = Modifier.fillMaxWidth().height(180.dp),
+            horizontalArrangement = Arrangement.spacedBy(4.dp),
+            verticalArrangement = Arrangement.spacedBy(4.dp),
+        ) {
+            items(allEmojis) { emoji ->
+                Box(
+                    modifier = Modifier
+                        .size(40.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                        .clickable { onSelectEmoji(emoji) },
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Text(emoji, fontSize = 22.sp)
+                }
             }
         }
     }

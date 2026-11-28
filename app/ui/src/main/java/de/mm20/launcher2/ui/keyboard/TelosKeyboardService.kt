@@ -3,17 +3,26 @@ package de.mm20.launcher2.ui.keyboard
 import android.content.ClipDescription
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.Intent
 import android.inputmethodservice.InputMethodService
 import android.os.Build
+import android.os.Bundle
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
+import android.speech.RecognitionListener
+import android.speech.RecognizerIntent
+import android.speech.SpeechRecognizer
 import android.view.KeyEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.core.view.inputmethod.InputConnectionCompat
 import androidx.core.view.inputmethod.InputContentInfoCompat
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
@@ -107,6 +116,8 @@ class TelosKeyboardService :
                         onSwitchLanguage = ::switchLanguage,
                         onPasteText = ::handlePasteText,
                         onPasteClipboardItem = ::handlePasteClipboardItem,
+                        onStartVoiceTyping = ::startVoiceTyping,
+                        onTextEditingAction = ::handleTextEditingAction,
                         onVibrate = ::vibrateKey,
                     )
                 }
@@ -266,10 +277,67 @@ class TelosKeyboardService :
     }
 
     private fun switchLanguage() {
-        TelosKeyboardState.currentLanguage =
-            if (TelosKeyboardState.currentLanguage == KeyboardLanguage.Greek)
-                KeyboardLanguage.English
-            else KeyboardLanguage.Greek
+        val newLang = if (TelosKeyboardState.currentLanguage == KeyboardLanguage.Greek)
+            KeyboardLanguage.English
+        else KeyboardLanguage.Greek
+        TelosKeyboardState.currentLanguage = newLang
+        lifecycleScope.launch {
+            TelosDictionaryManager.ensureDictionary(applicationContext, newLang)
+        }
+    }
+
+    private fun startVoiceTyping() {
+        if (!SpeechRecognizer.isRecognitionAvailable(this)) {
+            android.widget.Toast.makeText(this, "Speech recognition unavailable", android.widget.Toast.LENGTH_SHORT).show()
+            return
+        }
+        TelosKeyboardState.isListeningVoice = true
+        runCatching {
+            speechRecognizer?.destroy()
+            val sr = SpeechRecognizer.createSpeechRecognizer(this)
+            speechRecognizer = sr
+            sr.setRecognitionListener(object : RecognitionListener {
+                override fun onReadyForSpeech(params: Bundle?) {}
+                override fun onBeginningOfSpeech() {}
+                override fun onRmsChanged(rmsdB: Float) {}
+                override fun onBufferReceived(buffer: ByteArray?) {}
+                override fun onEndOfSpeech() { TelosKeyboardState.isListeningVoice = false }
+                override fun onError(error: Int) { TelosKeyboardState.isListeningVoice = false }
+                override fun onResults(results: Bundle?) {
+                    TelosKeyboardState.isListeningVoice = false
+                    val matches = results?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
+                    if (matches != null && matches.size > 0) {
+                        currentInputConnection?.commitText(matches[0] + " ", 1)
+                    }
+                }
+                override fun onPartialResults(partialResults: Bundle?) {}
+                override fun onEvent(eventType: Int, params: Bundle?) {}
+            })
+            val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, if (TelosKeyboardState.currentLanguage == KeyboardLanguage.Greek) "el-GR" else "en-US")
+            sr.startListening(intent)
+        }.onFailure {
+            TelosKeyboardState.isListeningVoice = false
+        }
+    }
+
+    private var speechRecognizer: SpeechRecognizer? = null
+
+    private fun handleTextEditingAction(action: String) {
+        val ic = currentInputConnection ?: return
+        when (action) {
+            "left" -> ic.sendKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DPAD_LEFT))
+            "right" -> ic.sendKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DPAD_RIGHT))
+            "up" -> ic.sendKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DPAD_UP))
+            "down" -> ic.sendKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DPAD_DOWN))
+            "select_all" -> ic.performContextMenuAction(android.R.id.selectAll)
+            "copy" -> ic.performContextMenuAction(android.R.id.copy)
+            "cut" -> ic.performContextMenuAction(android.R.id.cut)
+            "paste" -> ic.performContextMenuAction(android.R.id.paste)
+            "home" -> ic.sendKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_MOVE_HOME))
+            "end" -> ic.sendKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_MOVE_END))
+        }
     }
 
     private fun handlePasteClipboardItem(item: ClipboardItem) {
