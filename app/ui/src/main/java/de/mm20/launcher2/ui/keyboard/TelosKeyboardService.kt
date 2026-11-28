@@ -202,8 +202,21 @@ class TelosKeyboardService :
             (info.inputType and EditorInfo.TYPE_MASK_CLASS) == EditorInfo.TYPE_CLASS_NUMBER &&
                 (info.inputType and EditorInfo.TYPE_MASK_VARIATION) ==
                     EditorInfo.TYPE_NUMBER_VARIATION_PASSWORD
-        TelosKeyboardState.privateEditor = isPassword || numericPassword || noLearning
-        if (!TelosKeyboardState.privateMode) updateClipboardSnippet()
+
+        val sensitivePackages = java.util.Arrays.asList(
+            "com.x8bit.bitwarden", "org.keepassdroid", "de.tutao.tutanota",
+            "com.revolut.revolut", "de.number26.android", "ch.protonmail.android",
+            "io.metamask", "exodusmovement.exodus"
+        )
+        val isSensitiveApp = info.packageName in sensitivePackages
+
+        TelosKeyboardState.privateEditor = isPassword || numericPassword || noLearning || isSensitiveApp
+        if (TelosKeyboardState.privateMode) {
+            TelosKeyboardBuffer.clear()
+            TelosKeyboardState.lastClipboardText = ""
+        } else {
+            updateClipboardSnippet()
+        }
     }
 
     override fun onFinishInput() {
