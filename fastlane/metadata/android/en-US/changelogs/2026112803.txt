@@ -1,0 +1,5 @@
+• Added Cycle Tracker to Telos Health (toggle in settings)
+• Multi-language OpenFoodFacts food search with Greek fallback
+• Enabled Weather in home screen clock widget by default
+• Added DNS-over-QUIC (DoQ) support in Telos Network
+• Sorted Telos Store apps alphabetically
