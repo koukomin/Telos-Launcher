@@ -1,0 +1,4 @@
+• Added Repeat Mode button (Off/All/One) to YouTube & YT Music players
+• Compact Cyber-Tech playlist cards and fixed album artwork thumbnail loading
+• Added Cyber-Tech neon line stroke border to mini player
+• Increased bottom padding so texts are fully visible above mini player

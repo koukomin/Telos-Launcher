@@ -1,0 +1,4 @@
+• Προσθήκη κουμπιού Repeat (Επανάληψη) στο YouTube & YT Music
+• Συμπαγείς κάρτες λιστών Cyber-Tech & διόρθωση φόρτωσης εξωφύλλων/preview
+• Προσθήκη Cyber-Tech neon περιγράμματος στον mini player
+• Αυξημένο bottom padding ώστε τα κείμενα να μην καλύπτονται από τον mini player

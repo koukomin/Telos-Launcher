@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.media.youtube
 
+import de.mm20.launcher2.ui.component.TelosCyber
 import de.mm20.launcher2.ui.component.TelosCyberHeading
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
@@ -113,7 +114,7 @@ fun YouTubeScreen(music: Boolean, vm: YouTubeViewModel, initialLink: String? = n
             state = gridState,
             columns = GridCells.Adaptive((if (music) 360.dp else 320.dp) * androidx.compose.ui.platform.LocalDensity.current.fontScale.coerceAtLeast(1f)),
             modifier = Modifier.fillMaxSize(),
-            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
+            contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 110.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
@@ -471,6 +472,16 @@ internal fun FlowMediaCard(
 ) {
     var menuOpen by remember(entry.url) { mutableStateOf(false) }
 
+    val formattedThumbnail = remember(entry.thumbnail) {
+        val thumb = entry.thumbnail.orEmpty()
+        when {
+            thumb.startsWith("//") -> "https:$thumb"
+            thumb.startsWith("http://") || thumb.startsWith("https://") -> thumb
+            thumb.length > 5 -> "https://i.ytimg.com/vi/$thumb/hqdefault.jpg"
+            else -> "https://www.gstatic.com/youtube/media/ytm/images/pico_liked_music.png"
+        }
+    }
+
     Surface(
         onClick = onPlay,
         shape = RoundedCornerShape(if (music) 12.dp else 8.dp),
@@ -479,12 +490,12 @@ internal fun FlowMediaCard(
     ) {
         Column {
             if (!music) {
-                AsyncImage(model = entry.thumbnail, contentDescription = null,
+                AsyncImage(model = formattedThumbnail, contentDescription = null,
                     contentScale = ContentScale.Crop,
                     modifier = Modifier.fillMaxWidth().aspectRatio(16f / 9f).clip(RoundedCornerShape(8.dp)))
             }
             Row(Modifier.fillMaxWidth().padding(if (music) 10.dp else 12.dp), verticalAlignment = Alignment.CenterVertically) {
-                if (music) AsyncImage(model = entry.thumbnail, contentDescription = null,
+                if (music) AsyncImage(model = formattedThumbnail, contentDescription = null,
                     contentScale = ContentScale.Crop, modifier = Modifier.size(64.dp).clip(RoundedCornerShape(8.dp)))
                 Column(Modifier.weight(1f).padding(horizontal = if (music) 12.dp else 0.dp)) {
                     Text(entry.title, style = MaterialTheme.typography.titleMedium,
@@ -549,7 +560,7 @@ fun YouTubePlaylistChipsRow(
     Column(modifier = modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(12.dp)) {
         Text(stringResource(I18nR.string.telos_youtube_tab_playlists), style = MaterialTheme.typography.headlineSmall,
             fontWeight = FontWeight.Bold)
-        LazyRow(horizontalArrangement = Arrangement.spacedBy(16.dp), contentPadding = PaddingValues(horizontal = 2.dp)) {
+        LazyRow(horizontalArrangement = Arrangement.spacedBy(12.dp), contentPadding = PaddingValues(horizontal = 2.dp)) {
             items(userPlaylists, key = { it.id }) { pl ->
                 val isSelected = selectedUrl == pl.url
                 val title = when (pl.id) {
@@ -561,19 +572,44 @@ fun YouTubePlaylistChipsRow(
                     "LL" -> stringResource(I18nR.string.telos_youtube_label)
                     else -> pl.subtitle
                 }
-                Surface(onClick = { onSelectPlaylist(pl) }, shape = RoundedCornerShape(8.dp),
+                val formattedPlThumb = remember(pl.thumbnail, pl.id) {
+                    val thumb = pl.thumbnail.orEmpty()
+                    when {
+                        thumb.startsWith("//") -> "https:$thumb"
+                        thumb.startsWith("http://") || thumb.startsWith("https://") -> thumb
+                        pl.id == "LM" || pl.id == "LL" -> "https://www.gstatic.com/youtube/media/ytm/images/pico_liked_music.png"
+                        else -> null
+                    }
+                }
+                Surface(
+                    onClick = { onSelectPlaylist(pl) },
+                    shape = RoundedCornerShape(12.dp),
                     color = if (isSelected) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surfaceContainerLow,
-                    border = if (isSelected) androidx.compose.foundation.BorderStroke(2.dp, MaterialTheme.colorScheme.primary) else null,
-                    modifier = Modifier.width(160.dp).semantics { selected = isSelected }) {
-                    Column(Modifier.padding(8.dp)) {
-                        Box(Modifier.fillMaxWidth().aspectRatio(1f).clip(RoundedCornerShape(8.dp))
-                            .background(MaterialTheme.colorScheme.secondaryContainer), contentAlignment = Alignment.Center) {
-                            if (pl.thumbnail != null) AsyncImage(pl.thumbnail, null, contentScale = ContentScale.Crop, modifier = Modifier.fillMaxSize())
-                            else Icon(painterResource(if (pl.id == "LL") BaseR.drawable.video_library_24px else BaseR.drawable.music_note_24px), null,
-                                tint = MaterialTheme.colorScheme.onSecondaryContainer, modifier = Modifier.size(40.dp))
+                    border = androidx.compose.foundation.BorderStroke(
+                        if (isSelected) 2.dp else 1.2.dp,
+                        if (isSelected) TelosCyber.NeonCyan else TelosCyber.NeonGreen.copy(alpha = 0.6f)
+                    ),
+                    modifier = Modifier.width(125.dp).semantics { selected = isSelected }
+                ) {
+                    Column(Modifier.padding(6.dp)) {
+                        Box(
+                            Modifier.fillMaxWidth().height(90.dp).clip(RoundedCornerShape(8.dp))
+                                .background(MaterialTheme.colorScheme.secondaryContainer),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            if (formattedPlThumb != null) {
+                                AsyncImage(formattedPlThumb, null, contentScale = ContentScale.Crop, modifier = Modifier.fillMaxSize())
+                            } else {
+                                Icon(
+                                    painterResource(if (pl.id == "LL") BaseR.drawable.video_library_24px else BaseR.drawable.music_note_24px),
+                                    null,
+                                    tint = MaterialTheme.colorScheme.onSecondaryContainer,
+                                    modifier = Modifier.size(32.dp)
+                                )
+                            }
                         }
-                        Text(title, style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 8.dp))
-                        Text(subtitle, style = MaterialTheme.typography.bodySmall)
+                        Text(title, style = MaterialTheme.typography.titleSmall, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.padding(top = 4.dp))
+                        Text(subtitle, style = MaterialTheme.typography.bodySmall, maxLines = 1, overflow = TextOverflow.Ellipsis)
                     }
                 }
             }
@@ -585,6 +621,7 @@ fun YouTubePlaylistChipsRow(
 fun YouTubeMiniPlayer(vm: YouTubeViewModel, music: Boolean, onOpen: (Boolean) -> Unit) {
     val now by vm.nowPlaying.collectAsStateWithLifecycle()
     val playing by vm.playing.collectAsStateWithLifecycle()
+    val controller by vm.controller.collectAsStateWithLifecycle()
     val savedMusic by vm.library.lastMusic.collectAsStateWithLifecycle()
     val savedVideo by vm.library.lastVideo.collectAsStateWithLifecycle()
     val context = LocalContext.current
@@ -602,6 +639,7 @@ fun YouTubeMiniPlayer(vm: YouTubeViewModel, music: Boolean, onOpen: (Boolean) ->
         onClick = { if (matches && music) showPlayer = true else onOpen(item.mediaMetadata.extras?.getBoolean("audioOnly") == true) },
         shape = RoundedCornerShape(24.dp),
         color = MaterialTheme.colorScheme.surfaceContainerHighest.copy(alpha = 0.94f),
+        border = androidx.compose.foundation.BorderStroke(1.5.dp, TelosCyber.NeonGreen),
         tonalElevation = 2.dp,
         shadowElevation = 8.dp,
         modifier = Modifier
@@ -640,6 +678,27 @@ fun YouTubeMiniPlayer(vm: YouTubeViewModel, music: Boolean, onOpen: (Boolean) ->
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
+            }
+            if (matches) {
+                var repeatMode by remember(controller, matches) { mutableIntStateOf(controller?.repeatMode ?: androidx.media3.common.Player.REPEAT_MODE_OFF) }
+                IconButton(
+                    onClick = {
+                        val next = when (repeatMode) {
+                            androidx.media3.common.Player.REPEAT_MODE_OFF -> androidx.media3.common.Player.REPEAT_MODE_ALL
+                            androidx.media3.common.Player.REPEAT_MODE_ALL -> androidx.media3.common.Player.REPEAT_MODE_ONE
+                            else -> androidx.media3.common.Player.REPEAT_MODE_OFF
+                        }
+                        repeatMode = next
+                        controller?.repeatMode = next
+                    }
+                ) {
+                    Icon(
+                        painterResource(if (repeatMode == androidx.media3.common.Player.REPEAT_MODE_ONE) BaseR.drawable.repeat_one_24px else BaseR.drawable.repeat_24px),
+                        contentDescription = "Repeat",
+                        tint = if (repeatMode != androidx.media3.common.Player.REPEAT_MODE_OFF) TelosCyber.NeonGreen else MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.size(20.dp)
+                    )
+                }
             }
             IconButton(onClick = { if (matches) vm.toggle() else saved?.let { vm.play(context, it, music) } }) {
                 Icon(

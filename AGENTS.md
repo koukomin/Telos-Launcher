@@ -128,6 +128,12 @@ Keep Python under `tools/` (and `docs/scripts/` / `.github/scripts/` for docs/CI
    - Whenever an agent or developer fixes a bug, CI workflow failure, or code mistake, the agent MUST immediately update `AGENTS.md` with the new rule, root cause, and required fix.
    - This ensures that all future AI agents and contributors are automatically notified and will never repeat the same mistake.
 
+8. **YouTube & YT Music UI, Thumbnails & Repeat Controls:**
+   - In `YouTubeScreen.kt` and `YouTubeMusicPlayerSheet.kt`, always expose Repeat controls (Off, All, One) mapped to `controller.repeatMode`.
+   - Keep playlist cards compact (`125.dp` width, `90.dp` image height) and always format playlist/track thumbnail URLs (prepend `https:` for relative URLs, fallback for Liked Music/Videos).
+   - Give the Mini Player an explicit Cyber-Tech neon line border (`BorderStroke(1.5.dp, TelosCyber.NeonGreen)`) so it stands out over dark backgrounds.
+   - Maintain `bottom = 110.dp` content padding in `LazyVerticalGrid` so list items and titles are never covered by the floating mini player.
+
 ## Documentation
 
 Docs live in `docs/` (a VitePress site, published as GitHub Pages at https://koukomin.github.io/Telos-Launcher/ and historically at https://telos.mm20.de). Every user-visible or architectural change must update, **in the same change**:

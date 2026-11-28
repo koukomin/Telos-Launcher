@@ -54,12 +54,15 @@ internal fun YouTubeMusicPlayerSheet(vm: YouTubeViewModel, onDismiss: () -> Unit
     var position by remember { mutableLongStateOf(0L) }
     var duration by remember { mutableLongStateOf(0L) }
     var seekable by remember { mutableStateOf(false) }
+    var repeatMode by remember { mutableIntStateOf(controller?.repeatMode ?: androidx.media3.common.Player.REPEAT_MODE_OFF) }
+
     LaunchedEffect(controller, item.mediaId) {
         while (isActive) {
             runCatching { controller?.let {
                 position = it.currentPosition.coerceAtLeast(0)
                 duration = it.duration.coerceAtLeast(0)
                 seekable = it.isCurrentMediaItemSeekable
+                repeatMode = it.repeatMode
             } }
             delay(500)
         }
@@ -67,20 +70,49 @@ internal fun YouTubeMusicPlayerSheet(vm: YouTubeViewModel, onDismiss: () -> Unit
     val entry = remember(item, duration) { YouTubeEntry(item.mediaId, item.mediaMetadata.title?.toString().orEmpty(),
         item.mediaMetadata.artist?.toString().orEmpty(), item.mediaMetadata.artworkUri?.toString(), duration / 1000) }
     ModalBottomSheet(onDismissRequest = onDismiss, sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true), containerColor = MaterialTheme.colorScheme.surfaceContainer) {
-        YouTubeMusicPlayerContent(entry, tracks, index, position, duration, playing, seekable,
-            onToggle = vm::toggle, onStop = { vm.stop(); onDismiss() },
+        YouTubeMusicPlayerContent(
+            entry = entry,
+            tracks = tracks,
+            index = index,
+            position = position,
+            duration = duration,
+            playing = playing,
+            seekable = seekable,
+            repeatMode = repeatMode,
+            onToggleRepeat = {
+                val next = when (repeatMode) {
+                    androidx.media3.common.Player.REPEAT_MODE_OFF -> androidx.media3.common.Player.REPEAT_MODE_ALL
+                    androidx.media3.common.Player.REPEAT_MODE_ALL -> androidx.media3.common.Player.REPEAT_MODE_ONE
+                    else -> androidx.media3.common.Player.REPEAT_MODE_OFF
+                }
+                repeatMode = next
+                controller?.repeatMode = next
+            },
+            onToggle = vm::toggle,
+            onStop = { vm.stop(); onDismiss() },
             onSeek = { controller?.seekTo(it) },
             onTrack = { at -> tracks.getOrNull(at)?.let { vm.play(context, it, true, tracks) } },
-            modifier = Modifier.fillMaxWidth().fillMaxHeight(0.92f))
+            modifier = Modifier.fillMaxWidth().fillMaxHeight(0.92f)
+        )
     }
 }
 
 /** Data-driven presentation; the existing controller and queue remain the playback authority. */
 @Composable
 internal fun YouTubeMusicPlayerContent(
-    entry: YouTubeEntry, tracks: List<YouTubeEntry>, index: Int, position: Long, duration: Long,
-    playing: Boolean, seekable: Boolean,
-    onToggle: () -> Unit, onStop: () -> Unit, onSeek: (Long) -> Unit, onTrack: (Int) -> Unit,
+    entry: YouTubeEntry,
+    tracks: List<YouTubeEntry>,
+    index: Int,
+    position: Long,
+    duration: Long,
+    playing: Boolean,
+    seekable: Boolean,
+    repeatMode: Int = androidx.media3.common.Player.REPEAT_MODE_OFF,
+    onToggleRepeat: () -> Unit = {},
+    onToggle: () -> Unit,
+    onStop: () -> Unit,
+    onSeek: (Long) -> Unit,
+    onTrack: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     var dragging by remember(entry.url) { mutableStateOf<Float?>(null) }
@@ -103,6 +135,14 @@ internal fun YouTubeMusicPlayerContent(
             val time = remember(position / 1000, duration / 1000) { "${formatDuration(position)} / ${formatDuration(duration)}" }
             Text(time, style = MaterialTheme.typography.labelMedium)
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly, verticalAlignment = Alignment.CenterVertically) {
+                IconButton(onClick = onToggleRepeat) {
+                    Icon(
+                        painterResource(if (repeatMode == androidx.media3.common.Player.REPEAT_MODE_ONE) BaseR.drawable.repeat_one_24px else BaseR.drawable.repeat_24px),
+                        contentDescription = "Repeat",
+                        tint = if (repeatMode != androidx.media3.common.Player.REPEAT_MODE_OFF) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+
                 IconButton(onClick = { onTrack(index - 1) }, enabled = index > 0 && index <= tracks.lastIndex) {
                     Icon(painterResource(BaseR.drawable.skip_previous_24px), stringResource(I18nR.string.hc_previous))
                 }
