@@ -676,7 +676,18 @@ private fun TelosAppsTab(disabled: Set<String>, onToggle: (TelosApp, Boolean) ->
     var tq by remember { mutableStateOf("") }
     val appContext = LocalContext.current
     val appConfiguration = androidx.compose.ui.platform.LocalConfiguration.current
-    val shownApps = remember(tq, appConfiguration) { TelosApps.all.filter { de.mm20.launcher2.comms.search.TelosSearch.matches(tq, it.localizedName(appContext.resources), it.name, it.description, it.features.joinToString(" "), it.keywords.joinToString(" ")) } }
+    val shownApps = remember(tq, appConfiguration) {
+        TelosApps.all.filter {
+            de.mm20.launcher2.comms.search.TelosSearch.matches(
+                tq,
+                it.localizedName(appContext.resources),
+                it.name,
+                it.description,
+                it.features.joinToString(" "),
+                it.keywords.joinToString(" ")
+            )
+        }.sortedBy { it.localizedName(appContext.resources) }
+    }
     Column(Modifier.fillMaxSize()) {
     de.mm20.launcher2.ui.component.TelosSearchBar(tq, { tq = it }, stringResource(I18nR.string.hf_store_search))
     if (shownApps.isEmpty()) de.mm20.launcher2.ui.component.SearchEmptyState(tq.trim())

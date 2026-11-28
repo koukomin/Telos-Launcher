@@ -2251,5 +2251,14 @@
     <string name="fit_search_food">Search food, protein, supplement...</string>
     <string name="fit_add_food">+ Add Food</string>
     <string name="fit_meals">Today\'s Meals</string>
+    <string name="fit_cycle_tracker" translatable="false">Cycle Tracker 🌸</string>
+    <string name="fit_cycle_tracker_summary" translatable="false">Track menstrual cycle, fertility window and predictions</string>
+    <string name="fit_cycle_phase" translatable="false">Cycle Phase</string>
+    <string name="fit_cycle_day" translatable="false">Day %1$d of %2$d</string>
+    <string name="fit_log_period" translatable="false">Log Period Start Today</string>
+    <string name="fit_hydration_tracker" translatable="false">Hydration Tracker 💧</string>
+    <string name="fit_bmi_title" translatable="false">Body Mass Index (BMI)</string>
+    <string name="fit_medication_title" translatable="false">Medications &amp; Supplements 💊</string>
+    <string name="fit_hardware_sensor_active" translatable="false">SENSORS ACTIVE 👟</string>
 </resources>
 
