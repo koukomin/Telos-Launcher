@@ -29,6 +29,8 @@ internal fun FitSourcesPane(
     healthConnectAvailable: Boolean,
     healthConnectSynced: Boolean,
     needsPermission: Boolean,
+    cycleTrackerEnabled: Boolean = false,
+    onToggleCycleTracker: (Boolean) -> Unit = {},
     onRequestHealthConnect: () -> Unit,
     onOpenHealthConnect: () -> Unit,
     onOpenVendor: (String) -> Unit,
@@ -39,6 +41,27 @@ internal fun FitSourcesPane(
         modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
+        item {
+            Surface(
+                modifier = Modifier.fillMaxWidth().telosTechCard(borderColor = Color(0xFFFF007F)),
+                shape = RoundedCornerShape(16.dp),
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth().padding(16.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = androidx.compose.ui.Alignment.CenterVertically
+                ) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text("Cycle Tracker 🌸", fontWeight = FontWeight.Bold)
+                        Text("Track menstrual cycle, fertility window and predictions", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    }
+                    androidx.compose.material3.Switch(
+                        checked = cycleTrackerEnabled,
+                        onCheckedChange = onToggleCycleTracker
+                    )
+                }
+            }
+        }
         item {
             Text(
                 stringResource(I18nR.string.fit_sources_intro),

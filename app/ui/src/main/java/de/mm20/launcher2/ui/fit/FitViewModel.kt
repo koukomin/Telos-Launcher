@@ -67,6 +67,15 @@ class FitViewModel : ViewModel(), SensorEventListener {
     )
     val medications: StateFlow<List<MedicationItem>> = _medications.asStateFlow()
 
+    private val _cycleTrackerEnabled = MutableStateFlow(false)
+    val cycleTrackerEnabled: StateFlow<Boolean> = _cycleTrackerEnabled.asStateFlow()
+
+    private val _lastPeriodDateMillis = MutableStateFlow(System.currentTimeMillis() - 14 * 86400000L)
+    val lastPeriodDateMillis: StateFlow<Long> = _lastPeriodDateMillis.asStateFlow()
+
+    private val _cycleLengthDays = MutableStateFlow(28)
+    val cycleLengthDays: StateFlow<Int> = _cycleLengthDays.asStateFlow()
+
     private val _isHealthConnectAvailable = MutableStateFlow(false)
     val isHealthConnectAvailable: StateFlow<Boolean> = _isHealthConnectAvailable.asStateFlow()
 
@@ -100,6 +109,14 @@ class FitViewModel : ViewModel(), SensorEventListener {
     fun setHeightAndWeight(heightCm: Float, weightKg: Float) {
         _heightCm.value = heightCm
         _weight.value = weightKg
+    }
+
+    fun setCycleTrackerEnabled(enabled: Boolean) {
+        _cycleTrackerEnabled.value = enabled
+    }
+
+    fun logPeriodStart(timeMillis: Long = System.currentTimeMillis()) {
+        _lastPeriodDateMillis.value = timeMillis
     }
 
     fun addMeal(meal: LoggedMeal) {

@@ -62,6 +62,9 @@ fun FitDashboardScreen() {
     val calories by viewModel.calories.collectAsStateWithLifecycle()
     val distanceKm by viewModel.distanceKm.collectAsStateWithLifecycle()
     val needsHealthPermission by viewModel.needsHealthPermission.collectAsStateWithLifecycle()
+    val cycleTrackerEnabled by viewModel.cycleTrackerEnabled.collectAsStateWithLifecycle()
+    val lastPeriodDateMillis by viewModel.lastPeriodDateMillis.collectAsStateWithLifecycle()
+    val cycleLengthDays by viewModel.cycleLengthDays.collectAsStateWithLifecycle()
     val permissionLauncher = rememberLauncherForActivityResult(
         PermissionController.createRequestPermissionResultContract()
     ) { viewModel.loadHealthConnectData(context) }
@@ -141,6 +144,8 @@ fun FitDashboardScreen() {
                         healthConnectAvailable = isHealthConnectAvailable,
                         healthConnectSynced = healthConnectSynced,
                         needsPermission = needsHealthPermission,
+                        cycleTrackerEnabled = cycleTrackerEnabled,
+                        onToggleCycleTracker = { viewModel.setCycleTrackerEnabled(it) },
                         onRequestHealthConnect = {
                             permissionLauncher.launch(FitHealthHub.readPermissions)
                         },
@@ -154,6 +159,15 @@ fun FitDashboardScreen() {
                             .padding(horizontal = 16.dp),
                         verticalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
+                        if (cycleTrackerEnabled) {
+                            item {
+                                CycleTrackerCard(
+                                    lastPeriodDateMillis = lastPeriodDateMillis,
+                                    cycleLengthDays = cycleLengthDays,
+                                    onLogPeriodStart = { viewModel.logPeriodStart() }
+                                )
+                            }
+                        }
                         item {
                             Surface(
                                 modifier = Modifier
@@ -449,6 +463,61 @@ fun FitDashboardScreen() {
                 showFoodSearch = false
             }
         )
+    }
+}
+
+@Composable
+private fun CycleTrackerCard(
+    lastPeriodDateMillis: Long,
+    cycleLengthDays: Int,
+    onLogPeriodStart: () -> Unit
+) {
+    val millisPerDay = 86400000L
+    val now = System.currentTimeMillis()
+    val daysSinceStart = Math.max(1, ((now - lastPeriodDateMillis) / millisPerDay).toInt() + 1)
+    val currentDayInCycle = ((daysSinceStart - 1) % cycleLengthDays) + 1
+
+    val phase = when {
+        currentDayInCycle in 1..5 -> "Menstrual Phase 🩸"
+        currentDayInCycle in 6..12 -> "Follicular Phase 🌿"
+        currentDayInCycle in 13..16 -> "Ovulation Window 🌸"
+        else -> "Luteal Phase 🍂"
+    }
+
+    val daysUntilNext = cycleLengthDays - currentDayInCycle
+
+    Surface(
+        modifier = Modifier
+            .fillMaxWidth()
+            .telosTechCard(borderColor = Color(0xFFFF007F)),
+        shape = RoundedCornerShape(20.dp)
+    ) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text("Cycle Tracker 🌸", style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold)
+                Text("Day $currentDayInCycle of $cycleLengthDays", fontSize = 12.sp, fontWeight = FontWeight.Bold, color = Color(0xFFFF007F))
+            }
+
+            Spacer(Modifier.height(8.dp))
+
+            Text("Phase: $phase", fontSize = 12.sp, fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.onSurface)
+            Spacer(Modifier.height(2.dp))
+            Text("Predicted Next Period: in $daysUntilNext days", fontSize = 11.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
+
+            Spacer(Modifier.height(12.dp))
+
+            Button(
+                onClick = onLogPeriodStart,
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFF007F)),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Log Period Start Today", color = Color.White, fontSize = 11.sp)
+            }
+        }
     }
 }
 
