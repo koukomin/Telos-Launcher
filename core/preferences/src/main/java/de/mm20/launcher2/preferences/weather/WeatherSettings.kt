@@ -299,4 +299,22 @@ class WeatherSettings internal constructor(
             )
         }
     }
+
+    val savedLocations = launcherDataStore.data.map {
+        it.weather.weatherSavedLocations
+    }.distinctUntilChanged()
+
+    fun addSavedLocation(location: de.mm20.launcher2.preferences.WeatherSavedLocation) {
+        launcherDataStore.update {
+            val list = it.weather.weatherSavedLocations.filter { loc: de.mm20.launcher2.preferences.WeatherSavedLocation -> loc.name != location.name } + location
+            it.copy(weather = it.weather.copy(weatherSavedLocations = list))
+        }
+    }
+
+    fun removeSavedLocation(name: String) {
+        launcherDataStore.update {
+            val list = it.weather.weatherSavedLocations.filter { loc: de.mm20.launcher2.preferences.WeatherSavedLocation -> loc.name != name }
+            it.copy(weather = it.weather.copy(weatherSavedLocations = list))
+        }
+    }
 }

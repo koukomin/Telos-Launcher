@@ -505,6 +505,13 @@ data class StateTagsGroup(
 )
 
 @Serializable
+data class WeatherSavedLocation(
+    val name: String,
+    val lat: Double,
+    val lon: Double,
+)
+
+@Serializable
 data class WeatherGroup(
     val weatherProvider: String = "openmeteo",
     val weatherAutoLocation: Boolean = true,
@@ -514,6 +521,7 @@ data class WeatherGroup(
     val weatherLastUpdate: Long = 0L,
     val weatherProviderSettings: Map<String, ProviderSettings> = emptyMap(),
     val weatherOngoingNotificationEnabled: Boolean = true,
+    val weatherSavedLocations: List<WeatherSavedLocation> = emptyList(),
     /** Notifications for severe weather in the next hours, off by default */
     val weatherAlertsEnabled: Boolean = false,
     val weatherAlertRain: Boolean = true,

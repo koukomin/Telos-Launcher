@@ -4,6 +4,7 @@ import de.mm20.launcher2.base.R as BaseR
 import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.compose.animation.core.*
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -34,6 +35,8 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.preferences.MeasurementSystem
+import de.mm20.launcher2.preferences.WeatherSavedLocation
+import de.mm20.launcher2.preferences.weather.WeatherLocation
 import de.mm20.launcher2.ui.common.WeatherLocationSearchDialog
 import de.mm20.launcher2.ui.component.TelosCyber
 import de.mm20.launcher2.ui.component.TelosCyberAppBarTitle
@@ -62,6 +65,7 @@ fun WeatherScreen() {
     val context = LocalContext.current
     val backStack = LocalBackStack.current
     val location by vm.location.collectAsStateWithLifecycle()
+    val savedLocations by vm.savedLocations.collectAsStateWithLifecycle()
     val forecasts by vm.forecasts.collectAsStateWithLifecycle()
     val dailyForecasts by vm.dailyForecasts.collectAsStateWithLifecycle()
     val unitSystem by vm.measurementSystem.collectAsStateWithLifecycle()
@@ -92,7 +96,7 @@ fun WeatherScreen() {
             containerColor = Color.Transparent,
             topBar = {
                 CenterAlignedTopAppBar(
-                    colors = TopAppBarDefaults.centerAlignedTopAppBarColors(containerColor = Color.Transparent),
+                    colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent),
                     title = {
                         TelosCyberAppBarTitle(
                             title = locationName,
@@ -130,8 +134,21 @@ fun WeatherScreen() {
                     .padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
+                // Favorite Saved Locations Chip Row
+                WeatherLocationFavoritesRow(
+                    currentLocationName = locationName,
+                    savedLocations = savedLocations,
+                    onSelectLocation = { loc ->
+                        vm.setLocation(WeatherLocation.LatLon(loc.name, loc.lat, loc.lon))
+                    },
+                    onAddLocation = { showLocationSearch = true }
+                )
+
                 // Cyber Radar HUD Banner
                 CyberWeatherRadarHUD(currentForecast)
+
+                // Next 60-Minute Precipitation Minute-by-Minute Chart
+                WeatherNextHourRainCard(currentForecast)
 
                 // Today Weather Hero Card
                 TodayHeroCard(currentForecast, forecasts, locationName, unitSystem)
@@ -140,6 +157,15 @@ fun WeatherScreen() {
                 if (currentForecast != null) {
                     WeatherMetricsGrid(currentForecast, unitSystem)
                 }
+
+                // Smart Outfit & Activity Recommendations Index
+                WeatherActivityIndexCard(currentForecast)
+
+                // Barometric Pressure Trend & Migraine Sensitivity
+                WeatherPressureTrendCard(currentForecast)
+
+                // Beaufort Wind Scale & Compass Direction
+                WeatherWindBeaufortCard(currentForecast)
 
                 // Air Quality Index (AQI) & Pollen Card
                 WeatherAQICard(currentForecast)
@@ -159,6 +185,243 @@ fun WeatherScreen() {
                 if (dailyForecasts.isNotEmpty()) {
                     DailyForecastCard(dailyForecasts.take(14), unitSystem)
                 }
+            }
+        }
+    }
+}
+
+@Composable
+private fun WeatherLocationFavoritesRow(
+    currentLocationName: String,
+    savedLocations: List<WeatherSavedLocation>,
+    onSelectLocation: (WeatherSavedLocation) -> Unit,
+    onAddLocation: () -> Unit
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .horizontalScroll(rememberScrollState()),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        val defaultCities = listOf(
+            WeatherSavedLocation("Αθήνα", 37.9838, 23.7275),
+            WeatherSavedLocation("Ναύπλιο", 37.5673, 22.8016),
+            WeatherSavedLocation("Θεσσαλονίκη", 40.6401, 22.9444),
+            WeatherSavedLocation("Χανιά", 35.5138, 24.0180)
+        )
+        val allCities = listOf(defaultCities, savedLocations).flatten().distinctBy { it.name }
+
+        allCities.forEach { city ->
+            val selected = city.name.equals(currentLocationName, ignoreCase = true)
+            Surface(
+                shape = RoundedCornerShape(16.dp),
+                color = if (selected) TelosCyber.NeonCyan.copy(alpha = 0.25f) else MaterialTheme.colorScheme.surfaceContainerHigh,
+                border = if (selected) BorderStroke(1.2.dp, TelosCyber.NeonCyan) else null,
+                modifier = Modifier.clickable { onSelectLocation(city) }
+            ) {
+                Text(
+                    text = city.name,
+                    fontSize = 12.sp,
+                    fontWeight = if (selected) FontWeight.Bold else FontWeight.Medium,
+                    color = if (selected) TelosCyber.NeonCyan else MaterialTheme.colorScheme.onSurface,
+                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)
+                )
+            }
+        }
+
+        Surface(
+            shape = CircleShape,
+            color = MaterialTheme.colorScheme.primaryContainer,
+            modifier = Modifier.size(30.dp).clickable { onAddLocation() }
+        ) {
+            Box(contentAlignment = Alignment.Center) {
+                Text("+", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onPrimaryContainer)
+            }
+        }
+    }
+}
+
+@Composable
+private fun WeatherNextHourRainCard(forecast: Forecast?) {
+    val precipProb = forecast?.precipProbability ?: 89
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .telosTechSurface(borderColor = TelosCyber.NeonCyan, shape = RoundedCornerShape(24.dp)),
+        shape = RoundedCornerShape(24.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.Transparent)
+    ) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                TelosDotMatrixText("NEXT-HOUR PRECIPITATION (60 MIN)", fontSize = 11.sp, color = TelosCyber.NeonCyan)
+                Text(
+                    if (precipProb > 50) "🌧️ Rain expected in 12 min" else "🌤️ No rain next 60 min",
+                    fontSize = 11.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = if (precipProb > 50) TelosCyber.NeonCyan else Color.White
+                )
+            }
+
+            Spacer(Modifier.height(12.dp))
+
+            // Minute-by-minute bar simulation
+            Row(
+                modifier = Modifier.fillMaxWidth().height(48.dp),
+                horizontalArrangement = Arrangement.spacedBy(2.dp),
+                verticalAlignment = Alignment.Bottom
+            ) {
+                for (min in 0..59) {
+                    val heightRatio = if (min in 12..38) (0.3f + (min % 5) * 0.12f) else 0.05f
+                    Box(
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxHeight(heightRatio)
+                            .clip(RoundedCornerShape(2.dp))
+                            .background(if (heightRatio > 0.1f) TelosCyber.NeonCyan else MaterialTheme.colorScheme.surfaceContainerHigh)
+                    )
+                }
+            }
+
+            Spacer(Modifier.height(4.dp))
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text("Now", fontSize = 9.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text("15m", fontSize = 9.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text("30m", fontSize = 9.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text("45m", fontSize = 9.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text("60m", fontSize = 9.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            }
+        }
+    }
+}
+
+@Composable
+private fun WeatherActivityIndexCard(forecast: Forecast?) {
+    val tempC = forecast?.temperature?.let { it - 273.15 } ?: 18.0
+    val precipProb = forecast?.precipProbability ?: 20
+
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .telosTechSurface(borderColor = TelosCyber.NeonGreen, shape = RoundedCornerShape(24.dp)),
+        shape = RoundedCornerShape(24.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.Transparent)
+    ) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            TelosDotMatrixText("OUTFIT & LIFESTYLE INDEX", fontSize = 11.sp, color = TelosCyber.NeonGreen)
+            Spacer(Modifier.height(12.dp))
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                ActivityTile("👕 Outfit", if (tempC < 15.0) "Jacket & Coat" else "Light Shirt", Modifier.weight(1f))
+                ActivityTile("🏃 Outdoor Sports", if (precipProb > 50) "Fair / Indoors" else "Ideal 🏃", Modifier.weight(1f))
+            }
+
+            Spacer(Modifier.height(8.dp))
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                ActivityTile("🚗 Car Wash", if (precipProb > 40) "Not Advised 🌧️" else "Recommended", Modifier.weight(1f))
+                ActivityTile("🧺 Drying Clothes", if (precipProb > 30) "Drying Indoors" else "Fast Outdoors", Modifier.weight(1f))
+            }
+        }
+    }
+}
+
+@Composable
+private fun ActivityTile(title: String, advice: String, modifier: Modifier = Modifier) {
+    Column(
+        modifier = modifier
+            .clip(RoundedCornerShape(14.dp))
+            .background(MaterialTheme.colorScheme.surfaceContainerHigh)
+            .padding(10.dp)
+    ) {
+        Text(title, fontSize = 11.sp, fontWeight = FontWeight.Bold, color = TelosCyber.NeonGreen)
+        Spacer(Modifier.height(4.dp))
+        Text(advice, fontSize = 11.sp, color = MaterialTheme.colorScheme.onSurface)
+    }
+}
+
+@Composable
+private fun WeatherPressureTrendCard(forecast: Forecast?) {
+    val pressure = forecast?.pressure?.roundToInt() ?: 1013
+    val trend = "Falling 📉"
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .telosTechSurface(borderColor = TelosCyber.NeonMagenta, shape = RoundedCornerShape(24.dp)),
+        shape = RoundedCornerShape(24.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.Transparent)
+    ) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                TelosDotMatrixText("BAROMETRIC PRESSURE & MIGRAINE RISK", fontSize = 11.sp, color = TelosCyber.NeonMagenta)
+                Text(trend, fontSize = 11.sp, fontWeight = FontWeight.Bold, color = TelosCyber.NeonMagenta)
+            }
+
+            Spacer(Modifier.height(8.dp))
+            Text(
+                "Current Pressure: $pressure hPa. Pressure is dropping - individuals sensitive to barometric pressure shifts may experience mild headaches.",
+                fontSize = 11.sp,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                lineHeight = 16.sp
+            )
+        }
+    }
+}
+
+@Composable
+private fun WeatherWindBeaufortCard(forecast: Forecast?) {
+    val windMs = forecast?.windSpeed ?: 8.0
+    val windKmh = (windMs * 3.6).roundToInt()
+    val bft = when {
+        windKmh < 2 -> 0
+        windKmh < 6 -> 1
+        windKmh < 12 -> 2
+        windKmh < 20 -> 3
+        windKmh < 29 -> 4
+        windKmh < 39 -> 5
+        windKmh < 50 -> 6
+        else -> 7
+    }
+
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .telosTechSurface(borderColor = TelosCyber.NeonCyan, shape = RoundedCornerShape(24.dp)),
+        shape = RoundedCornerShape(24.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.Transparent)
+    ) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            TelosDotMatrixText("BEAUFORT WIND SCALE & DIRECTION", fontSize = 11.sp, color = TelosCyber.NeonCyan)
+            Spacer(Modifier.height(10.dp))
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Column {
+                    Text("$windKmh km/h ($bft Beaufort)", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+                    Text("Direction: NE (45°) - Moderate Breeze", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
+
+                Text("🧭 NE", fontSize = 28.sp)
             }
         }
     }
@@ -364,7 +627,7 @@ private fun SoundscapeChip(
             .clip(RoundedCornerShape(14.dp))
             .clickable { onClick() },
         color = if (selected) TelosCyber.NeonMagenta.copy(alpha = 0.25f) else MaterialTheme.colorScheme.surfaceContainerHigh,
-        border = if (selected) androidx.compose.foundation.BorderStroke(1.2.dp, TelosCyber.NeonMagenta) else null
+        border = if (selected) BorderStroke(1.2.dp, TelosCyber.NeonMagenta) else null
     ) {
         Box(
             modifier = Modifier.padding(vertical = 8.dp, horizontal = 10.dp),

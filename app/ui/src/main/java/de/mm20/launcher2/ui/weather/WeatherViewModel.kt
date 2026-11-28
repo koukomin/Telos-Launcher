@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.preferences.MeasurementSystem
+import de.mm20.launcher2.preferences.WeatherSavedLocation
 import de.mm20.launcher2.preferences.weather.WeatherLocation
 import de.mm20.launcher2.preferences.weather.WeatherSettings
 import de.mm20.launcher2.weather.DailyForecast
@@ -24,6 +25,9 @@ class WeatherViewModel : ViewModel(), KoinComponent {
     val location: StateFlow<WeatherLocation?> = weatherSettings.location
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
+    val savedLocations: StateFlow<List<WeatherSavedLocation>> = weatherSettings.savedLocations
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
     val forecasts: StateFlow<List<Forecast>> = weatherRepository.getForecasts(48)
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
@@ -37,6 +41,14 @@ class WeatherViewModel : ViewModel(), KoinComponent {
         viewModelScope.launch {
             weatherSettings.setLocation(location)
         }
+    }
+
+    fun addSavedLocation(name: String, lat: Double, lon: Double) {
+        weatherSettings.addSavedLocation(WeatherSavedLocation(name, lat, lon))
+    }
+
+    fun removeSavedLocation(name: String) {
+        weatherSettings.removeSavedLocation(name)
     }
 
     fun refresh(context: Context) {
