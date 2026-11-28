@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.keyboard
 
+import android.content.ClipDescription
 import android.content.ClipboardManager
 import android.content.Context
 import android.inputmethodservice.InputMethodService
@@ -11,6 +12,8 @@ import android.view.KeyEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import androidx.core.view.inputmethod.InputConnectionCompat
+import androidx.core.view.inputmethod.InputContentInfoCompat
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
@@ -103,6 +106,7 @@ class TelosKeyboardService :
                         onToggleIncognito = ::toggleIncognito,
                         onSwitchLanguage = ::switchLanguage,
                         onPasteText = ::handlePasteText,
+                        onPasteClipboardItem = ::handlePasteClipboardItem,
                         onVibrate = ::vibrateKey,
                     )
                 }
@@ -164,6 +168,7 @@ class TelosKeyboardService :
         TelosKeyboardState.lastClipboardText = ""
         TelosKeyboardState.privateEditor = false
         val info = attribute ?: return
+        TelosKeyboardState.imeAction = info.imeOptions and EditorInfo.IME_MASK_ACTION
         TelosKeyboardState.keyboardMode =
             when (info.inputType and EditorInfo.TYPE_MASK_CLASS) {
                 EditorInfo.TYPE_CLASS_NUMBER,
@@ -267,15 +272,51 @@ class TelosKeyboardService :
             else KeyboardLanguage.Greek
     }
 
+    private fun handlePasteClipboardItem(item: ClipboardItem) {
+        val ic = currentInputConnection ?: return
+        val info = currentInputEditorInfo ?: return
+
+        if (item.imageUri != null) {
+            runCatching {
+                val inputContentInfo = InputContentInfoCompat(
+                    item.imageUri,
+                    ClipDescription("Image", arrayOf(item.mimeType)),
+                    null
+                )
+                val flags = InputConnectionCompat.INPUT_CONTENT_GRANT_READ_URI_PERMISSION
+                InputConnectionCompat.commitContent(ic, info, inputContentInfo, flags, null)
+            }.onFailure {
+                if (!item.text.isNullOrBlank()) {
+                    ic.commitText(item.text, 1)
+                }
+            }
+        } else if (!item.text.isNullOrBlank()) {
+            ic.commitText(item.text, 1)
+        }
+    }
+
     private fun updateClipboardSnippet() {
         runCatching {
             val cm = getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
             val clip = cm?.primaryClip
             if (clip != null && clip.itemCount > 0) {
-                val text = clip.getItemAt(0)?.text?.toString()
-                if (!text.isNullOrBlank()) {
-                    TelosKeyboardState.lastClipboardText = text.take(120)
+                val items = java.util.ArrayList<ClipboardItem>()
+                val count = clip.itemCount
+                var i = 0
+                while (i < count) {
+                    val item = clip.getItemAt(i)
+                    if (item.uri != null) {
+                        val mime = cm.primaryClipDescription?.getMimeType(0) ?: "image/png"
+                        items.add(ClipboardItem(text = item.text?.toString(), imageUri = item.uri, mimeType = mime))
+                    } else if (item.text != null && item.text.length > 0) {
+                        items.add(ClipboardItem(text = item.text.toString()))
+                    }
+                    i++
                 }
+                val firstItem = if (items.size > 0) items[0] else null
+                TelosKeyboardState.clipboardItems = items
+                TelosKeyboardState.lastClipboardItem = firstItem
+                TelosKeyboardState.lastClipboardText = firstItem?.text ?: ""
             }
         }
     }

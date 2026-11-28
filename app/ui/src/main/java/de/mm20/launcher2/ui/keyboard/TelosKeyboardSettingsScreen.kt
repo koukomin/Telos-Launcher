@@ -201,6 +201,33 @@ fun TelosKeyboardSettingsScreen() {
                     },
                     label = { v -> Text("%.0f sp".format(v)) },
                 )
+                SwitchPreference(
+                    title = "Show Key Borders",
+                    summary = "Draw outlines around individual keys like classic keyboards",
+                    value = TelosKeyboardAppearance.showKeyBorders,
+                    onValueChanged = {
+                        TelosKeyboardAppearance.showKeyBorders = it
+                        TelosKeyboardAppearance.save(context)
+                    }
+                )
+                SwitchPreference(
+                    title = "Show Number Row",
+                    summary = "Display a dedicated 1-0 number row above the keyboard",
+                    value = TelosKeyboardAppearance.showNumberRow,
+                    onValueChanged = {
+                        TelosKeyboardAppearance.showNumberRow = it
+                        TelosKeyboardAppearance.save(context)
+                    }
+                )
+                SwitchPreference(
+                    title = "Show Symbol Hints",
+                    summary = "Show secondary number and symbol labels on key corners",
+                    value = TelosKeyboardAppearance.showSymbolHints,
+                    onValueChanged = {
+                        TelosKeyboardAppearance.showSymbolHints = it
+                        TelosKeyboardAppearance.save(context)
+                    }
+                )
             }
         }
     }

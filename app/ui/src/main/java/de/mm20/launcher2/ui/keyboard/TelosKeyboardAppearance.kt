@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableLongStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 
@@ -20,18 +21,24 @@ object TelosKeyboardAppearance {
     var keyboardScale by mutableFloatStateOf(1f)
     var keyHeightDp by mutableFloatStateOf(52f)
     var keyFontSp by mutableFloatStateOf(18f)
+    var showKeyBorders by mutableStateOf(false)
+    var showNumberRow by mutableStateOf(false)
+    var showSymbolHints by mutableStateOf(true)
 
-    val accent: Color get() = Color(accentArgb.toULong())
+    val accent: Color get() = Color(accentArgb.toInt())
 
-    fun scaledKeyHeightDp(): Float = (keyHeightDp * keyboardScale).coerceIn(40f, 80f)
+    fun scaledKeyHeightDp(): Float = (keyHeightDp * keyboardScale).coerceIn(38f, 84f)
     fun scaledFontSp(): Float = (keyFontSp * keyboardScale).coerceIn(12f, 28f)
 
     fun load(context: Context) {
         val p = context.applicationContext.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
         accentArgb = p.getLong("accent", DEFAULT_ACCENT)
-        keyboardScale = p.getFloat("scale", 1f).coerceIn(0.8f, 1.35f)
-        keyHeightDp = p.getFloat("key_height", 52f).coerceIn(44f, 72f)
-        keyFontSp = p.getFloat("key_font", 18f).coerceIn(14f, 26f)
+        keyboardScale = p.getFloat("scale", 1f).coerceIn(0.75f, 1.4f)
+        keyHeightDp = p.getFloat("key_height", 52f).coerceIn(38f, 76f)
+        keyFontSp = p.getFloat("key_font", 18f).coerceIn(12f, 28f)
+        showKeyBorders = p.getBoolean("key_borders", false)
+        showNumberRow = p.getBoolean("number_row", false)
+        showSymbolHints = p.getBoolean("symbol_hints", true)
     }
 
     fun save(context: Context) {
@@ -40,6 +47,9 @@ object TelosKeyboardAppearance {
             .putFloat("scale", keyboardScale)
             .putFloat("key_height", keyHeightDp)
             .putFloat("key_font", keyFontSp)
+            .putBoolean("key_borders", showKeyBorders)
+            .putBoolean("number_row", showNumberRow)
+            .putBoolean("symbol_hints", showSymbolHints)
             .apply()
     }
 }
