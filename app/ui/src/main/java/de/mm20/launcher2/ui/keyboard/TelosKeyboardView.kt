@@ -10,6 +10,7 @@ import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.drag
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -22,6 +23,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.StrokeJoin
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.boundsInRoot
 import androidx.compose.ui.layout.onGloballyPositioned
@@ -122,11 +127,41 @@ fun TelosKeyboardView(
                     )
             }
 
+            // Visual Swipe Trail Overlay
+            GlideTypingTrailOverlay()
+
             // Floating Key Preview Bubble (Magnifier)
             val previewText = state.activeKeyPreview
             if (previewText != null) {
                 KeyPreviewBubble(text = previewText)
             }
+        }
+    }
+}
+
+@Composable
+private fun GlideTypingTrailOverlay() {
+    val pathColor = TelosKeyboardAppearance.accent
+    val points = TelosGlideTyping.currentPathPoints.toList()
+    if (points.size >= 2) {
+        Canvas(modifier = Modifier.fillMaxSize()) {
+            val path = Path().apply {
+                moveTo(points[0].x, points[0].y)
+                var idx = 1
+                while (idx < points.size) {
+                    lineTo(points[idx].x, points[idx].y)
+                    idx++
+                }
+            }
+            drawPath(
+                path = path,
+                color = pathColor,
+                style = Stroke(
+                    width = 7.dp.toPx(),
+                    cap = StrokeCap.Round,
+                    join = StrokeJoin.Round
+                )
+            )
         }
     }
 }
