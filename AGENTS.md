@@ -95,6 +95,35 @@ Telos is exclusively an Android Launcher (`package de.mm20.launcher2`). Desktop 
 
 Keep Python under `tools/` (and `docs/scripts/` / `.github/scripts/` for docs/CI only). Supported trees: `tools/i18n/`, `tools/translations/`, `tools/validation/`, `tools/performance/`, plus release helpers `tools/release-*.py`. **Do not** leave one-shot `patch_*.py` / `fix_*.py` in the repository root — edit sources directly or add a maintained tool under `tools/` with a README.
 
+## Agent Engineering Rules & Release Guardrails (Mandatory)
+
+1. **Release Metadata & Fastlane Changelogs:**
+   - Whenever updating `versionName` or `versionCode` in `version.properties`, **ALWAYS create matching changelog files** for the version code in:
+     - `fastlane/metadata/android/en-US/changelogs/<versionCode>.txt`
+     - `fastlane/metadata/android/el-GR/changelogs/<versionCode>.txt`
+   - Failing to commit matching Fastlane changelogs will cause `Validate release changes` in `.github/workflows/build-release.yml` to fail (`FileNotFoundError`).
+
+2. **Git Tag & Versioning Checks:**
+   - Before tagging a release (e.g. `v1.46.14`), verify that `versionName` in `version.properties` is strictly higher than all existing releases on GitHub.
+   - Legacy anomalous tags (e.g. `v1.0.1792243292`) are automatically filtered by `tools/release-version.py` (`int(t.split('.')[2]) < 10000`).
+
+3. **3rd-Party Store Unfreezing & Store Origin Display:**
+   - When triggering updates or launching external 3rd-party store apps (Google Play, F-Droid, Aurora, Obtainium, Droidify), always check if the store package is frozen (`freezeManager.isFrozen(pkg)`).
+   - If frozen, call `freezeManager.unfreeze(listOf(pkg), fromUser = true)` before starting the activity intent.
+   - Always display the store origin label and mini store icon on `StoreItemRow` and `AppDetailsScreen`.
+   - In `StoreDashboardScreen.kt`, Telos Store apps must be sorted alphabetically via `.sortedBy { it.localizedName(...) }`.
+
+4. **Keyboard Private / Incognito Mode Auto-Detection:**
+   - In `TelosKeyboardService.kt`, auto-detect private mode for password fields, `IME_FLAG_NO_PERSONALIZED_LEARNING`, and sensitive apps (Bitwarden, KeePass, Tutanota, Revolut, N26, ProtonMail, MetaMask, Exodus).
+   - Instantly suspend dictionary word learning and clear/disable clipboard snippet auto-preview when in private mode.
+
+5. **Multi-Language OpenFoodFacts Food Search:**
+   - In `OpenFoodFactsApi.kt`, search queries must pass `lc=<userLang>` and `cc=gr` (e.g., `el.openfoodfacts.org`).
+   - Include dictionary fallback mapping for localized food terms (e.g., Greek terms -> English) to ensure rich nutrition results are returned.
+
+6. **Home Screen Clock Weather Default:**
+   - Keep `clockWidgetWeatherPart = true` enabled by default in `LauncherSettingsData.kt` so weather appears on the home screen clock widget out of the box.
+
 ## Documentation
 
 Docs live in `docs/` (a VitePress site, published as GitHub Pages at https://koukomin.github.io/Telos-Launcher/ and historically at https://telos.mm20.de). Every user-visible or architectural change must update, **in the same change**:
