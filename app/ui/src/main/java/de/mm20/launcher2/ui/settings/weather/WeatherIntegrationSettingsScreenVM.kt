@@ -26,6 +26,15 @@ class WeatherIntegrationSettingsScreenVM : ViewModel(), KoinComponent {
     private val permissionsManager: PermissionsManager by inject()
 
     private val alertManager: WeatherAlertManager by inject()
+    private val ongoingNotifier: de.mm20.launcher2.weather.WeatherOngoingNotifier by inject()
+
+    val ongoingNotificationEnabled = weatherSettings.ongoingNotificationEnabled
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), true)
+
+    fun setOngoingNotificationEnabled(enabled: Boolean) {
+        weatherSettings.setOngoingNotificationEnabled(enabled)
+        viewModelScope.launch { ongoingNotifier.update() }
+    }
 
     val availableProviders = repository.getProviders()
 

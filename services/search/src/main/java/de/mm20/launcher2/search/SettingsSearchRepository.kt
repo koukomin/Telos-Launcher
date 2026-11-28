@@ -74,13 +74,14 @@ class SettingsSearchRepository(private val context: Context) {
         )
         fun appSetting(route: String, domain: String, extraKeys: List<String> = emptyList()): SettingsSearchItem {
             val name = TelosAppLabels.forDomain(app, domain)
+            val combinedKeywords = listOf(extraKeys, TelosAppKeywords.forDomain(domain)).flatten().distinct()
             return SettingsSearchItem(
                 label = name,
                 subtitle = app.getString(I18nR.string.search_settings_source_telos_app, name),
                 source = SettingsSearchSource.TelosApp,
                 telosRoute = route,
                 iconRes = TelosAppIcons.forDomain(domain) ?: BaseR.drawable.settings_24px,
-                keywords = extraKeys,
+                keywords = combinedKeywords,
             )
         }
         return listOf(

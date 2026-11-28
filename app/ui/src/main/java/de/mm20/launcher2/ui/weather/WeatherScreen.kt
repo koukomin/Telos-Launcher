@@ -1,8 +1,8 @@
 package de.mm20.launcher2.ui.weather
+
 import de.mm20.launcher2.base.R as BaseR
 import de.mm20.launcher2.i18n.R as I18nR
 
-import android.content.Context
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
@@ -10,7 +10,6 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -29,25 +28,23 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.preferences.MeasurementSystem
-import de.mm20.launcher2.preferences.weather.WeatherLocation
 import de.mm20.launcher2.ui.common.WeatherLocationSearchDialog
-import de.mm20.launcher2.ui.locals.LocalBackStack
 import de.mm20.launcher2.ui.component.TelosCyber
 import de.mm20.launcher2.ui.component.TelosCyberAppBarTitle
 import de.mm20.launcher2.ui.component.TelosDotMatrixText
-import de.mm20.launcher2.ui.component.telosTechSurface
 import de.mm20.launcher2.ui.component.VirtualAppWindow
 import de.mm20.launcher2.ui.component.telosAmbientGlow
 import de.mm20.launcher2.ui.component.telosScanlines
+import de.mm20.launcher2.ui.component.telosTechSurface
 import de.mm20.launcher2.ui.component.weather.AnimatedWeatherIcon
 import de.mm20.launcher2.ui.component.weather.WeatherIcon as UIWeatherIcon
+import de.mm20.launcher2.ui.locals.LocalBackStack
 import de.mm20.launcher2.weather.DailyForecast
 import de.mm20.launcher2.weather.Forecast
 import java.time.Instant
@@ -134,20 +131,22 @@ fun WeatherScreen() {
                 // Cyber Radar HUD Banner
                 CyberWeatherRadarHUD(currentForecast)
 
-                // Today Weather Hero Card
-                TodayHeroCard(currentForecast, unitSystem)
+                // Today Weather Hero Card (Screenshot 3 style)
+                TodayHeroCard(currentForecast, forecasts, locationName, unitSystem)
 
+                // Details Grid (6-Tile Today Weather Metrics)
+                if (currentForecast != null) {
+                    WeatherMetricsGrid(currentForecast, unitSystem)
+                }
+
+                // Hourly Forecast Strip
                 if (forecasts.isNotEmpty()) {
                     HourlyForecastCard(forecasts.take(24), unitSystem)
                 }
 
+                // Daily 14-Day Forecast Range List
                 if (dailyForecasts.isNotEmpty()) {
                     DailyForecastCard(dailyForecasts.take(14), unitSystem)
-                }
-
-                // Weather Details Grid (AQI, UV, Wind, Humidity, Pressure, Visibility)
-                if (currentForecast != null) {
-                    WeatherMetricsGrid(currentForecast, unitSystem)
                 }
             }
         }
@@ -157,14 +156,38 @@ fun WeatherScreen() {
 @Composable
 private fun TodayHeroCard(
     forecast: Forecast?,
+    allForecasts: List<Forecast>,
+    locationName: String,
     unitSystem: MeasurementSystem
 ) {
-    val tempC = forecast?.temperature?.let { it - 273.15 } ?: 22.0
-    val feelsC = forecast?.temperature?.let { it - 273.15 } ?: 22.0
-    val temp = formatTemp(tempC, unitSystem)
-    val feelsLike = formatTemp(feelsC, unitSystem)
+    val isImperial = unitSystem == MeasurementSystem.UnitedStates
+    val tempC = forecast?.temperature?.let { it - 273.15 } ?: 19.0
+    val tempStr = formatTemp(tempC, isImperial)
+
+    val todayForecasts = allForecasts.take(24)
+    val minC = todayForecasts.minOfOrNull { it.temperature - 273.15 } ?: 12.0
+    val maxC = todayForecasts.maxOfOrNull { it.temperature - 273.15 } ?: 18.0
+    val minMaxStr = "${formatTemp(maxC, isImperial)} / ${formatTemp(minC, isImperial)}"
+
     val icon = forecast?.toUIWeatherIcon() ?: UIWeatherIcon.PartlyCloudy
-    val condition = forecast?.condition ?: "Partly Cloudy"
+    val conditionText = forecast?.condition ?: stringResource(I18nR.string.weather_condition_partlycloudy)
+
+    val dateFormat = remember { DateTimeFormatter.ofPattern("EEE d MMM", Locale.getDefault()) }
+    val dateStr = try {
+        Instant.ofEpochMilli(forecast?.timestamp ?: System.currentTimeMillis())
+            .atZone(ZoneId.systemDefault())
+            .format(dateFormat)
+            .uppercase(Locale.getDefault())
+    } catch (e: Exception) {
+        "TODAY"
+    }
+
+    val windMs = forecast?.windSpeed ?: 3.0
+    val windStr = if (isImperial) "${(windMs * 2.23694).roundToInt()} mph" else "${(windMs * 3.6).roundToInt()} km/h"
+    val precipProb = forecast?.precipProbability ?: 89
+    val precipAmount = forecast?.precipitation ?: 1.52
+
+    val summaryText = "$conditionText. ${stringResource(I18nR.string.weather_metric_wind)} $windStr. ${stringResource(I18nR.string.weather_forecast_precipitation)} $precipProb%, ${String.format(Locale.getDefault(), "%.2f", precipAmount)} mm."
 
     Card(
         modifier = Modifier
@@ -176,31 +199,195 @@ private fun TodayHeroCard(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(24.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+                .padding(20.dp)
         ) {
-            AnimatedWeatherIcon(
-                icon = icon,
-                modifier = Modifier.size(96.dp)
-            )
-            Spacer(Modifier.height(8.dp))
+            // Header Row: Big Temp + Range & Date + Icon
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Column {
+                    Row(verticalAlignment = Alignment.Bottom) {
+                        Text(
+                            text = tempStr,
+                            fontSize = 68.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.onSurface,
+                            lineHeight = 68.sp
+                        )
+                        Spacer(Modifier.width(12.dp))
+                        Text(
+                            text = minMaxStr,
+                            fontSize = 22.sp,
+                            fontWeight = FontWeight.Light,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            modifier = Modifier.padding(bottom = 12.dp)
+                        )
+                    }
+
+                    Text(
+                        text = dateStr,
+                        style = MaterialTheme.typography.labelMedium,
+                        fontWeight = FontWeight.Bold,
+                        color = TelosCyber.NeonCyan,
+                        letterSpacing = 1.2.sp
+                    )
+
+                    Spacer(Modifier.height(4.dp))
+
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Text(
+                            text = locationName,
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.onSurface
+                        )
+                        Spacer(Modifier.width(4.dp))
+                        Icon(
+                            painter = painterResource(BaseR.drawable.location_on_24px),
+                            contentDescription = null,
+                            tint = TelosCyber.NeonCyan,
+                            modifier = Modifier.size(16.dp)
+                        )
+                    }
+                }
+
+                AnimatedWeatherIcon(
+                    icon = icon,
+                    modifier = Modifier.size(84.dp)
+                )
+            }
+
+            Spacer(Modifier.height(12.dp))
+
             Text(
-                text = temp,
-                fontSize = 64.sp,
-                fontWeight = FontWeight.Bold,
+                text = conditionText,
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.SemiBold,
                 color = MaterialTheme.colorScheme.onSurface
             )
+
+            Spacer(Modifier.height(4.dp))
+
             Text(
-                text = condition,
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.SemiBold,
-                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.9f)
+                text = summaryText,
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                lineHeight = 20.sp
+            )
+        }
+    }
+}
+
+@Composable
+private fun WeatherMetricsGrid(
+    forecast: Forecast,
+    unitSystem: MeasurementSystem
+) {
+    val isImperial = unitSystem == MeasurementSystem.UnitedStates
+    val tempC = forecast.temperature - 273.15
+    val feelsC = forecast.temperature - 273.15
+    val feelsStr = formatTemp(feelsC, isImperial)
+    val humidity = forecast.humidity?.roundToInt() ?: 70
+    val uv = forecast.uvIndex?.roundToInt() ?: 2
+    val visibilityKm = 14
+    val dewPointC = (tempC - 4.0)
+    val dewPointStr = formatTemp(dewPointC, isImperial)
+    val pressure = forecast.pressure?.roundToInt() ?: 1013
+
+    Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+        TelosDotMatrixText(
+            stringResource(I18nR.string.weather_section_details),
+            fontSize = 11.sp,
+            color = TelosCyber.NeonCyan
+        )
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            MetricTile(
+                title = stringResource(I18nR.string.weather_metric_feels_like),
+                value = feelsStr,
+                iconRes = BaseR.drawable.air_24px,
+                modifier = Modifier.weight(1f)
+            )
+            MetricTile(
+                title = stringResource(I18nR.string.weather_metric_humidity_rel),
+                value = "$humidity%",
+                iconRes = BaseR.drawable.humidity_percentage_20px,
+                modifier = Modifier.weight(1f)
+            )
+            MetricTile(
+                title = stringResource(I18nR.string.weather_metric_uv),
+                value = "$uv",
+                iconRes = BaseR.drawable.light_mode_24px,
+                modifier = Modifier.weight(1f)
+            )
+        }
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            MetricTile(
+                title = stringResource(I18nR.string.weather_metric_visibility),
+                value = "$visibilityKm km",
+                iconRes = BaseR.drawable.visibility_24px,
+                modifier = Modifier.weight(1f)
+            )
+            MetricTile(
+                title = stringResource(I18nR.string.weather_metric_humidity),
+                value = dewPointStr,
+                iconRes = BaseR.drawable.humidity_percentage_20px,
+                modifier = Modifier.weight(1f)
+            )
+            MetricTile(
+                title = stringResource(I18nR.string.weather_metric_pressure),
+                value = "$pressure hPa",
+                iconRes = BaseR.drawable.speed_24px,
+                modifier = Modifier.weight(1f)
+            )
+        }
+    }
+}
+
+@Composable
+private fun MetricTile(
+    title: String,
+    value: String,
+    iconRes: Int,
+    modifier: Modifier = Modifier
+) {
+    Card(
+        modifier = modifier,
+        shape = RoundedCornerShape(18.dp),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh)
+    ) {
+        Column(
+            modifier = Modifier.padding(12.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Icon(
+                painterResource(iconRes),
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.size(20.dp)
             )
             Spacer(Modifier.height(4.dp))
             Text(
-                text = "Feels like $feelsLike",
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
+                text = title,
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+            Spacer(Modifier.height(4.dp))
+            Text(
+                text = value,
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold
             )
         }
     }
@@ -211,6 +398,7 @@ private fun HourlyForecastCard(
     forecasts: List<Forecast>,
     unitSystem: MeasurementSystem
 ) {
+    val isImperial = unitSystem == MeasurementSystem.UnitedStates
     val timeFormat = remember { DateTimeFormatter.ofPattern("HH:mm") }
 
     Card(
@@ -221,8 +409,12 @@ private fun HourlyForecastCard(
         colors = CardDefaults.cardColors(containerColor = Color.Transparent)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
-            TelosDotMatrixText("HOURLY", fontSize = 11.sp, color = TelosCyber.NeonCyan)
-            Spacer(Modifier.height(8.dp))
+            TelosDotMatrixText(
+                stringResource(I18nR.string.weather_section_hourly),
+                fontSize = 11.sp,
+                color = TelosCyber.NeonCyan
+            )
+            Spacer(Modifier.height(10.dp))
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -236,28 +428,46 @@ private fun HourlyForecastCard(
                         "12:00"
                     }
                     val itemC = item.temperature - 273.15
+                    val precip = item.precipProbability ?: 0
+                    val windSpeedMs = item.windSpeed ?: 1.0
+                    val windStr = if (isImperial) "${(windSpeedMs * 2.23694).roundToInt()} mph" else "${(windSpeedMs * 3.6).roundToInt()} km/h"
+
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
-                        modifier = Modifier.width(56.dp)
+                        modifier = Modifier.width(60.dp)
                     ) {
-                        Text(hourText, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                        Spacer(Modifier.height(6.dp))
-                        AnimatedWeatherIcon(icon = item.toUIWeatherIcon(), modifier = Modifier.size(32.dp))
-                        Spacer(Modifier.height(6.dp))
                         Text(
-                            text = formatTemp(itemC, unitSystem),
+                            text = formatTemp(itemC, isImperial),
                             style = MaterialTheme.typography.bodyMedium,
                             fontWeight = FontWeight.Bold
                         )
-                        val precip = item.precipProbability ?: 0
                         if (precip > 0) {
                             Text(
                                 text = "$precip%",
                                 style = MaterialTheme.typography.labelSmall,
-                                color = MaterialTheme.colorScheme.primary,
-                                fontSize = 10.sp
+                                color = TelosCyber.NeonCyan,
+                                fontSize = 11.sp,
+                                fontWeight = FontWeight.Bold
                             )
+                        } else {
+                            Spacer(Modifier.height(14.dp))
                         }
+                        Spacer(Modifier.height(4.dp))
+                        AnimatedWeatherIcon(icon = item.toUIWeatherIcon(), modifier = Modifier.size(32.dp))
+                        Spacer(Modifier.height(4.dp))
+                        Text(
+                            text = windStr,
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            fontSize = 10.sp
+                        )
+                        Spacer(Modifier.height(2.dp))
+                        Text(
+                            hourText,
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            fontWeight = FontWeight.Medium
+                        )
                     }
                 }
             }
@@ -270,7 +480,8 @@ private fun DailyForecastCard(
     dailyForecasts: List<DailyForecast>,
     unitSystem: MeasurementSystem
 ) {
-    val dayFormat = remember { DateTimeFormatter.ofPattern("EEE, MMM d") }
+    val isImperial = unitSystem == MeasurementSystem.UnitedStates
+    val dayFormat = remember { DateTimeFormatter.ofPattern("EEE, d MMM") }
 
     Card(
         modifier = Modifier
@@ -280,8 +491,12 @@ private fun DailyForecastCard(
         colors = CardDefaults.cardColors(containerColor = Color.Transparent)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
-            TelosDotMatrixText("14-DAY", fontSize = 11.sp, color = TelosCyber.NeonGreen)
-            Spacer(Modifier.height(8.dp))
+            TelosDotMatrixText(
+                stringResource(I18nR.string.weather_section_daily),
+                fontSize = 11.sp,
+                color = TelosCyber.NeonGreen
+            )
+            Spacer(Modifier.height(10.dp))
             dailyForecasts.forEach { day ->
                 val dayLabel = try {
                     Instant.ofEpochMilli(day.timestamp).atZone(ZoneId.systemDefault()).format(dayFormat)
@@ -290,6 +505,7 @@ private fun DailyForecastCard(
                 }
                 val minC = day.minTemp - 273.15
                 val maxC = day.maxTemp - 273.15
+                val precip = day.hourlyForecasts.mapNotNull { it.precipProbability }.maxOrNull() ?: 0
 
                 Row(
                     modifier = Modifier
@@ -301,19 +517,32 @@ private fun DailyForecastCard(
                         text = dayLabel,
                         style = MaterialTheme.typography.bodyMedium,
                         fontWeight = FontWeight.SemiBold,
-                        modifier = Modifier.width(110.dp),
+                        modifier = Modifier.width(100.dp),
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
                     AnimatedWeatherIcon(icon = dayToUIWeatherIcon(day.icon), modifier = Modifier.size(28.dp))
-                    Spacer(Modifier.width(12.dp))
+                    Spacer(Modifier.width(6.dp))
+                    if (precip > 0) {
+                        Text(
+                            text = "$precip%",
+                            style = MaterialTheme.typography.labelSmall,
+                            color = TelosCyber.NeonCyan,
+                            fontSize = 11.sp,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.width(36.dp)
+                        )
+                    } else {
+                        Spacer(Modifier.width(36.dp))
+                    }
+                    Spacer(Modifier.width(6.dp))
                     Text(
-                        text = formatTemp(minC, unitSystem),
+                        text = formatTemp(minC, isImperial),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                     Spacer(Modifier.width(8.dp))
-                    // Temp Bar
+                    // Gradient Temperature Bar
                     Box(
                         modifier = Modifier
                             .weight(1f)
@@ -322,120 +551,20 @@ private fun DailyForecastCard(
                             .background(
                                 Brush.horizontalGradient(
                                     listOf(
-                                        MaterialTheme.colorScheme.secondaryContainer,
-                                        MaterialTheme.colorScheme.primary
+                                        Color(0xFF3B82F6),
+                                        Color(0xFFEF4444)
                                     )
                                 )
                             )
                     )
                     Spacer(Modifier.width(8.dp))
                     Text(
-                        text = formatTemp(maxC, unitSystem),
+                        text = formatTemp(maxC, isImperial),
                         style = MaterialTheme.typography.bodyMedium,
                         fontWeight = FontWeight.Bold
                     )
                 }
             }
-        }
-    }
-}
-
-@Composable
-private fun WeatherMetricsGrid(
-    forecast: Forecast,
-    unitSystem: MeasurementSystem
-) {
-    val windMs = forecast.windSpeed ?: 5.0
-    val windKmh = (windMs * 3.6).roundToInt()
-    val humidity = forecast.humidity?.roundToInt() ?: 60
-    val pressure = forecast.pressure?.roundToInt() ?: 1013
-    val uv = forecast.uvIndex?.roundToInt() ?: 4
-
-    Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-            MetricTile(
-                title = stringResource(I18nR.string.weather_metric_wind),
-                value = "$windKmh km/h",
-                subtitle = stringResource(I18nR.string.weather_wind_gusts, (windKmh * 1.25).roundToInt()),
-                iconRes = BaseR.drawable.air_24px,
-                modifier = Modifier.weight(1f)
-            )
-            MetricTile(
-                title = stringResource(I18nR.string.weather_metric_humidity),
-                value = "$humidity%",
-                subtitle = stringResource(I18nR.string.weather_dew_point, formatTemp((forecast.temperature - 273.15) - 4, unitSystem)),
-                iconRes = BaseR.drawable.humidity_percentage_20px,
-                modifier = Modifier.weight(1f)
-            )
-        }
-
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-            MetricTile(
-                title = stringResource(I18nR.string.weather_metric_uv),
-                value = "$uv",
-                subtitle = if (uv > 6) stringResource(I18nR.string.weather_uv_high) else stringResource(I18nR.string.weather_uv_moderate),
-                iconRes = BaseR.drawable.light_mode_24px,
-                modifier = Modifier.weight(1f)
-            )
-            MetricTile(
-                title = stringResource(I18nR.string.weather_metric_pressure),
-                value = "$pressure hPa",
-                subtitle = stringResource(I18nR.string.weather_barometer),
-                iconRes = BaseR.drawable.speed_24px,
-                modifier = Modifier.weight(1f)
-            )
-        }
-    }
-}
-
-@Composable
-private fun MetricTile(
-    title: String,
-    value: String,
-    subtitle: String,
-    iconRes: Int,
-    modifier: Modifier = Modifier
-) {
-    Card(
-        modifier = modifier,
-        shape = RoundedCornerShape(20.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh)
-    ) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Icon(
-                    painterResource(iconRes),
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.size(20.dp)
-                )
-                Spacer(Modifier.width(8.dp))
-                Text(
-                    text = title,
-                    style = MaterialTheme.typography.labelMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-            }
-            Spacer(Modifier.height(8.dp))
-            Text(
-                text = value,
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.Bold
-            )
-            Spacer(Modifier.height(2.dp))
-            Text(
-                text = subtitle,
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
         }
     }
 }
@@ -456,11 +585,11 @@ private fun dayToUIWeatherIcon(icon: Int): UIWeatherIcon = when (icon) {
     else -> UIWeatherIcon.PartlyCloudy
 }
 
-private fun formatTemp(celsius: Double, system: MeasurementSystem): String {
-    return if (system == MeasurementSystem.UnitedStates) {
-        "${((celsius * 9 / 5) + 32).roundToInt()}°F"
+private fun formatTemp(celsius: Double, imperial: Boolean): String {
+    return if (imperial) {
+        "${((celsius * 9 / 5) + 32).roundToInt()}°"
     } else {
-        "${celsius.roundToInt()}°C"
+        "${celsius.roundToInt()}°"
     }
 }
 
@@ -471,7 +600,6 @@ private fun CyberWeatherRadarHUD(
 ) {
     val cyan = Color(0xFF00F2FE)
     val pink = Color(0xFFFF007F)
-    val darkBg = Color(0xFF0D0E15)
 
     val transition = rememberInfiniteTransition(label = "radar")
     val angle by transition.animateFloat(
@@ -498,8 +626,8 @@ private fun CyberWeatherRadarHUD(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            TelosDotMatrixText("[ATMOSPHERIC_RADAR]", fontSize = 11.sp, color = TelosCyber.NeonCyan)
-            TelosDotMatrixText("[SWEEP: LIVE]", fontSize = 9.sp, color = TelosCyber.NeonMagenta)
+            TelosDotMatrixText(stringResource(I18nR.string.weather_radar_title), fontSize = 11.sp, color = TelosCyber.NeonCyan)
+            TelosDotMatrixText(stringResource(I18nR.string.weather_radar_sweep), fontSize = 9.sp, color = TelosCyber.NeonMagenta)
         }
 
         Spacer(Modifier.height(12.dp))
@@ -510,21 +638,18 @@ private fun CyberWeatherRadarHUD(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             // Radar Animation
-            Box(contentAlignment = Alignment.Center, modifier = Modifier.size(110.dp)) {
-                Canvas(modifier = Modifier.size(110.dp)) {
+            Box(contentAlignment = Alignment.Center, modifier = Modifier.size(100.dp)) {
+                Canvas(modifier = Modifier.size(100.dp)) {
                     val center = Offset(size.width / 2, size.height / 2)
                     val radius = size.minDimension / 2 - 4.dp.toPx()
 
-                    // Radar rings
                     drawCircle(color = cyan.copy(alpha = 0.18f), radius = radius, center = center, style = Stroke(width = 1.5.dp.toPx()))
                     drawCircle(color = cyan.copy(alpha = 0.18f), radius = radius * 0.66f, center = center, style = Stroke(width = 1.dp.toPx()))
                     drawCircle(color = cyan.copy(alpha = 0.18f), radius = radius * 0.33f, center = center, style = Stroke(width = 1.dp.toPx()))
 
-                    // Radar crosshairs
                     drawLine(color = cyan.copy(alpha = 0.22f), start = Offset(center.x, 0f), end = Offset(center.x, size.height), strokeWidth = 1.dp.toPx())
                     drawLine(color = cyan.copy(alpha = 0.22f), start = Offset(0f, center.y), end = Offset(size.width, center.y), strokeWidth = 1.dp.toPx())
 
-                    // Radar sweep line
                     val rad = Math.toRadians((angle - 90).toDouble())
                     val endX = center.x + radius * Math.cos(rad).toFloat()
                     val endY = center.y + radius * Math.sin(rad).toFloat()
@@ -539,9 +664,9 @@ private fun CyberWeatherRadarHUD(
                     .padding(start = 12.dp),
                 verticalArrangement = Arrangement.spacedBy(6.dp)
             ) {
-                val humVal = (forecast?.humidity ?: 0.5).toFloat()
+                val humVal = ((forecast?.humidity ?: 70.0) / 100.0).toFloat()
                 Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                    Text("ΥΓΡΑΣΙΑ:", fontSize = 11.sp, fontFamily = FontFamily.Monospace, color = cyan)
+                    Text(stringResource(I18nR.string.weather_forecast_humidity) + ":", fontSize = 11.sp, fontFamily = FontFamily.Monospace, color = cyan)
                     Text("${(humVal * 100).toInt()}%", fontSize = 11.sp, fontWeight = FontWeight.Bold, fontFamily = FontFamily.Monospace, color = Color.White)
                 }
                 de.mm20.launcher2.ui.component.TelosWaveProgress(
@@ -552,12 +677,12 @@ private fun CyberWeatherRadarHUD(
                 )
 
                 Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                    Text("ΑΝΕΜΟΣ:", fontSize = 11.sp, fontFamily = FontFamily.Monospace, color = pink)
+                    Text(stringResource(I18nR.string.weather_forecast_wind) + ":", fontSize = 11.sp, fontFamily = FontFamily.Monospace, color = pink)
                     Text("${forecast?.windSpeed?.roundToInt() ?: 12} km/h", fontSize = 11.sp, fontWeight = FontWeight.Bold, fontFamily = FontFamily.Monospace, color = Color.White)
                 }
 
                 Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                    Text("ΠΙΕΣΗ:", fontSize = 11.sp, fontFamily = FontFamily.Monospace, color = Color(0xFFA855F7))
+                    Text(stringResource(I18nR.string.weather_metric_pressure) + ":", fontSize = 11.sp, fontFamily = FontFamily.Monospace, color = Color(0xFFA855F7))
                     Text("${forecast?.pressure?.roundToInt() ?: 1013} hPa", fontSize = 11.sp, fontWeight = FontWeight.Bold, fontFamily = FontFamily.Monospace, color = Color.White)
                 }
             }

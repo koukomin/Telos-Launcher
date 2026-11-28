@@ -513,6 +513,7 @@ data class WeatherGroup(
     val weatherLastLocation: LatLon? = null,
     val weatherLastUpdate: Long = 0L,
     val weatherProviderSettings: Map<String, ProviderSettings> = emptyMap(),
+    val weatherOngoingNotificationEnabled: Boolean = true,
     /** Notifications for severe weather in the next hours, off by default */
     val weatherAlertsEnabled: Boolean = false,
     val weatherAlertRain: Boolean = true,

@@ -1862,6 +1862,14 @@
     <string name="preference_wallpaper_start_behavior_resume">Resume</string>
     <string name="preference_wallpaper_zoom">Zoom</string>
     <string name="preference_weather_integration">Καιρός</string>
+    <string name="weather_metric_feels_like">Αίσθηση σαν</string>
+    <string name="weather_metric_visibility">Ορατότητα</string>
+    <string name="weather_metric_humidity_rel">Σχ. υγρασία</string>
+    <string name="weather_section_details">ΛΕΠΤΟΜΕΡΕΙΕΣ</string>
+    <string name="weather_section_hourly">ΩΡΙΑΙΑ</string>
+    <string name="weather_section_daily">ΗΜΕΡΗΣΙΑ (14 ΗΜΕΡΕΣ)</string>
+    <string name="preference_weather_ongoing_notification">Μόνιμη ειδοποίηση καιρού</string>
+    <string name="preference_weather_ongoing_notification_summary">Εμφάνιση τρέχουσας πρόγνωσης στη γραμμή ειδοποιήσεων</string>
     <string name="profile_work_profile_action_lock">Pause work apps</string>
     <string name="profile_work_profile_action_unlock">Unpause</string>
     <string name="profile_work_profile_state_locked">Work apps are paused</string>

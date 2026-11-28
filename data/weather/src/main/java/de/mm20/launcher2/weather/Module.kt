@@ -12,6 +12,7 @@ import org.koin.dsl.module
 val weatherModule = module {
     single<WeatherRepository> { WeatherRepositoryImpl(androidContext(), get(), get(), get()) }
     single { WeatherAlertManager(androidContext(), get(), get()) }
+    single { WeatherOngoingNotifier(androidContext(), get(), get()) }
     factory<WeatherProvider> { (providerId: String) ->
         when (providerId) {
             OpenMeteoProvider.Id -> OpenMeteoProvider(androidContext())

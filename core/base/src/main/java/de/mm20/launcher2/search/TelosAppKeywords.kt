@@ -56,7 +56,11 @@ object TelosAppKeywords {
         "telos_magnifier_app" to listOf("magnifier", "zoom", "zoom in", "μεγεθυντικός", "φακός"),
         "telos_flashlight_app" to listOf("flashlight", "torch", "siren", "morse", "φακός", "σειρήνα", "μορς"),
         "telos_clock_app" to listOf("clock", "alarm", "time", "world clock", "timer", "stopwatch", "night clock", "ρολόι", "ρολοι", "ξυπνητήρι", "ώρα", "roloi", "xypnitiri", "ora", "χρονόμετρο", "αντίστροφη μέτρηση"),
-        "telos_weather_app" to listOf("weather", "forecast", "breezy", "today weather", "radar", "aqi", "uv", "rain", "temperature", "καιρός", "καιρος", "πρόγνωση", "προγνωση", "βροχή", "θερμοκρασία", "kairos", "prognosi"),
+        "telos_weather_app" to listOf(
+            "weather", "forecast", "breezy", "today weather", "todayweather", "radar", "aqi", "uv", "rain", "temperature",
+            "καιρός", "καιρος", "καιρου", "καιρού", "καιρον", "καιρό", "καιρο", "πρόγνωση", "προγνωση", "βροχή", "βροχη", "θερμοκρασία", "θερμοκρασια",
+            "kairos", "kairou", "kairo", "prognosi", "vrochi", "vroxi", "thermokrasia", "meteo", "μετεώ", "μετεω"
+        ),
         "telos_help_app" to listOf("help", "tutorial", "guide", "faq", "βοήθεια", "βοηθεια", "οδηγός", "οδηγος"),
     )
 

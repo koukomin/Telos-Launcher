@@ -1261,6 +1261,14 @@
     <string name="weather_metric_humidity">Humidity</string>
     <string name="weather_metric_uv">UV index</string>
     <string name="weather_metric_pressure">Pressure</string>
+    <string name="weather_metric_feels_like">Feels like</string>
+    <string name="weather_metric_visibility">Visibility</string>
+    <string name="weather_metric_humidity_rel">Rel. humidity</string>
+    <string name="weather_section_details">DETAILS</string>
+    <string name="weather_section_hourly">HOURLY</string>
+    <string name="weather_section_daily">DAILY (14-DAY)</string>
+    <string name="preference_weather_ongoing_notification">Ongoing Notification</string>
+    <string name="preference_weather_ongoing_notification_summary">Show continuous weather status in the notification shade</string>
     <string name="weather_wind_gusts">Gusts up to %1$d km/h</string>
     <string name="weather_dew_point">Dew point: %1$s</string>
     <string name="weather_uv_high">High — wear sunscreen</string>

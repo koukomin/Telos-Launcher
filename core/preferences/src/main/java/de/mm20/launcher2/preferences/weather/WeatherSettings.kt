@@ -37,6 +37,7 @@ data class WeatherSettingsData(
     val locationName: String? = null,
     val lastLocation: LatLon? = null,
     val lastUpdate: Long = 0L,
+    val ongoingNotificationEnabled: Boolean = true,
     val providerSettings: Map<String, ProviderSettings> = emptyMap(),
 )
 
@@ -284,4 +285,18 @@ class WeatherSettings internal constructor(
     val timeFormat = launcherDataStore.data.map {
         it.locale.localeTimeFormat
     }.distinctUntilChanged()
+
+    val ongoingNotificationEnabled = launcherDataStore.data.map {
+        it.weather.weatherOngoingNotificationEnabled
+    }.distinctUntilChanged()
+
+    fun setOngoingNotificationEnabled(enabled: Boolean) {
+        launcherDataStore.update {
+            it.copy(
+                weather = it.weather.copy(
+                    weatherOngoingNotificationEnabled = enabled
+                )
+            )
+        }
+    }
 }

@@ -158,6 +158,25 @@ fun WeatherIntegrationSettingsScreen() {
             }
         }
         item {
+            val ongoingEnabled by viewModel.ongoingNotificationEnabled.collectAsState()
+            val notificationPermission = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) {}
+            PreferenceCategory {
+                SwitchPreference(
+                    title = stringResource(I18nR.string.preference_weather_ongoing_notification),
+                    summary = stringResource(I18nR.string.preference_weather_ongoing_notification_summary),
+                    value = ongoingEnabled,
+                    onValueChanged = { on ->
+                        viewModel.setOngoingNotificationEnabled(on)
+                        if (on && Build.VERSION.SDK_INT >= 33 &&
+                            ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED
+                        ) {
+                            notificationPermission.launch(Manifest.permission.POST_NOTIFICATIONS)
+                        }
+                    }
+                )
+            }
+        }
+        item {
             val alerts by viewModel.alerts.collectAsState()
             val notificationPermission = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) {}
             PreferenceCategory(title = stringResource(I18nR.string.preference_category_weather_alerts)) {

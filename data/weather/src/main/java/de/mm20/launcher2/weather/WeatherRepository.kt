@@ -224,6 +224,7 @@ class WeatherUpdateWorker(
     private val settings: WeatherSettings by inject()
     private val locationProvider: DevicePoseProvider by inject()
     private val alertManager: WeatherAlertManager by inject()
+    private val ongoingNotifier: WeatherOngoingNotifier by inject()
 
     override suspend fun doWork(): Result {
         Log.d("WeatherUpdateWorker", "Requesting weather data")
@@ -237,6 +238,7 @@ class WeatherUpdateWorker(
             Log.d("WeatherUpdateWorker", "No weather update required")
             // the forecast in the database is still current, it may hold something to warn about
             runCatching { alertManager.check() }
+            runCatching { kotlinx.coroutines.runBlocking { ongoingNotifier.update() } }
             return Result.failure()
         }
 
@@ -267,6 +269,7 @@ class WeatherUpdateWorker(
                 .replaceAll(weatherData.takeWhile { it.timestamp < in7Days  }.map { it.toDatabaseEntity() })
             settings.setLastUpdate(System.currentTimeMillis())
             runCatching { alertManager.check() }
+            runCatching { kotlinx.coroutines.runBlocking { ongoingNotifier.update() } }
             Result.success()
         }
     }
