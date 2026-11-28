@@ -25,7 +25,7 @@ def validate(properties, event, ref, tags):
         raise ValueError(f'Tag must match version.properties: {tag}')
     if event == 'workflow_dispatch' and ref != 'refs/heads/main':
         raise ValueError('Release dispatch is allowed only from main')
-    versions = [version_tuple(t[1:]) for t in tags if re.fullmatch(r'v[0-9]+\.[0-9]+\.[0-9]+', t)]
+    versions = [version_tuple(t[1:]) for t in tags if re.fullmatch(r'v[0-9]+\.[0-9]+\.[0-9]+', t) and int(t.split('.')[2]) < 10000]
     if publish and versions and current < max(versions):
         raise ValueError('Refusing to publish an older version than an existing tag')
     return tag, publish

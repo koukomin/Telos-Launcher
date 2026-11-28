@@ -33,7 +33,7 @@ internal object DnsTester {
                     DnsKind.System -> InetAddress.getByName(domain)
                     DnsKind.Plain, DnsKind.DnsProxy -> plain(server.url, domain)
                     DnsKind.Doh -> doh(server.url.trim(), domain)
-                    DnsKind.Dot -> dot(server.url.trim(), domain)
+                    DnsKind.Dot, DnsKind.Doq -> dot(server.url.trim(), domain)
                     DnsKind.DnsCrypt, DnsKind.Odoh -> viaEngine(server, tunnel, domain)
                 }
                 (System.nanoTime() - start) / 1_000_000L

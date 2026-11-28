@@ -46,6 +46,9 @@ object DnsCatalog {
     private fun dot(id: String, provider: String, name: String, host: String, b: List<String>, desc: String, vararg tags: DnsTag) =
         DnsServer(id, DnsKind.Dot, name, "tls://$host", null, b, desc, true, provider, tags.toList())
 
+    private fun doq(id: String, provider: String, name: String, url: String, b: List<String>, desc: String, vararg tags: DnsTag) =
+        DnsServer(id, DnsKind.Doq, name, url, null, b, desc, true, provider, tags.toList())
+
     private fun crypt(id: String, provider: String, name: String, stamp: String, desc: String, vararg tags: DnsTag) =
         DnsServer(id, DnsKind.DnsCrypt, name, stamp, null, emptyList(), desc, true, provider, tags.toList())
 
@@ -169,6 +172,9 @@ object DnsCatalog {
         // Rethink DNS
         doh("rethink-standard-doh", "Rethink DNS", "Rethink DNS", "https://zero.rethinkdns.com/dns-query", rethinkZero, "No blocklists", P, U),
         doh("rethink-basic-doh", "Rethink DNS", "Rethink DNS with blocklists", "https://basic.rethinkdns.com/1:YBcgAIAQIAAIAABgIAA=", rethink, "Blocks malware and more", M, P),
+        // DNS-over-QUIC (DoQ)
+        doq("adguard-doq", "AdGuard", "AdGuard DoQ", "quic://dns.adguard-dns.com:853", ag, "DNS-over-QUIC with ad and tracker blocking", A, M, P),
+        doq("controld-doq", "Control D", "Control D DoQ", "quic://freedns.controld.com:853/p0", cd, "DNS-over-QUIC Control D", P, U),
         // ODoH targets (the relay is chosen by the user)
         odoh("cloudflare-odoh", "Cloudflare", "Cloudflare (ODoH)", "https://odoh.cloudflare-dns.com/dns-query", "ODoH target, no filtering", P, U),
         odoh("odoh-crypto", "ODoH Crypto", "ODoH Crypto", "https://odoh.crypto.sx/dns-query", "ODoH target, no filtering", P, U),

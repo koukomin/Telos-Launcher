@@ -326,6 +326,7 @@ internal fun kindLabel(kind: DnsKind): String = when (kind) {
     DnsKind.Plain -> stringResource(I18nR.string.net_dns_kind_plain)
     DnsKind.Doh -> "DoH"
     DnsKind.Dot -> "DoT"
+    DnsKind.Doq -> "DoQ"
     DnsKind.DnsCrypt -> "DNSCrypt"
     DnsKind.Odoh -> "ODoH"
     DnsKind.DnsProxy -> stringResource(I18nR.string.net_dns_kind_proxy)

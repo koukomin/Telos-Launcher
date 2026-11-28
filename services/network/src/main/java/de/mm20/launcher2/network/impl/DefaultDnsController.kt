@@ -144,6 +144,10 @@ internal class DefaultDnsController(private val context: Context) : DnsControlle
                     Result.failure(InsecureDnsUrlException("DoH over http:// is only allowed for local hosts: $url"))
                 } else Result.success(Unit)
             }
+            DnsKind.Doq -> {
+                val urlTrim = url.trim()
+                if (urlTrim.isEmpty()) fail("invalid QUIC address") else Result.success(Unit)
+            }
             DnsKind.Dot -> {
                 val host = url.removePrefix("tls://").substringBefore('/').substringBefore(':')
                 if (host.isEmpty() || host.contains(' ')) fail("invalid DoT host: $url") else Result.success(Unit)
@@ -220,6 +224,10 @@ internal class DefaultDnsController(private val context: Context) : DnsControlle
                 DnsKind.Doh -> Intra.addDoHTransport(tunnel, id, server.url.trim(), "", ips)
                 DnsKind.Dot -> {
                     val host = server.url.trim().let { if (it.startsWith("tls://")) it else "tls://$it" }
+                    Intra.addDoTTransport(tunnel, id, host, ips)
+                }
+                DnsKind.Doq -> {
+                    val host = server.url.trim().let { if (it.startsWith("quic://")) it else "quic://$it" }
                     Intra.addDoTTransport(tunnel, id, host, ips)
                 }
                 DnsKind.DnsCrypt -> {

@@ -17,6 +17,9 @@ enum class DnsKind {
     /** DNS over TLS. [DnsServer.url] is `host` or `tls://host[:port]`. */
     Dot,
 
+    /** DNS over QUIC. [DnsServer.url] is `quic://host[:port]`. */
+    Doq,
+
     /** DNSCrypt. [DnsServer.url] is the `sdns://` stamp, [DnsServer.relay] an optional relay stamp. */
     DnsCrypt,
 
