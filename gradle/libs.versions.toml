@@ -80,7 +80,9 @@ sqlcipher = "4.20.0"
 taglib = "1.0.6"
 libtorrent4j = "2.1.0-39"
 youtubedl = "0.18.1"
-kotpass = "0.10.0"
+kotpass = "0.13.0"
+shadow = "9.6.1"
+okio = "3.15.0"
 robolectric = "4.18.1"
 androidx-camera = "1.7.0"
 
@@ -230,6 +232,7 @@ shizuku-aidl = { group = "dev.rikka.shizuku", name = "aidl", version.ref = "shiz
 dhizuku-api = { group = "io.github.iamr0s", name = "Dhizuku-API", version.ref = "dhizuku" }
 hiddenapibypass = { group = "org.lsposed.hiddenapibypass", name = "hiddenapibypass", version = "6.2" }
 androidx-annotation = { group = "androidx.annotation", name = "annotation", version.ref = "annotation" }
+okio-jvm = { module = "com.squareup.okio:okio-jvm", version.ref = "okio" }
 kotpass = { group = "app.keemobile", name = "kotpass", version.ref = "kotpass" }
 robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "robolectric" }
 
@@ -240,6 +243,7 @@ ktor = ["ktor-client-core", "ktor-client-okhttp", "ktor-serialization-kotlinx-js
 tests = ["junit"]
 
 [plugins]
+shadow = { id = "com.gradleup.shadow", version.ref = "shadow" }
 android-application = { id = "com.android.application", version.ref = "android-gradle-plugin" }
 android-library = { id = "com.android.library", version.ref = "android-gradle-plugin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp-gradle-plugin" }

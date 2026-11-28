@@ -51,6 +51,7 @@ jobs:
         with:
           retention-days: 7
           name: de.mm20.launcher2.nightly.apk
+          if-no-files-found: error
           path: app/app/build/outputs/apk/default/nightly/app-default-nightly.apk
       - name: Upload R8 mapping
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7

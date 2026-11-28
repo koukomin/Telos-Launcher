@@ -110,3 +110,19 @@
   - Squashed and merged PR #139 (`codex/cleanup-followup`).
   - Restored EventCache extension imports and aligned upstream sentinel.
 - [x] **Merge & Releases**: Δημοσιεύτηκαν επιτυχώς οι εκδόσεις `v1.45.80` έως `v1.46.07`.
+
+### Kotpass 0.13.0 compatibility
+
+Kotpass 0.13.0 embeds classes under `org.apache.commons.lang3`, including
+`ArrayUtils`, `ClassUtils`, `ObjectUtils` and `StringEscapeUtils` also present
+in Telos's commons-lang3 dependency. The Android consumers now use a separate
+Kotpass JAR that relocates the bundled Commons Lang classes and their bytecode
+references while preserving the original Kotpass API.
+
+### Firestack 8134609734 compatibility
+
+The POM declares JAR packaging, but Maven Central publishes an AAR. Explicit
+`@aar` resolves the Android library. Network compilation with 8134609734 then
+fails because DNS and proxy methods take Gostr and the VPN listener callbacks
+have changed. Keep c4a33649be until a dedicated engine migration preserves
+DNS, firewall, per-app proxy and Tor routing on a device.

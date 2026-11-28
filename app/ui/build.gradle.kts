@@ -249,7 +249,7 @@ dependencies {
     testImplementation("org.json:json:20260814")
     
     implementation(project(":services:keepasstl"))
-    implementation(libs.kotpass)
+    implementation(project(path = ":libs:kotpass", configuration = "shadow"))
 }
 // Bouncy Castle comes in with several versions (sshj, other libraries); the parts must match or the classes are duplicated
 configurations.all {

@@ -177,6 +177,7 @@ include(":ui-kmp")
 
 // JVM `:desktop-linux` is retired. Do not include it.
 include(":services:keepasstl")
+include(":libs:kotpass")
 
 // The full Aether client is compiled from source into the Telos APK.
 if (telosAmethystRepository == null) includeBuild("libs/amethyst") {

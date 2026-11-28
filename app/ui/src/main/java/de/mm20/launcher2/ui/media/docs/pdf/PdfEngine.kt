@@ -408,7 +408,7 @@ object PdfEngine {
                                     if (scaled !== bmp) bmp.recycle()
                                     bmp = scaled
                                 }
-                                val flat = flattenOnWhite(bmp)
+                                val flat = PdfBitmaps.flattenOnWhite(bmp)
                                 if (flat !== bmp) bmp.recycle()
                                 val newImage = JPEGFactory.createFromImage(doc, flat, level.jpegQuality)
                                 resources.put(name, newImage)

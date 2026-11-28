@@ -53,4 +53,5 @@ jobs:
         with:
           retention-days: 7
           name: telos-default-debug-apk
+          if-no-files-found: error
           path: app/app/build/outputs/apk/default/debug/*.apk
