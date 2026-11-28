@@ -217,7 +217,7 @@ internal class DefaultDnsController(private val context: Context) : DnsControlle
                         .joinToString(",") { IpUtil.withPort(it, 53) }
                     Intra.addDNSProxy(tunnel, id, csv)
                 }
-                DnsKind.Doh -> Intra.addDoHTransport(tunnel, id, server.url.trim(), "", ips)
+                DnsKind.Doh -> Intra.addDoHTransport2(tunnel, id, server.url.trim(), "", ips)
                 DnsKind.Dot -> {
                     val host = server.url.trim().let { if (it.startsWith("tls://")) it else "tls://$it" }
                     Intra.addDoTTransport(tunnel, id, host, ips)

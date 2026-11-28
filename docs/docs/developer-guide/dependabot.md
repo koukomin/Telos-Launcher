@@ -249,9 +249,19 @@ have no patched versions. The selected feature graph and inherited source-level 
 
 No Cargo advisory or private Dependabot alert is dismissed by this review.
 
+
 ### Kotpass
 
 The `:libs:kotpass` build relocates the Commons Lang classes bundled by Kotpass
 0.13.0. Android modules use the relocated JAR. Check
 `:app:app:checkDefaultDebugDuplicateClasses` and the KeePass unit tests when
 upgrading Kotpass.
+
+### Firestack
+
+Telos tracks the Firestack revision pinned by upstream Rethink. Revision
+`525c343dde` preserves the DNS measurement API. Its VPN callbacks include an
+engine connection ID, DoH bootstrap IPs use `addDoHTransport2`, and custom
+servers take a type and a separate identifier. The Maven POM advertises a JAR
+so the dependency selects the published Android artifact with `@aar`.
+

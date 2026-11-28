@@ -87,7 +87,7 @@ robolectric = "4.18.1"
 androidx-camera = "1.7.0"
 
 # Go network engine of Rethink DNS (MPL-2.0), pinned like Rethink pins it (firestackCommit)
-firestack = "c4a33649be"
+firestack = "525c343dde"
 annotation = "1.11.0"
 
 [libraries]
