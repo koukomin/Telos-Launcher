@@ -125,8 +125,26 @@ fun AppDetailsScreen(itemId: String) {
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
-                        installerLabel?.let {
-                            Text(stringResource(I18nR.string.hf_store_source) + ": " + it, style = MaterialTheme.typography.bodySmall)
+                        val installerPkg by produceState<String?>(null, item.packageName) {
+                            value = installedBy(context, item.packageName)
+                        }
+                        val pkg = installerPkg
+                        installerLabel?.let { label: String ->
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(6.dp),
+                                modifier = Modifier.padding(top = 2.dp)
+                            ) {
+                                if (pkg != null && pkg.length > 0 && pkg != context.packageName) {
+                                    AppIcon(packageName = pkg, name = label, size = 18)
+                                }
+                                Text(
+                                    text = stringResource(I18nR.string.hf_store_source) + ": " + label,
+                                    style = MaterialTheme.typography.bodySmall,
+                                    fontWeight = FontWeight.SemiBold,
+                                    color = MaterialTheme.colorScheme.primary
+                                )
+                            }
                         }
                         Text(item.source.summary(), style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.primary)
                     }

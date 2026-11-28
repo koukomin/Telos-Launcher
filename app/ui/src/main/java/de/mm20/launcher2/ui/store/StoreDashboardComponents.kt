@@ -102,6 +102,46 @@ internal fun StoreItemRow(
                         fontFamily = androidx.compose.ui.text.font.FontFamily.Monospace,
                         color = if (row.updateAvailable) pink else cyan
                     )
+
+                    val installerPkg: String? = remember(item.packageName) {
+                        runCatching {
+                            val pm = context.packageManager
+                            if (android.os.Build.VERSION.SDK_INT >= 30) {
+                                pm.getInstallSourceInfo(item.packageName).installingPackageName
+                            } else {
+                                @Suppress("DEPRECATION")
+                                pm.getInstallerPackageName(item.packageName)
+                            }
+                        }.getOrNull()
+                    }
+
+                    val storeLabel = when (installerPkg) {
+                        "com.android.vending" -> "Google Play"
+                        context.packageName -> "Telos Store"
+                        null -> "Telos Store"
+                        else -> runCatching {
+                            val pm = context.packageManager
+                            @Suppress("DEPRECATION")
+                            val info = pm.getApplicationInfo(installerPkg, 0)
+                            pm.getApplicationLabel(info).toString()
+                        }.getOrDefault(installerPkg)
+                    }
+
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(6.dp)
+                    ) {
+                        if (installerPkg != null && installerPkg.length > 0 && installerPkg != context.packageName) {
+                            AppIcon(packageName = installerPkg, name = storeLabel, size = 16)
+                        }
+                        Text(
+                            text = storeLabel,
+                            style = MaterialTheme.typography.labelSmall,
+                            fontWeight = FontWeight.Bold,
+                            color = if (installerPkg == "com.android.vending") Color(0xFF34A853) else cyan
+                        )
+                    }
+
                     val sizeText = item.latestRelease?.size?.let { formatBytes(it) }
                     Text(listOfNotNull(item.source.summary(), sizeText, row.options.category.ifBlank { null },
                         if (row.options.trackOnly) stringResource(I18nR.string.hf_store_track_only) else null,

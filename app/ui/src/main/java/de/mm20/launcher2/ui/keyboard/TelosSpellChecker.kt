@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import de.mm20.launcher2.search.GreekFold
+import java.io.File
 import java.util.Locale
 
 object TelosSystemSuggestions {
@@ -50,17 +51,38 @@ object TelosKeyboardDictionary {
         "weather", "clock", "flashlight", "calculator", "how are you", "sounds good", "okay", "sorry"
     )
 
+    private val downloadedWords = java.util.concurrent.ConcurrentHashMap<KeyboardLanguage, List<String>>()
     private val learnedWords = mutableSetOf<String>()
+
+    fun loadDownloadedDictionary(lang: KeyboardLanguage, file: File) {
+        runCatching {
+            val lines = java.util.ArrayList<String>()
+            val br = java.io.BufferedReader(java.io.FileReader(file))
+            var line: String? = br.readLine()
+            while (line != null) {
+                if (line.trim().length > 0) lines.add(line.trim())
+                line = br.readLine()
+            }
+            br.close()
+            downloadedWords.put(lang, lines)
+        }
+    }
+
+    fun unloadDownloadedDictionary(lang: KeyboardLanguage) {
+        downloadedWords.remove(lang)
+    }
 
     fun suggestions(input: String, lang: KeyboardLanguage): List<String> {
         val trimmed = input.trim()
         if (trimmed.isEmpty()) return emptyList()
         val foldedInput = GreekFold.fold(trimmed.lowercase(Locale.ROOT))
 
-        val pool = when (lang) {
+        val staticPool = when (lang) {
             KeyboardLanguage.Greek -> greekWords
             KeyboardLanguage.English -> englishWords
-        } + learnedWords.toList()
+        }
+        val downloaded = downloadedWords[lang] ?: emptyList()
+        val pool = listOf(staticPool, downloaded, learnedWords.toList()).flatten()
 
         val system = TelosSystemSuggestions.current(trimmed, lang)
         val exactPrefixes = pool.filter {
@@ -73,7 +95,7 @@ object TelosKeyboardDictionary {
             }
         } else emptyList()
 
-        return (system + exactPrefixes + fuzzyMatches).distinct().take(5)
+        return listOf(system, exactPrefixes, fuzzyMatches).flatten().distinct().take(5)
     }
 
     fun learnWord(word: String, isIncognito: Boolean) {
@@ -92,8 +114,8 @@ object TelosKeyboardBuffer {
     }
 
     fun backspace(lang: KeyboardLanguage) {
-        if (currentWordBuffer.isNotEmpty()) {
-            currentWordBuffer = currentWordBuffer.dropLast(1)
+        if (currentWordBuffer.length > 0) {
+            currentWordBuffer = (currentWordBuffer as java.lang.String).substring(0, currentWordBuffer.length - 1)
             updateSuggestions(lang)
         }
     }
@@ -105,7 +127,7 @@ object TelosKeyboardBuffer {
 
     fun updateSuggestions(lang: KeyboardLanguage) {
         activeSuggestions.clear()
-        if (currentWordBuffer.isNotBlank()) {
+        if (currentWordBuffer.length > 0) {
             activeSuggestions.addAll(TelosKeyboardDictionary.suggestions(currentWordBuffer, lang))
         }
     }

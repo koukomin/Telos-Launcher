@@ -449,6 +449,10 @@ private fun AppsTab(
     onRefresh: () -> Unit = {},
     lastCheck: Long = 0L,
 ) {
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
+    val freezeManager: de.mm20.launcher2.freeze.FreezeManager = koinInject()
+
     Column(Modifier.fillMaxSize()) {
         StoreCommandHud(
             query = query,
@@ -475,14 +479,44 @@ private fun AppsTab(
             )
         } else {
             PullToRefreshBox(isRefreshing = checking, onRefresh = onRefresh, modifier = Modifier.weight(1f)) {
+            val freezeManager: de.mm20.launcher2.freeze.FreezeManager = koinInject()
             val updates = rows.filter { it.updateAvailable }
             val rest = rows.filter { !it.updateAvailable }
+
+            val telosUpdates = updates.filter { row ->
+                val installer = runCatching {
+                    val pm = context.packageManager
+                    if (android.os.Build.VERSION.SDK_INT >= 30) pm.getInstallSourceInfo(row.item.packageName).installingPackageName
+                    else @Suppress("DEPRECATION") pm.getInstallerPackageName(row.item.packageName)
+                }.getOrNull()
+                installer == context.packageName || installer.isNullOrBlank()
+            }
+
+            val otherStoreUpdates = updates.filter { row ->
+                val installer = runCatching {
+                    val pm = context.packageManager
+                    if (android.os.Build.VERSION.SDK_INT >= 30) pm.getInstallSourceInfo(row.item.packageName).installingPackageName
+                    else @Suppress("DEPRECATION") pm.getInstallerPackageName(row.item.packageName)
+                }.getOrNull()
+                installer != null && installer != context.packageName && installer != "com.android.vending"
+            }
+
+            val playStoreUpdates = updates.filter { row ->
+                val installer = runCatching {
+                    val pm = context.packageManager
+                    if (android.os.Build.VERSION.SDK_INT >= 30) pm.getInstallSourceInfo(row.item.packageName).installingPackageName
+                    else @Suppress("DEPRECATION") pm.getInstallerPackageName(row.item.packageName)
+                }.getOrNull()
+                installer == "com.android.vending"
+            }
+
             LazyColumn(contentPadding = PaddingValues(bottom = 96.dp), modifier = Modifier.fillMaxSize()) {
-                if (updates.isNotEmpty()) {
-                    item(key = "hdr-updates") {
-                        StoreSectionHeader(stringResource(I18nR.string.store_section_updates, updates.size))
+                // Top Priority: Telos Store Updates (Support Auto Update)
+                if (telosUpdates.isNotEmpty()) {
+                    item(key = "hdr-telos-updates") {
+                        StoreSectionHeader(stringResource(I18nR.string.store_section_updates, telosUpdates.size) + " (Telos Store)")
                     }
-                    items(updates, key = { it.item.id }) { row ->
+                    items(telosUpdates, key = { it.item.id }) { row ->
                         StoreItemRow(
                             row = row,
                             installState = installStates[row.item.id] ?: StoreInstallUiState.Idle,
@@ -492,6 +526,66 @@ private fun AppsTab(
                         )
                     }
                 }
+
+                // Middle: Updates from Other Stores (F-Droid, Aurora, Obtainium, etc.)
+                if (otherStoreUpdates.isNotEmpty()) {
+                    item(key = "hdr-other-updates") {
+                        StoreSectionHeader("Updates from Other Stores (${otherStoreUpdates.size})")
+                    }
+                    items(otherStoreUpdates, key = { it.item.id }) { row ->
+                        val installerPkg: String? = remember(row.item.packageName) {
+                            runCatching {
+                                val pm = context.packageManager
+                                if (android.os.Build.VERSION.SDK_INT >= 30) pm.getInstallSourceInfo(row.item.packageName).installingPackageName
+                                else @Suppress("DEPRECATION") pm.getInstallerPackageName(row.item.packageName)
+                            }.getOrNull()
+                        }
+                        StoreItemRow(
+                            row = row,
+                            installState = installStates[row.item.id] ?: StoreInstallUiState.Idle,
+                            onClick = { onOpen(row) },
+                            onDetailsClick = { onOpen(row) },
+                            onActionClick = {
+                                val pkg = installerPkg
+                                if (pkg != null && pkg.length > 0) {
+                                    scope.launch {
+                                        freezeManager.unfreeze(listOf(pkg), fromUser = true)
+                                        val launchIntent = context.packageManager.getLaunchIntentForPackage(pkg)
+                                        if (launchIntent != null) {
+                                            context.startActivity(launchIntent)
+                                        } else {
+                                            onAction(row)
+                                        }
+                                    }
+                                } else {
+                                    onAction(row)
+                                }
+                            },
+                        )
+                    }
+                }
+
+                // Bottom: Google Play Store Updates
+                if (playStoreUpdates.isNotEmpty()) {
+                    item(key = "hdr-play-updates") {
+                        StoreSectionHeader("Google Play Store Updates (${playStoreUpdates.size})")
+                    }
+                    items(playStoreUpdates, key = { it.item.id }) { row ->
+                        StoreItemRow(
+                            row = row,
+                            installState = installStates[row.item.id] ?: StoreInstallUiState.Idle,
+                            onClick = { onOpen(row) },
+                            onDetailsClick = { onOpen(row) },
+                            onActionClick = {
+                                scope.launch {
+                                    freezeManager.unfreeze(listOf("com.android.vending"), fromUser = true)
+                                    PlayStoreInventory.openPlayUpdates(context)
+                                }
+                            },
+                        )
+                    }
+                }
+
                 if (rest.isNotEmpty()) {
                     if (updates.isNotEmpty()) {
                         item(key = "hdr-rest") {
